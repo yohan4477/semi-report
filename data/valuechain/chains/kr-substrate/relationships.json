@@ -316,7 +316,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-memory"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mem-hynix",
@@ -346,7 +347,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-memory"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mem-amkor",
@@ -376,7 +378,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-memory"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mem-stats",
@@ -406,7 +409,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-memory"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "fcbga-tesla",
@@ -436,7 +440,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "fcbga-ssd",
@@ -466,7 +471,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "fcbga-optical",
@@ -496,7 +502,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "fcbga-pcie",
@@ -526,7 +533,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mlb-amd",
@@ -557,7 +565,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mlb-spacex",
@@ -587,7 +596,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mlb-800g",
@@ -617,7 +627,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "mlb-cisco",
@@ -647,7 +658,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "unalloc-anon1",
@@ -677,7 +689,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "unalloc-anon2",
@@ -707,7 +720,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "unalloc-anon3",
@@ -737,7 +751,8 @@
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "prepreg-dd-src",

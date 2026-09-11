@@ -6,9 +6,12 @@
   chains/<사슬>/relationships.json                    지속적인 관계. 숫자를 박지 않는다
   chains/<사슬>/observations.json                     시점별 값. 분모·기준일·근거등급이 붙는다
   chains/<사슬>/claims.json · hypotheses.json
+  chains/<사슬>/projects.json                         프로젝트 맥락. 식구를 두르는 테두리, 상자 아님
   chains/<사슬>/bom/*.json · financials/*.json
 
-어느 회사도 코드에 박지 않는다. 시작 회사는 관계가 가장 많은 엔티티에서 고른다.
+어느 회사도 코드에 박지 않는다. 실리는 사슬은 chains/ 아래 chain.json 이 있는 디렉터리
+전부이고(check_vc.shipped_chains), 시작 회사는 관계가 가장 많은 엔티티에서 고른다.
+굽기 전에 check_vc.validate() 를 돌려 FAIL 이면 굽지 않는다.
 """
 import io, json, os, sys
 
@@ -16,8 +19,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUT = os.path.join(ROOT, '대시보드', '밸류체인 탐색기.html')
 
-# 화면에 싣는 사슬. 구조는 여러 사슬을 받지만 지금 내보내는 것은 이 하나다
-SHIP = ['bloom-energy', 'kr-substrate', 'taiyo-yuden']
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import check_vc  # noqa: E402  실리는 사슬 목록과 발행 전 검사를 같이 쓴다
+
+
+def ship_list():
+    u"""화면에 싣는 사슬 — chains/ 아래 chain.json 이 있는 디렉터리 전부.
+    회사 이름을 코드에 박지 않는다. 안 실을 사슬은 chain.json 을 안 둔다."""
+    return check_vc.shipped_chains()
+
 
 CDN = 'https://cdn.jsdelivr.net/npm'
 LIBS = [
@@ -102,9 +112,6 @@ white-space:nowrap}
 .axchip.on{background:var(--ink1);color:#fff;border-color:var(--ink1)}
 .axchip.on i{color:#c8cede}
 .axnote{font-size:11.5px;color:var(--warm);padding-left:55px}
-.axclear{position:absolute;right:12px;top:7px;border:1px solid var(--line);
-background:var(--paper);color:var(--ink2);border-radius:5px;padding:3px 8px;
-font:inherit;font-size:11.5px;cursor:pointer}
 .main{flex:1;display:flex;min-height:0;position:relative}
 .canvas{flex:1;min-width:0;position:relative}
 .drw{width:30%;min-width:280px;max-width:420px;flex:0 0 auto;background:var(--paper);
@@ -395,6 +402,11 @@ var COL_OF = {};
 COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
 // 검사기가 쓰는 이름과 칸 이름이 한 글자씩 다르다. 같은 자리로 읽는다
 var TIER_ALIAS = { COMPONENT:'COMPONENT_SUPPLIER', SUBSYSTEM_MODULE:'SUBSYSTEM' };
+// 다른 회사를 중심에 놓을 때 왼쪽 칸 — 사슬 층 대신 그 회사에서 몇 단 앞인가
+var HOP_LABEL = { SUBSYSTEM:'1단 앞', COMPONENT_SUPPLIER:'2단 앞',
+  MATERIAL_PROCESSING:'3단 앞', RAW_MATERIAL:'4단 이상 앞' };
+var HOP_COL = [COL_OF.SUBSYSTEM, COL_OF.COMPONENT_SUPPLIER, COL_OF.MATERIAL_PROCESSING,
+  COL_OF.RAW_MATERIAL];
 function colOfRel(r, up){
   var t = tierOf(r, up);
   if (TIER_ALIAS[t]) t = TIER_ALIAS[t];
@@ -484,12 +496,16 @@ function shareLabel(rid, yr){
 
 // ── 노드 ────────────────────────────────────────────────────────────
 var HANDLE_N = 7;
+// 포트는 네 갈래 — 왼쪽으로 드는 t, 오른쪽으로 나가는 s, 그리고 왼쪽으로 가는 선을 위한
+// sl(왼쪽 변에서 나감)·tr(오른쪽 변으로 듦). 거꾸로 가는 선이 제 상자를 가로지르지 않게
+var PORT_SIDE = { t:[ 'target', Position.Left ], s:[ 'source', Position.Right ],
+                  sl:[ 'source', Position.Left ], tr:[ 'target', Position.Right ] };
 function ports(kind){
   var out = [];
   for (var i = 0; i < HANDLE_N; i++){
     out.push(h(Handle, { key: kind + i, id: kind + i,
-      type: kind === 't' ? 'target' : 'source',
-      position: kind === 't' ? Position.Left : Position.Right,
+      type: PORT_SIDE[kind][0],
+      position: PORT_SIDE[kind][1],
       isConnectable: false,
       style:{ opacity:0, width:1, height:1, minWidth:1, minHeight:1, border:0,
               top: Math.round((i + 1) * 100 / (HANDLE_N + 1)) + '%' } }));
@@ -513,7 +529,8 @@ function Nd(p){
         style:{ marginLeft: (d.sub || d.share) ? '5px' : 0 } }, 'NEW') : null,
     ]) : null
   ];
-  return h('div', { className: cls }, ports('t').concat(mid).concat(ports('s')));
+  return h('div', { className: cls },
+    ports('t').concat(ports('sl')).concat(mid).concat(ports('s')).concat(ports('tr')));
 }
 function Hdr(p){
   return h('div', { className:'hdr' }, [
@@ -536,19 +553,20 @@ function orth(pts, r){
   var last = pts[pts.length - 1];
   return d + ' L ' + last.x + ' ' + last.y;
 }
-// 선은 하나뿐인 문법으로 그린다 — 상자에서 수평으로 나가고, 칸 사이 빈 띠의 통로에서만
-// 위아래로 움직이고, 다음 상자에는 다시 수평으로 든다. gx 는 통로 자리(route 가 정한다),
-// gy 는 그 통로에서 옮겨 갈 높이다. gy 가 비면 닿을 상자의 높이로 간다
+// 선은 하나뿐인 문법으로 그린다 — 상자에서 수평으로 나가고, 출발 칸 바로 옆 통로에서
+// 한 번만 위아래로 움직이고, 그 높이로 닿을 상자까지 곧게 간다. 꺾임은 둘을 넘지 않는다.
+// gx 는 통로 자리(route 가 정한다), gy 는 그 통로에서 옮겨 갈 높이다. gy 가 비면 닿을
+// 상자의 높이다. gy 가 그 높이와 다르면(중간 상자를 비키느라 더 멀리 옮긴 선) 그 높이로
+// 곧게 가서 끝난다 — 상자 앞에서 다시 꺾지 않는다
 function GutEdge(p){
-  var d = p.data || {}, gx = d.gx || [], gy = d.gy || [];
-  var path = [{ x:p.sourceX, y:p.sourceY }], prev = p.sourceY;
-  for (var i = 0; i < gx.length; i++){
-    var y = (gy[i] === null || gy[i] === undefined) ? p.targetY : gy[i];
-    path.push({ x:gx[i], y:prev });
-    path.push({ x:gx[i], y:y });
-    prev = y;
+  var d = p.data || {};
+  var gx = d.gx, gy = (d.gy === null || d.gy === undefined) ? p.targetY : d.gy;
+  var path = [{ x:p.sourceX, y:p.sourceY }];
+  if (gx !== null && gx !== undefined) {
+    path.push({ x:gx, y:p.sourceY });
+    path.push({ x:gx, y:gy });
   }
-  path.push({ x:p.targetX, y:p.targetY });
+  path.push({ x:p.targetX, y:gy });
   // 같은 자리에 겹쳐 찍힌 점은 걷는다. 안 걷으면 모서리 반지름이 0 이 된다
   var pts = path.filter(function(q, i){
     return i === 0 || Math.abs(q.x - path[i-1].x) > 0.5 || Math.abs(q.y - path[i-1].y) > 0.5;
@@ -566,17 +584,15 @@ function GutEdge(p){
 }
 var EDGE_TYPES = { gut: GutEdge };
 // 프로젝트는 사슬의 한 단계가 아니라 여러 상자를 묶는 테두리다. 상자는 제 자리에
-// 그대로 서고, 테두리는 그 뒤에 깔려 누가 한 프로젝트에 얽혔는지만 보여 준다
+// 그대로 서고, 테두리는 그 뒤에 깔려 누가 한 프로젝트에 얽혔는지만 보여 준다.
+// 테두리에는 포트가 없다 — 선은 언제나 상자(SPV·부지·회사)에 닿지 테두리에 닿지 않는다.
+// 식구는 projects.json 이 명시한 것뿐이고 관계로 추론하지 않는다
 function Proj(p){
   var d = p.data;
   return h('div', { className:'proj', style:{ width:d.w + 'px', height:d.h + 'px' } }, [
-    h(Handle, { key:'t', type:'target', position:Position.Left, isConnectable:false,
-      style:{ opacity:0, width:1, height:1, minWidth:1, minHeight:1, border:0 } }),
     h('div', { key:'l', className:'plab' }, [
       h('div', { key:'a' }, '프로젝트'),
-      h('div', { key:'b', className:'pn' }, d.title) ]),
-    h(Handle, { key:'s', type:'source', position:Position.Right, isConnectable:false,
-      style:{ opacity:0, width:1, height:1, minWidth:1, minHeight:1, border:0 } })
+      h('div', { key:'b', className:'pn' }, d.title) ])
   ]);
 }
 var NODE_TYPES = { nd: Nd, hdr: Hdr, proj: Proj };
@@ -602,14 +618,17 @@ function cw(s){
   return w;
 }
 function boxH(d){
+  // 브라우저가 잰 높이가 있으면 그것을 쓴다. 어림은 첫 그림에서만
+  if (d.measured) return d.measured;
   var per = d.focal ? 13 : 16;
   var lines = Math.ceil((cw(d.title || '') + (d.flag ? 3 : 0)) / per) || 1;
   return 16 + lines * (d.focal ? 21 : 18)
        + ((d.sub || d.isNew || d.share) ? 17 : 0) + (d.focal ? 14 : 0);
 }
 
-// 칸 사이 빈 띠를 레인으로 쪼개고, 노드 변에는 포트를 나눠 꽂는다
-function route(edges, geo){
+// 칸 사이 빈 띠를 레인으로 쪼개고, 노드 변에는 포트를 나눠 꽂는다.
+// fcol 은 타겟이 선 칸 번호(geo 의 col 눈금) — 꺾는 쪽을 가르는 기준이다
+function route(edges, geo, fcol){
   function cy(id){ var g = geo[id]; return g ? g.y + g.h / 2 : 0; }
 
   var outg = {}, inn = {};
@@ -623,19 +642,17 @@ function route(edges, geo){
     if (n <= HANDLE_N) return ((HANDLE_N - n) / 2 | 0) + i;
     return Math.round(i * (HANDLE_N - 1) / (n - 1));
   }
-  // 프로젝트 테두리에는 포트를 나누지 않는다. 테두리 한가운데로 든다
-  function isBox(id){ return geo[id] && geo[id].proj; }
+  // 왼쪽으로 가는 선(닿을 상자가 출발 상자보다 왼쪽)은 왼쪽 변에서 나가 오른쪽 변으로 든다
+  function leftward(e){ return geo[e.target].col < geo[e.source].col; }
+  function hs(e){ return leftward(e) ? 'sl' : 's'; }
+  function ht(e){ return leftward(e) ? 'tr' : 't'; }
   Object.keys(outg).forEach(function(id){
     var a = outg[id].sort(function(p, q){ return cy(p.target) - cy(q.target); });
-    a.forEach(function(e, i){
-      e.sourceHandle = isBox(id) ? null : 's' + slot(i, a.length);
-    });
+    a.forEach(function(e, i){ e.sourceHandle = hs(e) + slot(i, a.length); });
   });
   Object.keys(inn).forEach(function(id){
     var a = inn[id].sort(function(p, q){ return cy(p.source) - cy(q.source); });
-    a.forEach(function(e, i){
-      e.targetHandle = isBox(id) ? null : 't' + slot(i, a.length);
-    });
+    a.forEach(function(e, i){ e.targetHandle = ht(e) + slot(i, a.length); });
   });
 
   // ② 통로 — 세로 이동은 칸 사이 빈 띠 한가운데의 통로에서만 일어난다. 같은 상자에서
@@ -682,74 +699,73 @@ function route(edges, geo){
       // 한 상자에서 갈라지거나 한 상자로 모이는 선은 그 상자 쪽 포트를 하나로 모은다
       if (groups[key].length > 1) {
         groups[key].forEach(function(e){
-          if (key.charAt(0) === 'S') e.sourceHandle = 's' + MID;
-          else if (key.charAt(0) === 'T') e.targetHandle = 't' + MID;
+          if (key.charAt(0) === 'S') e.sourceHandle = hs(e) + MID;
+          else if (key.charAt(0) === 'T') e.targetHandle = ht(e) + MID;
         });
       }
     });
   });
 
-  // ③ 선마다 통로 자리와 그 통로에서 옮겨 갈 높이를 적는다. 마지막 통로에서는 닿을
-  // 상자의 높이로 간다(gy 를 비워 둔다). 중간 칸은 그 칸에 잡아 둔 빈 자리 높이로 지난다
-  // 상자를 피하려고 여러 번 꺾지 않는다. 한 선에 세로 구간은 하나뿐이고, 피해야 할
-  // 상자가 있으면 더 일찍·더 길게 한 번에 옮긴다. 칸을 여럿 건너뛰는 선도 같다 —
-  // 지나갈 높이가 비어 있는 통로를 앞에서부터 찾아 거기서 한 번만 꺾는다
+  // ③ 선마다 통로 자리 하나와 거기서 옮겨 갈 높이 하나를 적는다. 통로는 출발 칸 바로
+  // 옆 하나뿐이다 — 그 앞은 출발 높이, 그 뒤는 닿을 높이로 곧게 간다(꺾임 최대 둘).
+  // 중간 칸의 상자는 place 가 빈 자리를 잡아 두어 닿을 높이에서 비켜 있다. 그래도
+  // 걸리면 더 멀리 한 번에 옮긴다 — 타겟 오른쪽은 아래로(걸린 상자 바닥 아래), 왼쪽은
+  // 위로(걸린 상자 머리 위). 상자 앞에서 다시 꺾어 지그재그를 만들지 않는다.
+  // 통로를 여럿 밟던 옛 gx[]/gy[] 는 걷었다 — 직접 선이 여러 번 꺾이는 원인이었다
   var boxes = {};
   Object.keys(geo).forEach(function(id){
     var g = geo[id];
     if (!g || g.proj || id.charAt(0) === '~') return;
+    g.id = id;
     (boxes[g.col] = boxes[g.col] || []).push(g);
   });
   var CLR = 7;
-  function blocked(col, y, skip){
-    return (boxes[col] || []).some(function(g){
-      if (g === skip) return false;
-      return y > g.y - CLR && y < g.y + g.h + CLR;
+  function blockersAt(cols, y){
+    var out = [];
+    cols.forEach(function(c){
+      (boxes[c] || []).forEach(function(g){
+        if (y > g.y - CLR && y < g.y + g.h + CLR) out.push(g);
+      });
     });
+    return out;
   }
   edges.forEach(function(e){
     var a = geo[e.source], b = geo[e.target];
     if (!a || !b) return;
     if (a.col === b.col) { e.type = 'default'; return; }
-    var bs = bounds(e), corr = (e.data && e.data.corr) || [];
+    var bs = bounds(e);
     var y0 = cy(e.source), y1 = cy(e.target);
     if (bs.length === 1 && Math.abs(y0 - y1) <= 8) {
       e.type = 'straight';
       e.data = Object.assign({}, e.data, { gx:null, gy:null });
       return;
     }
-    // 꺾을 통로를 고른다. 그 통로 앞은 출발 높이로, 뒤는 닿을 높이로 지나야 하니
-    // 두 높이 모두 중간 칸의 상자를 안 스치는 통로를 앞에서부터 찾는다
-    var dir = b.col > a.col ? 1 : -1, pick = -1, bestHit = 1e9;
-    for (var k = 0; k < bs.length; k++){
-      var hit = 0;
-      for (var c = a.col + dir; c !== b.col; c += dir){
-        var before = dir > 0 ? (c <= bs[k]) : (c > bs[k]);
-        if (blocked(c, before ? y0 : y1, null)) hit++;
-      }
-      if (hit < bestHit) { bestHit = hit; pick = k; }
-      if (!hit) break;
+    var dir = b.col > a.col ? 1 : -1, mids = [];
+    for (var c = a.col + dir; c !== b.col; c += dir) mids.push(c);
+    var hit = blockersAt(mids, y1);
+    var clearY = y1;
+    if (hit.length) {
+      // 오른쪽(타겟 칸에서 나가는 쪽)은 아래로만, 왼쪽(타겟 칸으로 드는 쪽)은 위로만
+      var rightSide = fcol === undefined ? dir > 0 : Math.min(a.col, b.col) >= fcol;
+      hit.forEach(function(g){
+        clearY = rightSide ? Math.max(clearY, g.y + g.h + CLR)
+                           : Math.min(clearY, g.y - CLR);
+      });
+      if (window.console) console.warn('vc route: ' + e.id + ' 가 중간 상자('
+        + hit.map(function(g){ return g.id + '@' + g.col + ':' + Math.round(g.y) + '~'
+                                    + Math.round(g.y + g.h); }).join(',')
+        + ')에 걸려 ' + Math.round(y1) + ' 대신 ' + Math.round(clearY)
+        + ' 로 옮긴다. place 가 빈 자리를 못 잡았다');
     }
-    if (pick >= 0) {
-      e.type = 'gut';
-      e.data = Object.assign({}, e.data,
-        { gx:[gutterX(bs[pick], lane[e.id + '@' + bs[pick]] || 0)], gy:[null] });
-      return;
-    }
-    // 통로를 못 고른 선만 중간 칸에 잡아 둔 빈 자리를 밟는다
-    var gx = [], gy = [];
-    bs.forEach(function(bd, j){
-      gx.push(gutterX(bd, lane[e.id + '@' + bd] || 0));
-      gy.push(j < bs.length - 1 ? (corr[j] === undefined ? null : corr[j]) : null);
-    });
-    var near = gy.every(function(v){ return v === null || Math.abs(v - y1) <= 14; });
-    if (near) { gx = [gx[0]]; gy = [null]; }
     e.type = 'gut';
-    e.data = Object.assign({}, e.data, { gx:gx, gy:gy });
+    e.data = Object.assign({}, e.data,
+      { gx: gutterX(bs[0], lane[e.id + '@' + bs[0]] || 0),
+        gy: clearY === y1 ? null : clearY });
   });
 }
 
-function place(nodes, edges){
+function place(nodes, edges, opts){
+  opts = opts || {};
   // 가로는 단계 칸에 못박는다. dagre 는 부르지 않는다
   var colOf = {}, byCol = {};
   // 프로젝트 테두리는 칸에 안 든다. 식구를 다 앉힌 뒤 그 둘레로 잡는다
@@ -770,7 +786,10 @@ function place(nodes, edges){
     (nbr[a] = nbr[a] || []).push(b);
     (nbr[b] = nbr[b] || []).push(a);
   }
-  // 칸을 건너뛰는 선에는 중간 칸마다 보이지 않는 자리를 잡아 둔다
+  // 칸을 건너뛰는 선에는 중간 칸마다 보이지 않는 자리를 잡아 둔다. 같은 상자로 모이는
+  // 선들은 그 칸에서 자리 하나를 같이 쓴다 — 닿을 높이가 같은데 자리를 둘 잡으면 둘 다
+  // 그 높이에 앉을 수 없어 서로 밀어내며 끝없이 내려간다(N:1 은 통로를 함께 쓴다)
+  var dummyOf = {};
   edges.forEach(function(e){
     var a = at[colOf[e.source]], b = at[colOf[e.target]];
     if (a === undefined || b === undefined) return;
@@ -778,8 +797,11 @@ function place(nodes, edges){
     var step = b > a ? 1 : -1, prev = e.source;
     var mine = span[e.id] = [];
     for (var i = a + step; i !== b; i += step){
-      var did = '~' + e.id + '@' + i;
-      byCol[used[i]].push({ id:did, n:null, h:DUMMY_H, dummy:true });
+      var did = '~' + e.target + '@' + i;
+      if (!dummyOf[did]) {
+        dummyOf[did] = { id:did, n:null, h:DUMMY_H, dummy:true };
+        byCol[used[i]].push(dummyOf[did]);
+      }
       mine.push(did);
       link(prev, did);
       prev = did;
@@ -815,7 +837,12 @@ function place(nodes, edges){
           list[k].bary = prev + (next - prev) * (k - i + 1) / n;
         i = j - 1;
       }
-      list.sort(function(a, b){ return (a.bary - b.bary) || (a.ord - b.ord); });
+      // 무게중심이 같으면 빈 자리(칸을 건너뛰는 선의 통로)가 먼저다. 타겟으로 드는
+      // 선의 빈 자리가 타겟 높이에 앉아야 그 높이가 비어 있다
+      list.sort(function(a, b){
+        return (a.bary - b.bary) || ((a.dummy ? 0 : 1) - (b.dummy ? 0 : 1))
+            || (a.ord - b.ord);
+      });
       list.forEach(function(it, k){ it.ord = k; });
     });
   }
@@ -864,11 +891,13 @@ function place(nodes, edges){
     byCol[c].forEach(function(it){ where[it.id] = i; });
   });
   function cyOf(it){ return it.top + it.h / 2; }
+  // 빈 자리가 닿을 상자보다 아래로 밀려났을 때 그 상자를 내리는 바닥값. 아래로만 민다
+  var push = {};
   function packCol(i, toward){
     var y = 0;
     byCol[used[i]].forEach(function(it, k){
       it.ord = k;
-      var floor = 0;
+      var floor = push[it.id] || 0;
       (nbr[it.id] || []).forEach(function(x){
         if (where[x] !== toward) return;
         var nb = byCol[used[toward]].filter(function(q){ return q.id === x; })[0];
@@ -889,31 +918,83 @@ function place(nodes, edges){
       if (it.n && it.n.data && it.n.data.focal) fcol = i;
     });
   });
-  (function(){
+  // 타겟 칸 — 타겟은 맨 위에 못박고, 칸을 건너뛰는 선의 빈 자리는 제 높이(want)에 앉는다
+  function packFocal(){
     var y = 0;
-    byCol[used[fcol]].forEach(function(it, k){ it.ord = k; it.top = y; y += it.h + ROW_GAP; });
-  })();
+    byCol[used[fcol]].forEach(function(it, k){
+      it.ord = k;
+      var floor = (it.want !== undefined && it.want !== null) ? it.want - it.h / 2 : 0;
+      it.top = Math.max(y, floor);
+      y = it.top + it.h + ROW_GAP;
+    });
+  }
+  // 칸 안 차례를 지금 높이로 다시 맞춘다. 빈 자리는 닿을 상자 높이(want)로 센다 —
+  // 빈 자리 차례와 닿을 상자 차례가 어긋나면 서로 밀어내며 끝없이 내려간다
+  function resort(){
+    used.forEach(function(c, i){
+      if (i === fcol) return;
+      var list = byCol[c];
+      list.forEach(function(it, k){
+        it.key = (it.dummy && it.want !== undefined && it.want !== null) ? it.want
+               : (it.top === undefined ? k * 1e6 : cyOf(it));
+      });
+      list.sort(function(a, b){
+        return (a.key - b.key) || ((a.dummy ? 0 : 1) - (b.dummy ? 0 : 1)) || (a.ord - b.ord);
+      });
+      list.forEach(function(it, k){ it.ord = k; });
+    });
+  }
   function packAll(){
+    packFocal();
     for (var li = fcol - 1; li >= 0; li--) packCol(li, li + 1);
     for (var ri = fcol + 1; ri < used.length; ri++) packCol(ri, ri - 1);
   }
   packAll();
-  // 두 번 더 쓸어 빈 자리 높이를 닿을 상자에 맞춘다. 자리는 아래로만 움직이므로
-  // 되풀이해도 제자리에 선다
-  var spot = {};
+  // 빈 자리 높이를 닿을 상자에 맞출 때까지 쓴다. 빈 자리는 닿을 상자 높이를 바닥값으로
+  // 받고, 그래도 위 상자에 밀려 더 내려갔으면 닿을 상자를 그 높이로 내린다(왼쪽 —
+  // 오른쪽은 바닥값이 이미 민다). 자리는 아래로만 움직이므로 되풀이하면 제자리에 선다.
+  // 이것이 「중간 상자를 피하려고 다시 꺾지 않는다」를 route 가 아니라 place 가 지키는
+  // 자리다 — 선이 닿을 높이에서 중간 칸이 비어 있게 만든다. 타겟은 밀지 않는다
+  var spot = {}, eById = {};
   used.forEach(function(c){ byCol[c].forEach(function(it){ spot[it.id] = it; }); });
-  for (var pass = 0; pass < 2; pass++){
+  edges.forEach(function(x){ eById[x.id] = x; });
+  var span0 = 0;
+  used.forEach(function(c){ byCol[c].forEach(function(it){ span0 += it.h + ROW_GAP; }); });
+  for (var pass = 0; pass < 40; pass++){
+    var moved = false;
     Object.keys(span).forEach(function(eid){
-      var e = null;
-      edges.forEach(function(x){ if (x.id === eid) e = x; });
+      var e = eById[eid];
       if (!e) return;
       var t = spot[e.target];
       if (!t || t.top === undefined) return;
+      var ty = cyOf(t);
       span[eid].forEach(function(did){
-        if (spot[did]) spot[did].want = cyOf(t);
+        var d = spot[did];
+        if (!d) return;
+        if (d.want !== ty) { d.want = ty; moved = true; }
+        var dy = cyOf(d) - ty;
+        if (dy > 1 && !(t.n && t.n.data && t.n.data.focal)) {
+          var need = t.top + dy;
+          if ((push[t.id] || 0) < need - 0.5) { push[t.id] = need; moved = true; }
+        }
       });
     });
+    if (!moved) break;
+    resort();
     packAll();
+    // 판이 상자 높이 합의 세 배를 넘게 자라면 서로 밀어내는 고리다. 멈추고 route 가 비킨다
+    var deep = 0;
+    used.forEach(function(c){ byCol[c].forEach(function(it){
+      if (it.top + it.h > deep) deep = it.top + it.h; }); });
+    if (window.__VCDBG) console.info('vc place pass ' + pass + ' deep ' + Math.round(deep)
+      + ' ' + Object.keys(span).map(function(eid){
+        var t = spot[eById[eid].target], ds = span[eid].map(function(did){
+          return spot[did] ? Math.round(cyOf(spot[did]) - cyOf(t)) : '?'; });
+        return eid + ':' + ds.join('/'); }).filter(function(x){ return !/:(0\/?)+$/.test(x); }).join(' '));
+    if (deep > span0 * 3) {
+      if (window.console) console.warn('vc place: 빈 자리 맞추기가 ' + pass + ' 번에 안 멈춰 끊는다');
+      break;
+    }
   }
 
   // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
@@ -934,15 +1015,20 @@ function place(nodes, edges){
       geo[it.id] = { x:x, y:y, h:it.h, col:i };
       if (!it.dummy) out.push(Object.assign({}, it.n, { position:{ x:x, y:y } }));
     });
-    if (COLS[c])
+    if (COLS[c]) {
+      // 다른 회사를 중심에 놓으면 왼쪽 칸은 사슬 층이 아니라 그 회사에서 몇 단 앞인가다.
+      // 사슬의 층(원재료·소재…)은 사슬의 타겟 기준이라 다른 타겟에 못 쓴다
+      var hl = COLS[c].label, hn = COLS[c].note || null;
+      if (opts.rooted && HOP_LABEL[COLS[c].key]) {
+        hl = HOP_LABEL[COLS[c].key]; hn = '이어진 단 수';
+      }
       out.push({ id:'hdr|' + c, type:'hdr', draggable:false, selectable:false,
-        connectable:false, position:{ x:x, y:0 },
-        data:{ label: COLS[c].label, note: COLS[c].note || null } });
+        connectable:false, position:{ x:x, y:0 }, data:{ label: hl, note: hn } });
+    }
   });
 
-  // 프로젝트 테두리 — 식구 상자의 둘레에 여백을 둘러 잡는다. 식구는 그 프로젝트에
-  // 실제로 선이 닿은 상자뿐이고, 타겟보다 왼쪽에 서는 상자(부품을 대는 쪽)는 넣지
-  // 않는다. 넣으면 테두리가 판을 가로질러 타겟까지 삼킨다
+  // 프로젝트 테두리 — 식구 상자의 둘레에 여백을 둘러 잡는다(상자를 다 앉힌 뒤
+  // 식구 bounding box + 여백). 식구는 projects.json 이 명시한 것뿐이고 타겟은 늘 밖이다
   projs.forEach(function(pn){
     var ids = (pn.data.mem || []).filter(function(id){ return geo[id]; });
     if (!ids.length) return;
@@ -961,19 +1047,7 @@ function place(nodes, edges){
       data: Object.assign({}, pn.data, { w:pw, h:ph }) }));
   });
 
-  // 칸을 건너뛰는 선은 중간 칸마다 제 몫으로 잡아 둔 빈 자리 높이를 지난다. 그 높이를
-  // 선에 넘겨 둔다 — 통로 자리는 route 가 정한다
-  edges.forEach(function(e){
-    var ids = span[e.id];
-    if (!ids || !ids.length) return;
-    var corr = [];
-    for (var i = 0; i < ids.length; i++){
-      var g = geo[ids[i]];
-      corr.push(g ? g.y + g.h / 2 : null);
-    }
-    e.data = Object.assign({}, e.data, { corr: corr });
-  });
-  route(edges, geo);
+  route(edges, geo, fcol);
   return out;
 }
 
@@ -1035,45 +1109,171 @@ function chainOf(focal){
   return best;
 }
 
-function buildGraph(focal, year, sel, axis){
+// 거래가 아닌 관계로 붙은 상자에는 고객이라는 이름을 안 쓴다. 무슨 사이인지 적는다
+var ROLE_KO = { PLATFORM_EXPOSURE:'수요 노출', QUALIFICATION:'인증',
+  ULTIMATE_COMMERCIAL_USER:'최종 수요처', SERVES_END_USER:'최종 수요처',
+  UTILITY_SERVES:'전력 공급', CUSTOMERS_CUSTOMER:'고객의 고객',
+  END_USER_DEPLOYMENT:'설치·배치', SERVES_END_MARKET:'전방시장',
+  DEVELOPS:'개발', HOLDS_PROJECT:'보유', OWNS_SITE:'부지 소유',
+  OPERATES_SITE:'부지 운영', USES_SITE:'부지 이용', PROJECT_SUPPLY:'프로젝트 납품',
+  DEPLOYS_AT_SITE:'설치 부지', SUPPLIES:'공급', FINANCES:'금융',
+  PROJECT_FINANCE:'프로젝트 금융', CREDIT_SUPPORT:'신용 보강', INVESTS_IN:'투자',
+  OPERATES_THROUGH:'운영 자회사', EXECUTES_THROUGH:'실행 법인',
+  END_CUSTOMER_SUPPLY_CHAIN:'공급망 목록', DISTRIBUTION_PARTNERSHIP:'유통 제휴',
+  INDIRECT_CUSTOMER_UNDISCLOSED:'고객 · 비공개' };
+var CONTRACT_KO = { CONFIRMED:'계약 고객 확인', NOT_CONTRACTUAL:'계약 고객 아님',
+  UNVERIFIED:'계약 고객 미확인' };
+var CONTRACT_NOTE = { CONFIRMED:'계약상 구매 주체라는 근거가 있다',
+  NOT_CONTRACTUAL:'원문이 구매 주체가 아니라고 한다(고객의 고객)',
+  UNVERIFIED:'설치처·수요 노출·인증·공급망 목록 — 계약상 구매 주체라는 근거가 없다' };
+
+// ── 자리 매기기 — 타겟에서 실제로 이어진 꼴로 ──────────────────────
+// 다운스트림 칸은 관계 종류가 아니라 타겟에서 몇 홉 떨어졌나와 사이에 중개가 끼었나로
+// 정한다(프레임워크 §22-B). 1홉이면 직접 고객, 2홉부터는 간접 고객, 중개 노릇(데이터가
+// 준 tier INTERMEDIARY)이면 중개. 계약상 구매 주체인지는 칸이 아니라 서랍의 근거 칸
+// (contractual_customer)이다. 전방시장은 사슬의 다음 단계가 아니라 다른 축이다.
+// 타겟에서 앞으로 안 닿는데 앞쪽 상자에 선을 대는 상자(개발사·부지 소유·금융)는 그
+// 상자 뒤 칸에 노릇 이름으로 선다 — 타겟과 바로 거래하지 않는 쪽이다.
+// 왼쪽(공급)은 사슬의 타겟이면 데이터의 층(tier)으로, 다른 회사를 중심에 놓으면 그
+// 회사에서 몇 단 앞인가로 센다 — 층은 사슬의 타겟 기준이라 남의 중심에 그대로 못 쓴다.
+// 반환: { col, sub, via, rooted }. col 이 없는 상자는 이 중심의 사슬 밖이다
+function topology(focal, rels, rooted){
+  var mid = {};
+  rels.forEach(function(r){
+    if (r.target_tier === 'INTERMEDIARY') mid[r.target_entity] = 1;
+    if (r.source_tier === 'INTERMEDIARY') mid[r.source_entity] = 1;
+  });
+  var fwd = {}, back = {};
+  rels.forEach(function(r){
+    (fwd[r.source_entity] = fwd[r.source_entity] || []).push(r);
+    (back[r.target_entity] = back[r.target_entity] || []).push(r);
+  });
+  var col = {}, sub = {}, via = {}, depth = {};
+  col[focal] = COL_OF.FOCAL; depth[focal] = 0;
+  // ① 앞으로 — 사슬의 타겟은 다운스트림 갈래만, 다른 중심은 선이 가는 쪽을 따른다
+  //    (기업 구조 선은 흐름이 아니라 소유라 안 따른다)
+  var q = [focal];
+  while (q.length){
+    var cur = q.shift();
+    (fwd[cur] || []).forEach(function(r){
+      if (rooted ? r.lane === 'CORPORATE' : r.lane !== 'DOWNSTREAM') return;
+      var t = r.target_entity;
+      if (depth[t] !== undefined) return;
+      depth[t] = depth[cur] + 1; via[t] = r; q.push(t);
+    });
+  }
+  Object.keys(depth).forEach(function(id){
+    if (id === focal) return;
+    var e = ENT[id] || {}, r = via[id];
+    if (e.entity_type === 'application') {
+      col[id] = COL_OF.END_MARKET; sub[id] = '전방시장'; return;
+    }
+    if (mid[id]) { col[id] = COL_OF.INTERMEDIARY; sub[id] = '중개'; return; }
+    if (depth[id] === 1) {
+      col[id] = COL_OF.CONTRACTUAL_CUSTOMER;
+      sub[id] = r.contractual_customer === 'CONFIRMED' ? '직접 고객'
+              : (ROLE_KO[r.relationship_type] || relKo(r.relationship_type));
+      return;
+    }
+    col[id] = COL_OF.END_USER;
+    sub[id] = (r.relationship_type === 'INDIRECT_CUSTOMER_UNDISCLOSED' || e.anon)
+      ? '간접 고객 · 비공개' : '간접 고객';
+  });
+  // ② 뒤로 — 공급. 사슬의 타겟은 층으로, 다른 중심은 홉으로
+  var hop = {};
+  q = [focal]; hop[focal] = 0;
+  while (q.length){
+    var cur2 = q.shift();
+    (back[cur2] || []).forEach(function(r){
+      if (rooted ? r.lane === 'CORPORATE' : r.lane === 'DOWNSTREAM') return;
+      var s = r.source_entity;
+      if (hop[s] !== undefined || col[s] !== undefined) return;
+      hop[s] = hop[cur2] + 1; via[s] = r; q.push(s);
+    });
+  }
+  function tierCol(id){
+    // 층이 적힌 선이 자리를 정한다. 어느 선에도 층이 없으면 처음 닿은 선의 갈래로 앉힌다
+    var hit = null;
+    (fwd[id] || []).forEach(function(r){
+      if (hit) return;
+      var t = TIER_ALIAS[r.source_tier] || r.source_tier;
+      if (t && COL_OF[t] !== undefined) hit = { col: COL_OF[t], tier: t };
+    });
+    if (hit) return hit;
+    return { col: colOfRel(via[id], true), tier: null };
+  }
+  Object.keys(hop).forEach(function(id){
+    if (id === focal) return;
+    if (rooted) {
+      col[id] = HOP_COL[Math.min(hop[id], HOP_COL.length) - 1];
+      sub[id] = hop[id] === 1 ? '바로 앞' : hop[id] + '단 앞';
+      return;
+    }
+    var tc = tierCol(id);
+    col[id] = tc.col;
+    sub[id] = TIER_KO[tc.tier] || via[id].component || null;
+  });
+  // ③ 타겟에서 안 닿지만 앉힌 상자에 선을 대는 상자 — 개발사·부지 소유·금융·운영 법인.
+  //    사슬의 타겟일 때만이다. 다른 회사를 중심에 놓으면 그 회사에서 이어진 것만 그린다
+  //    (미상 자리표를 같이 쓰는 남의 중개까지 딸려 들어온다)
+  var again = !rooted;
+  while (again){
+    again = false;
+    rels.forEach(function(r){
+      var s = r.source_entity, t = r.target_entity;
+      if (col[s] !== undefined || col[t] === undefined) return;
+      if (col[t] < COL_OF.FOCAL) return;
+      if (ENT[t] && ENT[t].entity_type === 'application') return;
+      col[s] = mid[s] ? COL_OF.INTERMEDIARY
+             : (t === focal ? COL_OF.CONTRACTUAL_CUSTOMER : COL_OF.END_USER);
+      sub[s] = mid[s] ? '중개' : (ROLE_KO[r.relationship_type] || relKo(r.relationship_type));
+      via[s] = r; again = true;
+    });
+  }
+  // ④ 그래도 자리가 없는 상자 — 사슬의 타겟이면 옛 갈래 규칙으로 앉히고, 다른 중심이면
+  //    이 중심의 사슬 밖이라 그리지 않는다
+  if (!rooted) {
+    rels.forEach(function(r){
+      if (col[r.source_entity] === undefined) {
+        col[r.source_entity] = colOfRel(r, true); via[r.source_entity] = r;
+        sub[r.source_entity] = TIER_KO[r.source_tier] || r.component || null;
+      }
+      if (col[r.target_entity] === undefined) {
+        col[r.target_entity] = colOfRel(r, false); via[r.target_entity] = r;
+        sub[r.target_entity] = TIER_KO[r.target_tier] || r.component || null;
+      }
+    });
+  }
+  return { col: col, sub: sub, via: via, rooted: rooted };
+}
+
+function buildGraph(focal, year, sel, axis, sizes){
   var ck = chainOf(focal);
   var rels = ck ? CHAINS[ck].relationships : relsOf(focal);
+  // 사슬의 타겟이 아닌 회사를 중심에 놓으면 판을 그 회사 기준으로 다시 세운다(re-root).
+  // 층(tier)을 그대로 쓰지 않는다
+  var rooted = !ck || ((CHAINS[ck].meta || {}).focal_entity !== focal);
+  var tp = topology(focal, rels, rooted);
   var nodes = [], edges = [], seen = {};
   var selId = sel ? (sel.entity || sel.id) : null;
 
-  function nodeFor(eid, r, up){
-    var isFocal = eid === focal;
-    var tier = r ? tierOf(r, up) : null;
-    // 층이 적힌 선이 자리를 정한다. 층이 없는 선으로 먼저 앉힌 상자는 층이 적힌 선을
-    // 만나면 그 자리로 옮긴다 — 매출원처럼 한 선에서는 출발점, 다른 선에서는 도착점인
-    // 상자가 파일에 적힌 차례에 따라 엉뚱한 칸에 앉는 것을 막는다
-    if (seen[eid]) {
-      var old = nodes.filter(function(n){ return n.id === eid; })[0];
-      if (old && !isFocal && !old.data.tiered && tier) {
-        old.data.tiered = true;
-        old.data.col = colOfRel(r, up);
-        old.data.sub = TIER_KO[tier] || old.data.sub;
-      }
-      return;
-    }
-    seen[eid] = 1;
-    nodes.push({ id: eid, type:'nd', data:{
-      title: nm(eid), flag: flagOf(eid), kind: KIND_OF[(ENT[eid] || {}).entity_type] || 'ent',
-      focal: isFocal, col: isFocal ? COL_OF.FOCAL : colOfRel(r, up),
-      tiered: !!tier,
-      sub: isFocal ? ((ENT[focal] || {}).country || null)
-                   : (TIER_KO[tier] || (r ? r.component : null) || null),
-      ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : eid, entity: eid, up: up } } });
+  function addNode(id){
+    if (seen[id] || tp.col[id] === undefined) return;
+    seen[id] = 1;
+    var isFocal = id === focal, r = tp.via[id];
+    nodes.push({ id: id, type:'nd', data:{
+      measured: (sizes && sizes[id]) || null,
+      title: nm(id), flag: flagOf(id), kind: KIND_OF[(ENT[id] || {}).entity_type] || 'ent',
+      focal: isFocal, col: tp.col[id],
+      sub: isFocal ? ((ENT[focal] || {}).country || null) : (tp.sub[id] || null),
+      ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : id, entity: id,
+            up: r ? r.source_entity === id : false } } });
   }
-
-  nodeFor(focal, null, false);
-  rels.forEach(function(r){
-    var up = (colOfRel(r, true) !== undefined) && r.lane !== 'DOWNSTREAM';
-    nodeFor(r.source_entity, r, true);
-    nodeFor(r.target_entity, r, false);
-  });
+  addNode(focal);
+  rels.forEach(function(r){ addNode(r.source_entity); addNode(r.target_entity); });
 
   rels.forEach(function(r){
+    if (!seen[r.source_entity] || !seen[r.target_entity]) return;
     var on = activeIn(r, year), fy = firstYear(r);
     var st = Object.assign({}, evStyle(r.evidence_level));
     if (!on) st.opacity = 0.28;
@@ -1093,94 +1293,13 @@ function buildGraph(focal, year, sel, axis){
     if (t && on && fy === year && fy !== YEARS[0]) t.data.isNew = true;
   });
 
-  // 직접 고객과 간접 고객은 데이터에 적힌 층이 아니라 실제로 이어진 꼴이 가른다.
-  // 타겟과 바로 거래하면 직접 고객이고, 중개를 한 번 거쳐야 닿으면 간접 고객이다.
-  // 매출원은 거래 상대가 아니라 매출을 쪼갠 자리라 한 홉으로 세지 않는다.
-  // 거래가 아닌 관계(수요 노출·인증·전방 시장)는 손대지 않는다 — 거기에 고객이라는
-  // 이름을 붙이면 데이터에 없는 거래를 만드는 것이다
-  var TRADE = { SELLS_TO:1, DIRECT_CUSTOMER:1, END_CUSTOMER_SUPPLY_CHAIN:1,
-                DISTRIBUTION_PARTNERSHIP:1 };
-  var isMid = {}, tradeFrom = {};
-  rels.forEach(function(r){
-    if (r.target_tier === 'INTERMEDIARY') isMid[r.target_entity] = 1;
-  });
-  // 이제 타겟과 고객 사이에 끼는 상자는 중개뿐이다. 매출원은 상자가 아니라 띠다
-  function hop(id){ return id === focal; }
-  rels.forEach(function(r){
-    if (!TRADE[r.relationship_type]) return;
-    if (hop(r.source_entity)) tradeFrom[r.target_entity] = 'direct';
-    else if (isMid[r.source_entity] && tradeFrom[r.target_entity] !== 'direct')
-      tradeFrom[r.target_entity] = 'behind';
-  });
-  // 거래가 아닌 관계로 붙은 상자에는 고객이라는 이름을 안 쓴다. 무슨 사이인지 적는다
-  var ROLE_KO = { PLATFORM_EXPOSURE:'수요 노출', QUALIFICATION:'인증',
-    ULTIMATE_COMMERCIAL_USER:'최종 수요처', SERVES_END_USER:'최종 수요처',
-    UTILITY_SERVES:'전력 공급', CUSTOMERS_CUSTOMER:'고객의 고객',
-    END_USER_DEPLOYMENT:'설치처', SERVES_END_MARKET:'전방시장' };
-  var role = {};
-  rels.forEach(function(r){
-    if (!role[r.target_entity] && ROLE_KO[r.relationship_type])
-      role[r.target_entity] = ROLE_KO[r.relationship_type];
-  });
-  nodes.forEach(function(n){
-    var et = (ENT[n.id] || {}).entity_type;
-    if (et === 'application') { n.data.sub = '전방시장'; return; }
-    var want = tradeFrom[n.id];
-    if (!want) {
-      if (n.data.col === COL_OF.END_USER && role[n.id]) n.data.sub = role[n.id];
-      return;
-    }
-    var tier = want === 'direct' ? 'CONTRACTUAL_CUSTOMER' : 'END_USER';
-    if (n.data.col !== COL_OF.CONTRACTUAL_CUSTOMER && n.data.col !== COL_OF.END_USER)
-      return;
-    n.data.col = COL_OF[tier];
-    n.data.sub = TIER_KO[tier];
-  });
-
-  // 프로젝트는 칸을 차지하지 않는다. 테두리가 되어 제 식구를 두른다
-  var PROJ_ROLE = { DEVELOPS:'개발', HOLDS_PROJECT:'보유', OWNS_SITE:'부지 소유',
-    OPERATES_SITE:'부지 운영', USES_SITE:'부지 이용',
-    ULTIMATE_COMMERCIAL_USER:'최종 수요처', PROJECT_SUPPLY:'프로젝트 납품' };
-  function isProj(id){ return (ENT[id] || {}).entity_type === 'project_spv'; }
-  // 프로젝트에 얽힌 회사는 그 프로젝트가 아니라 제 노릇으로 자리를 받는다.
-  // 다운스트림에서 프로젝트에 붙은 회사는 간접 고객 칸에 선다 — 부지를 가졌거나
-  // 굴리거나 쓰는 쪽이라 타겟과 바로 거래하지 않는다
-  rels.forEach(function(r){
-    if (!isProj(r.target_entity) || r.lane !== 'DOWNSTREAM') return;
-    if (r.source_entity === focal) return;
-    var n = nodes.filter(function(x){ return x.id === r.source_entity; })[0];
-    if (!n || n.type === 'proj') return;
-    n.data.col = COL_OF.END_USER;
-    n.data.sub = PROJ_ROLE[r.relationship_type] || n.data.sub;
-  });
-  // 테두리가 되려면 제 식구가 있어야 하고, 그 식구를 다른 프로젝트와 나눠 갖지 않아야
-  // 한다. 한 상자가 프로젝트 둘에 걸리면 테두리 둘이 같은 자리에 겹쳐 무슨 그림인지
-  // 알 수 없다 — 그때는 프로젝트도 제 상자로 선다
-  var pmem = {}, seenMem = {};
-  nodes.forEach(function(n){
-    if (!isProj(n.id)) return;
-    var mem = [];
-    rels.forEach(function(r){
-      var other = r.source_entity === n.id ? r.target_entity
-                : (r.target_entity === n.id ? r.source_entity : null);
-      if (!other || other === focal || isProj(other)) return;
-      var mn = nodes.filter(function(x){ return x.id === other; })[0];
-      if (!mn || mn.data.col === undefined || mn.data.col <= COL_OF.FOCAL) return;
-      if (mem.indexOf(other) < 0) mem.push(other);
-    });
-    pmem[n.id] = mem;
-    mem.forEach(function(m){ seenMem[m] = (seenMem[m] || 0) + 1; });
-  });
-  nodes.forEach(function(n){
-    if (!isProj(n.id)) return;
-    var mem = (pmem[n.id] || []).filter(function(m){ return seenMem[m] === 1; });
-    if (mem.length !== (pmem[n.id] || []).length || !mem.length) {
-      n.data.col = COL_OF.END_USER;
-      n.data.sub = '프로젝트·부지';
-      return;
-    }
-    n.type = 'proj';
-    n.data.mem = mem;
+  // 프로젝트는 칸도 상자도 아니다. projects.json 이 명시한 식구를 두르는 테두리다.
+  // SPV·부지는 실제 법인이라 상자로 선다. 타겟은 늘 테두리 밖이고 선은 테두리에 안 닿는다
+  ((ck && CHAINS[ck].projects) || []).forEach(function(p){
+    var mem = (p.members || []).filter(function(m){ return m !== focal && seen[m]; });
+    if (!mem.length) return;
+    nodes.push({ id:'proj|' + p.id, type:'proj',
+      data:{ title: p.name_ko || p.name, mem: mem, pid: p.id } });
   });
 
   // 그 해에 걸린 선이 하나도 없는 상자는 흐리게 둔다
@@ -1233,7 +1352,8 @@ function buildGraph(focal, year, sel, axis){
   }
 
 
-  return { nodes: place(nodes, edges), edges: edges };
+  return { nodes: place(nodes, edges, { rooted: rooted }), edges: edges,
+           rooted: rooted, chain: ck };
 }
 
 // ── 서랍 ────────────────────────────────────────────────────────────
@@ -1385,6 +1505,13 @@ function Drawer(p){
         h('div', { key:'t1' }, '사슬 층'),
         h('div', { key:'t2' },
           TIER_KO[eid === r.source_entity ? r.source_tier : r.target_tier] || '—'),
+        r.contractual_customer ? h('div', { key:'k1' }, '계약 고객 여부') : null,
+        r.contractual_customer ? h('div', { key:'k2' }, [
+          h('span', { key:'a', className:'badge'
+            + (r.contractual_customer === 'CONFIRMED' ? '' : ' est') },
+            CONTRACT_KO[r.contractual_customer] || r.contractual_customer),
+          h('span', { key:'b', style:{ color:'#6b7488', fontSize:'11.5px' } },
+            CONTRACT_NOTE[r.contractual_customer] || '') ]) : null,
         h('div', { key:7 }, '기간'),
         h('div', { key:8 }, (r.valid_from || '?') + ' ~ ' + (r.valid_to || '현재')),
         h('div', { key:9 }, '근거'), h('div', { key:10 }, [
@@ -1484,9 +1611,11 @@ function Swim(p){
 }
 
 // ── 근거 ────────────────────────────────────────────────────────────
-var CHAIN_KO = { 'bloom-energy':'블룸에너지', 'kr-substrate':'반도체 기판',
-  'taiyo-yuden':'태양유전', 'nvidia':'엔비디아' };
-function chainKo(k){ return CHAIN_KO[k] || k; }
+// 사슬 이름은 chain.json 의 label 이다. 코드에 회사 이름을 박지 않는다
+function chainKo(k){
+  var c = CHAINS[k];
+  return (c && c.meta && c.meta.label) || k;
+}
 
 // ── 회사 목록 ───────────────────────────────────────────────────────
 // 기본은 사슬의 중심 회사만. 「전부 보기」를 누르면 판에 선 이름을 다 편다
@@ -1700,17 +1829,36 @@ function Axis(p){
     });
     return t.join('\\n') || null;
   }
+  // 한 줄의 분모는 하나다. 그 줄에서 가장 많이 쓰인 분모의 값만 칩에 적고, 분모가 다른
+  // 값(가동률·전방 구성)은 손 얹었을 때만 분모와 함께 보여 준다 — 나란히 찍으면 더한다
+  function rowDen(kind, list){
+    var cnt = {}, best = null;
+    list.forEach(function(x){
+      var sh = pick(kind, x);
+      if (!sh || !sh.denominator) return;
+      cnt[sh.denominator] = (cnt[sh.denominator] || 0) + 1;
+      if (best === null || cnt[sh.denominator] > cnt[best]) best = sh.denominator;
+    });
+    return best;
+  }
   function chips(kind, list, label){
     if (!list.length) return null;
+    var den = rowDen(kind, list);
+    var mine = p.axis && p.axis.slice(0, 2) === kind;
+    // 「전체」는 고른 것이 없다는 뜻을 칩으로 명시한다. 이 줄의 선택이 없으면 전체가 켜진다
+    var all = h('button', { key:'*all', className:'axchip' + (mine ? '' : ' on'),
+      title: '이 줄의 분류를 고르지 않는다 — 모든 상자·선이 제 농도로 선다',
+      onClick: function(){ if (mine) p.onPick(null); } }, '전체');
     return h('div', { key:kind, className:'axrow' }, [
       h('b', { key:'b' }, label),
-      h('div', { key:'c', className:'axchips' }, list.map(function(x){
+      h('div', { key:'c', className:'axchips' }, [all].concat(list.map(function(x){
         var key = kind + ':' + x.id, on = p.axis === key, sh = pick(kind, x);
+        var show = sh && den && sh.denominator === den;
         return h('button', { key:x.id, title: tip(x),
           className: 'axchip' + (on ? ' on' : '') + (x.unallocated ? ' un' : ''),
           onClick: function(){ p.onPick(on ? null : key); } }, [
-          x.label, sh ? h('i', { key:'s' }, sh.value + '%') : null ]);
-      }))
+          x.label, show ? h('i', { key:'s' }, sh.value + '%') : null ]);
+      })))
     ]);
   }
   var rows = [chips('ss', m.ssList, '공급원'), chips('rt', m.rtList, '매출원')]
@@ -1733,9 +1881,7 @@ function Axis(p){
         + (kind === 'ss' ? '공급원 미상' : '배분 미상') + '으로 남았다');
     }
   }
-  return h('div', { className:'axis' }, rows.concat([ empty,
-    p.axis ? h('button', { key:'x', className:'axclear',
-      onClick: function(){ p.onPick(null); } }, '띠 풀기') : null ]));
+  return h('div', { className:'axis' }, rows.concat([ empty ]));
 }
 
 // ── 앱 ──────────────────────────────────────────────────────────────
@@ -1754,6 +1900,9 @@ function App(){
   var m2 = useState(null), rf = m2[0], setRf = m2[1];
   var n2 = useState(false), allNames = n2[0], setAllNames = n2[1];
   var o2 = useState(null), axis = o2[0], setAxis = o2[1];
+  // 상자 높이는 어림으로 먼저 그리고, 브라우저가 잰 높이로 한 번 더 앉힌다. 어림이
+  // 실제보다 낮으면 선이 지나는 빈 자리를 상자가 침범한다
+  var p2 = useState({}), sizes = p2[0], setSizes = p2[1];
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
@@ -1814,8 +1963,20 @@ function App(){
   }, []);
 
   var gr = useMemo(function(){
-    return buildGraph(focal, year, sel, axis);
-  }, [focal, year, sel, axis]);
+    return buildGraph(focal, year, sel, axis, sizes);
+  }, [focal, year, sel, axis, sizes]);
+  useEffect(function(){
+    if (!rf || mode !== 'current') return;
+    var t = setTimeout(function(){
+      var next = Object.assign({}, sizes), changed = false;
+      (rf.getNodes ? rf.getNodes() : []).forEach(function(n){
+        if (n.type !== 'nd' || !n.height) return;
+        if (Math.abs((next[n.id] || 0) - n.height) > 1) { next[n.id] = n.height; changed = true; }
+      });
+      if (changed) setSizes(next);
+    }, 60);
+    return function(){ clearTimeout(t); };
+  }, [rf, gr, mode]);
 
   // 칸 머리(원재료·소재·가공…) 위로는 못 올라가게 막는다. 아래·좌우는 넉넉히 둔다
   var extent = useMemo(function(){
@@ -1964,8 +2125,17 @@ function App(){
   return h('div', { className:'app' }, [ top,
     mode === 'roster' ? null : crumb,
     (mode === 'current' || mode === 'timeline') ? scrub : null,
-    mode === 'current' ? h(Axis, { key:'ax', chain: chainOf(focal), axis: axis, year: year,
-      onPick: setAxis }) : null,
+    // 공급원·매출원 띠는 사슬의 타겟 기준 분류라 다른 회사를 중심에 놓으면 접는다
+    (mode === 'current' && !gr.rooted)
+      ? h(Axis, { key:'ax', chain: chainOf(focal), axis: axis, year: year,
+          onPick: setAxis }) : null,
+    (mode === 'current' && gr.rooted)
+      ? h('div', { key:'rt', className:'axnote', style:{ padding:'6px 14px',
+          background:'var(--paper)', borderBottom:'1px solid var(--line)' } },
+          nm(focal) + ' 을(를) 중심으로 다시 세운 판이다. 왼쪽 칸은 사슬 층이 아니라 이 '
+          + '회사에서 몇 단 앞인가이고, 공급원·매출원 띠는 사슬의 타겟('
+          + (gr.chain ? nm((CHAINS[gr.chain].meta || {}).focal_entity) : '—')
+          + ') 기준이라 접었다') : null,
     h('div', { key:'m', className:'main' }, [
       body,
       ((mode === 'current' || mode === 'timeline') && drw)
@@ -2013,11 +2183,10 @@ def build():
           'methods': by_id(load('methods.json')),
           'chains': {}}
     cdir = os.path.join(DATA, 'chains')
-    for ck in sorted(os.listdir(cdir)):
+    for ck in ship_list():
         base = os.path.join(cdir, ck)
-        if not os.path.isdir(base) or ck not in SHIP:
-            continue
         db['chains'][ck] = {
+            'projects': load('chains', ck, 'projects.json') or [],
             'relationships': load('chains', ck, 'relationships.json') or [],
             'observations': load('chains', ck, 'observations.json') or [],
             'claims': load('chains', ck, 'claims.json') or [],
@@ -2053,6 +2222,14 @@ def build():
 
 if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
+    # 발행을 막는 검사 — 데이터 규약이 어긋나면 굽지 않는다. 화면이 잘못 그리지 않게
+    # 하려면 검증된 상자·선만 넘긴다(프레임워크 §1)
+    fails, debt, st = check_vc.validate()
+    if fails:
+        for f in fails[:40]:
+            print(f)
+        print(u'검사 FAIL %d — 굽지 않는다. data 와 생성기를 같이 고친다' % len(fails))
+        sys.exit(1)
     p, db = build()
     n = sum(len(c['relationships']) for c in db['chains'].values())
     print('%s\n사슬 %d · 엔티티 %d · 관계 %d · 출처 %d'

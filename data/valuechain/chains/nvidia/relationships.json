@@ -204,7 +204,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r009",
@@ -229,7 +230,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r010",
@@ -254,7 +256,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r011",
@@ -280,7 +283,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r012",
@@ -306,7 +310,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r013",
@@ -332,7 +337,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r014",
@@ -357,7 +363,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r015",
@@ -382,7 +389,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r016",
@@ -407,7 +415,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r017",
@@ -432,7 +441,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r018",
@@ -457,7 +467,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r019",
@@ -482,7 +493,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r020",
@@ -507,7 +519,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r036",
@@ -968,7 +981,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r102",
@@ -993,7 +1007,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r103",
@@ -1018,7 +1033,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r104",
@@ -1041,7 +1057,8 @@
   "notes": null,
   "target_tier": "END_USER",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "r105",
@@ -1064,7 +1081,8 @@
   "notes": null,
   "target_tier": "END_USER",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "r106",
@@ -1087,7 +1105,8 @@
   "notes": null,
   "target_tier": "END_USER",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "r107",
@@ -1160,7 +1179,8 @@
   "notes": "2026년 8월 후속사건. 4.25기가와트 IT 부하 규모의 리스가 대상이다",
   "target_tier": "INTERMEDIARY",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "r110",
@@ -1183,7 +1203,8 @@
   "notes": "NVIDIA 공시에 OpenAI 이름이 직접 나오는 유일한 자리다",
   "target_tier": "INTERMEDIARY",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "r111",
@@ -1208,7 +1229,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r112",
@@ -1283,7 +1305,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r202",
@@ -1309,7 +1332,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r203",
@@ -1357,7 +1381,8 @@
   "notes": "2026년 1월, 주당 87.20달러. 관계자거래로는 지정되지 않았다",
   "target_tier": "INTERMEDIARY",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "r205",
@@ -1408,7 +1433,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "r207",
@@ -1433,7 +1459,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "close-coreweave",

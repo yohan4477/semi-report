@@ -298,7 +298,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-vw-qualification",
@@ -326,7 +327,8 @@
   ],
   "notes": "인증일 뿐 직접고객 관계의 근거는 아니다(04의 E011·신뢰도 0.85)",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-nvidia-platform-exposure",
@@ -354,7 +356,8 @@
   ],
   "notes": "직접 구매 근거는 없다(04의 E012·신뢰도 0.55)",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-google-platform-exposure",
@@ -383,7 +386,8 @@
   ],
   "notes": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E013·신뢰도 0.6)",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-aws-platform-exposure",
@@ -412,7 +416,8 @@
   ],
   "notes": "TrendForce 가 수요 연결고리로 짚었을 뿐 직접 구매 근거는 없다(04의 E014·신뢰도 0.6)",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-arrow-distribution",
@@ -442,7 +447,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-avnet-distribution",
@@ -472,7 +478,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-mouser-distribution",
@@ -502,7 +509,8 @@
   "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-unallocated"
-  ]
+  ],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-app-it-infra-industrial",
@@ -530,7 +538,8 @@
   ],
   "notes": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-app-automotive",
@@ -558,7 +567,8 @@
   ],
   "notes": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-app-communication",
@@ -586,7 +596,8 @@
   ],
   "notes": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-app-information-equipment",
@@ -614,7 +625,8 @@
   ],
   "notes": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "ty-app-consumer",
@@ -642,7 +654,8 @@
   ],
   "notes": "FY2027 1분기 전방별 매출 비중이다. 03 표에 개별 출처 번호가 없다",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "close-arrow-electronics",

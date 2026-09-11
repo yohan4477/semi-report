@@ -1,0 +1,76 @@
+[
+ {
+  "id": "proj-jupiter",
+  "name": "Project Jupiter",
+  "name_ko": "프로젝트 주피터",
+  "site": "project-jupiter",
+  "developer": "borderplex",
+  "ultimate_end_user": "oracle",
+  "members": [
+   "project-jupiter",
+   "borderplex",
+   "oracle"
+  ],
+  "note": "LS일렉트릭은 부지 전기 공급사라 타겟 왼쪽에 서므로 식구에 넣지 않는다. 선은 그대로 닿는다",
+  "source_ids": [
+   "oracle_jupiter",
+   "lselectric_kind"
+  ]
+ },
+ {
+  "id": "proj-sk-eternix-80mw",
+  "name": "SK Eternix 80MW Korea project",
+  "name_ko": "충주·대소원 80MW",
+  "site": "sk-eternix-80mw",
+  "developer": "sk-eternix",
+  "members": [
+   "sk-eternix-80mw",
+   "sk-eternix"
+  ],
+  "source_ids": [
+   "be_sk_eternix_80mw"
+  ]
+ },
+ {
+  "id": "proj-bfjv-spv",
+  "name": "Brookfield Fund JV project SPV",
+  "name_ko": "펀드 JV 프로젝트 법인",
+  "site": "bfjv-spv-unknown",
+  "financier": "brookfield-fund-jvs",
+  "members": [
+   "bfjv-spv-unknown",
+   "brookfield-fund-jvs"
+  ],
+  "source_ids": [
+   "be_10k_fy2025"
+  ]
+ },
+ {
+  "id": "proj-volo",
+  "name": "Volo, Illinois Data Center",
+  "name_ko": "볼로 데이터센터",
+  "site": "volo-datacenter",
+  "members": [
+   "volo-datacenter",
+   "chirisa",
+   "coreweave"
+  ],
+  "source_ids": [
+   "be_coreweave_2024"
+  ]
+ },
+ {
+  "id": "proj-mitac",
+  "name": "MiTAC manufacturing sites (Fremont, San Jose)",
+  "name_ko": "MiTAC 제조 부지(프리몬트·산호세)",
+  "members": [
+   "mitac-fremont",
+   "mitac-sanjose",
+   "mitac-computing"
+  ],
+  "note": "부지 둘을 한 회사가 굴린다. 따로 두르면 테두리 둘이 같은 상자에 겹친다",
+  "source_ids": [
+   "be_mitac_2026"
+  ]
+ }
+]

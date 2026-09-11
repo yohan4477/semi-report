@@ -1518,7 +1518,8 @@
   ],
   "notes": "상거래는 오라클을 거치고 설비는 현장으로 직접 간다",
   "supply_source_ids": [],
-  "revenue_type_ids": []
+  "revenue_type_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "chirisa-volo",
@@ -1604,7 +1605,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "rev-install-fundjv",
@@ -1634,7 +1636,8 @@
   "revenue_type_ids": [
    "rt-be-rev-installation"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-skecoplant",
@@ -1665,7 +1668,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-eternix",
@@ -1695,7 +1699,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-mitac-fremont",
@@ -1725,7 +1730,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-mitac-sanjose",
@@ -1755,7 +1761,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-aep",
@@ -1786,7 +1793,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-oracle",
@@ -1817,7 +1825,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "NOT_CONTRACTUAL"
  },
  {
   "id": "bloom-equinix",
@@ -1847,7 +1856,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-nebius",
@@ -1877,7 +1887,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-volo",
@@ -1907,7 +1918,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-intel",
@@ -1937,7 +1949,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-att",
@@ -1967,7 +1980,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-verizon",
@@ -1997,7 +2011,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-quanta",
@@ -2027,7 +2042,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-walmart",
@@ -2057,7 +2073,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-homedepot",
@@ -2087,7 +2104,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-ferrari",
@@ -2117,7 +2135,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-fedex",
@@ -2147,7 +2166,8 @@
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "UNVERIFIED"
  },
  {
   "id": "bloom-be24c2",
@@ -2177,7 +2197,8 @@
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-be24c3",
@@ -2207,7 +2228,8 @@
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-be25c2",
@@ -2237,7 +2259,8 @@
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-be25c3",
@@ -2267,7 +2290,8 @@
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "bloom-be26c1",
@@ -2297,7 +2321,8 @@
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
  },
  {
   "id": "crfe-porite-src",
