@@ -938,13 +938,29 @@ function App(){
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
-      if (window.innerWidth < 720) {
-        // 다 보여 주려다 글자가 뭉개진다. 중심 회사를 읽을 수 있게 놓고 끌어서 본다
-        var c = rf.getNode ? rf.getNode(focal) : null;
-        if (c) {
-          rf.setCenter(c.position.x + 75, c.position.y + 22,
-                       { zoom: open.length ? .46 : .55, duration:240 });
-          return;
+      if (window.innerWidth < 720 && rf.getNodes) {
+        // 중심과 바로 옆 칸까지를 한 화면에 담는다. 나머지는 끌어서 본다
+        var all = rf.getNodes(), me = null;
+        all.forEach(function(n){ if (n.id === focal) me = n; });
+        if (me) {
+          var myCol = me.data.col, box = null;
+          all.forEach(function(n){
+            if (n.type === 'hdr' || n.data.col === undefined) return;
+            if (Math.abs(n.data.col - myCol) > 1) return;
+            var w = n.width || 150, hh = n.height || 44;
+            var b = { x:n.position.x, y:n.position.y, x2:n.position.x + w,
+                      y2:n.position.y + hh };
+            if (!box) box = b;
+            else {
+              box.x = Math.min(box.x, b.x); box.y = Math.min(box.y, b.y);
+              box.x2 = Math.max(box.x2, b.x2); box.y2 = Math.max(box.y2, b.y2);
+            }
+          });
+          if (box) {
+            rf.fitBounds({ x:box.x, y:box.y, width:box.x2 - box.x, height:box.y2 - box.y },
+                         { padding:0.08, duration:240 });
+            return;
+          }
         }
       }
       rf.fitView({ padding:0.12, duration:220 });
@@ -1086,7 +1102,7 @@ function App(){
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
       onNodeClick:onNodeClick, onInit:setRf, fitView:true, maxZoom:1.6,
       // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
-      minZoom: window.innerWidth < 720 ? .42 : .2,
+      minZoom: window.innerWidth < 720 ? .28 : .2,
       onPaneClick: function(){ if (window.innerWidth < 720) setDrw(false); },
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
