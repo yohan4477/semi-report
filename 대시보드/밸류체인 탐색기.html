@@ -283,7 +283,8 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Financing':'금융', 'EPC / Distribution':'EPC·유통', 'Utility':'유틸리티',
   'Data center':'데이터센터', 'C&I':'산업·상업 고객', 'Project':'프로젝트',
   'Undisclosed customer':'미상 고객', 'Assembly':'조립', 'Integrator':'통합',
-  'Material':'소재', 'Substrate':'기판', 'Equipment':'장비',
+  'Material':'소재', 'Material processing':'소재·가공', 'Substrate':'기판',
+  'Equipment':'장비',
   'Revenue type':'매출원', 'Chip maker':'칩 회사', 'Automotive':'자동차',
   'Integrator':'통합', 'OSAT':'후공정(OSAT)' };
 function subKo(k){ return SUB_KO[k] || k; }
@@ -1422,8 +1423,9 @@ function App(){
         onClick: function(){ setMode(x[0]); } }, x[1]);
     })),
     h('div', { key:'sp', className:'spacer' }),
-    h('button', { key:'f', className:'btn' + (focusOn ? ' on' : ''),
-      onClick: function(){ setFocusOn(!focusOn); } }, '포커스'),
+    mode === 'roster' ? null
+      : h('button', { key:'f', className:'btn' + (focusOn ? ' on' : ''),
+          onClick: function(){ setFocusOn(!focusOn); } }, '포커스'),
     (mode === 'current' || mode === 'timeline')
       ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
       onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null
@@ -1499,7 +1501,8 @@ function App(){
     h('i', { key:7 }, '오른쪽 고객 → 중개 → 프로젝트 → 최종 사용자')
   ]);
 
-  return h('div', { className:'app' }, [ top, crumb,
+  return h('div', { className:'app' }, [ top,
+    mode === 'roster' ? null : crumb,
     (mode === 'current' || mode === 'timeline') ? scrub : null,
     h('div', { key:'m', className:'main' }, [
       body,
