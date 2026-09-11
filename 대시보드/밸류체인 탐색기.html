@@ -51,7 +51,7 @@ cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
 .scrub .rail{flex:1;height:1px;background:var(--line);min-width:10px}
 .main{flex:1;display:flex;min-height:0;position:relative}
 .canvas{flex:1;min-width:0;position:relative}
-.drw{width:34%;min-width:300px;max-width:460px;background:var(--paper);
+.drw{width:30%;min-width:280px;max-width:420px;flex:0 0 auto;background:var(--paper);
 border-left:1px solid var(--line);overflow:auto;padding:14px 16px 40px}
 .drw h3{margin:0 0 2px;font-size:15px}
 .drw .role{color:var(--ink3);font-size:12px;margin-bottom:12px}
@@ -107,7 +107,7 @@ box-shadow:0 2px 8px rgba(20,26,40,.2)}
 background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
 .legend b{font-size:11px;color:var(--ink4);font-weight:500}
 .legend i{font-style:normal;white-space:nowrap}
-@media (max-width:980px){
+@media (max-width:720px){
   .drw{position:absolute;right:0;top:0;bottom:0;width:88%;max-width:none;z-index:30;
        box-shadow:-8px 0 24px rgba(20,26,40,.12)}
   .legend{display:none}
@@ -820,6 +820,12 @@ function App(){
   var k2 = useState(true), leg = k2[0], setLeg = k2[1];
   // 좁은 화면에서는 서랍을 닫고 시작한다. 열면 그래프를 덮기 때문이다
   var l2 = useState(window.innerWidth >= 980), drw = l2[0], setDrw = l2[1];
+  var m2 = useState(null), rf = m2[0], setRf = m2[1];
+  useEffect(function(){
+    if (!rf) return;
+    var t = setTimeout(function(){ rf.fitView({ padding:0.12, duration:220 }); }, 80);
+    return function(){ clearTimeout(t); };
+  }, [rf, drw, open, focal, year, mode, expanded]);
 
   useEffect(function(){
     writeUrl({ focal:focal, year:year, mode:mode, open:open,
@@ -952,7 +958,8 @@ function App(){
   else if (mode === 'bom') body = h(Bom, { chain:chainOfFocal, focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
-      onNodeClick:onNodeClick, fitView:true, minZoom:.25, maxZoom:1.6,
+      onNodeClick:onNodeClick, onInit:setRf, fitView:true, minZoom:.2, maxZoom:1.6,
+      onPaneClick: function(){ if (window.innerWidth < 720) setDrw(false); },
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
       h(Controls, { key:'ct', showInteractive:false })
