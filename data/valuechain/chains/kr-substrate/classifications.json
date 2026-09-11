@@ -91,6 +91,24 @@
      "source_ids": [
       "dd_ir_fcbga_mix"
      ]
+    },
+    {
+     "metric": "utilization",
+     "value": 90,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-08-03",
+     "denominator": "FC-BGA 라인 가동률",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.6,
+     "method_note": "전사 평균 가동률 76%를 FC-BGA 가동률로 읽지 않는다",
+     "source_ids": [
+      "dd_ir_util"
+     ]
     }
    ],
    "source_ids": [
@@ -116,6 +134,24 @@
      "period_start": "2024-01-01",
      "period_end": "2024-12-31",
      "as_of_date": "2025-06-30",
+     "denominator": "대덕전자 총매출",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.7,
+     "method_note": "약 4,764억 원. 회사 공식 분해가 아니다",
+     "source_ids": [
+      "dd_ir_mix"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 53.4,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2024-01-01",
+     "period_end": "2024-12-31",
+     "as_of_date": "2024-12-31",
      "denominator": "대덕전자 총매출",
      "evidence_level": "ESTIMATED",
      "confidence": 0.7,

@@ -37,7 +37,7 @@
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Material",
-  "component": "CCL·프리프레그 계열",
+  "component": "CCL",
   "source_role": "소재 공급",
   "target_role": "소재",
   "valid_from": null,
@@ -61,13 +61,43 @@
   "revenue_type_ids": []
  },
  {
+  "id": "lgchem-prepreg",
+  "source_entity": "lg-chem",
+  "target_entity": "daeduck-electronics",
+  "relationship_type": "SUPPLIES",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material",
+  "component": "프리프레그",
+  "source_role": "소재 공급",
+  "target_role": "소재",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": "RAW_MATERIAL",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "dd_ar_fy2025"
+  ],
+  "notes": null,
+  "supply_source_ids": [
+   "ss-prepreg"
+  ],
+  "revenue_type_ids": []
+ },
+ {
   "id": "doosan-ccl",
   "source_entity": "doosan-electronics",
   "target_entity": "daeduck-electronics",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Material",
-  "component": "CCL·프리프레그 계열",
+  "component": "CCL",
   "source_role": "소재 공급",
   "target_role": "소재",
   "valid_from": null,
@@ -87,6 +117,36 @@
   "notes": null,
   "supply_source_ids": [
    "ss-ccl-substrate"
+  ],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "doosan-prepreg",
+  "source_entity": "doosan-electronics",
+  "target_entity": "daeduck-electronics",
+  "relationship_type": "SUPPLIES",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Material",
+  "component": "프리프레그",
+  "source_role": "소재 공급",
+  "target_role": "소재",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": "RAW_MATERIAL",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "dd_ar_fy2025"
+  ],
+  "notes": null,
+  "supply_source_ids": [
+   "ss-prepreg"
   ],
   "revenue_type_ids": []
  },
@@ -298,7 +358,7 @@
   "component": "메모리 패키지기판",
   "source_role": "매출원",
   "target_role": "고객",
-  "valid_from": null,
+  "valid_from": "2024-06-30",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
@@ -329,7 +389,7 @@
   "component": "메모리 패키지기판",
   "source_role": "매출원",
   "target_role": "고객",
-  "valid_from": null,
+  "valid_from": "2024-06-30",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
@@ -360,7 +420,7 @@
   "component": "패키지 기판",
   "source_role": "매출원",
   "target_role": "고객",
-  "valid_from": null,
+  "valid_from": "2024-06-30",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
@@ -391,7 +451,7 @@
   "component": "패키지 기판",
   "source_role": "매출원",
   "target_role": "고객",
-  "valid_from": null,
+  "valid_from": "2024-06-30",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
@@ -425,23 +485,23 @@
   "valid_from": "2025-10-01",
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
+  "evidence_level": "INFERRED",
   "source_tier": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "medium",
+  "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "zdnet_tesla_2026"
   ],
   "notes": "복수 업계 보도로 공급망 포함이 확인된다. 회사가 공시한 고객명은 아니다",
+  "contractual_customer": "UNVERIFIED",
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-ssd",
@@ -549,24 +609,24 @@
   "valid_from": "2025-01-01",
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
+  "evidence_level": "INFERRED",
   "source_tier": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "medium",
+  "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "dd_ir_amd",
    "dd_bk_amd"
   ],
   "notes": "증권사 자료가 양산과 Helios 연계를 적는다. 회사 공시 고객명은 아니다",
+  "contractual_customer": "UNVERIFIED",
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mlb-spacex",
@@ -581,23 +641,23 @@
   "valid_from": "2026-01-01",
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
+  "evidence_level": "INFERRED",
   "source_tier": null,
   "target_tier": "CONTRACTUAL_CUSTOMER",
   "economic_importance": null,
   "capacity_criticality": null,
   "integration_criticality": null,
-  "confidence_band": "medium",
+  "confidence_band": "high",
   "flows": [],
   "source_ids": [
    "eugene_spacex_2026"
   ],
   "notes": null,
+  "contractual_customer": "UNVERIFIED",
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mlb-800g",
@@ -655,11 +715,11 @@
    "dd_cisco_legacy"
   ],
   "notes": "과거 관계를 시사하는 2차자료뿐이다. 800G 신규 고객과 같다는 근거는 없다",
+  "contractual_customer": "UNVERIFIED",
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "unalloc-anon1",
@@ -753,35 +813,5 @@
   ],
   "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "prepreg-dd-src",
-  "source_entity": "kr-substrate-supplier-undisclosed",
-  "target_entity": "daeduck-electronics",
-  "relationship_type": "INPUT_TO",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Material",
-  "component": "프리프레그",
-  "source_role": "소재",
-  "target_role": "기판 제조",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "RAW_MATERIAL",
-  "target_tier": null,
-  "economic_importance": null,
-  "capacity_criticality": null,
-  "integration_criticality": null,
-  "confidence_band": "high",
-  "flows": [],
-  "source_ids": [
-   "dd_ar_fy2025"
-  ],
-  "notes": "FY2025 원재료 매입 587억 원",
-  "supply_source_ids": [
-   "ss-prepreg"
-  ],
-  "revenue_type_ids": []
  }
 ]

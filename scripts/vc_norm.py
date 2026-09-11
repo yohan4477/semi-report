@@ -366,6 +366,7 @@ def normalize_chain(cid, ents):
             to_cls[r['id']] = 'rt-' + r['target_entity']
         elif is_ss(r['source_entity']) or is_rt(r['source_entity']):
             to_cls.setdefault(r['id'], None)
+    live_obs = set(o['id'] for o in nobs)
     moved_obs = {}
     for o in obs:
         rid = o.get('relationship_id')
@@ -385,6 +386,10 @@ def normalize_chain(cid, ents):
             elif rid and rid not in keep_ids:
                 e['classification_id'] = e.get('classification_id') or to_cls.get(rid)
                 e['relationship_id'] = None
+            mid = e.get('metric_id')
+            # 접힌 줄과 함께 사라진 관측을 가리키던 근거는 그 자리를 비운다
+            if mid and mid not in live_obs:
+                e['metric_id'] = None
             e.setdefault('classification_id', None)
         # 접히면서 가리킬 데가 없어진 근거 줄은 지운다. 상자끼리 잇던 줄이 분류로 바뀌면
         # 그 줄을 가리키던 근거는 원장에 남아도 아무것도 안 가리킨다
