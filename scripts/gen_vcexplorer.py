@@ -261,11 +261,11 @@ var HOME = (function(){
 var EV_KO = { CONFIRMED:'공시로 확인', ESTIMATED:'추정', INFERRED:'정황 추론',
   UNDISCLOSED:'비공개', HISTORICAL_CURRENT_UNKNOWN:'과거 관측·현재 미상' };
 var EV_STYLE = {
-  CONFIRMED: { stroke:'#5b6377', strokeWidth:1.8 },
-  ESTIMATED: { stroke:'#8a6a3d', strokeWidth:1.5 },
-  INFERRED:  { stroke:'#8b93a5', strokeWidth:1.4, strokeDasharray:'6 4' },
-  UNDISCLOSED:{ stroke:'#b6bcc7', strokeWidth:1.2, strokeDasharray:'2 4' },
-  HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#c2c7d1', strokeWidth:1.2, strokeDasharray:'1 5' }
+  CONFIRMED: { stroke:'#9aa2b3', strokeWidth:1.4 },
+  ESTIMATED: { stroke:'#bda680', strokeWidth:1.3 },
+  INFERRED:  { stroke:'#b4bac6', strokeWidth:1.2, strokeDasharray:'6 4' },
+  UNDISCLOSED:{ stroke:'#ccd1da', strokeWidth:1.1, strokeDasharray:'2 4' },
+  HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#d5d9e1', strokeWidth:1.1, strokeDasharray:'1 5' }
 };
 function evStyle(k){ return EV_STYLE[k] || EV_STYLE.INFERRED; }
 var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
@@ -466,25 +466,42 @@ function route(edges, geo){
 
   // ② 줄기 — 같은 상자에서 나가는 선은 세로 길을 같이 쓴다.
   // 엣지마다 레인을 주면 나란한 여러 줄이 되고, 그게 겹쳐 보이는 정체다
-  var gut = {};
+  var gut = {}, pool = {};
   edges.forEach(function(e){
     var a = geo[e.source], b = geo[e.target];
     if (!a || !b || a.col >= b.col) return;          // 같은 칸·역방향은 그대로 둔다
-    var g = gut[a.col] = gut[a.col] || {};
-    (g[e.source] = g[e.source] || []).push(e);
+    (pool[a.col] = pool[a.col] || []).push(e);
+  });
+  Object.keys(pool).forEach(function(gk){
+    var outd = {}, ind = {};
+    pool[gk].forEach(function(e){
+      outd[e.source] = (outd[e.source] || 0) + 1;
+      ind[e.target] = (ind[e.target] || 0) + 1;
+    });
+    var g = gut[gk] = {};
+    pool[gk].forEach(function(e){
+      // 한 상자에서 여럿 나가면 나가는 쪽으로, 여럿이 한 상자로 모이면 들어오는 쪽으로.
+      // 공급단은 여러 공급사가 계통 하나로 모이는 꼴이라 뒤쪽이 맞다
+      var key = outd[e.source] > 1 ? 'S|' + e.source
+              : (ind[e.target] > 1 ? 'T|' + e.target : 'S|' + e.source);
+      (g[key] = g[key] || []).push(e);
+    });
   });
   var MID = (HANDLE_N - 1) / 2 | 0;
+// 한 띠에 줄기가 여럿이면 줄기마다 다른 색을 준다. 겹쳐 지나가도 어느 줄기인지 갈린다
+var TRUNK_TONE = ['#8f97a8', '#7f93b4', '#9a8aa8', '#7fa494', '#b09079', '#8aa1a8'];
   Object.keys(gut).forEach(function(gk){
     var g = parseInt(gk, 10);
     var x0 = g * (COL_W + COL_GAP) + COL_W;          // 띠 왼쪽 끝
-    var trunks = Object.keys(gut[gk]).map(function(sid){
-      var es = gut[gk][sid], lo = cy(sid), hi = lo;
+    var trunks = Object.keys(gut[gk]).map(function(key){
+      var es = gut[gk][key], toward = key.charAt(0) === 'T';
+      var lo = cy(key.slice(2)), hi = lo;
       es.forEach(function(e){
-        var y = cy(e.target);
+        var y = cy(toward ? e.source : e.target);
         if (y < lo) lo = y;
         if (y > hi) hi = y;
       });
-      return { es:es, lo:lo, hi:hi };
+      return { es:es, lo:lo, hi:hi, toward:toward };
     }).sort(function(p, q){ return p.lo - q.lo; });
     var tail = [];                                   // 레인마다 마지막으로 쓴 아래끝
     trunks.forEach(function(it){
@@ -498,9 +515,17 @@ function route(edges, geo){
       var cx = x0 + (it.lane + 1) * (COL_GAP / (n + 1));
       it.es.forEach(function(e){
         e.type = 'chan';
+        // 줄기가 여럿이면 색을 갈라 준다. 꼴(실선·파선)은 근거 등급 그대로 둔다
+        if (n > 1)
+          e.style = Object.assign({}, e.style,
+            { stroke: TRUNK_TONE[it.lane % TRUNK_TONE.length],
+              opacity: it.lane > 0 ? 0.85 : 1 });
         e.data = Object.assign({}, e.data, { cx: cx });
-        // 줄기를 나눠 쓰면 출발 포트도 하나로 모은다. 안 그러면 뿌리가 흩어진다
-        if (it.es.length > 1) e.sourceHandle = 's' + MID;
+        // 줄기를 나눠 쓰면 그 끝의 포트도 하나로 모은다. 안 그러면 뿌리가 흩어진다
+        if (it.es.length > 1) {
+          if (it.toward) e.targetHandle = 't' + MID;
+          else e.sourceHandle = 's' + MID;
+        }
       });
     });
   });
@@ -573,19 +598,74 @@ function place(nodes, edges){
   }
   for (var s = 0; s < 4; s++){ sweep(1); sweep(-1); }
 
-  var heights = {};
+  // 첫 자리 — 차례대로 쌓는다
   used.forEach(function(c){
     var y = 0;
     byCol[c].forEach(function(it){ it.top = y; y += it.h + ROW_GAP; });
-    heights[c] = Math.max(0, y - ROW_GAP);
   });
-  var tall = Math.max.apply(null, used.map(function(c){ return heights[c]; }));
+
+  // 선이 되도록 곧게 지나가도록 y 를 맞춘다.
+  // 이어진 상대의 한가운데를 바라보되 차례와 간격은 지킨다
+  function ctr(it){ return it.top + it.h / 2; }
+  var pos = {};
+  function reindex(){
+    used.forEach(function(c){ byCol[c].forEach(function(it){ pos[it.id] = it; }); });
+  }
+  reindex();
+  function align(dir){
+    var seq = dir > 0 ? used.slice(1) : used.slice(0, -1).reverse();
+    seq.forEach(function(c){
+      var list = byCol[c];
+      list.forEach(function(it){
+        var ks = (nbr[it.id] || []).map(function(x){ return pos[x]; })
+          .filter(function(o){ return o && o !== it && colOf[o.id] !== c; });
+        it.want = ks.length
+          ? ks.reduce(function(a, o){ return a + ctr(o); }, 0) / ks.length - it.h / 2
+          : it.top;
+      });
+      // 차례와 간격을 지키면서 want 에 가장 가깝게 놓는다 (이웃 위반 풀기).
+      // 한 번에 밀어 넣기만 하면 아래로 계속 밀려 판이 길어진다
+      var acc = 0, blocks = [];
+      list.forEach(function(it, k){
+        var a = it.want - acc;                    // 간격을 뺀 눈금으로 옮긴다
+        acc += it.h + ROW_GAP;
+        var blk = { sum:a, n:1, i:k };
+        while (blocks.length && blocks[blocks.length - 1].sum / blocks[blocks.length - 1].n
+               > blk.sum / blk.n){
+          var prev = blocks.pop();
+          blk.sum += prev.sum; blk.n += prev.n; blk.i = prev.i;
+        }
+        blocks.push(blk);
+      });
+      var fit = [], at2 = 0;
+      blocks.forEach(function(b){
+        var v = b.sum / b.n;
+        for (var k = 0; k < b.n; k++) fit[at2++] = v;
+      });
+      acc = 0;
+      list.forEach(function(it, k){
+        it.top = fit[k] + acc;
+        acc += it.h + ROW_GAP;
+      });
+    });
+  }
+  for (var a2 = 0; a2 < 6; a2++){ align(1); align(-1); }
+
+  // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
+  var lo = 1e9, hi = -1e9;
+  used.forEach(function(c){
+    byCol[c].forEach(function(it){
+      if (it.top < lo) lo = it.top;
+      if (it.top + it.h > hi) hi = it.top + it.h;
+    });
+  });
+  var mid = (lo + hi) / 2;
 
   var out = [], geo = {};
   used.forEach(function(c, i){
-    var off = (tall - heights[c]) / 2, x = i * (COL_W + COL_GAP);
+    var x = i * (COL_W + COL_GAP);
     byCol[c].forEach(function(it){
-      var y = it.top + off + HDR_H;
+      var y = it.top - mid + (hi - lo) / 2 + HDR_H;
       geo[it.id] = { x:x, y:y, h:it.h, col:i };
       if (!it.dummy) out.push(Object.assign({}, it.n, { position:{ x:x, y:y } }));
     });
