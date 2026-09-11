@@ -309,6 +309,9 @@ var useState = React.useState, useMemo = React.useMemo, useEffect = React.useEff
 
 var DB = window.__VC__;
 var ENT = DB.entities, SRC = DB.sources, METH = DB.methods, CHAINS = DB.chains;
+// SEC 에 등록한 업종. 미국 등록법인과 20-F 를 내는 곳만 있다
+var SEC = DB.sec || {};
+function secSector(id){ var v = SEC[id]; return v && v.sic_desc ? v.sic_desc : ''; }
 
 // ── 색인 ────────────────────────────────────────────────────────────
 var REL = {}, OBS_BY_REL = {}, REL_BY_ENT = {}, CHAIN_OF = {};
@@ -1861,26 +1864,26 @@ function Roster(p){
     var e = ENT[id];
     var chains = {};
     rs.forEach(function(r){ chains[CHAIN_OF[r.id]] = 1; });
-    rows.push({ id:id, e:e, deg: rs.length,
+    rows.push({ id:id, e:e, deg: rs.length, sec: secSector(id),
                 chain: Object.keys(chains).map(chainKo).join('·') });
   });
+  // SEC 가 업종을 매긴 곳부터, 같은 업종끼리 붙인다. 안 매긴 곳은 뒤에 선 수 순으로
   rows.sort(function(a, b){
-    if (a.chain !== b.chain) return a.chain < b.chain ? -1 : 1;
+    if (!a.sec !== !b.sec) return a.sec ? -1 : 1;
+    if (a.sec !== b.sec) return a.sec < b.sec ? -1 : 1;
     return b.deg - a.deg;
   });
   var q = (p.q || '').toLowerCase();
   var view = q ? rows.filter(function(r){
     return (r.e.name + ' ' + (r.e.name_ko || '') + ' ' + r.id).toLowerCase().indexOf(q) >= 0;
   }) : rows;
-  var TYPE_KO = { company:'회사', jv:'합작', project_spv:'프로젝트 법인', fund_jv:'펀드 JV',
-    financial_institution:'금융기관', utility:'유틸리티', end_user:'최종 사용자',
-    application:'전방시장' };
   return h('div', { className:'pane' }, [
     h('h2', { key:'t' }, p.all ? '이 판에 선 이름 ' + rows.length + '개'
                                : '분석한 회사 ' + rows.length + '곳'),
     h('p', { key:'n', className:'note' }, [
       h('span', { key:'a' }, p.all
-        ? '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 공급원과 매출원은 상자가 아니라 위쪽 띠다. '
+        ? '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 섹터는 SEC 에 등록된 업종이라 '
+          + '미국에 공시하지 않는 곳은 빈칸이다. '
         : '줄을 누르면 그 회사의 밸류체인이 열린다. '),
       h('button', { key:'b', className:'btn', onClick: p.onToggleAll },
         p.all ? '중심 회사만' : '판에 선 이름 전부 보기')
@@ -1889,9 +1892,8 @@ function Roster(p){
       h('table', { className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [
           h('th', { key:1, className:'nw' }, '나라'),
-          h('th', { key:2, className:'nw' }, '이름'), h('th', { key:3 }, '갈래'),
-          h('th', { key:4, className:'nw' }, '유형'),
-          h('th', { key:5, className:'nw' }, '사슬') ])),
+          h('th', { key:2, className:'nw' }, '이름'),
+          h('th', { key:3 }, '섹터') ])),
         h('tbody', { key:'b' }, view.map(function(r){
           return h('tr', { key:r.id, className:'pick' + (pressed === r.id ? ' on' : ''),
             onClick: function(){ pick(r.id); } }, [
@@ -1904,9 +1906,8 @@ function Roster(p){
                       r.e.country ? h('span', { key:'c' }, r.e.country) : null];
             })()),
             h('td', { key:2, className:'nw' }, nm(r.id)),
-            h('td', { key:3 }, (r.e.categories || []).map(subKo).join(' · ') || '—'),
-            h('td', { key:4, className:'nw' }, TYPE_KO[r.e.entity_type] || r.e.entity_type),
-            h('td', { key:5, className:'nw' }, r.chain)
+            // SEC 에 등록된 업종 그대로. 등록을 안 한 곳은 빈칸이다
+            h('td', { key:3 }, r.sec || '—')
           ]);
         }))
       ]))
@@ -2286,8 +2287,9 @@ function App(){
     anchors.map(function(a){
       return h('div', { key:a.id, className:'row' + (a.id === focal ? ' cur' : ''),
         onClick: function(){ setMenu(false); setBusy(a.id); setMode('current'); goFocal(a.id); } },
+        // 오른쪽에는 SEC 에 등록된 업종. 미국에 공시하지 않는 곳은 빈칸이다
         [ h('span', { key:'n' }, withFlag(a.id, 'm')),
-          h('span', { key:'k', className:'k' }, chainKo(a.chain)) ]);
+          h('span', { key:'k', className:'k' }, secSector(a.id) || '—') ]);
     }))) : null;
   var ICON_SEARCH = h('svg', { viewBox:'0 0 24 24' }, [
     h('circle', { key:'c', cx:11, cy:11, r:7 }), h('path', { key:'l', d:'M20 20l-3.5-3.5' }) ]);
@@ -2471,6 +2473,8 @@ def build():
     db = {'entities': by_id(load('entities.json')),
           'sources': by_id(load('sources.json')),
           'methods': by_id(load('methods.json')),
+          # SEC 에 등록된 업종. scripts/fetch_sec_sector.py 가 받아 둔다
+          'sec': load('sec_sector.json') or {},
           'chains': {}}
     cdir = os.path.join(DATA, 'chains')
     for ck in ship_list():

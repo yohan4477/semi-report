@@ -1,0 +1,342 @@
+{
+ "aep": {
+  "cik": "0000004904",
+  "entity_name": "AMERICAN ELECTRIC POWER CO INC",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "4911",
+  "sic_desc": "Electric Services"
+ },
+ "alphabet": {
+  "cik": "0001652044",
+  "entity_name": "Alphabet Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "7370",
+  "sic_desc": "Services-Computer Programming, Data Processing, Etc."
+ },
+ "amat": {
+  "cik": "0000006951",
+  "entity_name": "APPLIED MATERIALS INC /DE",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "amazon": {
+  "cik": "0001018724",
+  "entity_name": "AMAZON COM INC",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "5961",
+  "sic_desc": "Retail-Catalog & Mail-Order Houses"
+ },
+ "amd": {
+  "cik": "0000002488",
+  "entity_name": "ADVANCED MICRO DEVICES INC",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "apple": {
+  "cik": "0000320193",
+  "entity_name": "Apple Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3571",
+  "sic_desc": "Electronic Computers"
+ },
+ "arrow-electronics": {
+  "cik": "0000007536",
+  "entity_name": "ARROW ELECTRONICS, INC.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "5065",
+  "sic_desc": "Wholesale-Electronic Parts & Equipment, NEC"
+ },
+ "asml": {
+  "cik": "0000937966",
+  "entity_name": "ASML HOLDING NV",
+  "forms": [
+   "20-F"
+  ],
+  "sic": "3559",
+  "sic_desc": "Special Industry Machinery, NEC"
+ },
+ "att": {
+  "cik": "0000732717",
+  "entity_name": "AT&T INC.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "4813",
+  "sic_desc": "Telephone Communications (No Radiotelephone)"
+ },
+ "avnet": {
+  "cik": "0000008858",
+  "entity_name": "AVNET INC",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "5065",
+  "sic_desc": "Wholesale-Electronic Parts & Equipment, NEC"
+ },
+ "bloom-energy": {
+  "cik": "0001664703",
+  "entity_name": "Bloom Energy Corp",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3620",
+  "sic_desc": "Electrical Industrial Apparatus"
+ },
+ "broadcom": {
+  "cik": "0001730168",
+  "entity_name": "Broadcom Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "cisco": {
+  "cik": "0000858877",
+  "entity_name": "CISCO SYSTEMS, INC.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3576",
+  "sic_desc": "Computer Communications Equipment"
+ },
+ "coreweave": {
+  "cik": "0001769628",
+  "entity_name": "CoreWeave, Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "7372",
+  "sic_desc": "Services-Prepackaged Software"
+ },
+ "dell": {
+  "cik": "0001571996",
+  "entity_name": "Dell Technologies Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3571",
+  "sic_desc": "Electronic Computers"
+ },
+ "duke-energy": {
+  "cik": "0001326160",
+  "entity_name": "Duke Energy CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "4931",
+  "sic_desc": "Electric & Other Services Combined"
+ },
+ "equinix": {
+  "cik": "0001101239",
+  "entity_name": "EQUINIX INC",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "6798",
+  "sic_desc": "Real Estate Investment Trusts"
+ },
+ "exelon": {
+  "cik": "0001109357",
+  "entity_name": "EXELON CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "4931",
+  "sic_desc": "Electric & Other Services Combined"
+ },
+ "fabrinet": {
+  "cik": "0001408710",
+  "entity_name": "Fabrinet",
+  "forms": [
+   "10-K",
+   "S-1"
+  ],
+  "sic": "3661",
+  "sic_desc": "Telephone & Telegraph Apparatus"
+ },
+ "fedex": {
+  "cik": "0001048911",
+  "entity_name": "FEDEX CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "4513",
+  "sic_desc": "Air Courier Services"
+ },
+ "home-depot": {
+  "cik": "0000354950",
+  "entity_name": "HOME DEPOT, INC.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "5211",
+  "sic_desc": "Retail-Lumber & Other Building Materials Dealers"
+ },
+ "hpe": {
+  "cik": "0001645590",
+  "entity_name": "Hewlett Packard Enterprise Co",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3570",
+  "sic_desc": "Computer & office Equipment"
+ },
+ "intel": {
+  "cik": "0000050863",
+  "entity_name": "INTEL CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "iren": {
+  "cik": "0001878848",
+  "entity_name": "IREN Ltd",
+  "forms": [
+   "10-K",
+   "20-F"
+  ],
+  "sic": "6199",
+  "sic_desc": "Finance Services"
+ },
+ "kla": {
+  "cik": "0000319201",
+  "entity_name": "KLA CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3827",
+  "sic_desc": "Optical Instruments & Lenses"
+ },
+ "lam": {
+  "cik": "0000707549",
+  "entity_name": "LAM RESEARCH CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3559",
+  "sic_desc": "Special Industry Machinery, NEC"
+ },
+ "meta": {
+  "cik": "0001326801",
+  "entity_name": "Meta Platforms, Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "7370",
+  "sic_desc": "Services-Computer Programming, Data Processing, Etc."
+ },
+ "micron": {
+  "cik": "0000723125",
+  "entity_name": "MICRON TECHNOLOGY INC",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "microsoft": {
+  "cik": "0000789019",
+  "entity_name": "MICROSOFT CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "7372",
+  "sic_desc": "Services-Prepackaged Software"
+ },
+ "nvidia": {
+  "cik": "0001045810",
+  "entity_name": "NVIDIA CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "oracle": {
+  "cik": "0001341439",
+  "entity_name": "ORACLE CORP",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "7372",
+  "sic_desc": "Services-Prepackaged Software"
+ },
+ "sbenergy": {
+  "cik": "0002133037",
+  "entity_name": "SB Energy, Inc.",
+  "forms": [
+   "S-1"
+  ],
+  "sic": "4911",
+  "sic_desc": "Electric Services"
+ },
+ "sk-hynix": {
+  "cik": "0002120882",
+  "entity_name": "SK hynix Inc.",
+  "forms": [],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "skhynix": {
+  "cik": "0002120882",
+  "entity_name": "SK hynix Inc.",
+  "forms": [],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "supermicro": {
+  "cik": "0001375365",
+  "entity_name": "Super Micro Computer, Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3571",
+  "sic_desc": "Electronic Computers"
+ },
+ "tesla": {
+  "cik": "0001318605",
+  "entity_name": "Tesla, Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "3711",
+  "sic_desc": "Motor Vehicles & Passenger Car Bodies"
+ },
+ "tsmc": {
+  "cik": "0001046179",
+  "entity_name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
+  "forms": [
+   "20-F"
+  ],
+  "sic": "3674",
+  "sic_desc": "Semiconductors & Related Devices"
+ },
+ "walmart": {
+  "cik": "0000104169",
+  "entity_name": "Walmart Inc.",
+  "forms": [
+   "10-K"
+  ],
+  "sic": "5331",
+  "sic_desc": "Retail-Variety Stores"
+ }
+}
