@@ -1237,6 +1237,17 @@ function buildGraph(focal, year, sel, axis){
 }
 
 // ── 서랍 ────────────────────────────────────────────────────────────
+// 한 줄이 어느 공급원·매출원에 드는지 적는다. 미상이면 왜 미상인지도 같이 적는다
+function clsNames(r, kind){
+  var m = clsOf(CHAIN_OF[r.id]);
+  var ids = (kind === 'ss' ? r.supply_source_ids : r.revenue_type_ids) || [];
+  if (!ids.length) return '—';
+  return ids.map(function(id){
+    var o = (kind === 'ss' ? m.ss : m.rt)[id];
+    if (!o) return id;
+    return o.label + (o.unallocated ? ' (귀속 근거 없음)' : '');
+  }).join(' · ');
+}
 function srcLine(sid){
   var s = SRC[sid];
   if (!s) return sid;
@@ -1365,6 +1376,10 @@ function Drawer(p){
         h('div', { key:1 }, '부품·역무'), h('div', { key:2 }, r.component || '—'),
         h('div', { key:3 }, '계통'),
         h('div', { key:4 }, subKo(r.subsystem || '—') + ' · ' + LANE_KO[r.lane]),
+        h('div', { key:'c1' }, '공급원'),
+        h('div', { key:'c2' }, clsNames(r, 'ss')),
+        h('div', { key:'c3' }, '매출원'),
+        h('div', { key:'c4' }, clsNames(r, 'rt')),
         h('div', { key:5 }, '역할'),
         h('div', { key:6 }, (r.source_role || '—') + ' → ' + (r.target_role || '—')),
         h('div', { key:'t1' }, '사슬 층'),
