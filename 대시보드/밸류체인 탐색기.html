@@ -699,8 +699,9 @@ function readUrl(first){
   var y = q.get('year');
   if (fresh) y = NOW;
   if (YEARS.indexOf(y) < 0) y = NOW;
-  // 맨 처음에는 회사 목록부터 보여 준다
-  var md = q.get('mode') || (fresh ? 'roster' : 'current');
+  // 장을 열면 늘 회사 목록부터다. 주소에 탭이 적혀 있을 때만 그 탭으로 연다
+  // (새로고침·북마크로 들어와도 같다 — 주소에 남은 focal·year 는 그대로 지킨다)
+  var md = q.get('mode') || (first ? 'roster' : 'current');
   return { focal: q.get('focal') || HOME, year: y,
            mode: md,
            open: (q.get('open') || '').split(',').filter(Boolean),
