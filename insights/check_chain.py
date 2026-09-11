@@ -24,9 +24,10 @@ import io, json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 
+# 소재·부품·계통·매출 갈래는 상자가 아니라 분류다(프레임워크 §22·§23). 상자로 남으면
+# 같은 공급사·고객이 분류마다 복제된다 — check_vc 의 V1 과 같은 자리를 여기서도 막는다
 ENTITY_TYPE = set(['company', 'jv', 'project_spv', 'fund_jv', 'financial_institution',
-                   'utility', 'end_user', 'material', 'revenue_type',
-                   'component', 'subsystem', 'application'])
+                   'utility', 'end_user', 'application'])
 LANE = set(['MANUFACTURING_BOM', 'MANUFACTURING_EQUIPMENT', 'SITE_ELECTRICAL_BOP',
             'OPERATIONAL_INPUT', 'DOWNSTREAM', 'CORPORATE'])
 EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
@@ -34,7 +35,7 @@ EV_LEVEL = set(['CONFIRMED', 'ESTIMATED', 'INFERRED', 'UNDISCLOSED',
 OBS_STATUS = set(['CURRENT', 'HISTORICAL', 'HISTORICAL_CURRENT_UNKNOWN',
                   'NOT_YET_ACTIVE', 'UNKNOWN'])
 REL_STATUS = set(['ACTIVE', 'ENDED', 'PLANNED', 'UNKNOWN'])
-TIER = set(['REVENUE_TYPE', 'CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'PROJECT', 'END_USER'])
+TIER = set(['CONTRACTUAL_CUSTOMER', 'INTERMEDIARY', 'END_USER', 'END_MARKET'])
 SCOPE = set(['EDGE', 'FOCAL_TOTAL_REVENUE', 'COUNTERPARTY_TOTAL_REVENUE'])
 SRC_TIER = set(['RAW_MATERIAL', 'MATERIAL_PROCESSING', 'COMPONENT_SUPPLIER',
                 'COMPONENT', 'SUBSYSTEM_MODULE'])
@@ -100,6 +101,8 @@ def main():
 
     for ch in chains():
         base = os.path.join(DATA, 'chains', ch)
+        chain_meta = load(os.path.join(base, 'chain.json'), {}) or {}
+        focal = chain_meta.get('focal_entity') or ch
         rels = load(os.path.join(base, 'relationships.json'), []) or []
         obss = load(os.path.join(base, 'observations.json'), []) or []
         evs = load(os.path.join(base, 'evidence.json'), []) or []
@@ -125,7 +128,11 @@ def main():
                     r.get('evidence_level') != 'CONFIRMED'
                     or r.get('target_tier') != 'CONTRACTUAL_CUSTOMER'):
                 fail(w, u'DIRECT_CUSTOMER 인데 계약상 고객 근거가 약하다')
-            if r.get('lane') == 'DOWNSTREAM' and r.get('target_tier') not in TIER:
+            # 프로젝트는 사슬의 한 칸이 아니라 테두리라 층을 안 받는다. 타겟으로
+            # 들어오는 줄의 층은 보내는 쪽 것이라 source_tier 에 적는다
+            tgt_type = (E.get(r.get('target_entity')) or {}).get('entity_type')
+            if (r.get('lane') == 'DOWNSTREAM' and r.get('target_tier') not in TIER
+                    and tgt_type != 'project_spv' and r.get('target_entity') != focal):
                 fail(w, u'다운스트림인데 target_tier 가 %r' % r.get('target_tier'))
             if r.get('lane') != 'DOWNSTREAM' and r.get('target_tier'):
                 fail(w, u'다운스트림이 아닌데 target_tier 가 붙었다')
@@ -186,6 +193,7 @@ def main():
             if e.get('hypothesis_id') and e['hypothesis_id'] not in H:
                 fail(w, u'없는 가설 %s' % e['hypothesis_id'])
             if (not e.get('metric_id') and not e.get('hypothesis_id')
+                    and not e.get('classification_id')
                     and e.get('relationship_id') not in R):
                 fail(w, u'없는 관계 %r' % e.get('relationship_id'))
         for x in hyps:
@@ -215,13 +223,12 @@ def main():
         # 한다. 화면은 꼴을 보고 직접·간접을 정한다 (gen_vcexplorer 의 tradeFrom)
         TRADE = set(['SELLS_TO', 'DIRECT_CUSTOMER', 'END_CUSTOMER_SUPPLY_CHAIN',
                      'DISTRIBUTION_PARTNERSHIP'])
-        chain_meta = load(os.path.join(base, 'chain.json'), {}) or {}
-        focal = chain_meta.get('focal_entity')
         mids = set(r['target_entity'] for r in rels
                    if r.get('target_tier') == 'INTERMEDIARY')
 
+        # 매출원은 상자가 아니라 띠라 한 홉으로 안 센다. 타겟과 바로 잇는 줄만 직접이다
         def hop(eid):
-            return eid == focal or E.get(eid, {}).get('entity_type') == 'revenue_type'
+            return eid == focal
 
         for r in rels:
             # 타겟이 안 적힌 사슬은 직접·간접을 가를 기준이 없다

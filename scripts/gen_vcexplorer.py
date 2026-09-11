@@ -88,6 +88,23 @@ touch-action:pan-y}
 cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent}
 .scrub .yr.on{color:var(--ink1);font-weight:700;border-bottom-color:var(--ink1)}
 .scrub .rail{flex:1;height:1px;background:var(--line);min-width:10px}
+.axis{display:flex;flex-direction:column;gap:5px;padding:7px 64px 7px 14px;
+background:var(--paper);border-bottom:1px solid var(--line);position:relative;
+max-height:104px;overflow:auto}
+.axrow{display:flex;align-items:flex-start;gap:9px;font-size:12px}
+.axrow b{flex:0 0 46px;color:var(--ink3);font-weight:600;padding-top:3px}
+.axchips{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+.axchip{border:1px solid var(--line);background:var(--paper);color:var(--ink2);
+border-radius:12px;padding:2px 9px;font:inherit;font-size:11.5px;cursor:pointer;
+white-space:nowrap}
+.axchip i{font-style:normal;color:var(--ink3);margin-left:5px;font-size:10.5px}
+.axchip.un{border-style:dashed;color:var(--ink3)}
+.axchip.on{background:var(--ink1);color:#fff;border-color:var(--ink1)}
+.axchip.on i{color:#c8cede}
+.axnote{font-size:11.5px;color:var(--warm);padding-left:55px}
+.axclear{position:absolute;right:12px;top:7px;border:1px solid var(--line);
+background:var(--paper);color:var(--ink2);border-radius:5px;padding:3px 8px;
+font:inherit;font-size:11.5px;cursor:pointer}
 .main{flex:1;display:flex;min-height:0;position:relative}
 .canvas{flex:1;min-width:0;position:relative}
 .drw{width:30%;min-width:280px;max-width:420px;flex:0 0 auto;background:var(--paper);
@@ -220,6 +237,21 @@ Object.keys(CHAINS).forEach(function(ck){
     (OBS_BY_REL[o.relationship_id] = OBS_BY_REL[o.relationship_id] || []).push(o);
   });
 });
+// 공급원·매출원은 상자가 아니라 분석축이다. 관계가 N:M 으로 가리킨다
+var CLS = {};
+Object.keys(CHAINS).forEach(function(ck){
+  var c = CHAINS[ck].classifications || { supply_sources:[], revenue_types:[] };
+  var m = CLS[ck] = { ss:{}, rt:{}, ssList:c.supply_sources || [],
+                      rtList:c.revenue_types || [] };
+  m.ssList.forEach(function(x){ m.ss[x.id] = x; });
+  m.rtList.forEach(function(x){ m.rt[x.id] = x; });
+});
+function clsOf(ck){ return CLS[ck] || { ss:{}, rt:{}, ssList:[], rtList:[] }; }
+function axisHit(r, axis){
+  if (!axis) return true;
+  var ids = (axis.slice(0, 2) === 'ss' ? r.supply_source_ids : r.revenue_type_ids) || [];
+  return ids.indexOf(axis.slice(3)) >= 0;
+}
 // 원가·재무는 사슬이 아니라 자료에 적힌 주인(company)으로 찾는다.
 // 한 회사가 사슬 둘에 걸쳐도 제 것만 본다
 var BOM_BY_CO = {}, FIN_BY_CO = {};
@@ -266,7 +298,7 @@ var FLAG = { '미국':'US', '한국':'KR', '중국':'CN', '대만':'TW', '일본
   '캐나다':'CA', '베트남':'VN', '이탈리아':'IT', '네덜란드':'NL' };
 var GLOBE = '🌐';
 var NO_CC = '?';
-var NO_COUNTRY_TYPE = { material:1, revenue_type:1 };
+var NO_COUNTRY_TYPE = { application:1 };
 function iso(cc){
   return cc.replace(/./g, function(c){
     return String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65); });
@@ -337,13 +369,13 @@ var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Integrator':'통합', 'OSAT':'후공정(OSAT)' };
 function subKo(k){ return SUB_KO[k] || k; }
 var TIER_KO = { CONTRACTUAL_CUSTOMER:'직접 고객', INTERMEDIARY:'중개',
-  PROJECT:'프로젝트', END_USER:'간접 고객',
-  REVENUE_TYPE:'매출원', RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
+  PROJECT:'프로젝트', END_USER:'간접 고객', END_MARKET:'전방시장',
+  RAW_MATERIAL:'원재료', MATERIAL_PROCESSING:'소재·가공',
   COMPONENT_SUPPLIER:'부품 공급', SUBSYSTEM_MODULE:'계통·모듈' };
 function tierOf(r, up){ return up ? r.source_tier : r.target_tier; }
-// 상자 꼴 — 회사는 실선, 층(소재·부품·계통·매출원)은 파선
-var KIND_OF = { material:'grp', component:'grp', subsystem:'grp', revenue_type:'grp',
-                application:'grp' };
+// 상자 꼴 — 회사·법인은 실선, 전방시장처럼 회사가 아닌 축은 파선.
+// 소재·부품·계통·매출 갈래는 더 이상 상자가 아니다. 위쪽 공급원·매출원 띠로 간다
+var KIND_OF = { application:'grp' };
 // 세로 한 줄에는 같은 단계만 선다. 왼쪽부터 오른쪽으로 사슬 순서다.
 // note 는 그 칸이 무엇을 세는 자리인지 — 매출원·최종 사용자 칸에는 사슬의 다음 단계가
 // 아니라 같은 매출을 다른 축으로 쪼갠 상자가 서기 때문에, 밝히지 않으면 옆 칸과
@@ -354,10 +386,10 @@ var COLS = [
   { key:'COMPONENT_SUPPLIER', label:'부품 공급', note:'사슬 단계' },
   { key:'SUBSYSTEM', label:'계통·모듈', note:'사슬 단계' },
   { key:'FOCAL', label:'타겟', note:null },
-  { key:'REVENUE_TYPE', label:'매출원', note:'제품별 매출 축' },
-  { key:'CONTRACTUAL_CUSTOMER', label:'직접 고객', note:'직접 거래' },
-  { key:'INTERMEDIARY', label:'중개', note:'유통·중개' },
-  { key:'END_USER', label:'간접 고객', note:'중개 뒤·전방 축' }
+  { key:'CONTRACTUAL_CUSTOMER', label:'직접 고객', note:'사슬 단계' },
+  { key:'INTERMEDIARY', label:'중개', note:'사슬 단계' },
+  { key:'END_USER', label:'간접 고객', note:'중개 뒤' },
+  { key:'END_MARKET', label:'전방시장', note:'다른 축' }
 ];
 var COL_OF = {};
 COLS.forEach(function(c, i){ COL_OF[c.key] = i; });
@@ -659,21 +691,59 @@ function route(edges, geo){
 
   // ③ 선마다 통로 자리와 그 통로에서 옮겨 갈 높이를 적는다. 마지막 통로에서는 닿을
   // 상자의 높이로 간다(gy 를 비워 둔다). 중간 칸은 그 칸에 잡아 둔 빈 자리 높이로 지난다
+  // 상자를 피하려고 여러 번 꺾지 않는다. 한 선에 세로 구간은 하나뿐이고, 피해야 할
+  // 상자가 있으면 더 일찍·더 길게 한 번에 옮긴다. 칸을 여럿 건너뛰는 선도 같다 —
+  // 지나갈 높이가 비어 있는 통로를 앞에서부터 찾아 거기서 한 번만 꺾는다
+  var boxes = {};
+  Object.keys(geo).forEach(function(id){
+    var g = geo[id];
+    if (!g || g.proj || id.charAt(0) === '~') return;
+    (boxes[g.col] = boxes[g.col] || []).push(g);
+  });
+  var CLR = 7;
+  function blocked(col, y, skip){
+    return (boxes[col] || []).some(function(g){
+      if (g === skip) return false;
+      return y > g.y - CLR && y < g.y + g.h + CLR;
+    });
+  }
   edges.forEach(function(e){
     var a = geo[e.source], b = geo[e.target];
     if (!a || !b) return;
     if (a.col === b.col) { e.type = 'default'; return; }
     var bs = bounds(e), corr = (e.data && e.data.corr) || [];
-    if (bs.length === 1 && Math.abs(cy(e.source) - cy(e.target)) <= 8) {
+    var y0 = cy(e.source), y1 = cy(e.target);
+    if (bs.length === 1 && Math.abs(y0 - y1) <= 8) {
       e.type = 'straight';
       e.data = Object.assign({}, e.data, { gx:null, gy:null });
       return;
     }
+    // 꺾을 통로를 고른다. 그 통로 앞은 출발 높이로, 뒤는 닿을 높이로 지나야 하니
+    // 두 높이 모두 중간 칸의 상자를 안 스치는 통로를 앞에서부터 찾는다
+    var dir = b.col > a.col ? 1 : -1, pick = -1, bestHit = 1e9;
+    for (var k = 0; k < bs.length; k++){
+      var hit = 0;
+      for (var c = a.col + dir; c !== b.col; c += dir){
+        var before = dir > 0 ? (c <= bs[k]) : (c > bs[k]);
+        if (blocked(c, before ? y0 : y1, null)) hit++;
+      }
+      if (hit < bestHit) { bestHit = hit; pick = k; }
+      if (!hit) break;
+    }
+    if (pick >= 0) {
+      e.type = 'gut';
+      e.data = Object.assign({}, e.data,
+        { gx:[gutterX(bs[pick], lane[e.id + '@' + bs[pick]] || 0)], gy:[null] });
+      return;
+    }
+    // 통로를 못 고른 선만 중간 칸에 잡아 둔 빈 자리를 밟는다
     var gx = [], gy = [];
     bs.forEach(function(bd, j){
       gx.push(gutterX(bd, lane[e.id + '@' + bd] || 0));
       gy.push(j < bs.length - 1 ? (corr[j] === undefined ? null : corr[j]) : null);
     });
+    var near = gy.every(function(v){ return v === null || Math.abs(v - y1) <= 14; });
+    if (near) { gx = [gx[0]]; gy = [null]; }
     e.type = 'gut';
     e.data = Object.assign({}, e.data, { gx:gx, gy:gy });
   });
@@ -804,6 +874,11 @@ function place(nodes, edges){
         var nb = byCol[used[toward]].filter(function(q){ return q.id === x; })[0];
         if (nb && nb.top !== undefined) floor = Math.max(floor, cyOf(nb) - it.h / 2);
       });
+      // 칸을 건너뛰는 선이 잡아 둔 빈 자리는 그 선이 닿을 상자와 같은 높이로 내린다.
+      // 그래야 선이 첫 통로에서 한 번 꺾고 그 높이로 곧게 지나간다 — 중간 칸마다
+      // 다시 꺾지 않는다
+      if (it.want !== undefined && it.want !== null)
+        floor = Math.max(floor, it.want - it.h / 2);
       it.top = Math.max(y, floor);
       y = it.top + it.h + ROW_GAP;
     });
@@ -818,8 +893,28 @@ function place(nodes, edges){
     var y = 0;
     byCol[used[fcol]].forEach(function(it, k){ it.ord = k; it.top = y; y += it.h + ROW_GAP; });
   })();
-  for (var li = fcol - 1; li >= 0; li--) packCol(li, li + 1);
-  for (var ri = fcol + 1; ri < used.length; ri++) packCol(ri, ri - 1);
+  function packAll(){
+    for (var li = fcol - 1; li >= 0; li--) packCol(li, li + 1);
+    for (var ri = fcol + 1; ri < used.length; ri++) packCol(ri, ri - 1);
+  }
+  packAll();
+  // 두 번 더 쓸어 빈 자리 높이를 닿을 상자에 맞춘다. 자리는 아래로만 움직이므로
+  // 되풀이해도 제자리에 선다
+  var spot = {};
+  used.forEach(function(c){ byCol[c].forEach(function(it){ spot[it.id] = it; }); });
+  for (var pass = 0; pass < 2; pass++){
+    Object.keys(span).forEach(function(eid){
+      var e = null;
+      edges.forEach(function(x){ if (x.id === eid) e = x; });
+      if (!e) return;
+      var t = spot[e.target];
+      if (!t || t.top === undefined) return;
+      span[eid].forEach(function(did){
+        if (spot[did]) spot[did].want = cyOf(t);
+      });
+    });
+    packAll();
+  }
 
   // 칸마다 위아래 여백을 없애고 전체를 가운데로 모은다
   var lo = 1e9, hi = -1e9;
@@ -940,7 +1035,7 @@ function chainOf(focal){
   return best;
 }
 
-function buildGraph(focal, year, sel){
+function buildGraph(focal, year, sel, axis){
   var ck = chainOf(focal);
   var rels = ck ? CHAINS[ck].relationships : relsOf(focal);
   var nodes = [], edges = [], seen = {};
@@ -1009,9 +1104,8 @@ function buildGraph(focal, year, sel){
   rels.forEach(function(r){
     if (r.target_tier === 'INTERMEDIARY') isMid[r.target_entity] = 1;
   });
-  function hop(id){
-    return id === focal || (ENT[id] || {}).entity_type === 'revenue_type';
-  }
+  // 이제 타겟과 고객 사이에 끼는 상자는 중개뿐이다. 매출원은 상자가 아니라 띠다
+  function hop(id){ return id === focal; }
   rels.forEach(function(r){
     if (!TRADE[r.relationship_type]) return;
     if (hop(r.source_entity)) tradeFrom[r.target_entity] = 'direct';
@@ -1053,8 +1147,7 @@ function buildGraph(focal, year, sel){
   // 굴리거나 쓰는 쪽이라 타겟과 바로 거래하지 않는다
   rels.forEach(function(r){
     if (!isProj(r.target_entity) || r.lane !== 'DOWNSTREAM') return;
-    if (r.source_entity === focal || (ENT[r.source_entity] || {}).entity_type === 'revenue_type')
-      return;
+    if (r.source_entity === focal) return;
     var n = nodes.filter(function(x){ return x.id === r.source_entity; })[0];
     if (!n || n.type === 'proj') return;
     n.data.col = COL_OF.END_USER;
@@ -1071,7 +1164,6 @@ function buildGraph(focal, year, sel){
       var other = r.source_entity === n.id ? r.target_entity
                 : (r.target_entity === n.id ? r.source_entity : null);
       if (!other || other === focal || isProj(other)) return;
-      if ((ENT[other] || {}).entity_type === 'revenue_type') return;
       var mn = nodes.filter(function(x){ return x.id === other; })[0];
       if (!mn || mn.data.col === undefined || mn.data.col <= COL_OF.FOCAL) return;
       if (mem.indexOf(other) < 0) mem.push(other);
@@ -1108,15 +1200,6 @@ function buildGraph(focal, year, sel){
       if (e.source === selId) near[e.target] = 1;
       if (e.target === selId) near[e.source] = 1;
     });
-    // 매출원은 거래 상대가 아니라 매출을 쪼갠 자리다. 고객이 그 뒤에 걸려 있으면
-    // 한 홉 더 본다 — 안 그러면 매출원을 거치는 고객이 늘 흐리게 앉는다
-    Object.keys(near).forEach(function(id){
-      if ((ENT[id] || {}).entity_type !== 'revenue_type') return;
-      edges.forEach(function(e){
-        if (e.source === id) near[e.target] = 1;
-        if (e.target === id) near[e.source] = 1;
-      });
-    });
     nodes = nodes.map(function(n){
       return near[n.id] ? n
         : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
@@ -1127,6 +1210,29 @@ function buildGraph(focal, year, sel){
         { opacity: hit ? 1 : 0.18 }) });
     });
   }
+  // 공급원·매출원 띠에서 하나를 고르면 그 분류에 걸린 줄만 진하게 남는다.
+  // 상자를 숨기지는 않는다 — 연도가 무엇이 서 있나를 정하고, 고르는 일은 강조만 바꾼다
+  if (axis) {
+    var keep = {};
+    keep[focal] = 1;
+    rels.forEach(function(r){
+      if (!axisHit(r, axis)) return;
+      keep[r.source_entity] = 1; keep[r.target_entity] = 1;
+    });
+    edges = edges.map(function(e){
+      var r = REL[e.data.rel];
+      var on = r && axisHit(r, axis);
+      // 고른 상자 강조가 이미 흐려 놓은 선은 더 진해지지 않는다. 둘 다 만족해야 진하다
+      return Object.assign({}, e, { style: Object.assign({}, e.style,
+        { opacity: on ? (e.style.opacity === undefined ? 1 : e.style.opacity) : 0.1 }) });
+    });
+    nodes = nodes.map(function(n){
+      return keep[n.id] ? n
+        : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
+    });
+  }
+
+
   return { nodes: place(nodes, edges), edges: edges };
 }
 
@@ -1396,13 +1502,13 @@ function Roster(p){
   }) : rows;
   var TYPE_KO = { company:'회사', jv:'합작', project_spv:'프로젝트 법인', fund_jv:'펀드 JV',
     financial_institution:'금융기관', utility:'유틸리티', end_user:'최종 사용자',
-    material:'소재', revenue_type:'매출원' };
+    application:'전방시장' };
   return h('div', { className:'pane' }, [
     h('h2', { key:'t' }, p.all ? '이 판에 선 이름 ' + rows.length + '개'
                                : '분석한 회사 ' + rows.length + '곳'),
     h('p', { key:'n', className:'note' }, [
       h('span', { key:'a' }, p.all
-        ? '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 소재와 매출원은 회사가 아니라 층이다. '
+        ? '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 공급원과 매출원은 상자가 아니라 위쪽 띠다. '
         : '줄을 누르면 그 회사의 밸류체인이 열린다. '),
       h('button', { key:'b', className:'btn', onClick: p.onToggleAll },
         p.all ? '중심 회사만' : '판에 선 이름 전부 보기')
@@ -1545,6 +1651,78 @@ function Bom(p){
   ]);
 }
 
+// ── 공급원·매출원 띠 ────────────────────────────────────────────────
+// 공급원은 소재·가공과 타겟 사이, 매출원은 타겟과 직접 고객 사이의 분석축이다.
+// 상자가 아니라 띠인 이유는 한 공급사가 여러 공급원에, 한 고객이 여러 매출원에
+// 걸리기 때문이다. 상자로 세우면 같은 회사가 분류마다 복제된다
+function Axis(p){
+  var m = clsOf(p.chain);
+  // 분모가 다른 %를 한 줄에 나란히 찍지 않는다. 가동률과 매출 비중을 같은 꼴로 적으면
+  // 읽는 사람이 둘을 더한다. 그 줄에서 가장 많이 쓰인 분모의 값만 띠에 적고,
+  // 나머지는 손 얹었을 때만 분모와 함께 보여 준다
+  // 띠에 적는 값은 한 갈래뿐이다 — 매출원은 총매출 대비 비중, 공급원은 조달 비중.
+  // 가동률·전방 구성처럼 다른 것을 세는 값은 숫자를 안 적고 손 얹었을 때만 보여 준다
+  var SHARE_METRIC = { rt:/revenue.*share$/, ss:/(sourcing|purchase|supply).*share$/ };
+  function isShare(kind, sh){
+    return PCT[sh.unit] && SHARE_METRIC[kind].test(sh.metric || '');
+  }
+  function pick(kind, x){
+    var y = parseInt(p.year, 10);
+    return (x.shares || []).filter(function(sh){
+      if (!isShare(kind, sh) || sh.value === null || sh.value === undefined) return false;
+      var a = y4(sh.period_start) || y4(sh.as_of_date);
+      var b = y4(sh.period_end) || y4(sh.as_of_date) || a;
+      return a && a <= y && y <= b;
+    })[0] || null;
+  }
+  function tip(x){
+    var t = x.note ? [x.note] : [];
+    (x.shares || []).forEach(function(sh){
+      if (sh.value === null || sh.value === undefined) return;
+      t.push((sh.metric || '') + ' ' + sh.value + '% · ' + (sh.period || '시점 미상')
+             + ' · 분모 '
+             + (sh.denominator || '미상'));
+    });
+    return t.join('\\n') || null;
+  }
+  function chips(kind, list, label){
+    if (!list.length) return null;
+    return h('div', { key:kind, className:'axrow' }, [
+      h('b', { key:'b' }, label),
+      h('div', { key:'c', className:'axchips' }, list.map(function(x){
+        var key = kind + ':' + x.id, on = p.axis === key, sh = pick(kind, x);
+        return h('button', { key:x.id, title: tip(x),
+          className: 'axchip' + (on ? ' on' : '') + (x.unallocated ? ' un' : ''),
+          onClick: function(){ p.onPick(on ? null : key); } }, [
+          x.label, sh ? h('i', { key:'s' }, sh.value + '%') : null ]);
+      }))
+    ]);
+  }
+  var rows = [chips('ss', m.ssList, '공급원'), chips('rt', m.rtList, '매출원')]
+    .filter(function(x){ return x; });
+  if (!rows.length) return null;
+  // 고른 분류에 걸린 줄이 하나도 없으면 화면이 통째로 흐려진다. 왜 그런지 적는다 —
+  // 공시가 제품별 매출만 밝히고 고객별 귀속은 안 밝힌 자리다
+  var empty = null;
+  if (p.axis) {
+    var key = p.axis.slice(3), kind = p.axis.slice(0, 2);
+    var hit = (CHAINS[p.chain] ? CHAINS[p.chain].relationships : []).some(function(r){
+      return ((kind === 'ss' ? r.supply_source_ids : r.revenue_type_ids) || [])
+        .indexOf(key) >= 0;
+    });
+    if (!hit) {
+      var o = (kind === 'ss' ? m.ss : m.rt)[key] || {};
+      empty = h('div', { key:'e', className:'axnote' },
+        '「' + (o.label || key) + '」에 귀속 근거가 붙은 거래가 없다. 회사 전체 비중만 '
+        + '공개됐고 개별 ' + (kind === 'ss' ? '공급사' : '고객') + '의 귀속은 '
+        + (kind === 'ss' ? '공급원 미상' : '배분 미상') + '으로 남았다');
+    }
+  }
+  return h('div', { className:'axis' }, rows.concat([ empty,
+    p.axis ? h('button', { key:'x', className:'axclear',
+      onClick: function(){ p.onPick(null); } }, '띠 풀기') : null ]));
+}
+
 // ── 앱 ──────────────────────────────────────────────────────────────
 function App(){
   var u0 = readUrl(true);
@@ -1560,6 +1738,7 @@ function App(){
   var l2 = useState(window.innerWidth >= 980), drw = l2[0], setDrw = l2[1];
   var m2 = useState(null), rf = m2[0], setRf = m2[1];
   var n2 = useState(false), allNames = n2[0], setAllNames = n2[1];
+  var o2 = useState(null), axis = o2[0], setAxis = o2[1];
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
@@ -1620,8 +1799,8 @@ function App(){
   }, []);
 
   var gr = useMemo(function(){
-    return buildGraph(focal, year, sel);
-  }, [focal, year, sel]);
+    return buildGraph(focal, year, sel, axis);
+  }, [focal, year, sel, axis]);
 
   // 칸 머리(원재료·소재·가공…) 위로는 못 올라가게 막는다. 아래·좌우는 넉넉히 둔다
   var extent = useMemo(function(){
@@ -1637,7 +1816,7 @@ function App(){
   }, [gr]);
 
   function goFocal(id){
-    setFocal(id); setOpen([]); setSel({ kind:'ent', id:id });
+    setFocal(id); setOpen([]); setSel({ kind:'ent', id:id }); setAxis(null);
     setPath(function(p){
       return p.indexOf(id) >= 0 ? p.slice(0, p.indexOf(id) + 1) : p.concat([id]);
     });
@@ -1759,12 +1938,19 @@ function App(){
     h('i', { key:'p' }, '상자를 누르면 그 줄기만 진해짐'),
     h('b', { key:'c' }, '가로'),
     h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통 → 타겟'),
-    h('i', { key:7 }, '오른쪽 직접 고객 → 중개 → 간접 고객, 프로젝트는 테두리')
+    h('i', { key:7 }, '오른쪽 직접 고객 → 중개 → 간접 고객, 프로젝트는 테두리'),
+    h('b', { key:'x' }, '띠'),
+    h('i', { key:8 }, '공급원 타겟에 들어가는 품목'),
+    h('i', { key:9 }, '매출원 타겟에서 나가는 매출 갈래'),
+    h('i', { key:10 }, '고르면 그 분류에 걸린 줄만 진해짐. 상자는 안 사라짐'),
+    h('i', { key:11 }, '미상 귀속 근거가 없어 못 나눈 자리')
   ]);
 
   return h('div', { className:'app' }, [ top,
     mode === 'roster' ? null : crumb,
     (mode === 'current' || mode === 'timeline') ? scrub : null,
+    mode === 'current' ? h(Axis, { key:'ax', chain: chainOf(focal), axis: axis, year: year,
+      onPick: setAxis }) : null,
     h('div', { key:'m', className:'main' }, [
       body,
       ((mode === 'current' || mode === 'timeline') && drw)
@@ -1822,6 +2008,8 @@ def build():
             'claims': load('chains', ck, 'claims.json') or [],
             'hypotheses': load('chains', ck, 'hypotheses.json') or [],
             'meta': load('chains', ck, 'chain.json') or {},
+            'classifications': load('chains', ck, 'classifications.json')
+                               or {'supply_sources': [], 'revenue_types': []},
             'bom': read_dir(base, 'bom'),
             'financials': read_dir(base, 'financials'),
         }

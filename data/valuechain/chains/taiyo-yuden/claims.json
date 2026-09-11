@@ -10,7 +10,9 @@
   "source_ids": [
    "ty_fin_2026"
   ],
-  "note": "매출총이익률은 약 23.1%다. FY2025(2025년 3월 결산) 매출은 341,438백만엔·매출원가는 269,867백만엔이었다(04의 O001)"
+  "note": "매출총이익률은 약 23.1%다. FY2025(2025년 3월 결산) 매출은 341,438백만엔·매출원가는 269,867백만엔이었다(04의 O001)",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-forecast-fy2027",
@@ -23,7 +25,9 @@
   "source_ids": [
    "ty_forecast_2027"
   ],
-  "note": "FY2027 1분기 매출은 939억 엔이며 회사는 AI 서버 수요를 핵심 성장동인으로 꼽는다"
+  "note": "FY2027 1분기 매출은 939억 엔이며 회사는 AI 서버 수요를 핵심 성장동인으로 꼽는다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-product-mix",
@@ -36,7 +40,9 @@
   "source_ids": [
    "ty_product_2026"
   ],
-  "note": "Integrated Modules·Others 두 갈래는 04 표에 관측 번호가 없어 관측이 아니라 이 주장으로만 남긴다"
+  "note": "Integrated Modules·Others 두 갈래는 04 표에 관측 번호가 없어 관측이 아니라 이 주장으로만 남긴다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-vertical-integration",
@@ -49,7 +55,9 @@
   "source_ids": [
    "ty_internal_material"
   ],
-  "note": "외부 분말 공급사에서 사들여 최종 조립만 한다는 단순한 구조가 아니다"
+  "note": "외부 분말 공급사에서 사들여 최종 조립만 한다는 단순한 구조가 아니다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-supplier-undisclosed",
@@ -63,7 +71,9 @@
    "ty_procurement",
    "ty_material_risk"
   ],
-  "note": "일부 원재료는 특정 공급사 의존도가 높아 장기공급계약으로 조달한다고만 밝힌다"
+  "note": "일부 원재료는 특정 공급사 의존도가 높아 장기공급계약으로 조달한다고만 밝힌다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-candidates-excluded",
@@ -76,7 +86,9 @@
   "source_ids": [
    "ty_material_risk"
   ],
-  "note": "근거 없는 공급사 이름을 그래프에 올리지 않는다는 원칙을 지킨 결과다"
+  "note": "근거 없는 공급사 이름을 그래프에 올리지 않는다는 원칙을 지킨 결과다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-sakai-historical",
@@ -89,7 +101,9 @@
   "source_ids": [
    "sakai_hist"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-shipments-202606",
@@ -102,7 +116,9 @@
   "source_ids": [
    "ai_tf_20260728"
   ],
-  "note": "TrendForce 조사 기준 산업 추정치다. 회사 분기 실적의 수주·출하 지표와 정의가 다르다(원표기: CONFIRMED industry estimate · 04의 O009)"
+  "note": "TrendForce 조사 기준 산업 추정치다. 회사 분기 실적의 수주·출하 지표와 정의가 다르다(원표기: CONFIRMED industry estimate · 04의 O009)",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-bb-ratio-202606",
@@ -115,7 +131,9 @@
   "source_ids": [
    "ai_bb_202607"
   ],
-  "note": "TrendForce 조사 기준 산업 추정치이며 회사 분기 실적 자료의 BB 지표와는 정의·기간이 달라 섞지 않는다(원표기: CONFIRMED industry estimate · 04의 O010)"
+  "note": "TrendForce 조사 기준 산업 추정치이며 회사 분기 실적 자료의 BB 지표와는 정의·기간이 달라 섞지 않는다(원표기: CONFIRMED industry estimate · 04의 O010)",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ty-ai-exposure-scenario",
@@ -128,6 +146,8 @@
   "source_ids": [
    "ai_share_scenario"
   ],
-  "note": "시나리오일 뿐 확정치가 아니다(04의 O011)"
+  "note": "시나리오일 뿐 확정치가 아니다(04의 O011)",
+  "subject_classification": null,
+  "object_classification": null
  }
 ]

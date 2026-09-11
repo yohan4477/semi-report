@@ -6,6 +6,11 @@ FAIL 0 이어야 푸시한다. 규약은 scripts/gen_vcexplorer.py 의 gutterX.
   R2 세로 구간이 통로 한가운데에서 ±10px 밖으로 나갔나
   R3 타겟 왼쪽에서 타겟으로 가는 선이 아래로 꺾었나 (왼쪽은 위로만)
   R4 타겟 오른쪽에서 타겟에서 나가는 선이 위로 꺾었나 (오른쪽은 아래로만)
+  R5 한 선에 세로 구간이 둘 이상인가 (상자를 피하려 여러 번 꺾었나)
+
+R5 는 프레임워크 §22-G·H 다. 상자를 피하는 일은 「더 일찍·더 길게 한 번 옮기기」로
+풀고 「여러 번 꺾기」로 풀지 않는다. 통로를 하나 고르면 그 앞은 출발 높이로, 그 뒤는
+닿을 높이로 곧게 간다 — 꺾임은 둘을 넘지 않는다.
 
 타겟 칸을 가로지르는 선은 방향을 안 본다 — 왼쪽 공급사가 오른쪽 프로젝트에 바로
 대는 꼴이라 한쪽 규칙으로 재면 반대쪽이 늘 어긋난다.
@@ -98,9 +103,11 @@ def check(page, label):
         # 한쪽 규칙으로 못 잰다. 어느 쪽에서 보든 반대쪽이 어긋난다
         ax, bx = segs[0][0][0], segs[-1][1][0]
         crosses = min(ax, bx) < fx and max(ax, bx) > fx + COL_W
+        vert = 0
         for (x0, y0), (x1, y1) in segs:
             if abs(x1 - x0) > 0.6 or abs(y1 - y0) <= 2:
                 continue
+            vert += 1
             n += 1
             x = (x0 + x1) / 2
             inside = [c for c in cols if c - TOL <= x <= c + COL_W + TOL]
@@ -121,6 +128,9 @@ def check(page, label):
             if x > fx + COL_W and dirx * dy < -TOL:
                 fails.append(u'FAIL %s — 타겟 오른쪽에서 꺾는 쪽이 거꾸로다 (x=%.1f, %.1f→%.1f)'
                              % (label, x, y0, y1))
+        if vert > 1:
+            fails.append(u'FAIL %s — 한 선이 세로로 %d 번 꺾었다 (통로 하나에서 끝낸다)'
+                         % (label, vert))
     return n
 
 

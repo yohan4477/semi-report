@@ -10,7 +10,9 @@
   "source_ids": [
    "be_10k_fy2025"
   ],
-  "note": "제품 15억 3,128만 · 설치 2억 410만 · 서비스 2억 2,830만 · 전력 6,035만"
+  "note": "제품 15억 3,128만 · 설치 2억 410만 · 서비스 2억 2,830만 · 전력 6,035만",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-fundjv-43",
@@ -23,7 +25,9 @@
   "source_ids": [
    "be_10k_fy2025"
   ],
-  "note": "제품 8억 980만 + 설치 5,230만 = 8억 6,210만 달러, 총매출의 42.6%"
+  "note": "제품 8억 980만 + 설치 5,230만 = 8억 6,210만 달러, 총매출의 42.6%",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-aep-13",
@@ -37,7 +41,9 @@
    "be_10k_fy2025",
    "be_aep_1gw"
   ],
-  "note": "13% 는 공시다. AEP 라는 지목은 용량과 단가를 맞춰 본 가설이다. 03 의 CLM003"
+  "note": "13% 는 공시다. AEP 라는 지목은 용량과 단가를 맞춰 본 가설이다. 03 의 CLM003",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-eternix-12",
@@ -50,7 +56,9 @@
   "source_ids": [
    "be_sk_eternix_80mw"
   ],
-  "note": "12% 는 공시다. 법인 지목과 매출 인식 시점은 비공개다. 03 의 CLM004"
+  "note": "12% 는 공시다. 법인 지목과 매출 인식 시점은 비공개다. 03 의 CLM004",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-cctc-share",
@@ -63,7 +71,9 @@
   "source_ids": [
    "cctc_yicai"
   ],
-  "note": "관계는 확인. 점유율은 2차 조사"
+  "note": "관계는 확인. 점유율은 2차 조사",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-amosense-15",
@@ -76,7 +86,9 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "note": "연 720만 장 ÷ 4,500~4,950만 장"
+  "note": "연 720만 장 ÷ 4,500~4,950만 장",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-amosense-9",
@@ -89,7 +101,9 @@
   "source_ids": [
    "sedaily_kr_suppliers"
   ],
-  "note": "앞 항목과 분모가 다르다"
+  "note": "앞 항목과 분모가 다르다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-mtar-5060",
@@ -103,7 +117,9 @@
    "mtar_ar_fy2425",
    "mtar_ar_fy2024"
   ],
-  "note": "회사 공시. 전해조 유닛은 단독 공급으로 설명된다"
+  "note": "회사 공시. 전해조 유닛은 단독 공급으로 설명된다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-coseus-100m",
@@ -116,7 +132,9 @@
   "source_ids": [
    "coseus_kind"
   ],
-  "note": "제품 BOM 이 아니라 설비"
+  "note": "제품 BOM 이 아니라 설비",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-seojin-52m",
@@ -129,7 +147,9 @@
   "source_ids": [
    "seojin_kind"
   ],
-  "note": "베트남 EXW, 미국 공급, 대응 MW 비공개"
+  "note": "베트남 EXW, 미국 공급, 대응 MW 비공개",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ls-216m",
@@ -142,7 +162,9 @@
   "source_ids": [
    "lselectric_kind"
   ],
-  "note": "배전반과 배전 변압기"
+  "note": "배전반과 배전 변압기",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ls-jupiter",
@@ -156,7 +178,9 @@
    "lselectric_kind",
    "oracle_jupiter"
   ],
-  "note": "지역과 시점이 붙지만 직접 서술은 없다"
+  "note": "지역과 시점이 붙지만 직접 서술은 없다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-brookfield-25b",
@@ -169,7 +193,9 @@
   "source_ids": [
    "be_brookfield_25b"
   ],
-  "note": "50억 달러에서 확대"
+  "note": "50억 달러에서 확대",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-oracle-28gw",
@@ -182,7 +208,9 @@
   "source_ids": [
    "be_oracle_28gw"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-equinix-100mw",
@@ -195,7 +223,9 @@
   "source_ids": [
    "be_equinix_100mw"
   ],
-  "note": "약 75MW 가동 + 30MW 공사 중"
+  "note": "약 75MW 가동 + 30MW 공사 중",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-nebius-328mw",
@@ -208,7 +238,9 @@
   "source_ids": [
    "nebius_be_328mw"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-aep-1gw",
@@ -221,7 +253,9 @@
   "source_ids": [
    "be_aep_1gw"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-eternix-80mw",
@@ -234,7 +268,9 @@
   "source_ids": [
    "be_sk_eternix_80mw"
   ],
-  "note": "충주 40MW + 대소원 40MW"
+  "note": "충주 40MW + 대소원 40MW",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-be26c1-same-customer",
@@ -247,7 +283,9 @@
   "source_ids": [
    "be_10qa_2026q2"
   ],
-  "note": "상반기 44%는 약 7억 9,920만 달러, 2분기 73%는 약 7억 7,770만 달러다. 2분기 금액만으로도 상반기 총액의 42.8%에 달해 별개 법인이라는 가정은 공시된 상반기 집중도와 맞지 않는다. 법인명은 여전히 비공개다. 03의 CLM021"
+  "note": "상반기 44%는 약 7억 9,920만 달러, 2분기 73%는 약 7억 7,770만 달러다. 2분기 금액만으로도 상반기 총액의 42.8%에 달해 별개 법인이라는 가정은 공시된 상반기 집중도와 맞지 않는다. 법인명은 여전히 비공개다. 03의 CLM021",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-oracle-customers-customer",
@@ -261,7 +299,9 @@
    "be_10qa_2026q2",
    "be_424b7_2026"
   ],
-  "note": "직접적 법률상 계약 상대방 증거 없이 오라클을 2분기 73% 계약 고객과 같다고 두지 않는다. 03의 CLM023"
+  "note": "직접적 법률상 계약 상대방 증거 없이 오라클을 2분기 73% 계약 고객과 같다고 두지 않는다. 03의 CLM023",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-project-equity-50m",
@@ -274,7 +314,9 @@
   "source_ids": [
    "be_10qa_2026q2"
   ],
-  "note": "프로젝트 법인·SPV 층의 존재 가능성을 뒷받침한다. 근거 없이 프로젝트 주피터 법인으로 특정하지 않는다. 대응 개체 id를 목록에서 찾지 못해 object는 None으로 둔다. 03의 CLM024"
+  "note": "프로젝트 법인·SPV 층의 존재 가능성을 뒷받침한다. 근거 없이 프로젝트 주피터 법인으로 특정하지 않는다. 대응 개체 id를 목록에서 찾지 못해 object는 None으로 둔다. 03의 CLM024",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-aepohio-aws-cologix",
@@ -287,7 +329,9 @@
   "source_ids": [
    "aep_ohio_2025"
   ],
-  "note": "AEP 오하이오라는 중개·법인 층을 그대로 두는 경로가 정본이다. AWS와 콜로직스가 자동으로 블룸의 직접 계약 고객이 되는 것은 아니다. 03의 CLM025"
+  "note": "AEP 오하이오라는 중개·법인 층을 그대로 두는 경로가 정본이다. AWS와 콜로직스가 자동으로 블룸의 직접 계약 고객이 되는 것은 아니다. 03의 CLM025",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-kaori-4026pct",
@@ -300,7 +344,9 @@
   "source_ids": [
    "kaori_ar_fy2025"
   ],
-  "note": "분모는 카오리의 2025 회계연도 순매출(신대만달러 65억 8,062만)이며, 블룸 핫박스 조달 점유율이 아니다. 2024 회계연도 블룸 매출은 신대만달러 18억 7,352만으로 카오리 순매출의 28.47%였다. 03의 CLM026"
+  "note": "분모는 카오리의 2025 회계연도 순매출(신대만달러 65억 8,062만)이며, 블룸 핫박스 조달 점유율이 아니다. 2024 회계연도 블룸 매출은 신대만달러 18억 7,352만으로 카오리 순매출의 28.47%였다. 03의 CLM026",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-cctc-historical-2014",
@@ -313,7 +359,9 @@
   "source_ids": [
    "cctc_ipo_2014"
   ],
-  "note": "블룸은 2014년 상반기 CCTC 매출의 9.54%를 차지한 1위 고객이었다. 관계와 제품 범위를 확인할 뿐 2026년 75~80% 조달 점유율을 확인하지는 않는다. 03의 CLM027"
+  "note": "블룸은 2014년 상반기 CCTC 매출의 9.54%를 차지한 1위 고객이었다. 관계와 제품 범위를 확인할 뿐 2026년 75~80% 조달 점유율을 확인하지는 않는다. 03의 CLM027",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-sanmina-direct",
@@ -326,7 +374,9 @@
   "source_ids": [
    "customs_sanmina_2026"
   ],
-  "note": "2026년 CCE CORVA·정지형 컨버터 선적이 반복 확인된다. 선적 건수를 조달 점유율로 환산할 수는 없다. 03의 CLM028"
+  "note": "2026년 CCE CORVA·정지형 컨버터 선적이 반복 확인된다. 선적 건수를 조달 점유율로 환산할 수는 없다. 03의 CLM028",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-acbel-direct",
@@ -339,7 +389,9 @@
   "source_ids": [
    "customs_acbel_2026"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED direct relationship / UNDISCLOSED tier relation」, 신뢰도는 「HIGH direct; UNKNOWN tier」다. 블룸 프로그램 단위 공급사 간 증거가 나오기 전까지 AcBel과 산미나는 독립 노드로 둔다. 03의 CLM029"
+  "note": "드라이브 원표기는 「CONFIRMED direct relationship / UNDISCLOSED tier relation」, 신뢰도는 「HIGH direct; UNKNOWN tier」다. 블룸 프로그램 단위 공급사 간 증거가 나오기 전까지 AcBel과 산미나는 독립 노드로 둔다. 03의 CLM029",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-nash-direct",
@@ -352,7 +404,9 @@
   "source_ids": [
    "customs_nash_2026"
   ],
-  "note": "KPE/CM2 산타크루즈, CCE+1 인클로저 선적이 확인된다. 내시를 서진시스템 산하로 강제로 묶지 않는다. 위계는 아직 풀리지 않았다. 03의 CLM030"
+  "note": "KPE/CM2 산타크루즈, CCE+1 인클로저 선적이 확인된다. 내시를 서진시스템 산하로 강제로 묶지 않는다. 위계는 아직 풀리지 않았다. 03의 CLM030",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-texon-seojin",
@@ -367,7 +421,9 @@
    "texon_history",
    "seojin_ar_2025"
   ],
-  "note": "텍슨의 블룸 선적을 서진시스템의 5,263.8만 달러 모듈 계약과 같은 범위·발주로 가정하지 않는다. 03의 CLM031"
+  "note": "텍슨의 블룸 선적을 서진시스템의 5,263.8만 달러 모듈 계약과 같은 범위·발주로 가정하지 않는다. 03의 CLM031",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-stackpole-patent",
@@ -380,7 +436,9 @@
   "source_ids": [
    "patent_stackpole"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED historical technical relationship / INFERRED current supplier」, 신뢰도는 「HIGH historical; LOW-MEDIUM current supplier」다. 공동 특허가 2026년 상업적 조달 점유율을 뒷받침하지는 않는다. 03의 CLM032"
+  "note": "드라이브 원표기는 「CONFIRMED historical technical relationship / INFERRED current supplier」, 신뢰도는 「HIGH historical; LOW-MEDIUM current supplier」다. 공동 특허가 2026년 상업적 조달 점유율을 뒷받침하지는 않는다. 03의 CLM032",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-porite-2026-active",
@@ -394,7 +452,9 @@
    "porite_2026_note",
    "customs_porite_2026"
   ],
-  "note": "선적과 공식 공급사 발언으로 관계는 확인된다. 2024년 약 50% 조달 점유율은 HISTORICAL_CURRENT_UNKNOWN 상태로 남으며, 관계가 살아 있다는 사실이 2026년 점유율을 확인해 주지는 않는다. 03의 CLM033"
+  "note": "선적과 공식 공급사 발언으로 관계는 확인된다. 2024년 약 50% 조달 점유율은 HISTORICAL_CURRENT_UNKNOWN 상태로 남으며, 관계가 살아 있다는 사실이 2026년 점유율을 확인해 주지는 않는다. 03의 CLM033",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-trade-snapshot-q1-2026",
@@ -407,7 +467,9 @@
   "source_ids": [
    "tarifflo_q1_2026"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED trade-data snapshot」이다. 1분기 1차 협력사 53곳이 확인되며, 관계·활동 신호로만 쓰고 조달·지출 점유율로 쓰지 않는다. object는 특정 상대 법인이 없어 None으로 둔다. 03의 CLM034"
+  "note": "드라이브 원표기는 「CONFIRMED trade-data snapshot」이다. 1분기 1차 협력사 53곳이 확인되며, 관계·활동 신호로만 쓰고 조달·지출 점유율로 쓰지 않는다. object는 특정 상대 법인이 없어 None으로 둔다. 03의 CLM034",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-jiafeng-direct",
@@ -420,7 +482,9 @@
   "source_ids": [
    "customs_jiafeng_2026"
   ],
-  "note": "CM1 빌드베이스 키트, 사이드패널, 워터스키드 인터페이스 조립품 직납이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM035"
+  "note": "CM1 빌드베이스 키트, 사이드패널, 워터스키드 인터페이스 조립품 직납이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM035",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-cumi-direct",
@@ -433,7 +497,9 @@
   "source_ids": [
    "customs_cumi_2026"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED product/relationship; exact SOFC function INFERRED」, 신뢰도는 「HIGH relationship; LOW-MEDIUM function」이다. 실링 부품으로 분류하지 않으며, 핫존 구조·단열 기능은 여전히 추정이다. 03의 CLM036"
+  "note": "드라이브 원표기는 「CONFIRMED product/relationship; exact SOFC function INFERRED」, 신뢰도는 「HIGH relationship; LOW-MEDIUM function」이다. 실링 부품으로 분류하지 않으며, 핫존 구조·단열 기능은 여전히 추정이다. 03의 CLM036",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-mingrui-direct",
@@ -446,7 +512,9 @@
   "source_ids": [
    "customs_mingrui_2026"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED relationship / INFERRED subsystem」, 신뢰도는 「HIGH relationship; LOW-MEDIUM subsystem」이다. CCTC·AMOsense의 전해질 기판 공급과는 분리해 둔다. 03의 CLM037"
+  "note": "드라이브 원표기는 「CONFIRMED relationship / INFERRED subsystem」, 신뢰도는 「HIGH relationship; LOW-MEDIUM subsystem」이다. CCTC·AMOsense의 전해질 기판 공급과는 분리해 둔다. 03의 CLM037",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-seojin-overseas-mfg",
@@ -459,7 +527,9 @@
   "source_ids": [
    "seojin_kind"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED production method / UNDISCLOSED executing subsidiary」다. 프로젝트별 증거 없이 텍슨이나 다른 명명된 자회사를 발주 실행처로 단정하지 않는다. 03의 CLM038"
+  "note": "드라이브 원표기는 「CONFIRMED production method / UNDISCLOSED executing subsidiary」다. 프로젝트별 증거 없이 텍슨이나 다른 명명된 자회사를 발주 실행처로 단정하지 않는다. 03의 CLM038",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-coreweave-chirisa",
@@ -472,7 +542,9 @@
   "source_ids": [
    "be_coreweave_2024"
   ],
-  "note": "최종 사용자·입주사인 코어위브와 부지 소유주인 치리사를 구분한다. 보도자료만으로는 블룸의 법적 매수 주체가 아직 입증되지 않는다. 03의 CLM039"
+  "note": "최종 사용자·입주사인 코어위브와 부지 소유주인 치리사를 구분한다. 보도자료만으로는 블룸의 법적 매수 주체가 아직 입증되지 않는다. 03의 CLM039",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-3tg-136-suppliers",
@@ -485,7 +557,9 @@
   "source_ids": [
    "be_conflict_minerals_2025"
   ],
-  "note": "분모는 분쟁광물 대상 협력사이며 전체 1차 상업 협력사 수가 아니다. 세관 관측 협력사 수와 직접 비교하지 않는다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM043"
+  "note": "분모는 분쟁광물 대상 협력사이며 전체 1차 상업 협력사 수가 아니다. 세관 관측 협력사 수와 직접 비교하지 않는다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM043",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-3tg-downstream",
@@ -498,7 +572,9 @@
   "source_ids": [
    "be_conflict_minerals_2025"
   ],
-  "note": "원자재 → 하위 협력사 → 직접 부품·소재 협력사 → 블룸으로 이어지는 위계를 뒷받침한다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM044"
+  "note": "원자재 → 하위 협력사 → 직접 부품·소재 협력사 → 블룸으로 이어지는 위계를 뒷받침한다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM044",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-cypress-direct",
@@ -511,7 +587,9 @@
   "source_ids": [
    "customs_cypress_2026"
   ],
-  "note": "2026년 9월 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM045"
+  "note": "2026년 9월 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM045",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-unicorn-direct",
@@ -524,7 +602,9 @@
   "source_ids": [
    "customs_unicorn_2026"
   ],
-  "note": "미세다공성·열단열재 선적이 2026년 반복 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM046"
+  "note": "미세다공성·열단열재 선적이 2026년 반복 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM046",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-wolfe-direct",
@@ -537,7 +617,9 @@
   "source_ids": [
    "customs_wolfe_2026"
   ],
-  "note": "발전기 배기관 선적이 확인된다. 기계·열 배기 역할이며 조달 점유율은 공개되지 않았다. 03의 CLM047"
+  "note": "발전기 배기관 선적이 확인된다. 기계·열 배기 역할이며 조달 점유율은 공개되지 않았다. 03의 CLM047",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-thermocouple-direct",
@@ -550,7 +632,9 @@
   "source_ids": [
    "customs_thermocouple_2026"
   ],
-  "note": "오카자키제작소(okazaki-mfg)도 함께 반복 직납이 확인된다. 선적 수량은 조달 점유율이 아니다. 03의 CLM048"
+  "note": "오카자키제작소(okazaki-mfg)도 함께 반복 직납이 확인된다. 선적 수량은 조달 점유율이 아니다. 03의 CLM048",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-hansun-global-cert",
@@ -563,7 +647,9 @@
   "source_ids": [
    "thebell_hansun_2026"
   ],
-  "note": "SOFC 배관모듈 글로벌 공급사 인증이 확인된다. 정확한 글로벌 조달 점유율은 비공개다. 03의 CLM049"
+  "note": "SOFC 배관모듈 글로벌 공급사 인증이 확인된다. 정확한 글로벌 조달 점유율은 비공개다. 03의 CLM049",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-mitac-expanded",
@@ -576,7 +662,9 @@
   "source_ids": [
    "be_mitac_2026"
   ],
-  "note": "캘리포니아 두 지점에 걸친 직접 협력·배치는 확인되나, 보도자료는 미탁 전체 지점의 정확한 계약 MW를 밝히지 않는다. 03의 CLM050"
+  "note": "캘리포니아 두 지점에 걸친 직접 협력·배치는 확인되나, 보도자료는 미탁 전체 지점의 정확한 계약 MW를 밝히지 않는다. 03의 CLM050",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-ai-infra-250mw",
@@ -589,7 +677,9 @@
   "source_ids": [
    "be_mitac_2026"
   ],
-  "note": "드라이브 원표기는 「CONFIRMED company statement」다. 분모는 블룸 AI 인프라 고객 부문이며, 블룸 전체 배치나 총 백로그가 아니다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM051"
+  "note": "드라이브 원표기는 「CONFIRMED company statement」다. 분모는 블룸 AI 인프라 고객 부문이며, 블룸 전체 배치나 총 백로그가 아니다. object에 대응하는 단일 상대 법인이 없어 None으로 둔다. 03의 CLM051",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-microsensor-direct",
@@ -602,6 +692,8 @@
   "source_ids": [
    "customs_microsensor_2026"
   ],
-  "note": "2026년 반복 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM052"
+  "note": "2026년 반복 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM052",
+  "subject_classification": null,
+  "object_classification": null
  }
 ]

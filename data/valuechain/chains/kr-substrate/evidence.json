@@ -6,7 +6,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "공급 생태계가 좁고 인증 장벽이 높다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e002",
@@ -15,7 +16,8 @@
   "source_id": "dd_product_page",
   "evidence_type": "direct",
   "evidence": "공급 생태계가 좁고 인증 장벽이 높다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e003",
@@ -24,7 +26,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "공급 생태계로 확인된다. 이 회사가 대덕전자 안에서 차지하는 몫은 공개되지 않았다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e004",
@@ -33,7 +36,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e005",
@@ -42,79 +46,88 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e006",
-  "relationship_id": "ccl-dd",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "FY2025 원재료 매입 1,404억 원",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-ccl-substrate"
  },
  {
   "id": "kr-e007",
-  "relationship_id": "prepreg-dd",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "FY2025 원재료 매입 587억 원",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-prepreg"
  },
  {
   "id": "kr-e008",
-  "relationship_id": "abf-dd",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "FY2025 원재료 매입 151억 원. 금액은 작지만 FC-BGA 병목이다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-abf-film"
  },
  {
   "id": "kr-e009",
-  "relationship_id": "pgc-dd",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "부재료 매입의 42.2%",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-pgc-plating"
  },
  {
   "id": "kr-e010",
-  "relationship_id": "dd-rev-memory-edge",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ir_mix",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-memory"
  },
  {
   "id": "kr-e011",
-  "relationship_id": "dd-rev-fcbga-edge",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_product_page",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-fcbga"
  },
  {
   "id": "kr-e012",
-  "relationship_id": "dd-rev-mlb-edge",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ir_mix",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-mlb"
  },
  {
   "id": "kr-e013",
-  "relationship_id": "dd-rev-unalloc-edge",
+  "relationship_id": null,
   "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "indirect",
   "evidence": "공시가 상위 고객을 익명으로만 밝힌다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-unallocated"
  },
  {
   "id": "kr-e014",
@@ -123,7 +136,8 @@
   "source_id": "dd_filing_1h2024",
   "evidence_type": "direct",
   "evidence": "2024 반기 공시가 이름을 든다. 매출원 안의 몫은 공개되지 않았다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e015",
@@ -132,7 +146,8 @@
   "source_id": "dd_filing_1h2024",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e016",
@@ -141,7 +156,8 @@
   "source_id": "dd_filing_1h2024",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e017",
@@ -150,7 +166,8 @@
   "source_id": "dd_filing_1h2024",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e018",
@@ -159,7 +176,8 @@
   "source_id": "dd_ir_mix",
   "evidence_type": "indirect",
   "evidence": "메모리 기판이 실리는 자리",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e019",
@@ -168,7 +186,8 @@
   "source_id": "zdnet_tesla_2026",
   "evidence_type": "indirect",
   "evidence": "복수 업계 보도로 공급망 포함이 확인된다. 회사가 공시한 고객명은 아니다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e020",
@@ -177,7 +196,8 @@
   "source_id": "dd_ir_ssd_optical",
   "evidence_type": "direct",
   "evidence": "IR 가 거래와 물량 증가를 밝혔다. 비공개인 것은 상대 실명뿐이다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e021",
@@ -186,7 +206,8 @@
   "source_id": "dd_ir_ssd_optical",
   "evidence_type": "direct",
   "evidence": "IR 가 거래를 밝혔다. 비공개인 것은 상대 실명뿐이다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e022",
@@ -195,7 +216,8 @@
   "source_id": "dd_ir_pcie",
   "evidence_type": "direct",
   "evidence": "2026 하반기 이후 로드맵. IR 가 밝힌 것은 계획이고 상대 실명은 비공개다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e023",
@@ -204,7 +226,8 @@
   "source_id": "zdnet_tesla_2026",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e024",
@@ -213,7 +236,8 @@
   "source_id": "dd_ir_ssd_optical",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e025",
@@ -222,7 +246,8 @@
   "source_id": "dd_ir_amd",
   "evidence_type": "indirect",
   "evidence": "증권사 자료가 양산과 Helios 연계를 적는다. 회사 공시 고객명은 아니다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e026",
@@ -231,7 +256,8 @@
   "source_id": "dd_bk_amd",
   "evidence_type": "indirect",
   "evidence": "증권사 자료가 양산과 Helios 연계를 적는다. 회사 공시 고객명은 아니다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e027",
@@ -240,7 +266,8 @@
   "source_id": "eugene_spacex_2026",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e028",
@@ -249,7 +276,8 @@
   "source_id": "dd_ir_800g",
   "evidence_type": "direct",
   "evidence": "IR 가 신규 고객 확보와 양산 진입을 밝혔다. 비공개인 것은 실명뿐이다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e029",
@@ -258,7 +286,8 @@
   "source_id": "dd_cisco_legacy",
   "evidence_type": "indirect",
   "evidence": "과거 관계를 시사하는 2차자료뿐이다. 800G 신규 고객과 같다는 근거는 없다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e030",
@@ -267,7 +296,8 @@
   "source_id": "dd_ir_amd",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e031",
@@ -276,7 +306,8 @@
   "source_id": "dd_ir_800g",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e032",
@@ -285,7 +316,8 @@
   "source_id": "eugene_spacex_2026",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e033",
@@ -294,7 +326,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "indirect",
   "evidence": "공시가 (가)로만 밝힌다. 삼성전자·SK하이닉스 등으로 임의 매핑하지 않는다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e034",
@@ -303,7 +336,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e035",
@@ -312,61 +346,68 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "indirect",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e036",
-  "relationship_id": "ccl-dd",
-  "metric_id": "o-dd-ccl-share",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "1,404억 원",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-ccl-substrate"
  },
  {
   "id": "kr-e037",
-  "relationship_id": "prepreg-dd",
-  "metric_id": "o-dd-prepreg-share",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "587억 원",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-prepreg"
  },
  {
   "id": "kr-e038",
-  "relationship_id": "abf-dd",
-  "metric_id": "o-dd-abf-share",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "151억 원. 매입 비중은 낮고 전략 중요도는 가장 높다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-abf-film"
  },
  {
   "id": "kr-e039",
-  "relationship_id": "pgc-dd",
-  "metric_id": "o-dd-pgc-share",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "852억 원. 분모가 원재료가 아니라 부재료다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "ss-pgc-plating"
  },
  {
   "id": "kr-e040",
-  "relationship_id": "dd-rev-memory-edge",
-  "metric_id": "o-dd-memory-share-2024",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ir_mix",
   "evidence_type": "direct",
   "evidence": "약 4,764억 원. 회사 공식 분해가 아니다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-memory"
  },
  {
   "id": "kr-e041",
-  "relationship_id": "dd-rev-fcbga-edge",
-  "metric_id": "o-dd-fcbga-util",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ir_util",
   "evidence_type": "direct",
   "evidence": "전사 평균 가동률 76%를 FC-BGA 가동률로 읽지 않는다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-fcbga"
  },
  {
   "id": "kr-e042",
@@ -375,7 +416,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "약 2,190억 원",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e043",
@@ -384,7 +426,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "약 1,727억 원",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e044",
@@ -393,7 +436,8 @@
   "source_id": "dd_ar_fy2025",
   "evidence_type": "direct",
   "evidence": "약 1,210억 원. 셋을 더하면 48.1%",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e045",
@@ -402,7 +446,8 @@
   "source_id": "dd_ir_fcbga_mix",
   "evidence_type": "direct",
   "evidence": "자동차 45 · 데이터센터 30 · 네트워크 25",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e046",
@@ -411,16 +456,18 @@
   "source_id": "dd_ir_fcbga_mix",
   "evidence_type": "direct",
   "evidence": "",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  },
  {
   "id": "kr-e047",
-  "relationship_id": "dd-rev-fcbga-edge",
-  "metric_id": "o-dd-fcbga-net",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "dd_ir_fcbga_mix",
   "evidence_type": "direct",
   "evidence": "네트워크 갈래. 고객별로 나눌 근거가 없어 FC-BGA 매출원에 건다. 03 의 CLM007",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": "rt-dd-rev-fcbga"
  },
  {
   "id": "kr-e048",
@@ -429,6 +476,7 @@
   "source_id": "dd_ir_mlb_forecast",
   "evidence_type": "direct",
   "evidence": "2025E 35 → 2026E 155 → 2027E 330 (십억 원). 실적이 아니라 전망이다",
-  "hypothesis_id": null
+  "hypothesis_id": null,
+  "classification_id": null
  }
 ]

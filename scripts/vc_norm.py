@@ -220,9 +220,12 @@ def normalize_chain(cid, ents):
         ents.setdefault(ph, {
             'id': ph, 'name': 'Undisclosed supplier', 'name_ko': u'공급사 미상',
             'entity_type': 'company', 'anon': True, 'country': None,
-            'legal_name': None, 'display_name': u'공급사 미상',
+            'legal_name': u'공급사 미상(비공개)', 'display_name': u'공급사 미상',
             'desc': u'그 품목을 누가 대는지 원문이 밝히지 않았다', 'categories': [],
             'primary_role': u'미상', 'other_roles': [], 'parent_entity_id': None})
+        ents[ph].setdefault('legal_name', u'공급사 미상(비공개)')
+        ents[ph]['legal_name'] = ents[ph]['legal_name'] or u'공급사 미상(비공개)'
+        ents[ph]['display_name'] = ents[ph].get('display_name') or u'공급사 미상'
         for r, s, t in orphan:
             n = dict(r)
             n['id'] = r['id'] + '-src'
@@ -302,6 +305,8 @@ def normalize_chain(cid, ents):
             'country': None, 'legal_name': None, 'display_name': u'간접 고객 미상',
             'desc': u'중개 뒤에 누가 쓰는지 원문이 밝히지 않았다', 'categories': [],
             'primary_role': u'미상', 'other_roles': [], 'parent_entity_id': None})
+        ents[ph]['legal_name'] = ents[ph].get('legal_name') or u'간접 고객 미상(비공개)'
+        ents[ph]['display_name'] = ents[ph].get('display_name') or u'간접 고객 미상'
         for m in openm:
             new.append({'id': 'close-%s' % m, 'source_entity': m, 'target_entity': ph,
                         'relationship_type': 'INDIRECT_CUSTOMER_UNDISCLOSED',
@@ -353,6 +358,48 @@ def normalize_chain(cid, ents):
                   if k in ref_ss or v.get('shares'))
     rt_reg = dict((k, v) for k, v in rt_reg.items()
                   if k in ref_rt or v.get('shares'))
+
+    # ⑦ 근거 원장 — 접힌 줄은 새 줄로, 분류로 간 줄은 분류 id 로 다시 잇는다
+    to_cls = {}
+    for r in rels:
+        if is_rt(r['target_entity']):
+            to_cls[r['id']] = 'rt-' + r['target_entity']
+        elif is_ss(r['source_entity']) or is_rt(r['source_entity']):
+            to_cls.setdefault(r['id'], None)
+    moved_obs = {}
+    for o in obs:
+        rid = o.get('relationship_id')
+        if rid in to_cls and to_cls[rid]:
+            moved_obs[o['id']] = to_cls[rid]
+    epath = os.path.join(cdir, 'evidence.json')
+    if os.path.exists(epath):
+        evs = rd(epath)
+        for e in evs:
+            mid = e.get('metric_id')
+            if mid and mid in moved_obs:
+                e['metric_id'] = None
+                e['classification_id'] = moved_obs[mid]
+            rid = e.get('relationship_id')
+            if rid in remap:
+                e['relationship_id'] = remap[rid]
+            elif rid and rid not in keep_ids:
+                e['classification_id'] = e.get('classification_id') or to_cls.get(rid)
+                e['relationship_id'] = None
+            e.setdefault('classification_id', None)
+        wr(epath, evs)
+    # ⑧ 주장 — 품목을 가리키던 주어·목적어는 분류를 가리킨다
+    kpath = os.path.join(cdir, 'claims.json')
+    if os.path.exists(kpath):
+        cls_rows = rd(kpath)
+        for c in cls_rows:
+            for k in ('subject', 'object'):
+                v = c.get(k)
+                if v and (is_ss(v) or is_rt(v)):
+                    c[k] = None
+                    c[k + '_classification'] = ('ss-' if is_ss(v) else 'rt-') + v
+            c.setdefault('subject_classification', None)
+            c.setdefault('object_classification', None)
+        wr(kpath, cls_rows)
 
     cls = {'chain': cid, 'focal_entity': focal,
            'supply_sources': [ss_reg[k] for k in sorted(ss_reg)],

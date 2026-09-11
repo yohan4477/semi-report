@@ -10,7 +10,9 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-material-mix",
@@ -23,20 +25,24 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "note": "CCL 과 프리프레그가 약 88%를 차지한다"
+  "note": "CCL 과 프리프레그가 약 88%를 차지한다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-abf-critical",
   "statement": "매입액이 가장 큰 소재는 CCL 이지만 전략 중요도는 ABF 가 더 높다.",
   "subject": "daeduck-electronics",
-  "object": "abf-film",
+  "object": null,
   "period": "2026",
   "evidence_level": "ESTIMATED",
   "confidence": 0.7,
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "note": "FC-BGA 빌드업 절연층의 핵심이고 인증 장벽이 높다"
+  "note": "FC-BGA 빌드업 절연층의 핵심이고 인증 장벽이 높다",
+  "object_classification": "ss-abf-film",
+  "subject_classification": null
  },
  {
   "id": "clm-dd-concentration",
@@ -49,7 +55,9 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "note": "이 셋을 삼성전자·SK하이닉스·AMD 등으로 임의 매핑하지 않는다"
+  "note": "이 셋을 삼성전자·SK하이닉스·AMD 등으로 임의 매핑하지 않는다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-named-customers",
@@ -62,7 +70,9 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-amd",
@@ -75,7 +85,9 @@
   "source_ids": [
    "dd_ir_amd"
   ],
-  "note": "회사가 공시한 고객명은 아니다"
+  "note": "회사가 공시한 고객명은 아니다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-tesla",
@@ -88,7 +100,9 @@
   "source_ids": [
    "zdnet_tesla_2026"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-spacex",
@@ -101,7 +115,9 @@
   "source_ids": [
    "eugene_spacex_2026"
   ],
-  "note": null
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-candidates",
@@ -114,7 +130,9 @@
   "source_ids": [
    "dd_ir_pcie"
   ],
-  "note": "후보 메모로만 남긴다"
+  "note": "후보 메모로만 남긴다",
+  "subject_classification": null,
+  "object_classification": null
  },
  {
   "id": "clm-dd-capacity",
@@ -127,6 +145,8 @@
   "source_ids": [
    "dd_ar_fy2025"
   ],
-  "note": "제품별 편차가 커서 전사 평균을 FC-BGA 가동률로 읽으면 안 된다"
+  "note": "제품별 편차가 커서 전사 평균을 FC-BGA 가동률로 읽으면 안 된다",
+  "subject_classification": null,
+  "object_classification": null
  }
 ]
