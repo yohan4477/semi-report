@@ -99,7 +99,9 @@ margin:10px 0 6px}
 min-width:118px;max-width:196px;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:12.5px;font-weight:600;line-height:1.35}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
-margin-right:4px;letter-spacing:-1px}
+margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
+.flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
+.more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
 .nd .sub{font-size:11px;color:var(--ink3);margin-top:2px}
 .nd.focal{border-color:var(--ink1);border-width:1.8px;background:#fff;
 box-shadow:0 2px 8px rgba(20,26,40,.2)}
@@ -167,24 +169,32 @@ function nm(id){ var e = ENT[id]; return e ? (e.name_ko || e.name) : id; }
 
 // 나라 이름 하나에 깃발 하나. 여러 나라면 여럿을 단다. 모르면 안 단다
 var FLAG = { '미국':'US', '한국':'KR', '중국':'CN', '대만':'TW', '일본':'JP', '인도':'IN',
-  '캐나다':'CA', '베트남':'VN', '이탈리아':'IT' };
+  '캐나다':'CA', '베트남':'VN', '이탈리아':'IT', '네덜란드':'NL' };
+var GLOBE = '🌐';
+var NO_CC = '?';
+var NO_COUNTRY_TYPE = { material:1, revenue_type:1 };
 function iso(cc){
   return cc.replace(/./g, function(c){
     return String.fromCodePoint(0x1F1E6 + c.charCodeAt(0) - 65); });
 }
+// 소재·매출원은 나라가 없다. 글로벌은 지구본, 원문이 안 밝힌 회사는 물음표
 function flagOf(id){
   var e = ENT[id];
-  if (!e || !e.country) return '';
-  var out = '';
+  if (!e) return '';
+  if (!e.country) return NO_COUNTRY_TYPE[e.entity_type] ? '' : NO_CC;
+  var out = [];
   e.country.split('·').forEach(function(part){
     var k = FLAG[part.trim()];
-    if (k) out += iso(k);
+    if (k) out.push(iso(k));
+    else if (part.trim() === '글로벌') out.push(GLOBE);
   });
-  return out;
+  return out.join(' ');
 }
+function flagCls(f){ return 'flag' + (f === NO_CC ? ' na' : ''); }
+function flagTitle(f){ return f === NO_CC ? '원문이 나라를 밝히지 않았다' : null; }
 function withFlag(id, key){
   var f = flagOf(id);
-  return f ? [h('span', { key:'f' + (key || ''), className:'flag' }, f),
+  return f ? [h('span', { key:'f' + (key || ''), className: flagCls(f), title: flagTitle(f) }, f),
               h('span', { key:'n' + (key || '') }, nm(id))] : nm(id);
 }
 
@@ -305,12 +315,14 @@ function Nd(p){
   return h('div', { className: cls }, [
     h(Handle, { key:'t', type:'target', position:Position.Left, style:{opacity:0} }),
     h('div', { key:'n', className:'nm' }, d.flag
-      ? [h('span', { key:'f', className:'flag' }, d.flag), h('span', { key:'t' }, d.title)]
+      ? [h('span', { key:'f', className: flagCls(d.flag), title: flagTitle(d.flag) }, d.flag),
+         h('span', { key:'t' }, d.title)]
       : d.title),
     (d.sub || d.isNew) ? h('div', { key:'s', className:'sub' }, [
       d.sub ? h('span', { key:'t2' }, d.sub) : null,
       d.isNew ? h('span', { key:'b', className:'badge new',
-        style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null
+        style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null,
+      d.more ? h('span', { key:'m', className:'more' }, '+') : null
     ]) : null,
     h(Handle, { key:'s2', type:'source', position:Position.Right, style:{opacity:0} })
   ]);
@@ -363,6 +375,12 @@ function writeUrl(s, push){
 // 상대 노드 하나와 그 관계선. host 쪽이 중심에 가까운 칸이다.
 // 같은 회사가 사슬 여러 갈래에 나오면 노드를 하나로 합치고 선만 더한다.
 // 반환값은 그 회사가 앉은 노드 id 다
+function hasMore(eid, up){
+  return relsOf(eid).some(function(r){
+    return up ? (r.target_entity === eid && r.lane === 'MANUFACTURING_BOM')
+              : (r.source_entity === eid && r.lane === 'DOWNSTREAM');
+  });
+}
 function addRelNode(ctx, r, nid, host, up, year){
   var eid = up ? r.source_entity : r.target_entity;
   var have = ctx.byEnt[eid];
@@ -371,6 +389,7 @@ function addRelNode(ctx, r, nid, host, up, year){
     ctx.nodes.push({ id: nid, type:'nd', data:{ title: nm(eid), flag: flagOf(eid),
       kind:'ent', sub: TIER_KO[tierOf(r, up)] || r.component || null, gone: !on0,
       isNew: on0 && fy0 === year && fy0 !== YEARS[0],
+      more: hasMore(eid, up) && ctx.open.indexOf('e|' + eid) < 0,
       ref:{ kind:'rel', id:r.id, entity: eid } } });
     ctx.byEnt[eid] = nid;
     have = nid;
@@ -390,30 +409,31 @@ function addRelNode(ctx, r, nid, host, up, year){
 
 // 판매 사슬은 층이 있다 — 계약 상대 → 중개 → 프로젝트 → 최종 사용자.
 // 층 수를 미리 정하지 않고 데이터에 있는 만큼만 따라간다
-function chainDown(ctx, eid, host, year, depth, seen){
-  if (depth > 2 || seen[eid]) return;
+// 한 상자를 누르면 그 상자의 다음 한 칸만 열린다. 저절로 번지지 않는다
+function chainDown(ctx, eid, host, year, open, seen){
+  if (seen[eid] || open.indexOf('e|' + eid) < 0) return;
   seen[eid] = 1;
   relsOf(eid).forEach(function(r){
     if (r.source_entity !== eid || r.lane !== 'DOWNSTREAM') return;
     var nid = addRelNode(ctx, r, 'x|' + r.target_entity, host, false, year);
-    chainDown(ctx, r.target_entity, nid, year, depth + 1, seen);
+    chainDown(ctx, r.target_entity, nid, year, open, seen);
   });
 }
 
 // 05 §16 — 공급사를 전부 중심에 바로 붙이지 않는다. 확인된 만큼만 위로 올라간다
-function chainUp(ctx, eid, host, year, depth, seen){
-  if (depth > 2 || seen[eid]) return;
+function chainUp(ctx, eid, host, year, open, seen){
+  if (seen[eid] || open.indexOf('e|' + eid) < 0) return;
   seen[eid] = 1;
   relsOf(eid).forEach(function(r){
     if (r.target_entity !== eid || r.lane !== 'MANUFACTURING_BOM') return;
     var nid = addRelNode(ctx, r, 'x|' + r.source_entity, host, true, year);
-    chainUp(ctx, r.source_entity, nid, year, depth + 1, seen);
+    chainUp(ctx, r.source_entity, nid, year, open, seen);
   });
 }
 
 function buildGraph(focal, year, open, expanded, focusOn){
   var groups = {}, nodes = [], edges = [];
-  var ctx = { nodes: nodes, edges: edges, byEnt: {} };
+  var ctx = { nodes: nodes, edges: edges, byEnt: {}, open: open };
   ctx.byEnt[focal] = focal;
   var revRels = relsOf(focal).filter(function(r){
     return r.source_entity === focal && r.target_tier === 'REVENUE_TYPE';
@@ -444,7 +464,7 @@ function buildGraph(focal, year, open, expanded, focusOn){
     relsOf(rt).forEach(function(c){
       if (c.source_entity !== rt) return;
       var cid = addRelNode(ctx, c, 'rc|' + c.target_entity, nid, false, year);
-      chainDown(ctx, c.target_entity, cid, year, 1, {});
+      chainDown(ctx, c.target_entity, cid, year, open, {});
     });
   });
   Object.keys(groups).sort(function(a, b){
@@ -463,8 +483,8 @@ function buildGraph(focal, year, open, expanded, focusOn){
     g.rels.forEach(function(r){
       var other = g.up ? r.source_entity : r.target_entity;
       var nid = addRelNode(ctx, r, gk + '|' + other, gk, g.up, year);
-      if (g.up) chainUp(ctx, other, nid, year, 1, {});
-      else chainDown(ctx, other, nid, year, 1, {});
+      if (g.up) chainUp(ctx, other, nid, year, open, {});
+      else chainDown(ctx, other, nid, year, open, {});
     });
   });
   // 누른 회사에서 한 홉만 더. 저절로 번지지 않는다
@@ -908,6 +928,7 @@ function App(){
     var ref = node.data.ref;
     if (ref.kind === 'grp') toggleGroup(ref.id);
     else if (ref.revtype) toggleGroup('rev|' + ref.entity);
+    else if (ref.entity) toggleGroup('e|' + ref.entity);
     setSel(ref); setDrw(true);
   }
   function drill(subsystem){
@@ -1012,6 +1033,8 @@ function App(){
     h('i', { key:3 }, '파선 정황 추론'),
     h('i', { key:4 }, '점선 비공개·과거 관측'),
     h('i', { key:5 }, '? 그 해 값 없음'),
+    h('i', { key:'q' }, '이름 앞 ? 원문이 나라를 안 밝힘'),
+    h('i', { key:'p' }, '+ 누르면 다음 칸이 열림'),
     h('b', { key:'c' }, '가로'),
     h('i', { key:6 }, '왼쪽 원재료 → 소재·가공 → 부품 → 계통'),
     h('i', { key:7 }, '오른쪽 계약 상대 → 중개 → 프로젝트 → 최종 사용자')
@@ -1026,6 +1049,7 @@ function App(){
         onFocus: goFocal,
         onTimeline: function(id){ goFocal(id); setMode('timeline'); },
         onExpand: function(id, dir){
+          setOpen(function(o){ return o.indexOf('e|' + id) >= 0 ? o : o.concat(['e|' + id]); });
           setExpanded(function(x){
             var y = Object.assign({}, x); y[id + '@' + dir] = 1; return y;
           });
