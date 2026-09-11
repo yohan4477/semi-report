@@ -85,16 +85,23 @@ font-size:11px;color:var(--ink2);margin-right:4px;background:var(--paper)}
 padding:2px 0;border-bottom:1px dashed var(--line2)}
 .steps div:last-child{border-bottom:0;font-weight:600}
 table.t{border-collapse:collapse;width:100%;font-size:12.5px}
-table.t tr.pick{cursor:pointer;-webkit-tap-highlight-color:rgba(20,26,40,.12);
-transition:background .12s}
-table.t tr.pick:hover{background:var(--hi)}
-table.t tr.pick:active,table.t tr.pick.on{background:var(--ink1);color:#fff}
-table.t tr.pick.on td,table.t tr.pick:active td{color:#fff}
+/* 누른 줄 — iOS 목록처럼 옅은 회색이 빠르게 들어왔다 천천히 빠진다. 글자색은 그대로 */
+table.t tr.pick{cursor:pointer;-webkit-tap-highlight-color:transparent;
+transition:background .28s ease-out}
+table.t tr.pick td{transition:background .28s ease-out}
+@media (hover:hover){ table.t tr.pick:hover td{background:#f0f1f4;transition-duration:.08s} }
+table.t tr.pick:active td,table.t tr.pick.on td{background:#e3e5ea;transition-duration:.05s}
+table.t tr.pick:active td:first-child,table.t tr.pick.on td:first-child{
+border-radius:8px 0 0 8px}
+table.t tr.pick:active td:last-child,table.t tr.pick.on td:last-child{
+border-radius:0 8px 8px 0}
+@media (prefers-reduced-motion:reduce){ table.t tr.pick,table.t tr.pick td{transition:none} }
 .busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 gap:9px;background:rgba(232,235,240,.72);z-index:20;font-size:13px;color:var(--ink2);
 pointer-events:none}
-.busy i{width:15px;height:15px;border:2px solid var(--line);border-top-color:var(--ink1);
-border-radius:50%;animation:vcspin .8s linear infinite}
+.busy i{width:15px;height:15px;border:1.5px solid rgba(20,26,40,.14);
+border-top-color:rgba(20,26,40,.55);border-radius:50%;animation:vcspin .8s linear infinite}
+@media (prefers-reduced-motion:reduce){ .busy i{animation-duration:2s} }
 @keyframes vcspin{to{transform:rotate(360deg)}}
 table.t th,table.t td{border-bottom:1px solid var(--line2);padding:5px 6px;text-align:left;
 vertical-align:top}
