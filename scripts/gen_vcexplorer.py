@@ -1156,11 +1156,18 @@ var CHAIN_KO = { 'bloom-energy':'블룸에너지', 'kr-substrate':'반도체 기
 function chainKo(k){ return CHAIN_KO[k] || k; }
 
 // ── 회사 목록 ───────────────────────────────────────────────────────
+// 기본은 사슬의 중심 회사만. 「전부 보기」를 누르면 판에 선 이름을 다 편다
 function Roster(p){
+  var anchors = {};
+  Object.keys(CHAINS).forEach(function(ck){
+    var m = CHAINS[ck].meta || {};
+    if (m.focal_entity) anchors[m.focal_entity] = ck;
+  });
   var rows = [];
   Object.keys(ENT).forEach(function(id){
     var rs = relsOf(id);
     if (!rs.length) return;
+    if (!p.all && !anchors[id]) return;
     var e = ENT[id];
     var inn = 0, out = 0, chains = {};
     rs.forEach(function(r){
@@ -1182,9 +1189,15 @@ function Roster(p){
     financial_institution:'금융기관', utility:'유틸리티', end_user:'최종 사용자',
     material:'소재', revenue_type:'매출원' };
   return h('div', { className:'pane' }, [
-    h('h2', { key:'t' }, '이 판에 선 이름 ' + rows.length + '개'),
-    h('p', { key:'n', className:'note' },
-      '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 소재와 매출원은 회사가 아니라 층이다.'),
+    h('h2', { key:'t' }, p.all ? '이 판에 선 이름 ' + rows.length + '개'
+                               : '분석한 회사 ' + rows.length + '곳'),
+    h('p', { key:'n', className:'note' }, [
+      h('span', { key:'a' }, p.all
+        ? '줄을 누르면 그 회사를 중심으로 판이 다시 선다. 소재와 매출원은 회사가 아니라 층이다. '
+        : '줄을 누르면 그 회사의 밸류체인이 열린다. '),
+      h('button', { key:'b', className:'btn', onClick: p.onToggleAll },
+        p.all ? '중심 회사만' : '판에 선 이름 전부 보기')
+    ]),
     h('div', { key:'w', style:{ overflowX:'auto' } },
       h('table', { className:'t' }, [
         h('thead', { key:'h' }, h('tr', null, [ h('th', { key:1 }, '이름'),
@@ -1333,6 +1346,7 @@ function App(){
   // 좁은 화면에서는 서랍을 닫고 시작한다. 열면 그래프를 덮기 때문이다
   var l2 = useState(window.innerWidth >= 980), drw = l2[0], setDrw = l2[1];
   var m2 = useState(null), rf = m2[0], setRf = m2[1];
+  var n2 = useState(false), allNames = n2[0], setAllNames = n2[1];
   useEffect(function(){
     if (!rf) return;
     var t = setTimeout(function(){
@@ -1500,7 +1514,8 @@ function App(){
   }, []));
 
   var body;
-  if (mode === 'roster') body = h(Roster, { q:q,
+  if (mode === 'roster') body = h(Roster, { q:q, all:allNames,
+    onToggleAll: function(){ setAllNames(!allNames); },
     onPick: function(id){ setQ(''); setMode('current'); goFocal(id); } });
   else if (mode === 'timeline')
     body = h(Swim, { focal:focal,
@@ -1599,6 +1614,7 @@ def build():
             'observations': load('chains', ck, 'observations.json') or [],
             'claims': load('chains', ck, 'claims.json') or [],
             'hypotheses': load('chains', ck, 'hypotheses.json') or [],
+            'meta': load('chains', ck, 'chain.json') or {},
             'bom': read_dir(base, 'bom'),
             'financials': read_dir(base, 'financials'),
         }

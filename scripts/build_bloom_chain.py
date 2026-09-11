@@ -363,5 +363,8 @@ def dump(path, obj):
 if __name__ == '__main__':
     import sys
     sys.stdout.reconfigure(encoding='utf-8')
+    dump(os.path.join(CHAIN, 'chain.json'),
+         {'id': 'bloom-energy', 'focal_entity': BE, 'label': '블룸에너지',
+          'note': 'SOFC·SOEC 제조사 한 곳을 중심으로 세운 사슬'})
     dump(os.path.join(CHAIN, 'relationships.json'), [rel(t) for t in R])
     print('관계 %d' % len(R))

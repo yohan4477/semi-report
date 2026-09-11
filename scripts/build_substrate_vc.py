@@ -264,6 +264,10 @@ if __name__ == '__main__':
     sys.stdout.reconfigure(encoding='utf-8')
     ne = merge('entities.json', [ent(t) for t in ENTITIES])
     ns = merge('sources.json', [src(t) for t in SOURCES])
+    dump(os.path.join(CHAIN, 'chain.json'),
+         {'id': 'kr-substrate', 'focal_entity': 'daeduck-electronics',
+          'label': '반도체 기판',
+          'note': '패키지 기판 제조사 한 곳을 중심으로 세운 사슬'})
     dump(os.path.join(CHAIN, 'relationships.json'), [rel(t) for t in R])
     dump(os.path.join(CHAIN, 'observations.json'), [obs(t) for t in O])
     dump(os.path.join(CHAIN, 'claims.json'), [claim(t) for t in CLAIMS])
