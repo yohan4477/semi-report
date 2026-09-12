@@ -636,12 +636,24 @@ function Table(p){
 }
 
 // ── 앱 ──────────────────────────────────────────────────────────────
+function prefAll(){
+  try { return localStorage.getItem('vc_openall') === '1'; } catch (e) { return false; }
+}
+
 function App(){
   var u0 = readUrl(true);
   var a = useState(u0.focal), focal = a[0], setFocal = a[1];
   var b = useState(u0.year), year = b[0], setYear = b[1];
   var c = useState(u0.mode), mode = c[0], setMode = c[1];
-  var d = useState(u0.open), open = d[0], setOpen = d[1];   // 펼친 상자 id. '*' 는 전부
+  // 「전부 펴기」는 기억한다 — 한 번 누르면 다음 회사·다음 방문에도 클릭 없이 펴진 채로
+  // 열린다. 「접기」가 기억을 지운다. 주소에 open= 이 있으면 그쪽이 먼저다
+  var d = useState(u0.open.length ? u0.open : (prefAll() ? ['*'] : [])),
+      open = d[0], setOpen = d[1];   // 펼친 상자 id. '*' 는 전부
+  function setAll(on){
+    try { if (on) localStorage.setItem('vc_openall', '1'); else localStorage.removeItem('vc_openall'); }
+    catch (e) {}
+    setOpen(on ? ['*'] : []);
+  }
   function toggleOpen(id){
     setOpen(function(o){
       var base = o.filter(function(x){ return x !== '*'; });
@@ -796,7 +808,7 @@ function App(){
   function goFocal(id){
     var ck = chainOf(id, chainHint || chainOf(focal));
     setChainHint(ck);
-    setFocal(id); setOpen([]); setSel({ kind:'ent', id:id }); setAxis(null);
+    setFocal(id); setOpen(prefAll() ? ['*'] : []); setSel({ kind:'ent', id:id }); setAxis(null);
     setPath(function(p){
       return p.indexOf(id) >= 0 ? p.slice(0, p.indexOf(id) + 1) : p.concat([id]);
     });
@@ -916,7 +928,7 @@ function App(){
         h('div', { key:'sp', className:'spacer' }),
         mode === 'current' ? h('button', { key:'all', className:'btn' + (allOpen ? ' on' : ''),
           title:'판 전체를 펴거나 접는다',
-          onClick: function(){ setOpen(allOpen ? [] : ['*']); } }, allOpen ? '접기' : '전부 펴기') : null,
+          onClick: function(){ setAll(!allOpen); } }, allOpen ? '접기' : '전부 펴기') : null,
         canDrw ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
           onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null,
         menuBox
@@ -984,7 +996,7 @@ function App(){
     narrow ? h('div', { key:'fab', className:'fab' }, [
       h('button', { key:'all', className:'iconbtn' + (allOpen ? ' on' : ''),
         title: allOpen ? '접기' : '전부 펴기', 'aria-label':'전부 펴기',
-        onClick: function(){ setOpen(allOpen ? [] : ['*']); } }, ICON_ALL),
+        onClick: function(){ setAll(!allOpen); } }, ICON_ALL),
       h('button', { key:'dw', className:'iconbtn' + (drw ? ' on' : ''),
         title:'근거 서랍', 'aria-label':'근거 서랍',
         onClick: function(){ setDrw(!drw); setSopen(false); } }, ICON_DRAWER) ]) : null,
