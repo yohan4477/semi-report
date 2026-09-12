@@ -31,19 +31,18 @@ def ship_list():
     return check_vc.shipped_chains()
 
 
-CDN = 'https://cdn.jsdelivr.net/npm'
-LIBS = [
-    CDN + '/react@18.3.1/umd/react.production.min.js',
-    CDN + '/react-dom@18.3.1/umd/react-dom.production.min.js',
-    CDN + '/reactflow@11.11.4/dist/umd/index.js',
-]
-RF_CSS = CDN + '/reactflow@11.11.4/dist/style.css'
+# 라이브러리는 저장소 안 scripts/vcexplorer/vendor/ 의 파일을 HTML 에 그대로 넣는다.
+# CDN 을 부르면 오프라인·CDN 장애 때 빈 화면이다. 판본은 vendor/README.md
+VENDOR_JS = ['react_18.3.1_umd_react.production.min.js',
+             'react-dom_18.3.1_umd_react-dom.production.min.js',
+             'reactflow_11.11.4_dist_umd_index.js']
+VENDOR_CSS = 'reactflow_11.11.4_dist_style.css'
 
 TEMPLATE = u'''<!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>밸류체인 탐색기</title>
-<link rel="stylesheet" href="__RFCSS__">
+<style>__RFCSS__</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
 <style>__CSS__</style>
 </head><body>
@@ -66,7 +65,22 @@ def _read(name):
 # 편집기가 JS 로 읽지 못하고 이스케이프가 두 겹이 된다
 CSS = _read('app.css')
 
-APP = _read('app.js')
+# 앱은 네 장이다 — 데이터 색인 / 자리 잡기 / 그래프 세우기 / 화면. 번호 순으로 이어 붙이고
+# 한 함수 안에 감싼다. 장마다 첫 두 줄은 이름과 한 줄 설명이다
+APP_PARTS = ['10_data.js', '20_layout.js', '30_graph.js', '40_ui.js']
+
+
+def _app():
+    lines = []
+    for name in APP_PARTS:
+        rows = _read(name).split('\n')
+        if rows and rows[-1] == '':
+            rows.pop()
+        lines.extend(rows[2:])          # 첫 두 줄은 장 이름과 설명
+    return '\n(function(){\n' + '\n'.join(lines) + '\n})();\n'
+
+
+APP = _app()
 
 
 def load(*parts):
@@ -126,9 +140,14 @@ def build():
     db['entities'] = dict((k, v) for k, v in db['entities'].items() if k in used)
 
     payload = json.dumps(db, ensure_ascii=False, separators=(',', ':'))
-    scripts = '\n'.join('<script src="%s"></script>' % u for u in LIBS)
+    vend = os.path.join(HERE, 'vcexplorer', 'vendor')
+
+    def vf(name):
+        with io.open(os.path.join(vend, name), encoding='utf-8') as f:
+            return f.read()
+    scripts = '\n'.join('<script>%s</script>' % vf(n) for n in VENDOR_JS)
     html = (TEMPLATE
-            .replace('__RFCSS__', RF_CSS)
+            .replace('__RFCSS__', vf(VENDOR_CSS))
             .replace('__CSS__', CSS)
             .replace('__SCRIPTS__', scripts)
             .replace('__DATA__', payload)
