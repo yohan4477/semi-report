@@ -200,7 +200,7 @@ justify-content:center;overflow:visible;box-shadow:0 1px 3px rgba(20,26,40,.14);
 .nd .nm{font-size:13px;font-weight:600;line-height:1.28;display:-webkit-box;
 -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
 /* 비중은 상자 오른쪽 위에 크게 — 알약이 아니라 그 회사가 숫자를 말한다(SPLC 꼴) */
-.nd .shr{position:absolute;right:7px;top:5px;font-size:12.5px;font-weight:700;
+.nd .shr{position:absolute;right:7px;bottom:5px;font-size:12.5px;font-weight:700;
 color:var(--ink1);background:var(--hi);border:1px solid var(--line);border-radius:4px;
 padding:0 5px;line-height:18px}
 .nd.lane .shr{position:static;display:inline-block;margin-left:5px;font-size:11px}
@@ -214,6 +214,9 @@ margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 border-radius:11px;background:var(--ink1);color:#fff;font-size:11px;font-weight:700;
 line-height:22px;text-align:center;box-shadow:0 1px 3px rgba(20,26,40,.3);pointer-events:none}
 .nd{position:relative}
+.react-flow__node{transition:transform .38s cubic-bezier(.2,.7,.2,1)}
+.react-flow__edge-path{transition:d .38s cubic-bezier(.2,.7,.2,1),opacity .25s}
+@media (prefers-reduced-motion:reduce){ .react-flow__node,.react-flow__edge-path{transition:none} }
 .nd.lane .more{right:-6px;top:-8px}
 .hdr{width:156px;height:44px;text-align:center;padding:5px 6px;background:var(--hi);
 border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
@@ -807,6 +810,8 @@ function route(edges, geo, fcol){
   });
   function slot(i, n){
     if (n <= 1) return (HANDLE_N - 1) / 2 | 0;
+    // 둘·셋·넷이면 한 칸씩 띄워 꽂는다. 붙여 꽂으면 두 줄이 한 줄처럼 보인다
+    if (n * 2 - 1 <= HANDLE_N) return ((HANDLE_N - (n * 2 - 1)) / 2 | 0) + i * 2;
     if (n <= HANDLE_N) return ((HANDLE_N - n) / 2 | 0) + i;
     return Math.round(i * (HANDLE_N - 1) / (n - 1));
   }
@@ -994,7 +999,14 @@ function place(nodes, edges, opts){
       refCol.forEach(function(it, k){ ref[it.id] = k; });
       var span = Math.max(1, refCol.length - 1);
       var list = byCol[c];
+      var nFix = list.filter(function(it){
+        return it.n && it.n.data && it.n.data.fixOrd !== undefined; }).length;
       list.forEach(function(it){
+        // 알약(공급원·매출원)은 정한 차례(비중 순)로 선다. 이웃 무게중심을 안 본다
+        if (it.n && it.n.data && it.n.data.fixOrd !== undefined) {
+          it.bary = it.n.data.fixOrd / Math.max(1, nFix - 1);
+          return;
+        }
         var ks = (nbr[it.id] || []).filter(function(x){ return ref[x] !== undefined; });
         // 0~1 로 맞춘다. 참조 칸에 더미가 몇 개 끼든 눈금이 안 흔들린다
         it.bary = ks.length
@@ -1381,6 +1393,22 @@ function rowDen(kind, list, year){
   return best;
 }
 
+// 공급원·매출원 차례 — 비중 높은 것이 위. 같은 분모 값이 먼저, 다른 분모 값이 그 다음,
+// 값 없는 것, 미상 순. 띠의 칩과 판의 알약이 같은 차례를 쓴다
+function orderCls(kind, list, year){
+  var den = rowDen(kind, list, year);
+  return list.slice().sort(function(a, b){
+    function key(x){
+      if (x.unallocated) return [3, 0];
+      var sh = pickShare(kind, x, year);
+      if (!sh) return [2, 0];
+      return [den && sh.denominator === den ? 0 : 1, -(sh.value || 0)];
+    }
+    var ka = key(a), kb = key(b);
+    return (ka[0] - kb[0]) || (ka[1] - kb[1]) || (a.label < b.label ? -1 : 1);
+  });
+}
+
 // ── 자리 매기기 — 타겟에서 실제로 이어진 꼴로 ──────────────────────
 // 다운스트림 칸은 관계 종류가 아니라 타겟에서 몇 홉 떨어졌나와 사이에 중개가 끼었나로
 // 정한다(프레임워크 §22-B). 1홉이면 직접 고객, 2홉부터는 간접 고객, 중개 노릇(데이터가
@@ -1537,15 +1565,15 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
   if (!rooted) {
     [['ss', m.ssList, COL_OF.SUPPLY_AXIS], ['rt', m.rtList, COL_OF.REVENUE_AXIS]]
     .forEach(function(row){
-      var kind = row[0], list = row[1], den = rowDen(kind, list, year);
-      list.forEach(function(x){
+      var kind = row[0], list = orderCls(kind, row[1], year), den = rowDen(kind, list, year);
+      list.forEach(function(x, xi){
         var sh = pickShare(kind, x, year), lid = laneId(kind, x.id);
         var rl = [];
         laneOf[lid] = { kind: kind, cls: x, rels: rl };
         seen[lid] = 1;
         nodes.push({ id: lid, type:'nd', data:{
           measured: (sizes && sizes[lid]) || null,
-          title: x.label, kind:'lane', col: row[2], un: !!x.unallocated,
+          title: x.label, kind:'lane', col: row[2], un: !!x.unallocated, fixOrd: xi,
           // 실명 매핑 밖의 잔여가 비공개인 매출원은 알약에 그 뜻을 단다(잔여 칸은 상자가 아니다)
           sub: x.residual ? x.residual.label : null,
           share: (sh && den && sh.denominator === den)
@@ -2226,6 +2254,7 @@ function Axis(p){
   }
   function chips(kind, list, label){
     if (!list.length) return null;
+    list = orderCls(kind, list, p.year);
     var den = rowDen(kind, list, p.year);
     var mine = p.axis && p.axis.slice(0, 2) === kind;
     // 「전체」는 고른 것이 없다는 뜻을 칩으로 명시한다. 이 줄의 선택이 없으면 전체가 켜진다
@@ -2321,7 +2350,7 @@ function App(){
       var n = null;
       gr.nodes.forEach(function(x){ if (x.id === panTo) n = x; });
       if (n) rf.setCenter(n.position.x + COL_W / 2, n.position.y + BOX_H / 2,
-                          { zoom: rf.getZoom ? rf.getZoom() : 1, duration: 320 });
+                          { zoom: rf.getZoom ? rf.getZoom() : 1, duration: 420 });
       setPanTo(null);
     }, 80);
     return function(){ clearTimeout(t); };
