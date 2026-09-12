@@ -2441,6 +2441,8 @@ function App(){
   function onNodeClick(_, node){
     var rfEl = document.querySelector('.react-flow');
     if (rfEl) { rfEl.scrollTop = 0; rfEl.scrollLeft = 0; }
+    // 누른 상자를 가운데에 둔다. 펴진 이웃이 어느 쪽에 나타났는지 보이게
+    setPanTo(node.id);
     // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다.
     // 공급원·매출원 알약은 상자가 아니라 분류라 띠의 칩과 같은 일을 한다 — 그 분류에
     // 걸린 줄만 남기고 칩이 켜진다. 다시 누르면 푼다
