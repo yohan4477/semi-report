@@ -1,0 +1,271 @@
+# -*- coding: utf-8 -*-
+u"""TSMC 밸류체인 — 그림으로 보기. 대시보드/TSMC 밸류체인.html 을 만든다.
+
+원문은 data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md 하나다. 2~8절의 값은 그 원문의
+8·9·11·14·15·16·17절에서 왔고 추정치는 ~ 로 표시한다. 1절(전체 지도)만 손으로 그린 SVG 대신
+밸류체인 탐색기(?focal=tsmc)를 끼워 넣는다 — 상자·선은 데이터(chains/tsmc)에서 나오고, 색은
+소속(청록 TSMC·주황 한국·진홍 병목·남색 고객)이며 병목은 관계의 capacity_criticality 가 HIGH
+이상인 줄이다. 2026-09-13 에 사용자가 준 HTML 을 그대로 두고 1절만 바꿨다.
+
+  PYTHONIOENCODING=utf-8 python scripts/gen_tsmc_page.py
+"""
+import io
+import os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, u'대시보드', u'TSMC 밸류체인.html')
+REPORT = u'data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md'
+
+HEAD = u'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TSMC 밸류체인 — 그림으로 보기</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EEF1F4;      /* 실리콘 회색 */
+    --ink:#1C2733;
+    --mute:#6B7785;
+    --line:#C9D1DA;
+    --tsmc:#0E6B66;       /* 웨이퍼 청록 */
+    --tsmc-soft:#D6ECEA;
+    --kr:#B4620A;         /* 한국 노드 */
+    --kr-soft:#F6E3C8;
+    --jp:#9B1C3A;         /* 일본 병목 */
+    --jp-soft:#F3D5DC;
+    --cust:#31507A;       /* 고객 */
+    --cust-soft:#D9E2EF;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.55}
+  main{max-width:960px;margin:0 auto;padding:28px 18px 64px}
+  h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-0.01em}
+  .sub{color:var(--mute);margin:0 0 28px;font-size:14px}
+  .sub a{color:var(--tsmc)}
+  section{margin:0 0 44px;padding-top:18px;border-top:2px solid var(--ink)}
+  h2{font-size:18px;font-weight:600;margin:0 0 4px}
+  h2 small{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
+  p.note{margin:0 0 14px;color:var(--mute);font-size:13.5px;max-width:70ch}
+  p.note a{color:var(--tsmc)}
+  svg{width:100%;height:auto;display:block;font-family:inherit}
+  .frame{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;height:640px}
+  .frame iframe{width:100%;height:100%;border:0;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px;color:var(--mute)}
+  .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .l-tsmc::before{background:var(--tsmc)} .l-kr::before{background:var(--kr)} .l-jp::before{background:var(--jp)} .l-cust::before{background:var(--cust)} .l-sup::before{background:#8A96A3}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:500;color:var(--mute)}
+  .heat td.c{width:56px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
+  .tl{position:relative;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl .yr{position:relative;margin:0 0 18px}
+  .tl .yr::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--tsmc)}
+  .tl b{display:block;font-weight:600;margin-bottom:2px}
+  .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
+  .tl .row span:first-child{color:var(--mute)}
+  @media (max-width:520px){h1{font-size:22px} .frame{height:520px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>TSMC 밸류체인 — 그림으로 보기</h1>
+  <p class="sub">보고서 「TSMC 밸류체인 조사」(2026-09-12, 저장소 <code>__REPORT__</code>)의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 근거 등급은 A 공시 실명·수치, B 공시에 의존 명시(수치 비공개), C 추정·보도.</p>
+'''
+
+SECTION_1 = u'''  <!-- 1. 전체 지도 — 밸류체인 탐색기 -->
+  <section>
+    <h2>1. 전체 지도<small>앞단 → TSMC → 뒷단</small></h2>
+    <p class="note">밸류체인 탐색기로 그린다. 상자와 선은 데이터에서 나오고 상자를 누르면 근거가 열린다. 색은 소속: 청록 TSMC, 주황 한국 회사, 진홍 병목(공급 여력 HIGH 이상), 남색 고객. 중개·유통은 점선 테두리. 선 굵기에는 뜻이 없다. <a href="밸류체인 탐색기.html?focal=tsmc&amp;open=*">새 창에서 크게 보기</a></p>
+    <div class="frame"><iframe src="밸류체인 탐색기.html?focal=tsmc&amp;open=*" title="TSMC 밸류체인 탐색기" loading="lazy"></iframe></div>
+    <div class="legend"><span class="l-tsmc">TSMC·외주</span><span class="l-kr">한국 노드</span><span class="l-jp">병목</span><span class="l-cust">고객</span><span class="l-sup">기타 공급사</span></div>
+  </section>
+'''
+
+# 2~8절 — 2026-09-13 사용자가 준 HTML 그대로. 값은 원문 8·9·11·14·15·16·17절
+SECTIONS_2_8 = u'''
+  <!-- 2. 매출 드라이버 트리 -->
+  <section>
+    <h2>2. 매출 드라이버 트리<small>2025, US$</small></h2>
+    <p class="note">왼쪽 결과에서 오른쪽 원인으로. 2026년 캐파 성장은 3%이므로 성장의 무게가 물량에서 ASP·믹스·CoWoS로 옮겨간다.</p>
+    <svg viewBox="0 0 960 300" role="img" aria-label="Revenue driver tree">
+      <g stroke="#C9D1DA" stroke-width="1.5" fill="none">
+        <path d="M150 150H190M190 90V225M190 90H230M190 225H230"/>
+        <path d="M420 90H460M460 55V125M460 55H500M460 125H500"/>
+        <path d="M690 55H730M730 35V80M730 35H770M730 80H770"/>
+        <path d="M690 125H730M730 110V160M730 110H770M730 160H770"/>
+        <path d="M420 225H460M460 205V250M460 205H500M460 250H500"/>
+      </g>
+      <g font-size="12">
+        <rect x="10" y="115" width="140" height="70" rx="4" fill="#0E6B66"/>
+        <text x="80" y="143" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">매출 $1,224억</text>
+        <text x="80" y="163" text-anchor="middle" fill="#fff">+35.9%</text>
+        <rect x="230" y="65" width="190" height="50" rx="3" fill="#D6ECEA" stroke="#0E6B66"/>
+        <text x="240" y="85" font-weight="500">웨이퍼 매출 ~87%</text><text x="240" y="103" fill="#6B7785">= 출하량 × 혼합 ASP</text>
+        <rect x="230" y="200" width="190" height="50" rx="3" fill="#D6ECEA" stroke="#0E6B66"/>
+        <text x="240" y="220" font-weight="500">비웨이퍼 ~13%</text><text x="240" y="238" fill="#6B7785">CoWoS · 테스트 · 마스크</text>
+        <rect x="500" y="35" width="190" height="40" rx="3" fill="#fff" stroke="#8A96A3"/>
+        <text x="510" y="52" font-weight="500">출하량 1,500만 장</text><text x="510" y="68" fill="#6B7785">+16%</text>
+        <rect x="500" y="105" width="190" height="40" rx="3" fill="#fff" stroke="#8A96A3"/>
+        <text x="510" y="122" font-weight="500">혼합 ASP ~$7,100</text><text x="510" y="138" fill="#6B7785">+17%</text>
+        <rect x="770" y="18" width="180" height="34" rx="3" fill="#fff" stroke="#C9D1DA"/><text x="780" y="33">캐파 1,700만+ ← Capex</text><text x="780" y="47" fill="#6B7785">2026 +3%</text>
+        <rect x="770" y="63" width="180" height="34" rx="3" fill="#fff" stroke="#C9D1DA"/><text x="780" y="78">가동률 ~88% ← 주문</text><text x="780" y="92" fill="#6B7785">NVIDIA · Apple</text>
+        <rect x="770" y="93" width="180" height="34" rx="3" fill="#fff" stroke="#C9D1DA"/><text x="780" y="108">노드 믹스: 7nm↓ 74%</text><text x="780" y="122" fill="#6B7785">3nm 24%, 2nm 램프</text>
+        <rect x="770" y="143" width="180" height="34" rx="3" fill="#fff" stroke="#C9D1DA"/><text x="780" y="158">단가 인상</text><text x="780" y="172" fill="#6B7785">2027 +5~10%</text>
+        <rect x="500" y="185" width="190" height="40" rx="3" fill="#fff" stroke="#8A96A3"/>
+        <text x="510" y="202" font-weight="500">CoWoS 월 7.5~8만 장</text><text x="510" y="218" fill="#6B7785">2026 말 12~14만</text>
+        <rect x="500" y="230" width="190" height="40" rx="3" fill="#fff" stroke="#8A96A3"/>
+        <text x="510" y="247" font-weight="500">CoWoS 단가 ~$3~5k</text><text x="510" y="263" fill="#6B7785">외주분은 OSAT 매출</text>
+      </g>
+    </svg>
+  </section>
+
+  <!-- 3. 단위경제 -->
+  <section>
+    <h2>3. 웨이퍼 1장의 단위경제<small>추정, US$</small></h2>
+    <p class="note">ASP에서 원가 항목을 차례로 빼면 장당 GP가 남는다. 감가상각이 가장 크고 물량과 무관하다.</p>
+    <svg viewBox="0 0 960 260" role="img" aria-label="Unit economics waterfall">
+      <g font-size="12" fill="#1C2733">
+        <rect x="40" y="30" width="90" height="180" fill="#0E6B66"/><text x="85" y="22" text-anchor="middle" font-weight="600">ASP $7,100</text>
+        <rect x="160" y="30" width="90" height="37" fill="#8A96A3"/><text x="205" y="22" text-anchor="middle">감가상각</text><text x="205" y="80" text-anchor="middle" fill="#6B7785">−1,470</text>
+        <rect x="280" y="67" width="90" height="14" fill="#8A96A3"/><text x="325" y="22" text-anchor="middle">원재료</text><text x="325" y="95" text-anchor="middle" fill="#6B7785">−560</text>
+        <rect x="400" y="81" width="90" height="6" fill="#8A96A3"/><text x="445" y="22" text-anchor="middle">유틸리티</text><text x="445" y="101" text-anchor="middle" fill="#6B7785">−250</text>
+        <rect x="520" y="87" width="90" height="9" fill="#8A96A3"/><text x="565" y="22" text-anchor="middle">인건비</text><text x="565" y="110" text-anchor="middle" fill="#6B7785">−330</text>
+        <rect x="640" y="96" width="90" height="17" fill="#8A96A3"/><text x="685" y="22" text-anchor="middle">외주·기타</text><text x="685" y="127" text-anchor="middle" fill="#6B7785">−660</text>
+        <rect x="770" y="113" width="90" height="97" fill="#0E6B66"/><text x="815" y="22" text-anchor="middle" font-weight="600">GP $3,800</text><text x="815" y="230" text-anchor="middle" fill="#0E6B66" font-weight="500">GM 59.9%</text>
+        <line x1="40" y1="210" x2="860" y2="210" stroke="#C9D1DA"/>
+        <text x="40" y="250" fill="#6B7785" font-size="11">감가상각 → 장비사(ASML·AMAT·TEL) / 원재료 → 소재·유통사 / 유틸리티 → 대만전력 / 외주 → ASE·Amkor</text>
+      </g>
+    </svg>
+  </section>
+
+  <!-- 4. 마진 풀 -->
+  <section>
+    <h2>4. AI GPU 1개의 마진 풀<small>Blackwell급, 추정</small></h2>
+    <p class="note">판매가 ~$32k 중 누가 원가를 만들고 누가 이익을 가져가는지. TSMC는 원가의 ~35%를 만들지만 이익 풀에선 ~5%.</p>
+    <svg viewBox="0 0 960 190" role="img" aria-label="Margin pool of one GPU">
+      <g font-size="12">
+        <text x="10" y="30" fill="#6B7785">원가 적층 $6,650</text>
+        <rect x="150" y="14" width="34" height="24" fill="#0E6B66"/>
+        <rect x="184" y="14" width="26" height="24" fill="#1B8A83"/>
+        <rect x="210" y="14" width="92" height="24" fill="#B4620A"/>
+        <rect x="302" y="14" width="21" height="24" fill="#8A96A3"/>
+        <text x="167" y="55" text-anchor="middle" fill="#0E6B66">다이 1.3k</text>
+        <text x="197" y="72" text-anchor="middle" fill="#1B8A83">CoWoS 1.0k</text>
+        <text x="256" y="55" text-anchor="middle" fill="#B4620A">HBM 3.5k</text>
+        <text x="312" y="72" text-anchor="middle" fill="#6B7785">기판·OSAT 0.8k</text>
+        <text x="10" y="120" fill="#6B7785">판매가 $32,000</text>
+        <rect x="150" y="104" width="175" height="24" fill="#C9D1DA"/>
+        <rect x="325" y="104" width="620" height="24" fill="#31507A"/>
+        <text x="237" y="146" text-anchor="middle" fill="#6B7785">원가 $6.7k</text>
+        <text x="635" y="146" text-anchor="middle" fill="#31507A" font-weight="500">NVIDIA 매출총이익 ~$25k (GM ~75%)</text>
+        <text x="10" y="180" fill="#6B7785" font-size="11">이익 풀 배분: NVIDIA ~78% · SK hynix ~6% · TSMC ~4% · 나머지 공급사 ~2%. 원가 축과 판매가 축의 스케일은 동일.</text>
+      </g>
+    </svg>
+  </section>
+
+  <!-- 5. 병목 -->
+  <section>
+    <h2>5. 병목 리스크 히트맵<small>합계 낮을수록 위험</small></h2>
+    <p class="note">대체 가능성·리드타임·지정학 각 1~5점. 일본 EUV 소재 4종이 모두 최상위권에 몰려 있다.</p>
+    <table class="heat">
+      <tr><th>병목</th><th>지배 회사</th><th>대체</th><th>리드타임</th><th>지정학</th><th>합계</th></tr>
+      <tr><td>대만 전력·용수</td><td>대만전력</td><td class="c h1">1</td><td class="c h1">1</td><td class="c h1">1</td><td class="c h1">3</td></tr>
+      <tr><td>EUV 노광기</td><td>ASML</td><td class="c h1">1</td><td class="c h1">1</td><td class="c h2">2</td><td class="c h1">4</td></tr>
+      <tr><td>EUV 마스크 블랭크</td><td>Hoya · AGC</td><td class="c h1">1</td><td class="c h2">2</td><td class="c h1">1</td><td class="c h1">4</td></tr>
+      <tr><td>EUV 레지스트</td><td>JSR · TOK · Shin-Etsu</td><td class="c h1">1</td><td class="c h2">2</td><td class="c h1">1</td><td class="c h1">4</td></tr>
+      <tr><td>EUV 트랙</td><td>Tokyo Electron</td><td class="c h1">1</td><td class="c h2">2</td><td class="c h1">1</td><td class="c h1">4</td></tr>
+      <tr><td>ABF 필름</td><td>Ajinomoto</td><td class="c h1">1</td><td class="c h3">3</td><td class="c h1">1</td><td class="c h2">5</td></tr>
+      <tr><td>CoWoS 캐파</td><td>TSMC 자체 + OSAT</td><td class="c h2">2</td><td class="c h2">2</td><td class="c h1">1</td><td class="c h2">5</td></tr>
+      <tr><td>공정제어</td><td>KLA</td><td class="c h2">2</td><td class="c h2">2</td><td class="c h3">3</td><td class="c h3">7</td></tr>
+      <tr><td>300mm 웨이퍼</td><td>SEH·SUMCO·GW·Siltronic·SK실트론</td><td class="c h3">3</td><td class="c h2">2</td><td class="c h3">3</td><td class="c h4">8</td></tr>
+      <tr><td>특수가스</td><td>Linde·Air Liquide·SK스페셜티</td><td class="c h4">4</td><td class="c h3">3</td><td class="c h3">3</td><td class="c h5">10</td></tr>
+      <tr><td>폴리실리콘</td><td>Hemlock·Wacker·Tokuyama·OCI</td><td class="c h4">4</td><td class="c h3">3</td><td class="c h4">4</td><td class="c h5">11</td></tr>
+    </table>
+  </section>
+
+  <!-- 6. 시나리오 -->
+  <section>
+    <h2>6. 시나리오 민감도<small>영업이익 변화, US$억</small></h2>
+    <p class="note">기준 영업이익 $622억. 단가 인상(+)과 환율·해외팹(−)이 비슷한 크기로 맞서고, 셋 다 물량과 무관하다.</p>
+    <svg viewBox="0 0 960 330" role="img" aria-label="Scenario tornado">
+      <g font-size="12" fill="#1C2733">
+        <line x1="480" y1="20" x2="480" y2="300" stroke="#1C2733" stroke-width="1.5"/>
+        <text x="470" y="42" text-anchor="end">일본 EUV 소재 3개월 차질</text><rect x="120" y="30" width="360" height="18" fill="#9B1C3A"/><text x="112" y="43" text-anchor="end" fill="#9B1C3A">−120+</text>
+        <text x="470" y="82" text-anchor="end">AI 수요 −20%</text><rect x="285" y="70" width="195" height="18" fill="#8A96A3"/><text x="277" y="83" text-anchor="end" fill="#6B7785">−65</text>
+        <text x="470" y="122" text-anchor="end">해외팹 램프 희석</text><rect x="390" y="110" width="90" height="18" fill="#8A96A3"/><text x="382" y="123" text-anchor="end" fill="#6B7785">−30</text>
+        <text x="470" y="162" text-anchor="end">NT$ 5% 절상</text><rect x="408" y="150" width="72" height="18" fill="#8A96A3"/><text x="400" y="163" text-anchor="end" fill="#6B7785">−24</text>
+        <text x="470" y="202" text-anchor="end">전기요금 +15%</text><rect x="466" y="190" width="14" height="18" fill="#8A96A3"/><text x="458" y="203" text-anchor="end" fill="#6B7785">−4.5</text>
+        <text x="490" y="242">CoWoS 캐파 +70%</text><rect x="480" y="230" width="75" height="18" fill="#0E6B66"/><text x="563" y="243" fill="#0E6B66">+25</text>
+        <text x="490" y="282">2027 단가 +8%</text><rect x="480" y="270" width="294" height="18" fill="#0E6B66"/><text x="782" y="283" fill="#0E6B66" font-weight="500">+98</text>
+        <text x="10" y="322" fill="#6B7785" font-size="11">막대 길이 = $1억당 3px. 고정비 ~$260억, 변동비 한계이익률 ~75% 가정.</text>
+      </g>
+    </svg>
+  </section>
+
+  <!-- 7. 시간축 -->
+  <section>
+    <h2>7. 시간축 2026~2030</h2>
+    <p class="note">장비 발주 → 12~18개월 뒤 캐파 → 그 뒤 5년간 감가상각. 2025~26 사상 최대 Capex는 2027~31년 원가로 남는다.</p>
+    <div class="tl">
+      <div class="yr"><b>2026</b>
+        <div class="row"><span>TSMC</span><span>Capex $520~640억. N2 램프, N2P·A16 2H 양산. CoWoS 월 12~14만 장</span>
+        <span>앞단</span><span>ASML·TEL·AMAT 장비 피크. Ajinomoto·Ibiden ABF 증설. Amkor·SPIL 외주 24~27만 장</span>
+        <span>뒷단</span><span>NVIDIA Rubin, Apple A20(N2), 하이퍼스케일러 ASIC 2세대</span></div></div>
+      <div class="yr"><b>2027</b>
+        <div class="row"><span>TSMC</span><span>단가 +5~10%. 애리조나 Fab2(3nm) 2H, JASM Fab2, ESMC 드레스덴 가동</span>
+        <span>앞단</span><span>미·일·독 현지 소재·가스 공급망. 2026 Capex 감가상각 본격 유입. 두산-SK실트론 언아웃 시작</span>
+        <span>뒷단</span><span>3nm 미국산 칩 출하. SK hynix HBM4 베이스 다이 TSMC 위탁 → 신규 직접 고객</span></div></div>
+      <div class="yr"><b>2028</b>
+        <div class="row"><span>TSMC</span><span>A14 양산. 애리조나 Fab3·패키징 공장</span>
+        <span>앞단</span><span>High-NA EUV 본격 도입 → ASML·Zeiss·Hoya</span>
+        <span>뒷단</span><span>2nm 세대 AI 가속기</span></div></div>
+      <div class="yr"><b>2029~30</b>
+        <div class="row"><span>TSMC</span><span>재생에너지 목표 경로. Foundry 2.0 점유 40%+ 유지 여부</span>
+        <span>앞단</span><span>대만 해상풍력 PPA. 전력 병목 해소 여부가 캐파 상한을 결정</span></div></div>
+    </div>
+  </section>
+
+  <!-- 8. 지분 -->
+  <section>
+    <h2>8. 거래 위에 소유를 겹치기</h2>
+    <p class="note">TSMC는 뒷단 중개(GUC)와 앞단 성숙 캐파(VIS)를 지분으로 쥐고, 해외 팹은 고객과 정부를 주주로 끌어들였다.</p>
+    <svg viewBox="0 0 960 300" role="img" aria-label="Equity map">
+      <g font-size="12" fill="#1C2733">
+        <rect x="400" y="110" width="160" height="70" rx="4" fill="#0E6B66"/><text x="480" y="152" text-anchor="middle" fill="#fff" font-size="16" font-weight="600">TSMC</text>
+        <g stroke="#0E6B66" stroke-width="1.5" fill="none">
+          <path d="M400 130C300 130 300 50 230 50"/><path d="M400 145C300 145 300 120 230 120"/><path d="M400 160C300 160 300 190 230 190"/><path d="M400 175C300 175 300 260 230 260"/>
+          <path d="M560 130C660 130 660 50 730 50"/><path d="M560 145C660 145 660 120 730 120"/><path d="M560 160C660 160 660 190 730 190"/>
+        </g>
+        <rect x="60" y="30" width="170" height="40" rx="3" fill="#D6ECEA" stroke="#0E6B66"/><text x="70" y="47">JASM 구마모토 ~86.5%</text><text x="70" y="62" fill="#6B7785">Sony · Denso · Toyota 출자</text>
+        <rect x="60" y="100" width="170" height="40" rx="3" fill="#D6ECEA" stroke="#0E6B66"/><text x="70" y="117">ESMC 드레스덴 ~70%</text><text x="70" y="132" fill="#6B7785">Bosch · Infineon · NXP 각 10%</text>
+        <rect x="60" y="170" width="170" height="40" rx="3" fill="#D6ECEA" stroke="#0E6B66"/><text x="70" y="187">TSMC Arizona 100%</text><text x="70" y="202" fill="#6B7785">CHIPS Act $66억 보조</text>
+        <rect x="60" y="240" width="170" height="40" rx="3" fill="#D6ECEA" stroke="#0E6B66"/><text x="70" y="257">VIS ~28% · VisEra ~70%</text><text x="70" y="272" fill="#6B7785">성숙 캐파 · CIS</text>
+        <rect x="730" y="30" width="200" height="40" rx="3" fill="#D6ECEA" stroke="#0E6B66"/><text x="740" y="47">GUC ~35%</text><text x="740" y="62" fill="#6B7785">하이퍼스케일러 ASIC 중개</text>
+        <rect x="730" y="100" width="200" height="40" rx="3" fill="#fff" stroke="#8A96A3"/><text x="740" y="117">ASE = SPIL 100%</text><text x="740" y="132" fill="#6B7785">CoWoS 외주 독립 대안은 Amkor뿐</text>
+        <rect x="730" y="170" width="200" height="40" rx="3" fill="#F3D5DC" stroke="#9B1C3A"/><text x="740" y="187">JSR ← JIC (일본 정부계)</text><text x="740" y="202" fill="#6B7785">병목 소재를 정부가 보유</text>
+        <rect x="400" y="230" width="160" height="50" rx="3" fill="#F6E3C8" stroke="#B4620A"/><text x="410" y="248">SK실트론 → 두산 70.6%</text><text x="410" y="264" fill="#6B7785">SK스페셜티 → 한앤코 85%</text>
+        <text x="480" y="298" text-anchor="middle" fill="#6B7785" font-size="11">한국 노드는 TSMC 지분 없음. 두산 언아웃(2027~34)에 고객 품질 인증 조건 포함.</text>
+      </g>
+    </svg>
+  </section>
+</main>
+</body>
+</html>
+'''
+
+
+def build():
+    html = HEAD.replace('__REPORT__', REPORT) + SECTION_1 + SECTIONS_2_8
+    with io.open(OUT, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(html)
+    print(u'%s · %d KB' % (os.path.relpath(OUT, ROOT), len(html.encode('utf-8')) // 1024))
+
+
+if __name__ == '__main__':
+    import sys
+    sys.stdout.reconfigure(encoding='utf-8')
+    build()
