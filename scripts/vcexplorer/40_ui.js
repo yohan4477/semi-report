@@ -526,6 +526,93 @@ function Axis(p){
   return h('div', { className:'axis' }, rows.concat([ empty ]));
 }
 
+// ── 표 ──────────────────────────────────────────────────────────────
+// 판의 관계 전부를 한 장으로. 머리를 누르면 그 열로 정렬한다. 비중은 그 해 값이고
+// 분모가 서로 다를 수 있어 숫자 옆에 분모를 적는다 — 한 열에서 더하지 않게
+function Table(p){
+  var st = useState({ key:'share', dir:-1 }), sort = st[0], setSort = st[1];
+  var qq = useState(''), q = qq[0], setQ = qq[1];
+  var rels = p.chain ? CHAINS[p.chain].relationships : relsOf(p.focal);
+  var m = clsOf(p.chain);
+  rels = rels.filter(function(r){ return activeIn(r, p.year); });
+  var rows = rels.map(function(r){
+    var up = r.target_entity === p.focal;
+    var other = up ? r.source_entity : (r.source_entity === p.focal ? r.target_entity : null);
+    var sh = shareIn(r.id, p.year);
+    var cls = (r.supply_source_ids || []).map(function(i){ return (m.ss[i] || {}).label || i; })
+      .concat((r.revenue_type_ids || []).map(function(i){ return (m.rt[i] || {}).label || i; }));
+    return { r:r, up:up, other:other,
+      from: nm(r.source_entity), to: nm(r.target_entity),
+      rel: relKo(r.relationship_type), lane: LANE_KO[r.lane] || r.lane,
+      cls: cls.join(' · '),
+      share: sh ? (sh.value !== null && sh.value !== undefined ? sh.value
+              : (sh.value_high !== null && sh.value_high !== undefined ? sh.value_high : null)) : null,
+      shareTxt: sh ? ((sh.value_low !== null && sh.value_low !== undefined)
+                      ? sh.value_low + '~' + sh.value_high + '%' : fmt(sh.value) + '%') : '',
+      den: sh ? (sh.denominator || '') : '',
+      ev: r.evidence_level, evKo: EV_KO[r.evidence_level] || r.evidence_level,
+      from_y: r.valid_from || '', srcN: (r.source_ids || []).length };
+  });
+  var EVR = { CONFIRMED:0, ESTIMATED:1, INFERRED:2, UNDISCLOSED:3, HISTORICAL_CURRENT_UNKNOWN:4 };
+  function keyOf(x){
+    switch (sort.key){
+      case 'share': return x.share === null ? -1 : x.share;
+      case 'ev': return -(EVR[x.ev] === undefined ? 9 : EVR[x.ev]);
+      case 'from_y': return x.from_y;
+      case 'from': return x.from;
+      case 'to': return x.to;
+      case 'rel': return x.rel;
+      case 'cls': return x.cls;
+      default: return 0;
+    }
+  }
+  rows.sort(function(a, b){
+    var ka = keyOf(a), kb = keyOf(b);
+    var c = ka < kb ? -1 : ka > kb ? 1 : 0;
+    return c * sort.dir || (a.from < b.from ? -1 : 1);
+  });
+  if (q) {
+    var ql = q.toLowerCase();
+    rows = rows.filter(function(x){
+      return (x.from + ' ' + x.to + ' ' + x.rel + ' ' + x.cls).toLowerCase().indexOf(ql) >= 0; });
+  }
+  function th(key, label){
+    var on = sort.key === key;
+    return h('th', { key:key, style:{ cursor:'pointer', whiteSpace:'nowrap' },
+      onClick: function(){ setSort({ key:key, dir: on ? -sort.dir : (key === 'share' || key === 'ev' ? -1 : 1) }); } },
+      label + (on ? (sort.dir > 0 ? ' \u2191' : ' \u2193') : ''));
+  }
+  return h('div', { className:'pane' }, [
+    h('h2', { key:'t' }, nm(p.focal) + ' — ' + p.year + ' 관계 ' + rows.length + '줄'),
+    h('p', { key:'n', className:'note' }, [
+      h('span', { key:'a' }, '머리를 누르면 그 열로 정렬한다. 비중은 그 해 값이고 분모가 줄마다 다를 수 있다 — 한 열에서 더하지 않는다. '),
+      h('input', { key:'q', value:q, placeholder:'이름·관계·분류로 거르기',
+        onChange: function(ev){ setQ(ev.target.value); },
+        style:{ font:'inherit', fontSize:'12.5px', padding:'3px 8px', border:'1px solid var(--line)',
+                borderRadius:'5px', marginLeft:'6px', minWidth:'180px' } }) ]),
+    h('div', { key:'w', style:{ overflowX:'auto' } },
+      h('table', { className:'t' }, [
+        h('thead', { key:'h' }, h('tr', null, [ th('from', '어디서'), th('to', '어디로'),
+          th('rel', '관계'), th('cls', '공급원·매출원'), th('share', p.year + ' 비중'),
+          h('th', { key:'den' }, '분모'), th('ev', '근거'), th('from_y', '언제부터'),
+          h('th', { key:'src' }, '출처') ])),
+        h('tbody', { key:'b' }, rows.map(function(x){
+          return h('tr', { key:x.r.id, className:'pick',
+            onClick: function(){ if (x.other) p.onPick(x.other); } }, [
+            h('td', { key:1, className:'nw' }, withFlag(x.r.source_entity, 'a')),
+            h('td', { key:2, className:'nw' }, withFlag(x.r.target_entity, 'b')),
+            h('td', { key:3 }, x.rel + ' · ' + x.lane),
+            h('td', { key:4 }, x.cls || '—'),
+            h('td', { key:5, className:'nw', style:{ fontWeight:600 } }, x.shareTxt || '—'),
+            h('td', { key:6, style:{ color:'var(--ink3)', fontSize:'11.5px' } }, x.den || '—'),
+            h('td', { key:7 }, h('span', { className:'badge' + (x.ev === 'CONFIRMED' ? '' : ' est') }, x.evKo)),
+            h('td', { key:8, className:'nw' }, x.from_y || '—'),
+            h('td', { key:9 }, x.srcN ? x.srcN + '건' : '—') ]);
+        }))
+      ]))
+  ]);
+}
+
 // ── 앱 ──────────────────────────────────────────────────────────────
 function App(){
   var u0 = readUrl(true);
@@ -718,6 +805,7 @@ function App(){
       setDrw(!narrow);
       return;
     }
+    if (node.data.kind === 'cluster') { toggleOpen(node.id); setPanTo(node.id); return; }
     if (node.data.more || node.data.opened) toggleOpen(node.id);
     setSel(node.data.ref); setDrw(!narrow);
   }
@@ -756,7 +844,10 @@ function App(){
       onClick: function(){ setMenu(!menu); setSopen(false); } },
       [ '회사', h('span', { key:'c', className:'car' }, menu ? '▲' : '▼') ]),
     h('button', { key:'cur', className: (mode === 'current' && !menu) ? 'on' : '',
-      onClick: function(){ setMode('current'); setMenu(false); } }, nm(focal))
+      onClick: function(){ setMode('current'); setMenu(false); } }, nm(focal)),
+    // 표 — 이 판의 관계를 비중·근거·기간 순으로 정렬해 한 장으로(SPLC Key Metrics 꼴)
+    h('button', { key:'tab', className: (mode === 'table' && !menu) ? 'on' : '',
+      onClick: function(){ setMode('table'); setMenu(false); } }, '표')
   ]);
   // 사슬의 타겟 회사들. 많아지면 목록 안에서 민다
   var anchors = [];
@@ -860,6 +951,9 @@ function App(){
     body = h(Swim, { focal:focal,
       onSel: function(ref){ setSel(ref); setDrw(true); } });
   else if (mode === 'evidence') body = h(Evidence, null);
+  else if (mode === 'table')
+    body = h(Table, { focal:focal, chain:gr.chain, year:year,
+      onPick: function(id){ setMode('current'); goFocal(id); } });
   else if (mode === 'bom') body = h(Bom, { focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' + (busy ? ' loading' : '') }, [
     busy ? null : h(HdrBar, { key:'hb', nodes: gr.nodes, vp: vp }),
@@ -922,7 +1016,7 @@ function App(){
 
   return h('div', { className:'app' }, [ top,
     mode === 'roster' ? null : crumb,
-    (mode === 'current' || mode === 'timeline') ? scrub : null,
+    (mode === 'current' || mode === 'timeline' || mode === 'table') ? scrub : null,
     // 공급원·매출원 띠는 사슬의 타겟 기준 분류라 다른 회사를 중심에 놓으면 접는다
     (mode === 'current' && !gr.rooted)
       ? h(Axis, { key:'ax', chain: gr.chain, axis: axis, year: year,

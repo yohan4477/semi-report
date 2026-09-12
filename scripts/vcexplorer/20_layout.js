@@ -45,6 +45,7 @@ function ports(kind){
 function Nd(p){
   var d = p.data;
   var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.kind === 'lane' ? ' lane' : '')
+          + (d.kind === 'cluster' ? ' cluster' : '')
           + (d.un ? ' un' : '') + (d.focal ? ' focal' : '') + (d.sel ? ' sel' : '')
           + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
   var mid = [

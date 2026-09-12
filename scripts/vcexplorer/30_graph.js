@@ -445,6 +445,46 @@ function buildGraph(focal, year, sel, axis, hint, open){
   nodes = nodes.filter(function(n){ return vis[n.id]; });
   edges = edges.filter(function(e){ return vis[e.source] && vis[e.target]; });
 
+  // 군집 접기 — 다운스트림 한 칸에 같은 노릇(설치·배치, 직접 고객…)의 회사가 여섯을 넘으면
+  // 「설치·배치 11곳」 한 상자로 접는다. 누르면 편다(open 에 grp|칸|노릇). 전부 펴기(*)면 안 접는다.
+  // 블룸의 직접 고객 열여덟처럼 긴 칸에서만 일어난다
+  var CLUSTER_MIN = 6;
+  if (!all) {
+    var groups = {};
+    nodes.forEach(function(n){
+      var d = n.data;
+      if (n.type !== 'nd' || d.kind !== 'ent' || d.focal || d.col === undefined) return;
+      if (d.col < COL_OF.CONTRACTUAL_CUSTOMER || d.col >= COL_OF.END_MARKET) return;
+      var key = 'grp|' + d.col + '|' + (d.sub || '');
+      (groups[key] = groups[key] || []).push(n.id);
+    });
+    var into = {};
+    Object.keys(groups).forEach(function(key){
+      var mem = groups[key];
+      if (mem.length < CLUSTER_MIN || open.indexOf(key) >= 0) return;
+      mem.forEach(function(id){ into[id] = key; });
+      var col = parseInt(key.split('|')[1], 10), sub = key.split('|')[2];
+      nodes.push({ id: key, type:'nd', data:{
+        title: (sub || '상자') + ' ' + mem.length + '곳', kind:'cluster', col: col,
+        sub: '누르면 펼친다', mem: mem, more: null,
+        ref:{ kind:'ent', id: focal, entity: focal } } });
+    });
+    if (Object.keys(into).length) {
+      nodes = nodes.filter(function(n){ return !into[n.id]; });
+      var seenE = {};
+      edges = edges.map(function(e){
+        var s2 = into[e.source] || e.source, t2 = into[e.target] || e.target;
+        if (s2 === e.source && t2 === e.target) return e;
+        return Object.assign({}, e, { source: s2, target: t2, id: e.id + '|c' });
+      }).filter(function(e){
+        if (e.source === e.target) return false;
+        var k = e.source + '>' + e.target + '>' + ((e.data && e.data.cls) || '');
+        if (seenE[k]) return false;
+        seenE[k] = 1; return true;
+      });
+    }
+  }
+
   // 프로젝트는 칸도 상자도 아니다. projects.json 이 명시한 식구를 두르는 테두리다.
   // SPV·부지는 실제 법인이라 상자로 선다. 타겟은 늘 테두리 밖이고 선은 테두리에 안 닿는다
   ((ck && CHAINS[ck].projects) || []).forEach(function(p){
