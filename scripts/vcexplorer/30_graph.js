@@ -77,7 +77,7 @@ var ROLE_KO = { PLATFORM_EXPOSURE:'수요 노출', QUALIFICATION:'인증',
   PROJECT_FINANCE:'프로젝트 금융', CREDIT_SUPPORT:'신용 보강', INVESTS_IN:'투자',
   OPERATES_THROUGH:'운영 자회사', EXECUTES_THROUGH:'실행 법인',
   END_CUSTOMER_SUPPLY_CHAIN:'공급망 목록', DISTRIBUTION_PARTNERSHIP:'유통 제휴',
-  INDIRECT_CUSTOMER_UNDISCLOSED:'고객 · 비공개' };
+  INDIRECT_CUSTOMER_UNDISCLOSED:'고객 · 비공개', CONTRACT_PARTY_UNDISCLOSED:'계약 상대 · 비공개' };
 var CONTRACT_KO = { CONFIRMED:'계약 고객 확인', NOT_CONTRACTUAL:'계약 고객 아님',
   UNVERIFIED:'계약 고객 미확인' };
 var CONTRACT_NOTE = { CONFIRMED:'계약상 구매 주체라는 근거가 있다',
@@ -205,8 +205,13 @@ function topology(focal, rels, rooted){
     }
     col[id] = depth[id] >= 5 ? COL_OF.END_USER_4 : depth[id] === 4 ? COL_OF.END_USER_3
             : (depth[id] === 3 ? COL_OF.END_USER_2 : COL_OF.END_USER);
+    // 부지·SPV 는 고객이 아니라 물건이 놓이는 자리다 — 「간접 고객」이라 안 적는다
     sub[id] = (r.relationship_type === 'INDIRECT_CUSTOMER_UNDISCLOSED' || e.anon)
-      ? '간접 고객 · 비공개' : '간접 고객';
+      ? '간접 고객 · 비공개'
+      : e.entity_type === 'project_spv'
+        ? (r.relationship_type === 'DEPLOYS_AT_SITE' || r.relationship_type === 'DEPLOYS_AT'
+           ? '설치 부지' : '프로젝트')
+        : '간접 고객';
   });
   // ② 뒤로 — 공급. 사슬의 타겟은 층으로, 다른 중심은 홉으로
   var hop = {};

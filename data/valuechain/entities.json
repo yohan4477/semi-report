@@ -2952,5 +2952,21 @@
   ],
   "desc": "2026년 8월 Vera CPU 를 도입하고 Vera Rubin 기반 인프라를 확장한다고 발표했다. 회계상 직접고객 지위는 별도로 주장되지 않는다",
   "anon": false
+ },
+ {
+  "id": "bloom-energy-contract-undisclosed",
+  "name": "Undisclosed contract party",
+  "name_ko": "계약 상대 미상",
+  "entity_type": "company",
+  "anon": true,
+  "country": null,
+  "legal_name": "계약 상대 미상(비공개)",
+  "display_name": "계약 상대 미상",
+  "desc": "설비가 이 부지에 놓인 것은 확인되나 누구와 계약했는지 원문이 밝히지 않았다",
+  "categories": [],
+  "primary_role": "미상",
+  "other_roles": [],
+  "parent_entity_id": null,
+  "region": null
  }
 ]

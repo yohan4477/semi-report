@@ -21,6 +21,8 @@ FAIL 0 이어야 푸시한다. 생성기(gen_vcexplorer.py)도 이 검사를 먼
   V12 공급원·매출원 개별 귀속(미상 아닌 것)에 근거가 붙었나 — 전체 mix 로 배정하면 FAIL
   V13 타겟에서 나가는 거래에 contractual_customer 근거 칸이 있나, 값이 셋 중 하나인가
   V14 귀속별 등급(revenue_type_map)이 ids 안의 분류만 가리키고 등급·출처가 붙었나
+  V15 계약 상대 미확인인 부지·SPV 가 타겟에서 바로 이어지지 않나 — 「계약 상대 미상」
+      자리표를 거쳐야 하고, 자리표 뒤에는 부지가 하나는 있어야 한다(migrate_vc2 ③)
 
 실리는 사슬(chain.json 이 있는 디렉터리)은 게이트, 아직 안 실린 사슬은 빚 한 줄로 센다.
 """
@@ -166,6 +168,12 @@ def validate():
                 if v not in CONTRACTUAL:
                     soft('V13', u'%s 의 %s 에 contractual_customer 가 %s 다 (%s 중 하나)'
                          % (cid, r['id'], v, '·'.join(sorted(CONTRACTUAL))))
+            # V15 — 계약 상대가 미확인인 부지·SPV 는 직접 고객 칸에 서면 안 된다
+            if r.get('lane') == 'DOWNSTREAM' and r['source_entity'] == focal \
+                    and r.get('contractual_customer') == 'UNVERIFIED' \
+                    and (ents.get(r['target_entity']) or {}).get('entity_type') == 'project_spv':
+                soft('V15', u'%s 의 %s 가 계약 상대 미확인인 부지 %s 를 타겟에서 바로 잇는다. '
+                     u'「계약 상대 미상」 자리표를 거친다' % (cid, r['id'], r['target_entity']))
             # V14 — 귀속별 등급(revenue_type_map·supply_source_map)은 ids 안의 분류만
             # 가리키고, 등급·출처가 있어야 한다. 배분 %는 비공개면 비워 둔다
             for mk, ik in (('revenue_type_map', 'revenue_type_ids'),
@@ -220,6 +228,11 @@ def validate():
                     fail('V8', u'%s 의 %s 가 미상 자리표에 실명 상자 %s 를 앉혔다'
                          % (cid, r['id'], r['target_entity']))
 
+        # V15 — 자리표가 섰으면 그 뒤에 부지가 하나는 있어야 한다
+        ph = cid + '-contract-undisclosed'
+        if any(r['target_entity'] == ph for r in rels) \
+                and not any(r['source_entity'] == ph for r in rels):
+            soft('V15', u'%s 의 계약 상대 미상 자리표 뒤에 부지가 없다' % cid)
         # V10 — 프로젝트는 별도 맥락 파일. 식구는 명시하고, 타겟은 식구가 아니며,
         # 프로젝트 id 는 관계의 끝점이 아니다
         ppath = os.path.join(cdir, 'projects.json')

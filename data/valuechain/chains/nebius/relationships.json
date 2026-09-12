@@ -292,7 +292,7 @@
   "notes": null,
   "supply_source_ids": [],
   "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
+  "contractual_customer": "NOT_CONTRACTUAL"
  },
  {
   "id": "dataone-vineland",
@@ -407,7 +407,7 @@
   "notes": null,
   "supply_source_ids": [],
   "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
+  "contractual_customer": "NOT_CONTRACTUAL"
  },
  {
   "id": "ne-lappeenranta-deploy",
@@ -436,7 +436,7 @@
   "notes": "첫 용량이 2027년이라 계획이다",
   "supply_source_ids": [],
   "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
+  "contractual_customer": "NOT_CONTRACTUAL"
  },
  {
   "id": "ne-independence-deploy",
@@ -465,7 +465,7 @@
   "notes": "승인까지 났고 용량은 잠재치다",
   "supply_source_ids": [],
   "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
+  "contractual_customer": "NOT_CONTRACTUAL"
  },
  {
   "id": "ded-microsoft",

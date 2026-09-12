@@ -228,7 +228,7 @@ var REL_KO = { SUPPLIES:'공급', PROCESSED_INTO:'가공', INPUT_TO:'투입', FE
   OPERATES_AT_SITE:'부지 운영·통합', SELLS_TO:'판매', REVENUE_FROM:'매출원',
   UTILITY_SERVES:'전력 공급', DIRECT_CUSTOMER:'직접 고객',
   CUSTOMERS_CUSTOMER:'고객의 고객', END_USER_DEPLOYMENT:'설치·배치',
-  DEPLOYS_AT:'설치 부지', SUBSIDIARY_OF:'자회사', CONTRACT_MANUFACTURES:'수탁 제조',
+  DEPLOYS_AT:'설치 부지', CONTRACT_PARTY_UNDISCLOSED:'계약 상대 미상', SUBSIDIARY_OF:'자회사', CONTRACT_MANUFACTURES:'수탁 제조',
   SERVES_END_MARKET:'최종 시장', SERVES_END_USER:'최종 사용자',
   CREDIT_SUPPORT:'신용 보강', INVESTS_IN:'투자' };
 function relKo(k){ return REL_KO[k] || k; }
