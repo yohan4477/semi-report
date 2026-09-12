@@ -749,7 +749,8 @@ var EDGE_TYPES = { gut: GutEdge };
 function Proj(p){
   var d = p.data;
   return h('div', { className:'proj', style:{ width:d.w + 'px', height:d.h + 'px' } }, [
-    h('div', { key:'l', className:'plab' }, [
+    h('div', { key:'l', className:'plab', style:{ left:(d.lx || 0) + 4 + 'px', right:'auto',
+        width: COL_W + 'px' } }, [
       h('div', { key:'a' }, '프로젝트'),
       h('div', { key:'b', className:'pn' }, d.title) ])
   ]);
@@ -1023,15 +1024,26 @@ function place(nodes, edges, opts){
   projs.forEach(function(pn){
     (pn.data.mem || []).forEach(function(m){ ofProj[m] = pn.id; });
   });
+  // 프로젝트의 높이는 칸마다 따로 정하지 않고 판 전체에서 하나로 잡는다(띠). 칸마다
+  // 따로 재면 같은 프로젝트의 식구가 칸마다 다른 높이에 앉아 테두리끼리 가로질러 겹친다
+  var gsum = {}, gcnt = {};
   used.forEach(function(c){
-    var list = byCol[c], key = {}, mean = {};
+    var list = byCol[c], span = Math.max(1, list.length - 1);
+    list.forEach(function(it){
+      var pj = ofProj[it.id];
+      if (!pj) return;
+      gsum[pj] = (gsum[pj] || 0) + it.ord / span;
+      gcnt[pj] = (gcnt[pj] || 0) + 1;
+    });
+  });
+  var grank = {};
+  Object.keys(gsum).forEach(function(pj){ grank[pj] = gsum[pj] / gcnt[pj]; });
+  used.forEach(function(c){
+    var list = byCol[c], key = {}, mean = {}, span = Math.max(1, list.length - 1);
     list.forEach(function(it){
       var k = ofProj[it.id] || ('~' + it.id);
       key[it.id] = k;
-      (mean[k] = mean[k] || []).push(it.ord);
-    });
-    Object.keys(mean).forEach(function(k){
-      mean[k] = mean[k].reduce(function(a, b){ return a + b; }, 0) / mean[k].length;
+      mean[k] = ofProj[it.id] ? grank[ofProj[it.id]] : it.ord / span;
     });
     list.sort(function(a, b){
       var ka = key[a.id], kb = key[b.id];
@@ -1064,9 +1076,17 @@ function place(nodes, edges, opts){
   // 빈 자리가 닿을 상자보다 아래로 밀려났을 때 그 상자를 내리는 바닥값. 아래로만 민다
   var push = {};
   function packCol(i, toward){
-    var y = 0;
+    var y = 0, prevProj = null;
     byCol[used[i]].forEach(function(it, k){
       it.ord = k;
+      // 프로젝트 테두리가 바뀌는 자리에는 이름이 들어갈 여백을 둔다 — 안 두면 아래
+      // 테두리의 이름이 위 테두리의 마지막 식구 상자를 덮는다
+      var pj = it.dummy ? null : (ofProj[it.id] || null);
+      if (k > 0 && pj !== prevProj) {
+        if (prevProj) y += PROJ_PAD_X;
+        if (pj) y += PROJ_PAD_Y;
+      }
+      prevProj = pj;
       var floor = push[it.id] || 0;
       (nbr[it.id] || []).forEach(function(x){
         if (where[x] !== toward) return;
@@ -1212,10 +1232,14 @@ function place(nodes, edges, opts){
     });
     var px = x1 - PROJ_PAD_X, py = y1 - PROJ_PAD_Y;
     var pw = (x2 - x1) + PROJ_PAD_X * 2, ph = (y2 - y1) + PROJ_PAD_Y + PROJ_PAD_X;
+    // 이름은 맨 위 식구 상자 바로 위에 둔다. 그 자리는 packCol 이 비워 둔 띠라 다른
+    // 상자가 못 선다. 테두리 왼쪽 위에 두면 다른 칸의 남의 상자와 겹친다
+    var topId = ids.slice().sort(function(p, q){ return geo[p].y - geo[q].y; })[0];
+    var lx = geo[topId].x - px;
     geo[pn.id] = { x:px, y:py, h:ph, col:col, proj:true };
     out.push(Object.assign({}, pn, { position:{ x:px, y:py }, zIndex:-1,
       draggable:false, selectable:false,
-      data: Object.assign({}, pn.data, { w:pw, h:ph }) }));
+      data: Object.assign({}, pn.data, { w:pw, h:ph, lx:lx }) }));
   });
 
   route(edges, geo, fcol);
