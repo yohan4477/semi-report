@@ -1024,7 +1024,9 @@ function App(){
       (!narrow && allOpen && !drw && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
         nodeStrokeWidth:0, maskColor:'rgba(232,235,240,.6)',
         nodeColor:function(n){ return n.type === 'hdr' ? 'transparent'
-          : (n.data && n.data.focal ? '#151b28' : (n.data && n.data.kind === 'lane' ? '#c6ccd8' : '#9aa3b5')); },
+          : (n.data && n.data.focal ? '#0E6B66' : (n.data && n.data.kind === 'lane' ? '#c6ccd8'
+             : (n.data && n.data.bott ? '#9B1C3A' : (n.data && n.data.kr ? '#B4620A'
+             : (n.data && n.data.side === 'cust' ? '#31507A' : '#9aa3b5'))))); },
         style:{ width:180, height:120 } }) : null
     ])
   ]);
@@ -1033,8 +1035,15 @@ function App(){
   var legend = h('div', { key:'lg', className:'legend' + (lgOpen ? ' open' : '') }, [
     h('button', { key:'tg', className:'lgbtn', onClick: function(){ setLgOpen(!lgOpen); } },
       lgOpen ? '범례 접기' : '범례'),
+    h('b', { key:'k' }, '색'),
+    h('i', { key:'k1', className:'lsw tsmc' }, '타겟'),
+    h('i', { key:'k2', className:'lsw kr' }, '한국 회사'),
+    h('i', { key:'k3', className:'lsw jp' }, '병목 — 공급 여력 HIGH 이상'),
+    h('i', { key:'k4', className:'lsw cust' }, '고객'),
+    h('i', { key:'k5', className:'lsw sup' }, '그 밖의 공급사'),
+    h('i', { key:'k6', className:'lsw mid' }, '점선 테두리 중개·유통'),
     h('b', { key:'b' }, '선'),
-    h('i', { key:1 }, '굵은 실선 공시로 확인'),
+    h('i', { key:1 }, '실선 공시로 확인 — 공급 쪽 회색, 고객 쪽 남색'),
     h('i', { key:2 }, '갈색 실선 추정 (분모 있음)'),
     h('i', { key:3 }, '파선 정황 추론'),
     h('i', { key:4 }, '점선 비공개·과거 관측'),

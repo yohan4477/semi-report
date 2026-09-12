@@ -142,6 +142,10 @@ var EV_STYLE = {
   HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#b8bec9', strokeWidth:1.3, strokeDasharray:'1 5' }
 };
 function evStyle(k){ return EV_STYLE[k] || EV_STYLE.INFERRED; }
+// 쪽 색 — 공급 쪽 회색, 고객 쪽 남색. 상자 테두리와 확인된 선이 같은 색을 쓴다
+var SIDE_INK = { sup:'#8A96A3', cust:'#31507A' };
+// 병목 — 공급 여력이 이 등급이면 진홍 상자
+var BOTT = { HIGH:1, VERY_HIGH:1 };
 var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Cell':'셀·세라믹', 'Other ceramic':'기타 세라믹', 'Thermal':'열·단열',
   'Interconnect':'인터커넥트', 'Hotbox':'핫박스', 'Power electronics':'전력 전자',

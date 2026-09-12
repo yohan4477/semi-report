@@ -43,7 +43,7 @@ TEMPLATE = u'''<!doctype html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>밸류체인 탐색기</title>
 <style>__RFCSS__</style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Color+Emoji&display=swap">
 <style>__CSS__</style>
 </head><body>
 <div id="root"></div>

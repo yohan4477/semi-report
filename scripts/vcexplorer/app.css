@@ -1,10 +1,14 @@
 
-:root{--paper:#fff;--ink1:#151b28;--ink2:#39415a;--ink3:#6b7488;--ink4:#9aa2b1;
---line:#c6ccd8;--line2:#e5e8ee;--bg:#e8ebf0;--hi:#dde6f4;--warm:#8a6a3d}
+/* 팔레트 — TSMC 그림 규약. 실리콘 회색 바탕, 색은 소속:
+   청록 타겟 · 주황 한국 회사 · 진홍 병목 · 남색 고객 · 회색 그 밖의 공급사 */
+:root{--paper:#fff;--ink1:#1C2733;--ink2:#39415a;--ink3:#6B7785;--ink4:#9aa2b1;
+--line:#C9D1DA;--line2:#e5e8ee;--bg:#EEF1F4;--hi:#e2e7ec;--warm:#8a6a3d;
+--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;--kr:#B4620A;--kr-soft:#F6E3C8;
+--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
 *{box-sizing:border-box}
 html,body,#root{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink1);overflow:hidden;
-font:13.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+font:13.5px/1.6 "IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
 font-variant-numeric:tabular-nums}
 .app{display:flex;flex-direction:column;height:100%}
 .top{display:flex;align-items:center;gap:12px;padding:9px 14px;background:var(--paper);
@@ -147,7 +151,7 @@ margin:10px 0 6px}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
 /* 상자는 크기가 다 같다(128×60). 이름은 두 줄까지 보이고 넘치면 줄임표, 아래 줄은 한 줄.
    크기가 제각각이면 같은 칸의 상자가 서로 다른 것으로 읽히고 선이 닿는 높이가 흔들린다 */
-.nd{background:var(--paper);border:1px solid #9aa3b5;border-radius:7px;padding:6px 10px;
+.nd{background:var(--paper);border:1px solid var(--sup);border-radius:4px;padding:6px 10px;
 width:156px;height:64px;box-sizing:border-box;display:flex;flex-direction:column;
 justify-content:center;overflow:visible;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:13px;font-weight:600;line-height:1.28;display:-webkit-box;
@@ -174,10 +178,13 @@ line-height:22px;text-align:center;box-shadow:0 1px 3px rgba(20,26,40,.3);pointe
 .more.l{right:auto;left:-9px}
 .nd.lane .more.l{right:auto;left:-6px}
 .hdr{width:156px;height:44px;text-align:center;padding:5px 6px;background:var(--hi);
+--hi:#e2e7ec}
+.hdr.focal{background:var(--tsmc-soft);border-color:var(--tsmc)}
+.hdr.cust{background:var(--cust-soft);border-color:var(--cust)}
 border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
 box-sizing:border-box}
 .hdrbar{position:absolute;left:0;top:0;right:0;height:50px;pointer-events:none;z-index:5;
-overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(232,235,240,0))}
+overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(238,241,244,0))}
 .hdrbar .hdr .hl{font-size:1em}
 .hdrbar .hdr .hn{font-size:.9em}
 .hdr .hl{font-size:12.5px;color:var(--ink1);font-weight:700;letter-spacing:-.2px;
@@ -197,16 +204,33 @@ margin-top:1px;white-space:normal;line-height:1.25;display:-webkit-box;-webkit-l
 .nd .val{display:inline-block;margin-left:5px;padding:0 5px;border-radius:4px;
 background:var(--hi);border:1px solid var(--line);color:var(--ink1);font-weight:700;
 font-size:11px}
-.nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;
-box-shadow:0 3px 12px rgba(20,26,40,.22)}
-.nd.focal .nm{font-size:14px}
-.nd.focal .sub{font-size:11.5px}
+/* 소속 색 — 고객은 남색, 한국 회사는 주황, 병목은 진홍. 겹치면 병목이 이긴다 */
+.nd.cust{border-color:var(--cust);background:var(--cust-soft)}
+.nd.kr{border-color:var(--kr);background:var(--kr-soft)}
+.nd.bott{border-color:var(--jp);background:var(--jp-soft)}
+.nd.mid{border-style:dashed}
+.nd.cluster.cust,.nd.cluster.kr{background:var(--paper)}
+.nd.focal{border-color:var(--tsmc);border-width:2px;background:var(--tsmc);color:#fff;
+box-shadow:0 3px 12px rgba(14,107,102,.3)}
+.nd.focal .nm{font-size:14px;color:#fff}
+.nd.focal .sub{font-size:11.5px;color:rgba(255,255,255,.82)}
+.nd.focal .ico{stroke:rgba(255,255,255,.85)}
+.nd.focal .flag.na{color:rgba(255,255,255,.7)}
+.nd.focal .badge.new{background:#fff;color:var(--tsmc);border-color:#fff}
+.nd.focal .more{background:#fff;color:var(--tsmc)}
+.nd.focal.sel{border-color:var(--ink1)}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 /* 공급원·매출원 갈림목 — 회사가 아니라 분류. 둥근 알약 꼴에 파선으로 상자와 구별한다 */
 .nd.lane{background:#f7f8fb;border:1px dashed #8e97aa;border-radius:20px;text-align:center;
 padding:2px 10px;height:64px;box-shadow:none;align-items:center}
 .nd.lane .nm{font-size:12.5px;font-weight:600;color:var(--ink2);-webkit-line-clamp:2}
-.nd.lane .sub{margin-top:1px;font-size:10.5px}
+.nd.lane .sub{margin-top:1px;font-size:10.5px;display:flex;align-items:center;
+justify-content:center;gap:1px 5px;min-width:0;width:100%;max-width:100%;flex-wrap:wrap;
+line-height:1.3}
+/* 분모 글자가 길면 비중 숫자가 다음 줄로 내려간다. 상자 높이 64 안에 세 줄이 든다 */
+.nd.lane .sub>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+min-width:0;max-width:100%}
+.nd.lane .sub .shr{flex:none;margin-left:0}
 .nd.lane.un{border-color:#c6ccd8}
 .nd.lane.un .nm{color:var(--ink3)}
 .nd.sel{border-color:var(--ink1);box-shadow:0 0 0 2px rgba(21,27,40,.16),0 1px 3px rgba(20,26,40,.14)}
@@ -222,6 +246,15 @@ box-shadow:3px 3px 0 -1px #fff,3px 3px 0 0 #aab2c2,6px 6px 0 -1px #fff,6px 6px 0
 background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
 .legend b{font-size:11px;color:var(--ink4);font-weight:500}
 .legend i{font-style:normal;white-space:nowrap}
+.legend i.lsw{display:inline-flex;align-items:center}
+.legend i.lsw::before{content:"";display:inline-block;width:11px;height:11px;border-radius:2px;
+margin-right:5px;vertical-align:-1px;border:1px solid transparent}
+.legend i.lsw.tsmc::before{background:var(--tsmc)}
+.legend i.lsw.kr::before{background:var(--kr-soft);border-color:var(--kr)}
+.legend i.lsw.jp::before{background:var(--jp-soft);border-color:var(--jp)}
+.legend i.lsw.cust::before{background:var(--cust-soft);border-color:var(--cust)}
+.legend i.lsw.sup::before{background:#fff;border-color:var(--sup)}
+.legend i.lsw.mid::before{background:#fff;border:1px dashed var(--sup)}
 .legend:not(.open) b,.legend:not(.open) i{display:none}
 .legend:not(.open){padding:3px 14px}
 .lgbtn{border:1px solid var(--line);background:var(--paper);color:var(--ink3);font:inherit;

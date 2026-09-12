@@ -47,7 +47,9 @@ function Nd(p){
   var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.kind === 'lane' ? ' lane' : '')
           + (d.kind === 'cluster' ? ' cluster' : '')
           + (d.un ? ' un' : '') + (d.focal ? ' focal' : '') + (d.sel ? ' sel' : '')
-          + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
+          + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '')
+          + (d.side === 'cust' ? ' cust' : '') + (d.kr ? ' kr' : '')
+          + (d.bott ? ' bott' : '') + (d.mid ? ' mid' : '');
   var mid = [
     h('div', { key:'n', className:'nm' }, [
       d.ico ? h('svg', { key:'i', className:'ico', viewBox:'0 0 24 24' },
@@ -82,7 +84,8 @@ function HdrBar(p){
   var z = p.vp.zoom, hs = p.nodes.filter(function(n){ return n.type === 'hdr'; });
   var fz = Math.max(.72, Math.min(1, z));
   return h('div', { className:'hdrbar' }, hs.map(function(n){
-    return h('div', { key:n.id, className:'hdr',
+    return h('div', { key:n.id, className:'hdr' + (n.data.label === '타겟' ? ' focal'
+        : (/고객|중개|전방/.test(n.data.label || '') ? ' cust' : '')),
       style:{ position:'absolute', top:'6px', left:(n.position.x * z + p.vp.x) + 'px',
               width:(COL_W * z) + 'px', transform:'none', fontSize:(fz * 100) + '%' } }, [
       h('div', { key:'l', className:'hl' }, n.data.label),

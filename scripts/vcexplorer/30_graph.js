@@ -300,10 +300,16 @@ function buildGraph(focal, year, sel, axis, hint, open){
     if (seen[id] || tp.col[id] === undefined) return;
     seen[id] = 1;
     var isFocal = id === focal, r = tp.via[id];
+    // 색은 소속이다(TSMC 그림 규약) — 타겟 청록, 한국 회사 주황, 고객 남색, 나머지 공급사 회색.
+    // 병목은 진홍: 공급 여력 HIGH 이상이라 적힌 줄의 출발 상자. 중개·유통은 점선 테두리
+    var kr = (ENT[id] || {}).country === '한국';
+    var side = isFocal ? 'focal' : (tp.col[id] >= COL_OF.CONTRACTUAL_CUSTOMER ? 'cust' : 'sup');
     nodes.push({ id: id, type:'nd', data:{
       title: nm(id), flag: flagOf(id), ico: iconOf(id),
       kind: KIND_OF[(ENT[id] || {}).entity_type] || 'ent',
-      focal: isFocal, col: tp.col[id],
+      focal: isFocal, col: tp.col[id], kr: kr, side: side,
+      mid: !isFocal && (tp.sub[id] === '중개' || tp.col[id] === COL_OF.INTERMEDIARY
+                        || (iconOf(id) === 'distributor')),
       sub: isFocal ? ((ENT[focal] || {}).country || null) : (tp.sub[id] || null),
       ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : id, entity: id,
             up: r ? r.source_entity === id : false } } });
@@ -331,7 +337,7 @@ function buildGraph(focal, year, sel, axis, hint, open){
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated, fixOrd: xi,
           // 밑줄은 옆 숫자의 분모다. 잔여(배분 미상)는 서랍에 적는다 — 알약에 「잔여」를
           // 달면 옆의 비중이 잔여 비중처럼 읽힌다
-          sub: x.group_label || ((sh && den && sh.denominator === den) ? den + ' 대비' : null),
+          sub: x.group_label || ((sh && den && sh.denominator === den) ? den : null),
           share: (sh && den && sh.denominator === den)
             ? sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '') : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',
@@ -351,6 +357,12 @@ function buildGraph(focal, year, sel, axis, hint, open){
   function mapOf(r, band, cid){
     var list = (band === 'ss' ? r.supply_source_map : r.revenue_type_map) || [];
     return list.filter(function(m){ return m.id === cid; })[0] || null;
+  }
+  // 확인된 선은 쪽으로 색을 나눈다 — 공급 쪽 회색, 고객 쪽 남색(TSMC 그림 규약).
+  // 추정·추론·비공개는 근거 등급 색·파선을 그대로 둔다
+  function sideTint(st, r, lvl){
+    if (lvl !== 'CONFIRMED') return st;
+    return Object.assign({}, st, { stroke: r.lane === 'DOWNSTREAM' ? SIDE_INK.cust : SIDE_INK.sup });
   }
   // 화살촉은 선 굵기를 따라 커지지 않는다(markerUnits) — 굵은 비중선의 촉이 상자만 해졌다
   function marker(color){
@@ -383,11 +395,17 @@ function buildGraph(focal, year, sel, axis, hint, open){
         }
       }
     }
+    // 병목 — 공급 여력이 HIGH 이상이라 적힌 줄의 출발 상자를 진홍으로
+    if (BOTT[r.capacity_criticality]) {
+      var bn = nodes.filter(function(n){ return n.id === r.source_entity; })[0];
+      if (bn && !bn.data.focal) bn.data.bott = true;
+    }
     var band = bandOf(r);
     if (!band) {
+      st = sideTint(st, r, r.evidence_level);
       edges.push({ id:'e-' + r.id, source: r.source_entity, target: r.target_entity,
         style: st, data:{ rel: r.id, on: on },
-        markerEnd: marker(evStyle(r.evidence_level).stroke), type:'smoothstep' });
+        markerEnd: marker(st.stroke), type:'smoothstep' });
     } else {
       var ids = band === 'ss' ? r.supply_source_ids : r.revenue_type_ids;
       ids.forEach(function(cid){
@@ -397,22 +415,24 @@ function buildGraph(focal, year, sel, axis, hint, open){
         var key = band + ':' + cid;
         // 귀속마다 근거 등급이 다르다 — Apple 은 커패시터에는 확인, 인덕터에는 추론
         var mp = mapOf(r, band, cid), lvl = mp ? mp.status : r.evidence_level;
-        var st2 = Object.assign({}, evStyle(lvl));
+        var st2 = sideTint(Object.assign({}, evStyle(lvl)), r, lvl);
         if (!on) st2.opacity = 0.28;
         edges.push({ id:'e-' + r.id + '|' + cid,
           source: band === 'ss' ? r.source_entity : lid,
           target: band === 'ss' ? lid : r.target_entity,
           style: st2, data:{ rel: r.id, on: on, cls: key, map: mp || null },
-          markerEnd: marker(evStyle(lvl).stroke), type:'smoothstep' });
+          markerEnd: marker(st2.stroke), type:'smoothstep' });
         // 갈림목과 타겟 사이 줄기는 갈림목마다 하나다. 그 갈림목을 지나는 선이 하나라도
         // 그 해에 살아 있으면 진하다
         var tk = trunk[lid];
         if (!tk) {
+          var tst = Object.assign({}, EV_STYLE.CONFIRMED,
+            { stroke: band === 'ss' ? SIDE_INK.sup : SIDE_INK.cust });
           tk = trunk[lid] = { id:'e-trunk|' + lid,
             source: band === 'ss' ? lid : focal, target: band === 'ss' ? focal : lid,
-            style: Object.assign({}, EV_STYLE.CONFIRMED),
+            style: tst,
             data:{ rel: null, cls: key, on: false, rels: [] },
-            markerEnd: marker(EV_STYLE.CONFIRMED.stroke), type:'smoothstep' };
+            markerEnd: marker(tst.stroke), type:'smoothstep' };
           edges.push(tk);
         }
         tk.data.rels.push(r.id);

@@ -409,14 +409,18 @@
   top: 100%;
 }
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Color+Emoji&display=swap">
 <style>
-:root{--paper:#fff;--ink1:#151b28;--ink2:#39415a;--ink3:#6b7488;--ink4:#9aa2b1;
---line:#c6ccd8;--line2:#e5e8ee;--bg:#e8ebf0;--hi:#dde6f4;--warm:#8a6a3d}
+/* 팔레트 — TSMC 그림 규약. 실리콘 회색 바탕, 색은 소속:
+   청록 타겟 · 주황 한국 회사 · 진홍 병목 · 남색 고객 · 회색 그 밖의 공급사 */
+:root{--paper:#fff;--ink1:#1C2733;--ink2:#39415a;--ink3:#6B7785;--ink4:#9aa2b1;
+--line:#C9D1DA;--line2:#e5e8ee;--bg:#EEF1F4;--hi:#e2e7ec;--warm:#8a6a3d;
+--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;--kr:#B4620A;--kr-soft:#F6E3C8;
+--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
 *{box-sizing:border-box}
 html,body,#root{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink1);overflow:hidden;
-font:13.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+font:13.5px/1.6 "IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
 font-variant-numeric:tabular-nums}
 .app{display:flex;flex-direction:column;height:100%}
 .top{display:flex;align-items:center;gap:12px;padding:9px 14px;background:var(--paper);
@@ -559,7 +563,7 @@ margin:10px 0 6px}
 .sq{width:10px;height:10px;border-radius:2px;display:inline-block}
 /* 상자는 크기가 다 같다(128×60). 이름은 두 줄까지 보이고 넘치면 줄임표, 아래 줄은 한 줄.
    크기가 제각각이면 같은 칸의 상자가 서로 다른 것으로 읽히고 선이 닿는 높이가 흔들린다 */
-.nd{background:var(--paper);border:1px solid #9aa3b5;border-radius:7px;padding:6px 10px;
+.nd{background:var(--paper);border:1px solid var(--sup);border-radius:4px;padding:6px 10px;
 width:156px;height:64px;box-sizing:border-box;display:flex;flex-direction:column;
 justify-content:center;overflow:visible;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:13px;font-weight:600;line-height:1.28;display:-webkit-box;
@@ -586,10 +590,13 @@ line-height:22px;text-align:center;box-shadow:0 1px 3px rgba(20,26,40,.3);pointe
 .more.l{right:auto;left:-9px}
 .nd.lane .more.l{right:auto;left:-6px}
 .hdr{width:156px;height:44px;text-align:center;padding:5px 6px;background:var(--hi);
+--hi:#e2e7ec}
+.hdr.focal{background:var(--tsmc-soft);border-color:var(--tsmc)}
+.hdr.cust{background:var(--cust-soft);border-color:var(--cust)}
 border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
 box-sizing:border-box}
 .hdrbar{position:absolute;left:0;top:0;right:0;height:50px;pointer-events:none;z-index:5;
-overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(232,235,240,0))}
+overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(238,241,244,0))}
 .hdrbar .hdr .hl{font-size:1em}
 .hdrbar .hdr .hn{font-size:.9em}
 .hdr .hl{font-size:12.5px;color:var(--ink1);font-weight:700;letter-spacing:-.2px;
@@ -609,16 +616,33 @@ margin-top:1px;white-space:normal;line-height:1.25;display:-webkit-box;-webkit-l
 .nd .val{display:inline-block;margin-left:5px;padding:0 5px;border-radius:4px;
 background:var(--hi);border:1px solid var(--line);color:var(--ink1);font-weight:700;
 font-size:11px}
-.nd.focal{border-color:var(--ink1);border-width:2px;background:#fff;
-box-shadow:0 3px 12px rgba(20,26,40,.22)}
-.nd.focal .nm{font-size:14px}
-.nd.focal .sub{font-size:11.5px}
+/* 소속 색 — 고객은 남색, 한국 회사는 주황, 병목은 진홍. 겹치면 병목이 이긴다 */
+.nd.cust{border-color:var(--cust);background:var(--cust-soft)}
+.nd.kr{border-color:var(--kr);background:var(--kr-soft)}
+.nd.bott{border-color:var(--jp);background:var(--jp-soft)}
+.nd.mid{border-style:dashed}
+.nd.cluster.cust,.nd.cluster.kr{background:var(--paper)}
+.nd.focal{border-color:var(--tsmc);border-width:2px;background:var(--tsmc);color:#fff;
+box-shadow:0 3px 12px rgba(14,107,102,.3)}
+.nd.focal .nm{font-size:14px;color:#fff}
+.nd.focal .sub{font-size:11.5px;color:rgba(255,255,255,.82)}
+.nd.focal .ico{stroke:rgba(255,255,255,.85)}
+.nd.focal .flag.na{color:rgba(255,255,255,.7)}
+.nd.focal .badge.new{background:#fff;color:var(--tsmc);border-color:#fff}
+.nd.focal .more{background:#fff;color:var(--tsmc)}
+.nd.focal.sel{border-color:var(--ink1)}
 .nd.grp{background:#f4f6fa;border-style:dashed;border-color:#9aa3b5}
 /* 공급원·매출원 갈림목 — 회사가 아니라 분류. 둥근 알약 꼴에 파선으로 상자와 구별한다 */
 .nd.lane{background:#f7f8fb;border:1px dashed #8e97aa;border-radius:20px;text-align:center;
 padding:2px 10px;height:64px;box-shadow:none;align-items:center}
 .nd.lane .nm{font-size:12.5px;font-weight:600;color:var(--ink2);-webkit-line-clamp:2}
-.nd.lane .sub{margin-top:1px;font-size:10.5px}
+.nd.lane .sub{margin-top:1px;font-size:10.5px;display:flex;align-items:center;
+justify-content:center;gap:1px 5px;min-width:0;width:100%;max-width:100%;flex-wrap:wrap;
+line-height:1.3}
+/* 분모 글자가 길면 비중 숫자가 다음 줄로 내려간다. 상자 높이 64 안에 세 줄이 든다 */
+.nd.lane .sub>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+min-width:0;max-width:100%}
+.nd.lane .sub .shr{flex:none;margin-left:0}
 .nd.lane.un{border-color:#c6ccd8}
 .nd.lane.un .nm{color:var(--ink3)}
 .nd.sel{border-color:var(--ink1);box-shadow:0 0 0 2px rgba(21,27,40,.16),0 1px 3px rgba(20,26,40,.14)}
@@ -634,6 +658,15 @@ box-shadow:3px 3px 0 -1px #fff,3px 3px 0 0 #aab2c2,6px 6px 0 -1px #fff,6px 6px 0
 background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
 .legend b{font-size:11px;color:var(--ink4);font-weight:500}
 .legend i{font-style:normal;white-space:nowrap}
+.legend i.lsw{display:inline-flex;align-items:center}
+.legend i.lsw::before{content:"";display:inline-block;width:11px;height:11px;border-radius:2px;
+margin-right:5px;vertical-align:-1px;border:1px solid transparent}
+.legend i.lsw.tsmc::before{background:var(--tsmc)}
+.legend i.lsw.kr::before{background:var(--kr-soft);border-color:var(--kr)}
+.legend i.lsw.jp::before{background:var(--jp-soft);border-color:var(--jp)}
+.legend i.lsw.cust::before{background:var(--cust-soft);border-color:var(--cust)}
+.legend i.lsw.sup::before{background:#fff;border-color:var(--sup)}
+.legend i.lsw.mid::before{background:#fff;border:1px dashed var(--sup)}
 .legend:not(.open) b,.legend:not(.open) i{display:none}
 .legend:not(.open){padding:3px 14px}
 .lgbtn{border:1px solid var(--line);background:var(--paper);color:var(--ink3);font:inherit;
@@ -1160,6 +1193,10 @@ var EV_STYLE = {
   HISTORICAL_CURRENT_UNKNOWN:{ stroke:'#b8bec9', strokeWidth:1.3, strokeDasharray:'1 5' }
 };
 function evStyle(k){ return EV_STYLE[k] || EV_STYLE.INFERRED; }
+// 쪽 색 — 공급 쪽 회색, 고객 쪽 남색. 상자 테두리와 확인된 선이 같은 색을 쓴다
+var SIDE_INK = { sup:'#8A96A3', cust:'#31507A' };
+// 병목 — 공급 여력이 이 등급이면 진홍 상자
+var BOTT = { HIGH:1, VERY_HIGH:1 };
 var SUB_KO = { 'Raw material':'원재료', 'Operational input':'운영 투입',
   'Cell':'셀·세라믹', 'Other ceramic':'기타 세라믹', 'Thermal':'열·단열',
   'Interconnect':'인터커넥트', 'Hotbox':'핫박스', 'Power electronics':'전력 전자',
@@ -1337,7 +1374,9 @@ function Nd(p){
   var cls = 'nd' + (d.kind === 'grp' ? ' grp' : '') + (d.kind === 'lane' ? ' lane' : '')
           + (d.kind === 'cluster' ? ' cluster' : '')
           + (d.un ? ' un' : '') + (d.focal ? ' focal' : '') + (d.sel ? ' sel' : '')
-          + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
+          + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '')
+          + (d.side === 'cust' ? ' cust' : '') + (d.kr ? ' kr' : '')
+          + (d.bott ? ' bott' : '') + (d.mid ? ' mid' : '');
   var mid = [
     h('div', { key:'n', className:'nm' }, [
       d.ico ? h('svg', { key:'i', className:'ico', viewBox:'0 0 24 24' },
@@ -1372,7 +1411,8 @@ function HdrBar(p){
   var z = p.vp.zoom, hs = p.nodes.filter(function(n){ return n.type === 'hdr'; });
   var fz = Math.max(.72, Math.min(1, z));
   return h('div', { className:'hdrbar' }, hs.map(function(n){
-    return h('div', { key:n.id, className:'hdr',
+    return h('div', { key:n.id, className:'hdr' + (n.data.label === '타겟' ? ' focal'
+        : (/고객|중개|전방/.test(n.data.label || '') ? ' cust' : '')),
       style:{ position:'absolute', top:'6px', left:(n.position.x * z + p.vp.x) + 'px',
               width:(COL_W * z) + 'px', transform:'none', fontSize:(fz * 100) + '%' } }, [
       h('div', { key:'l', className:'hl' }, n.data.label),
@@ -2290,10 +2330,16 @@ function buildGraph(focal, year, sel, axis, hint, open){
     if (seen[id] || tp.col[id] === undefined) return;
     seen[id] = 1;
     var isFocal = id === focal, r = tp.via[id];
+    // 색은 소속이다(TSMC 그림 규약) — 타겟 청록, 한국 회사 주황, 고객 남색, 나머지 공급사 회색.
+    // 병목은 진홍: 공급 여력 HIGH 이상이라 적힌 줄의 출발 상자. 중개·유통은 점선 테두리
+    var kr = (ENT[id] || {}).country === '한국';
+    var side = isFocal ? 'focal' : (tp.col[id] >= COL_OF.CONTRACTUAL_CUSTOMER ? 'cust' : 'sup');
     nodes.push({ id: id, type:'nd', data:{
       title: nm(id), flag: flagOf(id), ico: iconOf(id),
       kind: KIND_OF[(ENT[id] || {}).entity_type] || 'ent',
-      focal: isFocal, col: tp.col[id],
+      focal: isFocal, col: tp.col[id], kr: kr, side: side,
+      mid: !isFocal && (tp.sub[id] === '중개' || tp.col[id] === COL_OF.INTERMEDIARY
+                        || (iconOf(id) === 'distributor')),
       sub: isFocal ? ((ENT[focal] || {}).country || null) : (tp.sub[id] || null),
       ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : id, entity: id,
             up: r ? r.source_entity === id : false } } });
@@ -2321,7 +2367,7 @@ function buildGraph(focal, year, sel, axis, hint, open){
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated, fixOrd: xi,
           // 밑줄은 옆 숫자의 분모다. 잔여(배분 미상)는 서랍에 적는다 — 알약에 「잔여」를
           // 달면 옆의 비중이 잔여 비중처럼 읽힌다
-          sub: x.group_label || ((sh && den && sh.denominator === den) ? den + ' 대비' : null),
+          sub: x.group_label || ((sh && den && sh.denominator === den) ? den : null),
           share: (sh && den && sh.denominator === den)
             ? sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '') : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',
@@ -2341,6 +2387,12 @@ function buildGraph(focal, year, sel, axis, hint, open){
   function mapOf(r, band, cid){
     var list = (band === 'ss' ? r.supply_source_map : r.revenue_type_map) || [];
     return list.filter(function(m){ return m.id === cid; })[0] || null;
+  }
+  // 확인된 선은 쪽으로 색을 나눈다 — 공급 쪽 회색, 고객 쪽 남색(TSMC 그림 규약).
+  // 추정·추론·비공개는 근거 등급 색·파선을 그대로 둔다
+  function sideTint(st, r, lvl){
+    if (lvl !== 'CONFIRMED') return st;
+    return Object.assign({}, st, { stroke: r.lane === 'DOWNSTREAM' ? SIDE_INK.cust : SIDE_INK.sup });
   }
   // 화살촉은 선 굵기를 따라 커지지 않는다(markerUnits) — 굵은 비중선의 촉이 상자만 해졌다
   function marker(color){
@@ -2373,11 +2425,17 @@ function buildGraph(focal, year, sel, axis, hint, open){
         }
       }
     }
+    // 병목 — 공급 여력이 HIGH 이상이라 적힌 줄의 출발 상자를 진홍으로
+    if (BOTT[r.capacity_criticality]) {
+      var bn = nodes.filter(function(n){ return n.id === r.source_entity; })[0];
+      if (bn && !bn.data.focal) bn.data.bott = true;
+    }
     var band = bandOf(r);
     if (!band) {
+      st = sideTint(st, r, r.evidence_level);
       edges.push({ id:'e-' + r.id, source: r.source_entity, target: r.target_entity,
         style: st, data:{ rel: r.id, on: on },
-        markerEnd: marker(evStyle(r.evidence_level).stroke), type:'smoothstep' });
+        markerEnd: marker(st.stroke), type:'smoothstep' });
     } else {
       var ids = band === 'ss' ? r.supply_source_ids : r.revenue_type_ids;
       ids.forEach(function(cid){
@@ -2387,22 +2445,24 @@ function buildGraph(focal, year, sel, axis, hint, open){
         var key = band + ':' + cid;
         // 귀속마다 근거 등급이 다르다 — Apple 은 커패시터에는 확인, 인덕터에는 추론
         var mp = mapOf(r, band, cid), lvl = mp ? mp.status : r.evidence_level;
-        var st2 = Object.assign({}, evStyle(lvl));
+        var st2 = sideTint(Object.assign({}, evStyle(lvl)), r, lvl);
         if (!on) st2.opacity = 0.28;
         edges.push({ id:'e-' + r.id + '|' + cid,
           source: band === 'ss' ? r.source_entity : lid,
           target: band === 'ss' ? lid : r.target_entity,
           style: st2, data:{ rel: r.id, on: on, cls: key, map: mp || null },
-          markerEnd: marker(evStyle(lvl).stroke), type:'smoothstep' });
+          markerEnd: marker(st2.stroke), type:'smoothstep' });
         // 갈림목과 타겟 사이 줄기는 갈림목마다 하나다. 그 갈림목을 지나는 선이 하나라도
         // 그 해에 살아 있으면 진하다
         var tk = trunk[lid];
         if (!tk) {
+          var tst = Object.assign({}, EV_STYLE.CONFIRMED,
+            { stroke: band === 'ss' ? SIDE_INK.sup : SIDE_INK.cust });
           tk = trunk[lid] = { id:'e-trunk|' + lid,
             source: band === 'ss' ? lid : focal, target: band === 'ss' ? focal : lid,
-            style: Object.assign({}, EV_STYLE.CONFIRMED),
+            style: tst,
             data:{ rel: null, cls: key, on: false, rels: [] },
-            markerEnd: marker(EV_STYLE.CONFIRMED.stroke), type:'smoothstep' };
+            markerEnd: marker(tst.stroke), type:'smoothstep' };
           edges.push(tk);
         }
         tk.data.rels.push(r.id);
@@ -3592,7 +3652,9 @@ function App(){
       (!narrow && allOpen && !drw && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
         nodeStrokeWidth:0, maskColor:'rgba(232,235,240,.6)',
         nodeColor:function(n){ return n.type === 'hdr' ? 'transparent'
-          : (n.data && n.data.focal ? '#151b28' : (n.data && n.data.kind === 'lane' ? '#c6ccd8' : '#9aa3b5')); },
+          : (n.data && n.data.focal ? '#0E6B66' : (n.data && n.data.kind === 'lane' ? '#c6ccd8'
+             : (n.data && n.data.bott ? '#9B1C3A' : (n.data && n.data.kr ? '#B4620A'
+             : (n.data && n.data.side === 'cust' ? '#31507A' : '#9aa3b5'))))); },
         style:{ width:180, height:120 } }) : null
     ])
   ]);
@@ -3601,8 +3663,15 @@ function App(){
   var legend = h('div', { key:'lg', className:'legend' + (lgOpen ? ' open' : '') }, [
     h('button', { key:'tg', className:'lgbtn', onClick: function(){ setLgOpen(!lgOpen); } },
       lgOpen ? '범례 접기' : '범례'),
+    h('b', { key:'k' }, '색'),
+    h('i', { key:'k1', className:'lsw tsmc' }, '타겟'),
+    h('i', { key:'k2', className:'lsw kr' }, '한국 회사'),
+    h('i', { key:'k3', className:'lsw jp' }, '병목 — 공급 여력 HIGH 이상'),
+    h('i', { key:'k4', className:'lsw cust' }, '고객'),
+    h('i', { key:'k5', className:'lsw sup' }, '그 밖의 공급사'),
+    h('i', { key:'k6', className:'lsw mid' }, '점선 테두리 중개·유통'),
     h('b', { key:'b' }, '선'),
-    h('i', { key:1 }, '굵은 실선 공시로 확인'),
+    h('i', { key:1 }, '실선 공시로 확인 — 공급 쪽 회색, 고객 쪽 남색'),
     h('i', { key:2 }, '갈색 실선 추정 (분모 있음)'),
     h('i', { key:3 }, '파선 정황 추론'),
     h('i', { key:4 }, '점선 비공개·과거 관측'),
