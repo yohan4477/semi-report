@@ -1,0 +1,1451 @@
+[
+ {
+  "id": "clm-tsmc-revenue-2025",
+  "statement": "2025년 매출은 NT$3조8,090억(US$1,224억)으로 전년보다 NT$ 기준 31.6%, 달러 기준 35.9% 늘었다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-netincome-2025",
+  "statement": "2025년 순이익은 NT$1조7,179억(US$552억)이고 순이익률은 45.1% 다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-gm-2025",
+  "statement": "2025년 매출총이익률은 59.9% 로 2024년 56.1% 에서 올랐다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-shipments-2025",
+  "statement": "2025년 웨이퍼 출하는 12인치 환산 1,500만 장으로 2024년 1,290만 장에서 늘었다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-customers-2025",
+  "statement": "2025년 고객은 534개, 제품은 12,682개다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-node-mix-2025",
+  "statement": "2025년 웨이퍼 매출의 74% 가 7nm 이하이고 3nm 단독으로 24% 다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "분모는 회사 총매출이 아니라 웨이퍼 매출이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-capex-2025",
+  "statement": "2025년 Capex 는 NT$1조2,724억이다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-capex-2026",
+  "statement": "2026년 Capex 계획은 US$520~560억으로 제시됐고 이후 US$600~640억으로 올려 잡는 이야기가 나왔다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "상향은 공시가 아니라 언론 보도 수준이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-foundry20-2025",
+  "statement": "2025년 Foundry 2.0 점유율은 40% 로 2024년 34% 에서 올랐다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-platform-2025",
+  "statement": "2025년 플랫폼별 매출은 HPC 58%(NT$2조1,929억)·스마트폰 29%·IoT 5%·자동차 5%·DCE 1%·기타 2% 다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-region-2025",
+  "statement": "2025년 지역별 매출은 고객 본사 기준으로 북미 75%·중국·일본을 뺀 아태 9%·중국 9%·일본 4%·EMEA 3% 다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-top10-conc",
+  "statement": "상위 10대 고객 비중은 2023년 70%, 2024년 76%, 2025년 78% 로 올라갔다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2023~2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "분모는 회사 총매출이다. 실명은 어느 해도 공개되지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-top2-identity",
+  "statement": "1위 고객 비중은 25%→22%→19% 로 내려가고 2위는 11%→12%→17% 로 올라갔는데, 업계는 2025년까지 1위를 애플·2위를 엔비디아로 읽고 2026년 중 엔비디아의 역전을 본다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2023~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "TSMC 공시는 순위만 밝혀 어느 쪽이 19% 인지 확정할 수 없다. 대만 보도는 순서를 반대로 읽기도 한다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-wafer-supply-share",
+  "statement": "실리콘 웨이퍼 6개사가 2020~2022년 TSMC 웨이퍼 수요의 92~96% 를 공급했다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2020~2022",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "2025년 20-F 의 최신 3개년 비중은 아직 대조하지 않았다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-cogs-2025",
+  "statement": "매출총이익률 59.9% 를 뒤집으면 2025년 매출원가는 NT$1조5,270억 가까이인데 20-F 는 원가를 항목별로 나누지 않는다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-cost-structure",
+  "statement": "업계가 읽는 2025년 매출원가 구성은 감가상각 40%대, 원재료 약 17%, 유틸리티 7~8% 이고 나머지가 인건비와 외주 패키징·테스트·마스크다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-material-mix-2005",
+  "statement": "2005년 20-F 기준 원재료비 안에서 웨이퍼가 42%, 화학이 20%, 가스가 9% 였다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2005",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2005",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "오래된 수치이지만 원재료 안의 무게 순서를 보여 준다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-purchase-conc-2019",
+  "statement": "대만 연차보고서의 연결 순매입액 10% 이상 공급사 항목은 2019년 기준으로 A 19%·B 17%·C 10% 를 적었다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2019",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_ar_2022",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "회사명은 A·B·C 로 익명 처리된다. 업계가 A 를 ASML 로 읽는 것은 근거 등급 C 이고 2025년판 해당 페이지는 아직 대조하지 않았다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-rev-split",
+  "statement": "2025년 매출은 웨이퍼 약 87% 와 패키징·테스트·마스크 등 비웨이퍼 약 13% 로 갈린다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-asp",
+  "statement": "웨이퍼 매출은 출하 1,500만 장에 12인치 환산 혼합 ASP 약 US$7,100 을 곱한 크기다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-capacity",
+  "statement": "캐파는 1,700만 장을 넘고 가동률은 약 88% 이며 2026년 캐파 성장 가이던스는 3% 다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "캐파 성장 둔화가 물량 기여를 줄인다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-node-price",
+  "statement": "노드별 웨이퍼 매출 비중과 장당 가격은 3nm 24%·US$18~20k, 5·4nm 약 35%·US$15k, 7·6nm 약 15%·US$9k, 16nm 이상 성숙 26%·US$2~5k 로 읽힌다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-price-hike",
+  "statement": "웨이퍼 가격은 해마다 3~10% 오르고 2027년에는 5~10% 인상 협의가 거론된다. 2nm 은 2025년 4분기 양산에 들어가 2026~27년 믹스 상향을 끈다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-cowos",
+  "statement": "CoWoS 는 2025년 말 월 7.5~8만 장에 장당 US$3~5k 로 읽히고 2026년 말 월 12~14만 장이 목표다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-cowos-outsource",
+  "statement": "2026년 CoWoS 외주 총량은 24~27만 장으로 읽히고 그만큼은 OSAT 매출로 옮겨가 TSMC 에는 원가로 남는다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-growth-decomp",
+  "statement": "2025년 달러 기준 매출 성장 약 36% 는 물량 16% 와 ASP 17% 로 갈리고, 2026년부터 무게중심이 물량에서 ASP·믹스·CoWoS 로 옮겨간다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-opincome-2025",
+  "statement": "2025년 영업이익은 매출 US$1,224억에서 매출원가 약 US$491억(40.1%)과 영업비용 약 US$111억(9.1%)을 뺀 US$622억(50.8%)이다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "ESTIMATED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_20f_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "매출원가율은 공시 매출총이익률에서 나오고 영업비용 구성은 추정이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-unit-econ",
+  "statement": "장당으로 보면 원가 약 US$3,270 에 ASP 약 US$7,100 이라 장당 매출총이익이 약 US$3,800 이고, 감가상각 1,470·원재료 560·유틸리티 250·인건비 330·외주와 기타 660 이 그 원가를 채운다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-wafer-cost-mix",
+  "statement": "웨이퍼 한 장 원가는 감가상각 약 45%, 원재료 약 17%, 유틸리티 7~8%, 인건비 약 10%, 외주·마스크·기타 약 20% 로 읽힌다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "TSMC 는 원가 구성을 공개하지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-opex",
+  "statement": "영업비용은 R&D 약 7% 와 SG&A 약 2% 이고 2024년 SG&A 가 35.6% 늘어난 주원인은 애리조나·구마모토·드레스덴 준비비다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2024~2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-margin-levers",
+  "statement": "마진을 움직이는 지렛대는 가동률(1%p 당 GM 0.3~0.5%p), 노드 믹스, 단가 인상, 해외팹 희석(GM 2~3%p), 환율(NT$ 1% 절상당 GM 0.4%p) 다섯이다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "환율 민감도는 회사 가이던스이고 나머지는 추정이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-asml-exposure",
+  "statement": "ASML 의 2025년 시스템 매출은 중국 33%·한국 25%·대만 22% 로 갈리고 2분기에는 대만이 35% 로 1위였으며, 2026년 중국 비중을 20% 로 줄이는 가이던스가 대만·한국 비중을 키운다.",
+  "subject": "asml",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "asml_ar_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-asml-euv-monopoly",
+  "statement": "EUV 노광기는 ASML 단일 공급이고 TSMC 는 그 최대 매입처로 읽혀 서로 대체가 없다.",
+  "subject": "asml",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-amat-exposure",
+  "statement": "Applied Materials 의 2025 회계연도 10-K 는 2대 고객이 매출의 19%·15% 라고 적었고(전년 12%·11%) 파운드리·로직이 반도체 매출의 67% 다.",
+  "subject": "applied-materials",
+  "object": null,
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "amat_10k_fy2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "실명은 적히지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-lam-exposure",
+  "statement": "Lam Research 의 2025 회계연도 지역별 매출은 중국 34%·한국 22%·대만 19%·일본 10% 다.",
+  "subject": "lam-research",
+  "object": null,
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "lrcx_10k_fy2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-kla-exposure",
+  "statement": "KLA 는 대만이 최대 지역으로 30%대로 읽히고 공정제어에 대체재가 없다.",
+  "subject": "kla",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "10-K 지역별 표 대조가 남았다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tel-exposure",
+  "statement": "도쿄일렉트론은 대만 매출이 20%대로 읽히고 EUV 트랙을 사실상 독점한다.",
+  "subject": "tokyo-electron",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-seh-share",
+  "statement": "신에츠는 웨이퍼 세계 1위로 약 30% 를 쥐고 TSMC 가 최대 로직 고객이다.",
+  "subject": "shin-etsu-handotai",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-sumco-share",
+  "statement": "스미코는 웨이퍼 세계 2위로 약 17% 를 쥐고 300mm 로직 비중이 높다.",
+  "subject": "sumco",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-globalwafers-2025",
+  "statement": "글로벌웨이퍼스의 2025년 매출은 NT$606억(−3.2%)이고 점유율은 약 17% 이며 TSMC 와 TI 가 주 고객이다.",
+  "subject": "globalwafers",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-sksiltron-2025",
+  "statement": "SK실트론의 2025년 매출은 약 2조 원, 영업이익은 4,000억 원을 넘고 상반기 매출 9,802억 원·영업이익 916억 원이며 SK하이닉스가 상반기 매출의 18% 를 차지한다.",
+  "subject": "sk-siltron",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "sk_siltron_dart",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-sksiltron-2024",
+  "statement": "SK실트론의 2024년 매출은 2조1,268억 원, 영업이익은 3,155억 원, EBITDA 는 6,171억 원이다.",
+  "subject": "sk-siltron",
+  "object": null,
+  "period": "2024",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "sk_siltron_dart",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-sksiltron-tsmc-share",
+  "statement": "SK실트론의 TSMC 비중은 공개되지 않고 두 자릿수에 못 미치는 수준으로 읽히는데, 두산 SPA 의 주요 고객사 품질 인증 언아웃이 TSMC EUV 급 인증이면 비중 상승의 방아쇠가 된다.",
+  "subject": "sk-siltron",
+  "object": null,
+  "period": "2026~2034",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "㈜두산 공시의 추가 대금 지급 여부가 외부에서 읽을 수 있는 지표다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-entegris-exposure",
+  "statement": "엔테그리스의 2025년 매출은 US$32.0억(−1%)이고 대만이 최대 지역으로 20%대이며 화학·가스·CMP 세 카테고리에 모두 등재됐다.",
+  "subject": "entegris",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-skspecialty-exposure",
+  "statement": "SK스페셜티는 NF3·WF6 세계 1위로 약 40% 를 쥐고 2024년 매출 6,817억 원·영업이익 1,471억 원인데 주 고객은 삼성·SK하이닉스이고 TSMC 비중은 공개되지 않는다.",
+  "subject": "sk-specialty",
+  "object": null,
+  "period": "2024",
+  "evidence_level": "ESTIMATED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-hyperscaler-exposure",
+  "statement": "하이퍼스케일러 4사는 자체 칩을 TSMC 에 맡기고 엔비디아 경유까지 합치면 직접·간접으로 TSMC 매출의 30% 를 넘게 끌어온다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-exposure-symmetry",
+  "statement": "ASML·신에츠·엔비디아·애플은 TSMC 와 서로 대체 불가여서 가격은 협상이고 관계는 장기인데, AMD·브로드컴·미디어텍·대만 유통사·SK실트론은 한쪽만 묶여 TSMC 가격 인상이 그대로 전가된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-euv-litho",
+  "statement": "EUV 노광기 병목은 ASML가 점유 100% 를  쥐고 대체 가능성 1·리드타임 1·지정학 2 으로 합계 4 이다.",
+  "subject": "asml",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 네덜란드 단일, 광학은 독일 자이스. High-NA 전환기라 가장 위험하다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-euv-blank",
+  "statement": "EUV 마스크 블랭크 병목은 호야·AGC가 점유 약 93% 를  쥐고 대체 가능성 1·리드타임 2·지정학 1 으로 합계 4 이다.",
+  "subject": "hoya",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 조용한 일본 단일 국가 위험이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-euv-resist",
+  "statement": "EUV 레지스트 병목은 JSR·TOK·신에츠가 점유 90% 이상 를  쥐고 대체 가능성 1·리드타임 2·지정학 1 으로 합계 4 이다.",
+  "subject": "jsr",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 2019년 한일 수출규제가 선례다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-euv-track",
+  "statement": "EUV 트랙 병목은 도쿄일렉트론가 점유 약 90% 를  쥐고 대체 가능성 1·리드타임 2·지정학 1 으로 합계 4 이다.",
+  "subject": "tokyo-electron",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 코터·디벨로퍼가 사실상 한 곳이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-abf-film",
+  "statement": "ABF 필름 병목은 아지노모토가 점유 95% 이상 를  쥐고 대체 가능성 1·리드타임 3·지정학 1 으로 합계 5 이다.",
+  "subject": "ajinomoto-fine-techno",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. CoWoS 기판의 기초 소재다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-pellicle",
+  "statement": "펠리클 병목은 미쓰이화학가 점유 대부분 를  쥐고 대체 가능성 2·리드타임 3·지정학 1 으로 합계 6 이다.",
+  "subject": "mitsui-chemicals",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. ",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-cowos",
+  "statement": "CoWoS 캐파 병목은 TSMC 자체가 캐파를  쥐고 대체 가능성 2·리드타임 2·지정학 1 으로 합계 5 이다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 2026년 외주 확대로 풀리는 중이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-process-control",
+  "statement": "공정제어 병목은 KLA가 점유 50% 이상 를  쥐고 대체 가능성 2·리드타임 2·지정학 3 으로 합계 7 이다.",
+  "subject": "kla",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. ",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-wafer-300mm",
+  "statement": "300mm 웨이퍼 병목은 신에츠·스미코·글로벌웨이퍼스·실트로닉·SK실트론가 점유 5사 90% 이상 를  쥐고 대체 가능성 3·리드타임 2·지정학 3 으로 합계 8 이다.",
+  "subject": "shin-etsu-handotai",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 두산 인수로 한국 노드가 안정된다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-specialty-gas",
+  "statement": "특수가스 병목은 린데·에어리퀴드·SK스페셜티 등가 점유 분산 를  쥐고 대체 가능성 4·리드타임 3·지정학 3 으로 합계 10 이다.",
+  "subject": "linde",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. ",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-polysilicon",
+  "statement": "폴리실리콘 병목은 헴록·바커·도쿠야마·OCI가 점유 분산 를  쥐고 대체 가능성 4·리드타임 3·지정학 4 으로 합계 11 이다.",
+  "subject": "wacker-chemie",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. ",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-taiwan-power",
+  "statement": "대만 전력·용수 병목은 대만전력가 점유 100% 를  쥐고 대체 가능성 1·리드타임 1·지정학 1 으로 합계 3 이다.",
+  "subject": "taipower",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "점수는 1 이 가장 위험하고 합계가 낮을수록 위험하다. 물리적으로 가장 낮은 점수다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-bottleneck-top",
+  "statement": "최상위 위험은 대만 전력, EUV 생태계(ASML 과 자이스), 일본 EUV 소재 네 갈래(블랭크·레지스트·트랙·ABF)이고 세 번째가 가장 과소평가된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "회사별 매출은 작지만 모두 일본 한 나라에 있고 대체재가 없다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-skspecialty-ownership",
+  "statement": "SK스페셜티는 2025년 3월 31일 한앤컴퍼니가 85% 를 약 2.6조 원에 인수하고 SK㈜ 가 15% 를 남겨 SK㈜ 연결에서 빠졌다.",
+  "subject": "sk-specialty",
+  "object": null,
+  "period": "2025-03-31",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "sk_inc_disposal_20250331",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-sksiltron-ownership",
+  "statement": "SK실트론은 2025년 12월 두산이 우선협상대상자로 뽑히고 2026년 7월 31일 70.6% 지분 2.3조 원 SPA 를 맺어 클로징을 기다린다.",
+  "subject": "sk-siltron",
+  "object": null,
+  "period": "2026-07-31",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "doosan_disclosure_20260731",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "4절의 「한앤컴퍼니 유력」 서술은 구정보이고 12절 기준으로 읽는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-korea-nodes",
+  "statement": "TSMC 체인에 한국이 직접 걸리는 곳은 웨이퍼(SK실트론)와 가스(SK스페셜티) 두 곳뿐이고 둘 다 2025~26년에 SK그룹에서 밖으로 소유권이 옮겼다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-skhynix-parallel",
+  "statement": "SK하이닉스는 TSMC 공급사가 아니라 TSMC 고객인 엔비디아의 병렬 공급사로 CoWoS 에서 합류하는데, HBM4 부터 베이스 다이를 TSMC 로직 공정으로 만들면서 직접 거래로 바뀐다.",
+  "subject": "sk-hynix",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-excluded-hanmi",
+  "statement": "한미반도체는 TC 본더 주 고객이 SK하이닉스이고 TSMC CoWoS 직납이 확인되지 않아 직접 노드로 세우지 않았다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-excluded-korea-chem",
+  "statement": "솔브레인·동진쎄미켐·이엔에프테크놀로지는 TSMC 공급사 명단에 없고 주 고객이 삼성·SK하이닉스라 이 사슬에서 뺐다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-excluded-quartz",
+  "statement": "석영 도가니(신에츠쿼츠·페로텍)와 고순도 석영(시벨코·쿼츠 코프)은 원문이 어느 웨이퍼사에 들어가는지 실명으로 짝짓지 않아 관계로 세우지 않았다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-excluded-poly",
+  "statement": "폴리실리콘 네 곳(헴록·바커·도쿠야마·OCI) 가운데 원문이 웨이퍼사와 실명으로 짝지은 것은 바커–실트로닉 한 쌍뿐이라 나머지는 관계로 세우지 않았다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-oci-indirect",
+  "statement": "OCI홀딩스는 말레이시아 OCIM 폴리실리콘이 주력이 태양광이고 반도체용 고순도는 소량이어서 TSMC 체인 기여가 간접적이고 미미하다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-gpu-cost-stack",
+  "statement": "Blackwell 급 AI 가속기 한 개를 따라가면 웨이퍼 소재 약 $50, TSMC 로직 다이 두 개 약 $1,300, TSMC CoWoS-L 패키징 약 $1,000, HBM3E 여덟 스택 약 $3,500, ABF 기판 약 $200, 후공정·테스트 약 $300, 기타 약 $300 으로 원가가 $6,650 가까이 쌓이고 판매가는 $3만~3만5천이다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전부 추정이고 크기 비교용이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-gpu-margin-pool",
+  "statement": "가속기 한 개 매출 $32k 의 마진 풀은 엔비디아 약 $25k(78%), TSMC 약 $1.4k(4%), SK하이닉스 약 $1.9k(6%), 나머지 공급사 합계 약 $0.5k 로 갈린다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-cost-vs-profit",
+  "statement": "TSMC 는 원가 기준으로 가속기의 약 35% 를 만들지만 이익 풀에서는 약 5% 를 가져가고, 그러면서도 매출총이익률 60% 를 지키는 힘은 웨이퍼 1,500만 장의 물량과 고정비 흡수다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-server-margin",
+  "statement": "DGX 급 8-GPU 서버는 40만~50만 달러이고 폭스콘·콴타의 조립 마진은 3~5% 이며 하이퍼스케일러는 이를 자본재로 5년에 나눠 상각한다.",
+  "subject": "foxconn",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-bargaining-order",
+  "statement": "협상력은 엔비디아(가격 결정) > TSMC·SK하이닉스(캐파 배분권) > 기판·OSAT(가격 수용) > 웨이퍼·가스(장기계약 고정) 순으로 늘어선다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-price-pass-through",
+  "statement": "TSMC 가 2027년 8% 를 올리면 가속기 원가가 $180 늘어 엔비디아 매출총이익률이 75.0% 에서 74.5% 로 내려가는 정도라 거의 흡수된다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "반면 CoWoS 외주 확대는 외주 원가가 내부보다 커 TSMC 마진에 마이너스다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-ai-demand-down",
+  "statement": "AI 수요가 20% 줄면 AI 가 매출의 약 35% 라 매출이 7% 빠지고 가동률이 88% 에서 80% 로 내려가 매출 −US$86억·GM −4.5%p·영업이익 −US$65억(−10%)이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 뒷단은 엔비디아·브로드컴 주문이 줄고 앞단은 앰코·SPIL 외주가 먼저 회수되며 ASML EUV 발주가 미뤄진다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-power-price-up",
+  "statement": "대만 전기요금이 15% 오르면 유틸리티 약 US$37억 가운데 전력 80% 에 붙어 GM −0.4%p·영업이익 −US$4.5억이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 대만전력과 린데리엔화 원가가 같이 오른다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-ntd-appreciation",
+  "statement": "NT$ 가 5% 절상되면 회사 가이던스(1% 당 GM −0.4%p)대로 GM −2.0%p·영업이익 −US$24억이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 글로벌웨이퍼스·포모사스미코·대만 유통사가 같은 방향으로 눌린다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-price-hike-2027",
+  "statement": "2027년 단가를 8% 올리면 원가가 그대로라 매출 +US$98억이 마진으로 다 들어와 GM +3.2%p·영업이익 +US$98억(+16%)이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 엔비디아 GM 은 0.5%p 내려가고 애플·퀄컴은 스마트폰 BOM 압박을 받는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-overseas-fab",
+  "statement": "애리조나·구마모토·드레스덴 램프는 가이던스대로 GM 을 2~3%p 희석해 영업이익 −US$30억이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 미국·일본·독일 현지 인력과 건설비가 늘고 CHIPS 법 보조금이 일부를 상쇄한다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-cowos-up",
+  "statement": "2026년 CoWoS 캐파가 70% 늘면 비웨이퍼 매출 +US$60억에 외주 비중 상승으로 GM 이 0.3%p 내려가 영업이익 +US$25억이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 앰코·SPIL 매출이 급증하고 아지노모토 ABF 가 병목이 된다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-japan-material-stop",
+  "statement": "일본 EUV 소재 수출이 석 달 막히면 7nm 이하 74% 가운데 EUV 노드 생산이 멈춰 매출 −US$150억 이상·영업이익 −US$120억 이상이 된다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": "전파 경로: 11절 병목 표의 최상위 위험이 실현되는 자리이고 재고 한두 달이 완충이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-scenario-net",
+  "statement": "단가 인상과 NT$ 절상이 같은 크기로 반대 방향이라 2026~27년 마진의 방향은 가격 인상에서 NT$ 절상과 해외팹 희석을 뺀 순합이 정하고, 세 항목 모두 물량과 무관하다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026~2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-timeline-2026",
+  "statement": "Capex US$520~640억으로 사상 최대이고 N2 램프와 N2P·A16 하반기 양산, CoWoS 월 12~14만 장, 캐파 +3% 가 걸린다. 앞단에는 ASML EUV·High-NA 와 TEL·AMAT·Lam 장비 발주가 몰리고 아지노모토·이비덴 ABF 증설, 앰코·SPIL 외주 24~27만 장이 따라온다. 뒷단에는 애플 A20(N2), 엔비디아 Rubin(N3), AMD MI400, 하이퍼스케일러 ASIC 2세대가 나온다",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-timeline-2027",
+  "statement": "단가 5~10% 인상, 애리조나 Fab2(3nm) 하반기 양산, JASM Fab2(3nm)와 드레스덴 ESMC(28·16nm) 가동, A16 확대가 걸린다. 앞단에는 미국·일본·독일 현지 소재·가스 공급망 구축과 2026년 Capex 의 감가상각 유입이 오고, 뒷단에서는 3nm 미국산 칩 첫 출하와 SK하이닉스 HBM4 베이스 다이 위탁이 시작된다",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2027",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-timeline-2028",
+  "statement": "A14 양산, 애리조나 Fab3 와 패키징 공장, 두산–SK실트론 언아웃 2년차가 걸린다. 앞단에는 High-NA EUV 본격 도입으로 ASML·자이스·호야가 걸리고 웨이퍼 EUV 등급 인증이 넓어진다. 뒷단에는 2nm 세대 가속기가 나온다",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2028",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-timeline-2029-2030",
+  "statement": "2030년 재생에너지 목표 경로와 Foundry 2.0 점유 40% 유지 여부가 걸린다. 앞단에서는 대만 해상풍력 PPA 와 전력 병목 해소가 캐파 상한을 정한다",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2029~2030",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-lag-rule",
+  "statement": "장비 발주에서 캐파 가동까지 12~18개월, 감가상각 원가 반영까지 18~78개월이 걸려 2025~26년 사상 최대 Capex 는 2027~2031년 원가로 남고 그 기간 가동률이 마진의 전부다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2025~2031",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-stakes",
+  "statement": "TSMC 는 JASM 약 86.5%(소니 6%·덴소 5.5%·도요타 2%), ESMC 약 70%(보쉬·인피니온·NXP 각 10%), 애리조나 100%, GUC 약 35%, VIS 약 28%, VisEra 70%대, 신텍 약 40% 를 쥔다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_ar_2025",
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-stake-logic",
+  "statement": "TSMC 는 뒷단 중개(GUC)와 앞단 성숙 캐파(VIS)를 지분으로 통제하고 해외 팹은 고객·정부를 주주로 끌어들여 수요와 정치 위험을 나눈다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-geopolitics-capital",
+  "statement": "일본 정부(JIC→JSR)와 미국 정부(CHIPS→애리조나)가 각각 병목 소재와 캐파의 자본 파트너여서 지정학이 지분 구조로 들어와 있다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ase-spil-group",
+  "statement": "ASE 가 SPIL 을 100% 쥐고 있어 CoWoS 외주 두 곳이 사실상 한 그룹이고 앰코가 유일한 독립 대안이다.",
+  "subject": "ase",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-entegris-cmc",
+  "statement": "공급사 명단의 캐봇마이크로일렉트로닉스는 2022년 합병으로 엔테그리스로 읽어야 한다.",
+  "subject": "entegris",
+  "object": null,
+  "period": "2022",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-jsr-jic",
+  "statement": "JSR 은 2024년 일본 정부계 JIC 가 인수해 비상장이 됐고 그 결과 일본 정부가 EUV 레지스트 병목을 직접 쥔다.",
+  "subject": "jsr",
+  "object": null,
+  "period": "2024",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-open-items",
+  "statement": "2025년 대만 연차보고서 5.3절 공급사 표와 매입 10% 이상 공급사 금액, 고객 10-K 역추적, 장비사 지역별 매출 표는 아직 대조하지 않은 자리다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-09",
+  "evidence_level": "INFERRED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_report_2026_09_12"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ }
+]

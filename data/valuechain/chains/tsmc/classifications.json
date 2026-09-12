@@ -1,0 +1,447 @@
+{
+ "chain": "tsmc",
+ "focal_entity": "tsmc",
+ "supply_sources": [
+  {
+   "id": "ss-abf-cowos",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "ABF 기판·CoWoS 외주",
+   "label_en": "ABF substrate & CoWoS outsourcing",
+   "level": "SUBSYSTEM",
+   "note": "TSMC 매출원가이자 기판사·OSAT 의 매출이다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-chemicals",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "화학품",
+   "label_en": "Chemicals",
+   "level": "MATERIAL",
+   "note": "2022년판 대만 연차보고서가 12개사를 실명으로 적었다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-cmp-materials",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "CMP 소재",
+   "label_en": "CMP materials",
+   "level": "MATERIAL",
+   "note": "7개사. 명단의 캐봇마이크로일렉트로닉스는 엔테그리스로 읽는다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-equipment",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "장비",
+   "label_en": "Equipment",
+   "level": "EQUIPMENT",
+   "note": "capex 가 시차를 두고 감가상각으로 원가에 들어오는 자리다",
+   "shares": [
+    {
+     "metric": "depreciation_cost_share",
+     "value": 45.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 매출원가",
+     "evidence_level": "INFERRED",
+     "confidence": 1.0,
+     "method_note": "20-F 는 원가를 항목별로 나누지 않는다. 40%대 최대 항목으로 읽힌다",
+     "source_ids": [
+      "tsmc_report_2026_09_12"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-mask-blank-pellicle",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "마스크 블랭크·펠리클",
+   "label_en": "Mask blank & pellicle",
+   "level": "MATERIAL",
+   "note": "마스크는 TSMC 자체 마스크샵이 만들고 블랭크와 펠리클을 밖에서 들인다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-memory",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "HBM·메모리(고객이 별도 조달)",
+   "label_en": "Memory (customer-sourced)",
+   "level": "COMPONENT",
+   "note": "TSMC 가 사들이는 품목이 아니라 TSMC 고객이 따로 조달해 CoWoS 에서 합류하는 품목이다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-photoresist",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "포토레지스트",
+   "label_en": "Photoresist",
+   "level": "MATERIAL",
+   "note": "리소그래피 소재 7개사. EUV 레지스트는 일본 3사가 90% 넘게 쥔다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-silicon-wafer",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "실리콘 웨이퍼",
+   "label_en": "Silicon wafer",
+   "level": "MATERIAL",
+   "note": "20-F 가 실명을 공개하는 유일한 소재 갈래다",
+   "shares": [
+    {
+     "metric": "supply_share",
+     "value": null,
+     "value_low": 92.0,
+     "value_high": 96.0,
+     "unit": "percent",
+     "period": "2020~2022",
+     "period_start": "2020-01-01",
+     "period_end": "2022-12-31",
+     "as_of_date": "2022-12-31",
+     "denominator": "TSMC 웨이퍼 수요",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "6개사 합계이고 회사별 몫은 공개되지 않는다",
+     "source_ids": [
+      "tsmc_20f_2025",
+      "tsmc_report_2026_09_12"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025",
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-specialty-gas",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "특수가스",
+   "label_en": "Specialty gas",
+   "level": "MATERIAL",
+   "note": "9개사. 프랙스에어는 린데에 합병돼 따로 서지 않는다",
+   "shares": [],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  },
+  {
+   "id": "ss-utility",
+   "kind": "SUPPLY_SOURCE",
+   "unallocated": false,
+   "label": "유틸리티",
+   "label_en": "Utility",
+   "level": "OPERATIONAL",
+   "note": "전력·용수·HVAC",
+   "shares": [
+    {
+     "metric": "utility_cost_share",
+     "value": null,
+     "value_low": 7.0,
+     "value_high": 8.0,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 매출원가",
+     "evidence_level": "INFERRED",
+     "confidence": 1.0,
+     "method_note": "전기·물·HVAC 합계다",
+     "source_ids": [
+      "tsmc_report_2026_09_12"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_report_2026_09_12"
+   ]
+  }
+ ],
+ "revenue_types": [
+  {
+   "id": "rt-tsmc-rev-automotive",
+   "kind": "REVENUE_TYPE",
+   "label": "자동차 매출",
+   "label_en": "Automotive",
+   "note": "2025년 매출의 5%",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "platform_revenue_share",
+     "value": 5.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "20-F 의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_20f_2025"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "tsmc_20f_2025",
+     "tsmc_report_2026_09_12"
+    ],
+    "note": "퀄컴과 소니·NXP·인피니온·ST·르네사스가 이 갈래에 들지만 배분은 비공개다"
+   }
+  },
+  {
+   "id": "rt-tsmc-rev-dce",
+   "kind": "REVENUE_TYPE",
+   "label": "디지털 소비자 가전(DCE) 매출",
+   "label_en": "DCE",
+   "note": "2025년 매출의 1%",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "platform_revenue_share",
+     "value": 1.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "20-F 의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_20f_2025"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "tsmc_20f_2025",
+     "tsmc_report_2026_09_12"
+    ],
+    "note": "실명으로 배분된 고객이 없다"
+   }
+  },
+  {
+   "id": "rt-tsmc-rev-hpc",
+   "kind": "REVENUE_TYPE",
+   "label": "고성능 컴퓨팅(HPC) 매출",
+   "label_en": "HPC",
+   "note": "2025년 매출의 58%(NT$2조1,929억)로 가장 큰 갈래다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "platform_revenue_share",
+     "value": 58.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "20-F 의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_20f_2025"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "tsmc_20f_2025",
+     "tsmc_report_2026_09_12"
+    ],
+    "note": "엔비디아·AMD·브로드컴·마벨·인텔·하이퍼스케일러가 이 갈래에 들지만 고객별 배분은 비공개라 잔여가 남는다"
+   }
+  },
+  {
+   "id": "rt-tsmc-rev-iot",
+   "kind": "REVENUE_TYPE",
+   "label": "IoT 매출",
+   "label_en": "IoT",
+   "note": "2025년 매출의 5%",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "platform_revenue_share",
+     "value": 5.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "20-F 의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_20f_2025"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "tsmc_20f_2025",
+     "tsmc_report_2026_09_12"
+    ],
+    "note": "미디어텍과 자동차·IoT 칩 회사들이 이 갈래에 들지만 배분은 비공개다"
+   }
+  },
+  {
+   "id": "rt-tsmc-rev-other",
+   "kind": "REVENUE_TYPE",
+   "label": "기타 매출",
+   "label_en": "Others",
+   "note": "2025년 매출의 2%",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "platform_revenue_share",
+     "value": 2.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "20-F 의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_20f_2025"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "tsmc_20f_2025",
+     "tsmc_report_2026_09_12"
+    ],
+    "note": "실명으로 배분된 고객이 없다"
+   }
+  },
+  {
+   "id": "rt-tsmc-rev-smartphone",
+   "kind": "REVENUE_TYPE",
+   "label": "스마트폰 매출",
+   "label_en": "Smartphone",
+   "note": "2025년 매출의 29%",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "platform_revenue_share",
+     "value": 29.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2025",
+     "period_start": "2025-01-01",
+     "period_end": "2025-12-31",
+     "as_of_date": "2025-12-31",
+     "denominator": "TSMC 2025 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "20-F 의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_20f_2025"
+     ]
+    }
+   ],
+   "source_ids": [
+    "tsmc_20f_2025"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "tsmc_20f_2025",
+     "tsmc_report_2026_09_12"
+    ],
+    "note": "애플·퀄컴·미디어텍이 이 갈래에 들지만 고객별 배분은 비공개라 잔여가 남는다"
+   }
+  },
+  {
+   "id": "rt-unallocated",
+   "kind": "REVENUE_TYPE",
+   "label": "배분 미상",
+   "label_en": "Unallocated",
+   "unallocated": true,
+   "note": "고객인 것은 맞는데 어느 매출에 드는지 근거가 없다",
+   "shares": [],
+   "source_ids": []
+  }
+ ]
+}

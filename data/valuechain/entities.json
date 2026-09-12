@@ -2968,5 +2968,2010 @@
   "other_roles": [],
   "parent_entity_id": null,
   "region": null
+ },
+ {
+  "id": "broadcom",
+  "name": "Broadcom Inc.",
+  "name_ko": "브로드컴",
+  "entity_type": "company",
+  "legal_name": "Broadcom Inc.",
+  "display_name": "브로드컴",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Fabless chip maker",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Fabless chip maker"
+  ],
+  "desc": "구글 TPU·메타 MTIA 같은 커스텀 AI ASIC 과 네트워킹 스위치를 설계해 파운드리에 맡긴다",
+  "anon": false
+ },
+ {
+  "id": "qualcomm",
+  "name": "QUALCOMM Incorporated",
+  "name_ko": "퀄컴",
+  "entity_type": "company",
+  "legal_name": "QUALCOMM Incorporated",
+  "display_name": "퀄컴",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Fabless chip maker",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Fabless chip maker"
+  ],
+  "desc": "스냅드래곤 AP·모뎀·자동차 칩을 TSMC 와 삼성에 이중으로 맡긴다",
+  "anon": false
+ },
+ {
+  "id": "sony",
+  "name": "Sony Group Corporation",
+  "name_ko": "소니",
+  "entity_type": "company",
+  "legal_name": "Sony Group Corporation",
+  "display_name": "소니",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Image sensor maker",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Image sensor maker"
+  ],
+  "desc": "이미지센서 로직을 맡기고 구마모토 JASM 에 출자한 주주이기도 하다",
+  "anon": false
+ },
+ {
+  "id": "nxp",
+  "name": "NXP Semiconductors N.V.",
+  "name_ko": "NXP",
+  "entity_type": "company",
+  "legal_name": "NXP Semiconductors N.V.",
+  "display_name": "NXP",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Automotive chip maker",
+  "other_roles": [],
+  "country": "네덜란드",
+  "categories": [
+   "Automotive chip maker"
+  ],
+  "desc": "자동차 MCU 를 설계하고 드레스덴 ESMC 주주로도 들어갔다",
+  "anon": false
+ },
+ {
+  "id": "infineon",
+  "name": "Infineon Technologies AG",
+  "name_ko": "인피니온",
+  "entity_type": "company",
+  "legal_name": "Infineon Technologies AG",
+  "display_name": "인피니온",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Automotive chip maker",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Automotive chip maker"
+  ],
+  "desc": "자동차·산업용 반도체를 만들고 드레스덴 ESMC 주주다",
+  "anon": false
+ },
+ {
+  "id": "stmicroelectronics",
+  "name": "STMicroelectronics N.V.",
+  "name_ko": "ST마이크로일렉트로닉스",
+  "entity_type": "company",
+  "legal_name": "STMicroelectronics N.V.",
+  "display_name": "ST마이크로일렉트로닉스",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Automotive chip maker",
+  "other_roles": [],
+  "country": "프랑스",
+  "categories": [
+   "Automotive chip maker"
+  ],
+  "desc": "자동차·산업용 칩 일부를 외부 파운드리에 맡긴다",
+  "anon": false
+ },
+ {
+  "id": "renesas",
+  "name": "Renesas Electronics Corporation",
+  "name_ko": "르네사스",
+  "entity_type": "company",
+  "legal_name": "Renesas Electronics Corporation",
+  "display_name": "르네사스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Automotive chip maker",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Automotive chip maker"
+  ],
+  "desc": "자동차 MCU 를 만들고 선단 공정은 외부에 맡긴다",
+  "anon": false
+ },
+ {
+  "id": "tsmc-anon-c1",
+  "name": "Largest customer (undisclosed)",
+  "name_ko": "1위 고객(비공개)",
+  "entity_type": "company",
+  "legal_name": "Largest customer (undisclosed)",
+  "display_name": "1위 고객(비공개)",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Undisclosed customer",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Undisclosed customer"
+  ],
+  "desc": "20-F 가 비중만 밝히고 실명을 적지 않은 1위 고객. 업계는 2025년까지 애플로 읽지만 그 짝짓기의 근거 등급은 C 다",
+  "anon": true
+ },
+ {
+  "id": "tsmc-anon-c2",
+  "name": "Second largest customer (undisclosed)",
+  "name_ko": "2위 고객(비공개)",
+  "entity_type": "company",
+  "legal_name": "Second largest customer (undisclosed)",
+  "display_name": "2위 고객(비공개)",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Undisclosed customer",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Undisclosed customer"
+  ],
+  "desc": "20-F 가 비중만 밝히고 실명을 적지 않은 2위 고객. 업계는 엔비디아로 읽지만 그 짝짓기의 근거 등급은 C 다",
+  "anon": true
+ },
+ {
+  "id": "guc",
+  "name": "Global Unichip Corp.",
+  "name_ko": "GUC",
+  "entity_type": "company",
+  "legal_name": "Global Unichip Corp.",
+  "display_name": "GUC",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Design service",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Design service"
+  ],
+  "desc": "TSMC 가 약 35% 를 가진 디자인 서비스 회사. 하이퍼스케일러 ASIC 을 받아 TSMC 공정으로 옮긴다",
+  "anon": false
+ },
+ {
+  "id": "alchip",
+  "name": "Alchip Technologies, Ltd.",
+  "name_ko": "알칩",
+  "entity_type": "company",
+  "legal_name": "Alchip Technologies, Ltd.",
+  "display_name": "알칩",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Design service",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Design service"
+  ],
+  "desc": "하이퍼스케일러 커스텀 ASIC 설계를 맡아 GUC 와 경쟁한다",
+  "anon": false
+ },
+ {
+  "id": "pegatron",
+  "name": "Pegatron Corporation",
+  "name_ko": "페가트론",
+  "entity_type": "company",
+  "legal_name": "Pegatron Corporation",
+  "display_name": "페가트론",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "EMS",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "EMS"
+  ],
+  "desc": "애플 기기를 조립한다",
+  "anon": false
+ },
+ {
+  "id": "luxshare",
+  "name": "Luxshare Precision Industry",
+  "name_ko": "럭스셰어",
+  "entity_type": "company",
+  "legal_name": "Luxshare Precision Industry",
+  "display_name": "럭스셰어",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "EMS",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "EMS"
+  ],
+  "desc": "애플 기기를 조립한다",
+  "anon": false
+ },
+ {
+  "id": "xai",
+  "name": "xAI Corp.",
+  "name_ko": "xAI",
+  "entity_type": "end_user",
+  "legal_name": "xAI Corp.",
+  "display_name": "xAI",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "AI lab",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "AI lab"
+  ],
+  "desc": "엔비디아 가속기를 대량으로 들이는 AI 회사다",
+  "anon": false
+ },
+ {
+  "id": "supermicro",
+  "name": "Super Micro Computer, Inc.",
+  "name_ko": "슈퍼마이크로",
+  "entity_type": "company",
+  "legal_name": "Super Micro Computer, Inc.",
+  "display_name": "슈퍼마이크로",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Server ODM",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Server ODM"
+  ],
+  "desc": "엔비디아 가속기를 얹은 서버를 조립한다",
+  "anon": false
+ },
+ {
+  "id": "dell",
+  "name": "Dell Technologies Inc.",
+  "name_ko": "델",
+  "entity_type": "company",
+  "legal_name": "Dell Technologies Inc.",
+  "display_name": "델",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Server·PC OEM",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Server·PC OEM"
+  ],
+  "desc": "엔비디아·AMD 칩을 넣은 서버와 PC 를 판다",
+  "anon": false
+ },
+ {
+  "id": "hp",
+  "name": "HP Inc.",
+  "name_ko": "HP",
+  "entity_type": "company",
+  "legal_name": "HP Inc.",
+  "display_name": "HP",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "PC OEM",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "PC OEM"
+  ],
+  "desc": "AMD 칩을 넣은 PC 를 판다",
+  "anon": false
+ },
+ {
+  "id": "lenovo",
+  "name": "Lenovo Group Limited",
+  "name_ko": "레노버",
+  "entity_type": "company",
+  "legal_name": "Lenovo Group Limited",
+  "display_name": "레노버",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "PC OEM",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "PC OEM"
+  ],
+  "desc": "AMD 칩을 넣은 PC 를 판다",
+  "anon": false
+ },
+ {
+  "id": "xiaomi",
+  "name": "Xiaomi Corporation",
+  "name_ko": "샤오미",
+  "entity_type": "company",
+  "legal_name": "Xiaomi Corporation",
+  "display_name": "샤오미",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Smartphone OEM",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "Smartphone OEM"
+  ],
+  "desc": "퀄컴·미디어텍 AP 를 쓰는 스마트폰을 만든다",
+  "anon": false
+ },
+ {
+  "id": "oppo",
+  "name": "OPPO",
+  "name_ko": "오포",
+  "entity_type": "company",
+  "legal_name": "OPPO",
+  "display_name": "오포",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Smartphone OEM",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "Smartphone OEM"
+  ],
+  "desc": "퀄컴·미디어텍 AP 를 쓰는 스마트폰을 만든다",
+  "anon": false
+ },
+ {
+  "id": "vivo",
+  "name": "vivo",
+  "name_ko": "비보",
+  "entity_type": "company",
+  "legal_name": "vivo",
+  "display_name": "비보",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Smartphone OEM",
+  "other_roles": [],
+  "country": "중국",
+  "categories": [
+   "Smartphone OEM"
+  ],
+  "desc": "퀄컴·미디어텍 AP 를 쓰는 스마트폰을 만든다",
+  "anon": false
+ },
+ {
+  "id": "ase",
+  "name": "ASE Technology Holding Co., Ltd.",
+  "name_ko": "ASE 테크놀로지",
+  "entity_type": "company",
+  "legal_name": "ASE Technology Holding Co., Ltd.",
+  "display_name": "ASE 테크놀로지",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "OSAT",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "OSAT"
+  ],
+  "desc": "CoWoS 후공정을 TSMC 에서 받아 한다. SPIL 을 100% 가진 그룹이다",
+  "anon": false
+ },
+ {
+  "id": "spil",
+  "name": "Siliconware Precision Industries Co., Ltd.",
+  "name_ko": "SPIL",
+  "entity_type": "company",
+  "legal_name": "Siliconware Precision Industries Co., Ltd.",
+  "display_name": "SPIL",
+  "region": "Asia",
+  "parent_entity_id": "ase",
+  "primary_role": "OSAT",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "OSAT"
+  ],
+  "desc": "CoWoS oS 와 CoW 전공정을 TSMC 에서 받아 한다. ASE 그룹 자회사다",
+  "anon": false
+ },
+ {
+  "id": "amkor",
+  "name": "Amkor Technology, Inc.",
+  "name_ko": "앰코테크놀로지",
+  "entity_type": "company",
+  "legal_name": "Amkor Technology, Inc.",
+  "display_name": "앰코테크놀로지",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "OSAT",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "OSAT"
+  ],
+  "desc": "10-K 에 contract foundries 를 고객군으로 적었고 애리조나에서 TSMC 와 InFO·CoWoS 협력을 밝혔다",
+  "anon": false
+ },
+ {
+  "id": "ibiden",
+  "name": "Ibiden Co., Ltd.",
+  "name_ko": "이비덴",
+  "entity_type": "company",
+  "legal_name": "Ibiden Co., Ltd.",
+  "display_name": "이비덴",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Substrate",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "CoWoS 에 들어가는 ABF 기판을 만든다",
+  "anon": false
+ },
+ {
+  "id": "unimicron",
+  "name": "Unimicron Technology Corp.",
+  "name_ko": "유니마이크론",
+  "entity_type": "company",
+  "legal_name": "Unimicron Technology Corp.",
+  "display_name": "유니마이크론",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Substrate",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "CoWoS 에 들어가는 ABF 기판을 만든다",
+  "anon": false
+ },
+ {
+  "id": "kinsus",
+  "name": "Kinsus Interconnect Technology Corp.",
+  "name_ko": "킨서스",
+  "entity_type": "company",
+  "legal_name": "Kinsus Interconnect Technology Corp.",
+  "display_name": "킨서스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Substrate",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "CoWoS 에 들어가는 ABF 기판을 만들고 EMIB 형 패키징 공동개발이 이름에 오른다",
+  "anon": false
+ },
+ {
+  "id": "nanya-pcb",
+  "name": "Nan Ya Printed Circuit Board Corp.",
+  "name_ko": "난야PCB",
+  "entity_type": "company",
+  "legal_name": "Nan Ya Printed Circuit Board Corp.",
+  "display_name": "난야PCB",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Substrate",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Substrate"
+  ],
+  "desc": "CoWoS 에 들어가는 ABF 기판을 만든다",
+  "anon": false
+ },
+ {
+  "id": "shin-etsu-handotai",
+  "name": "Shin-Etsu Handotai Co., Ltd.",
+  "name_ko": "신에츠한도타이(SEH)",
+  "entity_type": "company",
+  "legal_name": "Shin-Etsu Handotai Co., Ltd.",
+  "display_name": "신에츠한도타이(SEH)",
+  "region": "Asia",
+  "parent_entity_id": "shin-etsu-chemical",
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "세계 1위 실리콘 웨이퍼 회사. 모회사 신에츠화학은 포토레지스트도 공급한다",
+  "anon": false
+ },
+ {
+  "id": "sumco",
+  "name": "SUMCO Corporation",
+  "name_ko": "스미코",
+  "entity_type": "company",
+  "legal_name": "SUMCO Corporation",
+  "display_name": "스미코",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "세계 2위 웨이퍼 회사로 300mm 로직 비중이 높다",
+  "anon": false
+ },
+ {
+  "id": "formosa-sumco",
+  "name": "Formosa SUMCO Technology Corp. (FST)",
+  "name_ko": "포모사스미코",
+  "entity_type": "jv",
+  "legal_name": "Formosa SUMCO Technology Corp. (FST)",
+  "display_name": "포모사스미코",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "포모사플라스틱 그룹과 스미코가 세운 웨이퍼 합작사다",
+  "anon": false
+ },
+ {
+  "id": "globalwafers",
+  "name": "GlobalWafers Co., Ltd.",
+  "name_ko": "글로벌웨이퍼스",
+  "entity_type": "company",
+  "legal_name": "GlobalWafers Co., Ltd.",
+  "display_name": "글로벌웨이퍼스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "세계 3위권 웨이퍼 회사. 텍사스 셔먼에 새 공장을 세운다",
+  "anon": false
+ },
+ {
+  "id": "siltronic",
+  "name": "Siltronic AG",
+  "name_ko": "실트로닉",
+  "entity_type": "company",
+  "legal_name": "Siltronic AG",
+  "display_name": "실트로닉",
+  "region": "Europe",
+  "parent_entity_id": "wacker-chemie",
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "바커케미 자회사로 폴리실리콘부터 수직으로 묶였다",
+  "anon": false
+ },
+ {
+  "id": "sk-siltron",
+  "name": "SK siltron Co., Ltd.",
+  "name_ko": "SK실트론",
+  "entity_type": "company",
+  "legal_name": "SK siltron Co., Ltd.",
+  "display_name": "SK실트론",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "한국",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "국내 유일한 300mm 웨이퍼 제조사. 2026년 7월 ㈜두산이 지분 70.6% 인수 계약을 맺었다",
+  "anon": false
+ },
+ {
+  "id": "soitec",
+  "name": "Soitec S.A.",
+  "name_ko": "소이텍",
+  "entity_type": "company",
+  "legal_name": "Soitec S.A.",
+  "display_name": "소이텍",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Silicon wafer",
+  "other_roles": [],
+  "country": "프랑스",
+  "categories": [
+   "Silicon wafer"
+  ],
+  "desc": "SOI 와 특수 웨이퍼를 만든다",
+  "anon": false
+ },
+ {
+  "id": "air-liquide",
+  "name": "Air Liquide S.A.",
+  "name_ko": "에어리퀴드",
+  "entity_type": "company",
+  "legal_name": "Air Liquide S.A.",
+  "display_name": "에어리퀴드",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [
+   "Specialty gas"
+  ],
+  "country": "프랑스",
+  "categories": [
+   "Chemicals",
+   "Specialty gas"
+  ],
+  "desc": "공정 화학품과 특수가스 두 갈래에 이름이 오른다",
+  "anon": false
+ },
+ {
+  "id": "basf",
+  "name": "BASF SE",
+  "name_ko": "BASF",
+  "entity_type": "company",
+  "legal_name": "BASF SE",
+  "display_name": "BASF",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "공정 화학품을 공급한다",
+  "anon": false
+ },
+ {
+  "id": "dupont",
+  "name": "DuPont de Nemours, Inc.",
+  "name_ko": "듀폰",
+  "entity_type": "company",
+  "legal_name": "DuPont de Nemours, Inc.",
+  "display_name": "듀폰",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [
+   "CMP materials"
+  ],
+  "country": "미국",
+  "categories": [
+   "Chemicals",
+   "CMP materials"
+  ],
+  "desc": "공정 화학품과 CMP 소재 두 갈래에 이름이 오른다",
+  "anon": false
+ },
+ {
+  "id": "entegris",
+  "name": "Entegris, Inc.",
+  "name_ko": "엔테그리스",
+  "entity_type": "company",
+  "legal_name": "Entegris, Inc.",
+  "display_name": "엔테그리스",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [
+   "Specialty gas",
+   "CMP materials"
+  ],
+  "country": "미국",
+  "categories": [
+   "Chemicals",
+   "Specialty gas",
+   "CMP materials"
+  ],
+  "desc": "화학·가스·CMP 세 갈래에 모두 이름이 오른다. 2022년 캐봇마이크로일렉트로닉스를 합병했다",
+  "anon": false
+ },
+ {
+  "id": "fujifilm-electronic-materials",
+  "name": "FUJIFILM Electronic Materials",
+  "name_ko": "후지필름 일렉트로닉 머티리얼즈",
+  "entity_type": "company",
+  "legal_name": "FUJIFILM Electronic Materials",
+  "display_name": "후지필름 일렉트로닉 머티리얼즈",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [
+   "Photoresist",
+   "CMP materials"
+  ],
+  "country": "일본",
+  "categories": [
+   "Chemicals",
+   "Photoresist",
+   "CMP materials"
+  ],
+  "desc": "화학·포토레지스트·CMP 세 갈래에 모두 이름이 오른다",
+  "anon": false
+ },
+ {
+  "id": "kanto-ppc",
+  "name": "Kanto-PPC, Inc.",
+  "name_ko": "간토PPC",
+  "entity_type": "jv",
+  "legal_name": "Kanto-PPC, Inc.",
+  "display_name": "간토PPC",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "간토화학과 대만 PPC 가 세운 고순도 화학 합작사다",
+  "anon": false
+ },
+ {
+  "id": "kuang-ming",
+  "name": "Kuang Ming Industrial",
+  "name_ko": "광밍",
+  "entity_type": "company",
+  "legal_name": "Kuang Ming Industrial",
+  "display_name": "광밍",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "대만 현지 화학 공급사다",
+  "anon": false
+ },
+ {
+  "id": "merck",
+  "name": "Merck KGaA",
+  "name_ko": "머크",
+  "entity_type": "company",
+  "legal_name": "Merck KGaA",
+  "display_name": "머크",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "공정 화학품을 공급한다",
+  "anon": false
+ },
+ {
+  "id": "rasa",
+  "name": "RASA Industries, Ltd.",
+  "name_ko": "라사공업",
+  "entity_type": "company",
+  "legal_name": "RASA Industries, Ltd.",
+  "display_name": "라사공업",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "공정 화학품을 공급한다",
+  "anon": false
+ },
+ {
+  "id": "shiny-chemical",
+  "name": "Shiny Chemical Industrial Co., Ltd.",
+  "name_ko": "샤이니",
+  "entity_type": "company",
+  "legal_name": "Shiny Chemical Industrial Co., Ltd.",
+  "display_name": "샤이니",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "대만 현지 화학 공급사다",
+  "anon": false
+ },
+ {
+  "id": "tokuyama",
+  "name": "Tokuyama Corporation",
+  "name_ko": "도쿠야마",
+  "entity_type": "company",
+  "legal_name": "Tokuyama Corporation",
+  "display_name": "도쿠야마",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [
+   "Polysilicon"
+  ],
+  "country": "일본",
+  "categories": [
+   "Chemicals",
+   "Polysilicon"
+  ],
+  "desc": "공정 화학품을 공급하고 폴리실리콘도 만든다",
+  "anon": false
+ },
+ {
+  "id": "wah-lee",
+  "name": "Wah Lee Industrial Corp.",
+  "name_ko": "화리공업",
+  "entity_type": "company",
+  "legal_name": "Wah Lee Industrial Corp.",
+  "display_name": "화리공업",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Distributor",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Distributor"
+  ],
+  "desc": "엔테그리스·듀폰 제품을 비롯한 해외 화학·소재·장비를 대만 팹에 넣는 대표 유통사다",
+  "anon": false
+ },
+ {
+  "id": "3m",
+  "name": "3M Company",
+  "name_ko": "3M",
+  "entity_type": "company",
+  "legal_name": "3M Company",
+  "display_name": "3M",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Photoresist",
+  "other_roles": [
+   "CMP materials"
+  ],
+  "country": "미국",
+  "categories": [
+   "Photoresist",
+   "CMP materials"
+  ],
+  "desc": "리소그래피 소재와 CMP 소재 두 갈래에 이름이 오른다",
+  "anon": false
+ },
+ {
+  "id": "jsr",
+  "name": "JSR Corporation",
+  "name_ko": "JSR",
+  "entity_type": "company",
+  "legal_name": "JSR Corporation",
+  "display_name": "JSR",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Photoresist",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Photoresist"
+  ],
+  "desc": "EUV 레지스트 일본 3사 가운데 하나. 2024년 일본 정부계 JIC 가 인수해 비상장이 됐다",
+  "anon": false
+ },
+ {
+  "id": "nissan-chemical",
+  "name": "Nissan Chemical Corporation",
+  "name_ko": "닛산화학",
+  "entity_type": "company",
+  "legal_name": "Nissan Chemical Corporation",
+  "display_name": "닛산화학",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Photoresist",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Photoresist"
+  ],
+  "desc": "리소그래피 소재를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "shin-etsu-chemical",
+  "name": "Shin-Etsu Chemical Co., Ltd.",
+  "name_ko": "신에츠화학",
+  "entity_type": "company",
+  "legal_name": "Shin-Etsu Chemical Co., Ltd.",
+  "display_name": "신에츠화학",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Photoresist",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Photoresist"
+  ],
+  "desc": "EUV 레지스트 일본 3사 가운데 하나이고 SEH 의 모회사다",
+  "anon": false
+ },
+ {
+  "id": "sumitomo-chemical",
+  "name": "Sumitomo Chemical Co., Ltd.",
+  "name_ko": "스미토모화학",
+  "entity_type": "company",
+  "legal_name": "Sumitomo Chemical Co., Ltd.",
+  "display_name": "스미토모화학",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Photoresist",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Photoresist"
+  ],
+  "desc": "리소그래피 소재를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "tok",
+  "name": "Tokyo Ohka Kogyo Co., Ltd.",
+  "name_ko": "도쿄오카공업(TOK)",
+  "entity_type": "company",
+  "legal_name": "Tokyo Ohka Kogyo Co., Ltd.",
+  "display_name": "도쿄오카공업(TOK)",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Photoresist",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Photoresist"
+  ],
+  "desc": "EUV 레지스트 일본 3사 가운데 하나다",
+  "anon": false
+ },
+ {
+  "id": "air-products",
+  "name": "Air Products and Chemicals, Inc.",
+  "name_ko": "에어프로덕츠",
+  "entity_type": "company",
+  "legal_name": "Air Products and Chemicals, Inc.",
+  "display_name": "에어프로덕츠",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "특수가스를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "central-glass",
+  "name": "Central Glass Co., Ltd.",
+  "name_ko": "센트럴글래스",
+  "entity_type": "company",
+  "legal_name": "Central Glass Co., Ltd.",
+  "display_name": "센트럴글래스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "특수가스를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "linde",
+  "name": "Linde plc",
+  "name_ko": "린데",
+  "entity_type": "company",
+  "legal_name": "Linde plc",
+  "display_name": "린데",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "독일·미국",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "특수가스를 공급한다. 프랙스에어는 린데에 합병돼 따로 서지 않는다",
+  "anon": false
+ },
+ {
+  "id": "linde-lienhwa",
+  "name": "Linde LienHwa Industrial Gases Co., Ltd.",
+  "name_ko": "린데리엔화",
+  "entity_type": "jv",
+  "legal_name": "Linde LienHwa Industrial Gases Co., Ltd.",
+  "display_name": "린데리엔화",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "린데와 리엔화실업의 합작사. 대만 최대 산업가스사이고 TSMC 팹 옆에 온사이트 플랜트를 둔다",
+  "anon": false
+ },
+ {
+  "id": "lienhwa",
+  "name": "LienHwa Industrial Holdings Corp.",
+  "name_ko": "리엔화실업",
+  "entity_type": "company",
+  "legal_name": "LienHwa Industrial Holdings Corp.",
+  "display_name": "리엔화실업",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Industrial gas",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Industrial gas"
+  ],
+  "desc": "린데리엔화 합작의 대만 쪽 모회사다",
+  "anon": false
+ },
+ {
+  "id": "sk-specialty",
+  "name": "SK specialty Co., Ltd.",
+  "name_ko": "SK스페셜티",
+  "entity_type": "company",
+  "legal_name": "SK specialty Co., Ltd.",
+  "display_name": "SK스페셜티",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "한국",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "NF3·WF6 세계 1위. 2025년 3월 한앤컴퍼니가 지분 85% 를 사들였다",
+  "anon": false
+ },
+ {
+  "id": "taiwan-material-technology",
+  "name": "Taiwan Material Technology Co., Ltd.",
+  "name_ko": "대만머티리얼테크놀로지",
+  "entity_type": "company",
+  "legal_name": "Taiwan Material Technology Co., Ltd.",
+  "display_name": "대만머티리얼테크놀로지",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "대만 현지 가스 공급사다",
+  "anon": false
+ },
+ {
+  "id": "nippon-sanso-taiwan",
+  "name": "Nippon Sanso Taiwan Co., Ltd.",
+  "name_ko": "니혼산소 대만",
+  "entity_type": "jv",
+  "legal_name": "Nippon Sanso Taiwan Co., Ltd.",
+  "display_name": "니혼산소 대만",
+  "region": "Asia",
+  "parent_entity_id": "nippon-sanso",
+  "primary_role": "Specialty gas",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Specialty gas"
+  ],
+  "desc": "일본 니혼산소의 대만 법인이다",
+  "anon": false
+ },
+ {
+  "id": "nippon-sanso",
+  "name": "Nippon Sanso Holdings Corporation",
+  "name_ko": "니혼산소 홀딩스",
+  "entity_type": "company",
+  "legal_name": "Nippon Sanso Holdings Corporation",
+  "display_name": "니혼산소 홀딩스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Industrial gas",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Industrial gas"
+  ],
+  "desc": "니혼산소 대만의 모회사다",
+  "anon": false
+ },
+ {
+  "id": "kanto-chemical",
+  "name": "Kanto Chemical Co., Inc.",
+  "name_ko": "간토화학",
+  "entity_type": "company",
+  "legal_name": "Kanto Chemical Co., Inc.",
+  "display_name": "간토화학",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "간토PPC 합작의 일본 쪽 모회사다",
+  "anon": false
+ },
+ {
+  "id": "ppc-taiwan",
+  "name": "PPC (Taiwan)",
+  "name_ko": "PPC",
+  "entity_type": "company",
+  "legal_name": "PPC (Taiwan)",
+  "display_name": "PPC",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Chemicals",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Chemicals"
+  ],
+  "desc": "간토PPC 합작의 대만 쪽 모회사다",
+  "anon": false
+ },
+ {
+  "id": "formosa-plastics",
+  "name": "Formosa Plastics Group",
+  "name_ko": "포모사플라스틱 그룹",
+  "entity_type": "company",
+  "legal_name": "Formosa Plastics Group",
+  "display_name": "포모사플라스틱 그룹",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Petrochemical",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Petrochemical"
+  ],
+  "desc": "포모사스미코 합작의 대만 쪽 모회사다",
+  "anon": false
+ },
+ {
+  "id": "agc",
+  "name": "AGC Inc.",
+  "name_ko": "AGC",
+  "entity_type": "company",
+  "legal_name": "AGC Inc.",
+  "display_name": "AGC",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "CMP materials",
+  "other_roles": [
+   "Mask blank"
+  ],
+  "country": "일본",
+  "categories": [
+   "CMP materials",
+   "Mask blank"
+  ],
+  "desc": "CMP 소재를 공급하고 호야와 함께 EUV 마스크 블랭크를 지배한다",
+  "anon": false
+ },
+ {
+  "id": "fujibo",
+  "name": "Fujibo Holdings, Inc.",
+  "name_ko": "후지보",
+  "entity_type": "company",
+  "legal_name": "Fujibo Holdings, Inc.",
+  "display_name": "후지보",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "CMP materials",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "CMP materials"
+  ],
+  "desc": "CMP 패드 소재를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "fujimi",
+  "name": "Fujimi Incorporated",
+  "name_ko": "후지미",
+  "entity_type": "company",
+  "legal_name": "Fujimi Incorporated",
+  "display_name": "후지미",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "CMP materials",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "CMP materials"
+  ],
+  "desc": "CMP 슬러리를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "topco-scientific",
+  "name": "Topco Scientific Co., Ltd.",
+  "name_ko": "토프코",
+  "entity_type": "company",
+  "legal_name": "Topco Scientific Co., Ltd.",
+  "display_name": "토프코",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Distributor",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Distributor"
+  ],
+  "desc": "신에츠 웨이퍼와 포토레지스트의 대만 총판 노릇이 거론되는 유통사다",
+  "anon": false
+ },
+ {
+  "id": "asml",
+  "name": "ASML Holding N.V.",
+  "name_ko": "ASML",
+  "entity_type": "company",
+  "legal_name": "ASML Holding N.V.",
+  "display_name": "ASML",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Lithography equipment",
+  "other_roles": [],
+  "country": "네덜란드",
+  "categories": [
+   "Lithography equipment"
+  ],
+  "desc": "EUV 노광기를 혼자 만든다. 2025년 매출 327억 유로",
+  "anon": false
+ },
+ {
+  "id": "applied-materials",
+  "name": "Applied Materials, Inc.",
+  "name_ko": "어플라이드머티리얼즈",
+  "entity_type": "company",
+  "legal_name": "Applied Materials, Inc.",
+  "display_name": "어플라이드머티리얼즈",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Deposition·etch equipment",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Deposition·etch equipment"
+  ],
+  "desc": "증착·식각·CMP·검사 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "lam-research",
+  "name": "Lam Research Corporation",
+  "name_ko": "램리서치",
+  "entity_type": "company",
+  "legal_name": "Lam Research Corporation",
+  "display_name": "램리서치",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Etch equipment",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Etch equipment"
+  ],
+  "desc": "식각·증착 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "kla",
+  "name": "KLA Corporation",
+  "name_ko": "KLA",
+  "entity_type": "company",
+  "legal_name": "KLA Corporation",
+  "display_name": "KLA",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Process control equipment",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Process control equipment"
+  ],
+  "desc": "공정제어·검사 장비를 공급하고 대체재가 없다",
+  "anon": false
+ },
+ {
+  "id": "tokyo-electron",
+  "name": "Tokyo Electron Limited",
+  "name_ko": "도쿄일렉트론",
+  "entity_type": "company",
+  "legal_name": "Tokyo Electron Limited",
+  "display_name": "도쿄일렉트론",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Track·etch equipment",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Track·etch equipment"
+  ],
+  "desc": "EUV 트랙(코터·디벨로퍼)을 사실상 혼자 공급하고 식각 장비도 만든다",
+  "anon": false
+ },
+ {
+  "id": "screen-holdings",
+  "name": "SCREEN Holdings Co., Ltd.",
+  "name_ko": "스크린홀딩스",
+  "entity_type": "company",
+  "legal_name": "SCREEN Holdings Co., Ltd.",
+  "display_name": "스크린홀딩스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Cleaning equipment",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Cleaning equipment"
+  ],
+  "desc": "세정 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "kokusai-electric",
+  "name": "Kokusai Electric Corporation",
+  "name_ko": "고쿠사이일렉트릭",
+  "entity_type": "company",
+  "legal_name": "Kokusai Electric Corporation",
+  "display_name": "고쿠사이일렉트릭",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "ALD equipment",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "ALD equipment"
+  ],
+  "desc": "ALD·열처리 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "asm-international",
+  "name": "ASM International N.V.",
+  "name_ko": "ASM인터내셔널",
+  "entity_type": "company",
+  "legal_name": "ASM International N.V.",
+  "display_name": "ASM인터내셔널",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "ALD equipment",
+  "other_roles": [],
+  "country": "네덜란드",
+  "categories": [
+   "ALD equipment"
+  ],
+  "desc": "ALD 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "advantest",
+  "name": "Advantest Corporation",
+  "name_ko": "어드반테스트",
+  "entity_type": "company",
+  "legal_name": "Advantest Corporation",
+  "display_name": "어드반테스트",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Test equipment",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Test equipment"
+  ],
+  "desc": "테스트 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "teradyne",
+  "name": "Teradyne, Inc.",
+  "name_ko": "테라다인",
+  "entity_type": "company",
+  "legal_name": "Teradyne, Inc.",
+  "display_name": "테라다인",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Test equipment",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Test equipment"
+  ],
+  "desc": "테스트 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "disco",
+  "name": "DISCO Corporation",
+  "name_ko": "디스코",
+  "entity_type": "company",
+  "legal_name": "DISCO Corporation",
+  "display_name": "디스코",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Dicing equipment",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Dicing equipment"
+  ],
+  "desc": "다이싱·그라인딩 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "onto-innovation",
+  "name": "Onto Innovation Inc.",
+  "name_ko": "온토이노베이션",
+  "entity_type": "company",
+  "legal_name": "Onto Innovation Inc.",
+  "display_name": "온토이노베이션",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Metrology equipment",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Metrology equipment"
+  ],
+  "desc": "계측·검사 장비를 공급한다",
+  "anon": false
+ },
+ {
+  "id": "carl-zeiss-smt",
+  "name": "Carl Zeiss SMT GmbH",
+  "name_ko": "칼자이스 SMT",
+  "entity_type": "company",
+  "legal_name": "Carl Zeiss SMT GmbH",
+  "display_name": "칼자이스 SMT",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Optics",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Optics"
+  ],
+  "desc": "ASML 노광기의 광학계를 만든다",
+  "anon": false
+ },
+ {
+  "id": "cymer",
+  "name": "Cymer, LLC",
+  "name_ko": "사이머",
+  "entity_type": "company",
+  "legal_name": "Cymer, LLC",
+  "display_name": "사이머",
+  "region": null,
+  "parent_entity_id": "asml",
+  "primary_role": "Light source",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Light source"
+  ],
+  "desc": "ASML 자회사로 노광 광원을 만든다",
+  "anon": false
+ },
+ {
+  "id": "trumpf",
+  "name": "TRUMPF SE + Co. KG",
+  "name_ko": "트럼프",
+  "entity_type": "company",
+  "legal_name": "TRUMPF SE + Co. KG",
+  "display_name": "트럼프",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Laser",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Laser"
+  ],
+  "desc": "EUV 광원에 쓰는 레이저를 만든다",
+  "anon": false
+ },
+ {
+  "id": "vdl",
+  "name": "VDL Groep",
+  "name_ko": "VDL 그룹",
+  "entity_type": "company",
+  "legal_name": "VDL Groep",
+  "display_name": "VDL 그룹",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Modules",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Modules"
+  ],
+  "desc": "ASML 장비 모듈을 만든다",
+  "anon": false
+ },
+ {
+  "id": "prodrive",
+  "name": "Prodrive Technologies",
+  "name_ko": "프로드라이브",
+  "entity_type": "company",
+  "legal_name": "Prodrive Technologies",
+  "display_name": "프로드라이브",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Modules",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Modules"
+  ],
+  "desc": "ASML 장비의 전자 모듈을 만든다",
+  "anon": false
+ },
+ {
+  "id": "ferrotec",
+  "name": "Ferrotec Corporation",
+  "name_ko": "페로텍",
+  "entity_type": "company",
+  "legal_name": "Ferrotec Corporation",
+  "display_name": "페로텍",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Vacuum components",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Vacuum components"
+  ],
+  "desc": "장비용 진공 부품과 석영 도가니를 만든다",
+  "anon": false
+ },
+ {
+  "id": "mks-instruments",
+  "name": "MKS Instruments, Inc.",
+  "name_ko": "MKS 인스트루먼츠",
+  "entity_type": "company",
+  "legal_name": "MKS Instruments, Inc.",
+  "display_name": "MKS 인스트루먼츠",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Vacuum components",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Vacuum components"
+  ],
+  "desc": "장비용 진공·계측 부품을 만든다",
+  "anon": false
+ },
+ {
+  "id": "edwards",
+  "name": "Edwards Vacuum",
+  "name_ko": "에드워즈",
+  "entity_type": "company",
+  "legal_name": "Edwards Vacuum",
+  "display_name": "에드워즈",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Vacuum pumps",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Vacuum pumps"
+  ],
+  "desc": "장비용 진공 펌프를 만든다",
+  "anon": false
+ },
+ {
+  "id": "ichor",
+  "name": "Ichor Holdings, Ltd.",
+  "name_ko": "아이코어",
+  "entity_type": "company",
+  "legal_name": "Ichor Holdings, Ltd.",
+  "display_name": "아이코어",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Gas panels",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Gas panels"
+  ],
+  "desc": "장비용 가스 패널을 만든다",
+  "anon": false
+ },
+ {
+  "id": "ultra-clean-holdings",
+  "name": "Ultra Clean Holdings, Inc. (UCT)",
+  "name_ko": "UCT",
+  "entity_type": "company",
+  "legal_name": "Ultra Clean Holdings, Inc. (UCT)",
+  "display_name": "UCT",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "Gas panels",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "Gas panels"
+  ],
+  "desc": "장비용 가스 패널을 만든다",
+  "anon": false
+ },
+ {
+  "id": "wacker-chemie",
+  "name": "Wacker Chemie AG",
+  "name_ko": "바커케미",
+  "entity_type": "company",
+  "legal_name": "Wacker Chemie AG",
+  "display_name": "바커케미",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Polysilicon",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Polysilicon"
+  ],
+  "desc": "폴리실리콘을 만들고 실트로닉의 모회사다",
+  "anon": false
+ },
+ {
+  "id": "stella-chemifa",
+  "name": "Stella Chemifa Corporation",
+  "name_ko": "스텔라케미파",
+  "entity_type": "company",
+  "legal_name": "Stella Chemifa Corporation",
+  "display_name": "스텔라케미파",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Hydrofluoric acid",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Hydrofluoric acid"
+  ],
+  "desc": "반도체용 불화수소를 만든다",
+  "anon": false
+ },
+ {
+  "id": "morita-chemical",
+  "name": "Morita Chemical Industries Co., Ltd.",
+  "name_ko": "모리타화학",
+  "entity_type": "company",
+  "legal_name": "Morita Chemical Industries Co., Ltd.",
+  "display_name": "모리타화학",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Hydrofluoric acid",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Hydrofluoric acid"
+  ],
+  "desc": "반도체용 불화수소를 만든다",
+  "anon": false
+ },
+ {
+  "id": "hoya",
+  "name": "HOYA Corporation",
+  "name_ko": "호야",
+  "entity_type": "company",
+  "legal_name": "HOYA Corporation",
+  "display_name": "호야",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Mask blank",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Mask blank"
+  ],
+  "desc": "AGC 와 함께 EUV 마스크 블랭크를 지배한다",
+  "anon": false
+ },
+ {
+  "id": "mitsui-chemicals",
+  "name": "Mitsui Chemicals, Inc.",
+  "name_ko": "미쓰이화학",
+  "entity_type": "company",
+  "legal_name": "Mitsui Chemicals, Inc.",
+  "display_name": "미쓰이화학",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Pellicle",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Pellicle"
+  ],
+  "desc": "EUV 펠리클을 대부분 만든다",
+  "anon": false
+ },
+ {
+  "id": "taipower",
+  "name": "Taiwan Power Company",
+  "name_ko": "대만전력",
+  "entity_type": "utility",
+  "legal_name": "Taiwan Power Company",
+  "display_name": "대만전력",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Utility",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Utility"
+  ],
+  "desc": "대만의 전력과 용수를 혼자 맡는다. 산업용 요금 인상이 TSMC 원가에 바로 들어온다",
+  "anon": false
+ },
+ {
+  "id": "jasm",
+  "name": "Japan Advanced Semiconductor Manufacturing, Inc. (JASM)",
+  "name_ko": "JASM",
+  "entity_type": "jv",
+  "legal_name": "Japan Advanced Semiconductor Manufacturing, Inc. (JASM)",
+  "display_name": "JASM",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Fab",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Fab"
+  ],
+  "desc": "구마모토의 TSMC 합작 팹. 소니·덴소·도요타가 주주로 들어왔다",
+  "anon": false
+ },
+ {
+  "id": "esmc",
+  "name": "European Semiconductor Manufacturing Company (ESMC)",
+  "name_ko": "ESMC",
+  "entity_type": "jv",
+  "legal_name": "European Semiconductor Manufacturing Company (ESMC)",
+  "display_name": "ESMC",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Fab",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Fab"
+  ],
+  "desc": "드레스덴의 TSMC 합작 팹. 보쉬·인피니온·NXP 가 각각 10% 가까이 가졌다",
+  "anon": false
+ },
+ {
+  "id": "tsmc-arizona",
+  "name": "TSMC Arizona Corporation",
+  "name_ko": "TSMC 애리조나",
+  "entity_type": "company",
+  "legal_name": "TSMC Arizona Corporation",
+  "display_name": "TSMC 애리조나",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Fab",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Fab"
+  ],
+  "desc": "TSMC 가 100% 가진 미국 팹. CHIPS 법 보조금 66억 달러와 세액공제가 붙었다",
+  "anon": false
+ },
+ {
+  "id": "vis",
+  "name": "Vanguard International Semiconductor Corporation (VIS)",
+  "name_ko": "뱅가드(VIS)",
+  "entity_type": "company",
+  "legal_name": "Vanguard International Semiconductor Corporation (VIS)",
+  "display_name": "뱅가드(VIS)",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Foundry",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Foundry"
+  ],
+  "desc": "TSMC 가 약 28% 를 가진 8인치·성숙 노드 파운드리다",
+  "anon": false
+ },
+ {
+  "id": "visera",
+  "name": "VisEra Technologies Company Ltd.",
+  "name_ko": "비세라",
+  "entity_type": "company",
+  "legal_name": "VisEra Technologies Company Ltd.",
+  "display_name": "비세라",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "CIS process",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "CIS process"
+  ],
+  "desc": "TSMC 가 70%대를 가진 CIS 컬러필터·마이크로렌즈 회사다",
+  "anon": false
+ },
+ {
+  "id": "xintec",
+  "name": "Xintec Inc.",
+  "name_ko": "신텍",
+  "entity_type": "company",
+  "legal_name": "Xintec Inc.",
+  "display_name": "신텍",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "WLCSP packaging",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "WLCSP packaging"
+  ],
+  "desc": "TSMC 가 약 40% 를 가진 WLCSP 패키징 회사다",
+  "anon": false
+ },
+ {
+  "id": "denso",
+  "name": "DENSO Corporation",
+  "name_ko": "덴소",
+  "entity_type": "company",
+  "legal_name": "DENSO Corporation",
+  "display_name": "덴소",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Automotive supplier",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Automotive supplier"
+  ],
+  "desc": "JASM 주주로 자동차용 캐파에 출자했다",
+  "anon": false
+ },
+ {
+  "id": "toyota",
+  "name": "Toyota Motor Corporation",
+  "name_ko": "도요타",
+  "entity_type": "company",
+  "legal_name": "Toyota Motor Corporation",
+  "display_name": "도요타",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Automaker",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "Automaker"
+  ],
+  "desc": "JASM 주주다",
+  "anon": false
+ },
+ {
+  "id": "bosch",
+  "name": "Robert Bosch GmbH",
+  "name_ko": "보쉬",
+  "entity_type": "company",
+  "legal_name": "Robert Bosch GmbH",
+  "display_name": "보쉬",
+  "region": "Europe",
+  "parent_entity_id": null,
+  "primary_role": "Automotive supplier",
+  "other_roles": [],
+  "country": "독일",
+  "categories": [
+   "Automotive supplier"
+  ],
+  "desc": "ESMC 주주다",
+  "anon": false
+ },
+ {
+  "id": "doosan",
+  "name": "Doosan Corporation",
+  "name_ko": "㈜두산",
+  "entity_type": "company",
+  "legal_name": "Doosan Corporation",
+  "display_name": "㈜두산",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Industrial group",
+  "other_roles": [],
+  "country": "한국",
+  "categories": [
+   "Industrial group"
+  ],
+  "desc": "2026년 7월 31일 SK실트론 지분 70.6% 를 2.3조 원에 사기로 계약했다",
+  "anon": false
+ },
+ {
+  "id": "sk-inc",
+  "name": "SK Inc.",
+  "name_ko": "SK㈜",
+  "entity_type": "company",
+  "legal_name": "SK Inc.",
+  "display_name": "SK㈜",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Holding company",
+  "other_roles": [],
+  "country": "한국",
+  "categories": [
+   "Holding company"
+  ],
+  "desc": "SK실트론과 SK스페셜티의 종전 지배주주다",
+  "anon": false
+ },
+ {
+  "id": "hanandcompany",
+  "name": "Hahn & Company",
+  "name_ko": "한앤컴퍼니",
+  "entity_type": "financial_institution",
+  "legal_name": "Hahn & Company",
+  "display_name": "한앤컴퍼니",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Private equity",
+  "other_roles": [],
+  "country": "한국",
+  "categories": [
+   "Private equity"
+  ],
+  "desc": "2025년 3월 SK스페셜티 지분 85% 를 약 2.6조 원에 사들였다",
+  "anon": false
+ },
+ {
+  "id": "jic",
+  "name": "Japan Investment Corporation (JIC)",
+  "name_ko": "일본투자공사(JIC)",
+  "entity_type": "financial_institution",
+  "legal_name": "Japan Investment Corporation (JIC)",
+  "display_name": "일본투자공사(JIC)",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "State-backed fund",
+  "other_roles": [],
+  "country": "일본",
+  "categories": [
+   "State-backed fund"
+  ],
+  "desc": "2024년 JSR 을 인수해 비상장으로 돌린 일본 정부계 펀드다",
+  "anon": false
  }
 ]

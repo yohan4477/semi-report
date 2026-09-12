@@ -1408,5 +1408,185 @@
   "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Vera-Rubin-Ramps-Into-Full-Production-to-Power-Agentic-AI-Factories-Worldwide/default.aspx",
   "accessed_date": "2026-09-12",
   "note": "Dell·HPE·Lenovo·Supermicro 등 폭넓은 ODM·스토리지 파트너가 참여하는 생산 생태계. 개별 물량 비중은 비공개"
+ },
+ {
+  "id": "tsmc_report_2026_09_12",
+  "publisher": "조사 원장",
+  "title": "TSMC 밸류체인 조사 — 앞단/뒷단",
+  "source_type": "research_ledger",
+  "published_date": "2026-09-12",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "저장소 data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md. 근거 등급 A/B/C 가 절마다 붙어 있고 이 사슬의 모든 줄이 이 원장을 가리킨다"
+ },
+ {
+  "id": "tsmc_20f_2025",
+  "publisher": "TSMC",
+  "title": "TSMC 2025년 Form 20-F",
+  "source_type": "primary_official",
+  "published_date": "2026-04",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "2026년 4월 SEC 제출. 고객 집중도(상위 10대·1위·2위)·플랫폼별·지역별 매출과 웨이퍼 공급사 실명이 여기 있다. 고객 실명은 어느 해도 공개되지 않는다"
+ },
+ {
+  "id": "tsmc_ar_2025",
+  "publisher": "TSMC",
+  "title": "TSMC 2025년 대만 연차보고서(TWSE)",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "지분·자회사와 5.3 Manufacturing Excellence 절의 공급사 표가 실린 자리다. 공급사 표 최신판 대조는 아직 남았다"
+ },
+ {
+  "id": "tsmc_ar_2022",
+  "publisher": "TSMC",
+  "title": "TSMC 2022년 대만 연차보고서(TWSE)",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "화학·리소그래피 소재·특수가스·CMP 공급사 명단을 카테고리별 실명으로 공개한 판이다. 2025년판과 대조해야 한다"
+ },
+ {
+  "id": "tsmc_20f_2005",
+  "publisher": "TSMC",
+  "title": "TSMC 2005년 Form 20-F",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "원재료비 안의 웨이퍼 42%·화학 20%·가스 9% 구성이 실린 옛 공시다. 구조 참고용"
+ },
+ {
+  "id": "apple_10k_fy2025",
+  "publisher": "Apple",
+  "title": "Apple 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": "2025-10",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "특정 부품을 단일 공급원에 의존한다고 적는다. TSMC 실명은 10-K 가 아니라 공급업체 리스트에 오른다"
+ },
+ {
+  "id": "amd_10k_2025",
+  "publisher": "AMD",
+  "title": "AMD 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "TSMC 를 웨이퍼 주 공급원으로 실명으로 적는다. 금액·비중은 비공개"
+ },
+ {
+  "id": "avgo_10k_2025",
+  "publisher": "Broadcom",
+  "title": "Broadcom 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "파운드리 의존을 적는다. TSMC 실명 문구는 원문 조사에서 확인되지 않았다"
+ },
+ {
+  "id": "qcom_10k_2025",
+  "publisher": "Qualcomm",
+  "title": "Qualcomm 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "TSMC·삼성 이중 소싱을 실명으로 적는다"
+ },
+ {
+  "id": "intc_10k_2025",
+  "publisher": "Intel",
+  "title": "Intel 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "외부 파운드리 사용을 적는다"
+ },
+ {
+  "id": "amkr_10k_2025",
+  "publisher": "Amkor Technology",
+  "title": "Amkor 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "contract foundries 를 고객군으로 적는다. TSMC 개별 물량은 비공개"
+ },
+ {
+  "id": "amat_10k_fy2025",
+  "publisher": "Applied Materials",
+  "title": "Applied Materials 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "2대 고객이 매출의 19%·15%(전년 12%·11%). 실명은 적지 않는다. 10월 결산"
+ },
+ {
+  "id": "lrcx_10k_fy2025",
+  "publisher": "Lam Research",
+  "title": "Lam Research 2025 회계연도 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "지역별 매출 중국 34%·한국 22%·대만 19%·일본 10%. 6월 결산"
+ },
+ {
+  "id": "asml_ar_2025",
+  "publisher": "ASML",
+  "title": "ASML 2025년 연차보고서",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "2025년 매출 327억 유로(+15.6%), 시스템 매출의 지역 구성과 EUV·High-NA 판매 대수"
+ },
+ {
+  "id": "mediatek_twse_2025",
+  "publisher": "MediaTek",
+  "title": "MediaTek 대만 공시(TWSE 2454)",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "선단 공정을 TSMC 에 맡긴다는 사실이 적히나 금액·비중은 비공개"
+ },
+ {
+  "id": "doosan_disclosure_20260731",
+  "publisher": "㈜두산",
+  "title": "타법인주식 취득 결정",
+  "source_type": "primary_official",
+  "published_date": "2026-07-31",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "SK실트론 지분 70.6% 를 2.3조 원에 취득하는 SPA. 2027~34년 EBITDA 초과, 주요 고객사 품질 인증, 미국 자회사 자산 처분에 걸린 언아웃이 붙는다"
+ },
+ {
+  "id": "sk_inc_disposal_20250331",
+  "publisher": "SK㈜",
+  "title": "타법인주식 처분 결정",
+  "source_type": "primary_official",
+  "published_date": "2025-03-31",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "SK스페셜티 지분 85% 를 약 2.6조 원에 한앤컴퍼니에 넘기고 15% 를 남겼다"
+ },
+ {
+  "id": "sk_siltron_dart",
+  "publisher": "SK실트론 / DART",
+  "title": "SK실트론 사업보고서·반기보고서",
+  "source_type": "primary_official",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "2024~2025년 매출·영업이익과 SK하이닉스가 상반기 매출의 18% 라는 고객 구성이 여기 있다"
  }
 ]

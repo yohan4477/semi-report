@@ -1,0 +1,2882 @@
+[
+ {
+  "id": "tsmc-e001",
+  "relationship_id": "tsmc-wafer-shin-etsu-handotai",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "세계 1위 웨이퍼사. 모회사 신에츠화학이 포토레지스트도 함께 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e002",
+  "relationship_id": "tsmc-wafer-shin-etsu-handotai",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "세계 1위 웨이퍼사. 모회사 신에츠화학이 포토레지스트도 함께 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e003",
+  "relationship_id": "tsmc-wafer-sumco",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "세계 2위 웨이퍼사로 300mm 로직 비중이 높다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e004",
+  "relationship_id": "tsmc-wafer-sumco",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "세계 2위 웨이퍼사로 300mm 로직 비중이 높다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e005",
+  "relationship_id": "tsmc-wafer-formosa-sumco",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "포모사플라스틱 그룹과 스미코의 합작사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e006",
+  "relationship_id": "tsmc-wafer-formosa-sumco",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "포모사플라스틱 그룹과 스미코의 합작사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e007",
+  "relationship_id": "tsmc-wafer-globalwafers",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "세계 3위권. 텍사스 셔먼 신공장을 세운다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e008",
+  "relationship_id": "tsmc-wafer-globalwafers",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "세계 3위권. 텍사스 셔먼 신공장을 세운다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e009",
+  "relationship_id": "tsmc-wafer-siltronic",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "바커케미 자회사로 폴리실리콘부터 수직으로 묶였다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e010",
+  "relationship_id": "tsmc-wafer-siltronic",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "바커케미 자회사로 폴리실리콘부터 수직으로 묶였다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e011",
+  "relationship_id": "tsmc-wafer-sk-siltron",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "국내 유일한 300mm 제조사. TSMC 비중은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e012",
+  "relationship_id": "tsmc-wafer-sk-siltron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "국내 유일한 300mm 제조사. TSMC 비중은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e013",
+  "relationship_id": "tsmc-wafer-soitec",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "SOI·특수 웨이퍼를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e014",
+  "relationship_id": "tsmc-wafer-soitec",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "SOI·특수 웨이퍼를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e015",
+  "relationship_id": "tsmc-mat-air-liquide",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "공정 화학품과 특수가스 두 갈래에 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e016",
+  "relationship_id": "tsmc-mat-air-liquide",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "공정 화학품과 특수가스 두 갈래에 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e017",
+  "relationship_id": "tsmc-mat-basf",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e018",
+  "relationship_id": "tsmc-mat-basf",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e019",
+  "relationship_id": "tsmc-mat-dupont",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "공정 화학품과 CMP 소재 두 갈래에 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e020",
+  "relationship_id": "tsmc-mat-dupont",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "공정 화학품과 CMP 소재 두 갈래에 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e021",
+  "relationship_id": "tsmc-mat-entegris",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "화학·가스·CMP 세 갈래에 모두 오른다. 명단의 캐봇마이크로일렉트로닉스는 이 회사로 읽는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e022",
+  "relationship_id": "tsmc-mat-entegris",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "화학·가스·CMP 세 갈래에 모두 오른다. 명단의 캐봇마이크로일렉트로닉스는 이 회사로 읽는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e023",
+  "relationship_id": "tsmc-mat-fujifilm-electronic-materials",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "화학·포토레지스트·CMP 세 갈래에 모두 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e024",
+  "relationship_id": "tsmc-mat-fujifilm-electronic-materials",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "화학·포토레지스트·CMP 세 갈래에 모두 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e025",
+  "relationship_id": "tsmc-mat-kanto-ppc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "간토화학과 대만 PPC 의 고순도 화학 합작사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e026",
+  "relationship_id": "tsmc-mat-kanto-ppc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "간토화학과 대만 PPC 의 고순도 화학 합작사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e027",
+  "relationship_id": "tsmc-mat-kuang-ming",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e028",
+  "relationship_id": "tsmc-mat-kuang-ming",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e029",
+  "relationship_id": "tsmc-mat-merck",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e030",
+  "relationship_id": "tsmc-mat-merck",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e031",
+  "relationship_id": "tsmc-mat-rasa",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e032",
+  "relationship_id": "tsmc-mat-rasa",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e033",
+  "relationship_id": "tsmc-mat-shiny-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e034",
+  "relationship_id": "tsmc-mat-shiny-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e035",
+  "relationship_id": "tsmc-mat-tokuyama",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "화학품 명단에 오르고 폴리실리콘도 만든다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e036",
+  "relationship_id": "tsmc-mat-tokuyama",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "화학품 명단에 오르고 폴리실리콘도 만든다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e037",
+  "relationship_id": "tsmc-mat-wah-lee",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "화학품 명단에 오른 대만 유통사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e038",
+  "relationship_id": "tsmc-mat-wah-lee",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "화학품 명단에 오른 대만 유통사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e039",
+  "relationship_id": "tsmc-mat-3m",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "리소그래피 소재와 CMP 소재 두 갈래에 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e040",
+  "relationship_id": "tsmc-mat-3m",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "리소그래피 소재와 CMP 소재 두 갈래에 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e041",
+  "relationship_id": "tsmc-mat-jsr",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "EUV 레지스트 일본 3사 가운데 하나다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e042",
+  "relationship_id": "tsmc-mat-jsr",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "EUV 레지스트 일본 3사 가운데 하나다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e043",
+  "relationship_id": "tsmc-mat-nissan-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e044",
+  "relationship_id": "tsmc-mat-nissan-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e045",
+  "relationship_id": "tsmc-mat-shin-etsu-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "EUV 레지스트 일본 3사 가운데 하나다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e046",
+  "relationship_id": "tsmc-mat-shin-etsu-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "EUV 레지스트 일본 3사 가운데 하나다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e047",
+  "relationship_id": "tsmc-mat-sumitomo-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e048",
+  "relationship_id": "tsmc-mat-sumitomo-chemical",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e049",
+  "relationship_id": "tsmc-mat-tok",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "EUV 레지스트 일본 3사 가운데 하나다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e050",
+  "relationship_id": "tsmc-mat-tok",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "EUV 레지스트 일본 3사 가운데 하나다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e051",
+  "relationship_id": "tsmc-mat-air-products",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e052",
+  "relationship_id": "tsmc-mat-air-products",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e053",
+  "relationship_id": "tsmc-mat-central-glass",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e054",
+  "relationship_id": "tsmc-mat-central-glass",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e055",
+  "relationship_id": "tsmc-mat-linde",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "프랙스에어는 린데에 합병돼 따로 서지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e056",
+  "relationship_id": "tsmc-mat-linde",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "프랙스에어는 린데에 합병돼 따로 서지 않는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e057",
+  "relationship_id": "tsmc-mat-linde-lienhwa",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "TSMC 팹 옆 온사이트 플랜트를 굴리는 합작사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e058",
+  "relationship_id": "tsmc-mat-linde-lienhwa",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "TSMC 팹 옆 온사이트 플랜트를 굴리는 합작사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e059",
+  "relationship_id": "tsmc-mat-sk-specialty",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "NF3·WF6 세계 1위. TSMC 비중은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e060",
+  "relationship_id": "tsmc-mat-sk-specialty",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "NF3·WF6 세계 1위. TSMC 비중은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e061",
+  "relationship_id": "tsmc-mat-taiwan-material-technology",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e062",
+  "relationship_id": "tsmc-mat-taiwan-material-technology",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e063",
+  "relationship_id": "tsmc-mat-nippon-sanso-taiwan",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "일본 니혼산소의 대만 법인이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e064",
+  "relationship_id": "tsmc-mat-nippon-sanso-taiwan",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "일본 니혼산소의 대만 법인이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e065",
+  "relationship_id": "tsmc-mat-fujibo",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e066",
+  "relationship_id": "tsmc-mat-fujibo",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e067",
+  "relationship_id": "tsmc-mat-fujimi",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e068",
+  "relationship_id": "tsmc-mat-fujimi",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2022년판 대만 연차보고서가 카테고리별로 실명을 공개한 명단이다. 2025년판 5.3절 표와 대조해야 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e069",
+  "relationship_id": "tsmc-mat-agc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2022",
+  "evidence_type": "direct",
+  "evidence": "CMP 소재 명단에 오른다. 마스크 블랭크는 따로 선다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e070",
+  "relationship_id": "tsmc-mat-agc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "CMP 소재 명단에 오른다. 마스크 블랭크는 따로 선다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e071",
+  "relationship_id": "tsmc-blank-hoya",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "호야와 AGC 가 EUV 블랭크의 93% 가까이를 쥔다. 마스크는 TSMC 자체 마스크샵이 만든다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e072",
+  "relationship_id": "tsmc-blank-agc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "호야와 함께 EUV 블랭크를 지배한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e073",
+  "relationship_id": "tsmc-pellicle-mitsui",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "EUV 펠리클을 대부분 만든다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e074",
+  "relationship_id": "tsmc-dist-topco",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "신에츠 웨이퍼·포토레지스트의 대만 총판 노릇이 원문에 적힌다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e075",
+  "relationship_id": "tsmc-via-entegris-wah-lee",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "유통사가 취급하는 브랜드로 원문이 이름을 적었다. 물량·마진은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e076",
+  "relationship_id": "tsmc-via-dupont-wah-lee",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "유통사가 취급하는 브랜드로 원문이 이름을 적었다. 물량·마진은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e077",
+  "relationship_id": "tsmc-via-shin-etsu-chemical-topco-scientific",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "유통사가 취급하는 브랜드로 원문이 이름을 적었다. 물량·마진은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e078",
+  "relationship_id": "tsmc-via-shin-etsu-handotai-topco-scientific",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "유통사가 취급하는 브랜드로 원문이 이름을 적었다. 물량·마진은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e079",
+  "relationship_id": "tsmc-eq-asml",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "EUV 노광기를 혼자 만든다. 익명 최대 매입처 A 사로 읽힌다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e080",
+  "relationship_id": "tsmc-eq-applied-materials",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "증착·식각·CMP·검사에 걸쳐 여러 공정에 들어간다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e081",
+  "relationship_id": "tsmc-eq-lam-research",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "식각이 핵심이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e082",
+  "relationship_id": "tsmc-eq-kla",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "공정제어·검사에 대체재가 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e083",
+  "relationship_id": "tsmc-eq-tokyo-electron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "EUV 트랙(코터·디벨로퍼)을 사실상 혼자 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e084",
+  "relationship_id": "tsmc-eq-screen-holdings",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "세정 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e085",
+  "relationship_id": "tsmc-eq-kokusai-electric",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "ALD·열처리 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e086",
+  "relationship_id": "tsmc-eq-asm-international",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "ALD 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e087",
+  "relationship_id": "tsmc-eq-advantest",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "테스트 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e088",
+  "relationship_id": "tsmc-eq-teradyne",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "테스트 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e089",
+  "relationship_id": "tsmc-eq-disco",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "다이싱·그라인딩 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e090",
+  "relationship_id": "tsmc-eq-onto-innovation",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "계측·검사 장비를 낸다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e091",
+  "relationship_id": "tsmc-eq2-carl-zeiss-smt-asml",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ASML 장비의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e092",
+  "relationship_id": "tsmc-eq2-cymer-asml",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ASML 장비의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e093",
+  "relationship_id": "tsmc-eq2-trumpf-asml",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ASML 장비의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e094",
+  "relationship_id": "tsmc-eq2-vdl-asml",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ASML 장비의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e095",
+  "relationship_id": "tsmc-eq2-prodrive-asml",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ASML 장비의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e096",
+  "relationship_id": "tsmc-eq2-ferrotec-tokyo-electron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e097",
+  "relationship_id": "tsmc-eq2-ferrotec-lam-research",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e098",
+  "relationship_id": "tsmc-eq2-mks-instruments-tokyo-electron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e099",
+  "relationship_id": "tsmc-eq2-mks-instruments-lam-research",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e100",
+  "relationship_id": "tsmc-eq2-edwards-tokyo-electron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e101",
+  "relationship_id": "tsmc-eq2-edwards-lam-research",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e102",
+  "relationship_id": "tsmc-eq2-ichor-tokyo-electron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e103",
+  "relationship_id": "tsmc-eq2-ichor-lam-research",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e104",
+  "relationship_id": "tsmc-eq2-ultra-clean-holdings-tokyo-electron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e105",
+  "relationship_id": "tsmc-eq2-ultra-clean-holdings-lam-research",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "도쿄일렉트론·램리서치의 앞단으로 원문이 이름을 적었다. 물량 비중은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e106",
+  "relationship_id": "tsmc-poly-wacker-siltronic",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "실트로닉은 바커케미 자회사여서 폴리실리콘부터 수직으로 묶인다. 헴록·도쿠야마·OCI 는 원문이 웨이퍼사와 실명으로 짝짓지 않아 관계로 세우지 않았다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e107",
+  "relationship_id": "tsmc-hf-stella-chemifa-linde-lienhwa",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 5절 지도가 불화수소를 린데리엔화·SK스페셜티 쪽으로 그린다. 개별 물량은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e108",
+  "relationship_id": "tsmc-hf-stella-chemifa-sk-specialty",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 5절 지도가 불화수소를 린데리엔화·SK스페셜티 쪽으로 그린다. 개별 물량은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e109",
+  "relationship_id": "tsmc-hf-morita-chemical-linde-lienhwa",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 5절 지도가 불화수소를 린데리엔화·SK스페셜티 쪽으로 그린다. 개별 물량은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e110",
+  "relationship_id": "tsmc-hf-morita-chemical-sk-specialty",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 5절 지도가 불화수소를 린데리엔화·SK스페셜티 쪽으로 그린다. 개별 물량은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e111",
+  "relationship_id": "tsmc-sub-ibiden",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "CoWoS 기판 공급사로 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e112",
+  "relationship_id": "tsmc-abf-ajinomoto-ibiden",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e113",
+  "relationship_id": "tsmc-sub-unimicron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "CoWoS 기판 공급사로 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e114",
+  "relationship_id": "tsmc-abf-ajinomoto-unimicron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e115",
+  "relationship_id": "tsmc-sub-kinsus",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "EMIB 형 패키징 공동개발이 이름에 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e116",
+  "relationship_id": "tsmc-abf-ajinomoto-kinsus",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e117",
+  "relationship_id": "tsmc-sub-nanya-pcb",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "CoWoS 기판 공급사로 이름이 오른다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e118",
+  "relationship_id": "tsmc-abf-ajinomoto-nanya-pcb",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e119",
+  "relationship_id": "tsmc-osat-ase",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "CoWoS oS 와 CoW 전공정을 받아 한다. 2025년 말 월 2~2.5만 장 캐파가 거론된다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e120",
+  "relationship_id": "tsmc-osat-spil",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "2026년 6~8만 장/년 외주 물량이 거론된다. ASE 그룹이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e121",
+  "relationship_id": "tsmc-osat-amkor",
+  "metric_id": null,
+  "source_id": "amkr_10k_2025",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 contract foundries 를 고객군으로 적었다. 2026년 18~19만 장/년 외주 물량이 거론되고 애리조나 협력을 발표했다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e122",
+  "relationship_id": "tsmc-osat-amkor",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 contract foundries 를 고객군으로 적었다. 2026년 18~19만 장/년 외주 물량이 거론되고 애리조나 협력을 발표했다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e123",
+  "relationship_id": "tsmc-util-taipower",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 전력·용수를 혼자 맡아 대체가 없다. 2024~25년 산업용 요금 인상이 원가에 바로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e124",
+  "relationship_id": "tsmc-hbm-sk-hynix",
+  "metric_id": null,
+  "source_id": "nv_fin_001",
+  "evidence_type": "direct",
+  "evidence": "TSMC 공급사가 아니라 TSMC 고객의 병렬 공급사다. CoWoS 에서 TSMC 로직 다이와 합류한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e125",
+  "relationship_id": "tsmc-hbm-sk-hynix",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "TSMC 공급사가 아니라 TSMC 고객의 병렬 공급사다. CoWoS 에서 TSMC 로직 다이와 합류한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e126",
+  "relationship_id": "tsmc-hbm-samsung-electronics",
+  "metric_id": null,
+  "source_id": "nv_fin_001",
+  "evidence_type": "direct",
+  "evidence": "TSMC 공급사가 아니라 TSMC 고객의 병렬 공급사다. CoWoS 에서 TSMC 로직 다이와 합류한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e127",
+  "relationship_id": "tsmc-hbm-samsung-electronics",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "TSMC 공급사가 아니라 TSMC 고객의 병렬 공급사다. CoWoS 에서 TSMC 로직 다이와 합류한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e128",
+  "relationship_id": "tsmc-hbm-micron",
+  "metric_id": null,
+  "source_id": "nv_fin_001",
+  "evidence_type": "direct",
+  "evidence": "TSMC 공급사가 아니라 TSMC 고객의 병렬 공급사다. CoWoS 에서 TSMC 로직 다이와 합류한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e129",
+  "relationship_id": "tsmc-hbm-micron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "TSMC 공급사가 아니라 TSMC 고객의 병렬 공급사다. CoWoS 에서 TSMC 로직 다이와 합류한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e130",
+  "relationship_id": "tsmc-cust-apple",
+  "metric_id": null,
+  "source_id": "apple_10k_fy2025",
+  "evidence_type": "indirect",
+  "evidence": "A 시리즈와 M 시리즈 로직을 전량 맡긴다. 10-K 는 단일 공급원 의존만 적고 TSMC 실명은 공급업체 리스트에 오른다. 2025년 몫을 19~22%로 읽는 시각이 있으나 20-F 가 실명을 밝히지 않아 확정할 수 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e131",
+  "relationship_id": "tsmc-cust-apple",
+  "metric_id": null,
+  "source_id": "apple_supplier",
+  "evidence_type": "indirect",
+  "evidence": "A 시리즈와 M 시리즈 로직을 전량 맡긴다. 10-K 는 단일 공급원 의존만 적고 TSMC 실명은 공급업체 리스트에 오른다. 2025년 몫을 19~22%로 읽는 시각이 있으나 20-F 가 실명을 밝히지 않아 확정할 수 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e132",
+  "relationship_id": "tsmc-cust-apple",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "A 시리즈와 M 시리즈 로직을 전량 맡긴다. 10-K 는 단일 공급원 의존만 적고 TSMC 실명은 공급업체 리스트에 오른다. 2025년 몫을 19~22%로 읽는 시각이 있으나 20-F 가 실명을 밝히지 않아 확정할 수 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e133",
+  "relationship_id": "tsmc-cust-nvidia",
+  "metric_id": null,
+  "source_id": "nv_fin_001",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 TSMC·삼성 파운드리와 CoWoS 패키징을 실명으로 적는다. 2025년 몫을 17~19%로 읽는 시각이 있으나 20-F 가 실명을 밝히지 않아 확정할 수 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e134",
+  "relationship_id": "tsmc-cust-nvidia",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 TSMC·삼성 파운드리와 CoWoS 패키징을 실명으로 적는다. 2025년 몫을 17~19%로 읽는 시각이 있으나 20-F 가 실명을 밝히지 않아 확정할 수 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e135",
+  "relationship_id": "tsmc-cust-amd",
+  "metric_id": null,
+  "source_id": "amd_10k_2025",
+  "evidence_type": "indirect",
+  "evidence": "10-K 가 TSMC 를 웨이퍼 주 공급원으로 적는다. 상위 10 안으로만 알려진다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e136",
+  "relationship_id": "tsmc-cust-amd",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "10-K 가 TSMC 를 웨이퍼 주 공급원으로 적는다. 상위 10 안으로만 알려진다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e137",
+  "relationship_id": "tsmc-cust-broadcom",
+  "metric_id": null,
+  "source_id": "avgo_10k_2025",
+  "evidence_type": "indirect",
+  "evidence": "커스텀 AI ASIC 을 전량 맡긴다. 10-K 는 파운드리 의존만 적고 TSMC 실명 문구는 원문 조사에서 확인되지 않았다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e138",
+  "relationship_id": "tsmc-cust-broadcom",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "커스텀 AI ASIC 을 전량 맡긴다. 10-K 는 파운드리 의존만 적고 TSMC 실명 문구는 원문 조사에서 확인되지 않았다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e139",
+  "relationship_id": "tsmc-cust-marvell",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "커스텀 ASIC 과 광통신 DSP 를 맡긴다. 고객 공시의 TSMC 실명 문구는 확인되지 않았다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e140",
+  "relationship_id": "tsmc-cust-qualcomm",
+  "metric_id": null,
+  "source_id": "qcom_10k_2025",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 TSMC·삼성 이중 소싱을 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e141",
+  "relationship_id": "tsmc-cust-qualcomm",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 TSMC·삼성 이중 소싱을 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e142",
+  "relationship_id": "tsmc-cust-mediatek",
+  "metric_id": null,
+  "source_id": "mediatek_twse_2025",
+  "evidence_type": "indirect",
+  "evidence": "선단 공정은 TSMC 단일이다. 대만 공시에 금액·비중은 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e143",
+  "relationship_id": "tsmc-cust-mediatek",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "선단 공정은 TSMC 단일이다. 대만 공시에 금액·비중은 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e144",
+  "relationship_id": "tsmc-cust-intel",
+  "metric_id": null,
+  "source_id": "intc_10k_2025",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 외부 파운드리 사용을 적는다. 루나레이크·애로우레이크 타일과 Xe GPU 를 맡긴다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e145",
+  "relationship_id": "tsmc-cust-intel",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "10-K 에 외부 파운드리 사용을 적는다. 루나레이크·애로우레이크 타일과 Xe GPU 를 맡긴다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e146",
+  "relationship_id": "tsmc-cust-google",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자체 TPU 를 직접 계약으로 맡기거나 브로드컴·GUC 를 거친다. 경로별 배분은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e147",
+  "relationship_id": "tsmc-cust-aws",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자체 트레이니엄을 직접 계약으로 맡기거나 마벨·알칩을 거친다. 경로별 배분은 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e148",
+  "relationship_id": "tsmc-cust-microsoft",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자체 마이아를 맡긴다. 직거래인지 중개인지는 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e149",
+  "relationship_id": "tsmc-cust-meta",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자체 MTIA 를 맡긴다. 직거래인지 중개인지는 비공개",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e150",
+  "relationship_id": "tsmc-cust-sony",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "이미지센서 로직을 맡긴다. 자동차 5%·IoT 5% 의 주 구성이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e151",
+  "relationship_id": "tsmc-cust-nxp",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자동차 MCU 를 맡긴다. 자동차 5%·IoT 5% 의 주 구성이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e152",
+  "relationship_id": "tsmc-cust-infineon",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자동차·산업용 칩을 맡긴다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e153",
+  "relationship_id": "tsmc-cust-stmicroelectronics",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자동차·산업용 칩을 맡긴다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e154",
+  "relationship_id": "tsmc-cust-renesas",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "자동차 MCU 를 맡긴다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e155",
+  "relationship_id": "tsmc-cust-tsmc-anon-c1",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 가 1위 고객의 총매출 대비 비중만 밝히고 실명은 어느 해도 적지 않는다. 업계가 1위를 애플, 2위를 엔비디아로 읽는 것은 근거 등급 C 이고 대만 언론은 순서를 반대로 읽기도 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e156",
+  "relationship_id": "tsmc-cust-tsmc-anon-c1",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "20-F 가 1위 고객의 총매출 대비 비중만 밝히고 실명은 어느 해도 적지 않는다. 업계가 1위를 애플, 2위를 엔비디아로 읽는 것은 근거 등급 C 이고 대만 언론은 순서를 반대로 읽기도 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e157",
+  "relationship_id": "tsmc-cust-tsmc-anon-c2",
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 가 2위 고객의 총매출 대비 비중만 밝히고 실명은 어느 해도 적지 않는다. 업계가 1위를 애플, 2위를 엔비디아로 읽는 것은 근거 등급 C 이고 대만 언론은 순서를 반대로 읽기도 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e158",
+  "relationship_id": "tsmc-cust-tsmc-anon-c2",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "20-F 가 2위 고객의 총매출 대비 비중만 밝히고 실명은 어느 해도 적지 않는다. 업계가 1위를 애플, 2위를 엔비디아로 읽는 것은 근거 등급 C 이고 대만 언론은 순서를 반대로 읽기도 한다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e159",
+  "relationship_id": "tsmc-mid-guc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "TSMC 가 약 35% 를 가진 디자인 서비스 회사다 하이퍼스케일러 ASIC 이 이 경로로 들어오나 금액은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e160",
+  "relationship_id": "tsmc-mid-alchip",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "GUC 와 경쟁하는 디자인 서비스 회사다 하이퍼스케일러 ASIC 이 이 경로로 들어오나 금액은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e161",
+  "relationship_id": "tsmc-cust-sk-hynix-hbm4",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "HBM4 부터 베이스 다이를 TSMC 로직 공정으로 만들면서 병렬 공급사가 직접 고객이 된다. 시점과 물량은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e162",
+  "relationship_id": "tsmc-cc-apple-foxconn",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e163",
+  "relationship_id": "tsmc-cc-apple-pegatron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e164",
+  "relationship_id": "tsmc-cc-apple-luxshare",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e165",
+  "relationship_id": "tsmc-cc-nvidia-microsoft",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e166",
+  "relationship_id": "tsmc-cc-nvidia-meta",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e167",
+  "relationship_id": "tsmc-cc-nvidia-google",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e168",
+  "relationship_id": "tsmc-cc-nvidia-aws",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e169",
+  "relationship_id": "tsmc-cc-nvidia-oracle",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e170",
+  "relationship_id": "tsmc-cc-nvidia-xai",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e171",
+  "relationship_id": "tsmc-cc-nvidia-coreweave",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e172",
+  "relationship_id": "tsmc-cc-nvidia-foxconn",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e173",
+  "relationship_id": "tsmc-cc-nvidia-quanta-computer",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e174",
+  "relationship_id": "tsmc-cc-nvidia-wistron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e175",
+  "relationship_id": "tsmc-cc-nvidia-supermicro",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e176",
+  "relationship_id": "tsmc-cc-nvidia-dell",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e177",
+  "relationship_id": "tsmc-cc-amd-dell",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e178",
+  "relationship_id": "tsmc-cc-amd-hp",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e179",
+  "relationship_id": "tsmc-cc-amd-lenovo",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e180",
+  "relationship_id": "tsmc-cc-amd-sony",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e181",
+  "relationship_id": "tsmc-cc-amd-microsoft",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e182",
+  "relationship_id": "tsmc-cc-broadcom-google",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e183",
+  "relationship_id": "tsmc-cc-broadcom-meta",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e184",
+  "relationship_id": "tsmc-cc-broadcom-aws",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e185",
+  "relationship_id": "tsmc-cc-marvell-google",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e186",
+  "relationship_id": "tsmc-cc-marvell-meta",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e187",
+  "relationship_id": "tsmc-cc-marvell-aws",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e188",
+  "relationship_id": "tsmc-cc-qualcomm-samsung-electronics",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e189",
+  "relationship_id": "tsmc-cc-qualcomm-xiaomi",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e190",
+  "relationship_id": "tsmc-cc-qualcomm-oppo",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e191",
+  "relationship_id": "tsmc-cc-qualcomm-vivo",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e192",
+  "relationship_id": "tsmc-cc-mediatek-samsung-electronics",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e193",
+  "relationship_id": "tsmc-cc-mediatek-xiaomi",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e194",
+  "relationship_id": "tsmc-cc-mediatek-oppo",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e195",
+  "relationship_id": "tsmc-cc-mediatek-vivo",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e196",
+  "relationship_id": "tsmc-cc-guc-google",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e197",
+  "relationship_id": "tsmc-cc-guc-aws",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e198",
+  "relationship_id": "tsmc-cc-guc-meta",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e199",
+  "relationship_id": "tsmc-cc-alchip-google",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e200",
+  "relationship_id": "tsmc-cc-alchip-aws",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e201",
+  "relationship_id": "tsmc-cc-alchip-meta",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "원문 2-2 의 경로다. 금액·물량 배분은 비공개다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e202",
+  "relationship_id": "tsmc-eq-stake-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "구마모토 특수공정·3nm 팹. 고객이 캐파에 출자해 물량을 묶었다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e203",
+  "relationship_id": "tsmc-eq-stake-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "구마모토 특수공정·3nm 팹. 고객이 캐파에 출자해 물량을 묶었다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e204",
+  "relationship_id": "tsmc-eq-stake-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "드레스덴 28·16nm 자동차 팹. 유럽 자동차 IDM 3사가 고객 겸 주주다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e205",
+  "relationship_id": "tsmc-eq-stake-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "드레스덴 28·16nm 자동차 팹. 유럽 자동차 IDM 3사가 고객 겸 주주다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e206",
+  "relationship_id": "tsmc-eq-stake-tsmc-arizona",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "CHIPS 법 보조금 66억 달러와 세액공제가 붙어 미 정부가 사실상 자본 파트너다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e207",
+  "relationship_id": "tsmc-eq-stake-tsmc-arizona",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "CHIPS 법 보조금 66억 달러와 세액공제가 붙어 미 정부가 사실상 자본 파트너다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e208",
+  "relationship_id": "tsmc-eq-stake-guc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "뒷단 중개를 지분으로 쥔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e209",
+  "relationship_id": "tsmc-eq-stake-guc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "뒷단 중개를 지분으로 쥔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e210",
+  "relationship_id": "tsmc-eq-stake-vis",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "성숙 노드 이관처다. 싱가포르 VSMC 는 NXP 와의 합작이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e211",
+  "relationship_id": "tsmc-eq-stake-vis",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "성숙 노드 이관처다. 싱가포르 VSMC 는 NXP 와의 합작이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e212",
+  "relationship_id": "tsmc-eq-stake-visera",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "CIS 컬러필터·마이크로렌즈. 지분은 70%대로만 적힌다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e213",
+  "relationship_id": "tsmc-eq-stake-visera",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "CIS 컬러필터·마이크로렌즈. 지분은 70%대로만 적힌다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e214",
+  "relationship_id": "tsmc-eq-stake-xintec",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "WLCSP 패키징 회사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e215",
+  "relationship_id": "tsmc-eq-stake-xintec",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "WLCSP 패키징 회사다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e216",
+  "relationship_id": "tsmc-stake-sony-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e217",
+  "relationship_id": "tsmc-stake-sony-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e218",
+  "relationship_id": "tsmc-stake-denso-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e219",
+  "relationship_id": "tsmc-stake-denso-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e220",
+  "relationship_id": "tsmc-stake-toyota-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e221",
+  "relationship_id": "tsmc-stake-toyota-jasm",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e222",
+  "relationship_id": "tsmc-stake-bosch-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e223",
+  "relationship_id": "tsmc-stake-bosch-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e224",
+  "relationship_id": "tsmc-stake-infineon-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e225",
+  "relationship_id": "tsmc-stake-infineon-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e226",
+  "relationship_id": "tsmc-stake-nxp-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e227",
+  "relationship_id": "tsmc-stake-nxp-esmc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "고객이 캐파에 출자해 주주로 들어왔다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e228",
+  "relationship_id": "tsmc-stake-ase-spil",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "2018년 합병으로 ASE 가 SPIL 을 100% 쥔다. CoWoS 외주 두 곳이 사실상 한 그룹이고 앰코가 유일한 독립 대안이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e229",
+  "relationship_id": "tsmc-stake-jic-jsr",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "indirect",
+  "evidence": "2024년 비상장화로 일본 정부가 병목 소재를 직접 쥐었다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e230",
+  "relationship_id": "tsmc-stake-doosan-sksiltron",
+  "metric_id": null,
+  "source_id": "doosan_disclosure_20260731",
+  "evidence_type": "direct",
+  "evidence": "SPA 2.3조 원에 70.6%. 2027~34년 EBITDA 초과, 주요 고객사 품질 인증, 미국 자회사 자산 처분에 걸린 언아웃이 붙는다. 100% 가치는 5조 원 중반으로 평가됐고 최태원 지분 29.4% 는 별도 협상이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e231",
+  "relationship_id": "tsmc-stake-doosan-sksiltron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "SPA 2.3조 원에 70.6%. 2027~34년 EBITDA 초과, 주요 고객사 품질 인증, 미국 자회사 자산 처분에 걸린 언아웃이 붙는다. 100% 가치는 5조 원 중반으로 평가됐고 최태원 지분 29.4% 는 별도 협상이다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e232",
+  "relationship_id": "tsmc-stake-skinc-sksiltron",
+  "metric_id": null,
+  "source_id": "sk_siltron_dart",
+  "evidence_type": "direct",
+  "evidence": "SK㈜ 51.0% 와 TRS 19.6% 를 합쳐 70.6%. 매각 계약은 맺었으나 클로징 대기라 아직 지배주주다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e233",
+  "relationship_id": "tsmc-stake-skinc-sksiltron",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "SK㈜ 51.0% 와 TRS 19.6% 를 합쳐 70.6%. 매각 계약은 맺었으나 클로징 대기라 아직 지배주주다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e234",
+  "relationship_id": "tsmc-stake-hahn-skspecialty",
+  "metric_id": null,
+  "source_id": "sk_inc_disposal_20250331",
+  "evidence_type": "direct",
+  "evidence": "2025년 3월 31일 약 2.6조 원에 85% 를 인수해 SK㈜ 연결에서 빠졌다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e235",
+  "relationship_id": "tsmc-stake-hahn-skspecialty",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "2025년 3월 31일 약 2.6조 원에 85% 를 인수해 SK㈜ 연결에서 빠졌다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e236",
+  "relationship_id": "tsmc-stake-skinc-skspecialty",
+  "metric_id": null,
+  "source_id": "sk_inc_disposal_20250331",
+  "evidence_type": "direct",
+  "evidence": "85% 를 넘기고 15% 를 남겼다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e237",
+  "relationship_id": "tsmc-stake-skinc-skspecialty",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "85% 를 넘기고 15% 를 남겼다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e238",
+  "relationship_id": "tsmc-jv-linde-linde-lienhwa",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e239",
+  "relationship_id": "tsmc-jv-lienhwa-linde-lienhwa",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e240",
+  "relationship_id": "tsmc-jv-kanto-chemical-kanto-ppc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e241",
+  "relationship_id": "tsmc-jv-ppc-taiwan-kanto-ppc",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e242",
+  "relationship_id": "tsmc-jv-formosa-plastics-formosa-sumco",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e243",
+  "relationship_id": "tsmc-jv-sumco-formosa-sumco",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e244",
+  "relationship_id": "tsmc-jv-nippon-sanso-nippon-sanso-taiwan",
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e245",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-hpc"
+ },
+ {
+  "id": "tsmc-e246",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-hpc"
+ },
+ {
+  "id": "tsmc-e247",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-smartphone"
+ },
+ {
+  "id": "tsmc-e248",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-smartphone"
+ },
+ {
+  "id": "tsmc-e249",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-iot"
+ },
+ {
+  "id": "tsmc-e250",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-iot"
+ },
+ {
+  "id": "tsmc-e251",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-automotive"
+ },
+ {
+  "id": "tsmc-e252",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-automotive"
+ },
+ {
+  "id": "tsmc-e253",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-dce"
+ },
+ {
+  "id": "tsmc-e254",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-dce"
+ },
+ {
+  "id": "tsmc-e255",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-other"
+ },
+ {
+  "id": "tsmc-e256",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-other"
+ },
+ {
+  "id": "tsmc-e257",
+  "relationship_id": "tsmc-cust-tsmc-anon-c1",
+  "metric_id": "o-tsmc-anon-c1-2023",
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 은 순위별 비중만 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e258",
+  "relationship_id": "tsmc-cust-tsmc-anon-c1",
+  "metric_id": "o-tsmc-anon-c1-2024",
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 은 순위별 비중만 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e259",
+  "relationship_id": "tsmc-cust-tsmc-anon-c1",
+  "metric_id": "o-tsmc-anon-c1-2025",
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 은 순위별 비중만 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e260",
+  "relationship_id": "tsmc-cust-tsmc-anon-c2",
+  "metric_id": "o-tsmc-anon-c2-2023",
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 은 순위별 비중만 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e261",
+  "relationship_id": "tsmc-cust-tsmc-anon-c2",
+  "metric_id": "o-tsmc-anon-c2-2024",
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 은 순위별 비중만 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e262",
+  "relationship_id": "tsmc-cust-tsmc-anon-c2",
+  "metric_id": "o-tsmc-anon-c2-2025",
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 은 순위별 비중만 적는다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e263",
+  "relationship_id": "tsmc-eq-asml",
+  "metric_id": "o-asml-taiwan-share",
+  "source_id": "asml_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "대만 지역 비중이고 TSMC 단독 비중이 아니다. 2분기에는 대만이 35% 로 지역 1위였다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e264",
+  "relationship_id": "tsmc-eq-lam-research",
+  "metric_id": "o-lam-taiwan-share",
+  "source_id": "lrcx_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "대만 지역 비중이고 TSMC 단독 비중이 아니다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e265",
+  "relationship_id": "tsmc-eq-applied-materials",
+  "metric_id": "o-amat-top-customer",
+  "source_id": "amat_10k_fy2025",
+  "evidence_type": "direct",
+  "evidence": "10-K 는 2대 고객이 19%·15% 라고만 적고 실명을 밝히지 않는다. 1위를 TSMC 로 읽는 것은 근거 등급 C 다",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e266",
+  "relationship_id": "tsmc-eq-stake-jasm",
+  "metric_id": "o-stake-tsmc-eq-stake-jasm",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e267",
+  "relationship_id": "tsmc-eq-stake-esmc",
+  "metric_id": "o-stake-tsmc-eq-stake-esmc",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e268",
+  "relationship_id": "tsmc-eq-stake-tsmc-arizona",
+  "metric_id": "o-stake-tsmc-eq-stake-tsmc-arizona",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e269",
+  "relationship_id": "tsmc-eq-stake-guc",
+  "metric_id": "o-stake-tsmc-eq-stake-guc",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e270",
+  "relationship_id": "tsmc-eq-stake-vis",
+  "metric_id": "o-stake-tsmc-eq-stake-vis",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e271",
+  "relationship_id": "tsmc-eq-stake-xintec",
+  "metric_id": "o-stake-tsmc-eq-stake-xintec",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e272",
+  "relationship_id": "tsmc-stake-sony-jasm",
+  "metric_id": "o-stake-tsmc-stake-sony-jasm",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e273",
+  "relationship_id": "tsmc-stake-denso-jasm",
+  "metric_id": "o-stake-tsmc-stake-denso-jasm",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e274",
+  "relationship_id": "tsmc-stake-toyota-jasm",
+  "metric_id": "o-stake-tsmc-stake-toyota-jasm",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e275",
+  "relationship_id": "tsmc-stake-bosch-esmc",
+  "metric_id": "o-stake-tsmc-stake-bosch-esmc",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e276",
+  "relationship_id": "tsmc-stake-infineon-esmc",
+  "metric_id": "o-stake-tsmc-stake-infineon-esmc",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e277",
+  "relationship_id": "tsmc-stake-nxp-esmc",
+  "metric_id": "o-stake-tsmc-stake-nxp-esmc",
+  "source_id": "tsmc_ar_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e278",
+  "relationship_id": "tsmc-stake-ase-spil",
+  "metric_id": "o-stake-tsmc-stake-ase-spil",
+  "source_id": "tsmc_report_2026_09_12",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e279",
+  "relationship_id": "tsmc-stake-doosan-sksiltron",
+  "metric_id": "o-stake-tsmc-stake-doosan-sksiltron",
+  "source_id": "doosan_disclosure_20260731",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e280",
+  "relationship_id": "tsmc-stake-skinc-sksiltron",
+  "metric_id": "o-stake-tsmc-stake-skinc-sksiltron",
+  "source_id": "sk_siltron_dart",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e281",
+  "relationship_id": "tsmc-stake-hahn-skspecialty",
+  "metric_id": "o-stake-tsmc-stake-hahn-skspecialty",
+  "source_id": "sk_inc_disposal_20250331",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e282",
+  "relationship_id": "tsmc-stake-skinc-skspecialty",
+  "metric_id": "o-stake-tsmc-stake-skinc-skspecialty",
+  "source_id": "sk_inc_disposal_20250331",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "tsmc-e283",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-hpc"
+ },
+ {
+  "id": "tsmc-e284",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-smartphone"
+ },
+ {
+  "id": "tsmc-e285",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-iot"
+ },
+ {
+  "id": "tsmc-e286",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-automotive"
+ },
+ {
+  "id": "tsmc-e287",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-dce"
+ },
+ {
+  "id": "tsmc-e288",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "20-F 의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-other"
+ }
+]
