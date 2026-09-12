@@ -499,6 +499,67 @@ def merge_global():
     return len(ents), len(srcs)
 
 
+# bom/2026-current.json 의 계통별 원가 비중을 공급원 비중으로 얹는다. 분모는 매출 환산
+# MW 당 제품 원가(작업 모델, ESTIMATED)이지 조달 점유율이 아니다. 셀 계통은 분류가
+# 없어 「셀·전기화학 계통」을 세우고 subsystem=Cell 인 줄에 덧붙인다(04 의 subsystem 칸이
+# 근거). Bloom 내부 전환·잔여 조정은 공급원이 아니라 얹지 않는다
+BOM_TO_SS = {'Cell': 'ss-sub-cell', 'Interconnect': 'ss-sub-interconnect',
+             'Hotbox': 'ss-sub-hotbox', 'Power electronics': 'ss-sub-power-electronics',
+             'Mechanical': 'ss-sub-mechanical'}
+
+
+def apply_bom_shares():
+    u"""vc_norm 뒤에 돈다. 멱등."""
+    import glob
+    boms = sorted(glob.glob(os.path.join(CHAIN, 'bom', '*.json')))
+    if not boms:
+        return
+    bom = json.load(io.open(boms[-1], encoding='utf-8'))
+    methods = dict((m['id'], m) for m in
+                   json.load(io.open(os.path.join(DATA, 'methods.json'), encoding='utf-8')))
+    src = (methods.get(bom.get('method_id')) or {}).get('source_ids') or ['be_10k_fy2025']
+    cp = os.path.join(CHAIN, 'classifications.json')
+    cls = json.load(io.open(cp, encoding='utf-8'))
+    by = dict((x['id'], x) for x in cls['supply_sources'])
+    rp = os.path.join(CHAIN, 'relationships.json')
+    rels = json.load(io.open(rp, encoding='utf-8'))
+    if 'ss-sub-cell' not in by:
+        by['ss-sub-cell'] = {'id': 'ss-sub-cell', 'kind': 'SUPPLY_SOURCE',
+                             'label': u'셀·전기화학 계통', 'label_en': 'Cell / electrochemical',
+                             'level': 'SUBSYSTEM', 'note': u'전해질 기판·세라믹 플레이트·스칸듐 '
+                             u'계열 소재가 드는 계통. BOM 작업 모델의 셀 몫을 얹는 자리',
+                             'unallocated': False, 'shares': [], 'source_ids': []}
+        cls['supply_sources'].append(by['ss-sub-cell'])
+    for r in rels:
+        if r.get('subsystem') == 'Cell' and r.get('lane') != 'DOWNSTREAM':
+            ids = r.setdefault('supply_source_ids', [])
+            if 'ss-sub-cell' not in ids:
+                ids.append('ss-sub-cell')
+    for c in bom.get('components') or []:
+        sid = BOM_TO_SS.get(c.get('subsystem'))
+        if not sid or sid not in by or c.get('share_pct') is None:
+            continue
+        row = {'metric': 'bom_cost_share', 'value': c['share_pct'], 'value_low': None,
+               'value_high': None, 'unit': 'percent', 'period': bom.get('period'),
+               'period_start': '2026-01-01', 'period_end': '2026-12-31',
+               'as_of_date': bom.get('as_of_date'), 'denominator': bom.get('denominator'),
+               'evidence_level': c.get('evidence_level') or bom.get('status') or 'ESTIMATED',
+               'confidence': None,
+               'method_note': u'BOM 작업 모델(%s) · 회사 공식 BOM 이 아니다 · 확신 %s'
+                              % (bom.get('method_id'), c.get('confidence')),
+               'source_ids': list(src), 'source_date': bom.get('as_of_date')}
+        x = by[sid]
+        x['shares'] = [s for s in x.get('shares') or []
+                       if not (s.get('metric') == 'bom_cost_share'
+                               and s.get('period') == bom.get('period'))] + [row]
+        for s in src:
+            if s not in x.get('source_ids', []):
+                x.setdefault('source_ids', []).append(s)
+    cls['supply_sources'].sort(key=lambda x: x['id'])
+    dump(cp, cls)
+    dump(rp, rels)
+
+
 if __name__ == '__main__':
     import sys
     sys.stdout.reconfigure(encoding='utf-8')
@@ -510,3 +571,7 @@ if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import vc_norm
     vc_norm.main()
+    apply_bom_shares()
+    # 계약 고객 근거 칸·프로젝트 맥락은 migrate_vc2 가 채운다(멱등)
+    import migrate_vc2
+    migrate_vc2.main()

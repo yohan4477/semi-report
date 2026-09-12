@@ -1253,7 +1253,8 @@ var CONTRACT_NOTE = { CONFIRMED:'계약상 구매 주체라는 근거가 있다'
 
 // 띠와 갈림목에 적는 값은 한 갈래뿐이다 — 매출원은 총매출 대비 비중, 공급원은 조달 비중.
 // 가동률·전방 구성처럼 다른 것을 세는 값은 숫자를 안 적고 손 얹었을 때만 보여 준다
-var SHARE_METRIC = { rt:/revenue.*share$/, ss:/(sourcing|purchase|supply).*share$/ };
+var SHARE_METRIC = { rt:/revenue.*share$/,
+                     ss:/(sourcing|purchase|supply|bom|cost).*share$/ };
 function isShare(kind, sh){
   return PCT[sh.unit] && SHARE_METRIC[kind].test(sh.metric || '');
 }

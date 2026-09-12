@@ -90,7 +90,8 @@
   ],
   "notes": "관계는 확인. 조달 점유율은 공식 비공개이고 2차 조사 추정만 있다",
   "supply_source_ids": [
-   "ss-cmp-electrolyte-substrate"
+   "ss-cmp-electrolyte-substrate",
+   "ss-sub-cell"
   ],
   "revenue_type_ids": []
  },
@@ -121,7 +122,8 @@
   ],
   "notes": "2026 신규 진입. 세라믹 공급망 다변화 신호",
   "supply_source_ids": [
-   "ss-cmp-electrolyte-substrate"
+   "ss-cmp-electrolyte-substrate",
+   "ss-sub-cell"
   ],
   "revenue_type_ids": []
  },

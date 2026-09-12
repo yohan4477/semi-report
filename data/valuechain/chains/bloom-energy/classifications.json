@@ -168,6 +168,39 @@
    "source_ids": []
   },
   {
+   "id": "ss-sub-cell",
+   "kind": "SUPPLY_SOURCE",
+   "label": "셀·전기화학 계통",
+   "label_en": "Cell / electrochemical",
+   "level": "SUBSYSTEM",
+   "note": "전해질 기판·세라믹 플레이트·스칸듐 계열 소재가 드는 계통. BOM 작업 모델의 셀 몫을 얹는 자리",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "bom_cost_share",
+     "value": 12,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026-current",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-09-11",
+     "denominator": "매출 환산 MW 당 제품 원가",
+     "evidence_level": "ESTIMATED",
+     "confidence": null,
+     "method_note": "BOM 작업 모델(method-cogs-per-mw) · 회사 공식 BOM 이 아니다 · 확신 MEDIUM",
+     "source_ids": [
+      "be_10k_fy2025"
+     ],
+     "source_date": "2026-09-11"
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2025"
+   ]
+  },
+  {
    "id": "ss-sub-hotbox",
    "kind": "SUPPLY_SOURCE",
    "label": "핫박스·파워유닛 계통",
@@ -175,8 +208,30 @@
    "level": "SUBSYSTEM",
    "note": "MTAR·가오리 점유율의 분모가 여기 있다",
    "unallocated": false,
-   "shares": [],
-   "source_ids": []
+   "shares": [
+    {
+     "metric": "bom_cost_share",
+     "value": 19,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026-current",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-09-11",
+     "denominator": "매출 환산 MW 당 제품 원가",
+     "evidence_level": "ESTIMATED",
+     "confidence": null,
+     "method_note": "BOM 작업 모델(method-cogs-per-mw) · 회사 공식 BOM 이 아니다 · 확신 MEDIUM_HIGH",
+     "source_ids": [
+      "be_10k_fy2025"
+     ],
+     "source_date": "2026-09-11"
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2025"
+   ]
   },
   {
    "id": "ss-sub-interconnect",
@@ -186,8 +241,30 @@
    "level": "SUBSYSTEM",
    "note": "원가 모델의 계통 층이다. 공급사 조달 배분과 섞지 않는다",
    "unallocated": false,
-   "shares": [],
-   "source_ids": []
+   "shares": [
+    {
+     "metric": "bom_cost_share",
+     "value": 24,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026-current",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-09-11",
+     "denominator": "매출 환산 MW 당 제품 원가",
+     "evidence_level": "ESTIMATED",
+     "confidence": null,
+     "method_note": "BOM 작업 모델(method-cogs-per-mw) · 회사 공식 BOM 이 아니다 · 확신 MEDIUM",
+     "source_ids": [
+      "be_10k_fy2025"
+     ],
+     "source_date": "2026-09-11"
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2025"
+   ]
   },
   {
    "id": "ss-sub-mechanical",
@@ -197,8 +274,30 @@
    "level": "SUBSYSTEM",
    "note": "서진·내시·텍슨의 상하 관계는 미확정이라 나란히 둔다",
    "unallocated": false,
-   "shares": [],
-   "source_ids": []
+   "shares": [
+    {
+     "metric": "bom_cost_share",
+     "value": 6,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026-current",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-09-11",
+     "denominator": "매출 환산 MW 당 제품 원가",
+     "evidence_level": "ESTIMATED",
+     "confidence": null,
+     "method_note": "BOM 작업 모델(method-cogs-per-mw) · 회사 공식 BOM 이 아니다 · 확신 LOW_MEDIUM",
+     "source_ids": [
+      "be_10k_fy2025"
+     ],
+     "source_date": "2026-09-11"
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2025"
+   ]
   },
   {
    "id": "ss-sub-power-electronics",
@@ -208,8 +307,30 @@
    "level": "SUBSYSTEM",
    "note": "캐벨에서 산미나로 가는 계층은 근거가 없어 안 잇는다",
    "unallocated": false,
-   "shares": [],
-   "source_ids": []
+   "shares": [
+    {
+     "metric": "bom_cost_share",
+     "value": 14,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026-current",
+     "period_start": "2026-01-01",
+     "period_end": "2026-12-31",
+     "as_of_date": "2026-09-11",
+     "denominator": "매출 환산 MW 당 제품 원가",
+     "evidence_level": "ESTIMATED",
+     "confidence": null,
+     "method_note": "BOM 작업 모델(method-cogs-per-mw) · 회사 공식 BOM 이 아니다 · 확신 LOW_MEDIUM",
+     "source_ids": [
+      "be_10k_fy2025"
+     ],
+     "source_date": "2026-09-11"
+    }
+   ],
+   "source_ids": [
+    "be_10k_fy2025"
+   ]
   },
   {
    "id": "ss-thermal",

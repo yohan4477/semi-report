@@ -1121,20 +1121,20 @@
  },
  {
   "id": "nebius",
-  "name": "Nebius Group N.V.",
+  "name": "Nebius",
   "name_ko": "네비우스",
-  "entity_type": "company",
-  "legal_name": "Nebius Group N.V.",
+  "entity_type": "end_user",
+  "legal_name": "Nebius",
   "display_name": "네비우스",
-  "region": "Europe",
+  "region": "North America·Global",
   "parent_entity_id": null,
-  "primary_role": "AI cloud",
+  "primary_role": "Data center",
   "other_roles": [],
-  "country": "네덜란드",
+  "country": "미국·글로벌",
   "categories": [
-   "AI cloud"
+   "Data center"
   ],
-  "desc": "AI 클라우드 운영사이자 그룹 모법인. 매출의 거의 전부가 AI 클라우드 부문에서 난다",
+  "desc": "첫 미국 배치 328MW",
   "anon": false
  },
  {
@@ -3935,6 +3935,7 @@
   "categories": [],
   "primary_role": "미상",
   "other_roles": [],
-  "parent_entity_id": null
+  "parent_entity_id": null,
+  "region": null
  }
 ]

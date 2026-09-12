@@ -135,6 +135,19 @@ def normalize_chain(cid, ents):
         old = rd(cpath)
         ss_reg = dict((x['id'], x) for x in old.get('supply_sources', []))
         rt_reg = dict((x['id'], x) for x in old.get('revenue_types', []))
+        # 이미 선 분류의 비중도 같은 값·기간·분모면 한 줄로 접는다 — 다시 굽힐 때마다
+        # 곁가지(출처 날짜)가 달라 붙은 중복이 칩에 같은 숫자를 두 번 세웠다
+        for reg in (ss_reg, rt_reg):
+            for x in reg.values():
+                seen, keep = set(), []
+                for sh in x.get('shares') or []:
+                    k = tuple(sh.get(f) for f in ('metric', 'value', 'value_low', 'value_high',
+                                                  'unit', 'period', 'denominator'))
+                    if k in seen:
+                        continue
+                    seen.add(k)
+                    keep.append(sh)
+                x['shares'] = keep
     for r in rels:
         for i in (r['source_entity'], r['target_entity']):
             if is_ss(i) and 'ss-' + i not in ss_reg:
@@ -329,7 +342,13 @@ def normalize_chain(cid, ents):
             key = 'rt-' + src['target_entity']
             if key in rt_reg:
                 sh = obs_to_share(o)
-                if sh not in rt_reg[key]['shares']:
+                # 같은 값·기간·분모의 비중은 한 줄이다. 출처 날짜 같은 곁가지가 달라져
+                # 다시 굽힐 때마다 줄이 붙으면 칩에 같은 숫자가 두 번 선다
+                def same(a, b):
+                    return all(a.get(k) == b.get(k) for k in
+                               ('metric', 'value', 'value_low', 'value_high', 'unit',
+                                'period', 'denominator'))
+                if not any(same(sh, x) for x in rt_reg[key]['shares']):
                     rt_reg[key]['shares'].append(sh)
                 rt_reg[key]['source_ids'] = sorted(
                     set(rt_reg[key]['source_ids']) | set(o.get('source_ids') or []))

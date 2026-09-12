@@ -55,8 +55,29 @@
    "label_en": "AI cloud revenue",
    "note": "공개 AI 클라우드 이용",
    "unallocated": false,
-   "shares": [],
-   "source_ids": []
+   "shares": [
+    {
+     "metric": "revenue_type_share",
+     "value": 98.7,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "Q2 2026",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "네비우스 총매출",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.9,
+     "method_note": "574.9 ÷ 582.3 (Ex.99.1)",
+     "source_ids": [
+      "ne_6k_q2_ex991"
+     ]
+    }
+   ],
+   "source_ids": [
+    "ne_6k_q2_ex991"
+   ]
   },
   {
    "id": "rt-ne-rev-dedicated",

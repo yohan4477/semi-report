@@ -438,6 +438,39 @@ def evidence():
     return out
 
 
+# 04 Observations OBS001~OBS004 — 공급원별 매입 비중. 분모가 둘이다(원재료 매입액 셋,
+# 부재료 매입액 하나). 띠는 분모가 같은 셋만 숫자로 적고 PGC 는 손 얹었을 때만 보인다
+SS_SHARES = [
+ ('ss-ccl-substrate', 62.2, u'FY2025 원재료 매입액', u'OBS001'),
+ ('ss-prepreg', 26.0, u'FY2025 원재료 매입액', u'OBS002'),
+ ('ss-abf-film', 6.7, u'FY2025 원재료 매입액', u'OBS003'),
+ ('ss-pgc-plating', 42.2, u'FY2025 부재료 매입액', u'OBS004'),
+]
+
+
+def apply_supply_shares():
+    u"""vc_norm 이 옮긴 분류 위에 공급원 매입 비중을 얹는다. 멱등."""
+    cp = os.path.join(CHAIN, 'classifications.json')
+    cls = json.load(io.open(cp, encoding='utf-8'))
+    by = dict((x['id'], x) for x in cls['supply_sources'])
+    for sid, v, den, obsid in SS_SHARES:
+        x = by.get(sid)
+        if not x:
+            continue
+        row = {'metric': 'purchase_share', 'value': v, 'value_low': None, 'value_high': None,
+               'unit': 'percent', 'period': 'FY2025', 'period_start': '2025-01-01',
+               'period_end': '2025-12-31', 'as_of_date': '2025-12-31', 'denominator': den,
+               'evidence_level': 'CONFIRMED', 'confidence': None,
+               'method_note': u'04 의 %s' % obsid, 'source_ids': ['dd_ar_fy2025'],
+               'source_date': '2026-03-18'}
+        x['shares'] = [s for s in x.get('shares') or []
+                       if not (s.get('metric') == 'purchase_share'
+                               and s.get('period') == 'FY2025')] + [row]
+        if 'dd_ar_fy2025' not in x.get('source_ids', []):
+            x.setdefault('source_ids', []).append('dd_ar_fy2025')
+    dump(cp, cls)
+
+
 if __name__ == '__main__':
     import sys
     sys.stdout.reconfigure(encoding='utf-8')
@@ -459,3 +492,4 @@ if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import vc_norm
     vc_norm.main()
+    apply_supply_shares()

@@ -1,6 +1,16 @@
 [
  {
   "id": "ne-e001",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ne_6k_q2_ex991",
+  "evidence_type": "indirect",
+  "evidence": "574.9 ÷ 582.3 (Ex.99.1)",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-ai-cloud"
+ },
+ {
+  "id": "ne-e002",
   "relationship_id": "unalloc-cust-c",
   "metric_id": "o-ne-cust-c-q2",
   "source_id": "ne_6k_q2_ex992",
@@ -10,7 +20,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e002",
+  "id": "ne-e003",
   "relationship_id": "unalloc-cust-c",
   "metric_id": "o-ne-cust-c-h1",
   "source_id": "ne_6k_q2_ex992",
@@ -20,7 +30,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e003",
+  "id": "ne-e004",
   "relationship_id": "unalloc-cust-d",
   "metric_id": "o-ne-cust-d-q2",
   "source_id": "ne_6k_q2_ex992",
@@ -30,7 +40,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e004",
+  "id": "ne-e005",
   "relationship_id": "unalloc-cust-d",
   "metric_id": "o-ne-cust-d-h1",
   "source_id": "ne_6k_q2_ex992",
@@ -40,7 +50,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e005",
+  "id": "ne-e006",
   "relationship_id": "unalloc-cust-e",
   "metric_id": "o-ne-cust-e-q2",
   "source_id": "ne_6k_q2_ex992",
@@ -50,7 +60,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e006",
+  "id": "ne-e007",
   "relationship_id": "bloom-power",
   "metric_id": "o-ne-bloom-328mw",
   "source_id": "ne_bloom",
@@ -60,7 +70,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e007",
+  "id": "ne-e008",
   "relationship_id": "ne-mantsala-deploy",
   "metric_id": "o-ne-mantsala-75mw",
   "source_id": "ne_finland",
@@ -70,7 +80,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e008",
+  "id": "ne-e009",
   "relationship_id": "ne-lappeenranta-deploy",
   "metric_id": "o-ne-lappeenranta-310mw",
   "source_id": "ne_finland",
@@ -80,7 +90,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e009",
+  "id": "ne-e010",
   "relationship_id": "ne-independence-deploy",
   "metric_id": "o-ne-independence-1200mw",
   "source_id": "ne_missouri",
@@ -90,7 +100,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e010",
+  "id": "ne-e011",
   "relationship_id": "ded-microsoft",
   "metric_id": "o-ne-microsoft-value",
   "source_id": "ne_microsoft",
@@ -100,7 +110,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e011",
+  "id": "ne-e012",
   "relationship_id": "ded-meta",
   "metric_id": "o-ne-meta-value",
   "source_id": "ne_meta",
@@ -110,7 +120,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e012",
+  "id": "ne-e013",
   "relationship_id": "nv-invest",
   "metric_id": "o-ne-nvidia-invest",
   "source_id": "ne_nvidia",
@@ -120,7 +130,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e013",
+  "id": "ne-e014",
   "relationship_id": "nv-gpu",
   "metric_id": null,
   "source_id": "ne_20f_2025",
@@ -130,7 +140,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e014",
+  "id": "ne-e015",
   "relationship_id": "nv-gpu",
   "metric_id": null,
   "source_id": "ne_nvidia",
@@ -140,7 +150,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e016",
+  "id": "ne-e017",
   "relationship_id": "nv-net",
   "metric_id": null,
   "source_id": "ne_nvidia",
@@ -150,7 +160,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e018",
+  "id": "ne-e019",
   "relationship_id": "weka-sw",
   "metric_id": null,
   "source_id": "ne_weka",
@@ -160,7 +170,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e019",
+  "id": "ne-e020",
   "relationship_id": "vast-sw",
   "metric_id": null,
   "source_id": "ne_vast",
@@ -170,7 +180,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e022",
+  "id": "ne-e023",
   "relationship_id": "bloom-power",
   "metric_id": null,
   "source_id": "ne_bloom",
@@ -180,7 +190,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e024",
+  "id": "ne-e025",
   "relationship_id": "ne-inc-sub",
   "metric_id": null,
   "source_id": "ne_microsoft",
@@ -190,7 +200,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e025",
+  "id": "ne-e026",
   "relationship_id": "nv-partner",
   "metric_id": null,
   "source_id": "ne_nvidia",
@@ -200,7 +210,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e026",
+  "id": "ne-e027",
   "relationship_id": "nv-invest",
   "metric_id": null,
   "source_id": "ne_nvidia",
@@ -210,7 +220,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e027",
+  "id": "ne-e028",
   "relationship_id": "nv-invest",
   "metric_id": null,
   "source_id": "ne_6k_q2_ex992",
@@ -220,7 +230,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e028",
+  "id": "ne-e029",
   "relationship_id": "equinix-pa10",
   "metric_id": null,
   "source_id": "ne_paris",
@@ -230,7 +240,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e029",
+  "id": "ne-e030",
   "relationship_id": "ne-pa10-deploy",
   "metric_id": null,
   "source_id": "ne_paris",
@@ -240,7 +250,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e030",
+  "id": "ne-e031",
   "relationship_id": "dataone-vineland",
   "metric_id": null,
   "source_id": "ne_vineland",
@@ -250,7 +260,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e031",
+  "id": "ne-e032",
   "relationship_id": "ne-inc-vineland",
   "metric_id": null,
   "source_id": "ne_microsoft",
@@ -260,18 +270,8 @@
   "classification_id": null
  },
  {
-  "id": "ne-e032",
-  "relationship_id": "ne-inc-vineland",
-  "metric_id": null,
-  "source_id": "ne_vineland",
-  "evidence_type": "direct",
-  "evidence": "",
-  "hypothesis_id": null,
-  "classification_id": null
- },
- {
   "id": "ne-e033",
-  "relationship_id": "precast-vineland",
+  "relationship_id": "ne-inc-vineland",
   "metric_id": null,
   "source_id": "ne_vineland",
   "evidence_type": "direct",
@@ -281,9 +281,9 @@
  },
  {
   "id": "ne-e034",
-  "relationship_id": "ne-mantsala-deploy",
+  "relationship_id": "precast-vineland",
   "metric_id": null,
-  "source_id": "ne_finland",
+  "source_id": "ne_vineland",
   "evidence_type": "direct",
   "evidence": "",
   "hypothesis_id": null,
@@ -293,7 +293,7 @@
   "id": "ne-e035",
   "relationship_id": "ne-mantsala-deploy",
   "metric_id": null,
-  "source_id": "ne_20f_2025",
+  "source_id": "ne_finland",
   "evidence_type": "direct",
   "evidence": "",
   "hypothesis_id": null,
@@ -301,6 +301,16 @@
  },
  {
   "id": "ne-e036",
+  "relationship_id": "ne-mantsala-deploy",
+  "metric_id": null,
+  "source_id": "ne_20f_2025",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ne-e037",
   "relationship_id": "ne-lappeenranta-deploy",
   "metric_id": null,
   "source_id": "ne_finland",
@@ -310,7 +320,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e037",
+  "id": "ne-e038",
   "relationship_id": "ne-independence-deploy",
   "metric_id": null,
   "source_id": "ne_missouri",
@@ -320,20 +330,10 @@
   "classification_id": null
  },
  {
-  "id": "ne-e038",
-  "relationship_id": null,
-  "metric_id": null,
-  "source_id": "ne_microsoft",
-  "evidence_type": "direct",
-  "evidence": "",
-  "hypothesis_id": null,
-  "classification_id": "rt-ne-rev-dedicated"
- },
- {
   "id": "ne-e039",
   "relationship_id": null,
   "metric_id": null,
-  "source_id": "ne_meta",
+  "source_id": "ne_microsoft",
   "evidence_type": "direct",
   "evidence": "",
   "hypothesis_id": null,
@@ -343,6 +343,16 @@
   "id": "ne-e040",
   "relationship_id": null,
   "metric_id": null,
+  "source_id": "ne_meta",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-dedicated"
+ },
+ {
+  "id": "ne-e041",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "ne_6k_q2_ex991",
   "evidence_type": "direct",
   "evidence": "",
@@ -350,20 +360,10 @@
   "classification_id": "rt-ne-rev-ai-cloud"
  },
  {
-  "id": "ne-e041",
-  "relationship_id": null,
-  "metric_id": null,
-  "source_id": "ne_revolut",
-  "evidence_type": "direct",
-  "evidence": "",
-  "hypothesis_id": null,
-  "classification_id": "rt-ne-rev-token-factory"
- },
- {
   "id": "ne-e042",
   "relationship_id": null,
   "metric_id": null,
-  "source_id": "ne_sword",
+  "source_id": "ne_revolut",
   "evidence_type": "direct",
   "evidence": "",
   "hypothesis_id": null,
@@ -373,6 +373,16 @@
   "id": "ne-e043",
   "relationship_id": null,
   "metric_id": null,
+  "source_id": "ne_sword",
+  "evidence_type": "direct",
+  "evidence": "",
+  "hypothesis_id": null,
+  "classification_id": "rt-ne-rev-token-factory"
+ },
+ {
+  "id": "ne-e044",
+  "relationship_id": null,
+  "metric_id": null,
   "source_id": "ne_palantir",
   "evidence_type": "direct",
   "evidence": "",
@@ -380,7 +390,7 @@
   "classification_id": "rt-ne-rev-managed-inference"
  },
  {
-  "id": "ne-e044",
+  "id": "ne-e045",
   "relationship_id": null,
   "metric_id": null,
   "source_id": "ne_prima_mente",
@@ -390,7 +400,7 @@
   "classification_id": "rt-ne-rev-reserved"
  },
  {
-  "id": "ne-e045",
+  "id": "ne-e046",
   "relationship_id": null,
   "metric_id": null,
   "source_id": "ne_6k_q2_ex992",
@@ -400,7 +410,7 @@
   "classification_id": "rt-ne-rev-unallocated"
  },
  {
-  "id": "ne-e046",
+  "id": "ne-e047",
   "relationship_id": "ded-microsoft",
   "metric_id": null,
   "source_id": "ne_microsoft",
@@ -410,7 +420,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e047",
+  "id": "ne-e048",
   "relationship_id": "ded-meta",
   "metric_id": null,
   "source_id": "ne_meta",
@@ -420,7 +430,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e048",
+  "id": "ne-e049",
   "relationship_id": "cloud-revolut",
   "metric_id": null,
   "source_id": "ne_revolut",
@@ -430,7 +440,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e049",
+  "id": "ne-e050",
   "relationship_id": "cloud-recraft",
   "metric_id": null,
   "source_id": "ne_recraft",
@@ -440,7 +450,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e050",
+  "id": "ne-e051",
   "relationship_id": "cloud-sword",
   "metric_id": null,
   "source_id": "ne_sword",
@@ -450,7 +460,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e051",
+  "id": "ne-e052",
   "relationship_id": "cloud-prime",
   "metric_id": null,
   "source_id": "ne_prime_intellect",
@@ -460,7 +470,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e052",
+  "id": "ne-e053",
   "relationship_id": "cloud-lynx",
   "metric_id": null,
   "source_id": "ne_lynx",
@@ -470,7 +480,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e053",
+  "id": "ne-e054",
   "relationship_id": "cloud-roboforce",
   "metric_id": null,
   "source_id": "ne_roboforce",
@@ -480,7 +490,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e054",
+  "id": "ne-e055",
   "relationship_id": "cloud-basecamp",
   "metric_id": null,
   "source_id": "ne_uk",
@@ -490,7 +500,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e055",
+  "id": "ne-e056",
   "relationship_id": "token-revolut",
   "metric_id": null,
   "source_id": "ne_revolut",
@@ -500,7 +510,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e056",
+  "id": "ne-e057",
   "relationship_id": "token-sword",
   "metric_id": null,
   "source_id": "ne_sword",
@@ -510,7 +520,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e057",
+  "id": "ne-e058",
   "relationship_id": "reserved-prima",
   "metric_id": null,
   "source_id": "ne_prima_mente",
@@ -520,7 +530,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e058",
+  "id": "ne-e059",
   "relationship_id": "inference-palantir",
   "metric_id": null,
   "source_id": "ne_palantir",
@@ -530,7 +540,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e059",
+  "id": "ne-e060",
   "relationship_id": "unalloc-cust-c",
   "metric_id": null,
   "source_id": "ne_6k_q2_ex992",
@@ -540,7 +550,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e060",
+  "id": "ne-e061",
   "relationship_id": "unalloc-cust-d",
   "metric_id": null,
   "source_id": "ne_6k_q2_ex992",
@@ -550,7 +560,7 @@
   "classification_id": null
  },
  {
-  "id": "ne-e061",
+  "id": "ne-e062",
   "relationship_id": "unalloc-cust-e",
   "metric_id": null,
   "source_id": "ne_6k_q2_ex992",

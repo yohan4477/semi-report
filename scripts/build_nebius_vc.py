@@ -355,6 +355,11 @@ PCT, USDM, MW = 'percent', 'USD million', 'MW'
 # (id, rel, metric, value, low, high, unit, period, p_start, p_end, as_of,
 #  denominator, status, evidence_level, confidence, note, sources)
 O = [
+ # 매출원 비중 — Ex.99.1 의 AI 클라우드 574.9 ÷ 총매출 582.3. 회사가 비중으로 적은 값이
+ # 아니라 두 숫자를 나눈 값이라 ESTIMATED 다(주장 clm-ne-cloud-share 와 같은 값)
+ ('o-ne-ai-cloud-share', 'ne-rev-ai-cloud-edge', 'revenue_type_share', 98.7, None, None,
+  PCT, 'Q2 2026', '2026-04-01', '2026-06-30', '2026-06-30', '네비우스 총매출', 'CURRENT',
+  'ESTIMATED', 0.9, '574.9 ÷ 582.3 (Ex.99.1)', ['ne_6k_q2_ex991']),
  ('o-ne-cust-c-q2', 'unalloc-cust-c', 'customer_revenue_share', 24, None, None, PCT,
   'Q2 2026', '2026-04-01', '2026-06-30', '2026-06-30', '네비우스 총매출', 'CURRENT',
   'CONFIRMED', 1.0, '실명은 비공개다', ['ne_6k_q2_ex992']),
