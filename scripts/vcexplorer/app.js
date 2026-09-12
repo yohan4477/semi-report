@@ -182,6 +182,7 @@ var COLS = [
   // 한 칸씩 더 선다 — 한 칸에 몰아넣으면 같은 칸 안에서 가리키는 선이 생긴다
   { key:'END_USER_2', label:'간접 고객', note:'한 단 더' },
   { key:'END_USER_3', label:'간접 고객', note:'두 단 더' },
+  { key:'END_USER_4', label:'간접 고객', note:'세 단 더' },
   { key:'END_MARKET', label:'전방시장', note:'다른 축' }
 ];
 var COL_OF = {};
@@ -332,7 +333,9 @@ function Nd(p){
       d.isNew ? h('span', { key:'b', className:'badge new',
         style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null,
     ]) : null,
-    (d.share && d.kind !== 'lane') ? h('span', { key:'shr', className:'shr' }, d.share) : null
+    (d.share && d.kind !== 'lane') ? h('span', { key:'shr', className:'shr',
+      title: d.share === '?' ? ('이 해 값 없음 · 값 있는 해 ' + ((d.shareYears || []).join(', ') || '—'))
+                             : null }, d.share) : null
   ];
   if (d.more) mid.push(h('span', { key:'more',
     className:'more' + (d.col !== undefined && d.col < COL_OF.FOCAL ? ' l' : ''),
@@ -1114,7 +1117,7 @@ function topology(focal, rels, rooted){
               : (ROLE_KO[r.relationship_type] || relKo(r.relationship_type));
       return;
     }
-    col[id] = depth[id] >= 4 ? COL_OF.END_USER_3
+    col[id] = depth[id] >= 5 ? COL_OF.END_USER_4 : depth[id] === 4 ? COL_OF.END_USER_3
             : (depth[id] === 3 ? COL_OF.END_USER_2 : COL_OF.END_USER);
     sub[id] = (r.relationship_type === 'INDIRECT_CUSTOMER_UNDISCLOSED' || e.anon)
       ? '간접 고객 · 비공개' : '간접 고객';
@@ -1166,7 +1169,7 @@ function topology(focal, rels, rooted){
       if (ENT[t] && ENT[t].entity_type === 'application') return;
       col[s] = mid[s] ? COL_OF.INTERMEDIARY
              : (t === focal ? COL_OF.CONTRACTUAL_CUSTOMER
-                : Math.min(Math.max(col[t] + 1, COL_OF.END_USER), COL_OF.END_USER_3));
+                : Math.min(Math.max(col[t] + 1, COL_OF.END_USER), COL_OF.END_USER_4));
       sub[s] = mid[s] ? '중개' : (ROLE_KO[r.relationship_type] || relKo(r.relationship_type));
       via[s] = r; again = true;
     });
@@ -1275,7 +1278,18 @@ function buildGraph(focal, year, sel, axis, hint, open){
       // 값은 focal 이 아닌 쪽 상자에 붙인다. 선 위에 얹으면 선을 가린다
       var holder = r.target_entity === focal ? r.source_entity : r.target_entity;
       var hn = nodes.filter(function(n){ return n.id === holder; })[0];
-      if (hn && !hn.data.share) hn.data.share = lbl;
+      if (hn && !hn.data.share) {
+        hn.data.share = lbl;
+        if (lbl === '?') {
+          var ys = {};
+          (OBS_BY_REL[r.id] || []).forEach(function(o){
+            if (!PCT[o.unit] || !onEdge(o) || o.value === null && o.value_low === null) return;
+            var yy = y4(o.period_end) || y4(o.as_of_date);
+            if (yy) ys[yy] = 1;
+          });
+          hn.data.shareYears = Object.keys(ys).sort();
+        }
+      }
     }
     var band = bandOf(r);
     if (!band) {

@@ -85,9 +85,9 @@ def chain_labels():
     return out
 
 
-def check(page, fid, label):
-    # 첫 화면은 타겟·갈림목만 펴므로 선 규약은 전부 편 판(open=*)에서 잰다
-    page.goto('file:///' + PAGE.replace(os.sep, '/') + '?focal=' + fid + '&mode=current&open=*')
+def check(page, fid, label, extra=''):
+    # 전부 편 판(open=*)·접힌 첫 화면·알약 하나 편 판 — 세 꼴 다 같은 선 규약이다
+    page.goto('file:///' + PAGE.replace(os.sep, '/') + '?focal=' + fid + '&mode=current' + extra)
     page.wait_for_timeout(2600)
     data = page.evaluate("""() => ({
       focal: (function(){
@@ -210,7 +210,12 @@ def main():
         b = p.chromium.launch()
         page = b.new_page(viewport={'width': 1500, 'height': 1100})
         for fid, label in labels:
-            total += check(page, fid, label)
+            total += check(page, fid, label + '(전부)', '&open=*')
+            total += check(page, fid, label + '(첫 화면)', '')
+            first = page.evaluate("(function(){var n=document.querySelector('.react-flow__node .nd.lane');"
+                                  "return n?n.closest('.react-flow__node').getAttribute('data-id'):null})()")
+            if first:
+                total += check(page, fid, label + '(알약 하나)', '&open=' + first)
         b.close()
     for f in fails[:30]:
         print(f)
