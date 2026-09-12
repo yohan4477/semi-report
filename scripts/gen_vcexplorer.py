@@ -230,8 +230,8 @@ margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 text-overflow:ellipsis;line-height:1.3}
 .proj{border:1px dashed #aab2c2;border-radius:10px;background:rgba(255,255,255,.45);
 pointer-events:none;box-sizing:border-box}
-.proj .plab{position:absolute;top:6px;left:10px;font-size:9.5px;font-weight:700;
-letter-spacing:.4px;color:var(--ink3)}
+.proj .plab{position:absolute;top:6px;left:10px;right:10px;font-size:9.5px;font-weight:700;
+letter-spacing:.4px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .proj .pn{font-size:11.5px;font-weight:700;letter-spacing:-.2px;color:var(--ink2);
 margin-top:1px}
 .nd .val{display:inline-block;margin-left:5px;padding:0 5px;border-radius:4px;
@@ -755,7 +755,8 @@ function Proj(p){
   ]);
 }
 var NODE_TYPES = { nd: Nd, hdr: Hdr, proj: Proj };
-var PROJ_PAD_X = 18, PROJ_PAD_Y = 34;
+// 위 여백은 「프로젝트」 + 이름 두 줄이 들어갈 만큼. 34 로는 이름이 첫 식구 상자와 겹쳤다
+var PROJ_PAD_X = 18, PROJ_PAD_Y = 52;
 
 // 칸을 건너뛰는 선이 지나갈 빈 자리는 상자와 같은 높이로 잡는다. 10px 만 비우면
 // 그 띠가 상자 높이를 못 덮어 선이 중간 칸 상자를 가로지른다
