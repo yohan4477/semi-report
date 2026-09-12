@@ -199,6 +199,14 @@ width:156px;height:64px;box-sizing:border-box;display:flex;flex-direction:column
 justify-content:center;overflow:visible;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:13px;font-weight:600;line-height:1.28;display:-webkit-box;
 -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
+/* 비중은 상자 오른쪽 위에 크게 — 알약이 아니라 그 회사가 숫자를 말한다(SPLC 꼴) */
+.nd .shr{position:absolute;right:7px;top:5px;font-size:12.5px;font-weight:700;
+color:var(--ink1);background:var(--hi);border:1px solid var(--line);border-radius:4px;
+padding:0 5px;line-height:18px}
+.nd.lane .shr{position:static;display:inline-block;margin-left:5px;font-size:11px}
+/* 유형 아이콘 — 국기 옆. 공장·유통·플랫폼·부지·금융·전력 */
+.nd .ico{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:4px;
+stroke:var(--ink3);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
@@ -263,6 +271,17 @@ stroke-linecap:round;stroke-linejoin:round}
 border-bottom:1px solid var(--line);z-index:50;box-shadow:0 6px 16px rgba(20,26,40,.12)}
 .searchpop .search{max-width:none;width:100%}
 .searchpop .sug{top:38px}
+/* 엄지 자리 — 좁은 화면의 조작 버튼은 아래쪽에 띄운다 */
+.fab{position:absolute;right:12px;bottom:14px;display:flex;flex-direction:column;gap:8px;
+z-index:30}
+.fab .iconbtn{width:42px;height:42px;border-radius:21px;box-shadow:0 2px 8px rgba(20,26,40,.2);
+font-size:16px}
+.fab .iconbtn svg{width:18px;height:18px}
+.backbtn{position:absolute;left:12px;bottom:14px;z-index:30;border:1px solid var(--line);
+background:var(--paper);color:var(--ink1);border-radius:21px;height:42px;padding:0 14px 0 10px;
+font:inherit;font-size:13px;font-weight:600;box-shadow:0 2px 8px rgba(20,26,40,.2);
+display:flex;align-items:center;gap:6px;max-width:55vw;white-space:nowrap;overflow:hidden;
+text-overflow:ellipsis}
 .yearbar{display:flex;align-items:center;justify-content:center;gap:4px;padding:3px 8px;
 background:var(--paper);border-bottom:1px solid var(--line);font-size:12.5px;
 font-weight:700;color:var(--ink1);user-select:none}
@@ -305,7 +324,7 @@ APP = u'''
 var h = React.createElement;
 var RFlib = window.ReactFlow;
 var RF = RFlib.default || RFlib.ReactFlow;
-var Background = RFlib.Background, Controls = RFlib.Controls;
+var Background = RFlib.Background, Controls = RFlib.Controls, MiniMap = RFlib.MiniMap;
 var Handle = RFlib.Handle, Position = RFlib.Position, MarkerType = RFlib.MarkerType;
 var getSmoothStepPath = RFlib.getSmoothStepPath;
 var EdgeLabelRenderer = RFlib.EdgeLabelRenderer;
@@ -593,6 +612,30 @@ function shareLabel(rid, yr){
 
 // ── 노드 ────────────────────────────────────────────────────────────
 var HANDLE_N = 7;
+// 유형 아이콘 — 상자 종류를 글자 대신 한 획으로. 회사·공장·유통·플랫폼·부지·금융·전력
+var ICON_PATH = {
+  company:'M4 21V7l8-4 8 4v14M9 21v-6h6v6M8 11h.01M12 11h.01M16 11h.01',
+  factory:'M3 21V10l6 4V10l6 4V4h6v17M7 17h.01M11 17h.01M15 17h.01',
+  distributor:'M3 7h11v9H3zM14 10h4l3 3v3h-7M6 19a2 2 0 1 0 0-.1M17 19a2 2 0 1 0 0-.1',
+  platform:'M7 18a4 4 0 0 1-.6-8A6 6 0 0 1 18 9a4 4 0 0 1 0 9z',
+  site:'M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11zM12 10h.01',
+  finance:'M3 10l9-6 9 6M5 10v9M9 10v9M15 10v9M19 10v9M3 21h18',
+  utility:'M13 2L4 14h6l-1 8 9-12h-6z',
+  market:'M3 12h4l3-8 4 16 3-8h4'
+};
+function iconOf(id){
+  var e = ENT[id] || {}, t = e.entity_type, cats = (e.categories || []).join(' ').toLowerCase();
+  if (t === 'application') return 'market';
+  if (t === 'project_spv') return 'site';
+  if (t === 'utility') return 'utility';
+  if (t === 'financial_institution' || t === 'fund_jv') return 'finance';
+  if (/distribut/.test(cats)) return 'distributor';
+  if (/platform|cloud/.test(cats) && t !== 'company') return 'platform';
+  if (/plant|manufactur|ceramic|plating|inductor|assembly|foundry|component/.test(cats)
+      && e.entity_type === 'company' && /plant|공장|manufactur/i.test((e.name || '') + cats))
+    return 'factory';
+  return t === 'end_user' ? 'platform' : 'company';
+}
 // 포트는 네 갈래 — 왼쪽으로 드는 t, 오른쪽으로 나가는 s, 그리고 왼쪽으로 가는 선을 위한
 // sl(왼쪽 변에서 나감)·tr(오른쪽 변으로 듦). 거꾸로 가는 선이 제 상자를 가로지르지 않게
 var PORT_SIDE = { t:[ 'target', Position.Left ], s:[ 'source', Position.Right ],
@@ -615,17 +658,20 @@ function Nd(p){
           + (d.un ? ' un' : '') + (d.focal ? ' focal' : '') + (d.sel ? ' sel' : '')
           + (d.dim ? ' dim' : '') + (d.gone ? ' gone' : '');
   var mid = [
-    h('div', { key:'n', className:'nm' }, d.flag
-      ? [h('span', { key:'f', className: flagCls(d.flag), title: flagTitle(d.flag) }, d.flag),
-         h('span', { key:'t' }, d.title)]
-      : d.title),
-    (d.sub || d.isNew || d.share) ? h('div', { key:'s', className:'sub' }, [
+    h('div', { key:'n', className:'nm' }, [
+      d.ico ? h('svg', { key:'i', className:'ico', viewBox:'0 0 24 24' },
+        h('path', { d: ICON_PATH[d.ico] })) : null,
+      d.flag ? h('span', { key:'f', className: flagCls(d.flag), title: flagTitle(d.flag) },
+        d.flag) : null,
+      h('span', { key:'t' }, d.title) ]),
+    (d.sub || d.isNew || (d.share && d.kind === 'lane'))
+      ? h('div', { key:'s', className:'sub' }, [
       d.sub ? h('span', { key:'t2' }, d.sub) : null,
-      d.share ? h('span', { key:'v', className:'val',
-        style:{ marginLeft: d.sub ? '5px' : 0 } }, d.share) : null,
+      (d.share && d.kind === 'lane') ? h('span', { key:'v', className:'shr' }, d.share) : null,
       d.isNew ? h('span', { key:'b', className:'badge new',
-        style:{ marginLeft: (d.sub || d.share) ? '5px' : 0 } }, 'NEW') : null,
-    ]) : null
+        style:{ marginLeft: d.sub ? '5px' : 0 } }, 'NEW') : null,
+    ]) : null,
+    (d.share && d.kind !== 'lane') ? h('span', { key:'shr', className:'shr' }, d.share) : null
   ];
   if (d.more) mid.push(h('span', { key:'more', className:'more', title:'누르면 ' + d.more
     + '곳을 편다' }, '+' + d.more));
@@ -1429,7 +1475,8 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
     var isFocal = id === focal, r = tp.via[id];
     nodes.push({ id: id, type:'nd', data:{
       measured: (sizes && sizes[id]) || null,
-      title: nm(id), flag: flagOf(id), kind: KIND_OF[(ENT[id] || {}).entity_type] || 'ent',
+      title: nm(id), flag: flagOf(id), ico: iconOf(id),
+      kind: KIND_OF[(ENT[id] || {}).entity_type] || 'ent',
       focal: isFocal, col: tp.col[id],
       sub: isFocal ? ((ENT[focal] || {}).country || null) : (tp.sub[id] || null),
       ref:{ kind: r ? 'rel' : 'ent', id: r ? r.id : id, entity: id,
@@ -1489,6 +1536,12 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
     var st = Object.assign({}, evStyle(r.evidence_level));
     if (!on) st.opacity = 0.28;
     var lbl = shareLabel(r.id, year);
+    // 그 해 비중이 있는 선은 굵기로 말한다(Sankey 문법). 1.5px 에서 5px 사이, 제곱근으로
+    var shv = shareIn(r.id, year);
+    if (shv && shv.value !== null && shv.value !== undefined)
+      st.strokeWidth = Math.round((1.5 + 3.5 * Math.sqrt(Math.min(100, shv.value) / 100)) * 10) / 10;
+    else if (shv && shv.value_high !== null && shv.value_high !== undefined)
+      st.strokeWidth = Math.round((1.5 + 3.5 * Math.sqrt(Math.min(100, shv.value_high) / 100)) * 10) / 10;
     if (lbl) {
       // 값은 focal 이 아닌 쪽 상자에 붙인다. 선 위에 얹으면 선을 가린다
       var holder = r.target_entity === focal ? r.source_entity : r.target_entity;
@@ -1509,7 +1562,7 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
         var key = band + ':' + cid;
         // 귀속마다 근거 등급이 다르다 — Apple 은 커패시터에는 확인, 인덕터에는 추론
         var mp = mapOf(r, band, cid), lvl = mp ? mp.status : r.evidence_level;
-        var st2 = Object.assign({}, evStyle(lvl));
+        var st2 = Object.assign({}, evStyle(lvl), st.strokeWidth ? { strokeWidth: st.strokeWidth } : {});
         if (!on) st2.opacity = 0.28;
         edges.push({ id:'e-' + r.id + '|' + cid,
           source: band === 'ss' ? r.source_entity : lid,
@@ -1586,11 +1639,23 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
 
   // 고른 상자와 거기 바로 닿는 것만 진하게
   if (selId && seen[selId]) {
+    // 고른 상자를 지나는 줄 전체를 진하게 — 앞으로는 닿는 곳까지, 뒤로는 오는 곳까지
+    // (원재료 → … → 간접 고객). 바로 옆 한 홉만 진하면 사슬이 안 보인다
     var near = {};
     near[selId] = 1;
+    var fwdE = {}, bakE = {};
     edges.forEach(function(e){
-      if (e.source === selId) near[e.target] = 1;
-      if (e.target === selId) near[e.source] = 1;
+      (fwdE[e.source] = fwdE[e.source] || []).push(e.target);
+      (bakE[e.target] = bakE[e.target] || []).push(e.source);
+    });
+    // 타겟에서는 더 안 나간다 — 타겟을 지나면 반대쪽 판 전체가 켜진다
+    [fwdE, bakE].forEach(function(g){
+      var q = [selId];
+      while (q.length){
+        var c = q.shift();
+        if (c === focal && c !== selId) continue;
+        (g[c] || []).forEach(function(x){ if (!near[x]) { near[x] = 1; q.push(x); } });
+      }
     });
     nodes = nodes.map(function(n){
       if (n.id === selId)
@@ -1599,7 +1664,7 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
         : Object.assign({}, n, { data: Object.assign({}, n.data, { dim:true }) });
     });
     edges = edges.map(function(e){
-      var hit = e.source === selId || e.target === selId;
+      var hit = near[e.source] && near[e.target];
       return Object.assign({}, e, { style: Object.assign({}, e.style,
         { opacity: hit ? 1 : 0.35 }) });
     });
@@ -2423,12 +2488,6 @@ function App(){
         h('button', { key:'sb', className:'iconbtn' + (sopen ? ' on' : ''), title:'회사 찾기',
           'aria-label':'회사 찾기',
           onClick: function(){ setSopen(!sopen); if (sopen) setQ(''); } }, ICON_SEARCH),
-        mode === 'current' ? h('button', { key:'all', className:'iconbtn' + (allOpen ? ' on' : ''),
-          title: allOpen ? '접기' : '전부 펴기', 'aria-label':'전부 펴기',
-          onClick: function(){ setOpen(allOpen ? [] : ['*']); } }, ICON_ALL) : null,
-        canDrw ? h('button', { key:'dw', className:'iconbtn' + (drw ? ' on' : ''),
-          title:'근거 서랍', 'aria-label':'근거 서랍',
-          onClick: function(){ setDrw(!drw); setSopen(false); } }, ICON_DRAWER) : null,
         sopen ? h('div', { key:'sp', className:'searchpop' }, searchBox) : null,
         menuBox
       ])
@@ -2501,6 +2560,17 @@ function App(){
   else if (mode === 'bom') body = h(Bom, { focal:focal, onDrill:drill });
   else body = h('div', { key:'cv', className:'canvas' }, [
     h(HdrBar, { key:'hb', nodes: gr.nodes, vp: vp }),
+    // 좁은 화면 — 조작은 엄지 자리(아래)에. 오른쪽은 전부 펴기·서랍, 왼쪽은 뒤로 한 단
+    narrow ? h('div', { key:'fab', className:'fab' }, [
+      h('button', { key:'all', className:'iconbtn' + (allOpen ? ' on' : ''),
+        title: allOpen ? '접기' : '전부 펴기', 'aria-label':'전부 펴기',
+        onClick: function(){ setOpen(allOpen ? [] : ['*']); } }, ICON_ALL),
+      h('button', { key:'dw', className:'iconbtn' + (drw ? ' on' : ''),
+        title:'근거 서랍', 'aria-label':'근거 서랍',
+        onClick: function(){ setDrw(!drw); setSopen(false); } }, ICON_DRAWER) ]) : null,
+    (narrow && path.length > 1) ? h('button', { key:'back', className:'backbtn',
+      onClick: function(){ goFocal(path[path.length - 2]); } },
+      [ h('span', { key:'a' }, '\u2190'), h('span', { key:'b' }, nm(path[path.length - 2])) ]) : null,
     busy ? h('div', { key:'busy', className:'busy' }, [ h('i', { key:'i' }),
       h('span', { key:'t' }, nm(busy) + ' 판을 세우는 중') ]) : null,
     h(RF, { key:'rf', nodes:gr.nodes, edges:gr.edges, nodeTypes:NODE_TYPES,
@@ -2514,7 +2584,13 @@ function App(){
       onPaneClick: function(){ if (window.innerWidth < 720) setDrw(false); },
       nodesDraggable:false, proOptions:{ hideAttribution:true } }, [
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
-      h(Controls, { key:'ct', showInteractive:false })
+      h(Controls, { key:'ct', showInteractive:false }),
+      // 전부 편 판에서만 — 어디를 보고 있는지. 좁은 화면은 자리가 없다
+      (!narrow && allOpen && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
+        nodeStrokeWidth:0, maskColor:'rgba(232,235,240,.6)',
+        nodeColor:function(n){ return n.type === 'hdr' ? 'transparent'
+          : (n.data && n.data.focal ? '#151b28' : (n.data && n.data.kind === 'lane' ? '#c6ccd8' : '#9aa3b5')); },
+        style:{ width:180, height:120 } }) : null
     ])
   ]);
 
