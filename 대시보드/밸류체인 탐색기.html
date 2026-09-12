@@ -353,17 +353,6 @@ Object.keys(FIN_BY_CO).forEach(function(k){
   FIN_BY_CO[k].sort(function(a, b){ return a.as_of_date < b.as_of_date ? -1 : 1; });
 });
 
-// 계통마다 원가 몫. 원가 구성(BOM)에 적힌 값을 계통 이름으로 찾아 쓴다
-function bomShare(co, subsystem){
-  var bs = BOM_BY_CO[co] || [];
-  if (!bs.length || !subsystem) return null;
-  var b = bs[bs.length - 1], hit = null;
-  (b.components || []).forEach(function(c){
-    if (c.subsystem === subsystem) hit = c;
-  });
-  return hit ? { pct: hit.share_pct, level: hit.evidence_level, period: b.period } : null;
-}
-
 function relsOf(id){
   var seen = {}, out = [];
   (REL_BY_ENT[id] || []).forEach(function(rid){
@@ -502,17 +491,6 @@ function colOfRel(r, up){
   // 중간재이고, 고객 칸으로 보내면 소재가 고객 자리에 앉는다
   return r.lane === 'DOWNSTREAM' ? COL_OF.CONTRACTUAL_CUSTOMER
                                  : COL_OF.MATERIAL_PROCESSING;
-}
-// 05 §4 — 첫 화면은 제품 BOM 계통 다섯을 앞에 세우고 다른 lane 은 뒤로 뺀다
-var CAT_ORDER = ['Cell', 'Interconnect', 'Hotbox', 'Power electronics', 'Mechanical',
-  'Other ceramic', 'Thermal', 'Instrumentation', 'Material', 'Raw material',
-  'Material processing', 'Manufacturing equipment', 'Equipment', 'Site electrical BoP',
-  'Operational input'];
-var DOWN_ORDER = ['Financing', 'EPC / Distribution', 'Utility', 'Data center', 'C&I',
-  'OSAT', 'Project', 'Undisclosed customer', 'Assembly'];
-function ordOf(g){
-  var a = (g.up ? CAT_ORDER : DOWN_ORDER).indexOf(g.key);
-  return (a < 0 ? 90 : a) + (g.up ? 0 : 0);
 }
 var LANE_KO = { MANUFACTURING_BOM:'제품 BOM', MANUFACTURING_EQUIPMENT:'제조 장비',
   SITE_ELECTRICAL_BOP:'부지 전기', OPERATIONAL_INPUT:'운영 투입',
@@ -747,16 +725,6 @@ function gutterX(bd, lane){
 // 그것만 쓰면 둘이 맞닿는다
 var HDR_GAP = 34;
 
-// 상자 높이를 미리 어림한다. 한글은 두 칸, 영숫자는 한 칸으로 센다
-function cw(s){
-  var w = 0;
-  for (var i = 0; i < s.length; i++){
-    var c = s.charCodeAt(i);
-    w += ((c >= 0x1100 && c <= 0xD7FF) || (c >= 0x3000 && c <= 0x9FFF)) ? 2 : 1;
-  }
-  return w;
-}
-// 상자 높이는 고정이다 — 회사 60, 알약 38. 어림도 재기도 필요 없다
 // 상자는 갈래를 가리지 않고 한 크기다. 높이가 갈리면 같은 줄에 선 것들이
 // 층이 어긋나 보이고 선도 같은 눈금에 못 선다
 var BOX_H = 64, LANE_H = 64;
@@ -1160,11 +1128,6 @@ function place(nodes, edges, opts){
     var deep = 0;
     used.forEach(function(c){ byCol[c].forEach(function(it){
       if (it.top + it.h > deep) deep = it.top + it.h; }); });
-    if (window.__VCDBG) console.info('vc place pass ' + pass + ' deep ' + Math.round(deep)
-      + ' ' + Object.keys(span).map(function(eid){
-        var t = spot[eById[eid].target], ds = span[eid].map(function(did){
-          return spot[did] ? Math.round(cyOf(spot[did]) - cyOf(t)) : '?'; });
-        return eid + ':' + ds.join('/'); }).filter(function(x){ return !/:(0\/?)+$/.test(x); }).join(' '));
     if (deep > span0 * 3) {
       if (window.console) console.warn('vc place: 빈 자리 맞추기가 ' + pass + ' 번에 안 멈춰 끊는다');
       break;
@@ -1514,7 +1477,7 @@ function topology(focal, rels, rooted){
   return { col: col, sub: sub, via: via, rooted: rooted };
 }
 
-function buildGraph(focal, year, sel, axis, sizes, hint, open){
+function buildGraph(focal, year, sel, axis, hint, open){
   var ck = chainOf(focal, hint);
   var rels = ck ? CHAINS[ck].relationships : relsOf(focal);
   // 사슬의 타겟이 아닌 회사를 중심에 놓으면 판을 그 회사 기준으로 다시 세운다(re-root).
@@ -1533,7 +1496,6 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
     seen[id] = 1;
     var isFocal = id === focal, r = tp.via[id];
     nodes.push({ id: id, type:'nd', data:{
-      measured: (sizes && sizes[id]) || null,
       title: nm(id), flag: flagOf(id), ico: iconOf(id),
       kind: KIND_OF[(ENT[id] || {}).entity_type] || 'ent',
       focal: isFocal, col: tp.col[id],
@@ -1561,7 +1523,6 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
         laneOf[lid] = { kind: kind, cls: x, rels: rl };
         seen[lid] = 1;
         nodes.push({ id: lid, type:'nd', data:{
-          measured: (sizes && sizes[lid]) || null,
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated, fixOrd: xi,
           // 실명 매핑 밖의 잔여가 비공개인 매출원은 알약에 그 뜻을 단다(잔여 칸은 상자가 아니다)
           sub: x.residual ? x.residual.label : null,
@@ -2311,9 +2272,6 @@ function App(){
   var m2 = useState(null), rf = m2[0], setRf = m2[1];
   var n2 = useState(false), allNames = n2[0], setAllNames = n2[1];
   var o2 = useState(null), axis = o2[0], setAxis = o2[1];
-  // 상자 높이는 어림으로 먼저 그리고, 브라우저가 잰 높이로 한 번 더 앉힌다. 어림이
-  // 실제보다 낮으면 선이 지나는 빈 자리를 상자가 침범한다
-  var p2 = useState({}), sizes = p2[0], setSizes = p2[1];
   // 좁은 화면인가. 돌리거나 창을 줄이면 따라간다
   var q2 = useState(window.innerWidth < 720), narrow = q2[0], setNarrow = q2[1];
   var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
@@ -2430,20 +2388,8 @@ function App(){
   }, []);
 
   var gr = useMemo(function(){
-    return buildGraph(focal, year, sel, axis, sizes, chainHint, open);
-  }, [focal, year, sel, axis, sizes, chainHint, open]);
-  useEffect(function(){
-    if (!rf || mode !== 'current') return;
-    var t = setTimeout(function(){
-      var next = Object.assign({}, sizes), changed = false;
-      (rf.getNodes ? rf.getNodes() : []).forEach(function(n){
-        if (n.type !== 'nd' || !n.height) return;
-        if (Math.abs((next[n.id] || 0) - n.height) > 1) { next[n.id] = n.height; changed = true; }
-      });
-      if (changed) setSizes(next);
-    }, 60);
-    return function(){ clearTimeout(t); };
-  }, [rf, gr, mode]);
+    return buildGraph(focal, year, sel, axis, chainHint, open);
+  }, [focal, year, sel, axis, chainHint, open]);
 
   // 칸 머리(원재료·소재·가공…) 위로는 못 올라가게 막는다. 아래·좌우는 넉넉히 둔다
   var extent = useMemo(function(){
@@ -2715,8 +2661,7 @@ function App(){
         ? h(Drawer, { key:'d', sel:sel, year:year, onSel:setSel,
         onClose: function(){ setDrw(false); },
         onFocus: goFocal,
-        onTimeline: function(id){ goFocal(id); setMode('timeline'); },
-        onExpand: null }) : null
+        onTimeline: function(id){ goFocal(id); setMode('timeline'); } }) : null
     ]),
     mode === 'current' ? legend : null
   ]);
