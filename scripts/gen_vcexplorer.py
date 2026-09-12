@@ -244,7 +244,7 @@ padding:2px 10px;height:64px;box-shadow:none;align-items:center}
 .nd.sel{border-color:var(--ink1);box-shadow:0 0 0 2px rgba(21,27,40,.16),0 1px 3px rgba(20,26,40,.14)}
 .nd.lane.sel{background:#fff;border-style:solid;border-color:var(--ink1)}
 .nd.lane.sel .nm{color:var(--ink1)}
-.nd.dim{opacity:.28}
+.nd.dim{opacity:.6}
 .nd.gone{opacity:.32;border-style:dotted}
 .legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:6px 14px;
 background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
@@ -1601,7 +1601,7 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
     edges = edges.map(function(e){
       var hit = e.source === selId || e.target === selId;
       return Object.assign({}, e, { style: Object.assign({}, e.style,
-        { opacity: hit ? 1 : 0.18 }) });
+        { opacity: hit ? 1 : 0.35 }) });
     });
   }
   // 공급원·매출원 띠에서 하나를 고르면 그 분류에 걸린 줄만 진하게 남는다.
@@ -1619,7 +1619,7 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
       var on = e.data.cls ? e.data.cls === axis : (r && axisHit(r, axis));
       // 고른 상자 강조가 이미 흐려 놓은 선은 더 진해지지 않는다. 둘 다 만족해야 진하다
       return Object.assign({}, e, { style: Object.assign({}, e.style,
-        { opacity: on ? (e.style.opacity === undefined ? 1 : e.style.opacity) : 0.1 }) });
+        { opacity: on ? (e.style.opacity === undefined ? 1 : e.style.opacity) : 0.3 }) });
     });
     var axLane = 'lane|' + axis.slice(0, 2) + '|' + axis.slice(3);
     nodes = nodes.map(function(n){
@@ -2199,6 +2199,19 @@ function App(){
   var s2 = useState(null), busy = s2[0], setBusy = s2[1];
   // 판의 이동·확대 — 머리글 띠가 가로로 따라가게 한다
   var v2 = useState({ x:0, y:0, zoom:1 }), vp = v2[0], setVp = v2[1];
+  // 시야를 옮길 상자. 판이 다시 선 뒤 그 상자를 가운데에 둔다
+  var w2 = useState(null), panTo = w2[0], setPanTo = w2[1];
+  useEffect(function(){
+    if (!panTo || !rf || !rf.setCenter) return;
+    var t = setTimeout(function(){
+      var n = null;
+      gr.nodes.forEach(function(x){ if (x.id === panTo) n = x; });
+      if (n) rf.setCenter(n.position.x + COL_W / 2, n.position.y + BOX_H / 2,
+                          { zoom: rf.getZoom ? rf.getZoom() : 1, duration: 320 });
+      setPanTo(null);
+    }, 80);
+    return function(){ clearTimeout(t); };
+  }, [panTo, gr, rf]);
   useEffect(function(){
     if (!busy) return;
     var t = setTimeout(function(){ setBusy(null); }, 3000);
@@ -2314,6 +2327,15 @@ function App(){
       return p.indexOf(id) >= 0 ? p.slice(0, p.indexOf(id) + 1) : p.concat([id]);
     });
     writeUrl({ focal:id, year:year, mode:mode, open:[], sel:id, chain: ck }, true);
+  }
+  // 띠의 칩을 고르면 판이 그 갈림목으로 옮겨 가고 그 갈림목이 펴진다. 고르기만 하고
+  // 시야가 그대로면 무엇이 바뀌었는지 안 보인다
+  function pickAxis(key){
+    setAxis(key);
+    if (!key) return;
+    var lid = 'lane|' + key.slice(0, 2) + '|' + key.slice(3);
+    setOpen(function(o){ return o.indexOf(lid) >= 0 || o.indexOf('*') >= 0 ? o : o.concat([lid]); });
+    setPanTo(lid);
   }
   function onNodeClick(_, node){
     // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다.
@@ -2522,7 +2544,7 @@ function App(){
     // 공급원·매출원 띠는 사슬의 타겟 기준 분류라 다른 회사를 중심에 놓으면 접는다
     (mode === 'current' && !gr.rooted)
       ? h(Axis, { key:'ax', chain: gr.chain, axis: axis, year: year,
-          onPick: setAxis }) : null,
+          onPick: pickAxis }) : null,
     (mode === 'current' && gr.rooted)
       ? h('div', { key:'rt', className:'axnote', style:{ padding:'6px 14px',
           background:'var(--paper)', borderBottom:'1px solid var(--line)' } },
