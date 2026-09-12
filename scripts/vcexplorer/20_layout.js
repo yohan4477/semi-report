@@ -286,13 +286,8 @@ function route(edges, geo, fcol){
     if (a.col === b.col) { e.type = 'default'; return; }
     var bs = bounds(e);
     var y0 = cy(e.source), y1 = cy(e.target);
-    // 높이가 거의 같아도 곧은 선(straight)으로 긋지 않는다 — 포트 높이가 몇 px 달라 선이
+    // 곧은 선(straight)은 안 쓴다 — 상자 가운데 높이가 같아도 포트 자리가 몇 px 달라 선이
     // 기운다. 통로에서 작은 턱 하나로 옮기면 가로로 곧게 읽힌다
-    if (bs.length === 1 && Math.abs(y0 - y1) <= 0.5) {
-      e.type = 'straight';
-      e.data = Object.assign({}, e.data, { gx:null, gy:null });
-      return;
-    }
     var dir = b.col > a.col ? 1 : -1, mids = [];
     for (var c = a.col + dir; c !== b.col; c += dir) mids.push(c);
     var hit = blockersAt(mids, y1);
