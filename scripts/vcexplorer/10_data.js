@@ -223,6 +223,8 @@ var MET_KO = { sourcing_share:'조달 점유율', sourcing_volume_share:'물량 
   commitment_value:'약정 총액', guarantee_cap:'보증 상한', investment_value:'투자 금액' };
 function metKo(k){ return MET_KO[k] || k; }
 var REL_KO = { SUPPLIES:'공급', PROCESSED_INTO:'가공', INPUT_TO:'투입', FEEDS:'넘김',
+  MANUFACTURES:'위탁 제조', STRATEGIC_PARTNERSHIP:'전략 제휴', INTERNAL_MATERIAL_SUPPLY:'내부 소재 공급',
+  SUBSYSTEM_SUPPLY:'계통 공급', CORPORATE_CONTROL:'지배', PROCESSING:'가공', INTRAGROUP_SUPPLY:'그룹 내 공급',
   FUELS:'연료', EQUIPMENT_SUPPLY:'장비 공급', ELECTRICAL_BOP_SUPPLY:'부지 전기 공급',
   EMS_ASSEMBLY:'후공정 외주',
   PROJECT_SUPPLY:'프로젝트 공급', JV_ASSEMBLY:'합작 조립', OPERATES_THROUGH:'운영 자회사',

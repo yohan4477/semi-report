@@ -1021,7 +1021,7 @@ function App(){
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
       h(Controls, { key:'ct', showInteractive:false }),
       // 전부 편 판에서만 — 어디를 보고 있는지. 좁은 화면은 자리가 없다
-      (!narrow && allOpen && !drw && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
+      (!narrow && allOpen && !drw && window.innerWidth >= 1200 && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
         nodeStrokeWidth:0, maskColor:'rgba(232,235,240,.6)',
         nodeColor:function(n){ return n.type === 'hdr' ? 'transparent'
           : (n.data && n.data.focal ? '#0E6B66' : (n.data && n.data.kind === 'lane' ? '#c6ccd8'
