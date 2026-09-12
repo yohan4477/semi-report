@@ -1258,14 +1258,21 @@ var SHARE_METRIC = { rt:/revenue.*share$/,
 function isShare(kind, sh){
   return PCT[sh.unit] && SHARE_METRIC[kind].test(sh.metric || '');
 }
+// 고른 해를 덮는 비중이 있으면 그것, 없으면 그 해 이전의 가장 최근 값을 기간표를 달아
+// 돌려준다(stale). 대덕전자 매입 비중은 FY2025 공시가 최신이라 2026 화면에서 숨기면
+// 있는 값이 없는 것처럼 보인다 — 값은 보이되 언제 것인지 칩에 적는다
 function pickShare(kind, x, year){
-  var y = parseInt(year, 10);
-  return (x.shares || []).filter(function(sh){
-    if (!isShare(kind, sh) || sh.value === null || sh.value === undefined) return false;
+  var y = parseInt(year, 10), cover = null, prev = null, prevY = -1;
+  (x.shares || []).forEach(function(sh){
+    if (!isShare(kind, sh) || sh.value === null || sh.value === undefined) return;
     var a = y4(sh.period_start) || y4(sh.as_of_date);
     var b = y4(sh.period_end) || y4(sh.as_of_date) || a;
-    return a && a <= y && y <= b;
-  })[0] || null;
+    if (!a) return;
+    if (a <= y && y <= b) { if (!cover || b > (y4(cover.period_end) || 0)) cover = sh; }
+    else if (b < y && b > prevY) { prevY = b; prev = sh; }
+  });
+  if (cover) return cover;
+  return prev ? Object.assign({}, prev, { stale: true }) : null;
 }
 // 한 줄의 분모는 하나다. 그 줄에서 가장 많이 쓰인 분모의 값만 적고, 분모가 다른
 // 값(가동률·전방 구성)은 손 얹었을 때만 분모와 함께 보여 준다 — 나란히 찍으면 더한다
@@ -1446,7 +1453,8 @@ function buildGraph(focal, year, sel, axis, sizes, hint){
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated,
           // 실명 매핑 밖의 잔여가 비공개인 매출원은 알약에 그 뜻을 단다(잔여 칸은 상자가 아니다)
           sub: x.residual ? x.residual.label : null,
-          share: (sh && den && sh.denominator === den) ? sh.value + '%' : null,
+          share: (sh && den && sh.denominator === den)
+            ? sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '') : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',
                 lane: kind === 'ss' ? 'MANUFACTURING_BOM' : 'DOWNSTREAM',
                 cls: kind + ':' + x.id, chain: ck } } });
@@ -2093,7 +2101,8 @@ function Axis(p){
         return h('button', { key:x.id, title: tip(x),
           className: 'axchip' + (on ? ' on' : '') + (x.unallocated ? ' un' : ''),
           onClick: function(){ p.onPick(on ? null : key); } }, [
-          x.label, show ? h('i', { key:'s' }, sh.value + '%') : null ]);
+          x.label, show ? h('i', { key:'s' },
+            sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '')) : null ]);
       })))
     ]);
   }
