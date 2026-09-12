@@ -58,6 +58,7 @@ PYTHONIOENCODING=utf-8 python scripts/check_jsoncite.py # json 원문 인용이 
 PYTHONIOENCODING=utf-8 python scripts/check_vc.py      # 밸류체인 — 공급원·매출원이 분석축으로 서 있나
 PYTHONIOENCODING=utf-8 python scripts/check_vcroute.py # 밸류체인 선 — 세로 이동이 칸 사이 통로에서만 일어나나
 PYTHONIOENCODING=utf-8 python scripts/check_vcui.py    # 밸류체인 화면 — 브라우저로 사슬·해·펼침·칩·상자를 눌러 오류가 나나
+PYTHONIOENCODING=utf-8 python scripts/check_vcdata.py  # 밸류체인 데이터 뜻 — 없는 출처·중복 관계·같은 이름 상자·범위 밖 %·뒤집힌 기간
 PYTHONIOENCODING=utf-8 python scripts/find_materials.py 전력 기가와트  # (검사기 아님) 주제로 재료 후보 찾기 — 제목 훑기는 놓친다
 PYTHONIOENCODING=utf-8 python insights/check_figval.py # 도해에 든 값이 원문에 있나 (확인 필요만 센다)
 PYTHONIOENCODING=utf-8 python insights/check_figdup.py # 도해 설명 — 판은 번호, 캡션은 그 풀이. 본문과 겹치나

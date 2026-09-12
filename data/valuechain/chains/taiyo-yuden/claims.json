@@ -49,7 +49,7 @@
   "statement": "태양유전은 Haruna·Yawatabara 공장의 세라믹 분말, Nakanojo 공장의 인덕터 코어·분말, TY Chemical Technology 의 도금까지 소재·공정을 그룹 안에 갖췄다.",
   "subject": "taiyo-yuden",
   "object": null,
-  "period": null,
+  "period": "2026-08",
   "evidence_level": "CONFIRMED",
   "confidence": null,
   "source_ids": [
@@ -95,7 +95,7 @@
   "statement": "Sakai Chemical BT04 BaTiO3 는 과거 태양유전 관련 MLCC 연구에 쓰인 사례일 뿐 현재 공급사 관계를 확인해 주지 않는다.",
   "subject": "taiyo-yuden",
   "object": null,
-  "period": null,
+  "period": "과거(연구 사례)",
   "evidence_level": "HISTORICAL_CURRENT_UNKNOWN",
   "confidence": null,
   "source_ids": [

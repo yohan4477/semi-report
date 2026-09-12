@@ -14,54 +14,10 @@
    "source_ids": []
   },
   {
-   "id": "ss-cloud-capacity",
-   "kind": "SUPPLY_SOURCE",
-   "label": "클라우드 용량",
-   "label_en": "Cloud capacity",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
-   "id": "ss-deposition-etch",
-   "kind": "SUPPLY_SOURCE",
-   "label": "증착·식각",
-   "label_en": "Deposition & etch",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
    "id": "ss-foundry",
    "kind": "SUPPLY_SOURCE",
    "label": "파운드리",
    "label_en": "Foundry",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
-   "id": "ss-light-source",
-   "kind": "SUPPLY_SOURCE",
-   "label": "광원",
-   "label_en": "Light source",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
-   "id": "ss-lithography",
-   "kind": "SUPPLY_SOURCE",
-   "label": "노광",
-   "label_en": "Lithography",
    "level": "SUBSYSTEM",
    "note": null,
    "unallocated": false,
@@ -80,17 +36,6 @@
    "source_ids": []
   },
   {
-   "id": "ss-metrology",
-   "kind": "SUPPLY_SOURCE",
-   "label": "계측 장비",
-   "label_en": "Metrology",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
    "id": "ss-optics",
    "kind": "SUPPLY_SOURCE",
    "label": "광 모듈",
@@ -100,51 +45,971 @@
    "unallocated": false,
    "shares": [],
    "source_ids": []
-  },
-  {
-   "id": "ss-precision-modules",
-   "kind": "SUPPLY_SOURCE",
-   "label": "정밀 모듈",
-   "label_en": "Precision modules",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
-   "id": "ss-silicon-wafer",
-   "kind": "SUPPLY_SOURCE",
-   "label": "실리콘 웨이퍼",
-   "label_en": "Silicon wafer",
-   "level": "SUBSYSTEM",
-   "note": null,
-   "unallocated": false,
-   "shares": [],
-   "source_ids": []
-  },
-  {
-   "id": "ss-unallocated",
-   "kind": "SUPPLY_SOURCE",
-   "label": "공급원 미상",
-   "label_en": "Unallocated",
-   "level": "UNALLOCATED",
-   "unallocated": true,
-   "note": "공급사인 것은 맞는데 무엇을 대는지 근거가 없다",
-   "shares": [],
-   "source_ids": []
   }
  ],
  "revenue_types": [
   {
-   "id": "rt-unallocated",
+   "id": "rt-nv-rev-acie",
    "kind": "REVENUE_TYPE",
-   "label": "배분 미상",
-   "label_en": "Unallocated",
-   "unallocated": true,
-   "note": "고객인 것은 맞는데 어느 매출에 드는지 근거가 없다",
-   "shares": [],
-   "source_ids": []
+   "label": "AI 클라우드·산업·기업(ACIE) 매출",
+   "label_en": "AI Clouds, Industrial & Enterprise (ACIE)",
+   "note": "FY2027 1분기부터 쓰는 시장·플랫폼 구분. 데이터센터 매출의 나머지 한쪽",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "acie_revenue_share",
+     "value": 41.9,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "Q2 FY2027",
+     "period_start": "2026-04-27",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "acie_revenue_amount",
+     "value": 40313,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "Q2 FY2027",
+     "period_start": "2026-04-27",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 2027 회계연도 2분기 총매출 962억 2,100만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "acie_revenue_share",
+     "value": 40.77,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "H1 FY2027",
+     "period_start": "2026-01-26",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "acie_revenue_amount",
+     "value": 72508,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "H1 FY2027",
+     "period_start": "2026-01-26",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 2027 회계연도 상반기 총매출 1,778억 3,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_002"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_002",
+     "nv_map_001"
+    ],
+    "note": "RCM017·020(Q2·H1 FY2027). 코어위브·네비우스·람다 등으로 배분한 근거는 없다"
+   },
+   "group_rank": 0,
+   "group_label": "FY2027 재분류 · 시장 플랫폼"
+  },
+  {
+   "id": "rt-nv-rev-automotive",
+   "kind": "REVENUE_TYPE",
+   "label": "자동차 매출",
+   "label_en": "Automotive",
+   "note": "FY2024~FY2026 레거시 전방시장 구분. FY2027 표시에서는 엣지 컴퓨팅에 흡수됐다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "automotive_revenue_share",
+     "value": 1.79,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "automotive_revenue_amount",
+     "value": 1091,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA FY2024 총매출 609억 2,200만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "automotive_revenue_share",
+     "value": 1.3,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "automotive_revenue_amount",
+     "value": 1694,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA FY2025 총매출 1,304억 9,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "automotive_revenue_share",
+     "value": 1.09,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "automotive_revenue_amount",
+     "value": 2349,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA FY2026 총매출 2,159억 3,800만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_001",
+    "nv_fin_003"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_003",
+     "nv_map_001"
+    ],
+    "note": "RCM004·009·014(FY2024~FY2026). 이름이 공개된 고객으로 배분된 몫은 없다"
+   },
+   "group_rank": 1,
+   "group_label": "FY2026 이전 분류"
+  },
+  {
+   "id": "rt-nv-rev-datacenter",
+   "kind": "REVENUE_TYPE",
+   "label": "데이터센터 매출",
+   "label_en": "Data Center",
+   "note": "FY2024~FY2026 레거시 전방시장 구분의 최대 갈래. FY2027부터는 하이퍼스케일·ACIE 로 재편됐다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "data_center_revenue_share",
+     "value": 78.01,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "data_center_revenue_amount",
+     "value": 47525,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA FY2024 총매출 609억 2,200만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "data_center_revenue_share",
+     "value": 88.27,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "data_center_revenue_amount",
+     "value": 115186,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA FY2025 총매출 1,304억 9,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "data_center_revenue_share",
+     "value": 89.72,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "data_center_revenue_amount",
+     "value": 193737,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA FY2026 총매출 2,159억 3,800만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_001",
+    "nv_fin_003"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_001",
+     "nv_map_001"
+    ],
+    "note": "RCM001·006·011(FY2024~FY2026). 이름이 공개된 고객으로 배분된 몫은 없다"
+   },
+   "group_rank": 1,
+   "group_label": "FY2026 이전 분류"
+  },
+  {
+   "id": "rt-nv-rev-edge-computing",
+   "kind": "REVENUE_TYPE",
+   "label": "엣지 컴퓨팅 매출",
+   "label_en": "Edge Computing",
+   "note": "FY2027 표시의 데이터센터 바깥 구분. 옛 게이밍·프로페셔널 시각화·자동차·OEM 이 여기로 흡수됐고 따로 공시되지 않는다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "edge_computing_revenue_share",
+     "value": 7.48,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "Q2 FY2027",
+     "period_start": "2026-04-27",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "edge_computing_revenue_amount",
+     "value": 7198,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "Q2 FY2027",
+     "period_start": "2026-04-27",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 2027 회계연도 2분기 총매출 962억 2,100만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "edge_computing_revenue_share",
+     "value": 7.63,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "H1 FY2027",
+     "period_start": "2026-01-26",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "edge_computing_revenue_amount",
+     "value": 13568,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "H1 FY2027",
+     "period_start": "2026-01-26",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 2027 회계연도 상반기 총매출 1,778억 3,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_002"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_002",
+     "nv_map_001"
+    ],
+    "note": "RCM018·021(Q2·H1 FY2027). 이름이 공개된 고객으로 배분된 몫은 없다"
+   },
+   "group_rank": 0,
+   "group_label": "FY2027 재분류 · 시장 플랫폼"
+  },
+  {
+   "id": "rt-nv-rev-gaming",
+   "kind": "REVENUE_TYPE",
+   "label": "게이밍 매출",
+   "label_en": "Gaming",
+   "note": "FY2024~FY2026 레거시 전방시장 구분. FY2027 표시에서는 엣지 컴퓨팅에 흡수됐다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "gaming_revenue_share",
+     "value": 17.15,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "gaming_revenue_amount",
+     "value": 10447,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA FY2024 총매출 609억 2,200만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "gaming_revenue_share",
+     "value": 8.7,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "gaming_revenue_amount",
+     "value": 11350,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA FY2025 총매출 1,304억 9,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "gaming_revenue_share",
+     "value": 7.43,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "gaming_revenue_amount",
+     "value": 16042,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA FY2026 총매출 2,159억 3,800만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_001",
+    "nv_fin_003"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_003",
+     "nv_map_001"
+    ],
+    "note": "RCM002·007·012(FY2024~FY2026). 이름이 공개된 고객으로 배분된 몫은 없다"
+   },
+   "group_rank": 1,
+   "group_label": "FY2026 이전 분류"
+  },
+  {
+   "id": "rt-nv-rev-hyperscale",
+   "kind": "REVENUE_TYPE",
+   "label": "하이퍼스케일 매출",
+   "label_en": "Hyperscale",
+   "note": "FY2027 1분기부터 쓰는 시장·플랫폼 구분. 데이터센터 매출을 ACIE 와 둘로 가른 한쪽이다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "hyperscale_revenue_share",
+     "value": 50.62,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "Q2 FY2027",
+     "period_start": "2026-04-27",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "hyperscale_revenue_amount",
+     "value": 48710,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "Q2 FY2027",
+     "period_start": "2026-04-27",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 2027 회계연도 2분기 총매출 962억 2,100만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "hyperscale_revenue_share",
+     "value": 51.6,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "H1 FY2027",
+     "period_start": "2026-01-26",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    },
+    {
+     "metric": "hyperscale_revenue_amount",
+     "value": 91761,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "H1 FY2027",
+     "period_start": "2026-01-26",
+     "period_end": "2026-07-26",
+     "as_of_date": "2026-07-26",
+     "denominator": "NVIDIA 2027 회계연도 상반기 총매출 1,778억 3,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_002"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_002"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_002",
+     "nv_map_001"
+    ],
+    "note": "RCM016·019(Q2·H1 FY2027). AWS·Azure·GCP·OCI 로 배분한 근거는 없다"
+   },
+   "group_rank": 0,
+   "group_label": "FY2027 재분류 · 시장 플랫폼"
+  },
+  {
+   "id": "rt-nv-rev-oem-other",
+   "kind": "REVENUE_TYPE",
+   "label": "OEM·기타 매출",
+   "label_en": "OEM and Other",
+   "note": "FY2024~FY2026 레거시 전방시장 구분. FY2027 표시에서는 엣지 컴퓨팅에 흡수됐다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "oem_other_revenue_share",
+     "value": 0.5,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "oem_other_revenue_amount",
+     "value": 306,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA FY2024 총매출 609억 2,200만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "oem_other_revenue_share",
+     "value": 0.3,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "oem_other_revenue_amount",
+     "value": 389,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA FY2025 총매출 1,304억 9,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "oem_other_revenue_share",
+     "value": 0.29,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "oem_other_revenue_amount",
+     "value": 619,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA FY2026 총매출 2,159억 3,800만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_001",
+    "nv_fin_003"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_003",
+     "nv_map_001"
+    ],
+    "note": "RCM005·010·015(FY2024~FY2026). 이름이 공개된 고객으로 배분된 몫은 없다"
+   },
+   "group_rank": 1,
+   "group_label": "FY2026 이전 분류"
+  },
+  {
+   "id": "rt-nv-rev-proviz",
+   "kind": "REVENUE_TYPE",
+   "label": "프로페셔널 시각화 매출",
+   "label_en": "Professional Visualization",
+   "note": "FY2024~FY2026 레거시 전방시장 구분. FY2027 표시에서는 엣지 컴퓨팅에 흡수됐다",
+   "unallocated": false,
+   "shares": [
+    {
+     "metric": "proviz_revenue_share",
+     "value": 2.55,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "proviz_revenue_amount",
+     "value": 1553,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2024",
+     "period_start": "2023-01-30",
+     "period_end": "2024-01-28",
+     "as_of_date": "2024-01-28",
+     "denominator": "NVIDIA FY2024 총매출 609억 2,200만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "proviz_revenue_share",
+     "value": 1.44,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "proviz_revenue_amount",
+     "value": 1878,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2025",
+     "period_start": "2024-01-29",
+     "period_end": "2025-01-26",
+     "as_of_date": "2025-01-26",
+     "denominator": "NVIDIA FY2025 총매출 1,304억 9,700만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "proviz_revenue_share",
+     "value": 1.48,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    },
+    {
+     "metric": "proviz_revenue_amount",
+     "value": 3191,
+     "value_low": null,
+     "value_high": null,
+     "unit": "USD M",
+     "period": "FY2026",
+     "period_start": "2025-01-27",
+     "period_end": "2026-01-25",
+     "as_of_date": "2026-01-25",
+     "denominator": "NVIDIA FY2026 총매출 2,159억 3,800만 달러",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": null,
+     "source_ids": [
+      "nv_fin_001",
+      "nv_fin_003"
+     ]
+    }
+   ],
+   "source_ids": [
+    "nv_fin_001",
+    "nv_fin_003"
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "nv_fin_003",
+     "nv_map_001"
+    ],
+    "note": "RCM003·008·013(FY2024~FY2026). 이름이 공개된 고객으로 배분된 몫은 없다"
+   },
+   "group_rank": 1,
+   "group_label": "FY2026 이전 분류"
   }
  ]
 }

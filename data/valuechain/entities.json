@@ -3937,5 +3937,167 @@
   "other_roles": [],
   "parent_entity_id": null,
   "region": null
+ },
+ {
+  "id": "spil",
+  "name": "Siliconware Precision Industries Co., Ltd.",
+  "name_ko": "실리콘웨어(SPIL)",
+  "entity_type": "company",
+  "legal_name": "Siliconware Precision Industries Co., Ltd.",
+  "display_name": "실리콘웨어(SPIL)",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Packaging partner",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Packaging partner"
+  ],
+  "desc": "Rubin 생태계의 웨이퍼·칩 파트너로 이름이 오른다. 엔비디아와의 직접 상거래 몫은 공개되지 않는다",
+  "anon": false
+ },
+ {
+  "id": "kinsus",
+  "name": "Kinsus Interconnect Technology Corp.",
+  "name_ko": "킨서스",
+  "entity_type": "company",
+  "legal_name": "Kinsus Interconnect Technology Corp.",
+  "display_name": "킨서스",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Substrate partner",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Substrate partner"
+  ],
+  "desc": "기판(서브스트레이트) 파트너로 Rubin 생태계에 이름이 오른다. 개별 물량은 비공개",
+  "anon": false
+ },
+ {
+  "id": "kyec",
+  "name": "King Yuan Electronics Co., Ltd.",
+  "name_ko": "킹윤일렉트로닉스(KYEC)",
+  "entity_type": "company",
+  "legal_name": "King Yuan Electronics Co., Ltd.",
+  "display_name": "킹윤일렉트로닉스(KYEC)",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Test partner",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Test partner"
+  ],
+  "desc": "테스트 파트너로 Rubin 생태계에 이름이 오른다. 개별 물량은 비공개",
+  "anon": false
+ },
+ {
+  "id": "unimicron",
+  "name": "Unimicron Technology Corp.",
+  "name_ko": "유니마이크론",
+  "entity_type": "company",
+  "legal_name": "Unimicron Technology Corp.",
+  "display_name": "유니마이크론",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Substrate partner",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Substrate partner"
+  ],
+  "desc": "기판(서브스트레이트) 파트너로 Rubin 생태계에 이름이 오른다. 개별 물량은 비공개",
+  "anon": false
+ },
+ {
+  "id": "coherent",
+  "name": "Coherent Corp.",
+  "name_ko": "코히런트",
+  "entity_type": "company",
+  "legal_name": "Coherent Corp.",
+  "display_name": "코히런트",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Optics supplier",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Optics supplier"
+  ],
+  "desc": "광통신 부품·용량 공급사이자 엔비디아로부터 20억 달러 지분투자를 받았다",
+  "anon": false
+ },
+ {
+  "id": "lumentum",
+  "name": "Lumentum Holdings Inc.",
+  "name_ko": "루멘텀",
+  "entity_type": "company",
+  "legal_name": "Lumentum Holdings Inc.",
+  "display_name": "루멘텀",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "Optics supplier",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "Optics supplier"
+  ],
+  "desc": "광통신 부품·용량 공급사이자 엔비디아로부터 20억 달러 지분투자를 받았다",
+  "anon": false
+ },
+ {
+  "id": "mediatek",
+  "name": "MediaTek Inc.",
+  "name_ko": "미디어텍",
+  "entity_type": "company",
+  "legal_name": "MediaTek Inc.",
+  "display_name": "미디어텍",
+  "region": "Asia",
+  "parent_entity_id": null,
+  "primary_role": "Custom silicon partner",
+  "other_roles": [],
+  "country": "대만",
+  "categories": [
+   "Custom silicon partner"
+  ],
+  "desc": "NVLink Fusion 생태계의 커스텀 XPU 설계 파트너다",
+  "anon": false
+ },
+ {
+  "id": "ssi",
+  "name": "Safe Superintelligence Inc.",
+  "name_ko": "세이프 슈퍼인텔리전스(SSI)",
+  "entity_type": "company",
+  "legal_name": "Safe Superintelligence Inc.",
+  "display_name": "세이프 슈퍼인텔리전스(SSI)",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "AI model maker",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "AI model maker"
+  ],
+  "desc": "2026년 7월 엔비디아와 장기 전략 제휴를 맺고 투자를 받았으며 Rubin 시스템에 접근한다",
+  "anon": false
+ },
+ {
+  "id": "spacexai",
+  "name": "SpaceXAI",
+  "name_ko": "스페이스XAI",
+  "entity_type": "company",
+  "legal_name": "SpaceXAI",
+  "display_name": "스페이스XAI",
+  "region": "미국",
+  "parent_entity_id": null,
+  "primary_role": "AI infrastructure operator",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "AI infrastructure operator"
+  ],
+  "desc": "2026년 8월 Vera CPU 를 도입하고 Vera Rubin 기반 인프라를 확장한다고 발표했다. 회계상 직접고객 지위는 별도로 주장되지 않는다",
+  "anon": false
  }
 ]

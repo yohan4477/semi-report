@@ -362,6 +362,56 @@
  {
   "id": "ty-e037",
   "relationship_id": "ty-app-it-infra-industrial",
+  "metric_id": "o-ty-it-infra-share",
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "AI 서버를 포함한 서버·통신인프라·산업용 전체를 묶은 수치다. AI 전용 매출이 아니다(04의 O004)",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ty-e038",
+  "relationship_id": "ty-app-automotive",
+  "metric_id": "o-ty-automotive-share",
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "(04의 O005)",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ty-e039",
+  "relationship_id": "ty-app-communication",
+  "metric_id": "o-ty-communication-share",
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "(04의 O006)",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ty-e040",
+  "relationship_id": "ty-app-information-equipment",
+  "metric_id": "o-ty-info-equip-share",
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "(04의 O007)",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ty-e041",
+  "relationship_id": "ty-app-consumer",
+  "metric_id": "o-ty-consumer-share",
+  "source_id": "ty_ledger_04",
+  "evidence_type": "direct",
+  "evidence": "(04의 O008)",
+  "hypothesis_id": null,
+  "classification_id": null
+ },
+ {
+  "id": "ty-e042",
+  "relationship_id": "ty-app-it-infra-industrial",
   "metric_id": "o-ty-ai-exposure-scenario",
   "source_id": "ai_share_scenario",
   "evidence_type": "direct",

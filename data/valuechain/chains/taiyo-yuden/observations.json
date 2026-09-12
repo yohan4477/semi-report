@@ -17,7 +17,9 @@
   "confidence": null,
   "method_id": null,
   "method_note": null,
-  "source_ids": [],
+  "source_ids": [
+   "ty_ledger_04"
+  ],
   "denominator_scope": "EDGE",
   "source_date": "2026-06-30"
  },
@@ -39,7 +41,9 @@
   "confidence": null,
   "method_id": null,
   "method_note": null,
-  "source_ids": [],
+  "source_ids": [
+   "ty_ledger_04"
+  ],
   "denominator_scope": "EDGE",
   "source_date": "2026-06-30"
  },
@@ -61,7 +65,9 @@
   "confidence": null,
   "method_id": null,
   "method_note": null,
-  "source_ids": [],
+  "source_ids": [
+   "ty_ledger_04"
+  ],
   "denominator_scope": "EDGE",
   "source_date": "2026-06-30"
  },
@@ -83,7 +89,9 @@
   "confidence": null,
   "method_id": null,
   "method_note": null,
-  "source_ids": [],
+  "source_ids": [
+   "ty_ledger_04"
+  ],
   "denominator_scope": "EDGE",
   "source_date": "2026-06-30"
  },
@@ -105,7 +113,9 @@
   "confidence": null,
   "method_id": null,
   "method_note": null,
-  "source_ids": [],
+  "source_ids": [
+   "ty_ledger_04"
+  ],
   "denominator_scope": "EDGE",
   "source_date": "2026-06-30"
  },

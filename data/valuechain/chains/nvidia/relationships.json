@@ -1,1540 +1,666 @@
 [
  {
-  "id": "r001",
+  "id": "nv-tsmc-foundry",
   "source_entity": "tsmc",
   "target_entity": "nvidia",
-  "relationship_type": "SUPPLIES",
+  "relationship_type": "MANUFACTURES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Foundry",
-  "component": "첨단 노드 GPU 웨이퍼 · CoWoS 패키징",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "반도체 웨이퍼 파운드리",
+  "source_role": "파운드리",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "CoWoS 를 대는 주체를 10-K 가 따로 지명하지는 않는다",
   "source_tier": "COMPONENT_SUPPLIER",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_001"
+  ],
+  "notes": "웨이퍼 배분 비중은 공개되지 않는다(04의 R001)",
   "supply_source_ids": [
    "ss-foundry"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r002",
-  "source_entity": "samsung",
+  "id": "nv-samsung-foundry",
+  "source_entity": "samsung-electronics",
   "target_entity": "nvidia",
-  "relationship_type": "SUPPLIES",
+  "relationship_type": "MANUFACTURES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Foundry",
-  "component": "웨이퍼 파운드리 · 메모리",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "반도체 웨이퍼 파운드리",
+  "source_role": "파운드리",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
   "source_tier": "COMPONENT_SUPPLIER",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_001"
+  ],
+  "notes": "웨이퍼 배분 비중은 공개되지 않는다(04의 R002)",
   "supply_source_ids": [
    "ss-foundry"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r003",
-  "source_entity": "skhynix",
+  "id": "nv-skhynix-memory",
+  "source_entity": "sk-hynix",
   "target_entity": "nvidia",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Memory",
-  "component": "메모리",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "메모리·HBM",
+  "source_role": "메모리 공급사",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "10-K 는 HBM 을 따로 적지 않고 memory 로 뭉쳐 적는다",
   "source_tier": "COMPONENT_SUPPLIER",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_002"
+  ],
+  "notes": "정확한 공급 비중은 공개되지 않는다(04의 R003)",
   "supply_source_ids": [
    "ss-memory"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r004",
+  "id": "nv-micron-memory",
   "source_entity": "micron",
   "target_entity": "nvidia",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Memory",
-  "component": "메모리",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "메모리·HBM",
+  "source_role": "메모리 공급사",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
   "source_tier": "COMPONENT_SUPPLIER",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_002"
+  ],
+  "notes": "정확한 공급 비중은 공개되지 않는다(04의 R004)",
   "supply_source_ids": [
    "ss-memory"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r005",
+  "id": "nv-samsung-memory",
+  "source_entity": "samsung-electronics",
+  "target_entity": "nvidia",
+  "relationship_type": "SUPPLIES",
+  "lane": "MANUFACTURING_BOM",
+  "subsystem": "Memory",
+  "component": "메모리·HBM",
+  "source_role": "메모리 공급사",
+  "target_role": "엔비디아",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": "COMPONENT_SUPPLIER",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_002"
+  ],
+  "notes": "정확한 공급 비중은 공개되지 않는다(04의 R005)",
+  "supply_source_ids": [
+   "ss-memory"
+  ],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-foxconn-cm",
   "source_entity": "foxconn",
   "target_entity": "nvidia",
   "relationship_type": "CONTRACT_MANUFACTURES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Assembly & Test",
-  "component": "완제품 조립·시험·패키징",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "조립·시험·패키징",
+  "source_role": "위탁생산",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
+  "source_tier": "SUBSYSTEM_MODULE",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
   "confidence_band": "high",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_004"
+  ],
+  "notes": "10-K 가 이름을 적은 하청업체다. 개별 물량 비중은 비공개(04의 R006)",
   "supply_source_ids": [
    "ss-assembly-test"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r006",
+  "id": "nv-wistron-cm",
   "source_entity": "wistron",
   "target_entity": "nvidia",
   "relationship_type": "CONTRACT_MANUFACTURES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Assembly & Test",
-  "component": "완제품 조립·시험·패키징",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "조립·시험·패키징",
+  "source_role": "위탁생산",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
+  "source_tier": "SUBSYSTEM_MODULE",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
   "confidence_band": "high",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_004"
+  ],
+  "notes": "10-K 가 이름을 적은 하청업체다. 개별 물량 비중은 비공개(04의 R007)",
   "supply_source_ids": [
    "ss-assembly-test"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r007",
+  "id": "nv-fabrinet-cm",
   "source_entity": "fabrinet",
   "target_entity": "nvidia",
   "relationship_type": "CONTRACT_MANUFACTURES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Assembly & Test",
-  "component": "완제품 조립·시험·패키징",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
+  "component": "조립·시험·패키징",
+  "source_role": "위탁생산",
+  "target_role": "엔비디아",
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
+  "source_tier": "SUBSYSTEM_MODULE",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
   "confidence_band": "high",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
+  "flows": [],
+  "source_ids": [
+   "nv_sup_004"
+  ],
+  "notes": "10-K 가 이름을 적은 하청업체다. 개별 물량 비중은 비공개(04의 R008)",
   "supply_source_ids": [
    "ss-assembly-test"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r008",
-  "source_entity": "nvidia",
-  "target_entity": "anon_nv_1",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Direct sales",
-  "component": "직접 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r009",
-  "source_entity": "nvidia",
-  "target_entity": "anon_nv_2",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Direct sales",
-  "component": "직접 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r010",
-  "source_entity": "nvidia",
-  "target_entity": "anon_nv_3",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Direct sales",
-  "component": "직접 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "총매출 비중은 10% 미만이라 매출 집중도 공시에는 안 나온다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r011",
-  "source_entity": "nvidia",
-  "target_entity": "supermicro",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Systems",
-  "component": "GPU·서버 시스템",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "익명 직접고객 후보. 슈퍼마이크로 쪽 공시로 아직 대조하지 않았다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r012",
-  "source_entity": "nvidia",
-  "target_entity": "dell",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Systems",
-  "component": "GPU·서버 시스템",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "익명 직접고객 후보",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r013",
-  "source_entity": "nvidia",
-  "target_entity": "hpe",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Systems",
-  "component": "GPU·서버 시스템",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "익명 직접고객 후보",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r014",
-  "source_entity": "nvidia",
-  "target_entity": "microsoft",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "10-K 는 간접고객을 군으로만 적고 이름을 대지 않는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r015",
-  "source_entity": "nvidia",
-  "target_entity": "amazon",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r016",
-  "source_entity": "nvidia",
-  "target_entity": "alphabet",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r017",
-  "source_entity": "nvidia",
-  "target_entity": "meta",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r018",
-  "source_entity": "nvidia",
-  "target_entity": "oracle",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r019",
-  "source_entity": "nvidia",
-  "target_entity": "coreweave",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "10-K 가 「네오클라우드」를 적었으나 이름은 없다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r020",
-  "source_entity": "nvidia",
-  "target_entity": "openai",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI accelerator",
-  "component": "AI 가속기",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r036",
-  "source_entity": "asml",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Lithography",
-  "component": "EUV·DUV 노광 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": "사슬에서 가장 중요한 고리인데 두 회사 공시 어디에도 상대 이름이 없다",
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-lithography"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r037",
-  "source_entity": "amat",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Deposition & etch",
-  "component": "증착·식각 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-deposition-etch"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r038",
-  "source_entity": "lam",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Deposition & etch",
-  "component": "식각·증착 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-deposition-etch"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r039",
-  "source_entity": "kla",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Metrology",
-  "component": "계측·검사 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-metrology"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r040",
-  "source_entity": "tel",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Deposition & etch",
-  "component": "코터·디벨로퍼·식각 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-deposition-etch"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r041",
-  "source_entity": "shinetsu",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Silicon wafer",
-  "component": "원판 실리콘 웨이퍼",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "20-F 는 원판 웨이퍼 공급사를 국가로만 적는다",
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-silicon-wafer"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r042",
-  "source_entity": "sumco",
-  "target_entity": "tsmc",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Silicon wafer",
-  "component": "원판 실리콘 웨이퍼",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-silicon-wafer"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r043",
-  "source_entity": "tsmc",
-  "target_entity": "anon_ts_a",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Foundry",
-  "component": "웨이퍼 제조",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "2023년에는 10% 미만이라 표에 안 나온다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r044",
-  "source_entity": "tsmc",
-  "target_entity": "anon_ts_b",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Foundry",
-  "component": "웨이퍼 제조",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "세 해에 걸쳐 25%에서 17%로 내려왔다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r049",
-  "source_entity": "zeiss",
-  "target_entity": "asml",
+  "id": "nv-coherent-capacity",
+  "source_entity": "coherent",
+  "target_entity": "nvidia",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
   "subsystem": "Optics",
-  "component": "렌즈·거울·조명계 (유일 공급사)",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
+  "component": "고급 레이저·광네트워킹 부품",
+  "source_role": "광통신 공급사",
+  "target_role": "엔비디아",
+  "valid_from": "2026-03-02",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
   "source_tier": "COMPONENT_SUPPLIER",
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_opt_001"
+  ],
+  "notes": "다중 십억 달러 구매 약정과 미래 용량권이다. 확정 물량은 아니다(SUPPLIES_CAPACITY, 04의 R009)",
   "supply_source_ids": [
    "ss-optics"
   ],
   "revenue_type_ids": []
  },
  {
-  "id": "r050",
-  "source_entity": "cymer",
-  "target_entity": "asml",
-  "relationship_type": "SUBSIDIARY_OF",
-  "lane": "CORPORATE",
-  "subsystem": "Light source",
-  "component": "EUV·DUV 광원",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": "2013년 ASML 이 인수한 자회사라 외부 공급사로 적히지 않는다",
-  "supply_source_ids": [],
-  "revenue_type_ids": []
- },
- {
-  "id": "r051",
-  "source_entity": "trumpf",
-  "target_entity": "asml",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Light source",
-  "component": "EUV 광원용 이산화탄소 레이저",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-light-source"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r052",
-  "source_entity": "vdl",
-  "target_entity": "asml",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Precision modules",
-  "component": "정밀 기계 모듈",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": null,
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-precision-modules"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r053",
-  "source_entity": "asml",
-  "target_entity": "anon_as_1",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Lithography",
-  "component": "노광 장비·서비스",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "상위 2사 합계는 38.0%, 10% 를 넘긴 고객 넷 합계는 61.2% 다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r054",
-  "source_entity": "asml",
-  "target_entity": "samsung",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Lithography",
-  "component": "EUV·DUV 노광 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": "ASML 은 고객을 익명으로 적는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r055",
-  "source_entity": "asml",
-  "target_entity": "skhynix",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Lithography",
-  "component": "EUV·DUV 노광 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r057",
-  "source_entity": "asml",
-  "target_entity": "micron",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Lithography",
-  "component": "EUV·DUV 노광 장비",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r101",
-  "source_entity": "nvidia",
-  "target_entity": "nv27_x",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Direct sales",
-  "component": "직접 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "세 기간 모두 공시에 나온 유일한 고객이다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r102",
-  "source_entity": "nvidia",
-  "target_entity": "nv27_y",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Direct sales",
-  "component": "직접 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "Q1 21% 와 H1 15% 가 같은 고객이라는 것은 공시가 아니라 역산이다. Q2 에 10% 를 넘은 고객이 하나뿐이므로 다른 배열이 서지 않는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r103",
-  "source_entity": "nvidia",
-  "target_entity": "nv27_z",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Direct sales",
-  "component": "직접 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "Q1 17% 와 H1 13% 를 잇는 것도 같은 역산이다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r104",
-  "source_entity": "nvidia",
-  "target_entity": "mkt_hyper",
-  "relationship_type": "SERVES_END_MARKET",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Market platform",
-  "component": "데이터센터 매출 중 하이퍼스케일 몫",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
-  "target_tier": "END_USER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
- },
- {
-  "id": "r105",
-  "source_entity": "nvidia",
-  "target_entity": "mkt_acie",
-  "relationship_type": "SERVES_END_MARKET",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Market platform",
-  "component": "데이터센터 매출 중 AI 클라우드·산업·기업 몫",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
-  "target_tier": "END_USER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
- },
- {
-  "id": "r106",
-  "source_entity": "nvidia",
-  "target_entity": "mkt_edge",
-  "relationship_type": "SERVES_END_MARKET",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Market platform",
-  "component": "데이터센터 바깥 매출",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": null,
-  "target_tier": "END_USER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
- },
- {
-  "id": "r107",
-  "source_entity": "quanta",
-  "target_entity": "nvidia",
-  "relationship_type": "CONTRACT_MANUFACTURES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Assembly & Test",
-  "component": "AI 서버 조립",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다 서로를 공시에 적지 않아 후공정 귀속 근거가 없다. 공급원 미상으로 닫는다",
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-unallocated"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r108",
-  "source_entity": "wiwynn",
-  "target_entity": "nvidia",
-  "relationship_type": "CONTRACT_MANUFACTURES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Assembly & Test",
-  "component": "AI 서버 조립",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "서로를 공시에 적지 않아 후공정 귀속 근거가 없다. 공급원 미상으로 닫는다",
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-unallocated"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r109",
-  "source_entity": "nvidia",
-  "target_entity": "sbenergy",
-  "relationship_type": "CREDIT_SUPPORT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Financing",
-  "component": "OpenAI 계열사 리스에 대한 신용보강 (최대 1,050억 달러)",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "2026년 8월 후속사건. 4.25기가와트 IT 부하 규모의 리스가 대상이다",
-  "target_tier": "INTERMEDIARY",
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
- },
- {
-  "id": "r110",
-  "source_entity": "nvidia",
-  "target_entity": "openai",
-  "relationship_type": "CREDIT_SUPPORT",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Financing",
-  "component": "SB Energy 리스 신용보강의 수혜자",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "NVIDIA 공시에 OpenAI 이름이 직접 나오는 유일한 자리다",
-  "target_tier": "INTERMEDIARY",
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
- },
- {
-  "id": "r111",
-  "source_entity": "nvidia",
-  "target_entity": "anon_ai_cloud",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI infrastructure",
-  "component": "데이터센터 인프라 제품 판매",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "파는 동시에 그 클라우드 용량을 되산다. 방향이 다른 줄 두 개가 같은 상대에 붙는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r112",
-  "source_entity": "anon_ai_cloud",
+  "id": "nv-lumentum-capacity",
+  "source_entity": "lumentum",
   "target_entity": "nvidia",
   "relationship_type": "SUPPLIES",
   "lane": "MANUFACTURING_BOM",
-  "subsystem": "Cloud capacity",
-  "component": "클라우드 용량 (NVIDIA 가 사는 쪽)",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
-  ],
-  "valid_from": null,
+  "subsystem": "Optics",
+  "component": "고급 레이저 부품",
+  "source_role": "광통신 공급사",
+  "target_role": "엔비디아",
+  "valid_from": "2026-03-02",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "AI 클라우드 쪽이 일방적으로 공급을 끊고 제3자에게 더 좋은 값에 팔 수 있는 구조다",
   "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-cloud-capacity"
-  ],
-  "revenue_type_ids": []
- },
- {
-  "id": "r113",
-  "source_entity": "anon_ai_res",
-  "target_entity": "nvidia",
-  "relationship_type": "SERVES_END_USER",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Cloud purchase",
-  "component": "NVIDIA 고객들에게서 클라우드 서비스를 사들인다",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "직접 사는 것이 아니라 고객을 거쳐 산다. NVIDIA 가 간접고객으로 따로 적었다",
   "target_tier": null,
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "source_tier": "END_USER"
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_opt_002"
+  ],
+  "notes": "다중 십억 달러 구매 약정과 미래 용량권이다. 확정 물량은 아니다(SUPPLIES_CAPACITY, 04의 R011)",
+  "supply_source_ids": [
+   "ss-optics"
+  ],
+  "revenue_type_ids": []
  },
  {
-  "id": "r201",
-  "source_entity": "nvidia",
-  "target_entity": "supermicro",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Systems",
-  "component": "GPU·서버 시스템",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
+  "id": "nv-skhynix-partner",
+  "source_entity": "sk-hynix",
+  "target_entity": "nvidia",
+  "relationship_type": "STRATEGIC_PARTNERSHIP",
+  "lane": "CORPORATE",
+  "subsystem": "Memory",
+  "component": "차세대 AI 메모리 공동개발",
+  "source_role": "전략 파트너",
+  "target_role": "엔비디아",
+  "valid_from": "2026-07-24",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
   "confidence_band": "high",
-  "notes": "슈퍼마이크로 10-K 가 「one supplier 63.1%」로 적는 익명 공급사가 NVIDIA 라는 것은 우리 추정이다. 공시는 이름을 대지 않는다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
+  "flows": [],
+  "source_ids": [
+   "nv_skh_001"
   ],
-  "contractual_customer": "CONFIRMED"
+  "notes": "일반 메모리 공급 관계(nv-skhynix-memory)와는 별도의 전략적 공동개발 관계다(04의 R021)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
-  "id": "r202",
+  "id": "nv-coherent-invest",
+  "source_entity": "nvidia",
+  "target_entity": "coherent",
+  "relationship_type": "INVESTS_IN",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "지분투자",
+  "source_role": "투자자",
+  "target_role": "피투자사",
+  "valid_from": "2026-03-02",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_opt_001"
+  ],
+  "notes": "20억 달러(04의 R010)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-lumentum-invest",
+  "source_entity": "nvidia",
+  "target_entity": "lumentum",
+  "relationship_type": "INVESTS_IN",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "지분투자",
+  "source_role": "투자자",
+  "target_role": "피투자사",
+  "valid_from": "2026-03-02",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_opt_002"
+  ],
+  "notes": "20억 달러(04의 R012)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-coreweave-partner",
   "source_entity": "nvidia",
   "target_entity": "coreweave",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI infrastructure",
-  "component": "GPU·시스템",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
+  "relationship_type": "STRATEGIC_PARTNERSHIP",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "전략적 협력",
+  "source_role": "엔비디아",
+  "target_role": "전략 파트너",
+  "valid_from": "2026-01-26",
+  "valid_to": "2030-12-31",
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
   "confidence_band": "high",
-  "notes": "코어위브가 쓰는 GPU 가 전부 NVIDIA 것이라고 10-K 에 적혀 있다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED",
+  "flows": [],
   "source_ids": [
-   "sec_crwv_10k_fy2025"
-  ]
- },
- {
-  "id": "r203",
-  "source_entity": "coreweave",
-  "target_entity": "nvidia",
-  "relationship_type": "SUPPLIES",
-  "lane": "MANUFACTURING_BOM",
-  "subsystem": "Cloud capacity",
-  "component": "팔리지 않은 클라우드 용량",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue"
+   "nv_down_002"
   ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "8-K 에 NVIDIA 가 2032-04-13 까지 잔여 용량을 사야 한다고 적혀 있다",
-  "source_tier": "COMPONENT_SUPPLIER",
-  "supply_source_ids": [
-   "ss-cloud-capacity"
-  ],
+  "notes": "2030년까지 AI 팩토리·Rubin·CPU·스토리지에 걸쳐 5GW 넘는 협력(04의 R013)",
+  "supply_source_ids": [],
   "revenue_type_ids": []
  },
  {
-  "id": "r204",
+  "id": "nv-coreweave-invest",
   "source_entity": "nvidia",
   "target_entity": "coreweave",
   "relationship_type": "INVESTS_IN",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Financing",
-  "component": "보통주 지분 투자 20억 달러",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "end_demand"
-  ],
-  "valid_from": null,
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "지분투자",
+  "source_role": "투자자",
+  "target_role": "피투자사",
+  "valid_from": "2026",
   "valid_to": null,
   "status": "ACTIVE",
   "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
   "confidence_band": "high",
-  "notes": "2026년 1월, 주당 87.20달러. 관계자거래로는 지정되지 않았다",
-  "target_tier": "INTERMEDIARY",
+  "flows": [],
+  "source_ids": [
+   "nv_down_002"
+  ],
+  "notes": "20억 달러(04의 R014)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "contractual_customer": "UNVERIFIED"
+  "revenue_type_ids": []
  },
  {
-  "id": "r205",
-  "source_entity": "dell",
-  "target_entity": "iren",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "Systems",
-  "component": "블랙웰 시스템 일체",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "revenue",
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "CONFIRMED",
-  "confidence_band": "high",
-  "notes": "NVIDIA 관점에서는 델이 직접고객이고 IREN 은 간접고객이 되는 경로다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ]
- },
- {
-  "id": "r206",
-  "source_entity": "nvidia",
-  "target_entity": "lambda_labs",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI infrastructure",
-  "component": "Vera Rubin 인스턴스",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "INFERRED",
-  "confidence_band": "low",
-  "notes": "보도자료가 클라우드 파트너로 이름을 적었다고 조사에 적혔으나 원장에 출처가 없어 추론으로 둔다. 매입 규모는 없다",
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED"
- },
- {
-  "id": "r207",
+  "id": "nv-nebius-partner",
   "source_entity": "nvidia",
   "target_entity": "nebius",
-  "relationship_type": "SELLS_TO",
-  "lane": "DOWNSTREAM",
-  "subsystem": "AI infrastructure",
-  "component": "Vera Rubin 인스턴스",
-  "source_role": null,
-  "target_role": null,
-  "flows": [
-   "physical"
-  ],
-  "valid_from": null,
-  "valid_to": null,
+  "relationship_type": "STRATEGIC_PARTNERSHIP",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "전략적 협력",
+  "source_role": "엔비디아",
+  "target_role": "전략 파트너",
+  "valid_from": "2026-03-11",
+  "valid_to": "2030-12-31",
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
-  "target_tier": "CONTRACTUAL_CUSTOMER",
-  "supply_source_ids": [],
-  "revenue_type_ids": [
-   "rt-unallocated"
-  ],
-  "contractual_customer": "CONFIRMED",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
   "source_ids": [
-   "ne_nvidia"
-  ]
+   "nv_down_003"
+  ],
+  "notes": "2030년까지 풀스택 AI 클라우드·AI 팩토리에 걸쳐 5GW 넘는 협력(04의 R015)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  },
  {
-  "id": "close-coreweave",
-  "source_entity": "coreweave",
-  "target_entity": "nvidia-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
+  "id": "nv-nebius-invest",
+  "source_entity": "nvidia",
+  "target_entity": "nebius",
+  "relationship_type": "INVESTS_IN",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "지분투자",
+  "source_role": "투자자",
+  "target_role": "피투자사",
+  "valid_from": "2026",
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
   "flows": [],
-  "source_ids": [],
+  "source_ids": [
+   "nv_down_003"
+  ],
+  "notes": "20억 달러(04의 R016)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+  "revenue_type_ids": []
  },
  {
-  "id": "close-openai",
-  "source_entity": "openai",
-  "target_entity": "nvidia-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
-  "valid_to": null,
+  "id": "nv-aws-partner",
+  "source_entity": "nvidia",
+  "target_entity": "aws",
+  "relationship_type": "STRATEGIC_PARTNERSHIP",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "GPU·Vera·NVLink Fusion·NVHBM",
+  "source_role": "엔비디아",
+  "target_role": "전략 파트너",
+  "valid_from": "2026-08-26",
+  "valid_to": "2028-12-31",
   "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
   "flows": [],
-  "source_ids": [],
+  "source_ids": [
+   "nv_down_001"
+  ],
+  "notes": "2027~2028년 GPU 200만 개 추가 계획. 익명 고객 집중도 수치와 매핑하지 않는다(04의 R017)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+  "revenue_type_ids": []
  },
  {
-  "id": "close-sbenergy",
-  "source_entity": "sbenergy",
-  "target_entity": "nvidia-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
+  "id": "nv-openai-partner",
+  "source_entity": "nvidia",
+  "target_entity": "openai",
+  "relationship_type": "STRATEGIC_PARTNERSHIP",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "NVIDIA 시스템·Rubin",
+  "source_role": "엔비디아",
+  "target_role": "전략 파트너",
+  "valid_from": "2025-09-22",
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
   "flows": [],
-  "source_ids": [],
+  "source_ids": [
+   "nv_down_004"
+  ],
+  "notes": "최소 10GW 규모 시스템 구매 의향서(LOI). SEC 상 직접 고객으로 표기되지 않는다(04의 R018)",
   "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-ssi-partner",
+  "source_entity": "nvidia",
+  "target_entity": "ssi",
+  "relationship_type": "STRATEGIC_PARTNERSHIP",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "Rubin 연산 접근권",
+  "source_role": "엔비디아",
+  "target_role": "전략 파트너",
+  "valid_from": "2026-07-27",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_down_005"
+  ],
+  "notes": "투자가 존재하나 금액은 이 원장에 없다(04의 R019)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-spacexai-adopt",
+  "source_entity": "nvidia",
+  "target_entity": "spacexai",
+  "relationship_type": "PLATFORM_EXPOSURE",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "Vera CPU·Vera Rubin",
+  "source_role": "엔비디아",
+  "target_role": "플랫폼 채택자",
+  "valid_from": "2026-08-24",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_down_006"
+  ],
+  "notes": "채택 사실만 확인되고 회계상 직접 고객 지위는 주장되지 않는다(PLATFORM_ADOPTION, 04의 R020)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-marvell-adopt",
+  "source_entity": "marvell",
+  "target_entity": "nvidia",
+  "relationship_type": "PLATFORM_EXPOSURE",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "커스텀 XPU·스케일업 네트워킹",
+  "source_role": "커스텀 실리콘 파트너",
+  "target_role": "엔비디아",
+  "valid_from": "2026",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_arch_001"
+  ],
+  "notes": "NVLink Fusion 생태계 파트너. 엔비디아도 20억 달러를 투자했다고 원장에 적혀 있으나 별도 투자 관계 행은 04에 없다(PLATFORM_ADOPTION, 04의 R022)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
+ },
+ {
+  "id": "nv-mediatek-adopt",
+  "source_entity": "mediatek",
+  "target_entity": "nvidia",
+  "relationship_type": "PLATFORM_EXPOSURE",
+  "lane": "CORPORATE",
+  "subsystem": "Corporate",
+  "component": "커스텀 XPU 설계 기반",
+  "source_role": "커스텀 실리콘 파트너",
+  "target_role": "엔비디아",
+  "valid_from": "2026",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": null,
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "nv_arch_001"
+  ],
+  "notes": "랙 스케일 세미커스텀 아키텍처 파트너다(PLATFORM_ADOPTION, 04의 R023)",
+  "supply_source_ids": [],
+  "revenue_type_ids": []
  }
 ]

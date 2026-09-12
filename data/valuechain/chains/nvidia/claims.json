@@ -1,0 +1,319 @@
+[
+ {
+  "id": "clm-nv-cust-fy2024-direct",
+  "statement": "FY2024(2024년 1월 28일 마감)에는 직접고객 한 곳이 총매출의 13%를 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2024",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "실명은 비공개다(04의 OBS001)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-cust-fy2024-indirect",
+  "statement": "같은 기간 회사는 별도로 간접고객 한 곳의 몫을 총매출의 약 19%로 추정했다. 직접고객 수치와 합쳐서 보지 않는다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2024",
+  "evidence_level": "ESTIMATED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "주문·채널 자료를 바탕으로 한 회사 자체 추정치다(04의 OBS002)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-cust-fy2025",
+  "statement": "FY2025(2025년 1월 26일 마감)에는 직접고객 세 곳이 각각 총매출의 12%·11%·11%를 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "실명은 비공개다(04의 OBS003)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-cust-fy2026",
+  "statement": "FY2026(2026년 1월 25일 마감)에는 직접고객 두 곳이 각각 총매출의 22%·14%를 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "실명은 비공개다(04의 OBS004)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-cust-q1fy2027",
+  "statement": "Q1 FY2027(2026년 4월 26일 마감)에는 직접고객 세 곳이 각각 21%·17%·16%를 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "Q1 FY2027",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_cust_002"
+  ],
+  "note": "실명은 비공개다(04의 OBS005)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-cust-q2fy2027-top1",
+  "statement": "Q2 FY2027(2026년 7월 26일 마감)에는 직접고객 한 곳이 총매출의 16%를 넘겼다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "Q2 FY2027",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_cust_001"
+  ],
+  "note": "실명은 비공개다(04의 OBS006)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-cust-h1fy2027",
+  "statement": "H1 FY2027 누계 기준으로는 직접고객 세 곳이 각각 16%·15%·13%를 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "H1 FY2027",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_cust_001"
+  ],
+  "note": "실명은 비공개다(04의 OBS007)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-ar-concentration",
+  "statement": "2026년 7월 26일 기준 매출채권 잔액의 22%·14%·13%·11%·10%를 직접고객 다섯 곳이 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026-07-26",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_cust_003"
+  ],
+  "note": "분모가 매출채권 잔액이라 매출 비중과는 다르다(04의 OBS008)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-dc-large-cloud",
+  "statement": "Q4 FY2024(2024년 1월 28일 마감) 기준 대형 클라우드 제공자가 데이터센터 매출의 50%를 웃돌았다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "Q4 FY2024",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "분모는 회사 총매출이 아니라 데이터센터 부문 매출이다(04의 OBS009)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-dc-inference-share",
+  "statement": "FY2024 데이터센터 매출 가운데 AI 추론이 차지하는 몫을 회사는 약 40%로 추정했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2024",
+  "evidence_level": "ESTIMATED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "분모는 데이터센터 부문 매출이다(04의 OBS010)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-dc-csp-share",
+  "statement": "Q2 FY2025(2024년 7월 28일 마감) 기준 CSP(클라우드서비스제공사)가 데이터센터 매출의 약 45%를 차지했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "Q2 FY2025",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_obs_ledger"
+  ],
+  "note": "옛 전방시장 구분 기준이라 지금 표시와 그대로 잇지 않는다(04의 OBS011)",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-revenue-fy2026",
+  "statement": "FY2026(2026년 1월 25일 마감) 총매출은 2,159억 3,800만 달러이고 데이터센터 부문이 1,937억 3,700만 달러(89.7%)다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_fin_001"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-revenue-history",
+  "statement": "FY2024 총매출 609억 2,200만 달러에서 FY2025 1,304억 9,700만 달러, FY2026 2,159억 3,800만 달러로 늘었고 그 사이 데이터센터 비중은 78.0%→88.3%→89.7%로 올라갔다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2024~FY2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_fin_003"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-q2fy2027-mix",
+  "statement": "2027 회계연도 2분기(2026년 7월 26일 마감) 총매출 962억 2,100만 달러 가운데 데이터센터 890억 2,300만 달러는 하이퍼스케일 487억 1,000만 달러와 ACIE 403억 1,300만 달러로 나뉘고, 엣지 컴퓨팅이 71억 9,800만 달러다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "Q2 FY2027",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_fin_002"
+  ],
+  "note": "2027 회계연도 1분기부터 시장·플랫폼 구분으로 표시 방식이 바뀌었다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-rubin-ecosystem",
+  "statement": "Rubin 생태계의 웨이퍼·칩 파트너로 TSMC·SPIL·Kinsus·KYEC·유니마이크론이, 제조·시스템 리더로 폭스콘·페가트론·QCT·위스트론·인벤텍이 공식적으로 이름을 올렸다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_rub_001",
+   "nv_rub_002"
+  ],
+  "note": "생태계 역할일 뿐 공급사 사이의 정확한 상거래선은 별도로 확인되지 않는 한 잇지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-hbm4-estimate",
+  "statement": "Rubin 의 HBM4 는 SK하이닉스·마이크론·삼성전자 세 공급사 생태계로 거론되나 엔비디아 몫별 정확한 배분은 공개되지 않는다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "ESTIMATED",
+  "confidence": 0.6,
+  "source_ids": [
+   "nv_hbm_001"
+  ],
+  "note": "TrendForce 등 제3자 추정치이며 검증 일정이 바뀌면서 수치가 해가 가는 동안 달라졌다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-nvlink-fusion",
+  "statement": "NVLink Fusion 은 마벨·미디어텍 등 제3자 커스텀 XPU·CPU 를 엔비디아 랙 스케일 AI 팩토리 아키텍처에 붙이는 규격이다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2025~2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_arch_001"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-stx",
+  "statement": "BlueField-4 STX/CMX 는 AI 네이티브 컨텍스트·KV 캐시 스토리지 레인이다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_stx_001"
+  ],
+  "note": "채택이 곧 회계상 직접 고객을 뜻하지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-dsx",
+  "statement": "DSX AI 팩토리 참조 설계에 Eaton·Schneider·Siemens·Trane·Vertiv·Jacobs·Switch 등이 참여한다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_dsx_001"
+  ],
+  "note": "부지 인프라·참조설계 레인이지 엔비디아 제품 BOM 이 아니다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-taxonomy-recast",
+  "statement": "FY2024~FY2026 공시는 데이터센터·게이밍·프로페셔널 시각화·자동차·OEM 으로 나눈 \"전방시장별 매출\"을, FY2027 2분기부터는 하이퍼스케일·ACIE·엣지 컴퓨팅으로 나눈 \"시장·플랫폼별 매출\"을 쓴다. 2분기에 한 회사를 ACIE 에서 하이퍼스케일로 재분류하며 이전 기간도 다시 표시했다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2024~2027 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_rev_recast_001",
+   "nv_sem_001"
+  ],
+  "note": "구분 자체는 실명 고객 귀속의 근거가 아니다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-nv-revenue-map-nomap",
+  "statement": "매출 구분·시장 플랫폼별 실명 고객 귀속은 어느 기간도 공개되지 않는다. AWS·코어위브·네비우스·오픈AI 등 이름이 공개된 전략 파트너·투자·플랫폼 채택 관계는 그래프에 실제 관계로 남기되, 그 회사를 하이퍼스케일·ACIE 등 매출 구분으로 승격하지 않는다.",
+  "subject": "nvidia",
+  "object": null,
+  "period": "FY2024~2027 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "nv_map_001"
+  ],
+  "note": "01 §9 의 공시 경계와 같은 자리다",
+  "subject_classification": null,
+  "object_classification": null
+ }
+]

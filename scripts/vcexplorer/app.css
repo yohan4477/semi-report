@@ -69,6 +69,8 @@ border-radius:12px;padding:2px 9px;font:inherit;font-size:11.5px;cursor:pointer;
 white-space:nowrap}
 .axchip i{font-style:normal;color:var(--ink3);margin-left:5px;font-size:10.5px}
 .axchip.un{border-style:dashed;color:var(--ink3)}
+.axgroup{align-self:center;font-size:10.5px;color:var(--ink3);padding:0 4px 0 8px;
+white-space:nowrap;border-left:1px solid var(--line)}
 .axchip.on{background:var(--ink1);color:#fff;border-color:var(--ink1)}
 .axchip.on i{color:#c8cede}
 .axnote{font-size:11.5px;color:var(--warm);padding-left:55px}

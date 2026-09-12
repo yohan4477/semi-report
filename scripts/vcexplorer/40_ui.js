@@ -492,15 +492,20 @@ function Axis(p){
       onClick: function(){ if (mine) p.onPick(null); } }, '전체');
     return h('div', { key:kind, className:'axrow' }, [
       h('b', { key:'b' }, label),
-      h('div', { key:'c', className:'axchips' }, [all].concat(list.map(function(x){
+      h('div', { key:'c', className:'axchips' }, [all].concat(list.reduce(function(acc, x, i){
         var key = kind + ':' + x.id, on = p.axis === key, sh = pick(kind, x);
         var show = sh && den && sh.denominator === den;
-        return h('button', { key:x.id, title: tip(x),
+        // 분류 체계(무리)가 바뀌는 자리에 이름표 하나 — 두 체계의 비중을 한 줄로 더하지 않게
+        var prev = i ? list[i - 1] : null;
+        if (x.group_label && (!prev || prev.group_label !== x.group_label))
+          acc.push(h('span', { key:'g' + x.id, className:'axgroup' }, x.group_label));
+        acc.push(h('button', { key:x.id, title: tip(x),
           className: 'axchip' + (on ? ' on' : '') + (x.unallocated ? ' un' : ''),
           onClick: function(){ p.onPick(on ? null : key); } }, [
           x.label, show ? h('i', { key:'s' },
-            sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '')) : null ]);
-      })))
+            sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '')) : null ]));
+        return acc;
+      }, [])))
     ]);
   }
   var rows = [chips('ss', m.ssList, '공급원'), chips('rt', m.rtList, '매출원')]

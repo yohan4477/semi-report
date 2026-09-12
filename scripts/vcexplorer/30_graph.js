@@ -125,14 +125,17 @@ function rowDen(kind, list, year){
 function orderCls(kind, list, year){
   var den = rowDen(kind, list, year);
   return list.slice().sort(function(a, b){
+    // 무리(분류 체계, group_rank)가 먼저 갈린다 — 엔비디아처럼 옛 분류와 새 분류가 한 줄에
+    // 서면 비중 합이 100 을 넘는 것처럼 읽힌다. 무리 안에서는 비중 순, 미상은 맨 뒤
     function key(x){
-      if (x.unallocated) return [3, 0];
+      var g = x.unallocated ? 99 : (x.group_rank || 0);
+      if (x.unallocated) return [g, 3, 0];
       var sh = pickShare(kind, x, year);
-      if (!sh) return [2, 0];
-      return [den && sh.denominator === den ? 0 : 1, -(sh.value || 0)];
+      if (!sh) return [g, 2, 0];
+      return [g, den && sh.denominator === den ? 0 : 1, -(sh.value || 0)];
     }
     var ka = key(a), kb = key(b);
-    return (ka[0] - kb[0]) || (ka[1] - kb[1]) || (a.label < b.label ? -1 : 1);
+    return (ka[0] - kb[0]) || (ka[1] - kb[1]) || (ka[2] - kb[2]) || (a.label < b.label ? -1 : 1);
   });
 }
 
@@ -322,7 +325,7 @@ function buildGraph(focal, year, sel, axis, hint, open){
         nodes.push({ id: lid, type:'nd', data:{
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated, fixOrd: xi,
           // 실명 매핑 밖의 잔여가 비공개인 매출원은 알약에 그 뜻을 단다(잔여 칸은 상자가 아니다)
-          sub: x.residual ? x.residual.label : null,
+          sub: x.group_label || (x.residual ? x.residual.label : null),
           share: (sh && den && sh.denominator === den)
             ? sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '') : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',

@@ -774,7 +774,7 @@
   "publisher": "TrendForce",
   "title": "Apple 향 MLCC 생산 보도",
   "source_type": "industry_research",
-  "published_date": null,
+  "published_date": "2025-10",
   "url": "https://www.trendforce.com/research/download/RP240711DB",
   "accessed_date": "2026-09-11",
   "note": "태양유전 라인이 Apple·아이폰 수요향 MLCC 를 만든다고 보도. 2024-07·2025-10 두 시점 자료다(원표기: CONFIRMED industry evidence)"
@@ -1338,5 +1338,295 @@
   "url": "https://nebius.com/newsroom/nebius-group-announces-closing-of-private-offering-of-convertible-senior-notes-with-aggregate-gross-proceeds-of-approximately-5-75-billion",
   "accessed_date": "2026-09-12",
   "note": "전환사채 두 갈래 합계 57억 5,000만 달러. 03 의 S026"
+ },
+ {
+  "id": "nv_fin_001",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": "2026-02-25",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "accessed_date": "2026-09-12",
+  "note": "FY2026 총매출 2,159억 3,800만 달러, 데이터센터 1,937억 3,700만 달러(89.7%). 회사 총매출 기준"
+ },
+ {
+  "id": "nv_fin_002",
+  "publisher": "NVIDIA Corporation",
+  "title": "2027 회계연도 2분기 Form 10-Q(2026-07-26 마감)",
+  "source_type": "primary_official",
+  "published_date": "2026-08-26",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "accessed_date": "2026-09-12",
+  "note": "2분기 데이터센터 890억 2,300만 달러 = 하이퍼스케일 487억 1,000만 달러 + ACIE 403억 1,300만 달러, 엣지 컴퓨팅 71억 9,800만 달러. 2분기 총매출 962억 2,100만 달러. 시장·플랫폼 구분으로 표시 방식이 바뀌었다"
+ },
+ {
+  "id": "nv_fin_003",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 Form 10-K 비교표(FY2024~FY2026)",
+  "source_type": "primary_official",
+  "published_date": "2026-02-25",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "accessed_date": "2026-09-12",
+  "note": "FY2024/FY2025/FY2026 데이터센터 매출 475억 2,500만/1,151억 8,600만/1,937억 3,700만 달러, 총매출 609억 2,200만/1,304억 9,700만/2,159억 3,800만 달러. 레거시 전방시장 구분"
+ },
+ {
+  "id": "nv_cust_001",
+  "publisher": "NVIDIA Corporation",
+  "title": "2027 회계연도 2분기 Form 10-Q",
+  "source_type": "primary_official",
+  "published_date": "2026-08-26",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "accessed_date": "2026-09-12",
+  "note": "H1 FY2027 직접고객 집중도 16%·15%·13%(회사 총매출 기준). 실명은 비공개"
+ },
+ {
+  "id": "nv_cust_002",
+  "publisher": "NVIDIA Corporation",
+  "title": "2027 회계연도 1분기 Form 10-Q",
+  "source_type": "primary_official",
+  "published_date": "2026-05-20",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
+  "accessed_date": "2026-09-12",
+  "note": "Q1 FY2027 직접고객 세 곳이 총매출의 21%·17%·16%. 실명은 비공개"
+ },
+ {
+  "id": "nv_cust_003",
+  "publisher": "NVIDIA Corporation",
+  "title": "2027 회계연도 2분기 Form 10-Q",
+  "source_type": "primary_official",
+  "published_date": "2026-08-26",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "accessed_date": "2026-09-12",
+  "note": "2026-07-26 기준 매출채권 잔액의 22%·14%·13%·11%·10%를 직접고객 다섯 곳이 차지한다. 매출 비중과는 분모가 다르다"
+ },
+ {
+  "id": "nv_sup_001",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": "2026-02-25",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "accessed_date": "2026-09-12",
+  "note": "TSMC 와 삼성전자가 엔비디아의 반도체 웨이퍼 파운드리다. 배분 비중은 비공개"
+ },
+ {
+  "id": "nv_sup_002",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": "2026-02-25",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "accessed_date": "2026-09-12",
+  "note": "SK하이닉스·마이크론·삼성전자가 엔비디아에 메모리를 공급한다. 공급사별 정확한 비중은 비공개"
+ },
+ {
+  "id": "nv_sup_003",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": "2026-02-25",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "accessed_date": "2026-09-12",
+  "note": "CoWoS 첨단 패키징 기술을 쓴다고 밝힌다. 엔비디아 전용 용량 비중은 비공개"
+ },
+ {
+  "id": "nv_sup_004",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 Form 10-K",
+  "source_type": "primary_official",
+  "published_date": "2026-02-25",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+  "accessed_date": "2026-09-12",
+  "note": "Hon Hai(폭스콘)·위스트론·페브리넷이 조립·시험·패키징을 맡는 하청업체다. 개별 물량 비중은 비공개"
+ },
+ {
+  "id": "nv_rub_001",
+  "publisher": "NVIDIA",
+  "title": "Powering the Taiwan Ecosystem for Global AI Infrastructure",
+  "source_type": "primary_company",
+  "published_date": null,
+  "url": "https://blogs.nvidia.com/blog/taiwan-ecosystem-ai-infrastructure/",
+  "accessed_date": "2026-09-12",
+  "note": "Rubin 생태계 — TSMC·SPIL·Kinsus·KYEC·Unimicron 이 웨이퍼·칩 파트너, 폭스콘·페가트론·QCT·위스트론·인벤텍이 제조·시스템 리더다. 생태계 역할일 뿐 개별 상거래선은 별도로 확인돼야 한다"
+ },
+ {
+  "id": "nv_hbm_001",
+  "publisher": "TrendForce",
+  "title": "HBM Market Bulletin 2026",
+  "source_type": "industry_research",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "Rubin HBM4 를 둘러싼 세 공급사 생태계 추정. 엔비디아 공시가 아니라 제3자 추정치이며 검증 일정이 바뀌면서 해가 가는 동안 수치가 달라졌다"
+ },
+ {
+  "id": "nv_opt_001",
+  "publisher": "NVIDIA / Coherent",
+  "title": "NVIDIA and Coherent Announce Strategic Partnership to Develop Optics Technology to Scale Next-Generation Data Center Architecture",
+  "source_type": "primary_company",
+  "published_date": "2026-03-02",
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Coherent-Announce-Strategic-Partnership-to-Develop-Optics-Technology-to-Scale-Next-Generation-Data-Center-Architecture/default.aspx",
+  "accessed_date": "2026-09-12",
+  "note": "다중 십억 달러 구매 약정 + 미래 용량권 + 엔비디아의 20억 달러 지분투자"
+ },
+ {
+  "id": "nv_opt_002",
+  "publisher": "NVIDIA / Lumentum",
+  "title": "NVIDIA Announces Strategic Partnership With Lumentum to Develop State-of-the-Art Optics Technology",
+  "source_type": "primary_company",
+  "published_date": "2026-03-02",
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Strategic-Partnership-With-Lumentum-to-Develop-State-of-the-Art-Optics-Technology/default.aspx",
+  "accessed_date": "2026-09-12",
+  "note": "다중 십억 달러 구매 약정 + 미래 용량권 + 엔비디아의 20억 달러 지분투자"
+ },
+ {
+  "id": "nv_down_001",
+  "publisher": "AWS / NVIDIA",
+  "title": "2026-08-26 공동 발표",
+  "source_type": "primary_company",
+  "published_date": "2026-08-26",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "AWS 가 2027~28년 엔비디아 GPU 200만 개 추가 도입을 계획. Vera CPU·NVLink Fusion·NVHBM 통합. 익명 고객 집중도 수치와 매핑하지 않는다"
+ },
+ {
+  "id": "nv_down_002",
+  "publisher": "NVIDIA",
+  "title": "2026-01-26 공식 발표",
+  "source_type": "primary_company",
+  "published_date": "2026-01-26",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "코어위브와 2030년까지 5GW 넘는 협력. 엔비디아가 20억 달러를 투자했다"
+ },
+ {
+  "id": "nv_down_003",
+  "publisher": "NVIDIA",
+  "title": "NVIDIA and Nebius Partner to Scale Full-Stack AI Cloud",
+  "source_type": "primary_company",
+  "published_date": "2026-03-11",
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Nebius-Partner-to-Scale-Full-Stack-AI-Cloud/",
+  "accessed_date": "2026-09-12",
+  "note": "네비우스와 2030년까지 5GW 넘는 협력. 엔비디아가 20억 달러를 투자했다"
+ },
+ {
+  "id": "nv_down_004",
+  "publisher": "NVIDIA / OpenAI",
+  "title": "2025-09-22 공식 발표",
+  "source_type": "primary_company",
+  "published_date": "2025-09-22",
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "오픈AI 가 최소 10GW 규모 엔비디아 시스템 구매 의향서(LOI)를 맺었다. 엔비디아는 배치가 진행됨에 따라 최대 1,000억 달러까지 투자할 의향이 있다고 밝혔다"
+ },
+ {
+  "id": "nv_down_005",
+  "publisher": "NVIDIA / SSI",
+  "title": "Ilya Sutskever's Safe Superintelligence Inc. and NVIDIA Announce Long-Term Strategic Partnership",
+  "source_type": "primary_company",
+  "published_date": "2026-07-27",
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/Ilya-Sutskevers-Safe-Superintelligence-Inc--and-NVIDIA-Announce-Long-Term-Strategic-Partnership/default.aspx",
+  "accessed_date": "2026-09-12",
+  "note": "장기 전략 제휴, 엔비디아의 투자, Rubin 시스템 접근권"
+ },
+ {
+  "id": "nv_down_006",
+  "publisher": "NVIDIA",
+  "title": "SpaceXAI Adopts NVIDIA Vera CPU to Accelerate Agentic AI at Massive Scale",
+  "source_type": "primary_company",
+  "published_date": "2026-08-24",
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/SpaceXAI-Adopts-NVIDIA-Vera-CPU-to-Accelerate-Agentic-AI-at-Massive-Scale/default.aspx",
+  "accessed_date": "2026-09-12",
+  "note": "Vera CPU 도입과 Vera Rubin 기반 인프라 확장. Starmind 위성이 예로 들린다"
+ },
+ {
+  "id": "nv_arch_001",
+  "publisher": "NVIDIA",
+  "title": "NVLink Fusion",
+  "source_type": "primary_company",
+  "published_date": null,
+  "url": "https://www.nvidia.com/en-us/data-center/nvlink-fusion/",
+  "accessed_date": "2026-09-12",
+  "note": "제3자 커스텀 XPU·CPU 를 엔비디아 랙 스케일 AI 팩토리 아키텍처에 통합하는 규격이다"
+ },
+ {
+  "id": "nv_stx_001",
+  "publisher": "NVIDIA",
+  "title": "BlueField-4 STX/CMX",
+  "source_type": "primary_company",
+  "published_date": null,
+  "url": "https://www.nvidia.com/en-us/data-center/ai-storage/cmx/",
+  "accessed_date": "2026-09-12",
+  "note": "AI 네이티브 컨텍스트·KV 캐시 스토리지 레인이다. 채택이 곧 직접 고객을 뜻하지 않는다"
+ },
+ {
+  "id": "nv_dsx_001",
+  "publisher": "NVIDIA",
+  "title": "Vera Rubin DSX",
+  "source_type": "primary_company",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "DSX 참조 설계에 Eaton·Schneider·Siemens·Trane·Vertiv·Jacobs·Switch 등이 참여한다. 부지 인프라·참조설계 레인이지 제품 BOM 이 아니다"
+ },
+ {
+  "id": "nv_rev_recast_001",
+  "publisher": "NVIDIA Corporation",
+  "title": "2027 회계연도 2분기 Form 10-Q",
+  "source_type": "primary_official",
+  "published_date": "2026-08-26",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "accessed_date": "2026-09-12",
+  "note": "2027 회계연도 1분기부터 시장·플랫폼 표시로 바뀌었고 2분기에 한 회사를 ACIE 에서 하이퍼스케일로 재분류하며 이전 기간도 다시 표시했다. 분류는 시점마다 다른 관측이지 고정된 성격이 아니다"
+ },
+ {
+  "id": "nv_sem_001",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 10-K + 2027 회계연도 2분기 10-Q",
+  "source_type": "primary_official",
+  "published_date": "2026-08-26",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "accessed_date": "2026-09-12",
+  "note": "FY2024~26 공시는 \"전방시장별 매출\", FY2027 2분기는 \"시장·플랫폼별 매출\"이라는 이름을 쓴다. 이 구분 자체는 특정 고객 귀속의 근거가 아니다"
+ },
+ {
+  "id": "nv_skh_001",
+  "publisher": "NVIDIA / SK Group",
+  "title": "SK Group and NVIDIA Expand Strategic Partnership Across AI Factories and Next-Generation Memory",
+  "source_type": "primary_company",
+  "published_date": "2026-07-24",
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/SK-Group-and-NVIDIA-Expand-Strategic-Partnership-Across-AI-Factories-and-Next-Generation-Memory/default.aspx",
+  "accessed_date": "2026-09-12",
+  "note": "차세대 AI 메모리(HBM 포함)를 함께 확보·공동개발하는 장기 제휴다. 일반 메모리 공급 관계와는 별도로 다룬다"
+ },
+ {
+  "id": "nv_map_001",
+  "publisher": "NVIDIA Corporation",
+  "title": "FY2026 10-K + 2027 회계연도 2분기 10-Q + 프레임워크 규칙",
+  "source_type": "primary_official",
+  "published_date": "2026-08-26",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
+  "accessed_date": "2026-09-12",
+  "note": "매출 구분·시장 플랫폼별 실명 고객 귀속은 공시되지 않는다. 파트너 목록을 매출 배분으로 승격하지 않는다"
+ },
+ {
+  "id": "nv_obs_ledger",
+  "publisher": "조사 원장",
+  "title": "04 Observations 탭 (Drive)",
+  "source_type": "research_ledger",
+  "published_date": null,
+  "url": null,
+  "accessed_date": "2026-09-12",
+  "note": "OBS001~011 고객 집중도·데이터센터 세부 비중이 원장에 적혀 있다. 개별 10-K/10-Q 조항 번호는 원장에 없어 발행 문서명·마감일만 특정한다"
+ },
+ {
+  "id": "nv_rub_002",
+  "publisher": "NVIDIA",
+  "title": "NVIDIA Vera Rubin Ramps Into Full Production to Power Agentic AI Factories Worldwide",
+  "source_type": "primary_company",
+  "published_date": null,
+  "url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Vera-Rubin-Ramps-Into-Full-Production-to-Power-Agentic-AI-Factories-Worldwide/default.aspx",
+  "accessed_date": "2026-09-12",
+  "note": "Dell·HPE·Lenovo·Supermicro 등 폭넓은 ODM·스토리지 파트너가 참여하는 생산 생태계. 개별 물량 비중은 비공개"
  }
 ]
