@@ -161,6 +161,9 @@ border-radius:0 8px 8px 0}
 .busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
 gap:9px;background:rgba(232,235,240,.72);z-index:20;font-size:13px;color:var(--ink2);
 pointer-events:none}
+/* 세우는 동안은 판을 안 보인다. 자리 잡기 전 판은 머리글만 선 빈 판이다 */
+.canvas.loading .react-flow{opacity:0}
+.canvas .react-flow{transition:opacity .2s}
 .busy i{width:15px;height:15px;border:1.5px solid rgba(20,26,40,.14);
 border-top-color:rgba(20,26,40,.55);border-radius:50%;animation:vcspin .8s linear infinite}
 @media (prefers-reduced-motion:reduce){ .busy i{animation-duration:2s} }
@@ -2330,7 +2333,8 @@ function App(){
   var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
   var u2 = useState(false), menu = u2[0], setMenu = u2[1];
   // 회사 목록에서 고른 뒤 판이 설 때까지. 자리 잡기가 끝나면 fit 효과가 내린다
-  var s2 = useState(null), busy = s2[0], setBusy = s2[1];
+  // 처음 열 때도 「세우는 중」이다. 자리 잡기 전의 판(머리글만 선 빈 판)을 보이지 않는다
+  var s2 = useState(u0.focal), busy = s2[0], setBusy = s2[1];
   // 판의 이동·확대 — 머리글 띠가 가로로 따라가게 한다
   var v2 = useState({ x:0, y:0, zoom:1 }), vp = v2[0], setVp = v2[1];
   // 시야를 옮길 상자. 판이 다시 선 뒤 그 상자를 가운데에 둔다
@@ -2640,8 +2644,8 @@ function App(){
       onSel: function(ref){ setSel(ref); setDrw(true); } });
   else if (mode === 'evidence') body = h(Evidence, null);
   else if (mode === 'bom') body = h(Bom, { focal:focal, onDrill:drill });
-  else body = h('div', { key:'cv', className:'canvas' }, [
-    h(HdrBar, { key:'hb', nodes: gr.nodes, vp: vp }),
+  else body = h('div', { key:'cv', className:'canvas' + (busy ? ' loading' : '') }, [
+    busy ? null : h(HdrBar, { key:'hb', nodes: gr.nodes, vp: vp }),
     // 좁은 화면 — 조작은 엄지 자리(아래)에. 오른쪽은 전부 펴기·서랍, 왼쪽은 뒤로 한 단
     narrow ? h('div', { key:'fab', className:'fab' }, [
       h('button', { key:'all', className:'iconbtn' + (allOpen ? ' on' : ''),
