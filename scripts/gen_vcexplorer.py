@@ -298,6 +298,8 @@ font-size:16px;line-height:1;padding:2px 10px;cursor:pointer}
   .drw h3{font-size:14.5px}
   .legend{display:none}
   .crumb{display:none}
+  /* 확대·축소 버튼은 손가락으로 대신한다. 아래 왼쪽은 「뒤로」 자리다 */
+  .react-flow__controls{display:none}
   .sw th:first-child{width:auto}
   /* 머리줄 한 줄 — 이름 · 콤팩트 분절 탭 · 검색 아이콘 · 서랍 아이콘 */
   .top{gap:6px;padding:5px 8px;flex-wrap:nowrap;align-items:center;height:40px}
