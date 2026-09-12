@@ -2250,6 +2250,15 @@ function App(){
   var v2 = useState({ x:0, y:0, zoom:1 }), vp = v2[0], setVp = v2[1];
   // 시야를 옮길 상자. 판이 다시 선 뒤 그 상자를 가운데에 둔다
   var w2 = useState(null), panTo = w2[0], setPanTo = w2[1];
+  // 판 상자(.react-flow)는 스크롤 상자가 아니다. 포커스·찾기·자동 스크롤로 안이 밀리면
+  // 머리글 띠·미니맵과 상자가 어긋난다. 밀릴 때마다 0 으로 되돌린다
+  useEffect(function(){
+    var el = document.querySelector('.react-flow');
+    if (!el) return;
+    function fix(){ if (el.scrollTop || el.scrollLeft) { el.scrollTop = 0; el.scrollLeft = 0; } }
+    el.addEventListener('scroll', fix);
+    return function(){ el.removeEventListener('scroll', fix); };
+  }, [rf, mode]);
   useEffect(function(){
     if (!panTo || !rf || !rf.setCenter) return;
     var t = setTimeout(function(){
@@ -2388,7 +2397,7 @@ function App(){
   }
   function onNodeClick(_, node){
     var rfEl = document.querySelector('.react-flow');
-    if (rfEl && rfEl.scrollTop) rfEl.scrollTop = 0;
+    if (rfEl) { rfEl.scrollTop = 0; rfEl.scrollLeft = 0; }
     // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다.
     // 공급원·매출원 알약은 상자가 아니라 분류라 띠의 칩과 같은 일을 한다 — 그 분류에
     // 걸린 줄만 남기고 칩이 켜진다. 다시 누르면 푼다
