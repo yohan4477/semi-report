@@ -37,6 +37,7 @@ SRC_TRN = os.path.join(ROOT, 'insights', 'reports', 'model-trinity-2026-09-10.md
 SRC_SX = os.path.join(ROOT, 'insights', 'reports', 'model-payback-2026-09-10.md')
 SRC_BR = os.path.join(ROOT, 'insights', 'reports', 'model-bridge-2026-09-10.md')
 SRC_WAF = os.path.join(ROOT, 'insights', 'reports', 'model-wafer-2026-09-10.md')
+SRC_BS = os.path.join(ROOT, 'insights', 'reports', 'model-backstop-2026-09-12.md')
 
 _NOTE = ('값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 '
          '읽은 값은 몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열이나 '
@@ -104,6 +105,19 @@ HEAD_LEGO = _head('⑰', 'model-lego',
 HEAD_GRD = _head('⑱', 'model-grd',
                  '데이터센터 메가와트당 자본 — 전력을 어디서 끄느냐로 매출의 12~22퍼센트가 자본으로 간다',
                  'SemiAnalysis 영문 클리핑 1편의 본문 값')
+
+HEAD_BS = _head('㉓', 'model-bs',
+                '엔비디아 우발채무 5,300억 달러 — 1기가와트당 부담으로 나누면 6.5기가와트가 되고, 그 단가가 우리 자본 단가와 맞는다',
+                'SemiAnalysis 영문 클리핑 1편의 본문 값 · 이 층 앞 두 글의 단가')
+
+GROUPS_BS = [('대차대조표 바깥', 1, 2),
+             ('앞 글과 맞는 자리', 3, 4),
+             ('명시와 암묵', 5, 5),
+             ('남은 것', 6, 6)]
+
+LEAD_BS = ('10-Q 에 오른 오프밸런스 보증 5,300억 달러를 원문이 적은 1기가와트당 '
+           '부담으로 나눠 봅니다. 그 부담은 계약 둘에서 그대로 다시 나오고, 우리 전력으로 '
+           '나누면 7월 글의 바닥값이, 보증 상한으로 나누면 우리 자본 단가가 나옵니다.')
 
 HEAD_TRN = _head('⑲', 'model-trn',
                  'GPU 임대 바닥값(엔비디아 백스톱) — 깔아 준 대가로 청구가의 18퍼센트를 가져간다',
@@ -203,6 +217,11 @@ LEAD_CLUSTER = ('리서치 회사가 낸 표를 옮겨 적는 대신 그 표를 
 LEAD_INFER = ('AMD MI300X 는 빌려서 쓰면 엔비디아 H200 에 지고, 사서 쓰면 작업 종류에 따라 이깁니다. 원문은 임대 시세로만 답했습니다. 발표된 표를 다시 세우니 운영비는 전수로 맞았고, 자본비 여덟 칸이 어긋난 원인은 표에 찍힌 할인율의 반올림이었습니다.')
 
 CAPTION = {
+    'BSCOVER': ('6년치 바닥값을 다 받쳐 주는 AICP 만 짓는 값을 넘는다', cf.FIG_BSCOVER,
+                '막대 셋은 원문이 적은 1기가와트당 부담이고 짙은 칸이 AICP 입니다. 점선은 '
+                '우리가 되짚은 짓는 자본 — 잔존가치보증 부담 94억을 상한 25퍼센트로 나눈 '
+                '값이며 원문에 없습니다. ① 그 자본이 서는 자리입니다. 실제 보증이 상한보다 '
+                '낮으면 점선이 오른쪽으로 갑니다.'),
     'STACK': ('청구서에 찍히는 다섯 줄과 안 찍히는 세 줄', mf.FIG_STACK,
               '그림 016 의 Hyperscaler 열입니다. 여덟 줄이 다 0 이 아닌 유일한 열이라 '
               '사슬이 안 끊깁니다. 막대는 GPU 한 줄이 나머지의 서른 배라 제곱근 눈금으로 '
@@ -457,6 +476,14 @@ def _table(rows):
 
 
 TBL_NOTE = {
+    'BSSHEET': '항목 넷과 총액은 10-Q 값이고, 이름 없는 두 항목과 배수는 총액에서 뺀 값입니다. '
+               '원문은 그 둘의 이름을 안 적었습니다.',
+    'BSGW': '계약 총액과 용량은 원문 값이고 1기가와트당 부담은 그것을 나눈 값입니다. '
+            '잔존가치보증은 원문이 계약 없이 적어 재현 못 했습니다.',
+    'BSGPU': 'Firmus 계약 값과 바닥값은 원문 값이고, 장수와 전력과 되돌린 바닥값은 우리가 '
+             '냈습니다. 7월 글의 2.10킬로와트는 다른 계약에서 되짚은 값입니다.',
+    'BSCOVER': '자본 단가는 잔존가치보증이 상한 25퍼센트를 꽉 채운다는 전제 위에 섭니다. '
+               '용량 셋은 원문 값이고 그 자본과 배수는 우리가 냈습니다.',
     'TCO': '굿풋 줄은 발표된 백분율(소수 둘째 자리)로 계산했습니다. 그 반올림 때문에 '
            '발표치와 최대 700달러 차이가 납니다. 나머지 칸은 달러까지 같습니다.',
     'GOOD': '「수식대로」는 원문 L131 의 식에 그림의 입력을 그대로 넣은 값입니다. '
@@ -752,6 +779,10 @@ def report_grd(sec, p, fig):
 
 def report_trn(sec, p, fig):
     return _report(SRC_TRN, 'model-trn', LEAD_TRN, GROUPS_TRN, sec, p, fig)
+
+
+def report_bs(sec, p, fig):
+    return _report(SRC_BS, 'model-bs', LEAD_BS, GROUPS_BS, sec, p, fig)
 
 
 def report_sx(sec, p, fig):

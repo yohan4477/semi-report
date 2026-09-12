@@ -23,6 +23,7 @@ import trinity_debt as TD                                        # noqa: E402
 import spacex_payback as SX                                      # noqa: E402
 import bridge_capex as BR                                        # noqa: E402
 import wafer_chain as WF                                         # noqa: E402
+import backstop_capacity as BS                                   # noqa: E402
 
 RAW = json.loads(io.open(os.path.join(_MODELS, 'raw', 'capex.json'),
                          encoding='utf-8').read())
@@ -49,6 +50,10 @@ _SH = _tbl('frame-sheet')
 _SC = _tbl('frame-scn')
 _LV = _tbl('frame-lever')
 _WF = _tbl('wafer-coef')
+_BSS = _tbl('backstop-sheet')
+_BSC = _tbl('backstop-capacity')
+_BSA = _tbl('backstop-aicp')
+_BSR = _tbl('backstop-rvg')
 
 
 def _v(t, k):
@@ -551,6 +556,127 @@ def wafer_scn_table():
     return head, body
 
 
+# ── 백스톱 용량 ──────────────────────────────────────────────────────────
+def _bs_span():
+    """다리 층의 메가와트당 자본 폭. 그 층과 같은 길로 낸다."""
+    _, it = _it_per_mw()
+    los = [v[1] for v in _LY['rows'].values()]
+    his = [v[2] if v[2] is not None else v[1] for v in _LY['rows'].values()]
+    return BR.all_in_per_mw(min(los), it), BR.all_in_per_mw(max(his), it)
+
+
+def _bs_impl():
+    return BS.implied_capex_per_mw(_v(_BSC, 'per_gw_rvg'), _v(_BSR, 'guarantee_cap'))
+
+
+def backstop_sheet_table():
+    """10-Q 오프밸런스 항목 — 이름이 적힌 넷과 안 적힌 둘."""
+    head = ['항목', '전 분기', '이번 분기', '성격']
+    named = [_v(_BSS, 'supply_now'), _v(_BSS, 'lps_now'),
+             _v(_BSS, 'aicp_now'), _v(_BSS, 'lease_now')]
+    rest = BS.residual(_v(_BSS, 'off_total'), named)
+    rest_prev = BS.residual(_v(_BSS, 'off_prev'),
+                            [_v(_BSS, 'supply_prev'), _v(_BSS, 'lps_prev')])
+    return head, [
+        ['공급·용량 약정(주로 메모리)', '$%g십억' % _v(_BSS, 'supply_prev'),
+         '$%g십억' % _v(_BSS, 'supply_now'), '10-Q 공시'],
+        ['보증·LPS 보증(PORTS-Pike)', '$%g십억' % _v(_BSS, 'lps_prev'),
+         '$%g십억' % _v(_BSS, 'lps_now'), '10-Q 공시'],
+        ['AI 클라우드 계약(AICP)', '—', '$%g십억' % _v(_BSS, 'aicp_now'),
+         '10-Q 공시 · 처음 등장'],
+        ['데이터센터 리스(재양도 예정)', '—', '$%g십억' % _v(_BSS, 'lease_now'),
+         '10-Q 공시 · 처음 등장'],
+        ['이름이 적힌 넷의 합', '$%g십억' % (_v(_BSS, 'supply_prev') + _v(_BSS, 'lps_prev')),
+         '$%g십억' % sum(named), '모델이 낸 값 — 넷을 더했다'],
+        ['이름 없는 두 항목', '$%g십억' % rest_prev, '$%g십억' % rest,
+         '모델이 낸 값 — 총액에서 뺐다'],
+        ['오프밸런스 총액', '$%g십억' % _v(_BSS, 'off_prev'),
+         '$%g십억' % _v(_BSS, 'off_total'), '10-Q 공시'],
+        ['온밸런스 부채 총액', '', '$%g십억' % _v(_BSS, 'on_liab'), '10-Q 공시'],
+        ['오프 ÷ 온', '', '%.1f배' % BS.ratio(_v(_BSS, 'off_total'), _v(_BSS, 'on_liab')),
+         '모델이 낸 값'],
+        ['오프 ÷ F1/28 EBITDA 컨센서스', '',
+         '%.2f년치' % BS.ratio(_v(_BSS, 'off_total'), _v(_BSS, 'ebitda_f128')),
+         '모델이 낸 값'],
+    ]
+
+
+def backstop_gw_table():
+    """1기가와트당 부담을 계약에서 다시 낸다."""
+    head = ['구조', '계약', '모델', '발표', '차이']
+    firmus = BS.per_gw(_v(_BSA, 'firmus_total'), _v(_BSA, 'firmus_mw') / 1000.0)
+    ports = BS.per_gw(_v(_BSS, 'lps_now'), _v(_BSC, 'ports_gw'))
+    body = []
+    for name, deal, got, want in (
+            ('AICP', 'Firmus $%g십억 ÷ %gMW' % (_v(_BSA, 'firmus_total'),
+                                              _v(_BSA, 'firmus_mw')),
+             firmus, _v(_BSC, 'per_gw_aicp')),
+            ('PORTS-Pike', '보증 $%g십억 ÷ %gGW' % (_v(_BSS, 'lps_now'),
+                                                 _v(_BSC, 'ports_gw')),
+             ports, _v(_BSC, 'per_gw_ports'))):
+        body.append([name, deal, '$%.1f십억/GW' % got, '$%g십억/GW' % want,
+                     '%+.1f' % (got - want)])
+    body.append(['잔존가치보증', '원문이 계약 없이 적었다', '—',
+                 '$%g십억/GW' % _v(_BSC, 'per_gw_rvg'), '재현 못 함'])
+    return head, body
+
+
+def backstop_gpu_table():
+    """Firmus 계약에서 전력을, 1기가와트당 부담에서 바닥값을 되짚는다."""
+    n = BS.gpus_behind(_v(_BSA, 'firmus_total') * 1e9, _v(_BSA, 'floor'),
+                       _v(_BSA, 'years'), BS.HOURS_PER_YEAR)
+    kw = BS.kw_per_gpu(n, _v(_BSA, 'firmus_mw'))
+    fl = BS.floor_from_per_gw(_v(_BSC, 'per_gw_aicp'), _KW_PER_GPU,
+                              _v(_BSA, 'years'), BS.HOURS_PER_YEAR)
+    head = ['무엇', '값', '성격']
+    return head, [
+        ['Firmus 부담 총액 · 용량 · 기간',
+         '$%g십억 · %gMW · %g년' % (_v(_BSA, 'firmus_total'), _v(_BSA, 'firmus_mw'),
+                                  _v(_BSA, 'years')), '원문 값'],
+        ['GB300 평균 바닥값', '$%g/GPU·시간' % _v(_BSA, 'floor'), '원문 값'],
+        ['그 뒤에 선 GPU 장수', '%s장' % format(int(n), ','), '모델이 낸 값'],
+        ['GPU 한 장이 끄는 전력', '%.2fkW' % kw, '모델이 낸 값'],
+        ['7월 글에서 되짚은 전력', '%.2fkW' % _KW_PER_GPU, 'GPU 금융 층 — 모델이 낸 값'],
+        ['1GW당 $%g십억을 바닥값으로 되돌리면' % _v(_BSC, 'per_gw_aicp'),
+         '$%.3f/GPU·시간' % fl, '모델이 낸 값'],
+        ['시장 5년 계약가', '$%g~%g/GPU·시간' % (_v(_BSA, 'market_lo'), _v(_BSA, 'market_hi')),
+         '원문 값'],
+        ['바닥값의 할인',
+         '%.0f~%.0f%%' % (BS.discount(_v(_BSA, 'floor'), _v(_BSA, 'market_lo')),
+                          BS.discount(_v(_BSA, 'floor'), _v(_BSA, 'market_hi'))),
+         '모델이 낸 값'],
+    ]
+
+
+def backstop_cover_table():
+    """부담이 자본을 몇 배 덮나, 그 자본으로 용량 셋은 얼마인가."""
+    impl = _bs_impl()
+    lo, hi = _bs_span()
+    head = ['무엇', '값', '성격']
+    body = [
+        ['잔존가치보증 1GW당 부담 ÷ 상한 %g%%' % _v(_BSR, 'guarantee_cap'),
+         '$%.1f백만/MW' % impl, '모델이 낸 값'],
+        ['다리 층의 메가와트당 자본 폭', '$%.1f~%.1f백만/MW' % (lo, hi),
+         '앞 네 글 — 모델이 낸 값'],
+    ]
+    for name, v in (('AICP', _v(_BSC, 'per_gw_aicp')),
+                    ('PORTS-Pike', _v(_BSC, 'per_gw_ports')),
+                    ('잔존가치보증', _v(_BSC, 'per_gw_rvg'))):
+        body.append(['%s 부담 ÷ 자본' % name, '%.2f배' % BS.coverage(v, impl), '모델이 낸 값'])
+    for name, gw in (('엔비디아가 받쳐 주는 용량', _v(_BSC, 'nvda_gw')),
+                     ('빅4 제3자 리스 2026', _v(_BSC, 'giga_gw_2026')),
+                     ('같은 리스 2028 하한', _v(_BSC, 'giga_gw_2028'))):
+        body.append(['%s %gGW 의 자본' % (name, gw),
+                     '$%.0f십억 (엔비디아의 %.1f배)' % (BS.capex_behind(gw, impl),
+                                                   BS.ratio(gw, _v(_BSC, 'nvda_gw'))),
+                     '용량은 원문 값 · 자본은 모델이 낸 값'])
+    body.append(['잔존가치보증 F1/31 부담 ÷ 가정한 조달',
+                 '%.1f%% (상한 %g%%)' % (BS.share(_v(_BSR, 'obl_f131'),
+                                                _v(_BSR, 'assumed_funding')),
+                                       _v(_BSR, 'guarantee_cap')), '모델이 낸 값'])
+    return head, body
+
+
 TABLES = {
     'LEGOCOST': ('발표된 8퍼센트를 다시 낸다', lego_cost_table),
     'LEGOLAB': ('그 차이 가운데 인건비는 얼마인가', lego_labor_table),
@@ -577,6 +703,10 @@ TABLES = {
     'WAFVAL': ('웨이퍼 가치와 메모리 몫', wafer_val_table),
     'WAFMEM': ('메모리가 장수를 먹는 이유', wafer_mem_table),
     'WAFSCN': ('케이스 셋을 웨이퍼로 옮기면', wafer_scn_table),
+    'BSSHEET': ('10-Q 오프밸런스 항목 — 이름이 적힌 넷과 안 적힌 둘', backstop_sheet_table),
+    'BSGW': ('1기가와트당 부담을 계약에서 다시 낸다', backstop_gw_table),
+    'BSGPU': ('Firmus 계약에서 전력을, 부담에서 바닥값을 되짚는다', backstop_gpu_table),
+    'BSCOVER': ('부담이 자본을 몇 배 덮나, 그 자본으로 용량은 얼마인가', backstop_cover_table),
 }
 
 

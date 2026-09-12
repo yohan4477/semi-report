@@ -615,3 +615,38 @@ FIG_EQ_WAF = tree_svg(
     ]),
     marks=(('자본지출 총액', 1), ('메모리', 2)))
 
+
+# ── ⑫ 백스톱. 1기가와트당 부담 셋을 짓는 자본에 견준다 ────────────────────
+def _bs_cover():
+    import _capex_tbl as _ct
+    impl = _ct._bs_impl()
+    per = [('AICP — 6년치 바닥값 임대료', _ct._v(_ct._BSC, 'per_gw_aicp')),
+           ('PORTS-Pike — 땅·전력·건물 보증', _ct._v(_ct._BSC, 'per_gw_ports')),
+           ('잔존가치보증 — 거래액의 25%까지', _ct._v(_ct._BSC, 'per_gw_rvg'))]
+    x0, top, bh, gap = 250, 124, 28, 22
+    full, top_v = 300.0, float(per[0][1])
+    out = [_board(accent=(1,)),
+           _lt(20, 110, '같은 1기가와트를 받쳐 줄 때 엔비디아가 지는 부담 (십억 달러)',
+               't-lab', False)]
+    for i, (name, v) in enumerate(per):
+        y = top + i * (bh + gap)
+        out.append(_lt(20, y + 18, name, 't-sm', False))
+        out.append(_hbar(x0, y, full * v / top_v, bh, i == 0))
+        out.append(_lt(x0 + full * v / top_v + 8, y + 18, '$%g십억' % v, 't-sm', False))
+    xc = x0 + full * impl / top_v
+    y_top, y_bot = top - 8, top + 3 * (bh + gap) - gap + 8
+    out.append('<line x1="%.1f" y1="%d" x2="%.1f" y2="%d" stroke="var(--ink)" '
+               'stroke-width="1.4" stroke-dasharray="4 3"/>' % (xc, y_top, xc, y_bot))
+    out.append(_mark(xc, y_bot + 14, 1))
+    y = y_bot + 40
+    out.append(_lt(20, y, '점선 왼쪽이 짓는 자본보다 작은 부담, 오른쪽이 큰 부담이다.',
+                   't-sm', False))
+    out.append(_legend(y + 20, [
+        '1기가와트를 짓는 자본 $%.1f십억 — 잔존가치보증 부담을 상한 25%%로 나눠 되짚은 값'
+        % impl,
+    ]))
+    return ''.join(out)
+
+
+FIG_BSCOVER = _svg(W, 372, '6년치 바닥값을 다 받쳐 주는 AICP 만 짓는 자본을 넘는다',
+                   _bs_cover())

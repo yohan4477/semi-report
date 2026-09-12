@@ -342,6 +342,12 @@ def report_model_trn_html(head=True):
                               'model-trn', head)
 
 
+def report_model_bs_html(head=True):
+    """백스톱 용량. 본문은 insights/reports/model-backstop-2026-09-12.md."""
+    return _report_model_html(_model_part1.HEAD_BS, _model_part1.report_bs,
+                              'model-bs', head)
+
+
 def report_model_sx_html(head=True):
     """회수 기간. 본문은 insights/reports/model-payback-2026-09-10.md."""
     return _report_model_html(_model_part1.HEAD_SX, _model_part1.report_sx,
