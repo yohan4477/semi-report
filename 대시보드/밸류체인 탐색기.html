@@ -2362,6 +2362,8 @@ function App(){
     setPanTo(lid);
   }
   function onNodeClick(_, node){
+    var rfEl = document.querySelector('.react-flow');
+    if (rfEl && rfEl.scrollTop) rfEl.scrollTop = 0;
     // 누르면 그 상자와 바로 닿는 것만 진해진다. 새 상자를 만들지 않는다.
     // 공급원·매출원 알약은 상자가 아니라 분류라 띠의 칩과 같은 일을 한다 — 그 분류에
     // 걸린 줄만 남기고 칩이 켜진다. 다시 누르면 푼다
@@ -2537,6 +2539,9 @@ function App(){
       onNodeClick:onNodeClick, onInit:function(inst){ setRf(inst);
         if (inst.getViewport) setVp(inst.getViewport()); },
       onMove:function(_, v){ setVp(v); }, fitView:true, maxZoom:1.6,
+      // 상자에 포커스가 가면 브라우저가 판 자체를 스크롤해 상자를 보이게 한다 — 판이
+      // 통째로 밀리고 미니맵이 엉뚱한 자리에 선다. 포커스는 안 준다
+      nodesFocusable:false, edgesFocusable:false,
       // 좁은 화면에서는 글자가 안 보일 만큼 줄이지 않는다. 대신 끌어서 본다
       minZoom: window.innerWidth < 720 ? .28 : .25,
       translateExtent: extent,
