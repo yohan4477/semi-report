@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-13",
-"index_fingerprint": "a9519790565b1f51fae2293e0d776199b45e69c5",
-"lines": 4604
+"index_fingerprint": "87c91a59dc39daf1764d8ea1192b533c76fc2a06",
+"lines": 4622
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6610,6 +6610,104 @@
 "how": "명시",
 "t": "2025",
 "tense": "회고"
+},
+"content/semi_doped/2026-02-10-financing-ai-infra.md#L20": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L105": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L16": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L22": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L26": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L36": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L43": {
+"how": "명시",
+"span": [
+"2029",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L46": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L61": {
+"how": "계산",
+"t": "2016",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L62": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L71": {
+"how": "계산",
+"t": "2027",
+"tense": "전망"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L72": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L75": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L88": {
+"how": "명시",
+"span": [
+"2029",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L89": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L90": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L91": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-13-memory-mayhem-capex.md#L92": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
 },
 "content/semi_doped/2026-02-20-optical-supercycle.md#L27": {
 "how": "명시",
