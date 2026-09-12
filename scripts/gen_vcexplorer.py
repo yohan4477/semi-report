@@ -196,7 +196,7 @@ margin:10px 0 6px}
    크기가 제각각이면 같은 칸의 상자가 서로 다른 것으로 읽히고 선이 닿는 높이가 흔들린다 */
 .nd{background:var(--paper);border:1px solid #9aa3b5;border-radius:7px;padding:6px 10px;
 width:156px;height:64px;box-sizing:border-box;display:flex;flex-direction:column;
-justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
+justify-content:center;overflow:visible;box-shadow:0 1px 3px rgba(20,26,40,.14);cursor:pointer}
 .nd .nm{font-size:13px;font-weight:600;line-height:1.28;display:-webkit-box;
 -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
