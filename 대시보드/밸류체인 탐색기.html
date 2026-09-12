@@ -180,8 +180,9 @@ white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nd .sub{font-size:11.5px;color:var(--ink3);margin-top:2px;white-space:nowrap;overflow:hidden;
 text-overflow:ellipsis;line-height:1.3}
-.proj{border:1px dashed #aab2c2;border-radius:10px;background:rgba(255,255,255,.45);
-pointer-events:none;box-sizing:border-box}
+.proj{pointer-events:none;box-sizing:border-box;position:relative}
+.pseg{position:absolute;border:1px dashed #aab2c2;border-radius:10px;
+background:rgba(255,255,255,.45);box-sizing:border-box}
 .proj .plab{position:absolute;top:6px;left:10px;right:10px;font-size:9.5px;font-weight:700;
 letter-spacing:.4px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .proj .pn{font-size:11.5px;font-weight:700;letter-spacing:-.2px;color:var(--ink2);
@@ -705,12 +706,16 @@ var EDGE_TYPES = { gut: GutEdge };
 // 식구는 projects.json 이 명시한 것뿐이고 관계로 추론하지 않는다
 function Proj(p){
   var d = p.data;
-  return h('div', { className:'proj', style:{ width:d.w + 'px', height:d.h + 'px' } }, [
+  return h('div', { className:'proj', style:{ width:d.w + 'px', height:d.h + 'px' } },
+    (d.segs || []).map(function(sg, i){
+      return h('div', { key:'sg' + i, className:'pseg',
+        style:{ left:sg.x + 'px', top:sg.y + 'px', width:sg.w + 'px', height:sg.h + 'px' } });
+    }).concat([
     h('div', { key:'l', className:'plab', style:{ left:(d.lx || 0) + 4 + 'px', right:'auto',
         width: COL_W + 'px' } }, [
       h('div', { key:'a' }, '프로젝트'),
       h('div', { key:'b', className:'pn' }, d.title) ])
-  ]);
+  ]));
 }
 var NODE_TYPES = { nd: Nd, hdr: Hdr, proj: Proj };
 // 위 여백은 「프로젝트」 + 이름 두 줄이 들어갈 만큼. 34 로는 이름이 첫 식구 상자와 겹쳤다
@@ -1193,10 +1198,20 @@ function place(nodes, edges, opts){
     // 상자가 못 선다. 테두리 왼쪽 위에 두면 다른 칸의 남의 상자와 겹친다
     var topId = ids.slice().sort(function(p, q){ return geo[p].y - geo[q].y; })[0];
     var lx = geo[topId].x - px;
+    // 테두리는 칸마다 한 조각이다. 칸을 가로지르는 한 상자로 두르면 사이에 선 남의 상자와
+    // 다른 프로젝트 띠까지 삼킨다. 조각은 그 칸의 식구만 두른다
+    var byc = {};
+    ids.forEach(function(id){ var g = geo[id]; (byc[g.col] = byc[g.col] || []).push(g); });
+    var segs = Object.keys(byc).map(function(c){
+      var gs = byc[c], sy1 = 1e9, sy2 = -1e9;
+      gs.forEach(function(g){ sy1 = Math.min(sy1, g.y); sy2 = Math.max(sy2, g.y + g.h); });
+      return { x: gs[0].x - PROJ_PAD_X - px, y: sy1 - PROJ_PAD_Y - py,
+               w: COL_W + PROJ_PAD_X * 2, h: (sy2 - sy1) + PROJ_PAD_Y + PROJ_PAD_X };
+    });
     geo[pn.id] = { x:px, y:py, h:ph, col:col, proj:true };
     out.push(Object.assign({}, pn, { position:{ x:px, y:py }, zIndex:-1,
       draggable:false, selectable:false,
-      data: Object.assign({}, pn.data, { w:pw, h:ph, lx:lx }) }));
+      data: Object.assign({}, pn.data, { w:pw, h:ph, lx:lx, segs:segs }) }));
   });
 
   route(edges, geo, fcol);
@@ -1510,8 +1525,10 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
     var list = (band === 'ss' ? r.supply_source_map : r.revenue_type_map) || [];
     return list.filter(function(m){ return m.id === cid; })[0] || null;
   }
+  // 화살촉은 선 굵기를 따라 커지지 않는다(markerUnits) — 굵은 비중선의 촉이 상자만 해졌다
   function marker(color){
-    return { type: MarkerType.ArrowClosed, width:13, height:13, color: color };
+    return { type: MarkerType.ArrowClosed, width:11, height:11, color: color,
+             markerUnits:'userSpaceOnUse', strokeWidth:0 };
   }
 
   rels.forEach(function(r){
