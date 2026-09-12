@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-09-12",
-"index_fingerprint": "6ac232679991b85e7811bee558b4109b6e7e4c75",
-"lines": 4597
+"index_fingerprint": "a9519790565b1f51fae2293e0d776199b45e69c5",
+"lines": 4604
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -6610,6 +6610,49 @@
 "how": "명시",
 "t": "2025",
 "tense": "회고"
+},
+"content/semi_doped/2026-02-20-optical-supercycle.md#L27": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-20-optical-supercycle.md#L48": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-20-optical-supercycle.md#L64": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/semi_doped/2026-02-20-optical-supercycle.md#L68": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-28-optical-supply-chain.md#L37": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-28-optical-supply-chain.md#L42": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/semi_doped/2026-02-28-optical-supply-chain.md#L68": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
 },
 "content/semi_doped/2026-03-06-optics-copper-crossroads.md#L23": {
 "how": "계산",
