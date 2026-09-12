@@ -184,7 +184,15 @@
    "source_ids": [
     "dd_ir_fcbga_mix",
     "dd_ir_util"
-   ]
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "dd_ar_fy2025"
+    ],
+    "note": "SSD 컨트롤러·광모듈·PCIe 스위치 고객이 비공개로 남는다(RCM003)"
+   }
   },
   {
    "id": "rt-dd-rev-memory",
@@ -215,7 +223,15 @@
    ],
    "source_ids": [
     "dd_ir_mix"
-   ]
+   ],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "dd_ar_fy2025"
+    ],
+    "note": "실명 고객은 있으나 제품별·현재 배분이 비공개라 잔여가 남는다(RCM001)"
+   }
   },
   {
    "id": "rt-dd-rev-mlb",
@@ -225,7 +241,15 @@
    "note": "AI 가속기·스위치·항공우주",
    "unallocated": false,
    "shares": [],
-   "source_ids": []
+   "source_ids": [],
+   "residual": {
+    "status": "UNDISCLOSED",
+    "label": "배분 미상 잔여",
+    "source_ids": [
+     "dd_ar_fy2025"
+    ],
+    "note": "800G·방산·항공 MLB 고객 배분이 비어 있다(RCM007)"
+   }
   },
   {
    "id": "rt-dd-rev-unallocated",

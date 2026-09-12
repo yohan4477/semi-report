@@ -122,6 +122,17 @@
    "unallocated": false,
    "shares": [],
    "source_ids": []
+  },
+  {
+   "id": "ss-unallocated",
+   "kind": "SUPPLY_SOURCE",
+   "label": "공급원 미상",
+   "label_en": "Unallocated",
+   "level": "UNALLOCATED",
+   "unallocated": true,
+   "note": "공급사인 것은 맞는데 무엇을 대는지 근거가 없다",
+   "shares": [],
+   "source_ids": []
   }
  ],
  "revenue_types": [

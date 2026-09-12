@@ -1124,12 +1124,12 @@
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다",
+  "evidence_level": "INFERRED",
+  "confidence_band": "low",
+  "notes": "콴타도 NVIDIA 도 서로를 공시에 적지 않는다. 실적발표의 AI 서버 비중 서술로 잇는다 서로를 공시에 적지 않아 후공정 귀속 근거가 없다. 공급원 미상으로 닫는다",
   "source_tier": "COMPONENT_SUPPLIER",
   "supply_source_ids": [
-   "ss-assembly-test"
+   "ss-unallocated"
   ],
   "revenue_type_ids": []
  },
@@ -1149,12 +1149,12 @@
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": null,
+  "evidence_level": "INFERRED",
+  "confidence_band": "low",
+  "notes": "서로를 공시에 적지 않아 후공정 귀속 근거가 없다. 공급원 미상으로 닫는다",
   "source_tier": "COMPONENT_SUPPLIER",
   "supply_source_ids": [
-   "ss-assembly-test"
+   "ss-unallocated"
   ],
   "revenue_type_ids": []
  },
@@ -1333,7 +1333,10 @@
   "revenue_type_ids": [
    "rt-unallocated"
   ],
-  "contractual_customer": "CONFIRMED"
+  "contractual_customer": "CONFIRMED",
+  "source_ids": [
+   "sec_crwv_10k_fy2025"
+  ]
  },
  {
   "id": "r203",
@@ -1426,9 +1429,9 @@
   "valid_from": null,
   "valid_to": null,
   "status": "ACTIVE",
-  "evidence_level": "ESTIMATED",
-  "confidence_band": "medium",
-  "notes": "보도자료가 클라우드 파트너로 이름을 적었다. 매입 규모는 없다",
+  "evidence_level": "INFERRED",
+  "confidence_band": "low",
+  "notes": "보도자료가 클라우드 파트너로 이름을 적었다고 조사에 적혔으나 원장에 출처가 없어 추론으로 둔다. 매입 규모는 없다",
   "target_tier": "CONTRACTUAL_CUSTOMER",
   "supply_source_ids": [],
   "revenue_type_ids": [
@@ -1460,7 +1463,10 @@
   "revenue_type_ids": [
    "rt-unallocated"
   ],
-  "contractual_customer": "CONFIRMED"
+  "contractual_customer": "CONFIRMED",
+  "source_ids": [
+   "ne_nvidia"
+  ]
  },
  {
   "id": "close-coreweave",

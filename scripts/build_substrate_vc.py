@@ -448,6 +448,55 @@ SS_SHARES = [
 ]
 
 
+# 04 RevenueCustomerMap(2026-09-11 20:03) — 제품 귀속 근거가 있는 고객만 매출원에 잇고
+# 배분 %는 비공개로 둔다. 삼성전자·SK하이닉스·앰코·스태츠는 2024 상반기 보고서의 주요
+# 거래처일 뿐 현재 제품별 배분이 공시되지 않아 배분 미상이다(REL005~008 UNALLOCATED)
+RT_FCBGA, RT_MLB, RT_MEM, RT_UN = ('rt-dd-rev-fcbga', 'rt-dd-rev-mlb', 'rt-dd-rev-memory',
+                                   'rt-dd-rev-unallocated')
+DD_UNALLOC = ['mem-samsung', 'mem-hynix', 'mem-amkor', 'mem-stats']
+DD_RT_MAP = {
+ 'fcbga-tesla': [(RT_FCBGA, 'INFERRED', 0.7, ['zdnet_tesla_2026'],
+                  u'AI4 자율주행 FC-BGA 공급망 편입 보도. 회사 공시가 아니다(RCM002)')],
+ 'mlb-amd': [(RT_MLB, 'INFERRED', 0.7, ['dd_ir_amd', 'dd_bk_amd'],
+              u'AMD AI 가속기 MLB 노출을 증권사 둘이 삼각 측정. 배분 비공개(RCM004)')],
+ 'mlb-spacex': [(RT_MLB, 'INFERRED', 0.7, ['eugene_spacex_2026'],
+                 u'우주·위성 MLB 물량을 증권사가 SpaceX 향으로 적었다. 배분 비공개(RCM005)')],
+ 'mlb-cisco': [(RT_MLB, 'HISTORICAL_CURRENT_UNKNOWN', 0.4, ['dd_cisco_legacy'],
+                u'네트워크 PCB 옛 관계. 현재 800G 매핑으로 읽지 않는다(RCM006)')],
+}
+DD_RESIDUAL = {
+ RT_MEM: u'실명 고객은 있으나 제품별·현재 배분이 비공개라 잔여가 남는다(RCM001)',
+ RT_FCBGA: u'SSD 컨트롤러·광모듈·PCIe 스위치 고객이 비공개로 남는다(RCM003)',
+ RT_MLB: u'800G·방산·항공 MLB 고객 배분이 비어 있다(RCM007)',
+}
+
+
+def apply_v21():
+    u"""vc_norm 뒤에 돈다. 멱등."""
+    rp = os.path.join(CHAIN, 'relationships.json')
+    rels = json.load(io.open(rp, encoding='utf-8'))
+    for r in rels:
+        if r['id'] in DD_UNALLOC:
+            r['revenue_type_ids'] = [RT_UN]
+            r.pop('revenue_type_map', None)
+            r['notes'] = u'2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상'
+        m = DD_RT_MAP.get(r['id'])
+        if m:
+            r['revenue_type_ids'] = [x[0] for x in m]
+            r['revenue_type_map'] = [
+                {'id': x[0], 'status': x[1], 'confidence': x[2], 'allocation_value': None,
+                 'allocation_denominator': u'그 매출원 안 고객별 배분 비공개',
+                 'source_ids': x[3], 'note': x[4]} for x in m]
+    dump(rp, rels)
+    cp = os.path.join(CHAIN, 'classifications.json')
+    cls = json.load(io.open(cp, encoding='utf-8'))
+    for x in cls['revenue_types']:
+        if x['id'] in DD_RESIDUAL:
+            x['residual'] = {'status': 'UNDISCLOSED', 'label': u'배분 미상 잔여',
+                             'source_ids': ['dd_ar_fy2025'], 'note': DD_RESIDUAL[x['id']]}
+    dump(cp, cls)
+
+
 def apply_supply_shares():
     u"""vc_norm 이 옮긴 분류 위에 공급원 매입 비중을 얹는다. 멱등."""
     cp = os.path.join(CHAIN, 'classifications.json')
@@ -493,3 +542,4 @@ if __name__ == '__main__':
     import vc_norm
     vc_norm.main()
     apply_supply_shares()
+    apply_v21()

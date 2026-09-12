@@ -372,9 +372,9 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": "2024 반기 공시가 이름을 든다. 매출원 안의 몫은 공개되지 않았다",
+  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
   "revenue_type_ids": [
-   "rt-dd-rev-memory"
+   "rt-dd-rev-unallocated"
   ],
   "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
@@ -403,9 +403,9 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": null,
+  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
   "revenue_type_ids": [
-   "rt-dd-rev-memory"
+   "rt-dd-rev-unallocated"
   ],
   "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
@@ -434,9 +434,9 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": null,
+  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
   "revenue_type_ids": [
-   "rt-dd-rev-memory"
+   "rt-dd-rev-unallocated"
   ],
   "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
@@ -465,9 +465,9 @@
   "source_ids": [
    "dd_filing_1h2024"
   ],
-  "notes": null,
+  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
   "revenue_type_ids": [
-   "rt-dd-rev-memory"
+   "rt-dd-rev-unallocated"
   ],
   "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
@@ -501,7 +501,20 @@
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "revenue_type_map": [
+   {
+    "id": "rt-dd-rev-fcbga",
+    "status": "INFERRED",
+    "confidence": 0.7,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "zdnet_tesla_2026"
+    ],
+    "note": "AI4 자율주행 FC-BGA 공급망 편입 보도. 회사 공시가 아니다(RCM002)"
+   }
+  ]
  },
  {
   "id": "fcbga-ssd",
@@ -626,7 +639,21 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "revenue_type_map": [
+   {
+    "id": "rt-dd-rev-mlb",
+    "status": "INFERRED",
+    "confidence": 0.7,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "dd_ir_amd",
+     "dd_bk_amd"
+    ],
+    "note": "AMD AI 가속기 MLB 노출을 증권사 둘이 삼각 측정. 배분 비공개(RCM004)"
+   }
+  ]
  },
  {
   "id": "mlb-spacex",
@@ -657,7 +684,20 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "revenue_type_map": [
+   {
+    "id": "rt-dd-rev-mlb",
+    "status": "INFERRED",
+    "confidence": 0.7,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "eugene_spacex_2026"
+    ],
+    "note": "우주·위성 MLB 물량을 증권사가 SpaceX 향으로 적었다. 배분 비공개(RCM005)"
+   }
+  ]
  },
  {
   "id": "mlb-800g",
@@ -719,7 +759,20 @@
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": []
+  "supply_source_ids": [],
+  "revenue_type_map": [
+   {
+    "id": "rt-dd-rev-mlb",
+    "status": "HISTORICAL_CURRENT_UNKNOWN",
+    "confidence": 0.4,
+    "allocation_value": null,
+    "allocation_denominator": "그 매출원 안 고객별 배분 비공개",
+    "source_ids": [
+     "dd_cisco_legacy"
+    ],
+    "note": "네트워크 PCB 옛 관계. 현재 800G 매핑으로 읽지 않는다(RCM006)"
+   }
+  ]
  },
  {
   "id": "unalloc-anon1",

@@ -566,6 +566,15 @@ function route(edges, geo, fcol){
     for (var c = a.col + dir; c !== b.col; c += dir) mids.push(c);
     var hit = blockersAt(mids, y1);
     var clearY = y1;
+    // 첫 통로의 길(닿을 높이)이 막혔으면 마지막 통로(출발 높이로 곧게 가서 닿을 상자
+    // 앞에서 한 번 꺾기)를 본다. 세로 구간은 그대로 하나, 꺾임도 둘이다
+    if (hit.length && mids.length && !blockersAt(mids, y0).length) {
+      e.type = 'gut';
+      e.data = Object.assign({}, e.data,
+        { gx: gutterX(bs[bs.length - 1], lane[e.id + '@' + bs[bs.length - 1]] || 0), gy: null,
+          late: true });
+      return;
+    }
     if (hit.length) {
       // 오른쪽(타겟 칸에서 나가는 쪽)은 아래로만, 왼쪽(타겟 칸으로 드는 쪽)은 위로만
       var rightSide = fcol === undefined ? dir > 0 : Math.min(a.col, b.col) >= fcol;
@@ -788,8 +797,17 @@ function place(nodes, edges, opts){
   // 빈 자리 차례와 닿을 상자 차례가 어긋나면 서로 밀어내며 끝없이 내려간다
   function resort(){
     used.forEach(function(c, i){
-      if (i === fcol) return;
       var list = byCol[c];
+      if (i === fcol) {
+        // 타겟 칸 — 타겟은 맨 위에 못박고 빈 자리들만 닿을 높이 순으로. 안 맞추면 빈 자리
+        // 둘이 서로 밀어내며 판이 끝없이 자란다
+        var head = list.filter(function(it){ return !it.dummy; });
+        var ds = list.filter(function(it){ return it.dummy; });
+        ds.sort(function(a, b){ return ((a.want || 0) - (b.want || 0)) || (a.ord - b.ord); });
+        byCol[c] = head.concat(ds);
+        byCol[c].forEach(function(it, k){ it.ord = k; });
+        return;
+      }
       list.forEach(function(it, k){
         it.key = (it.dummy && it.want !== undefined && it.want !== null) ? it.want
                : (it.top === undefined ? k * 1e6 : cyOf(it));
@@ -816,8 +834,19 @@ function place(nodes, edges, opts){
   edges.forEach(function(x){ eById[x.id] = x; });
   var span0 = 0;
   used.forEach(function(c){ byCol[c].forEach(function(it){ span0 += it.h + ROW_GAP; }); });
+  var prevSig = null, deep0 = null;
   for (var pass = 0; pass < 40; pass++){
     var moved = false;
+    // 안 맞은 빈 자리의 어긋남이 지난 번과 똑같으면 되풀이해도 안 바뀐다 — 서로 밀어내는
+    // 고리다. 거기서 멈춘다. 남은 어긋남은 route 가 한 번에 더 멀리 옮겨 비킨다
+    var sig = Object.keys(span).map(function(eid){
+      var t = spot[eById[eid].target];
+      if (!t || t.top === undefined) return '';
+      return span[eid].map(function(did){
+        return spot[did] ? Math.round(cyOf(spot[did]) - cyOf(t)) : 0; }).join('/');
+    }).join(' ');
+    if (sig === prevSig) break;
+    prevSig = sig;
     Object.keys(span).forEach(function(eid){
       var e = eById[eid];
       if (!e) return;
@@ -842,7 +871,16 @@ function place(nodes, edges, opts){
     var deep = 0;
     used.forEach(function(c){ byCol[c].forEach(function(it){
       if (it.top + it.h > deep) deep = it.top + it.h; }); });
-    if (deep > span0 * 3) {
+    if (window.__VCDBG) console.info('vc place pass ' + pass + ' deep ' + Math.round(deep) + ' '
+      + Object.keys(span).map(function(eid){
+          var t = spot[eById[eid].target];
+          return eid + ':' + span[eid].map(function(did){
+            return spot[did] ? Math.round(cyOf(spot[did]) - cyOf(t)) : '?'; }).join('/');
+        }).filter(function(x){ return !/:(0\/?)+$/.test(x); }).join(' '));
+    // 맞아 드는 판은 첫 번 높이에서 몇 % 안에서 멈춘다. 첫 번의 1.6배를 넘으면 서로
+    // 밀어내는 고리다 — 거기서 끊는다. 남은 어긋남은 route 가 한 번에 더 멀리 옮겨 비킨다
+    if (deep0 === null) deep0 = deep;
+    if (deep > span0 * 3 || deep > deep0 * 1.6) {
       if (window.console) console.warn('vc place: 빈 자리 맞추기가 ' + pass + ' 번에 안 멈춰 끊는다');
       break;
     }

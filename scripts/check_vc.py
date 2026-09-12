@@ -175,7 +175,7 @@ def validate():
                         fail('V14', u'%s 의 %s 가 %s 밖의 %s 에 귀속 등급을 적었다'
                              % (cid, r['id'], ik, mp.get('id')))
                     if mp.get('status') not in ('CONFIRMED', 'ESTIMATED', 'INFERRED',
-                                                'UNDISCLOSED'):
+                                                'UNDISCLOSED', 'HISTORICAL_CURRENT_UNKNOWN'):
                         fail('V14', u'%s 의 %s 귀속 %s 에 등급이 없다' % (cid, r['id'], mp.get('id')))
                     if not mp.get('source_ids'):
                         fail('V14', u'%s 의 %s 귀속 %s 에 출처가 없다' % (cid, r['id'], mp.get('id')))
