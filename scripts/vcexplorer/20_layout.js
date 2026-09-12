@@ -153,7 +153,7 @@ function Proj(p){
 }
 var NODE_TYPES = { nd: Nd, hdr: Hdr, proj: Proj };
 // 위 여백은 「프로젝트」 + 이름 두 줄이 들어갈 만큼. 34 로는 이름이 첫 식구 상자와 겹쳤다
-var PROJ_PAD_X = 18, PROJ_PAD_Y = 52;
+var PROJ_PAD_X = 18, PROJ_PAD_Y = 58;
 
 // 칸을 건너뛰는 선이 지나갈 빈 자리는 상자와 같은 높이로 잡는다. 10px 만 비우면
 // 그 띠가 상자 높이를 못 덮어 선이 중간 칸 상자를 가로지른다

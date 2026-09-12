@@ -324,8 +324,9 @@ function buildGraph(focal, year, sel, axis, hint, open){
         seen[lid] = 1;
         nodes.push({ id: lid, type:'nd', data:{
           title: x.label, kind:'lane', col: row[2], un: !!x.unallocated, fixOrd: xi,
-          // 실명 매핑 밖의 잔여가 비공개인 매출원은 알약에 그 뜻을 단다(잔여 칸은 상자가 아니다)
-          sub: x.group_label || (x.residual ? x.residual.label : null),
+          // 밑줄은 옆 숫자의 분모다. 잔여(배분 미상)는 서랍에 적는다 — 알약에 「잔여」를
+          // 달면 옆의 비중이 잔여 비중처럼 읽힌다
+          sub: x.group_label || ((sh && den && sh.denominator === den) ? den + ' 대비' : null),
           share: (sh && den && sh.denominator === den)
             ? sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '') : null,
           ref:{ kind:'grp', id: lid, label: x.label, rels: rl, up: kind === 'ss',

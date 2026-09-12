@@ -465,6 +465,10 @@ function Bom(p){
 // 걸리기 때문이다. 상자로 세우면 같은 회사가 분류마다 복제된다
 function Axis(p){
   var m = clsOf(p.chain);
+  // 비중 없는 칩이 많은 줄은 접는다 — 블룸 공급원 21개 중 비중 있는 것은 5개뿐인데
+  // 두 줄로 펼치면 띠가 판을 밀어낸다. 「+N」을 누르면 편다
+  var m2 = useState({}), more = m2[0], setMore = m2[1];
+  var FOLD_OVER = 8, FOLD_MIN = 3;
   // 분모가 다른 %를 한 줄에 나란히 찍지 않는다. 가동률과 매출 비중을 같은 꼴로 적으면
   // 읽는 사람이 둘을 더한다. 그 줄에서 가장 많이 쓰인 분모의 값만 띠에 적고,
   // 나머지는 손 얹었을 때만 분모와 함께 보여 준다
@@ -490,22 +494,35 @@ function Axis(p){
     var all = h('button', { key:'*all', className:'axchip' + (mine ? '' : ' on'),
       title: '이 줄의 분류를 고르지 않는다 — 모든 상자·선이 제 농도로 선다',
       onClick: function(){ if (mine) p.onPick(null); } }, '전체');
+    var foldable = list.filter(function(x){
+      var sh = pick(kind, x);
+      return !(sh && den && sh.denominator === den) && !x.unallocated
+             && p.axis !== kind + ':' + x.id; });
+    var fold = list.length > FOLD_OVER && foldable.length >= FOLD_MIN;
+    var folded = fold && !more[kind];
+    var prev = null;
+    var items = list.reduce(function(acc, x){
+      var key = kind + ':' + x.id, on = p.axis === key, sh = pick(kind, x);
+      var show = sh && den && sh.denominator === den;
+      if (folded && foldable.indexOf(x) >= 0) return acc;
+      // 분류 체계(무리)가 바뀌는 자리에 이름표 하나 — 두 체계의 비중을 한 줄로 더하지 않게
+      if (x.group_label && (!prev || prev.group_label !== x.group_label))
+        acc.push(h('span', { key:'g' + x.id, className:'axgroup' }, x.group_label));
+      prev = x;
+      acc.push(h('button', { key:x.id, title: tip(x),
+        className: 'axchip' + (on ? ' on' : '') + (x.unallocated ? ' un' : ''),
+        onClick: function(){ p.onPick(on ? null : key); } }, [
+        x.label, show ? h('i', { key:'s' },
+          sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '')) : null ]));
+      return acc;
+    }, []);
+    if (fold) items.push(h('button', { key:'*more', className:'axchip fold',
+      title: folded ? '비중이 안 적힌 분류 ' + foldable.length + '개를 편다' : '비중 없는 분류를 접는다',
+      onClick: function(){ var n = {}; n[kind] = folded; setMore(Object.assign({}, more, n)); } },
+      folded ? '+' + foldable.length + ' 비중 없음' : '접기'));
     return h('div', { key:kind, className:'axrow' }, [
       h('b', { key:'b' }, label),
-      h('div', { key:'c', className:'axchips' }, [all].concat(list.reduce(function(acc, x, i){
-        var key = kind + ':' + x.id, on = p.axis === key, sh = pick(kind, x);
-        var show = sh && den && sh.denominator === den;
-        // 분류 체계(무리)가 바뀌는 자리에 이름표 하나 — 두 체계의 비중을 한 줄로 더하지 않게
-        var prev = i ? list[i - 1] : null;
-        if (x.group_label && (!prev || prev.group_label !== x.group_label))
-          acc.push(h('span', { key:'g' + x.id, className:'axgroup' }, x.group_label));
-        acc.push(h('button', { key:x.id, title: tip(x),
-          className: 'axchip' + (on ? ' on' : '') + (x.unallocated ? ' un' : ''),
-          onClick: function(){ p.onPick(on ? null : key); } }, [
-          x.label, show ? h('i', { key:'s' },
-            sh.value + '%' + (sh.stale ? ' ' + (sh.period || '') : '')) : null ]));
-        return acc;
-      }, [])))
+      h('div', { key:'c', className:'axchips' }, [all].concat(items))
     ]);
   }
   var rows = [chips('ss', m.ssList, '공급원'), chips('rt', m.rtList, '매출원')]
@@ -647,6 +664,7 @@ function App(){
   var q2 = useState(window.innerWidth < 720), narrow = q2[0], setNarrow = q2[1];
   var r2 = useState(false), sopen = r2[0], setSopen = r2[1];
   var u2 = useState(false), menu = u2[0], setMenu = u2[1];
+  var l2 = useState(false), lgOpen = l2[0], setLgOpen = l2[1];
   // 회사 목록에서 고른 뒤 판이 설 때까지. 자리 잡기가 끝나면 fit 효과가 내린다
   // 처음 열 때도 「세우는 중」이다. 자리 잡기 전의 판(머리글만 선 빈 판)을 보이지 않는다
   var s2 = useState(u0.focal), busy = s2[0], setBusy = s2[1];
@@ -991,7 +1009,7 @@ function App(){
       h(Background, { key:'bg', gap:22, size:1, color:'#c9cfdb' }),
       h(Controls, { key:'ct', showInteractive:false }),
       // 전부 편 판에서만 — 어디를 보고 있는지. 좁은 화면은 자리가 없다
-      (!narrow && allOpen && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
+      (!narrow && allOpen && !drw && MiniMap) ? h(MiniMap, { key:'mm', pannable:true, zoomable:true,
         nodeStrokeWidth:0, maskColor:'rgba(232,235,240,.6)',
         nodeColor:function(n){ return n.type === 'hdr' ? 'transparent'
           : (n.data && n.data.focal ? '#151b28' : (n.data && n.data.kind === 'lane' ? '#c6ccd8' : '#9aa3b5')); },
@@ -999,7 +1017,10 @@ function App(){
     ])
   ]);
 
-  var legend = h('div', { key:'lg', className:'legend' }, [
+  // 범례는 세 줄 글 벽이라 접어 두고 「범례」를 누르면 편다
+  var legend = h('div', { key:'lg', className:'legend' + (lgOpen ? ' open' : '') }, [
+    h('button', { key:'tg', className:'lgbtn', onClick: function(){ setLgOpen(!lgOpen); } },
+      lgOpen ? '범례 접기' : '범례'),
     h('b', { key:'b' }, '선'),
     h('i', { key:1 }, '굵은 실선 공시로 확인'),
     h('i', { key:2 }, '갈색 실선 추정 (분모 있음)'),

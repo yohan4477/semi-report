@@ -210,7 +210,7 @@ SOURCES = [
 # (id, 이름, 한국어 이름, 유형, 나라, 카테고리, 메모)
 ENTITIES = [
  ('bloom-energy', 'Bloom Energy', '블룸에너지', 'company', '미국', ['Integrator'],
-  'SOFC·SOEC 제조와 시스템 통합. 셀/공정 IP·제어·설치·서비스를 쥔 중심 노드'),
+  'SOFC·SOEC 를 만들고 시스템으로 묶는다. 셀·공정 IP 와 제어·설치·서비스까지 안에 둔다'),
  ('bloom-sk-fuel-cell', 'Bloom SK Fuel Cell LLC', '블룸SK퓨얼셀', 'jv', '한국', ['Assembly'],
   '2019 설립, 2020 가동, 2023 한국 시설 범위를 full assembly 로 확대'),
  ('bloom-energy-india', 'Bloom Energy India', '블룸에너지 인도', 'company', '인도',

@@ -1152,7 +1152,7 @@
   "categories": [
    "Integrator"
   ],
-  "desc": "SOFC·SOEC 제조와 시스템 통합. 셀/공정 IP·제어·설치·서비스를 쥔 중심 노드",
+  "desc": "SOFC·SOEC 를 만들고 시스템으로 묶는다. 셀·공정 IP 와 제어·설치·서비스까지 안에 둔다",
   "anon": false
  },
  {
@@ -2882,7 +2882,7 @@
   "categories": [
    "Electronic components"
   ],
-  "desc": "MLCC 를 중심으로 소재·공정·생산기술을 안에 갖춘 전자부품 회사다(04의 TY)",
+  "desc": "MLCC 를 중심으로 소재·공정·생산기술을 안에 갖춘 전자부품 회사다",
   "anon": false
  },
  {
@@ -2900,7 +2900,7 @@
   "categories": [
    "Plating"
   ],
-  "desc": "전자부품 도금을 맡는 자회사다(04의 TY_CHEM)",
+  "desc": "전자부품 도금을 맡는 자회사다",
   "anon": false
  },
  {
@@ -2918,7 +2918,7 @@
   "categories": [
    "Ceramic powder"
   ],
-  "desc": "MLCC 용 세라믹 분말을 만든다. IATF 인증 공정을 포함한다(04의 TY_HARUNA)",
+  "desc": "MLCC 용 세라믹 분말을 만든다. IATF 인증 공정을 포함한다",
   "anon": false
  },
  {
@@ -2936,7 +2936,7 @@
   "categories": [
    "Ceramic powder"
   ],
-  "desc": "MLCC 용 세라믹 분말을 만든다. IATF 인증 공정을 포함한다(04의 TY_YAWATABARA)",
+  "desc": "MLCC 용 세라믹 분말을 만든다. IATF 인증 공정을 포함한다",
   "anon": false
  },
  {
@@ -2954,7 +2954,7 @@
   "categories": [
    "Inductor material"
   ],
-  "desc": "인덕터용 코어·분말을 만든다(04의 TY_NAKANOJO)",
+  "desc": "인덕터용 코어·분말을 만든다",
   "anon": false
  },
  {
@@ -2972,7 +2972,7 @@
   "categories": [
    "MLCC manufacturing"
   ],
-  "desc": "MLCC 를 생산하는 자회사다(04의 TY_NIIGATA)",
+  "desc": "MLCC 를 생산하는 자회사다",
   "anon": false
  },
  {
@@ -2990,7 +2990,7 @@
   "categories": [
    "MLCC manufacturing"
   ],
-  "desc": "MLCC 를 생산하는 한국 자회사다(04의 TY_KOREA)",
+  "desc": "MLCC 를 생산하는 한국 자회사다",
   "anon": false
  },
  {
@@ -3008,7 +3008,7 @@
   "categories": [
    "MLCC manufacturing"
   ],
-  "desc": "MLCC 와 파워인덕터를 함께 생산한다(04의 TY_GD)",
+  "desc": "MLCC 와 파워인덕터를 함께 생산한다",
   "anon": false
  },
  {
@@ -3026,7 +3026,7 @@
   "categories": [
    "MLCC manufacturing"
   ],
-  "desc": "새로 늘린 MLCC 생산능력을 맡는다(04의 TY_CZ)",
+  "desc": "새로 늘린 MLCC 생산능력을 맡는다",
   "anon": false
  },
  {
@@ -3044,7 +3044,7 @@
   "categories": [
    "MLCC manufacturing"
   ],
-  "desc": "새로 늘린 MLCC 생산능력을 맡는다(04의 TY_SARAWAK)",
+  "desc": "새로 늘린 MLCC 생산능력을 맡는다",
   "anon": false
  },
  {
@@ -3062,7 +3062,7 @@
   "categories": [
    "End customer"
   ],
-  "desc": "Apple 공급사 명단에 태양유전이 올라 있다. 매출 비중은 공개되지 않았다(04의 APPLE)",
+  "desc": "Apple 공급사 명단에 태양유전이 올라 있다. 매출 비중은 공개되지 않았다",
   "anon": false
  },
  {
@@ -3080,7 +3080,7 @@
   "categories": [
    "Automotive"
   ],
-  "desc": "VW80808 인증을 받았을 뿐 직접고객·매출 관계의 근거는 아니다(04의 VW)",
+  "desc": "VW80808 인증을 받았을 뿐 직접고객·매출 관계의 근거는 아니다",
   "anon": false
  },
  {
@@ -3098,7 +3098,7 @@
   "categories": [
    "AI platform"
   ],
-  "desc": "TPU 수요가 고사양 MLCC 를 늘린다. 태양유전과 직접 거래를 확인할 근거는 없다(04의 GOOGLE)",
+  "desc": "TPU 수요가 고사양 MLCC 를 늘린다. 태양유전과 직접 거래를 확인할 근거는 없다",
   "anon": false
  },
  {
@@ -3116,7 +3116,7 @@
   "categories": [
    "Distributor"
   ],
-  "desc": "공식 인증 유통 파트너다(04의 ARROW)",
+  "desc": "공식 인증 유통 파트너다",
   "anon": false
  },
  {
@@ -3134,7 +3134,7 @@
   "categories": [
    "Distributor"
   ],
-  "desc": "공식 인증 유통 파트너다(04의 AVNET)",
+  "desc": "공식 인증 유통 파트너다",
   "anon": false
  },
  {
@@ -3152,7 +3152,7 @@
   "categories": [
    "Distributor"
   ],
-  "desc": "공식 인증 유통 파트너다(04의 MOUSER)",
+  "desc": "공식 인증 유통 파트너다",
   "anon": false
  },
  {
@@ -3448,7 +3448,7 @@
   "categories": [
    "Distributor"
   ],
-  "desc": "공식 전 세계 온라인 유통사다(04의 DIGIKEY)",
+  "desc": "공식 전 세계 온라인 유통사다",
   "anon": false
  },
  {
@@ -3466,7 +3466,7 @@
   "categories": [
    "Distributor"
   ],
-  "desc": "공식 전 세계 온라인 유통사다(04의 FUTURE)",
+  "desc": "공식 전 세계 온라인 유통사다",
   "anon": false
  },
  {
@@ -3484,7 +3484,7 @@
   "categories": [
    "Distributor"
   ],
-  "desc": "공식 전 세계 온라인 유통사다(04의 TTI)",
+  "desc": "공식 전 세계 온라인 유통사다",
   "anon": false
  },
  {

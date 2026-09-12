@@ -192,7 +192,8 @@ background:rgba(255,255,255,.45);box-sizing:border-box}
 .proj .plab{position:absolute;top:6px;left:10px;right:10px;font-size:9.5px;font-weight:700;
 letter-spacing:.4px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .proj .pn{font-size:11.5px;font-weight:700;letter-spacing:-.2px;color:var(--ink2);
-margin-top:1px}
+margin-top:1px;white-space:normal;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;
+-webkit-box-orient:vertical}
 .nd .val{display:inline-block;margin-left:5px;padding:0 5px;border-radius:4px;
 background:var(--hi);border:1px solid var(--line);color:var(--ink1);font-weight:700;
 font-size:11px}
@@ -221,6 +222,12 @@ box-shadow:3px 3px 0 -1px #fff,3px 3px 0 0 #aab2c2,6px 6px 0 -1px #fff,6px 6px 0
 background:var(--paper);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink3)}
 .legend b{font-size:11px;color:var(--ink4);font-weight:500}
 .legend i{font-style:normal;white-space:nowrap}
+.legend:not(.open) b,.legend:not(.open) i{display:none}
+.legend:not(.open){padding:3px 14px}
+.lgbtn{border:1px solid var(--line);background:var(--paper);color:var(--ink3);font:inherit;
+font-size:11px;padding:1px 9px;border-radius:10px;cursor:pointer}
+.lgbtn:active{background:#e5e7eb}
+.axchip.fold{border-style:dashed;color:var(--ink3)}
 /* 좁은 화면 — 우선순위는 그래프 > 공급원·매출원 띠 > 연도 > 나머지 길찾기.
    그래프가 첫 화면의 70% 이상을 차지하도록 머리줄 한 줄(≈40px)·띠 두 줄(≈56px)·
    연도 한 줄(≈28px)만 남긴다. 사슬 단계 칸과 공급원·매출원 축은 어느 크기에서도 안 뺀다 */
