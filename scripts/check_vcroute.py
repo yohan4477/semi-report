@@ -86,7 +86,8 @@ def chain_labels():
 
 
 def check(page, fid, label):
-    page.goto('file:///' + PAGE.replace(os.sep, '/') + '?focal=' + fid + '&mode=current')
+    # 첫 화면은 타겟·갈림목만 펴므로 선 규약은 전부 편 판(open=*)에서 잰다
+    page.goto('file:///' + PAGE.replace(os.sep, '/') + '?focal=' + fid + '&mode=current&open=*')
     page.wait_for_timeout(2600)
     data = page.evaluate("""() => ({
       focal: (function(){

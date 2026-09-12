@@ -154,7 +154,11 @@ justify-content:center;overflow:hidden;box-shadow:0 1px 3px rgba(20,26,40,.14);c
 .flag{font-family:"Noto Color Emoji","Segoe UI Emoji",sans-serif;font-size:11.5px;
 margin-right:5px;letter-spacing:1.5px;white-space:nowrap}
 .flag.na{font-family:inherit;color:var(--ink4);font-size:11px;letter-spacing:0}
-.more{float:right;color:var(--ink3);font-weight:700;margin-left:6px}
+.more{position:absolute;right:-9px;top:-9px;min-width:22px;height:22px;padding:0 6px;
+border-radius:11px;background:var(--ink1);color:#fff;font-size:11px;font-weight:700;
+line-height:22px;text-align:center;box-shadow:0 1px 3px rgba(20,26,40,.3);pointer-events:none}
+.nd{position:relative}
+.nd.lane .more{right:-6px;top:-8px}
 .hdr{width:156px;text-align:center;padding:5px 6px;background:var(--hi);
 border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
 box-sizing:border-box}
@@ -580,6 +584,8 @@ function Nd(p){
         style:{ marginLeft: (d.sub || d.share) ? '5px' : 0 } }, 'NEW') : null,
     ]) : null
   ];
+  if (d.more) mid.push(h('span', { key:'more', className:'more', title:'누르면 ' + d.more
+    + '곳을 편다' }, '+' + d.more));
   return h('div', { className: cls },
     ports('t').concat(ports('sl')).concat(mid).concat(ports('s')).concat(ports('tr')));
 }
@@ -1364,7 +1370,7 @@ function topology(focal, rels, rooted){
   return { col: col, sub: sub, via: via, rooted: rooted };
 }
 
-function buildGraph(focal, year, sel, axis, sizes, hint){
+function buildGraph(focal, year, sel, axis, sizes, hint, open){
   var ck = chainOf(focal, hint);
   var rels = ck ? CHAINS[ck].relationships : relsOf(focal);
   // 사슬의 타겟이 아닌 회사를 중심에 놓으면 판을 그 회사 기준으로 다시 세운다(re-root).
@@ -1489,10 +1495,38 @@ function buildGraph(focal, year, sel, axis, sizes, hint){
     if (!trunk[k].data.on) trunk[k].style.opacity = 0.28;
   });
 
+  // 필요한 것만 먼저 보인다 — 타겟과 공급원·매출원 갈림목. 갈림목이나 상자를 누르면 그것에
+  // 닿은 다음 홉만 편다(open). '*' 는 전부. 안 보이는 이웃 수는 +N 배지로 상자에 단다.
+  // 판 전체를 한 번에 그리면 블룸은 상자 100개라 무엇을 봐야 할지 잃는다
+  open = open || [];
+  var all = open.indexOf('*') >= 0 || rooted;
+  var vis = {};
+  vis[focal] = 1;
+  nodes.forEach(function(n){ if (n.data.kind === 'lane') vis[n.id] = 1; });
+  var adj = {};
+  edges.forEach(function(e){
+    (adj[e.source] = adj[e.source] || []).push(e.target);
+    (adj[e.target] = adj[e.target] || []).push(e.source);
+  });
+  if (all) nodes.forEach(function(n){ vis[n.id] = 1; });
+  else open.forEach(function(o){ (adj[o] || []).forEach(function(x){ vis[x] = 1; }); });
+  nodes.forEach(function(n){
+    if (!vis[n.id]) return;
+    var hid = 0;
+    (adj[n.id] || []).forEach(function(x){ if (!vis[x] && x !== focal) hid++; });
+    // 같은 이웃이 여러 선으로 닿으면 한 번만 센다
+    var uniq = {};
+    (adj[n.id] || []).forEach(function(x){ if (!vis[x] && x !== focal) uniq[x] = 1; });
+    n.data.more = Object.keys(uniq).length || null;
+    n.data.opened = open.indexOf(n.id) >= 0;
+  });
+  nodes = nodes.filter(function(n){ return vis[n.id]; });
+  edges = edges.filter(function(e){ return vis[e.source] && vis[e.target]; });
+
   // 프로젝트는 칸도 상자도 아니다. projects.json 이 명시한 식구를 두르는 테두리다.
   // SPV·부지는 실제 법인이라 상자로 선다. 타겟은 늘 테두리 밖이고 선은 테두리에 안 닿는다
   ((ck && CHAINS[ck].projects) || []).forEach(function(p){
-    var mem = (p.members || []).filter(function(m){ return m !== focal && seen[m]; });
+    var mem = (p.members || []).filter(function(m){ return m !== focal && seen[m] && vis[m]; });
     if (!mem.length) return;
     nodes.push({ id:'proj|' + p.id, type:'proj',
       data:{ title: p.name_ko || p.name, mem: mem, pid: p.id } });
@@ -2092,7 +2126,14 @@ function App(){
   var a = useState(u0.focal), focal = a[0], setFocal = a[1];
   var b = useState(u0.year), year = b[0], setYear = b[1];
   var c = useState(u0.mode), mode = c[0], setMode = c[1];
-  var d = useState(u0.open), open = d[0], setOpen = d[1];   // 주소 호환용
+  var d = useState(u0.open), open = d[0], setOpen = d[1];   // 펼친 상자 id. '*' 는 전부
+  function toggleOpen(id){
+    setOpen(function(o){
+      var base = o.filter(function(x){ return x !== '*'; });
+      return base.indexOf(id) >= 0 ? base.filter(function(x){ return x !== id; })
+                                   : base.concat([id]);
+    });
+  }
   var f = useState({ kind:'ent', id: u0.sel || u0.focal }), sel = f[0], setSel = f[1];
   // 보던 사슬. 그 사슬에 있는 회사로 중심을 옮기면 사슬을 지킨다
   var f2 = useState(u0.chain), chainHint = f2[0], setChainHint = f2[1];
@@ -2194,8 +2235,8 @@ function App(){
   }, []);
 
   var gr = useMemo(function(){
-    return buildGraph(focal, year, sel, axis, sizes, chainHint);
-  }, [focal, year, sel, axis, sizes, chainHint]);
+    return buildGraph(focal, year, sel, axis, sizes, chainHint, open);
+  }, [focal, year, sel, axis, sizes, chainHint, open]);
   useEffect(function(){
     if (!rf || mode !== 'current') return;
     var t = setTimeout(function(){
@@ -2240,10 +2281,12 @@ function App(){
       var off = axis === key;
       setAxis(off ? null : key);
       setSel(off ? { kind:'ent', id: focal } : node.data.ref);
-      setDrw(true);
+      if (node.data.more || node.data.opened) toggleOpen(node.id);
+      setDrw(!narrow);
       return;
     }
-    setSel(node.data.ref); setDrw(true);
+    if (node.data.more || node.data.opened) toggleOpen(node.id);
+    setSel(node.data.ref); setDrw(!narrow);
   }
   function drill(subsystem){
     // 그 계통에 속한 상자 하나를 골라 판에서 진하게 보여 준다
@@ -2304,6 +2347,9 @@ function App(){
     h('rect', { key:'r', x:3, y:4, width:18, height:16, rx:2 }),
     h('path', { key:'l', d:'M15 4v16M17.5 9h1M17.5 12h1' }) ]);
   var canDrw = mode === 'current' || mode === 'timeline';
+  var allOpen = open.indexOf('*') >= 0;
+  var ICON_ALL = h('svg', { viewBox:'0 0 24 24' }, [
+    h('path', { key:'a', d:'M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5' }) ]);
   // 좁은 화면 머리줄은 한 줄이다 — 검색은 아이콘으로 접고 서랍도 아이콘, 탭은 분절 컨트롤
   var top = narrow
     ? h('div', { key:'top', className:'top' }, [
@@ -2312,6 +2358,9 @@ function App(){
         h('button', { key:'sb', className:'iconbtn' + (sopen ? ' on' : ''), title:'회사 찾기',
           'aria-label':'회사 찾기',
           onClick: function(){ setSopen(!sopen); if (sopen) setQ(''); } }, ICON_SEARCH),
+        mode === 'current' ? h('button', { key:'all', className:'iconbtn' + (allOpen ? ' on' : ''),
+          title: allOpen ? '접기' : '전부 펴기', 'aria-label':'전부 펴기',
+          onClick: function(){ setOpen(allOpen ? [] : ['*']); } }, ICON_ALL) : null,
         canDrw ? h('button', { key:'dw', className:'iconbtn' + (drw ? ' on' : ''),
           title:'근거 서랍', 'aria-label':'근거 서랍',
           onClick: function(){ setDrw(!drw); setSopen(false); } }, ICON_DRAWER) : null,
@@ -2324,6 +2373,9 @@ function App(){
         searchBox,
         modes,
         h('div', { key:'sp', className:'spacer' }),
+        mode === 'current' ? h('button', { key:'all', className:'btn' + (allOpen ? ' on' : ''),
+          title:'판 전체를 펴거나 접는다',
+          onClick: function(){ setOpen(allOpen ? [] : ['*']); } }, allOpen ? '접기' : '전부 펴기') : null,
         canDrw ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
           onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null,
         menuBox
