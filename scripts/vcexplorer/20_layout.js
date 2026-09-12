@@ -624,11 +624,28 @@ function place(nodes, edges, opts){
   });
   var mid = (lo + hi) / 2;
 
+  // 프로젝트 이름표는 맨 위 식구 상자 위 PROJ_PAD_Y 에 붙는다. 그 식구가 첫 줄이면 이름표가
+  // 칸 머리글(고정 띠) 밑으로 들어간다 — 그만큼 판 전체를 내린다
+  var topOf = {};
+  Object.keys(byCol).forEach(function(c){
+    byCol[c].forEach(function(it){ topOf[it.id] = it.top; });
+  });
+  var extra = 0;
+  projs.forEach(function(pn){
+    var t = null;
+    (pn.data.mem || []).forEach(function(id){
+      if (topOf[id] !== undefined && (t === null || topOf[id] < t)) t = topOf[id];
+    });
+    if (t === null) return;
+    var labelTop = t - lo + HDR_H + HDR_GAP - PROJ_PAD_Y;
+    if (labelTop < HDR_H + 8) extra = Math.max(extra, HDR_H + 8 - labelTop);
+  });
+
   var out = [], geo = {};
   used.forEach(function(c, i){
     var x = i * (COL_W + COL_GAP);
     byCol[c].forEach(function(it){
-      var y = it.top - mid + (hi - lo) / 2 + HDR_H + HDR_GAP;
+      var y = it.top - mid + (hi - lo) / 2 + HDR_H + HDR_GAP + extra;
       geo[it.id] = { x:x, y:y, h:it.h, col:i };
       if (!it.dummy) out.push(Object.assign({}, it.n, { position:{ x:x, y:y } }));
     });
