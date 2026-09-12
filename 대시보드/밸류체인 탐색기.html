@@ -1537,12 +1537,8 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
     var st = Object.assign({}, evStyle(r.evidence_level));
     if (!on) st.opacity = 0.28;
     var lbl = shareLabel(r.id, year);
-    // 그 해 비중이 있는 선은 굵기로 말한다(Sankey 문법). 1.5px 에서 5px 사이, 제곱근으로
-    var shv = shareIn(r.id, year);
-    if (shv && shv.value !== null && shv.value !== undefined)
-      st.strokeWidth = Math.round((1.5 + 3.5 * Math.sqrt(Math.min(100, shv.value) / 100)) * 10) / 10;
-    else if (shv && shv.value_high !== null && shv.value_high !== undefined)
-      st.strokeWidth = Math.round((1.5 + 3.5 * Math.sqrt(Math.min(100, shv.value_high) / 100)) * 10) / 10;
+    // 선 굵기는 근거 등급만 말한다. 비중을 굵기로 옮겨 봤으나(2026-09-12) 비중이 붙은
+    // 선이 몇 안 되어 굵은 선 하나가 잘못 그린 것처럼 보였다. 비중은 상자의 숫자가 말한다
     if (lbl) {
       // 값은 focal 이 아닌 쪽 상자에 붙인다. 선 위에 얹으면 선을 가린다
       var holder = r.target_entity === focal ? r.source_entity : r.target_entity;
@@ -1563,7 +1559,7 @@ function buildGraph(focal, year, sel, axis, sizes, hint, open){
         var key = band + ':' + cid;
         // 귀속마다 근거 등급이 다르다 — Apple 은 커패시터에는 확인, 인덕터에는 추론
         var mp = mapOf(r, band, cid), lvl = mp ? mp.status : r.evidence_level;
-        var st2 = Object.assign({}, evStyle(lvl), st.strokeWidth ? { strokeWidth: st.strokeWidth } : {});
+        var st2 = Object.assign({}, evStyle(lvl));
         if (!on) st2.opacity = 0.28;
         edges.push({ id:'e-' + r.id + '|' + cid,
           source: band === 'ss' ? r.source_entity : lid,
