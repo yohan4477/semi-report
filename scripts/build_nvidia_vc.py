@@ -75,9 +75,6 @@ SOURCES = [
  ('nv_sup_002', 'NVIDIA Corporation', 'FY2026 Form 10-K', 'primary_official', '2026-02-25',
   'https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm',
   'SK하이닉스·마이크론·삼성전자가 엔비디아에 메모리를 공급한다. 공급사별 정확한 비중은 비공개'),
- ('nv_sup_003', 'NVIDIA Corporation', 'FY2026 Form 10-K', 'primary_official', '2026-02-25',
-  'https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm',
-  'CoWoS 첨단 패키징 기술을 쓴다고 밝힌다. 엔비디아 전용 용량 비중은 비공개'),
  ('nv_sup_004', 'NVIDIA Corporation', 'FY2026 Form 10-K', 'primary_official', '2026-02-25',
   'https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm',
   'Hon Hai(폭스콘)·위스트론·페브리넷이 조립·시험·패키징을 맡는 하청업체다. 개별 물량 비중은 '

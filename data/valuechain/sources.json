@@ -1,135 +1,5 @@
 [
  {
-  "id": "sec_nvda_10k_fy2026",
-  "publisher": "NVIDIA",
-  "title": "Form 10-K (FY2026)",
-  "published_date": "2026-02-25",
-  "accessed_date": "2026-09-10",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
-  "note": "accession 0001045810-26-000021 · 회계연도 2026-01-25 종료"
- },
- {
-  "id": "sec_tsmc_20f_fy2025",
-  "publisher": "TSMC",
-  "title": "Form 20-F (FY2025)",
-  "published_date": "2026-04-16",
-  "accessed_date": "2026-09-10",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
-  "note": "accession 0001628280-26-025362 · 회계연도 2025-12-31 종료"
- },
- {
-  "id": "sec_asml_20f_fy2025",
-  "publisher": "ASML",
-  "title": "Form 20-F (FY2025)",
-  "published_date": "2026-02-25",
-  "accessed_date": "2026-09-10",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
-  "note": "accession 0001628280-26-011378 · 본문 24.8MB 라 XBRL 주석으로 확인했다"
- },
- {
-  "id": "asml_ar_2025",
-  "publisher": "ASML Holding N.V.",
-  "title": "2025 Annual Report — Strategic report",
-  "published_date": "2026-02-25",
-  "accessed_date": "2026-09-10",
-  "source_type": "primary_company",
-  "url": "https://www.asml.com/en/investors/annual-report",
-  "note": "20-F 의 서술 파트와 같은 내용. 20-F 원문 용량 때문에 이 경로로 확인했다"
- },
- {
-  "id": "sec_nvda_10q_fy2027q1",
-  "publisher": "NVIDIA",
-  "title": "Form 10-Q (FY2027 Q1)",
-  "published_date": "2026-05-20",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000052/nvda-20260426.htm",
-  "note": "accession 0001045810-26-000052 · 2026-04-26 종료"
- },
- {
-  "id": "sec_nvda_10q_fy2027q2",
-  "publisher": "NVIDIA",
-  "title": "Form 10-Q (FY2027 Q2)",
-  "published_date": "2026-08-26",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/nvda-20260726.htm",
-  "note": "accession 0001045810-26-000075 · 2026-07-26 종료"
- },
- {
-  "id": "sec_smci_10k_fy2026",
-  "publisher": "Super Micro Computer",
-  "title": "Form 10-K (FY2026)",
-  "published_date": "2026-08-29",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1375365&type=10-K",
-  "note": "accession 0001375365-26-000022 · 회계연도 2026-06-30 종료"
- },
- {
-  "id": "sec_hpe_10q_fy2026q3",
-  "publisher": "Hewlett Packard Enterprise",
-  "title": "Form 10-Q (FY2026 Q3)",
-  "published_date": "2026-09-03",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1645590&type=10-Q",
-  "note": "accession 0001645590-26-000080 · 2026-07-31 종료"
- },
- {
-  "id": "sec_dell_10q_fy2027q2",
-  "publisher": "Dell Technologies",
-  "title": "Form 10-Q (FY2027 Q2)",
-  "published_date": "2026-09-04",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=1571996&type=10-Q",
-  "note": "accession 0001571996-26-000046 · 2026-07-31 종료"
- },
- {
-  "id": "sec_crwv_10k_fy2025",
-  "publisher": "CoreWeave",
-  "title": "Form 10-K (FY2025)",
-  "published_date": "2026-03-02",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
-  "note": "accession 0001769628-26-000104"
- },
- {
-  "id": "sec_crwv_8k_20250915",
-  "publisher": "CoreWeave",
-  "title": "Form 8-K — NVIDIA 잔여 용량 매입 계약",
-  "published_date": "2025-09-15",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000047/crwv-20250909.htm",
-  "note": "2023년 4월 MSA 산하 신규 주문서, 2025-09-09 체결"
- },
- {
-  "id": "sec_iren_8k_20260526",
-  "publisher": "IREN",
-  "title": "Form 8-K EX-99.1 — Childress 블랙웰 배치",
-  "published_date": "2026-05-26",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/0001878848/000187884826000030/irentrgts44bninarrwithbl.htm",
-  "note": "accession 0001878848-26-000030"
- },
- {
-  "id": "sec_nvda_8k_20260817",
-  "publisher": "NVIDIA",
-  "title": "Form 8-K — SB Energy 보증",
-  "published_date": "2026-08-17",
-  "accessed_date": "2026-09-11",
-  "source_type": "primary_official",
-  "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000069/nvda-20260817.htm",
-  "note": "accession 0001045810-26-000069"
- },
- {
   "id": "be_10k_fy2025",
   "publisher": "Bloom Energy",
   "title": "Form 10-K (FY2025)",
@@ -358,46 +228,6 @@
   "url": null,
   "accessed_date": "2026-09-11",
   "note": "04 에 URL 없이 이름만 적혀 있다"
- },
- {
-  "id": "semidoped_2026_05_22",
-  "publisher": "Semi Doped",
-  "title": "Daily update — 2026-05-22",
-  "source_type": "reputable_media",
-  "published_date": "2026-05-22",
-  "url": "https://www.thelec.net/news/articleView.html?idxno=10639",
-  "accessed_date": "2026-09-11",
-  "note": "대덕전자가 FC-CSP·FC-BGA·AI 기판 생산능력을 함께 늘리는 데 8,000억 원 넘게 쓴다. 저장소 클립이 The Elec 기사를 인용한다"
- },
- {
-  "id": "hanjuseong_backend_2026_05_18",
-  "publisher": "한주성",
-  "title": "모래가 반도체 칩이 되기까지 2편 후공정",
-  "source_type": "reputable_media",
-  "published_date": "2026-05-18",
-  "url": null,
-  "accessed_date": "2026-09-11",
-  "note": "삼성전기·대덕전자·심텍이 기판을 만들고 하나마이크론·네패스 같은 OSAT 가 패키징을 맡는다. 다이싱은 이오테크닉스, 본딩 장비는 한미반도체"
- },
- {
-  "id": "semianalysis_li_2026_08_27",
-  "publisher": "SemiAnalysis (링크드인)",
-  "title": "기판에 여유가 없다 — ABF 공급망",
-  "source_type": "industry_research",
-  "published_date": "2026-08-27",
-  "url": "https://www.linkedin.com/feed/update/urn:li:activity:7498545703879835648/",
-  "accessed_date": "2026-09-11",
-  "note": "2026 물량이 전부 예약됐고 공급사 여섯 곳 리드타임이 12~14개월. 재료도 빡빡하다 — T-glass 공급이 닛토보 한 곳에서 다섯 곳 이상으로 늘고, 기판용 CCL 은 거의 레조낙 한 곳에서만 나온다"
- },
- {
-  "id": "dealsite_2025_05_28",
-  "publisher": "딜사이트",
-  "title": "대덕전자, '득보다 실 컸던' FC-BGA…올해는 숨통",
-  "source_type": "reputable_media",
-  "published_date": "2025-05-28",
-  "url": "https://dealsite.co.kr/articles/142211",
-  "accessed_date": "2026-09-11",
-  "note": "고객사로 삼성전자와 SK하이닉스를 든다. 메모리 패키지기판이 전체 매출의 약 90%. FC-BGA 매출은 1,781억 원으로 전년 대비 20% 줄었고 분기 400억 원대. 인포테인먼트·디지털 클러스터·자율주행용 FC-BGA 고객사는 이름을 밝히지 않는다"
  },
  {
   "id": "be_10qa_2026q2",
@@ -780,16 +610,6 @@
   "note": "태양유전 라인이 Apple·아이폰 수요향 MLCC 를 만든다고 보도. 2024-07·2025-10 두 시점 자료다(원표기: CONFIRMED industry evidence)"
  },
  {
-  "id": "ty_auto_tier1",
-  "publisher": "TAIYO YUDEN",
-  "title": "Integrated Report / CEO 자료",
-  "source_type": "primary_official",
-  "published_date": null,
-  "url": "https://www.yuden.co.jp/en/ir/",
-  "accessed_date": "2026-09-11",
-  "note": "유럽·미국·중국·한국·일본 주요 1차 협력사와 폭넓게 거래한다고 공시. 개별 실명은 비공개(원표기: company disclosure)"
- },
- {
   "id": "vw_qual",
   "publisher": "TAIYO YUDEN",
   "title": "제품 뉴스 — VW80808 인증",
@@ -860,16 +680,6 @@
   "note": "공급사 수와 선적 건수다. 금액 비중이 아니다"
  },
  {
-  "id": "importinfo_bloom_list",
-  "publisher": "ImportInfo",
-  "title": "Bloom 수입자 공급사 목록",
-  "source_type": "trade_data",
-  "published_date": "2026-09",
-  "url": "https://www.importinfo.com/bloom-energy-corporation",
-  "accessed_date": "2026-09-11",
-  "note": "2026 년 8~9월까지 활동. 선적 건수는 금액 비중이 아니다"
- },
- {
   "id": "importgenius_bloom_hist",
   "publisher": "ImportGenius",
   "title": "Bloom 수입 이력",
@@ -918,16 +728,6 @@
   "url": "https://www.bloomenergy.com/news/bloom-energy-and-coreweave-partner-to-revolutionize-ai-data-center-power-solutions/",
   "accessed_date": "2026-09-11",
   "note": "치리사가 가진 일리노이 볼로 부지에서 코어위브가 쓴다"
- },
- {
-  "id": "equinix_own_2025",
-  "publisher": "Equinix",
-  "title": "에퀴닉스 자체 발표",
-  "source_type": "primary_company",
-  "published_date": "2025-08-14",
-  "url": "https://investor.equinix.com/news-events/press-releases/detail/1079/equinix-collaborates-with-leading-alternative-energy",
-  "accessed_date": "2026-09-11",
-  "note": "100MW 를 넘는 블룸 계약을 에퀴닉스가 직접 확인한다"
  },
  {
   "id": "be_conflict_minerals_2025",
@@ -1210,16 +1010,6 @@
   "note": "주권 AI 우선 파트너. 03 의 S013"
  },
  {
-  "id": "ne_q2_results",
-  "publisher": "Nebius",
-  "title": "Nebius reports second quarter 2026 financial results",
-  "source_type": "primary_company",
-  "published_date": "2026-08-12",
-  "url": "https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results",
-  "accessed_date": "2026-09-12",
-  "note": "2026 2분기 실적 발표. 03 의 S014"
- },
- {
   "id": "ne_finland",
   "publisher": "Nebius",
   "title": "Nebius to construct 310 MW AI factory in Finland",
@@ -1418,16 +1208,6 @@
   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
   "accessed_date": "2026-09-12",
   "note": "SK하이닉스·마이크론·삼성전자가 엔비디아에 메모리를 공급한다. 공급사별 정확한 비중은 비공개"
- },
- {
-  "id": "nv_sup_003",
-  "publisher": "NVIDIA Corporation",
-  "title": "FY2026 Form 10-K",
-  "source_type": "primary_official",
-  "published_date": "2026-02-25",
-  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
-  "accessed_date": "2026-09-12",
-  "note": "CoWoS 첨단 패키징 기술을 쓴다고 밝힌다. 엔비디아 전용 용량 비중은 비공개"
  },
  {
   "id": "nv_sup_004",

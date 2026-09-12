@@ -68,10 +68,6 @@ SOURCES = [
   'https://www.trendforce.com/research/download/RP240711DB',
   '태양유전 라인이 Apple·아이폰 수요향 MLCC 를 만든다고 보도. 2024-07·2025-10 두 시점 '
   '자료다(원표기: CONFIRMED industry evidence)'),
- ('ty_auto_tier1', 'TAIYO YUDEN', 'Integrated Report / CEO 자료', 'primary_official', None,
-  'https://www.yuden.co.jp/en/ir/',
-  '유럽·미국·중국·한국·일본 주요 1차 협력사와 폭넓게 거래한다고 공시. 개별 실명은 '
-  '비공개(원표기: company disclosure)'),
  ('ty_distributors', 'TAIYO YUDEN', 'Authorized Distributors', 'primary_official',
   '2026-09-11', 'https://www.yuden.co.jp/en/product/distributor/',
   '전 세계 공식 온라인 유통사는 Arrow·Avnet·Digi-Key·Future Electronics·Mouser·TTI. '

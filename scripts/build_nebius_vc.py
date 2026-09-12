@@ -77,10 +77,6 @@ SOURCES = [
   'primary_company', '2026-09-08',
   'https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-'
   'ai-stack-to-palantir-customers', '주권 AI 우선 파트너. 03 의 S013'),
- ('ne_q2_results', 'Nebius', 'Nebius reports second quarter 2026 financial results',
-  'primary_company', '2026-08-12',
-  'https://nebius.com/newsroom/nebius-reports-second-quarter-2026-financial-results',
-  '2026 2분기 실적 발표. 03 의 S014'),
  ('ne_finland', 'Nebius', 'Nebius to construct 310 MW AI factory in Finland',
   'primary_company', '2026-03-31',
   'https://nebius.com/newsroom/nebius-to-construct-310-mw-ai-factory-in-finland',

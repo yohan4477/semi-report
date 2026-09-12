@@ -48,6 +48,27 @@ def rd(p):
         return json.load(f)
 
 
+ENT_KEYS = set('source_entity target_entity focal_entity members contractual_customer '
+               'ultimate_end_user subject object company developer financier site '
+               'anon_company_id candidate_company_id'.split())
+SRC_KEYS = {'source_id', 'source_ids'}
+
+
+def walk_ids(o, used_ent, used_src, key=None):
+    u"""json 을 재귀로 걸어 상자 id 와 출처 id 가 든 칸을 센다."""
+    if isinstance(o, dict):
+        for k, v in o.items():
+            walk_ids(v, used_ent, used_src, k)
+    elif isinstance(o, list):
+        for v in o:
+            walk_ids(v, used_ent, used_src, key)
+    elif isinstance(o, str) and key:
+        if key in ENT_KEYS:
+            used_ent[o] += 1
+        elif key in SRC_KEYS:
+            used_src[o] += 1
+
+
 def validate(today=None):
     today = today or datetime.date.today()
     fails, warns = [], []
@@ -71,6 +92,12 @@ def validate(today=None):
             os.path.join(b, 'evidence.json')) else []
         relids = set(r['id'] for r in rels)
         pair = collections.Counter()
+        # 쓰였나는 사슬 폴더의 모든 json 을 걸어 센다 — 관계만 보면 revenue_type_map·분류의
+        # 비중·재무·프로젝트 식구가 가리키는 출처와 상자를 「안 쓰였다」고 잘못 센다
+        for dp, _, fs in os.walk(b):
+            for fn in fs:
+                if fn.endswith('.json'):
+                    walk_ids(rd(os.path.join(dp, fn)), used_ent, used_src)
         for r in rels:
             for k in ('source_entity', 'target_entity'):
                 used_ent[r[k]] += 1
