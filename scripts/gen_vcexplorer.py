@@ -238,7 +238,7 @@ padding:2px 10px;height:64px;box-shadow:none;align-items:center}
 .nd.lane.un{border-color:#c6ccd8}
 .nd.lane.un .nm{color:var(--ink3)}
 .nd.sel{border-color:var(--ink1);box-shadow:0 0 0 2px rgba(21,27,40,.16),0 1px 3px rgba(20,26,40,.14)}
-.nd.lane.sel{background:#e9edf5;border-style:solid;border-color:var(--ink1)}
+.nd.lane.sel{background:#fff;border-style:solid;border-color:var(--ink1)}
 .nd.lane.sel .nm{color:var(--ink1)}
 .nd.dim{opacity:.28}
 .nd.gone{opacity:.32;border-style:dotted}
