@@ -3,8 +3,8 @@ u"""밸류체인 보고서 장 — 사슬마다 한 장. 대시보드/<회사> �
 
 2026-09-13 사용자가 준 TSMC 그림 장(보고서 꼴: 제목·절·짧은 설명·그림)을 틀로 삼는다. 전체 지도
 절에는 밸류체인 탐색기(?focal=…&open=*)를 끼우고, 나머지 절은 그 사슬의 데이터(claims·
-classifications·relationships·observations·sources)에서 세운다. TSMC 는 원문 보고서의 2~8절
-(gen_tsmc_page.SECTIONS_2_8)을 그대로 두고 데이터 절을 뒤에 붙인다.
+classifications·relationships·observations·sources)에서 세운다. TSMC 는 받은 보고서 1~8절(손으로 그린
+지도 포함)을 그대로 두고 9절에 탐색기를 「추가」한 뒤 데이터 절을 붙인다.
 
 절(데이터가 없으면 그 절은 안 세운다):
   1 전체 지도(탐색기)  2 핵심 수치(주장)  3 매출원 구성  4 공급원 구성  5 병목  6 고객 집중도
@@ -24,6 +24,7 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUTDIR = os.path.join(ROOT, u'대시보드')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_tsmc_page  # noqa: E402  TSMC 2~8절 원문 그림
+import tsmc_map_orig  # noqa: E402  TSMC 1절 원문 지도(손으로 그린 SVG)
 
 EV_KO = {'CONFIRMED': u'공시로 확인', 'ESTIMATED': u'추정', 'INFERRED': u'정황 추론',
          'UNDISCLOSED': u'비공개', 'HISTORICAL_CURRENT_UNKNOWN': u'과거 관측·현재 미상'}
@@ -142,15 +143,15 @@ def period_key(p):
 
 
 # ── 절 ─────────────────────────────────────────────────────────────────
-def sec_map(c, n):
+def sec_map(c, n, title=u'전체 지도'):
     q = 'focal=%s&amp;open=*' % c.focal
     return u'''  <section>
-    <h2>%d. 전체 지도<small>앞단 → %s → 뒷단</small></h2>
+    <h2>%d. %s<small>앞단 → %s → 뒷단</small></h2>
     <p class="note">밸류체인 탐색기로 그린다. 상자와 선은 데이터에서 나오고 상자를 누르면 근거가 열린다. 색은 소속: 청록 타겟, 주황 한국 회사, 진홍 병목(공급 여력 HIGH 이상), 남색 고객. 중개·유통은 점선 테두리. 선 굵기에는 뜻이 없다. <a href="밸류체인 탐색기.html?%s">새 창에서 크게 보기</a></p>
     <div class="frame"><iframe src="밸류체인 탐색기.html?%s" title="%s 밸류체인 탐색기" loading="lazy"></iframe></div>
     <div class="legend"><span class="l-tsmc">타겟</span><span class="l-kr">한국 회사</span><span class="l-jp">병목</span><span class="l-cust">고객</span><span class="l-sup">그 밖의 공급사</span></div>
   </section>
-''' % (n, esc(c.label), q, q, esc(c.label))
+''' % (n, esc(title), esc(c.label), q, q, esc(c.label))
 
 
 def sec_claims(c, n):
@@ -296,11 +297,14 @@ def page(c, chains):
     nav = u''.join(u'<a href="%s"%s>%s</a>' % (esc(fname(x)), ' class="on"' if x.id == c.id else '', esc(x.label)) for x in chains)
     nav += u'<a href="밸류체인 탐색기.html">탐색기</a>'
     parts, n = [], 1
-    parts.append(sec_map(c, n)); n += 1
     if c.id == 'tsmc':
-        # 원문 보고서의 2~8절 그림을 그대로. 번호는 원문과 같이 2~8
+        # 받은 보고서 1~8절을 손 안 대고 그대로 두고, 탐색기 절은 9절로 「추가」한다
+        parts.append(tsmc_map_orig.SECTION_1_ORIG)
         parts.append(gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', ''))
         n = 9
+        parts.append(sec_map(c, n, u'데이터로 다시 그린 전체 지도')); n += 1
+    else:
+        parts.append(sec_map(c, n)); n += 1
     for fn in (sec_claims,
                lambda cc, k: sec_shares(cc, k, 'revenue_types', u'매출원 구성', u'매출 갈래마다 가장 최근 비중.', ''),
                lambda cc, k: sec_shares(cc, k, 'supply_sources', u'공급원 구성', u'공급 갈래마다 가장 최근 비중.', ' sup'),
@@ -308,7 +312,7 @@ def page(c, chains):
         h = fn(c, n)
         if h:
             parts.append(h); n += 1
-    sub = (u'보고서 「TSMC 밸류체인 조사」(2026-09-12, 저장소 <code>%s</code>)의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 근거 등급은 A 공시 실명·수치, B 공시에 의존 명시(수치 비공개), C 추정·보도.' % gen_tsmc_page.REPORT) \
+    sub = (u'보고서 「TSMC 밸류체인 조사」의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 원문은 저장소 <code>%s</code>, 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % gen_tsmc_page.REPORT) \
         if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 숫자는 전부 데이터(data/valuechain/chains/%s)에서 나오고 출처가 붙는다.' % c.id
     return u'''<!doctype html>
 <html lang="ko">
