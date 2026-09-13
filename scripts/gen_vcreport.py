@@ -116,6 +116,11 @@ CSS = u'''
     .cl .src{grid-column:1}
     table{font-size:12.5px} th,td{padding:6px 6px}
     .tw table{min-width:640px}
+    .tw table.fit{min-width:0;font-size:11.5px;table-layout:fixed;width:100%}
+    .heat.fit th,.heat.fit td{padding:6px 3px;word-break:keep-all}
+    .heat.fit th:nth-child(1),.heat.fit td:nth-child(1){width:28%}
+    .heat.fit th:nth-child(2),.heat.fit td:nth-child(2){width:30%}
+    .heat.fit td.c{width:auto;padding:6px 0}
     .bar{grid-template-columns:100px 1fr 96px} .bar .val{white-space:normal;font-size:12px;line-height:1.25}
   }
   /* 조사 보고서(마크다운) */
@@ -339,7 +344,8 @@ def page(c, chains):
         # 2~8절은 받은 그림 그대로. 번호도 원문과 같다
         raw = gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', '')
         raw = raw.replace('<svg ', '<div class="sv"><svg ').replace('</svg>', '</svg></div>')
-        raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat">').replace('</table>', '</table></div>')
+        # 병목 히트맵은 점수 칸이 좁아 폰 화면에도 한눈에 든다 — 옆으로 밀지 않고 맞춘다(fit)
+        raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat fit">').replace('</table>', '</table></div>')
         parts.append(raw)
         n = 9
     for fn in (sec_claims,
