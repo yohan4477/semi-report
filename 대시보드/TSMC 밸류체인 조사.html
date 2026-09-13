@@ -1,0 +1,1608 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TSMC 밸류체인 조사 — 앞단(공급) / 뒷단(고객)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#EEF1F4;--ink:#1C2733;--mute:#6B7785;--line:#C9D1DA;--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;
+    --kr:#B4620A;--kr-soft:#F6E3C8;--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.55}
+  main{max-width:960px;margin:0 auto;padding:28px 18px 64px}
+  h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-0.01em}
+  .sub{color:var(--mute);margin:0 0 18px;font-size:14px}
+  .sub a,.note a,td a{color:var(--tsmc)}
+  nav.chains{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 28px}
+  nav.chains a{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:#fff}
+  nav.chains a.on{background:var(--tsmc);border-color:var(--tsmc);color:#fff}
+  section{margin:0 0 44px;padding-top:18px;border-top:2px solid var(--ink)}
+  h2{font-size:18px;font-weight:600;margin:0 0 4px}
+  h2 small{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
+  p.note{margin:0 0 14px;color:var(--mute);font-size:13.5px;max-width:70ch}
+  svg{width:100%;height:auto;display:block;font-family:inherit}
+  .frame{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;height:640px}
+  .frame iframe{width:100%;height:100%;border:0;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px;color:var(--mute)}
+  .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .l-tsmc::before{background:var(--tsmc)} .l-kr::before{background:var(--kr)} .l-jp::before{background:var(--jp)} .l-cust::before{background:var(--cust)} .l-sup::before{background:#8A96A3}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:500;color:var(--mute)}
+  td.nw{white-space:nowrap}
+  .heat td.c{width:76px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
+  .ev{display:inline-block;font-size:11.5px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--mute);white-space:nowrap}
+  .ev.c{border-color:var(--tsmc);color:var(--tsmc)}
+  .bars{margin-top:6px}
+  .bar{display:grid;grid-template-columns:200px 1fr 120px;gap:10px;align-items:center;font-size:13.5px;padding:4px 0}
+  .bar .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .tr{height:16px;background:#fff;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--tsmc)}
+  .bar.sup .fill{background:var(--sup)}
+  .bar .val{color:var(--mute);white-space:nowrap}
+  .tl{position:relative;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl .yr{position:relative;margin:0 0 18px}
+  .tl .yr::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--tsmc)}
+  .tl b{display:block;font-weight:600;margin-bottom:2px}
+  .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
+  .tl .row span:first-child{color:var(--mute)}
+  @media (max-width:520px){h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}}
+  /* 조사 보고서(마크다운) */
+  .md h2{margin-top:28px;padding-top:18px;border-top:2px solid var(--ink)}
+  .md h3{font-size:15.5px;margin:22px 0 6px}
+  .md p{max-width:80ch}
+  .md ul,.md ol{padding-left:22px}
+  .md li{margin:3px 0}
+  .md blockquote{margin:10px 0;padding:6px 12px;border-left:3px solid var(--line);color:var(--mute)}
+  .md pre{background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+  .md code{font-size:13px}
+  .md .tw{overflow-x:auto}
+  .md table{font-size:13px}
+  .md hr{border:0;border-top:1px solid var(--line);margin:22px 0}
+</style>
+</head>
+<body>
+<main>
+  <h1>TSMC 밸류체인 조사 — 앞단(공급) / 뒷단(고객)</h1>
+  <p class="sub">조사 보고서 원문 그대로. 그림은 <a href="TSMC 밸류체인.html">TSMC 밸류체인 그림 장</a>, 상자·선은 <a href="밸류체인 탐색기.html?focal=tsmc&amp;open=*">탐색기</a>. 원문 파일 <code>data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md</code>.</p>
+  <nav class="chains"><a href="블룸에너지 밸류체인.html">블룸에너지</a><a href="반도체 기판 밸류체인.html">반도체 기판</a><a href="네비우스 밸류체인.html">네비우스</a><a href="엔비디아 밸류체인.html">엔비디아</a><a href="태양유전 밸류체인.html">태양유전</a><a href="TSMC 밸류체인.html">TSMC</a><a href="TSMC 밸류체인 조사.html" class="on">TSMC 조사 보고서</a><a href="밸류체인 탐색기.html">탐색기</a></nav>
+  <div class="md">
+<p>작성일: 2026-09-12
+기준 자료: TSMC 2025년 Form 20-F(2026.4 SEC 제출), TSMC 2025년 대만 연차보고서(TWSE), 고객·공급사 SEC 10-K, DART 공시, 업계 보도</p>
+<h2>0. 읽는 법 — 근거 등급</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>등급</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>TSMC 또는 상대 회사의 공시(20-F, 10-K, 연차보고서, DART)에 실명·수치로 명시</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>상대 회사 공시에 TSMC 의존이 명시되나 금액·비중은 비공개</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>애널리스트 추정 또는 업계 보도. 방향은 맞지만 숫자는 공시 근거 없음</td>
+</tr>
+</tbody>
+</table></div>
+<p>TSMC는 20-F에서 고객명을 절대 공개하지 않습니다. 따라서 뒷단은 "TSMC 공시의 집중도(A)" + "고객 10-K의 TSMC 의존 문구(B)" + "추정 매핑(C)"을 겹쳐서 봐야 합니다. 앞단은 반대로 대만 연차보고서가 카테고리별 공급사 실명을 공개하므로 A등급이 많습니다.</p>
+<hr>
+<h2>1. TSMC 본체 — 2025년 핵심 수치 (A)</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>2025</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출</td>
+<td>NT$3조8,090억 (US$1,224억)</td>
+<td>전년비 +31.6% (NT$), +35.9% (US$)</td>
+</tr>
+<tr>
+<td>순이익</td>
+<td>NT$1조7,179억 (US$552억)</td>
+<td>순이익률 45.1%</td>
+</tr>
+<tr>
+<td>매출총이익률</td>
+<td>59.9%</td>
+<td>2024년 56.1%</td>
+</tr>
+<tr>
+<td>웨이퍼 출하</td>
+<td>1,500만 장 (12인치 환산)</td>
+<td>2024년 1,290만 장</td>
+</tr>
+<tr>
+<td>고객 수 / 제품 수</td>
+<td>534개 / 12,682개</td>
+<td></td>
+</tr>
+<tr>
+<td>7nm 이하 비중</td>
+<td>웨이퍼 매출의 74%</td>
+<td>3nm 단독 24%</td>
+</tr>
+<tr>
+<td>Capex</td>
+<td>NT$1조2,724억</td>
+<td>2026 계획 US$520~560억 (이후 US$600~640억으로 상향 보도)</td>
+</tr>
+<tr>
+<td>Foundry 2.0 점유율</td>
+<td>40%</td>
+<td>2024년 34%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>플랫폼별 매출 (A):</strong> HPC 58% (NT$2조1,929억) · 스마트폰 29% · IoT 5% · 자동차 5% · DCE 1% · 기타 2%</p>
+<p><strong>지역별 매출 (고객 본사 기준, A):</strong> 북미 75% · 아태(중국·일본 제외) 9% · 중국 9% · 일본 4% · EMEA 3%</p>
+<p><strong>고객 집중도 (A, 20-F Risk Factors):</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th></th>
+<th>2023</th>
+<th>2024</th>
+<th>2025</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상위 10대 고객</td>
+<td>70%</td>
+<td>76%</td>
+<td>78%</td>
+</tr>
+<tr>
+<td>1위 고객</td>
+<td>25%</td>
+<td>22%</td>
+<td>19%</td>
+</tr>
+<tr>
+<td>2위 고객</td>
+<td>11%</td>
+<td>12%</td>
+<td>17%</td>
+</tr>
+</tbody>
+</table></div>
+<p>→ 1위 하락·2위 급등. 업계는 2025년까지 1위=Apple, 2위=NVIDIA로 보며, 2026년 중 NVIDIA가 1위로 역전된 것으로 추정(C). 대만 보도는 NVIDIA 19%/Apple 17%로 순서를 반대로 읽기도 하나, TSMC 공시는 순위만 밝히므로 어느 쪽이 19%인지는 확정 불가.</p>
+<hr>
+<h2>2. 뒷단 (매출 → 고객 → 고객의 고객)</h2>
+<h3>2-1. Tier 1 고객 매핑</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>고객</th>
+<th>등급</th>
+<th>TSMC에 맡기는 제품</th>
+<th>고객 공시에서 확인되는 내용</th>
+<th>추정 TSMC 매출 비중</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Apple</strong> (AAPL, 10-K 9월 결산)</td>
+<td>B/C</td>
+<td>A시리즈(iPhone), M시리즈(Mac/iPad), 모뎀·기타</td>
+<td>10-K에서 "특정 부품은 단일 공급원(single source)에 의존, 아시아 아웃소싱 파트너" 명시. TSMC 실명은 공급업체 리스트(Supplier List)에 등재</td>
+<td>2025년 ~19~22% → 2026년 ~18% (US$270억 추정)</td>
+</tr>
+<tr>
+<td><strong>NVIDIA</strong> (NVDA, 10-K 1월 결산)</td>
+<td>B/C</td>
+<td>H100/H200/Blackwell/Rubin GPU, 네트워킹</td>
+<td>10-K에 "TSMC와 Samsung 파운드리 활용, CoWoS 패키징 사용, 메모리는 SK hynix·Micron·Samsung" 실명 명시</td>
+<td>2025년 ~17~19% → 2026년 ~22% (US$330억 추정). 2026년 CoWoS 캐파의 50%+ 예약 보도</td>
+</tr>
+<tr>
+<td><strong>AMD</strong> (10-K 12월 결산)</td>
+<td>B/C</td>
+<td>Ryzen/EPYC CPU, Instinct MI300/MI400, Xilinx FPGA</td>
+<td>10-K에 TSMC를 웨이퍼 주 공급원으로 명시</td>
+<td>상위 10 내</td>
+</tr>
+<tr>
+<td><strong>Broadcom</strong> (AVGO, 10-K 10월 결산)</td>
+<td>B/C</td>
+<td>Google TPU·Meta MTIA 등 커스텀 AI ASIC, 네트워킹 스위치</td>
+<td>10-K에 파운드리 의존 명시</td>
+<td>상위 5 내로 추정</td>
+</tr>
+<tr>
+<td><strong>Qualcomm</strong> (QCOM, 10-K 9월 결산)</td>
+<td>B/C</td>
+<td>Snapdragon AP, 모뎀, 자동차</td>
+<td>10-K에 TSMC·Samsung 이중 소싱 명시</td>
+<td>상위 5 내</td>
+</tr>
+<tr>
+<td><strong>MediaTek</strong> (TWSE 2454, 대만 공시)</td>
+<td>B/C</td>
+<td>Dimensity AP, 스마트TV·WiFi SoC</td>
+<td></td>
+<td>상위 10 내</td>
+</tr>
+<tr>
+<td><strong>Marvell</strong> (MRVL, 10-K 1월 결산)</td>
+<td>B/C</td>
+<td>커스텀 ASIC(Amazon Trainium 등), 광통신 DSP</td>
+<td></td>
+<td>상위 10 내</td>
+</tr>
+<tr>
+<td><strong>Intel</strong> (INTC)</td>
+<td>B/C</td>
+<td>Lunar Lake/Arrow Lake 타일, Xe GPU</td>
+<td>10-K에 외부 파운드리 사용 명시</td>
+<td>상위 10 내</td>
+</tr>
+<tr>
+<td><strong>Google / Amazon / Microsoft / Meta</strong></td>
+<td>C</td>
+<td>자체 AI 칩(TPU, Trainium, Maia, MTIA)</td>
+<td>직접 계약 또는 Broadcom·Marvell·Alchip·GUC 경유</td>
+<td>시스템 회사로서 직거래 증가 추세</td>
+</tr>
+<tr>
+<td><strong>Sony, NXP, Infineon, STMicro, Renesas</strong></td>
+<td>C</td>
+<td>이미지센서 로직, 자동차 MCU 등</td>
+<td>자동차 5%·IoT 5%의 주 구성</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2-2. 고객의 고객 (Tier 2 뒷단)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>경로</th>
+<th>다음 단 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple →</td>
+<td>Foxconn(Hon Hai), Pegatron, Luxshare (조립) → 소비자</td>
+</tr>
+<tr>
+<td>NVIDIA →</td>
+<td>Microsoft, Meta, Google, Amazon, Oracle, xAI, CoreWeave (하이퍼스케일러·네오클라우드) / Foxconn·Quanta·Wistron·Supermicro·Dell (서버 조립)</td>
+</tr>
+<tr>
+<td>AMD →</td>
+<td>하이퍼스케일러, Dell·HP·Lenovo(PC), Sony·Microsoft(콘솔)</td>
+</tr>
+<tr>
+<td>Broadcom/Marvell →</td>
+<td>Google, Meta, Amazon (커스텀 ASIC 최종 사용자)</td>
+</tr>
+<tr>
+<td>Qualcomm/MediaTek →</td>
+<td>Samsung, Xiaomi, Oppo, Vivo (스마트폰 OEM)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2-3. 패키징·테스트 (매출 흐름의 옆단: TSMC가 OSAT에 재외주)</h3>
+<p>TSMC는 CoWoS 후공정 일부를 OSAT에 넘기며, 이는 TSMC 매출원가이자 OSAT의 매출입니다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>등급</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASE Technology / SPIL</strong> (TWSE 3711, NYSE ASX)</td>
+<td>C</td>
+<td>CoWoS oS(on-Substrate) 및 CoW 전공정 외주. 2026년 SPIL 6~8만 장/년 추정. 2025년 말 ASE CoWoS 캐파 월 2~2.5만 장 전망</td>
+</tr>
+<tr>
+<td><strong>Amkor</strong> (AMKR, 10-K)</td>
+<td>B/C</td>
+<td>10-K에 "contract foundries"를 고객군으로 명시. 2026년 18~19만 장/년 외주 추정. 애리조나에서 TSMC와 InFO/CoWoS 협력 발표</td>
+</tr>
+<tr>
+<td><strong>Kinsus, Unimicron, Ibiden, Nan Ya PCB</strong></td>
+<td>C</td>
+<td>CoWoS 기판(ABF substrate). Kinsus는 EMIB형 패키징 공동개발 보도</td>
+</tr>
+</tbody>
+</table></div>
+<p>TSMC 내부 캐파: 2025년 말 월 7.5~8만 장 → 2026년 말 12~14만 장 목표(C). 2026년 외주 총량 24~27만 장 추정.</p>
+<hr>
+<h2>3. 앞단 (매출원가 → 공급사 → 공급사의 공급사)</h2>
+<h3>3-1. 매출원가 구조 (20-F 기반 + 추정)</h3>
+<p>2025년 매출총이익률 59.9% → 매출원가 ≈ NT$1조5,270억. 20-F는 원가를 항목별로 나누지 않으며, 업계 추정(C) 구조는:</p>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>추정 비중</th>
+<th>연결되는 회사군</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>감가상각</td>
+<td>최대 항목 (40%대)</td>
+<td>장비사 (3-4절) — capex가 시차를 두고 원가로 전환</td>
+</tr>
+<tr>
+<td>원재료 (웨이퍼·화학·포토레지스트·가스·CMP)</td>
+<td>~17%</td>
+<td>소재사 (3-2절)</td>
+</tr>
+<tr>
+<td>유틸리티 (전기·물·HVAC)</td>
+<td>~7~8%</td>
+<td>대만전력(Taipower), 대만수도, 재생에너지 PPA</td>
+</tr>
+<tr>
+<td>인건비</td>
+<td></td>
+<td>9만+ 명</td>
+</tr>
+<tr>
+<td>외주 패키징·테스트·마스크</td>
+<td></td>
+<td>OSAT (2-3절)</td>
+</tr>
+</tbody>
+</table></div>
+<p>TSMC 2005년 20-F 기준 원재료비 중 웨이퍼 42%, 화학 20%, 가스 9% (A, 오래된 수치지만 구조 참고).</p>
+<p>대만 연차보고서 "연결 순매입액 10% 이상 공급사" 항목: 회사명은 A/B/C로 익명 처리되나, 금액과 비중은 공개됨. 2019년 기준 Company A 19%·B 17%·C 10%. 업계는 A=ASML로 봄(C). <strong>2025년판 해당 페이지(5.3 Manufacturing Excellence 절) 확인이 다음 작업.</strong></p>
+<h3>3-2. 원재료 공급사 (대만 연차보고서 실명 공개, A — 2022년판 기준, 2025년판 대조 필요)</h3>
+<p><strong>① 실리콘 웨이퍼</strong> — 20-F 실명 명시. 6개사가 TSMC 웨이퍼 수요의 92~96% 공급(2020~2022 기준, A)</p>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>국적</th>
+<th>상장/공시</th>
+<th>지배구조·비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shin-Etsu Handotai (SEH)</strong></td>
+<td>일본</td>
+<td>신에츠화학 4063.T</td>
+<td>세계 1위. 모회사 신에츠는 포토레지스트도 공급</td>
+</tr>
+<tr>
+<td><strong>SUMCO</strong></td>
+<td>일본</td>
+<td>3436.T</td>
+<td>세계 2위</td>
+</tr>
+<tr>
+<td><strong>Formosa SUMCO Technology (FST)</strong></td>
+<td>대만</td>
+<td>TWSE 3532</td>
+<td>Formosa Plastics 그룹 + SUMCO 합작 (중개형 합작 노드)</td>
+</tr>
+<tr>
+<td><strong>GlobalWafers</strong></td>
+<td>대만</td>
+<td>TWSE 6488</td>
+<td>세계 3위권. 텍사스 셔먼 신공장</td>
+</tr>
+<tr>
+<td><strong>Siltronic</strong></td>
+<td>독일</td>
+<td>WAF.DE</td>
+<td>Wacker Chemie 자회사 → 폴리실리콘 수직계열</td>
+</tr>
+<tr>
+<td><strong>SK siltron</strong></td>
+<td>한국</td>
+<td>비상장, SK㈜ 자회사 — <strong>DART: SK㈜ 연결</strong></td>
+<td>2025년 SK㈜가 경영권 매각 추진(한앤컴퍼니 등 PEF 거론, 기업가치 5조 원대). <strong>매각 완료 여부 DART 확인 필요</strong></td>
+</tr>
+<tr>
+<td>Soitec</td>
+<td>프랑스(싱가포르 법인)</td>
+<td>SOI.PA</td>
+<td>SOI/특수 웨이퍼</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>② 화학품 (12개사, A)</strong>
+Air Liquide(佛), BASF(獨), DuPont(美), Entegris(美), Fujifilm Electronic Materials(日), Kanto PPC(대만—Kanto Chemical 합작), Kuang Ming(대만), Merck(獨), RASA(日), Shiny(대만), Tokuyama(日), <strong>Wah Lee(대만 유통사)</strong></p>
+<p><strong>③ 리소그래피 소재/포토레지스트 (7개사, A)</strong>
+3M(美), Fujifilm EM(日), JSR(日, 2024년 JIC 인수로 비상장화), Nissan Chemical(日), Shin-Etsu Chemical(日), Sumitomo Chemical(日), TOK(日)
+→ EUV 레지스트는 일본 3사(JSR·TOK·신에츠)가 90%+ 지배. 원료 PAG·폴리머 등 Tier 2는 일본 중소 화학사.</p>
+<p><strong>④ 특수가스 (9개사, A)</strong>
+Air Liquide(佛), Air Products(美), Central Glass(日), Entegris(美), Linde(獨/美), <strong>LienHwa(대만—Linde LienHwa 합작 유통·현지 생산)</strong>, Praxair(Linde에 합병), <strong>SK Materials(한국 → 현 SK specialty)</strong>, Taiwan Material Technology(대만), Nippon Sanso Taiwan(日 Nippon Sanso 자회사)</p>
+<p><strong>⑤ CMP 소재 (7개사, A)</strong>
+3M(美), AGC(日), Cabot Microelectronics(現 Entegris에 합병), DuPont(美), Fujibo(日), Fujifilm EM(日), Fujimi(日)</p>
+<h3>3-3. 중개·유통·합작 노드 (별도 추적 대상)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>유형</th>
+<th>역할</th>
+<th>공시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wah Lee Industrial (華立)</strong></td>
+<td>유통사</td>
+<td>해외 화학·소재·장비를 대만 팹에 공급하는 대표 유통사. Entegris·DuPont 등 제품 취급</td>
+<td>TWSE 3010</td>
+</tr>
+<tr>
+<td><strong>Linde LienHwa (聯華林德)</strong></td>
+<td>합작</td>
+<td>Linde + LienHwa(聯華實業) 합작. 대만 최대 산업가스사, TSMC 팹 인접 온사이트 플랜트</td>
+<td>LienHwa TWSE 1229</td>
+</tr>
+<tr>
+<td><strong>Kanto-PPC</strong></td>
+<td>합작</td>
+<td>Kanto Chemical(日) + PPC(대만) 고순도 화학 합작</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Formosa SUMCO (FST)</strong></td>
+<td>합작</td>
+<td>Formosa Plastics + SUMCO 웨이퍼 합작</td>
+<td>TWSE 3532</td>
+</tr>
+<tr>
+<td><strong>Nippon Sanso Taiwan</strong></td>
+<td>현지 자회사</td>
+<td>日 Nippon Sanso(4091.T) 대만 법인</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Taiwan Material Technology</strong></td>
+<td>현지 가스사</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Topco Scientific (崇越)</strong></td>
+<td>유통사</td>
+<td>신에츠 웨이퍼·포토레지스트의 대만 총판 역할 (C)</td>
+<td>TWSE 5434</td>
+</tr>
+</tbody>
+</table></div>
+<p>이 회사들은 TSMC 매입 데이터에서는 공급사로, 원제조사 매출 데이터에서는 고객으로 잡히므로 양쪽에서 교차 확인 가능.</p>
+<h3>3-4. 장비 (Capex → 감가상각)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>공시</th>
+<th>TSMC 관련</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASML</strong></td>
+<td>20-F/연차보고서</td>
+<td>2025년 매출 €327억(+15.6%), 로직 매출은 선단 파운드리 AI 수요가 견인. EUV NXE 44대·High-NA EXE 판매. 대만이 최대 지역 중 하나. TSMC 최대 매입처(익명 Company A)로 추정</td>
+</tr>
+<tr>
+<td><strong>Applied Materials</strong> (AMAT)</td>
+<td>10-K 10월 결산</td>
+<td>증착·식각·CMP·검사. 10-K 상 TSMC 주요 고객</td>
+</tr>
+<tr>
+<td><strong>Lam Research</strong> (LRCX)</td>
+<td>10-K 6월 결산</td>
+<td>식각·증착</td>
+</tr>
+<tr>
+<td><strong>KLA</strong> (KLAC)</td>
+<td>10-K 6월 결산</td>
+<td>공정제어·검사 (대체재 없음)</td>
+</tr>
+<tr>
+<td><strong>Tokyo Electron</strong> (8035.T)</td>
+<td>유가증권보고서</td>
+<td>코터/디벨로퍼(EUV 트랙 독점), 식각</td>
+</tr>
+<tr>
+<td><strong>Screen, Kokusai, ASM International, Advantest, Teradyne, Disco, Onto</strong></td>
+<td></td>
+<td>세정·ALD·테스트·다이싱</td>
+</tr>
+<tr>
+<td><strong>Hanmi Semiconductor</strong> (한국, DART)</td>
+<td></td>
+<td>TC 본더 — 다만 주 고객은 SK hynix(HBM). CoWoS 라인 진입은 보도 수준(C)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>장비의 앞단 (Tier 2):</strong> ASML ← Carl Zeiss SMT(광학), Cymer(광원, ASML 자회사), Trumpf(레이저), VDL·Prodrive(모듈). TEL/Lam ← Ferrotec, MKS, Edwards(진공), Ichor·UCT(가스패널).</p>
+<h3>3-5. 원재료의 앞단 (Tier 2 공급)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>소재</th>
+<th>Tier 1</th>
+<th>Tier 2 (원료)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>웨이퍼</td>
+<td>SEH, SUMCO, GlobalWafers, Siltronic, SK siltron</td>
+<td>폴리실리콘: Hemlock(美), Wacker(獨), Tokuyama(日), OCI(한국, DART) / 석영 도가니: Shin-Etsu Quartz, Ferrotec / 고순도 석영: Sibelco·Quartz Corp</td>
+</tr>
+<tr>
+<td>포토레지스트</td>
+<td>JSR, TOK, Shin-Etsu, Fujifilm</td>
+<td>감광재·PAG·용제: 일본 특수화학 중소사</td>
+</tr>
+<tr>
+<td>특수가스</td>
+<td>Linde, Air Liquide, SK specialty, Nippon Sanso</td>
+<td>불소(HF): Stella Chemifa·Morita(日) / 형석: 중국·멕시코</td>
+</tr>
+<tr>
+<td>CMP 슬러리</td>
+<td>Entegris(舊 Cabot), Fujimi, AGC</td>
+<td>세리아·실리카 연마입자</td>
+</tr>
+<tr>
+<td>ABF 기판</td>
+<td>Ibiden, Unimicron, Kinsus, Nan Ya PCB</td>
+<td>ABF 필름: <strong>Ajinomoto</strong>(日, 95%+ 독점)</td>
+</tr>
+<tr>
+<td>마스크 블랭크</td>
+<td>(TSMC 자체 마스크샵)</td>
+<td>Hoya, AGC (EUV 블랭크 93%) / 펠리클: Mitsui Chemicals</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>4. 한국 노드 — DART로 이어지는 회사</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>TSMC 접점</th>
+<th>2025~26 상태</th>
+<th>DART 확인 포인트</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SK실트론</strong></td>
+<td>웨이퍼 6대 공급사 중 하나 (A)</td>
+<td>SK㈜가 경영권 매각 추진(2025.4~). 한앤컴퍼니 유력 보도, 국가핵심기술 보유로 산업부 승인 필요. 2024년 EBITDA 6,171억</td>
+<td>SK㈜ 반기보고서·주요사항보고서(타법인 주식 처분)</td>
+</tr>
+<tr>
+<td><strong>SK스페셜티</strong> (舊 SK머티리얼즈 가스사업)</td>
+<td>특수가스 9대 공급사 (A). NF3·WF6 세계 1위(점유율 ~40%)</td>
+<td>2025.3.31 한앤컴퍼니가 지분 85% 약 2.6조 원에 인수 완료, SK㈜ 15% 잔여 보유</td>
+<td>비상장 전환. SK㈜ 연결 제외 → 한앤코 펀드 포트폴리오</td>
+</tr>
+<tr>
+<td><strong>OCI</strong></td>
+<td>폴리실리콘 (웨이퍼 Tier 2)</td>
+<td></td>
+<td>OCI홀딩스 사업보고서</td>
+</tr>
+<tr>
+<td><strong>한미반도체</strong></td>
+<td>TC 본더 — HBM 중심, CoWoS 직접 납품 미확인</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>솔브레인·동진쎄미켐·이엔에프테크놀로지</strong></td>
+<td>화학·레지스트 — TSMC 공급 리스트에 없음. 주 고객은 삼성·SK hynix</td>
+<td>확인 결과 TSMC 직접 노드 아님</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SK hynix / Samsung / Micron</strong></td>
+<td>TSMC 고객(NVIDIA)의 HBM 공급사 — CoWoS에서 TSMC 로직다이와 결합</td>
+<td>NVIDIA 10-K에 실명 (A)</td>
+<td>SK hynix 사업보고서</td>
+</tr>
+</tbody>
+</table></div>
+<p>→ 한국이 TSMC 체인에 직접 걸리는 지점은 <strong>웨이퍼(SK실트론)·가스(SK스페셜티)</strong> 두 곳이며, 둘 다 2025년에 SK그룹에서 PEF로 소유권이 이동(했거나 이동 중)했다는 점이 특징. HBM은 TSMC의 공급사가 아니라 "TSMC 고객의 병렬 공급사"로 CoWoS 단계에서 합류.</p>
+<hr>
+<h2>5. 전체 지도 (요약)</h2>
+<pre><code>[Tier 2 원료]            [Tier 1 소재/장비]         [TSMC]              [Tier 1 고객]          [Tier 2 최종]
+Hemlock/Wacker/OCI ──▶ SEH/SUMCO/GW/Siltronic ─┐                    ┌─▶ Apple ──────────▶ Foxconn → 소비자
+Tokuyama            ──▶ SK siltron ─────────────┤                    ├─▶ NVIDIA ─────────▶ MS/Meta/Google/AMZN
+Stella/Morita(HF)   ──▶ Linde LienHwa/SK spec. ─┤                    ├─▶ AMD/Broadcom/Marvell ▶ 하이퍼스케일러
+일본 특수화학       ──▶ JSR/TOK/Shin-Etsu ──────┤   원재료 ~17%      ├─▶ Qualcomm/MediaTek ▶ 삼성/샤오미
+                        Wah Lee/Topco(유통) ────┤  ─────────▶  TSMC ─┤─▶ Intel
+Zeiss/Cymer/Trumpf  ──▶ ASML ───────────────────┤   감가상각(최대)   ├─▶ Google/AMZN/MS 자체칩
+Edwards/MKS/Ichor   ──▶ AMAT/Lam/KLA/TEL ───────┘                    └─▶ Sony/NXP/Infineon(車·IoT)
+Ajinomoto(ABF)      ──▶ Ibiden/Unimicron/Kinsus ──▶ CoWoS 외주 ──▶ ASE·SPIL·Amkor ──▶ (다시 고객에게)
+                                                          ▲
+                                        SK hynix/Samsung/Micron HBM (고객이 별도 조달)
+</code></pre>
+<hr>
+<h2>6. 검증 상태 및 미확인 항목</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025 20-F 고객 집중도·플랫폼·지역·재무</td>
+<td>확인 완료 (A)</td>
+</tr>
+<tr>
+<td>웨이퍼 6개사 실명</td>
+<td>20-F 확인 (A). 단 "92~96%" 비중은 2020~22년 수치. 2025 20-F의 최신 3개년 비중 재확인 필요</td>
+</tr>
+<tr>
+<td>화학·레지스트·가스·CMP 공급사 명단</td>
+<td>2022년 대만 연차보고서 기준 (A). 2025년판 5.3절 표와 대조 필요 (JSR 비상장화, Cabot→Entegris 합병 등 반영 여부)</td>
+</tr>
+<tr>
+<td>매입 10% 이상 공급사 금액</td>
+<td>2025년판 미확인</td>
+</tr>
+<tr>
+<td>1위/2위 고객 = Apple/NVIDIA</td>
+<td>추정 (C). TSMC는 확정 안 함</td>
+</tr>
+<tr>
+<td>CoWoS 외주 물량</td>
+<td>전부 보도·추정 (C)</td>
+</tr>
+<tr>
+<td>SK실트론 매각 완료 여부</td>
+<td>미확인 — DART 최신 공시 확인 필요</td>
+</tr>
+<tr>
+<td>장비사별 대만/TSMC 매출 비중</td>
+<td>각사 10-K 지역별 매출 표 확인 필요</td>
+</tr>
+</tbody>
+</table></div>
+<h2>7. 다음 확장 순서 (권장)</h2>
+<ol>
+<li>TSMC 2025 대만 연차보고서 pp.109~113 (5.3 Manufacturing Excellence) — 공급사 표·매입 10% 표 최신화</li>
+<li>고객 10-K 역추적: NVIDIA(FY2026, 2026.2), Apple(FY2025, 2025.10), AMD·Broadcom·Qualcomm(2025) — "TSMC" 검색 및 supplier concentration 문구 발췌</li>
+<li>DART: SK㈜ 2026 반기보고서 (SK실트론 처분 여부), SK hynix (HBM→NVIDIA)</li>
+<li>장비사 10-K 지역별 매출: ASML(Taiwan), AMAT, LRCX, KLAC 2025</li>
+<li>대만 유통사(Wah Lee 3010, Topco 5434, LienHwa 1229) 연차보고서 — 취급 브랜드와 주요 고객 표</li>
+</ol>
+<hr>
+<h2>8. 매출 드라이버 트리 (2025 기준)</h2>
+<h3>Level 0</h3>
+<p>매출 = 웨이퍼 매출 + 비웨이퍼 매출(패키징·테스트·마스크·기타)
+= US$1,224억 ≈ 웨이퍼 ~87% + 비웨이퍼 ~13% (추정)</p>
+<h3>Level 1 — 웨이퍼 매출 = 출하량 × 혼합 ASP</h3>
+<p>= 1,500만 장 × ~US$7,100/장 (12인치 환산, 추정)</p>
+<h3>Level 2 — 출하량 = 캐파 × 가동률</h3>
+<ul>
+<li>캐파(1,700만+ 장) = Σ팹 × 라인당 처리량 → Capex(NT$1.27조)·장비 리드타임·전력/용수가 제약</li>
+<li>가동률(~88%) = 수요/캐파 → 고객 주문(AI 서버, iPhone 사이클)이 결정</li>
+<li>2026 캐파 성장 가이던스 3% → 물량 기여 둔화</li>
+</ul>
+<h3>Level 2 — 혼합 ASP = Σ(노드별 비중 × 노드 가격)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>노드</th>
+<th>웨이퍼 매출 비중</th>
+<th>장당 가격(추정)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3nm</td>
+<td>24%</td>
+<td>~US$18~20k</td>
+</tr>
+<tr>
+<td>5nm/4nm</td>
+<td>~35%</td>
+<td>~US$15k</td>
+</tr>
+<tr>
+<td>7nm/6nm</td>
+<td>~15%</td>
+<td>~US$9k</td>
+</tr>
+<tr>
+<td>성숙(16nm~)</td>
+<td>26%</td>
+<td>~US$2~5k</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>가격 상승률: 연 3~10% (2027년 5~10% 인상 협의 보도)</li>
+<li>2nm은 4Q25 양산 진입 → 2026~27 믹스 상향의 주 동력</li>
+</ul>
+<h3>Level 2 — 비웨이퍼 매출 = CoWoS 장수 × 단가 + 기타</h3>
+<ul>
+<li>CoWoS: 월 7.5~8만 장 × ~US$3~5k/장 (추정) → 2026년 말 12~14만 장 목표</li>
+<li>외주분(24~27만 장/년)은 OSAT 매출로 이전, TSMC엔 원가</li>
+</ul>
+<h3>압축: 매출 성장 = 물량 성장(+16%) + ASP 성장(+17%) ≈ +36% (US$, 2025)</h3>
+<ul>
+<li>물량은 Capex → 12~18개월 후 반영</li>
+<li>ASP는 노드 믹스 이동 + 단가 인상</li>
+<li>2026년부터 성장 무게중심이 물량 → ASP·믹스·CoWoS로 이동</li>
+</ul>
+<h3>드라이버 → 밸류체인 연결</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>드라이버</th>
+<th>연결 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>캐파</td>
+<td>ASML·AMAT·TEL(장비), 대만전력(전력)</td>
+</tr>
+<tr>
+<td>가동률</td>
+<td>NVIDIA·Apple 주문(뒷단 Tier 1)</td>
+</tr>
+<tr>
+<td>노드 믹스</td>
+<td>EUV 레지스트(JSR·TOK), 웨이퍼 등급(SEH·SUMCO)</td>
+</tr>
+<tr>
+<td>CoWoS</td>
+<td>ABF 기판(Ibiden·Unimicron), OSAT(ASE·Amkor), HBM(SK hynix)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>9. 비용 드라이버 트리 (2025 기준)</h2>
+<h3>Level 0</h3>
+<p>영업이익 = 매출 − 매출원가 − 영업비용
+= US$1,224억 − ~US$491억(40.1%) − ~US$111억(9.1%) = US$622억(50.8%)</p>
+<h3>Level 1 — 매출원가 ≈ US$491억 = 출하량 × 웨이퍼당 원가</h3>
+<p>= 1,500만 장 × ~US$3,270/장 (vs ASP ~$7,100 → 장당 GP ~$3,800)</p>
+<h3>Level 2 — 웨이퍼당 원가의 구성 (추정 비중, TSMC 미공개)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>비중</th>
+<th>수식</th>
+<th>성격</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>감가상각</td>
+<td>~45%</td>
+<td>Σ(최근 5년 Capex) ÷ 내용연수(장비 5년)</td>
+<td>고정비. 2025 Capex NT$1.27조가 2026~30년 원가로 유입</td>
+</tr>
+<tr>
+<td>원재료</td>
+<td>~17%</td>
+<td>Σ(웨이퍼+화학+레지스트+가스+CMP)</td>
+<td>변동비. 미세 노드일수록 레이어·EUV 노광 횟수↑ → 장당 소재비↑</td>
+</tr>
+<tr>
+<td>유틸리티</td>
+<td>~7~8%</td>
+<td>전력량(kWh)×단가 + 용수</td>
+<td>준고정. 대만전력 산업용 요금 인상(2024~25) 직접 반영</td>
+</tr>
+<tr>
+<td>인건비</td>
+<td>~10%</td>
+<td>인원(9만+)×평균보상</td>
+<td>이익공유(순이익 1%+)로 변동비화</td>
+</tr>
+<tr>
+<td>외주·마스크·기타</td>
+<td>~20%</td>
+<td>CoWoS 외주 장수×OSAT 단가 + 마스크 + 해외팹 스타트업</td>
+<td>해외팹 램프 시 급증</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Level 1 — 영업비용 ≈ US$111억</h3>
+<ul>
+<li>R&amp;D ~7% = 2nm/A16/A14 파이프라인 + 패키징 → 노드당 개발비 우상향</li>
+<li>SG&amp;A ~2% = 해외팹(애리조나·구마모토·드레스덴) 준비비가 2024년 +35.6% 증가의 주원인</li>
+</ul>
+<h3>마진을 움직이는 다섯 지렛대</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>지렛대</th>
+<th>효과</th>
+<th>2025~26 상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>가동률</td>
+<td>고정비 흡수 → 1%p당 GM ~0.3~0.5%p</td>
+<td>88%+, AI로 풀가동</td>
+</tr>
+<tr>
+<td>노드 믹스</td>
+<td>장당 원가↑, ASP는 더 ↑ → 순증</td>
+<td>3nm 24%, 2nm 램프</td>
+</tr>
+<tr>
+<td>단가 인상</td>
+<td>원가 불변, 100% 마진 유입</td>
+<td>2027년 5~10% 협의</td>
+</tr>
+<tr>
+<td>해외팹 희석</td>
+<td>인건비·건설비·공급망 원가↑</td>
+<td>GM 2~3%p 희석 가이던스</td>
+</tr>
+<tr>
+<td>환율</td>
+<td>NT$ 강세 1% → GM ~0.4%p 하락</td>
+<td>2025년 NT$ 절상 부담</td>
+</tr>
+</tbody>
+</table></div>
+<h3>비용 드라이버 → 앞단 밸류체인 연결</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>비용 항목</th>
+<th>연결 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>감가상각</td>
+<td>ASML·AMAT·Lam·KLA·TEL (Capex가 5년 시차로 원가화)</td>
+</tr>
+<tr>
+<td>원재료</td>
+<td>SEH·SUMCO·SK실트론(웨이퍼), JSR·TOK(레지스트), Linde LienHwa·SK스페셜티(가스), Wah Lee·Topco(유통 마진)</td>
+</tr>
+<tr>
+<td>유틸리티</td>
+<td>대만전력, 재생에너지 PPA</td>
+</tr>
+<tr>
+<td>외주</td>
+<td>ASE·SPIL·Amkor (TSMC 원가 = OSAT 매출)</td>
+</tr>
+<tr>
+<td>해외팹</td>
+<td>미·일·독 현지 건설사·인력·보조금(CHIPS Act, 일본 경산성)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>매출·비용 트리를 합친 단위경제 (장당, 추정)</h3>
+<pre><code>ASP ~$7,100
+ − 감가상각 ~$1,470   ← Capex/장비사
+ − 원재료   ~$560    ← 소재사·유통사
+ − 유틸리티 ~$250    ← 전력·용수
+ − 인건비   ~$330
+ − 외주·기타 ~$660   ← OSAT·마스크·해외팹
+ = 장당 GP ~$3,800 (GM 59.9%)
+</code></pre>
+<p>노드별 ASP·원가는 TSMC 미공개 → 분기 실적의 노드별 매출 비중과 Capex·감가상각 공시로 역산해 엑셀 모델화 가능.</p>
+<hr>
+<h2>10. 양방향 노출도 매트릭스</h2>
+<p>"TSMC가 흔들리면 누가 얼마나 흔들리나 / 그 회사가 흔들리면 TSMC는 얼마나 흔들리나"</p>
+<h3>10-1. 앞단 (공급사 → TSMC 의존도)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>대만/TSMC 노출 (공시)</th>
+<th>TSMC → 이 회사 의존</th>
+<th>노출 등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASML</strong></td>
+<td>2025 시스템 매출: 중국 33%, 한국 25%, <strong>대만 22%</strong>, 미국 등. 2Q25엔 대만 35%로 분기 1위. 2026년 중국 20%로 축소 가이던스 → 대만·한국 비중 확대</td>
+<td>EUV 100% 단일 공급. TSMC 최대 매입처(익명 A사, 매입의 ~19%) 추정</td>
+<td>상호 필수</td>
+</tr>
+<tr>
+<td><strong>Applied Materials</strong> (FY25, 10월 결산)</td>
+<td>10-K: 2대 고객이 매출의 <strong>19%·15%</strong> (FY24 12%·11%). 두 곳은 TSMC·Samsung 추정. Foundry/Logic이 반도체 매출의 67%</td>
+<td>증착·식각·CMP 다수 공정</td>
+<td>높음</td>
+</tr>
+<tr>
+<td><strong>Lam Research</strong> (FY25, 6월 결산)</td>
+<td>지역별: 중국 34%, 한국 22%, <strong>대만 19%</strong>, 일본 10%. 3Q FY26 대만 19%</td>
+<td>식각 핵심</td>
+<td>중간</td>
+</tr>
+<tr>
+<td><strong>KLA</strong></td>
+<td>대만 최대 지역(30%대 추정, 10-K 확인 필요). 공정제어 대체재 없음</td>
+<td>검사·계측 단일</td>
+<td>높음</td>
+</tr>
+<tr>
+<td><strong>Tokyo Electron</strong></td>
+<td>대만 매출 20%대(추정). EUV 트랙(코터/디벨로퍼) 독점</td>
+<td>트랙 단일</td>
+<td>높음</td>
+</tr>
+<tr>
+<td><strong>Shin-Etsu (SEH)</strong></td>
+<td>웨이퍼 세계 1위(~30%). TSMC는 최대 로직 고객</td>
+<td>6대 웨이퍼사 중 1위</td>
+<td>상호 높음</td>
+</tr>
+<tr>
+<td><strong>SUMCO</strong></td>
+<td>세계 2위(~17%). 300mm 로직 비중 높음</td>
+<td></td>
+<td>높음</td>
+</tr>
+<tr>
+<td><strong>GlobalWafers</strong></td>
+<td>2025 매출 NT$606억(−3.2%), 점유율 ~17%. TSMC·TI가 주 고객</td>
+<td></td>
+<td>높음</td>
+</tr>
+<tr>
+<td><strong>SK실트론</strong></td>
+<td>2025 매출 ~2조 원, 영업이익 4,000억+. <strong>SK hynix가 상반기 매출의 18%</strong>(DART). TSMC 비중은 미공개이나 EUV급 웨이퍼 인증 진행 — 두산 인수 계약의 언아웃 조건에 "주요 고객사 품질 인증" 포함</td>
+<td>6대 웨이퍼사 중 하위</td>
+<td>낮음→상승 중</td>
+</tr>
+<tr>
+<td><strong>Entegris</strong></td>
+<td>2025 매출 US$32.0억(−1%), 대만 최대 지역(~20%대). 화학·가스·CMP 3개 카테고리 모두 등재</td>
+<td>필터·CMP 슬러리</td>
+<td>중간</td>
+</tr>
+<tr>
+<td><strong>SK스페셜티</strong></td>
+<td>NF3·WF6 세계 1위(점유 ~40%). 2024 매출 6,817억. TSMC 비중 미공개</td>
+<td>가스 9사 중 하나</td>
+<td>낮음</td>
+</tr>
+<tr>
+<td><strong>Linde LienHwa / Wah Lee / Topco</strong></td>
+<td>대만 유통·합작 → 사실상 TSMC 단일 고객군</td>
+<td>다수 대체 가능</td>
+<td>이들 쪽만 극단적으로 높음</td>
+</tr>
+</tbody>
+</table></div>
+<h3>10-2. 뒷단 (고객 → TSMC 의존도)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>TSMC 의존 (공시)</th>
+<th>TSMC 매출 중 비중</th>
+<th>노출 등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NVIDIA</strong></td>
+<td>10-K: TSMC·Samsung 파운드리, CoWoS 사용 명시. 실질적으로 선단 GPU 100% TSMC. 2026 CoWoS 캐파 50%+ 예약</td>
+<td>19~22% (2026 1위 추정)</td>
+<td>상호 필수</td>
+</tr>
+<tr>
+<td><strong>Apple</strong></td>
+<td>10-K: 단일 소싱 명시(회사명은 Supplier List). A/M 시리즈 100% TSMC</td>
+<td>17~19%</td>
+<td>상호 필수</td>
+</tr>
+<tr>
+<td><strong>AMD</strong></td>
+<td>10-K: TSMC 주 파운드리 명시. 선단 100%</td>
+<td>상위 5</td>
+<td>일방적(AMD→TSMC)</td>
+</tr>
+<tr>
+<td><strong>Broadcom</strong></td>
+<td>커스텀 ASIC 전량 TSMC</td>
+<td>상위 5</td>
+<td>일방적</td>
+</tr>
+<tr>
+<td><strong>Qualcomm</strong></td>
+<td>TSMC·Samsung 이중 소싱</td>
+<td>상위 10</td>
+<td>중간</td>
+</tr>
+<tr>
+<td><strong>MediaTek</strong></td>
+<td>선단은 TSMC 단일</td>
+<td>상위 10</td>
+<td>일방적</td>
+</tr>
+<tr>
+<td><strong>하이퍼스케일러 4사</strong></td>
+<td>자체 칩 = TSMC. NVIDIA 경유까지 합치면 AI capex의 대부분이 TSMC로 귀결</td>
+<td>직접+간접 30%+</td>
+<td>구조적</td>
+</tr>
+</tbody>
+</table></div>
+<h3>10-3. 매트릭스 해석</h3>
+<ul>
+<li><strong>대칭 의존(상호 필수):</strong> ASML, SEH, NVIDIA, Apple. 이 4곳과 TSMC는 서로 대체 불가 → 가격은 협상, 관계는 장기.</li>
+<li><strong>비대칭 (상대만 TSMC에 묶임):</strong> AMD·Broadcom·MediaTek·대만 유통사·SK실트론. TSMC 가격 인상이 그대로 전가됨.</li>
+<li><strong>TSMC가 상대에 묶임:</strong> KLA·TEL·JSR/TOK(레지스트)·Ajinomoto(ABF). 규모는 작지만 대체 불가 → 3-11절 병목 표로 이어짐.</li>
+</ul>
+<hr>
+<h2>11. 병목·단일소스 리스크 스코어</h2>
+<p>점수: 대체 가능성(1=대체 불가~5=쉬움), 리드타임(1=3년+~5=수개월), 지정학(1=단일국 집중~5=분산). <strong>합계 낮을수록 위험.</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th>병목</th>
+<th>지배 회사</th>
+<th>점유</th>
+<th>대체</th>
+<th>리드타임</th>
+<th>지정학</th>
+<th>합계</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EUV 노광기</td>
+<td>ASML</td>
+<td>100%</td>
+<td>1</td>
+<td>1</td>
+<td>2 (네덜란드, 광학은 독일 Zeiss)</td>
+<td><strong>4</strong></td>
+<td>최악. High-NA 전환기</td>
+</tr>
+<tr>
+<td>EUV 마스크 블랭크</td>
+<td>Hoya, AGC</td>
+<td>~93%</td>
+<td>1</td>
+<td>2</td>
+<td>1 (일본)</td>
+<td><strong>4</strong></td>
+<td>조용한 단일 국가 리스크</td>
+</tr>
+<tr>
+<td>EUV 레지스트</td>
+<td>JSR, TOK, Shin-Etsu</td>
+<td>90%+</td>
+<td>1</td>
+<td>2</td>
+<td>1 (일본)</td>
+<td><strong>4</strong></td>
+<td>2019 한일 수출규제가 선례</td>
+</tr>
+<tr>
+<td>EUV 트랙</td>
+<td>Tokyo Electron</td>
+<td>~90%</td>
+<td>1</td>
+<td>2</td>
+<td>1 (일본)</td>
+<td><strong>4</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>ABF 필름</td>
+<td>Ajinomoto</td>
+<td>95%+</td>
+<td>1</td>
+<td>3</td>
+<td>1 (일본)</td>
+<td><strong>5</strong></td>
+<td>CoWoS 기판의 기초 소재</td>
+</tr>
+<tr>
+<td>펠리클</td>
+<td>Mitsui Chemicals</td>
+<td>대부분</td>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+<td>6</td>
+<td></td>
+</tr>
+<tr>
+<td>CoWoS 캐파</td>
+<td>TSMC 자체</td>
+<td>—</td>
+<td>2 (OSAT 외주)</td>
+<td>2</td>
+<td>1 (대만)</td>
+<td>5</td>
+<td>2026 외주 확대로 완화 중</td>
+</tr>
+<tr>
+<td>공정제어</td>
+<td>KLA</td>
+<td>50%+</td>
+<td>2</td>
+<td>2</td>
+<td>3 (미국)</td>
+<td>7</td>
+<td></td>
+</tr>
+<tr>
+<td>300mm 웨이퍼</td>
+<td>SEH, SUMCO, GW, Siltronic, SK실트론</td>
+<td>5사 90%+</td>
+<td>3</td>
+<td>2</td>
+<td>3 (일·대만·독·한)</td>
+<td>8</td>
+<td>두산 인수로 한국 노드 안정</td>
+</tr>
+<tr>
+<td>특수가스</td>
+<td>Linde, Air Liquide, SK스페셜티 등</td>
+<td>분산</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>폴리실리콘</td>
+<td>Hemlock, Wacker, Tokuyama, OCI</td>
+<td>분산</td>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td>11</td>
+<td></td>
+</tr>
+<tr>
+<td>대만 전력·용수</td>
+<td>대만전력</td>
+<td>100%</td>
+<td>1</td>
+<td>1</td>
+<td>1 (대만)</td>
+<td><strong>3</strong></td>
+<td>물리적 최하위</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>요약:</strong> 최상위 리스크는 (1) 대만 전력, (2) EUV 생태계(ASML+Zeiss), (3) 일본 EUV 소재 4종(블랭크·레지스트·트랙·ABF). 세 번째가 가장 과소평가됨 — 회사별 매출은 작지만 모두 일본 단일 국가에 있고 대체재가 없음.</p>
+<hr>
+<h2>12. 한국 노드 딥다이브 (DART 기준)</h2>
+<h3>12-1. 2025~26 소유권 이동 요약</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>종전</th>
+<th>현재</th>
+<th>거래</th>
+<th>공시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SK스페셜티</strong></td>
+<td>SK㈜ 100%</td>
+<td>한앤컴퍼니 85% / SK㈜ 15%</td>
+<td>2025.3.31 완료, 약 2.6조 원 (4호 펀드)</td>
+<td>SK㈜ 타법인주식 처분</td>
+</tr>
+<tr>
+<td><strong>SK실트론</strong></td>
+<td>SK㈜ 51.0% + TRS 19.6% = 70.6%, 최태원 29.4%</td>
+<td>㈜두산 70.6% (SPA 2026.7.31, 클로징 대기)</td>
+<td>2.3조 원 + 언아웃(2027~34 EBITDA 초과·주요 고객 품질 인증·미국 자회사 자산 처분 시 추가 지급). 100% 가치 5조 중반 평가. 최태원 지분은 별도 협상</td>
+<td>㈜두산 타법인주식 취득 결정 (2026.7.31)</td>
+</tr>
+</tbody>
+</table></div>
+<p>→ SK그룹의 TSMC 체인 직접 노드가 2곳 모두 이탈. 웨이퍼는 두산(전자소재·테스트와 수직계열화), 가스는 PEF로.</p>
+<h3>12-2. 회사별 TSMC 체인 기여</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>실적</th>
+<th>TSMC 체인 접점</th>
+<th>TSMC 비중</th>
+<th>다음 단계</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SK실트론</strong></td>
+<td>2024 매출 2조1,268억·영업이익 3,155억 / 2025 매출 ~2조·영업이익 4,000억+ / 2025 상반기 매출 9,802억·영업이익 916억</td>
+<td>TSMC 20-F 웨이퍼 6대 공급사. 국내 유일 300mm 제조, 세계 5위(~10%)</td>
+<td>미공개. SK hynix 18%가 최대 고객. TSMC는 두 자릿수 미만 추정(C)</td>
+<td>두산 SPA의 "주요 고객사 품질 인증" 언아웃이 TSMC EUV급 인증이면 비중 상승 트리거</td>
+</tr>
+<tr>
+<td><strong>SK스페셜티</strong></td>
+<td>2024 매출 6,817억·영업이익 1,471억</td>
+<td>특수가스 9대 공급사. NF3·WF6·SiH4</td>
+<td>미공개. 주 고객 삼성·SK hynix, TSMC는 일부</td>
+<td>한앤코 하 증설·해외 판로 확대가 TSMC 비중 변수</td>
+</tr>
+<tr>
+<td><strong>OCI홀딩스</strong></td>
+<td>폴리실리콘 (말레이시아 OCIM)</td>
+<td>웨이퍼 Tier 2. 반도체용 폴리실리콘은 소량, 주력은 태양광</td>
+<td>간접·미미</td>
+<td>반도체용 고순도 확대 여부</td>
+</tr>
+<tr>
+<td><strong>SK hynix</strong></td>
+<td>HBM 세계 1위</td>
+<td>TSMC 공급사가 아니라 <strong>TSMC 고객(NVIDIA)의 병렬 공급사</strong>. CoWoS에서 TSMC 로직 다이와 결합. NVIDIA 10-K에 실명</td>
+<td>NVIDIA HBM의 과반</td>
+<td>HBM4부터 베이스 다이를 TSMC 로직 공정으로 제조 → SK hynix가 TSMC의 직접 고객이 되는 새 연결</td>
+</tr>
+<tr>
+<td><strong>Samsung</strong></td>
+<td>HBM·파운드리</td>
+<td>경쟁자(파운드리) 겸 NVIDIA HBM 공급사</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>한미반도체</strong></td>
+<td>TC 본더</td>
+<td>SK hynix HBM 라인. TSMC CoWoS 직납은 미확인</td>
+<td>없음(C)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>솔브레인·동진쎄미켐·이엔에프</strong></td>
+<td>화학·레지스트</td>
+<td>TSMC 공급사 명단에 없음</td>
+<td>없음</td>
+<td>제외</td>
+</tr>
+</tbody>
+</table></div>
+<h3>12-3. 한국 관점 결론</h3>
+<ol>
+<li>TSMC 체인에서 한국의 직접 노드는 <strong>웨이퍼(SK실트론→두산)·가스(SK스페셜티→한앤코)</strong> 두 곳뿐이며, 둘 다 TSMC 비중은 소수. 한국 소재사는 삼성·SK hynix 중심 체인이다.</li>
+<li>한국이 TSMC와 가장 굵게 연결되는 지점은 공급이 아니라 <strong>HBM(SK hynix)</strong>이며, 이는 NVIDIA를 매개로 한 병렬 연결이다. HBM4 베이스 다이 TSMC 위탁으로 이 연결이 직접 거래로 바뀐다.</li>
+<li>투자 관점: SK실트론의 두산 언아웃(2027~34)은 TSMC 인증 진행을 외부에서 읽을 수 있는 드문 지표. ㈜두산 공시의 추가 대금 지급 여부를 추적하면 된다.</li>
+<li>리스크 관점: 11절 병목 표에서 한국이 통제하는 병목은 없음. 반대로 한국 반도체(삼성·SK hynix)는 일본 EUV 소재 병목을 TSMC와 공유한다.</li>
+</ol>
+<hr>
+<h2>13. 4절 정정</h2>
+<p>4절 "SK실트론 — 매각 추진 중(한앤컴퍼니 유력)"은 구정보. 2025년 12월 두산이 우선협상대상자로 선정되고 2026년 7월 31일 SPA 체결(2.3조 원, 70.6%). 12절 기준으로 읽을 것.</p>
+<hr>
+<h2>14. 밸류체인 마진 풀 — NVIDIA GPU 1개를 따라가면</h2>
+<p>기준: Blackwell급 AI GPU 1개(N4P 2-다이 + HBM3E 8스택 + CoWoS-L). 전부 추정(C), 크기 비교용.</p>
+<h3>14-1. 원가 적층 (GPU 1개당)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>단계</th>
+<th>회사</th>
+<th>원가 기여(추정)</th>
+<th>누적</th>
+<th>그 회사의 GM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>웨이퍼 소재</td>
+<td>SEH/SUMCO</td>
+<td>~$50</td>
+<td>$50</td>
+<td>25~35%</td>
+</tr>
+<tr>
+<td>로직 다이 2개</td>
+<td><strong>TSMC</strong> (N4P 웨이퍼 ~$17k, 수율 반영)</td>
+<td>~$1,300</td>
+<td>$1,350</td>
+<td>60%</td>
+</tr>
+<tr>
+<td>CoWoS-L 패키징</td>
+<td><strong>TSMC</strong> (인터포저·본딩)</td>
+<td>~$1,000</td>
+<td>$2,350</td>
+<td>40~50%</td>
+</tr>
+<tr>
+<td>HBM3E 8스택</td>
+<td><strong>SK hynix</strong> / Micron / Samsung</td>
+<td>~$3,500</td>
+<td>$5,850</td>
+<td>50~60% (HBM)</td>
+</tr>
+<tr>
+<td>ABF 기판</td>
+<td>Ibiden/Unimicron</td>
+<td>~$200</td>
+<td>$6,050</td>
+<td>20~30%</td>
+</tr>
+<tr>
+<td>후공정·테스트</td>
+<td>ASE/SPIL/Amkor</td>
+<td>~$300</td>
+<td>$6,350</td>
+<td>15~20%</td>
+</tr>
+<tr>
+<td>기타 (수동소자·물류)</td>
+<td></td>
+<td>~$300</td>
+<td>$6,650</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>NVIDIA 판매가</strong></td>
+<td></td>
+<td><strong>~$30,000~35,000</strong></td>
+<td></td>
+<td><strong>~75%</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3>14-2. 해석</h3>
+<ul>
+<li>GPU 1개의 매출 $32k 중 마진 풀 배분: NVIDIA ~$25k (78%), TSMC ~$1.4k (4%), SK hynix ~$1.9k (6%), 나머지 공급사 합계 ~$0.5k.</li>
+<li><strong>TSMC는 원가 기준으론 GPU의 ~35%를 만들지만 이익 풀에선 ~5%.</strong> 그런데도 GM 60%를 유지하는 건 물량(웨이퍼 1,500만 장)과 고정비 흡수 때문.</li>
+<li>HBM이 로직 다이보다 원가가 크다 → NVIDIA 원가에서 TSMC보다 SK hynix가 더 큰 공급사. 이것이 12절 "한국의 가장 굵은 연결은 HBM"의 정량적 근거.</li>
+<li>서버 단계로 올라가면: DGX급 8-GPU 서버 ~$400~500k → Foxconn·Quanta 조립 마진 3~5%, 하이퍼스케일러는 이걸 자본재로 5년 상각.</li>
+<li>협상력 지도: NVIDIA(가격 결정) &gt; TSMC·SK hynix(캐파 배분권) &gt; 기판·OSAT(가격 수용) &gt; 웨이퍼·가스(장기계약 고정).</li>
+</ul>
+<h3>14-3. 2027년 단가 인상의 전파</h3>
+<p>TSMC +8% 인상 → GPU 원가 +$180 → NVIDIA GM 75.0→74.5%. 즉 TSMC 인상은 NVIDIA가 거의 흡수 가능. 반면 CoWoS 외주 확대는 TSMC GM에 마이너스(외주 원가 &gt; 내부 원가)이나 물량 증가로 상쇄.</p>
+<hr>
+<h2>15. 시나리오 민감도 (드라이버 트리 기반)</h2>
+<p>기준선 2025: 매출 US$1,224억, GM 59.9%, OPM 50.8%, 영업이익 US$622억.
+가정: 감가상각 등 고정비 ~US$260억, 변동비 한계이익률 ~75%.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>시나리오</th>
+<th>충격 경로</th>
+<th>매출</th>
+<th>GM</th>
+<th>영업이익</th>
+<th>전파</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① AI 수요 −20%</strong></td>
+<td>AI ≈ 매출의 ~35% (HPC 58%의 60%) → 매출 −7%. 가동률 88→80%</td>
+<td>−$86억</td>
+<td>−4.5%p</td>
+<td><strong>−$65억 (−10%)</strong></td>
+<td>뒷: NVIDIA·Broadcom 주문↓ / 앞: CoWoS 외주(Amkor·SPIL) 먼저 회수, ASML EUV 발주 연기</td>
+</tr>
+<tr>
+<td><strong>② 대만 전기요금 +15%</strong></td>
+<td>유틸리티 ~$37억 중 전력 80% × 15%</td>
+<td>0</td>
+<td>−0.4%p</td>
+<td>−$4.5억</td>
+<td>앞: 대만전력. Linde LienHwa(가스 생산 전력) 원가↑</td>
+</tr>
+<tr>
+<td><strong>③ NT$ 5% 절상</strong></td>
+<td>TSMC 가이던스: 1% 절상 = GM −0.4%p</td>
+<td>0 (US$ 기준)</td>
+<td>−2.0%p</td>
+<td><strong>−$24억</strong></td>
+<td>대만 공급사(GW·FST·유통사) 동일 방향 압박</td>
+</tr>
+<tr>
+<td><strong>④ 2027 단가 +8%</strong></td>
+<td>원가 불변, 100% 마진 유입</td>
+<td>+$98억</td>
+<td>+3.2%p</td>
+<td><strong>+$98억 (+16%)</strong></td>
+<td>뒷: NVIDIA GM −0.5%p, Apple·Qualcomm은 스마트폰 BOM 압박</td>
+</tr>
+<tr>
+<td><strong>⑤ 해외팹 램프 (AZ·구마모토·드레스덴)</strong></td>
+<td>GM 2~3%p 희석 가이던스</td>
+<td>0</td>
+<td>−2.5%p</td>
+<td>−$30억</td>
+<td>앞: 미·일·독 현지 인력·건설. CHIPS Act 보조금이 일부 상쇄</td>
+</tr>
+<tr>
+<td><strong>⑥ CoWoS 캐파 +70% (2026)</strong></td>
+<td>비웨이퍼 매출 +$60억, 외주 비중↑로 GM 소폭↓</td>
+<td>+$60억</td>
+<td>−0.3%p</td>
+<td>+$25억</td>
+<td>앞: Amkor·SPIL 매출 급증, Ajinomoto ABF 병목</td>
+</tr>
+<tr>
+<td><strong>⑦ 일본 EUV 소재 수출 차질 3개월</strong></td>
+<td>7nm 이하 74% 중 EUV 노드 생산 중단</td>
+<td>−$150억+</td>
+<td>급락</td>
+<td>−$120억+</td>
+<td>11절 병목 표 최상위 리스크 실현. 재고 1~2개월이 완충</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>핵심:</strong> ④(단가)와 ③(환율)이 같은 크기로 반대 방향. 2026~27년 TSMC 마진의 방향은 "가격 인상 − NT$ 절상 − 해외팹 희석"의 순합으로 결정되며, 세 항목 모두 물량과 무관.</p>
+<hr>
+<h2>16. 시간축 2026~2030</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>시기</th>
+<th>TSMC 이벤트</th>
+<th>앞단에 오는 주문</th>
+<th>뒷단에 오는 제품</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2026</strong></td>
+<td>Capex US$520~640억(사상 최대). N2 램프, N2P/A16 2H 양산. CoWoS 월 12~14만 장. 캐파 +3%</td>
+<td>ASML EUV·High-NA, TEL·AMAT·Lam 장비 피크. Ajinomoto·Ibiden ABF 증설. Amkor·SPIL CoWoS 외주 24~27만 장</td>
+<td>Apple A20(N2), NVIDIA Rubin(N3), AMD MI400, 하이퍼스케일러 ASIC 2세대</td>
+</tr>
+<tr>
+<td><strong>2027</strong></td>
+<td>단가 +5~10%. 애리조나 Fab2(3nm) 2H 양산. JASM Fab2(3nm), ESMC 드레스덴(28/16nm) 가동. A16 확대</td>
+<td>미·일·독 현지 소재·가스 공급망 구축 (Linde LienHwa 해외 동반, SK스페셜티 해외 판로 기회). 2026 Capex의 감가상각 본격 유입</td>
+<td>3nm 미국산 칩 첫 출하. SK hynix HBM4 베이스 다이 TSMC 로직 → 신규 직접 고객</td>
+</tr>
+<tr>
+<td><strong>2028</strong></td>
+<td>A14 양산. 애리조나 Fab3·패키징 공장. 두산-SK실트론 언아웃 2년차</td>
+<td>High-NA EUV 본격 도입 → ASML·Zeiss·Hoya(High-NA 블랭크). 웨이퍼 EUV 등급 인증 확대</td>
+<td>2nm 세대 AI 가속기</td>
+</tr>
+<tr>
+<td><strong>2029~30</strong></td>
+<td>2030 재생에너지 목표 경로. Foundry 2.0 점유 40%+ 유지 여부</td>
+<td>재생에너지 PPA(대만 해상풍력), 전력 병목 해소 여부가 캐파 상한 결정</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>시차 규칙:</strong> 장비 발주(t) → 캐파 가동(t+12~18개월) → 감가상각 원가 반영(t+18~78개월). 2025~26 사상 최대 Capex는 2027~2031 원가로 남는다 → 그 기간 가동률이 마진의 전부.</p>
+<hr>
+<h2>17. 지분·자본 연결 (거래 위에 소유를 겹치기)</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>TSMC 지분</th>
+<th>다른 주주</th>
+<th>밸류체인 위치</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>JASM</strong> (구마모토)</td>
+<td>~86.5%</td>
+<td>Sony ~6%, Denso ~5.5%, Toyota ~2%</td>
+<td>팹 (특수공정·3nm)</td>
+<td>고객(Sony CIS 로직, Denso 자동차)이 캐파에 출자 → 고객 락인</td>
+</tr>
+<tr>
+<td><strong>ESMC</strong> (드레스덴)</td>
+<td>~70%</td>
+<td>Bosch, Infineon, NXP 각 ~10%</td>
+<td>팹 (28/16nm 자동차)</td>
+<td>유럽 자동차 IDM 3사가 고객 겸 주주</td>
+</tr>
+<tr>
+<td><strong>TSMC Arizona</strong></td>
+<td>100%</td>
+<td>(CHIPS Act 보조금 US$66억 + 세액공제)</td>
+<td>팹 (4/3/2nm)</td>
+<td>미 정부가 사실상 자본 파트너</td>
+</tr>
+<tr>
+<td><strong>GUC (Global Unichip)</strong></td>
+<td>~35%</td>
+<td></td>
+<td>디자인 서비스 → 하이퍼스케일러 ASIC</td>
+<td>뒷단 중개 노드를 TSMC가 소유 (Alchip과 경쟁)</td>
+</tr>
+<tr>
+<td><strong>VIS (Vanguard)</strong></td>
+<td>~28%</td>
+<td></td>
+<td>8인치·성숙 파운드리</td>
+<td>성숙 노드 이관처. VSMC(싱가포르, NXP 합작)</td>
+</tr>
+<tr>
+<td><strong>VisEra</strong></td>
+<td>~70%대</td>
+<td></td>
+<td>CIS 컬러필터·마이크로렌즈</td>
+<td>Sony·OmniVision 체인</td>
+</tr>
+<tr>
+<td><strong>Xintec</strong></td>
+<td>~40%</td>
+<td></td>
+<td>WLCSP 패키징</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SK실트론</strong></td>
+<td>0</td>
+<td>㈜두산 70.6%(SPA), 최태원 29.4%</td>
+<td>웨이퍼</td>
+<td>두산 전자소재(BG)·테스트(두산테스나)와 수직계열 → 한국판 "웨이퍼→기판→테스트"</td>
+</tr>
+<tr>
+<td><strong>SK스페셜티</strong></td>
+<td>0</td>
+<td>한앤컴퍼니 85%, SK㈜ 15%</td>
+<td>가스</td>
+<td>PEF 소유 → 3~5년 내 재매각 가능성, 인수자에 따라 TSMC 접근성 변화</td>
+</tr>
+<tr>
+<td><strong>Formosa SUMCO</strong></td>
+<td>0</td>
+<td>Formosa Plastics 그룹, SUMCO</td>
+<td>웨이퍼 합작</td>
+<td>대만 자본 + 일본 기술</td>
+</tr>
+<tr>
+<td><strong>Linde LienHwa</strong></td>
+<td>0</td>
+<td>Linde, 聯華實業</td>
+<td>가스 합작</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>ASE ↔ SPIL</strong></td>
+<td>0</td>
+<td>ASE가 SPIL 100% (2018 합병)</td>
+<td>OSAT</td>
+<td>CoWoS 외주 2곳이 실질 1개 그룹 → Amkor가 유일한 독립 대안</td>
+</tr>
+<tr>
+<td><strong>Entegris ← CMC</strong></td>
+<td>0</td>
+<td>2022 합병</td>
+<td>CMP·필터</td>
+<td>공급사 명단의 "Cabot Microelectronics"는 Entegris로 읽을 것</td>
+</tr>
+<tr>
+<td><strong>JSR</strong></td>
+<td>0</td>
+<td>JIC(일본 정부계) 2024 비상장화</td>
+<td>EUV 레지스트</td>
+<td>일본 정부가 병목 소재를 직접 보유</td>
+</tr>
+</tbody>
+</table></div>
+<h3>해석</h3>
+<ol>
+<li>TSMC는 <strong>뒷단 중개(GUC)와 앞단 성숙 캐파(VIS)를 지분으로 통제</strong>하고, 해외 팹은 <strong>고객·정부를 주주로 끌어들여</strong> 수요와 정치 리스크를 분담시킨다.</li>
+<li>일본 정부(JIC→JSR)와 미국 정부(CHIPS→Arizona)가 각각 병목 소재와 캐파의 자본 파트너 — 지정학이 지분 구조로 내재화됨.</li>
+<li>한국 노드 2곳의 소유 이동은 TSMC 체인 관점에선 중립~긍정: 두산은 웨이퍼 인증 투자 유인(언아웃)이 있고, PEF는 SK스페셜티의 비계열 판로 확대를 원함.</li>
+</ol>
+<hr>
+<h2>18. 그림</h2>
+<p>시각 요약은 별도 파일 <code>TSMC_밸류체인_그림.html</code>에 8장으로 정리: ① 전체 지도(앞단→TSMC→뒷단, 선 굵기=금액) ② 매출 드라이버 트리 ③ 웨이퍼 1장 단위경제 워터폴 ④ GPU 1개 마진 풀 ⑤ 병목 히트맵 ⑥ 시나리오 토네이도 ⑦ 2026~30 시간축 ⑧ 지분 지도.</p>
+</div>
+</main>
+</body>
+</html>

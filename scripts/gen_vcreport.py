@@ -19,6 +19,8 @@ import os
 import re
 import sys
 
+import mistune  # 0.8 — 조사 보고서 마크다운을 장으로
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUTDIR = os.path.join(ROOT, u'대시보드')
@@ -98,6 +100,18 @@ CSS = u'''
   .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
   .tl .row span:first-child{color:var(--mute)}
   @media (max-width:520px){h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}}
+  /* 조사 보고서(마크다운) */
+  .md h2{margin-top:28px;padding-top:18px;border-top:2px solid var(--ink)}
+  .md h3{font-size:15.5px;margin:22px 0 6px}
+  .md p{max-width:80ch}
+  .md ul,.md ol{padding-left:22px}
+  .md li{margin:3px 0}
+  .md blockquote{margin:10px 0;padding:6px 12px;border-left:3px solid var(--line);color:var(--mute)}
+  .md pre{background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+  .md code{font-size:13px}
+  .md .tw{overflow-x:auto}
+  .md table{font-size:13px}
+  .md hr{border:0;border-top:1px solid var(--line);margin:22px 0}
 '''
 
 
@@ -295,6 +309,8 @@ def sec_sources(c, n):
 # ── 장 ─────────────────────────────────────────────────────────────────
 def page(c, chains):
     nav = u''.join(u'<a href="%s"%s>%s</a>' % (esc(fname(x)), ' class="on"' if x.id == c.id else '', esc(x.label)) for x in chains)
+    if report_path(c):
+        nav += u'<a href="%s">%s 조사 보고서</a>' % (esc(rname(c)), esc(c.label))
     nav += u'<a href="밸류체인 탐색기.html">탐색기</a>'
     parts, n = [], 1
     if c.id == 'tsmc':
@@ -312,7 +328,7 @@ def page(c, chains):
         h = fn(c, n)
         if h:
             parts.append(h); n += 1
-    sub = (u'보고서 「TSMC 밸류체인 조사」의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 원문은 저장소 <code>%s</code>, 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % gen_tsmc_page.REPORT) \
+    sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % esc(rname(c))) \
         if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 숫자는 전부 데이터(data/valuechain/chains/%s)에서 나오고 출처가 붙는다.' % c.id
     return u'''<!doctype html>
 <html lang="ko">
@@ -338,6 +354,52 @@ def fname(c):
     return u'%s 밸류체인.html' % c.label
 
 
+def rname(c):
+    return u'%s 밸류체인 조사.html' % c.label
+
+
+def report_path(c):
+    hits = sorted(glob.glob(os.path.join(DATA, 'reports', c.id + '-*.md')))
+    return hits[-1] if hits else None
+
+
+def report_page(c, chains):
+    u"""조사 보고서(마크다운)를 같은 꼴의 장으로. 표는 가로로 넘치면 그 표만 스크롤한다."""
+    rp = report_path(c)
+    if not rp:
+        return None
+    md = io.open(rp, encoding='utf-8').read()
+    body = mistune.markdown(md, escape=False)
+    body = body.replace('<table>', '<div class="tw"><table>').replace('</table>', '</table></div>')
+    # 첫 h1 은 장 제목으로 쓰니 본문에서 뺀다
+    m = re.match(r'\s*<h1>(.*?)</h1>', body, re.S)
+    title = re.sub(r'<.*?>', '', m.group(1)) if m else (u'%s 밸류체인 조사' % c.label)
+    if m:
+        body = body[m.end():]
+    nav = u''.join(u'<a href="%s">%s</a>' % (esc(fname(x)), esc(x.label)) for x in chains)
+    nav += u'<a href="%s" class="on">%s 조사 보고서</a><a href="밸류체인 탐색기.html">탐색기</a>' % (esc(rname(c)), esc(c.label))
+    return u'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%s</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>%s</style>
+</head>
+<body>
+<main>
+  <h1>%s</h1>
+  <p class="sub">조사 보고서 원문 그대로. 그림은 <a href="%s">%s 밸류체인 그림 장</a>, 상자·선은 <a href="밸류체인 탐색기.html?focal=%s&amp;open=*">탐색기</a>. 원문 파일 <code>%s</code>.</p>
+  <nav class="chains">%s</nav>
+  <div class="md">%s</div>
+</main>
+</body>
+</html>
+''' % (esc(title), CSS, esc(title), esc(fname(c)), esc(c.label), c.focal,
+       esc(os.path.relpath(rp, ROOT).replace(os.sep, '/')), nav, body)
+
+
 def build():
     ents = dict((e['id'], e) for e in rd(os.path.join(DATA, 'entities.json')))
     srcs = dict((s['id'], s) for s in rd(os.path.join(DATA, 'sources.json')))
@@ -350,6 +412,12 @@ def build():
         with io.open(out, 'w', encoding='utf-8', newline='\n') as f:
             f.write(html)
         print(u'%s · %d KB' % (os.path.relpath(out, ROOT), len(html.encode('utf-8')) // 1024))
+        rhtml = report_page(c, chains)
+        if rhtml:
+            rout = os.path.join(OUTDIR, rname(c))
+            with io.open(rout, 'w', encoding='utf-8', newline='\n') as f:
+                f.write(rhtml)
+            print(u'%s · %d KB' % (os.path.relpath(rout, ROOT), len(rhtml.encode('utf-8')) // 1024))
 
 
 if __name__ == '__main__':
