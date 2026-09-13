@@ -821,11 +821,10 @@ def sec_scenario(c, n, fg):
                      u'<p class="sc-p"><b>왜 이만큼.</b> %s</p><p class="sc-p"><b>어디로 번지나.</b> %s</p></div>'
                      % (esc(r['name']), cls, esc(r['profit'] or u'변화 미상'), cls, int(round(100.0 * mag / mx)),
                         esc(r['path'] or u'—'), esc(r['spread'] or u'—')))
-    note = u' '.join(lead)[:400]
-    s6 = fg.get('scenario') or {}
-    small = s6.get('small') or u'영업이익 변화'
-    return _sec(n, u'시나리오 민감도', small, esc(note) or u'조사 보고서의 기준선과 가정으로 잰 변화폭이다.',
-                u'<p class="note">시나리오는 「이것 하나가 바뀌면 이익이 얼마나 움직이나」를 재는 가정이다. 막대는 영업이익 변화 크기, 진홍은 줄고 청록은 는다. 그 밑의 두 줄이 무엇이 바뀌었는지와 그 충격이 사슬의 어디로 번지는지다.</p>'
+    # 머리글은 기준선 한 줄뿐 — 가정·풀이는 조사 보고서 몫이다(「이렇게 주저리 써야 하냐」)
+    base = (lead[0] if lead else u'').split(u'. ')[0].rstrip('.')
+    base = re.sub(r'^\s*기준선\s*[:：]?\s*', u'기준선 ', base)[:90]
+    return _sec(n, u'시나리오 민감도', u'하나만 바뀌면 영업이익이 얼마나', esc(base) or u'기준선은 조사 보고서 시나리오 절.',
                 u'<div class="scn">%s</div>' % u''.join(items))
 
 
