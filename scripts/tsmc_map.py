@@ -48,8 +48,8 @@ BOX = [
     ('f_auto', 'fin', 336, 34, '#fff', '#C9D1DA', False, [(u'자동차 OEM', False)]),
 ]
 TSMC = (470, 150, 110, 200)   # x, y, w, h
-OSAT = (445, 400, 160, 40)
-HBM = (445, 470, 160, 40)   # 밑줄 글자가 상자 폭을 넘지 않게 140 → 160
+OSAT = (455, 400, 150, 40)   # 왼쪽 변이 Tier 1 줄기(x=447)에 안 닿게
+HBM = (455, 470, 150, 40)
 
 # 선: (from, to, 굵기, 색). 굵기는 받은 그림의 「대략적 금액 규모」 그대로, 최대만 4 → 3 으로 눌렀다
 T2_T1 = [('hemlock', 'wafer'), ('stella', 'gas'), ('hoya', 'resist'), ('zeiss', 'asml'),
@@ -139,28 +139,27 @@ def render():
         o.append('<path d="%s" stroke-width="1.2"/>' % _path(ax + aw, ay + ah / 2, gx, bx, by + bh / 2))
     o.append('</g>')
 
-    # Tier 1 → TSMC: 통로 425~470. 닿는 높이는 TSMC 왼쪽 변에 위에서 아래로 나눠 준다.
-    # 위 상자는 위 자리, 아래 상자는 아래 자리 — 선이 서로 안 엇갈린다
-    o.append('<g stroke="%s" fill="none" marker-end="url(#ma)">' % GREY)
-    n = len(T1_TSMC)
-    ys = [ty + 16 + i * (th - 32) / (n - 1) for i in range(n)]
-    gx0, gx1 = 425, 470
-    for i, (a, wd) in enumerate(T1_TSMC):
+    # Tier 1 → TSMC: 통로 425~470 에 세로 줄기 하나(x=447). 상자마다 가로선이 줄기에 붙고, 줄기에서
+    # TSMC 로 드는 화살 하나(2026-09-13 「세로는 선 하나면 되고 거기서 가지쳐서 나오면 된다」)
+    o.append('<g stroke="%s" fill="none">' % GREY)
+    trunk_x = 447
+    ys_src = [_box(a)[1] + _box(a)[3] / 2 for a, _w in T1_TSMC]
+    o.append('<path d="M%d %d V%d" stroke-width="1.6"/>' % (trunk_x, min(ys_src), max(ys_src)))
+    for a, wd in T1_TSMC:
         ax, ay, aw, ah = _box(a)
-        # 통로 자리: 멀리 가는 선(위·아래 끝)이 바깥쪽, 가까운 선이 안쪽 — 세로 토막이 서로 안 겹친다
-        gx = gx0 + 6 + (n - 1 - i) * (gx1 - gx0 - 12) / (n - 1) if ay + ah / 2 < ys[i] else gx0 + 6 + i * (gx1 - gx0 - 12) / (n - 1)
-        o.append('<path d="%s" stroke-width="%s"/>' % (_path(ax + aw, ay + ah / 2, gx, tx, ys[i]), wd))
+        o.append('<path d="M%d %d H%d" stroke-width="%s"/>' % (ax + aw, ay + ah / 2, trunk_x, wd))
+    o.append('<path d="M%d %d H%d" stroke-width="1.6" marker-end="url(#ma)"/>' % (trunk_x, ty + th / 2, tx))
     o.append('</g>')
 
-    # TSMC → 고객: 통로 580~620
-    o.append('<g stroke="%s" fill="none" marker-end="url(#mn)">' % NAVY)
-    n = len(TSMC_CUST)
-    ys = [ty + 20 + i * (th - 40) / (n - 1) for i in range(n)]
-    gx0, gx1 = 580, 620
-    for i, (b, wd) in enumerate(TSMC_CUST):
+    # TSMC → 고객: 통로 580~620 에 세로 줄기 하나(x=600). TSMC 에서 줄기로 한 줄, 줄기에서 고객마다 가지
+    o.append('<g stroke="%s" fill="none">' % NAVY)
+    trunk_x = 600
+    ys_dst = [_box(b)[1] + _box(b)[3] / 2 for b, _w in TSMC_CUST]
+    o.append('<path d="M%d %d H%d" stroke-width="2"/>' % (tx + tw, ty + th / 2, trunk_x))
+    o.append('<path d="M%d %d V%d" stroke-width="2"/>' % (trunk_x, min(ys_dst + [ty + th / 2]), max(ys_dst + [ty + th / 2])))
+    for b, wd in TSMC_CUST:
         bx, by, bw, bh = _box(b)
-        gx = gx0 + 6 + i * (gx1 - gx0 - 12) / (n - 1) if by + bh / 2 < ys[i] else gx0 + 6 + (n - 1 - i) * (gx1 - gx0 - 12) / (n - 1)
-        o.append('<path d="%s" stroke-width="%s"/>' % (_path(tx + tw, ys[i], gx, bx, by + bh / 2), wd))
+        o.append('<path d="M%d %d H%d" stroke-width="%s" marker-end="url(#mn)"/>' % (trunk_x, by + bh / 2, bx, wd))
     o.append('</g>')
 
     # 고객 → 최종 수요: 통로 770~800
