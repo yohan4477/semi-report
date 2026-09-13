@@ -1666,6 +1666,98 @@
   "revenue_type_ids": []
  },
  {
+  "id": "close-brookfield-fund-jvs",
+  "source_entity": "brookfield-fund-jvs",
+  "target_entity": "bloom-energy-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-hitachi",
+  "source_entity": "hitachi",
+  "target_entity": "bloom-energy-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-sk-ecoplant-americas",
+  "source_entity": "sk-ecoplant-americas",
+  "target_entity": "bloom-energy-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
+  "id": "close-sk-eternix",
+  "source_entity": "sk-eternix",
+  "target_entity": "bloom-energy-indirect-undisclosed",
+  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
+  "lane": "DOWNSTREAM",
+  "subsystem": null,
+  "component": null,
+  "source_role": "중개",
+  "target_role": "간접 고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "UNDISCLOSED",
+  "source_tier": "INTERMEDIARY",
+  "target_tier": "END_USER",
+  "confidence_band": "low",
+  "flows": [],
+  "source_ids": [],
+  "supply_source_ids": [],
+  "revenue_type_ids": [],
+  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
+ },
+ {
   "id": "bloom-fundjv-sales",
   "source_entity": "bloom-energy",
   "target_entity": "brookfield-fund-jvs",
@@ -1690,10 +1782,10 @@
    "be_10k_fy2025"
   ],
   "notes": "계약상 고객이다. 스폰서(Brookfield)와도, 최종 사용자와도 다른 주체다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -1721,10 +1813,10 @@
    "be_10k_fy2025"
   ],
   "notes": "FY2025 펀드 JV 설치 매출 5,230만 달러가 따로 적힌다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-installation"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -1753,10 +1845,10 @@
    "be_sk_500mw_2023"
   ],
   "notes": "과거 500MW take-or-pay 와 후속 물량 약정. 2025-07-10 까지 특수관계였다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -1784,10 +1876,10 @@
    "be_sk_eternix_80mw"
   ],
   "notes": "충주 40MW + 대소원 40MW",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -1815,10 +1907,10 @@
    "be_mitac_2026"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -1846,10 +1938,10 @@
    "be_mitac_2026"
   ],
   "notes": "2026 확대 발표가 이미 있던 설치라고 적는다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -1878,10 +1970,10 @@
    "be_10k_fy2025"
   ],
   "notes": "한 회사가 유틸리티이자 채널이자 금융이다. 역할은 엔티티가 아니라 이 엣지에 붙는다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -1910,10 +2002,10 @@
    "be_oracle_2025"
   ],
   "notes": "SEC 가 오라클 워런트를 「고객의 고객」 대가로 회계처리한다. 계약상 구매 주체라는 직접 근거는 없다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "NOT_CONTRACTUAL"
  },
  {
@@ -1941,10 +2033,10 @@
    "be_equinix_100mw"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -1972,10 +2064,10 @@
    "nebius_be_328mw"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2003,10 +2095,10 @@
    "be_coreweave_2024"
   ],
   "notes": "블룸이 이 부지에 발전을 넣는다. 계약상 매입 주체는 따로 밝혀지지 않았다. 04 의 ED058",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2034,10 +2126,10 @@
    "be_10k_fy2025"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2065,10 +2157,10 @@
    "be_10k_fy2025"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2096,10 +2188,10 @@
    "be_10k_fy2025"
   ],
   "notes": "공개된 설치 고객이다. 계약상 구매 주체라는 근거는 따로 없다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2127,10 +2219,10 @@
    "be_10k_fy2025"
   ],
   "notes": "AI 하드웨어 제조 시설 용량을 150% 이상 늘렸다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2158,10 +2250,10 @@
    "be_10k_fy2025"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2189,10 +2281,10 @@
    "be_10k_fy2025"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2220,10 +2312,10 @@
    "be_10k_fy2025"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2251,10 +2343,10 @@
    "be_10k_fy2025"
   ],
   "notes": null,
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-product"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "UNVERIFIED"
  },
  {
@@ -2282,10 +2374,10 @@
    "be_10k_fy2024"
   ],
   "notes": "FY2024 16%. 법인 특정 불가",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -2313,10 +2405,10 @@
    "be_10k_fy2024"
   ],
   "notes": "FY2024 14%. 법인 특정 불가",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -2344,10 +2436,10 @@
    "be_10k_fy2025"
   ],
   "notes": "FY2025 2위 고객 13%. 법인명이 공개되지 않았다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -2375,10 +2467,10 @@
    "be_10k_fy2025"
   ],
   "notes": "FY2025 3위 고객 12%. 법인명이 공개되지 않았다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -2406,10 +2498,10 @@
    "be_10q_2026q2"
   ],
   "notes": "2026 상반기 44% · 2분기 73%(비특수관계). SEC 가 법인명을 밝히지 않았다",
+  "supply_source_ids": [],
   "revenue_type_ids": [
    "rt-be-rev-unallocated"
   ],
-  "supply_source_ids": [],
   "contractual_customer": "CONFIRMED"
  },
  {
@@ -2531,98 +2623,6 @@
    "ss-hydrogen"
   ],
   "revenue_type_ids": []
- },
- {
-  "id": "close-brookfield-fund-jvs",
-  "source_entity": "brookfield-fund-jvs",
-  "target_entity": "bloom-energy-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
-  "flows": [],
-  "source_ids": [],
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
- },
- {
-  "id": "close-hitachi",
-  "source_entity": "hitachi",
-  "target_entity": "bloom-energy-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
-  "flows": [],
-  "source_ids": [],
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
- },
- {
-  "id": "close-sk-ecoplant-americas",
-  "source_entity": "sk-ecoplant-americas",
-  "target_entity": "bloom-energy-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
-  "flows": [],
-  "source_ids": [],
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
- },
- {
-  "id": "close-sk-eternix",
-  "source_entity": "sk-eternix",
-  "target_entity": "bloom-energy-indirect-undisclosed",
-  "relationship_type": "INDIRECT_CUSTOMER_UNDISCLOSED",
-  "lane": "DOWNSTREAM",
-  "subsystem": null,
-  "component": null,
-  "source_role": "중개",
-  "target_role": "간접 고객",
-  "valid_from": null,
-  "valid_to": null,
-  "status": "ACTIVE",
-  "evidence_level": "UNDISCLOSED",
-  "source_tier": "INTERMEDIARY",
-  "target_tier": "END_USER",
-  "confidence_band": "low",
-  "flows": [],
-  "source_ids": [],
-  "supply_source_ids": [],
-  "revenue_type_ids": [],
-  "notes": "중개 뒤 실수요처를 원문이 밝히지 않았다. 사슬을 미상으로 닫는다"
  },
  {
   "id": "bloom-energy-contract-undisclosed-open",

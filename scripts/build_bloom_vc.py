@@ -23,9 +23,11 @@ SOURCES = [
  ('be_10k_fy2024', 'Bloom Energy', 'Form 10-K (FY2024)', 'primary_official', '2025-02',
   'https://www.sec.gov/Archives/edgar/data/1664703/000162828025008747/be-20241231.htm',
   '2024 매출·원가·고객 집중도 23/16/14'),
- ('be_10q_2026q2', 'Bloom Energy', 'Form 10-Q (2026 Q2)', 'primary_official', '2026-07',
-  'https://www.sec.gov/Archives/edgar/data/1664703/000162828026050325/be-20260630.htm',
-  '2026 상반기 매출·고객 집중도 44/21, 비특수관계 고객 73%'),
+ ('be_10q_2026q2', 'Bloom Energy', 'Form 10-Q (2026 Q2)', 'primary_official', '2026-07-28',
+  'https://www.sec.gov/Archives/edgar/data/1664703/000162828026050247/be-20260630.htm',
+  '2026 상반기·2분기 매출 유형별 금액, 수주잔고(RPO). 원 10-Q — 고객 집중도 44/21/73은 '
+  '이 원문 자체가 기간을 뒤바꿔 적었고 10-Q/A가 바로잡는다(be_10qa_2026q2). URL이 이전에 '
+  '10-Q/A 접수번호(050325)를 잘못 가리켰던 것을 2026-09-13 바로잡았다'),
  ('be_scandium_blog', 'Bloom Energy', 'Demystifying scandium oxide', 'primary_company', '2026',
   'https://www.bloomenergy.com/blog/demystifying-scandium-oxide-why-it-matters-in-bloom-fuel-cells/',
   '스칸듐·지르코니아, 복수국 조달, 25GW, 중국 비의존. 03 의 SRC002'),
@@ -106,6 +108,12 @@ SOURCES = [
   '2026-04-27',
   'https://www.sec.gov/Archives/edgar/data/1664703/000119312526179296/d253699d424b7.htm',
   '2025-07 오라클 공급계약과 2026-03 마스터 서비스 계약'),
+ ('be_8k_q2_2026_pr', 'Bloom Energy', 'Bloom Energy Reports Record Second Quarter 2026 '
+  'Financial Results and Raises Full Year 2026 Guidance (Form 8-K 별지 99.1)',
+  'primary_official', '2026-07-28',
+  'https://www.sec.gov/Archives/edgar/data/1664703/000162828026050150/'
+  'ex991_q226financialresults.htm',
+  '2026 회계연도 매출·수익성 가이던스 상향. 2분기 실적 발표'),
  ('aep_ohio_2025', 'AEP Ohio', 'AEP 오하이오 온사이트 전력 프로젝트 발표', 'primary_company',
   '2025-06-05', 'https://www.aep.com/news/stories/view/10262/',
   'AEP 오하이오가 AWS·콜로직스 부지에 블룸 연료전지를 설치한다. 최종 고객이 비용을 댄다'),

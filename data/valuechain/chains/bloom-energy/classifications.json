@@ -424,6 +424,24 @@
      "source_ids": [
       "be_10k_fy2025"
      ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 0.9,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": "계약 전력 533만 + 리스 전력 462만",
+     "source_ids": [
+      "be_10q_2026q2"
+     ]
     }
    ],
    "source_ids": [
@@ -510,6 +528,24 @@
      "method_note": "펀드 JV 로 확인된 설치 금액을 뺀 나머지",
      "source_ids": [
       "be_10k_fy2025"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 4.8,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10q_2026q2"
      ]
     }
    ],
@@ -598,6 +634,24 @@
      "source_ids": [
       "be_10k_fy2025"
      ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 87.8,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "제품 9억 3,541만 달러",
+     "source_ids": [
+      "be_10q_2026q2"
+     ]
     }
    ],
    "source_ids": [
@@ -684,6 +738,24 @@
      "method_note": "서비스는 고객별 배분이 공개되지 않는다",
      "source_ids": [
       "be_10k_fy2025"
+     ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 6.5,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-07-31",
+     "denominator": "Bloom 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 0.95,
+     "method_note": null,
+     "source_ids": [
+      "be_10q_2026q2"
      ]
     }
    ],

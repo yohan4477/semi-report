@@ -160,6 +160,18 @@ O = [
  ('o-rev-elec-2026h1', 'bloom-rev-electricity', 'revenue_type_share', 1.1, None, None, PCT,
   '2026 H1', '2026-01-01', '2026-06-30', '2026-07-31', 'Bloom 2026 상반기 총매출', 'CURRENT',
   'CONFIRMED', 0.95, 'method-revenue-mix', ['be_10q_2026q2'], None),
+ ('o-rev-product-2026q2', 'bloom-rev-product', 'revenue_type_share', 87.8, None, None, PCT,
+  '2026 Q2', '2026-04-01', '2026-06-30', '2026-07-31', 'Bloom 2026 2분기 총매출', 'CURRENT',
+  'CONFIRMED', 1.0, 'method-revenue-mix', ['be_10q_2026q2'], '제품 9억 3,541만 달러'),
+ ('o-rev-install-2026q2', 'bloom-rev-installation', 'revenue_type_share', 4.8, None, None,
+  PCT, '2026 Q2', '2026-04-01', '2026-06-30', '2026-07-31', 'Bloom 2026 2분기 총매출',
+  'CURRENT', 'CONFIRMED', 0.95, 'method-revenue-mix', ['be_10q_2026q2'], None),
+ ('o-rev-service-2026q2', 'bloom-rev-service', 'revenue_type_share', 6.5, None, None, PCT,
+  '2026 Q2', '2026-04-01', '2026-06-30', '2026-07-31', 'Bloom 2026 2분기 총매출', 'CURRENT',
+  'CONFIRMED', 0.95, 'method-revenue-mix', ['be_10q_2026q2'], None),
+ ('o-rev-elec-2026q2', 'bloom-rev-electricity', 'revenue_type_share', 0.9, None, None, PCT,
+  '2026 Q2', '2026-04-01', '2026-06-30', '2026-07-31', 'Bloom 2026 2분기 총매출', 'CURRENT',
+  'CONFIRMED', 0.95, 'method-revenue-mix', ['be_10q_2026q2'], '계약 전력 533만 + 리스 전력 462만'),
  # ── 고객 집중도 ───────────────────────────────────────────────────
  ('o-skecoplant-share-fy2024', 'bloom-skecoplant', 'customer_revenue_share', 23, None, None,
   PCT, 'FY2024', '2024-01-01', '2024-12-31', '2025-02-01', 'Bloom FY2024 총매출', 'HISTORICAL',
@@ -294,6 +306,7 @@ FIN = [
  ('FY2024', 1473.856, 1085.153, 685.847, 36.8, 362, '2025-02-01', ['be_10k_fy2024']),
  ('FY2025', 2023.994, 1531.281, 992.841, 35.2, 510, '2026-02-09', ['be_10k_fy2025']),
  ('2026-H1', 1816.419, 1588.761, 1023.189, 35.6, 530, '2026-07-31', ['be_10q_2026q2']),
+ ('2026-Q2', 1065.365, 935.413, 593.957, 36.5, 312, '2026-07-31', ['be_10q_2026q2']),
 ]
 
 # BOM 작업 모델 — 공식 BOM 이 아니다
@@ -556,6 +569,22 @@ CLAIMS = [
  ('clm-microsensor-direct', '마이크로센서는 블룸에 직접 공급하는 레벨트랜스미터 협력사다.',
   'micro-sensor', 'bloom-energy', '2026', 'CONFIRMED', 0.8, ['customs_microsensor_2026'],
   '2026년 반복 직납 선적이 확인된다. 조달 점유율은 공개되지 않았다. 03의 CLM052'),
+ # ── 2026-Q2 10-Q 갱신(2026-09-13) ──────────────────────────────────
+ ('clm-be-rpo-2026q2',
+  '2026년 6월 30일 기준 블룸의 미이행 이행의무는 제품 판매·설치 역무 중심으로 4억 4,240만 '
+  '달러이며, 1~2년 안에 매출로 인식될 것으로 예상한다.',
+  'bloom-energy', None, '2026-06-30', 'CONFIRMED', 1.0, ['be_10q_2026q2'],
+  '별도로 서비스 계약 중심 이연분 5,170만 달러가 있으며 1~25년에 걸쳐 인식된다. '
+  '2025-12-31 기준은 각각 3억 9,440만 달러·2,500만 달러였다. object는 특정 상대 법인이 '
+  '없어 None으로 둔다'),
+ ('clm-be-fy2026-guidance',
+  '블룸은 2026-07-28 2분기 실적 발표에서 2026 회계연도 매출 가이던스를 39억~42억 달러로 '
+  '올렸다.',
+  'bloom-energy', None, 'FY2026 가이던스(2026-07-28 제시)', 'CONFIRMED', 1.0,
+  ['be_8k_q2_2026_pr'],
+  '같은 자리에서 비GAAP 총마진 약 34%, 비GAAP 영업이익 8억~9억 달러, 비GAAP 주당순이익 '
+  '2.55~2.85달러도 냈다. 중간값 기준 전년 대비 매출 100% 성장. 가이던스는 회사 발표치이며 '
+  '확정 실적이 아니다. object는 특정 상대 법인이 없어 None으로 둔다'),
 ]
 
 
