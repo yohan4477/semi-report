@@ -162,17 +162,19 @@ def render():
         o.append('<path d="M%d %d H%d" stroke-width="%s" marker-end="url(#mn)"/>' % (trunk_x, by + bh / 2, bx, wd))
     o.append('</g>')
 
-    # 고객 → 최종 수요: 통로 770~800
-    o.append('<g stroke="%s" fill="none" marker-end="url(#ma)" stroke-width="1.2">' % GREY)
-    gx0, gx1 = 770, 800
-    for i, (a, b) in enumerate(CUST_FIN):
-        ax, ay, aw, ah = _box(a); bx, by, bw, bh = _box(b)
-        ty0, ty1 = ay + ah / 2, by + bh / 2
-        # 같은 상자(하이퍼스케일러)로 드는 둘째 선은 닿는 높이를 아래로 비켜 준다
-        if b == 'f_hyper' and a == 'hyper':
-            ty1 = by + bh - 10
-        gx = gx0 + 8 + (i % 3) * 7
-        o.append('<path d="%s"/>' % _path(ax + aw, ty0, gx, bx, ty1))
+    # 고객 → 최종 수요: 통로 770~800 에 세로 줄기 하나(x=785). 고객마다 가로선이 줄기에 붙고,
+    # 줄기에서 최종 수요 상자마다 화살 가지 하나
+    o.append('<g stroke="%s" fill="none" stroke-width="1.2">' % GREY)
+    trunk_x = 785
+    srcs = sorted(set(a for a, _b in CUST_FIN)); dsts = sorted(set(_b for _a, _b in CUST_FIN))
+    ys_all = [_box(i)[1] + _box(i)[3] / 2 for i in srcs + dsts]
+    o.append('<path d="M%d %d V%d"/>' % (trunk_x, min(ys_all), max(ys_all)))
+    for a in srcs:
+        ax, ay, aw, ah = _box(a)
+        o.append('<path d="M%d %d H%d"/>' % (ax + aw, ay + ah / 2, trunk_x))
+    for b in dsts:
+        bx, by, bw, bh = _box(b)
+        o.append('<path d="M%d %d H%d" marker-end="url(#ma)"/>' % (trunk_x, by + bh / 2, bx))
     o.append('</g>')
 
     # HBM → NVIDIA(점선): 상자 위를 지나지 않게 TSMC·고객 통로(x=612)로 올라가 엔비디아 왼쪽 변 아래쪽에 닿는다
