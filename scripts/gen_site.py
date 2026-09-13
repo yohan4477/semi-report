@@ -75,6 +75,10 @@ PAGES = [
     ('밸류체인 탐색기.html', 'valuechain', '밸류체인 탐색기', '🔗',
      '회사를 눌러 공급사와 고객을 계속 펼친다 — 선마다 무엇을 근거로 이었는지와 '
      '시점별 비중이 붙는다', False),
+    # 회사 하나가 카드 하나 — 밸류체인 사슬·핵심 수치·병목·그림 장·조사 보고서. 맨 위 고정 층이
+    # 탐색기라 밸류체인 장이 이 안에 든다(2026-09-13). 공시가 원문이라 잠그지 않는다
+    ('기업분석 대시보드.html', 'company', '기업분석', '🏭',
+     '회사 하나를 밸류체인·핵심 수치·병목으로 — 사슬마다 그림 장과 조사 보고서', False),
     # AI Engineer 컨퍼런스 발표 — 카드 안이 번호글이라 다른 장과 읽는 결이 다르다
     ('AI Engineer 대시보드.html', 'ai-engineer', 'AI Engineer', '🛠️',
      '에이전트를 실제로 굴려 본 사람들의 발표 — 한 편을 번호글로 옮겼다', False),
@@ -265,7 +269,16 @@ def rewrite_links(html: str, own_slug: str = '') -> str:
         return 'href="/%s/%s%s"' % (slug, quote(name), anchor)
     html = re.sub(r'href="([A-Za-z0-9_-]+)/([^"/:#]+)\.html(#[^"]*)?"', _psub, html)
 
-    return re.sub(r'href="([^"/:]+\.html)"', repl, html)
+    html = re.sub(r'href="([^"/:?]+\.html)"', repl, html)
+
+    # 물음표가 붙은 링크와 iframe src — 밸류체인 탐색기를 ?focal= 로 여는 자리(2026-09-13).
+    # 슬러그가 있으면 사이트 주소에 물음표를 그대로 잇고, 없으면 github.io 절대 주소로
+    def _q(m):
+        attr, target, q = m.group(1), m.group(2), m.group(3) or ''
+        if target in SLUGS:
+            return '%s="/%s%s"' % (attr, SLUGS[target], q)
+        return '%s="%s%s%s"' % (attr, GH, quote(target), q)
+    return re.sub(r'(href|src)="([^"/:?]+\.html)(\?[^"]*)?"', _q, html)
 
 
 def _card(slug: str, title: str, emoji: str, desc: str, locked: bool) -> str:
