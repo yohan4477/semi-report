@@ -58,7 +58,8 @@ T2_T1 = [('hemlock', 'wafer'), ('stella', 'gas'), ('hoya', 'resist'), ('zeiss', 
 # (2026-09-13 「tier2 → tier1 처럼 선 만들어」). 굵기 차이는 고객 쪽에만 남는다
 T1_TSMC = [('wafer', 1.2), ('siltron', 1.2), ('resist', 1.2), ('asml', 1.2), ('equip', 1.2),
            ('abf', 1.2), ('specialty', 1.2), ('gas', 1.2), ('dist', 1.2), ('power', 1.2)]
-TSMC_CUST = [('nvidia', 3), ('apple', 3), ('amd', 2), ('qcom', 1.5), ('hyper', 2), ('intel', 1), ('sony', 1.2)]
+# TSMC → 고객도 다른 선과 같은 색·굵기(2026-09-13 「타겟에서 고객 가는 선 색 굵기가 달라」)
+TSMC_CUST = [('nvidia', 1.2), ('apple', 1.2), ('amd', 1.2), ('qcom', 1.2), ('hyper', 1.2), ('intel', 1.2), ('sony', 1.2)]
 CUST_FIN = [('nvidia', 'f_hyper'), ('apple', 'f_foxconn'), ('amd', 'f_server'), ('qcom', 'f_phone'),
             ('hyper', 'f_hyper'), ('sony', 'f_auto')]
 
@@ -152,14 +153,14 @@ def render():
     o.append('</g>')
 
     # TSMC → 고객: 통로 580~620 에 세로 줄기 하나(x=600). TSMC 에서 줄기로 한 줄, 줄기에서 고객마다 가지
-    o.append('<g stroke="%s" fill="none">' % NAVY)
+    o.append('<g stroke="%s" fill="none">' % GREY)
     trunk_x = 600
     ys_dst = [_box(b)[1] + _box(b)[3] / 2 for b, _w in TSMC_CUST]
-    o.append('<path d="M%d %d H%d" stroke-width="2"/>' % (tx + tw, ty + th / 2, trunk_x))
-    o.append('<path d="M%d %d V%d" stroke-width="2"/>' % (trunk_x, min(ys_dst + [ty + th / 2]), max(ys_dst + [ty + th / 2])))
+    o.append('<path d="M%d %d H%d" stroke-width="1.6"/>' % (tx + tw, ty + th / 2, trunk_x))
+    o.append('<path d="M%d %d V%d" stroke-width="1.6"/>' % (trunk_x, min(ys_dst + [ty + th / 2]), max(ys_dst + [ty + th / 2])))
     for b, wd in TSMC_CUST:
         bx, by, bw, bh = _box(b)
-        o.append('<path d="M%d %d H%d" stroke-width="%s" marker-end="url(#mn)"/>' % (trunk_x, by + bh / 2, bx, wd))
+        o.append('<path d="M%d %d H%d" stroke-width="%s" marker-end="url(#ma)"/>' % (trunk_x, by + bh / 2, bx, wd))
     o.append('</g>')
 
     # 고객 → 최종 수요: 통로 770~800 에 세로 줄기 하나(x=785). 고객마다 가로선이 줄기에 붙고,
@@ -183,7 +184,7 @@ def render():
              % (hx + hw, hy + hh / 2, ny + nh - 8, nx, ORANGE))
     o.append('<text x="705" y="440" font-size="11" fill="%s">HBM은 NVIDIA 원가에서</text>'
              '<text x="705" y="454" font-size="11" fill="%s">TSMC보다 큼 (~$3.5k vs ~$2.3k)</text>' % (ORANGE, ORANGE))
-    o.append('<text x="10" y="545" font-size="11" fill="#6B7785">고객 쪽 선 굵기 = 대략적 금액 규모. 점선 박스 = 중개·유통. 한국 노드 2곳은 2025~26년 SK그룹에서 이탈.</text>')
+    o.append('<text x="10" y="545" font-size="11" fill="#6B7785">점선 박스 = 중개·유통. 한국 노드 2곳은 2025~26년 SK그룹에서 이탈.</text>')
     o.append('</svg>')
     return '\n      '.join(o)
 
