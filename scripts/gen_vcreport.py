@@ -98,7 +98,26 @@ CSS = u'''
   .tl b{display:block;font-weight:600;margin-bottom:2px}
   .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
   .tl .row span:first-child{color:var(--mute)}
-  @media (max-width:520px){h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .sv{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* 핵심 수치 — 표가 아니라 줄 목록. 좁은 화면에서 네 칸 표는 출처 칸이 잘려 나갔다 */
+  .claims{margin-top:6px}
+  .cl{display:grid;grid-template-columns:110px 1fr;gap:4px 14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .cl .per{color:var(--mute);white-space:nowrap}
+  .cl .st{margin:0}
+  .cl .src{grid-column:2;font-size:12px;color:var(--mute)}
+  .cl .src a{color:var(--tsmc)}
+  @media (max-width:640px){
+    h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}
+    nav.chains{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin-bottom:20px}
+    nav.chains a{white-space:nowrap;flex:none}
+    .sv svg{min-width:720px}
+    .cl{grid-template-columns:1fr}
+    .cl .src{grid-column:1}
+    table{font-size:12.5px} th,td{padding:6px 6px}
+    .tw table{min-width:640px}
+    .bar{grid-template-columns:100px 1fr 96px} .bar .val{white-space:normal;font-size:12px;line-height:1.25}
+  }
   /* 조사 보고서(마크다운) */
   .md h2{margin-top:28px;padding-top:18px;border-top:2px solid var(--ink)}
   .md h3{font-size:15.5px;margin:22px 0 6px}
@@ -175,13 +194,13 @@ def sec_claims(c, n):
     tr = []
     for x in rows[:16]:
         ev = x.get('evidence_level') or ''
-        tr.append(u'<tr><td class="nw">%s</td><td>%s</td><td class="nw"><span class="ev%s">%s</span></td><td>%s</td></tr>' % (
-            esc(x.get('period') or u'시점 미상'), esc(x.get('statement')),
-            ' c' if ev == 'CONFIRMED' else '', esc(EV_KO.get(ev, ev)), c.src_html(x.get('source_ids'))))
+        tr.append(u'<div class="cl"><div class="per">%s<br><span class="ev%s">%s</span></div><p class="st">%s</p><div class="src">%s</div></div>' % (
+            esc(x.get('period') or u'시점 미상'), ' c' if ev == 'CONFIRMED' else '', esc(EV_KO.get(ev, ev)),
+            esc(x.get('statement')), c.src_html(x.get('source_ids'))))
     return u'''  <section>
     <h2>%d. 핵심 수치<small>최신 공시부터</small></h2>
     <p class="note">회사를 주어로 한 주장 %d건 가운데 최근 %d건. 근거 등급은 공시로 확인, 추정, 정황 추론 순으로 약하다.</p>
-    <table><tr><th>시점</th><th>내용</th><th>근거</th><th>출처</th></tr>%s</table>
+    <div class="claims">%s</div>
   </section>
 ''' % (n, len(rows), min(16, len(rows)), u''.join(tr))
 
@@ -239,7 +258,7 @@ def sec_bottleneck(c, n):
     return u'''  <section>
     <h2>%d. 병목<small>공급 여력 등급이 적힌 줄</small></h2>
     <p class="note">관계 데이터의 공급 여력 등급(capacity_criticality)이 중간 이상인 공급 줄 %d개. 탐색기에서 진홍으로 칠한 상자와 같다.</p>
-    <table class="heat"><tr><th>공급사</th><th>받는 쪽</th><th>품목</th><th>등급</th><th>근거</th><th>비고</th></tr>%s</table>
+    <div class="tw"><table class="heat"><tr><th>공급사</th><th>받는 쪽</th><th>품목</th><th>등급</th><th>근거</th><th>비고</th></tr>%s</table></div>
   </section>
 ''' % (n, len(rows), u''.join(tr))
 
@@ -265,7 +284,7 @@ def sec_customers(c, n):
     return u'''  <section>
     <h2>%d. 고객·전방시장 비중<small>타겟에서 나가는 줄의 비중 관측</small></h2>
     <p class="note">타겟에서 나가는 줄에 붙은 비중 관측 %d건. 고객 실명이 아니라 전방시장 갈래일 수도 있고, 익명 고객은 공시가 이름을 안 밝힌 자리다.</p>
-    <table><tr><th>고객·전방</th><th>시점</th><th>비중</th><th>분모</th><th>근거</th><th>출처</th></tr>%s</table>
+    <div class="tw"><table><tr><th>고객·전방</th><th>시점</th><th>비중</th><th>분모</th><th>근거</th><th>출처</th></tr>%s</table></div>
   </section>
 ''' % (n, len(rows), tr)
 
@@ -280,7 +299,7 @@ def sec_equity(c, n):
     return u'''  <section>
     <h2>%d. 지분·소유<small>거래 위에 소유를 겹치기</small></h2>
     <p class="note">기업 구조 선 %d개. 탐색기는 이 선을 따라가지 않고 서랍에만 보인다.</p>
-    <table><tr><th>주체</th><th>관계</th><th>대상</th><th>부터</th><th>비고</th></tr>%s</table>
+    <div class="tw"><table><tr><th>주체</th><th>관계</th><th>대상</th><th>부터</th><th>비고</th></tr>%s</table></div>
   </section>
 ''' % (n, len(rows), tr)
 
@@ -300,7 +319,7 @@ def sec_sources(c, n):
         (u'<a href="%s">%s</a>' % (esc(s['url']), esc(s.get('title') or s['id']))) if s.get('url') else esc(s.get('title') or s['id'])) for s in rows)
     return u'''  <section>
     <h2>%d. 출처<small>%d건</small></h2>
-    <table><tr><th>날짜</th><th>발행</th><th>문서</th></tr>%s</table>
+    <div class="tw"><table><tr><th>날짜</th><th>발행</th><th>문서</th></tr>%s</table></div>
   </section>
 ''' % (n, len(rows), tr)
 
@@ -318,7 +337,10 @@ def page(c, chains):
     parts.append(sec_map(c, n)); n += 1
     if c.id == 'tsmc':
         # 2~8절은 받은 그림 그대로. 번호도 원문과 같다
-        parts.append(gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', ''))
+        raw = gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', '')
+        raw = raw.replace('<svg ', '<div class="sv"><svg ').replace('</svg>', '</svg></div>')
+        raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat">').replace('</table>', '</table></div>')
+        parts.append(raw)
         n = 9
     for fn in (sec_claims,
                lambda cc, k: sec_shares(cc, k, 'revenue_types', u'매출원 구성', u'매출 갈래마다 가장 최근 비중.', ''),

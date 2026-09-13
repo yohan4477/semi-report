@@ -157,6 +157,7 @@ CSS = '''
 .vc-frame{border:1px solid var(--line,#C9D1DA);border-radius:6px;overflow:hidden;background:#fff;height:640px;margin:8px 0}
 .vc-frame iframe{width:100%;height:100%;border:0;display:block}
 .vc-links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;margin:8px 0 0}
+@media (max-width:640px){.vc-frame{height:520px}}
 '''
 
 HEADER = '''  <header>
