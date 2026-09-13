@@ -439,3 +439,340 @@ def sec_equity_map(c, n):
 
 
 SECTIONS = (sec_revtree, sec_suptree, sec_heat, sec_custbars, sec_timeline, sec_equity_map)
+
+
+# ── 2026-09-13 통일 골격 — 여섯 장이 같은 열한 절 ───────────────────────────────
+# 1 전체 지도  2 매출 드라이버 트리  3 단위경제  4 마진 풀  5 병목 리스크 히트맵  6 시나리오 민감도
+# 7 시간축  8 거래 위에 소유를 겹치기  9 고객 집중도  10 핵심 수치  11 출처
+# 3·4·6 은 조사 보고서 값(chains/<id>/report_figs.json)에서, 없으면 자리만 지킨다(데이터 없음 한 줄).
+import io as _io
+import json as _json
+import os as _os
+
+
+def load_figs(c):
+    p = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'data', 'valuechain', 'chains', c.id, 'report_figs.json')
+    if not _os.path.exists(p):
+        return {}
+    with _io.open(p, encoding='utf-8') as f:
+        return _json.load(f) or {}
+
+
+def sec_empty(n, title, small, why):
+    return (u'  <section>\n    <h2>%d. %s<small>%s</small></h2>\n    <p class="note">%s</p>\n  </section>\n'
+            % (n, esc(title), esc(small), esc(why)))
+
+
+def _retitle(html, old, new):
+    u"""이미 세운 절의 제목만 TSMC 장의 이름으로 바꾼다."""
+    return html.replace(u'. %s<small>' % old, u'. %s<small>' % new, 1) if html else html
+
+
+def _sec(n, title, small, note, body):
+    return (u'  <section>\n    <h2>%d. %s<small>%s</small></h2>\n    <p class="note">%s</p>\n    %s\n  </section>\n'
+            % (n, esc(title), esc(small), note, body))
+
+
+# ── 1 전체 지도 — TSMC 손 그림과 같은 다섯 칸(Tier 2 · Tier 1 · 회사 · 고객 · 최종 수요) ────
+COLS = {'t2': (10, 180), 't1': (235, 190), 'me': (470, 110), 'cust': (620, 150), 'fin': (800, 150)}
+BH_MAP, PITCH = 34, 44
+
+
+def _style_of(c, ents_ids, rels):
+    if any(r.get('capacity_criticality') in ('HIGH', 'VERY_HIGH') for r in rels):
+        return JP_SOFT, JP, False
+    if any((c.ents.get(e) or {}).get('country') == u'한국' for e in ents_ids):
+        return KR_SOFT, KR, False
+    if rels and all(r.get('source_tier') == 'INTERMEDIARY' for r in rels):
+        return '#fff', SUP, True
+    return '#fff', LINE, False
+
+
+def sec_map_data(c, n):
+    me = c.nm(c.focal)
+    # 앞단 — 공급 줄. 그룹 안 공장·가공 자회사(태양유전)는 CORPORATE 선이지만 물건이 들어오는 줄이라 앞단에 세운다
+    IN_TYPES = ('INTERNAL_MATERIAL_SUPPLY', 'PROCESSING', 'MANUFACTURES', 'INTRAGROUP_SUPPLY', 'JV_ASSEMBLY', 'CONTRACT_MANUFACTURES')
+    up = [r for r in c.rels if r.get('target_entity') == c.focal and (r.get('lane') not in ('DOWNSTREAM', 'CORPORATE')
+          or (r.get('lane') == 'CORPORATE' and r.get('relationship_type') in IN_TYPES))]
+    ss = dict((x['id'], x.get('label')) for x in c.cls.get('supply_sources') or [])
+    groups = {}
+    for r in up:
+        k = ss.get((r.get('supply_source_ids') or [None])[0]) or r.get('subsystem') or r.get('component') or u'그 밖'
+        groups.setdefault(k, []).append(r)
+    t1_boxes = []
+    for k, rs in sorted(groups.items(), key=lambda kv: -len(kv[1]))[:10]:
+        ents = []
+        for r in rs:
+            if r['source_entity'] not in ents:
+                ents.append(r['source_entity'])
+        t1_boxes.append(([c.nm(e) for e in ents], k, ents, rs))
+    t1_of = {}
+    for i, b in enumerate(t1_boxes):
+        for e in b[2]:
+            t1_of.setdefault(e, i)
+    t2 = {}
+    for r in c.rels:
+        if r.get('target_entity') in t1_of and r.get('source_entity') != c.focal and r.get('lane') not in ('DOWNSTREAM', 'CORPORATE'):
+            t2.setdefault(r['target_entity'], []).append(r)
+    t2_boxes = []
+    for tgt, rs in sorted(t2.items(), key=lambda kv: -len(kv[1]))[:6]:
+        ents = []
+        for r in rs:
+            if r['source_entity'] not in ents:
+                ents.append(r['source_entity'])
+        t2_boxes.append(([c.nm(e) for e in ents], u'→ %s' % c.nm(tgt), ents, rs, t1_of[tgt]))
+    share = _obs_by_rel(c, 'customer_revenue_share')
+    seen = {}
+    for r in c.rels:
+        if r.get('lane') != 'DOWNSTREAM' or r.get('source_entity') != c.focal:
+            continue
+        e = r['target_entity']
+        o = share.get(r['id'])
+        v = o.get('value') if o else None
+        if e not in seen or (v is not None and (seen[e][1] is None or v > seen[e][1])):
+            seen[e] = (r, v, o)
+    # 고객 줄이 없으면(엔비디아) 회사가 맺은 협력·투자·플랫폼 노출 선을 뒷단 자리에 세운다 — 관계 이름을 보조 줄에 적는다
+    OUT_TYPES = {'STRATEGIC_PARTNERSHIP': u'전략 협력', 'PLATFORM_EXPOSURE': u'플랫폼 노출', 'INVESTS_IN': u'지분 투자'}
+    for r in c.rels:
+        if r.get('lane') == 'CORPORATE' and r.get('source_entity') == c.focal and r.get('relationship_type') in OUT_TYPES and r['target_entity'] not in seen:
+            seen[r['target_entity']] = (dict(r, target_role=OUT_TYPES[r['relationship_type']]), None, None)
+    cust = sorted(seen.values(), key=lambda t: -(t[1] if t[1] is not None else -1))[:7]
+    cust_idx = dict((t[0]['target_entity'], i) for i, t in enumerate(cust))
+    fin, fseen = [], set()
+    for r in c.rels:
+        if r.get('lane') == 'DOWNSTREAM' and r.get('source_entity') in cust_idx and r.get('target_entity') != c.focal:
+            e = r['target_entity']
+            if e in fseen or e in cust_idx:
+                continue
+            fseen.add(e)
+            fin.append((e, cust_idx[r['source_entity']]))
+    fin = fin[:6]
+    if not (t1_boxes or cust):
+        return sec_empty(n, u'전체 지도', u'앞단 → %s → 뒷단' % me, u'이 사슬에는 회사로 들어오거나 나가는 관계 줄이 없다.')
+    rows = max(len(t1_boxes), len(t2_boxes), len(cust), len(fin), 5)
+    H = 40 + rows * PITCH + 40
+    out = [u'<svg viewBox="0 0 960 %d" role="img" aria-label="%s 밸류체인 지도">' % (H, esc(me))]
+    out.append(u'<defs><marker id="m-%s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="%s"/></marker></defs>' % (c.id, SUP))
+    out.append(u'<g font-size="13" fill="%s"><text x="10" y="22">Tier 2 원료·부품</text><text x="235" y="22">Tier 1 소재·장비·유통</text><text x="620" y="22">고객</text><text x="800" y="22">최종 수요</text></g>' % MUTE)
+
+    def box(col, i, fill, stroke, dashed, l1, l2):
+        x, w = COLS[col]
+        y = 40 + i * PITCH
+        h = 40 if l2 else BH_MAP
+        s = [u'<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="%s" stroke="%s"%s/>' % (x, y, w, h, fill, stroke, ' stroke-dasharray="4 3"' if dashed else '')]
+        if l2:
+            s.append(u'<text x="%d" y="%d" font-size="12" fill="%s">%s</text><text x="%d" y="%d" font-size="11" fill="%s">%s</text>' % (x + 10, y + 16, INK, esc(l1), x + 10, y + 31, MUTE, esc(l2)))
+        else:
+            s.append(u'<text x="%d" y="%d" font-size="12" fill="%s">%s</text>' % (x + 10, y + 22, INK, esc(l1)))
+        return u''.join(s), (x, y, w, h)
+    geo = {}
+    for i, (names, lab, ents, rs) in enumerate(t1_boxes):
+        f, s, d = _style_of(c, ents, rs)
+        h, g = box('t1', i, f, s, d, cut(u' · '.join(names), 17), cut(lab, 20))
+        out.append(h)
+        geo[('t1', i)] = g
+    for i, (names, lab, ents, rs, ti) in enumerate(t2_boxes):
+        f, s, d = _style_of(c, ents, rs)
+        h, g = box('t2', i, f, s, d, cut(u' · '.join(names), 16), cut(lab, 18))
+        out.append(h)
+        geo[('t2', i)] = g
+    for i, (r, v, o) in enumerate(cust):
+        sub = (u'%s · %s' % (share_txt(o), o.get('period') or '')) if o else (r.get('target_role') or '')
+        h, g = box('cust', i, CUST_SOFT if v is not None else '#fff', CUST, False, cut(c.nm(r['target_entity']), 13), cut(sub, 16))
+        out.append(h)
+        geo[('cust', i)] = g
+    for i, (e, ci) in enumerate(fin):
+        h, g = box('fin', i, '#fff', LINE, False, cut(c.nm(e), 13), cut(u'← %s' % c.nm(cust[ci][0]['target_entity']), 16))
+        out.append(h)
+        geo[('fin', i)] = g
+    mx, mw = COLS['me']
+    mh = max(200, min(H - 80, rows * PITCH - 10))
+    my = 40 + (rows * PITCH - 10 - mh) / 2.0
+    out.append(u'<rect x="%d" y="%.0f" width="%d" height="%d" rx="4" fill="%s"/>' % (mx, my, mw, mh, TG))
+    lines = [(cut(me, 8), 20, True)]
+    rev = (c.ents.get(c.focal) or {}).get('revenue') or ''
+    if rev:
+        lines.append((cut(rev.split(u' 매출 ')[-1] if u' 매출 ' in rev else rev, 12), 12, False))
+    kinds = [(share_pct(latest_share(x)), x.get('label'), latest_share(x)) for x in (c.cls.get('revenue_types') or []) if not x.get('unallocated')]
+    kinds = [k for k in kinds if k[0] is not None]
+    if kinds:
+        k = max(kinds, key=lambda t: t[0])
+        lines.append((cut(u'%s %s' % (k[1].replace(u' 매출', u''), share_txt(k[2])), 12), 11, False))
+    lines.append((u'관계 %d줄' % len(c.rels), 11, False))
+    ty = my + mh / 2.0 - 8 * len(lines)
+    for txt, fs, bold in lines:
+        out.append(u'<text x="%d" y="%.0f" text-anchor="middle" fill="#fff" font-size="%d"%s>%s</text>' % (mx + mw / 2, ty, fs, ' font-weight="600"' if bold else ' opacity=".9"', esc(txt)))
+        ty += fs + 8
+    paths = []
+
+    def bez(x0, y0, x1, y1):
+        mid = (x0 + x1) / 2.0
+        paths.append(u'M%.0f %.0fC%.0f %.0f %.0f %.0f %.0f %.0f' % (x0, y0, mid, y0, mid, y1, x1, y1))
+    for i, b in enumerate(t2_boxes):
+        a, t = geo[('t2', i)], geo[('t1', b[4])]
+        bez(a[0] + a[2], a[1] + a[3] / 2.0, t[0], t[1] + t[3] / 2.0)
+    for i in range(len(t1_boxes)):
+        g = geo[('t1', i)]
+        bez(g[0] + g[2], g[1] + g[3] / 2.0, mx, my + 20 + (mh - 40) * (i + 0.5) / max(1, len(t1_boxes)))
+    for i in range(len(cust)):
+        g = geo[('cust', i)]
+        bez(mx + mw, my + 20 + (mh - 40) * (i + 0.5) / max(1, len(cust)), g[0], g[1] + g[3] / 2.0)
+    for i, (e, ci) in enumerate(fin):
+        a, t = geo[('cust', ci)], geo[('fin', i)]
+        bez(a[0] + a[2], a[1] + a[3] / 2.0, t[0], t[1] + t[3] / 2.0)
+    out.append(u'<g stroke="%s" stroke-width="1.3" fill="none" marker-end="url(#m-%s)"><path d="%s"/></g>' % (SUP, c.id, u''.join(paths)))
+    out.append(u'<text x="10" y="%d" font-size="11" fill="%s">선 굵기에는 뜻이 없다(금액 관측이 없다). 점선 상자 = 중개·유통. 상자 안 값은 관측이 붙은 줄만.</text></svg>' % (H - 12, MUTE))
+    legend = (u'<div class="legend"><span class="l-tsmc">%s</span><span class="l-kr">한국 회사</span><span class="l-jp">병목(공급 여력 HIGH 이상)</span>'
+              u'<span class="l-cust">고객</span><span class="l-sup">그 밖의 공급사</span></div>' % esc(me))
+    note = (u'관계 데이터의 줄을 다섯 칸에 세웠다. Tier 1 은 회사에 바로 대는 공급사(갈래로 묶음), Tier 2 는 그 공급사에 대는 곳, '
+            u'고객은 회사에서 나가는 줄, 최종 수요는 고객의 고객. 색은 소속: 청록 회사, 주황 한국, 진홍 병목, 남색 고객.')
+    return _sec(n, u'전체 지도', u'앞단 → %s → 뒷단' % me, note, u'<div class="sv">%s</div>\n    %s' % (u''.join(out), legend))
+
+
+# ── 3 단위경제 워터폴 · 4 마진 풀 · 5 점수 히트맵 · 6 토네이도 · 7 시간축 — 보고서 값 ─────
+def _money(v):
+    return u'{:,.0f}'.format(v) if abs(v) >= 100 else (u'%g' % v)
+
+
+def sec_unit(c, n, fg):
+    u = fg.get('unit')
+    if not u or not u.get('steps'):
+        return sec_empty(n, u'단위경제', u'조사 보고서 없음', u'단위 하나의 판매가와 원가 항목은 조사 보고서가 있어야 선다. 이 회사 보고서에는 아직 그 값이 없다.')
+    st, steps, en = u['start'], u['steps'][:7], u['end']
+    scale = 180.0 / (float(st['value']) or 1.0)
+    cols = 2 + len(steps)
+    cw = min(90, int(860 / cols) - 30)
+    gap = int((860 - cw * cols) / (cols - 1))
+    out = [u'<svg viewBox="0 0 960 260" role="img" aria-label="%s"><g font-size="12" fill="%s">' % (esc(u.get('title') or ''), INK)]
+    x = 40
+    out.append(u'<rect x="%d" y="30" width="%d" height="180" fill="%s"/><text x="%d" y="22" text-anchor="middle" font-weight="600">%s</text>' % (x, cw, TG, x + cw / 2, esc(st['label'])))
+    top = 30.0
+    for s in steps:
+        x += cw + gap
+        h = max(1.0, float(s['value']) * scale)
+        out.append(u'<rect x="%d" y="%.0f" width="%d" height="%.0f" fill="%s"/><text x="%d" y="22" text-anchor="middle">%s</text><text x="%d" y="%.0f" text-anchor="middle" fill="%s">−%s</text>'
+                   % (x, top, cw, h, SUP, x + cw / 2, esc(cut(s['label'], 9)), x + cw / 2, top + h + 14, MUTE, _money(float(s['value']))))
+        top += h
+    x += cw + gap
+    out.append(u'<rect x="%d" y="%.0f" width="%d" height="%.0f" fill="%s"/><text x="%d" y="22" text-anchor="middle" font-weight="600">%s</text>' % (x, top, cw, max(1.0, 210 - top), TG, x + cw / 2, esc(en['label'])))
+    if en.get('sub'):
+        out.append(u'<text x="%d" y="230" text-anchor="middle" fill="%s" font-weight="500">%s</text>' % (x + cw / 2, TG, esc(en['sub'])))
+    out.append(u'<line x1="40" y1="210" x2="%d" y2="210" stroke="%s"/>' % (x + cw, LINE))
+    if u.get('foot'):
+        out.append(u'<text x="40" y="250" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(u['foot'], 90))))
+    out.append(u'</g></svg>')
+    return _sec(n, u.get('title') or u'단위경제', u.get('small') or '', esc(u.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
+
+
+def sec_pool(c, n, fg):
+    p = fg.get('pool')
+    if not p or not p.get('cost') or not p.get('price'):
+        return sec_empty(n, u'마진 풀', u'조사 보고서 없음', u'제품 하나를 따라가며 원가를 쌓고 판매가와 견주는 그림은 조사 보고서가 있어야 선다.')
+    scale = 795.0 / (float(p['price']['value']) or 1.0)
+    COL = {'self': TG, 'kr': KR, 'jp': JP, 'sup': SUP}
+    out = [u'<svg viewBox="0 0 960 190" role="img" aria-label="%s"><g font-size="12">' % esc(p.get('title') or '')]
+    out.append(u'<text x="10" y="30" fill="%s">원가 적층 %s</text>' % (MUTE, esc(_money(sum(float(s['value']) for s in p['cost'])))))
+    x = 150.0
+    for i, s in enumerate(p['cost'][:7]):
+        w = max(1.0, float(s['value']) * scale)
+        col = COL.get(s.get('who'), SUP)
+        out.append(u'<rect x="%.0f" y="14" width="%.0f" height="24" fill="%s"/>' % (x, w, col))
+        out.append(u'<text x="%.0f" y="%d" text-anchor="middle" fill="%s">%s</text>' % (x + w / 2, 55 if i % 2 == 0 else 72, col if col != SUP else MUTE, esc(cut(s['label'], 14))))
+        x += w
+    cost_w = x - 150.0
+    out.append(u'<text x="10" y="120" fill="%s">%s</text>' % (MUTE, esc(p['price']['label'])))
+    out.append(u'<rect x="150" y="104" width="%.0f" height="24" fill="%s"/><rect x="%.0f" y="104" width="%.0f" height="24" fill="%s"/>' % (cost_w, LINE, 150 + cost_w, max(1.0, 795 - cost_w), CUST))
+    out.append(u'<text x="%.0f" y="146" text-anchor="middle" fill="%s">원가 %s</text>' % (150 + cost_w / 2, MUTE, esc(_money(cost_w / scale))))
+    if p.get('owner'):
+        out.append(u'<text x="%.0f" y="146" text-anchor="middle" fill="%s" font-weight="500">%s</text>' % (150 + cost_w + (795 - cost_w) / 2, CUST, esc(cut(p['owner'].get('label') or '', 40))))
+    if p.get('foot'):
+        out.append(u'<text x="10" y="180" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(p['foot'], 100))))
+    out.append(u'</g></svg>')
+    return _sec(n, p.get('title') or u'마진 풀', p.get('small') or '', esc(p.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
+
+
+def _hc(v):
+    return {1: 'h1', 2: 'h2', 3: 'h3', 4: 'h4'}.get(int(v), 'h5')
+
+
+def _hsum(v):
+    return 'h1' if v <= 4 else ('h2' if v == 5 else ('h3' if v <= 7 else ('h4' if v <= 9 else 'h5')))
+
+
+def sec_heat_report(c, n, fg):
+    h = fg.get('heat')
+    if not h or not h.get('rows'):
+        return None
+    tr = []
+    for r in h['rows'][:12]:
+        s = int(r['sub']) + int(r['lead']) + int(r['geo'])
+        tr.append(u'<tr><td>%s</td><td>%s</td><td class="c %s">%d</td><td class="c %s">%d</td><td class="c %s">%d</td><td class="c %s">%d</td></tr>' % (
+            esc(r['item']), esc(r.get('company') or ''), _hc(r['sub']), int(r['sub']), _hc(r['lead']), int(r['lead']), _hc(r['geo']), int(r['geo']), _hsum(s), s))
+    body = u'<div class="tw"><table class="heat fit"><tr><th>병목</th><th>지배 회사</th><th>대체</th><th>리드타임</th><th>지정학</th><th>합계</th></tr>%s</table></div>' % u''.join(tr)
+    return _sec(n, u'병목 리스크 히트맵', u'합계 낮을수록 위험', u'대체 가능성·리드타임·지정학 각 1~5점. ' + esc(h.get('note') or ''), body)
+
+
+def sec_scenario(c, n, fg):
+    s = fg.get('scenario')
+    if not s or not s.get('bars'):
+        return sec_empty(n, u'시나리오 민감도', u'조사 보고서 없음', u'기준 영업이익과 충격별 변화는 조사 보고서의 가정이 있어야 선다.')
+    bars = s['bars'][:7]
+    neg = sorted([b for b in bars if float(b['value']) < 0], key=lambda b: float(b['value']))
+    pos = sorted([b for b in bars if float(b['value']) >= 0], key=lambda b: float(b['value']))
+    px = 360.0 / (max(abs(float(b['value'])) for b in bars) or 1.0)
+    H = 40 + 40 * len(bars) + 30
+    out = [u'<svg viewBox="0 0 960 %d" role="img" aria-label="시나리오 토네이도"><g font-size="12" fill="%s">' % (H, INK)]
+    out.append(u'<line x1="480" y1="20" x2="480" y2="%d" stroke="%s" stroke-width="1.5"/>' % (H - 30, INK))
+    y = 30
+    for i, b in enumerate(neg):
+        v = float(b['value'])
+        w = max(2.0, abs(v) * px)
+        col = JP if i == 0 and len(neg) > 1 else SUP
+        out.append(u'<text x="470" y="%d" text-anchor="end">%s</text><rect x="%.0f" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" text-anchor="end" fill="%s">%s</text>'
+                   % (y + 12, esc(cut(b['label'], 22)), 480 - w, y, w, col, 472 - w, y + 13, col if col == JP else MUTE, esc(_money(v))))
+        y += 40
+    for b in pos:
+        v = float(b['value'])
+        w = max(2.0, v * px)
+        out.append(u'<text x="490" y="%d">%s</text><rect x="480" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" fill="%s" font-weight="500">+%s</text>'
+                   % (y + 12, esc(cut(b['label'], 22)), y, w, TG, 488 + w, y + 13, TG, esc(_money(v))))
+        y += 40
+    if s.get('foot'):
+        out.append(u'<text x="10" y="%d" fill="%s" font-size="11">%s</text>' % (H - 8, MUTE, esc(cut(s['foot'], 100))))
+    out.append(u'</g></svg>')
+    return _sec(n, u'시나리오 민감도', s.get('small') or '', esc(s.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
+
+
+def sec_timeline_report(c, n, fg):
+    t = fg.get('timeline')
+    if not t or not t.get('years'):
+        return None
+    blocks = []
+    for yb in t['years']:
+        rows = u''.join(u'<span>%s</span><span>%s</span>' % (esc(a), esc(b)) for a, b in (yb.get('rows') or []))
+        blocks.append(u'<div class="yr"><b>%s</b><div class="row">%s</div></div>' % (esc(str(yb.get('y'))), rows))
+    ys = [str(y.get('y')) for y in t['years']]
+    last = ys[-1].split(u'~')[-1]
+    last = last if len(last) == 4 else ys[-1][:2] + last
+    title = u'시간축 %s~%s' % (ys[0][:4], last)
+    return (u'  <section>\n    <h2>%d. %s</h2>\n    <p class="note">%s</p>\n    <div class="tl">%s</div>\n  </section>\n'
+            % (n, esc(title), esc(t.get('note') or ''), u''.join(blocks)))
+
+
+def skeleton(c):
+    u"""TSMC 가 아닌 사슬의 1~8절 — 항상 여덟 조각, 없는 절은 자리만."""
+    fg = load_figs(c)
+    me = c.nm(c.focal)
+    parts = [sec_map_data(c, 1)]
+    h = sec_revtree(c, 2)
+    parts.append(_retitle(h, u'매출 트리', u'매출 드라이버 트리') if h else sec_empty(2, u'매출 드라이버 트리', u'데이터 없음', u'매출 갈래 비중이 데이터에 없다.'))
+    parts.append(sec_unit(c, 3, fg))
+    parts.append(sec_pool(c, 4, fg))
+    h = sec_heat_report(c, 5, fg) or sec_heat(c, 5)
+    parts.append(_retitle(h, u'병목 히트맵', u'병목 리스크 히트맵') if h else sec_empty(5, u'병목 리스크 히트맵', u'데이터 없음', u'관계 데이터에 공급 여력 등급이 적힌 줄이 없고 조사 보고서 점수도 없다.'))
+    parts.append(sec_scenario(c, 6, fg))
+    h = sec_timeline_report(c, 7, fg) or sec_timeline(c, 7)
+    parts.append(h or sec_empty(7, u'시간축', u'데이터 없음', u'기간이 적힌 주장이 없다.'))
+    h = sec_equity_map(c, 8)
+    parts.append(_retitle(h, u'지분·소유', u'거래 위에 소유를 겹치기') if h else sec_empty(8, u'거래 위에 소유를 겹치기', u'구조 선 없음', u'이 사슬의 관계 데이터에 지분·자회사·합작 줄이 없다. %s의 지분 구조는 조사 보고서 10절에 적는다.' % me))
+    return parts

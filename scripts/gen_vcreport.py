@@ -353,16 +353,21 @@ def page(c, chains):
         # 병목 히트맵은 점수 칸이 좁아 폰 화면에도 한눈에 든다 — 옆으로 밀지 않고 맞춘다(fit)
         raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat fit">').replace('</table>', '</table></div>')
         parts.append(raw)
-        fns = ()
     else:
-        # 다른 사슬 — TSMC 2~8절과 같은 꼴을 데이터로 세운다. 트리가 비중을 보여 주니 막대 절은 안 겹친다
-        fns = vc_figs.SECTIONS + (sec_claims, sec_sources)
-    for fn in fns:
-        h = fn(c, n)
-        if h:
-            parts.append(h); n += 1
+        # 다른 사슬 — TSMC 1~8절과 같은 열한 절 골격(vc_figs.skeleton). 3·4·6 은 조사 보고서 값, 없으면 자리만
+        parts.extend(vc_figs.skeleton(c))
+    # 9~11 은 여섯 장 공통 — 고객 집중도·핵심 수치·출처
+    n = 9
+    for fn, empty in ((vc_figs.sec_custbars, (u'고객 집중도', u'데이터 없음', u'회사에서 나가는 줄에 붙은 매출 비중 관측이 없다.')),
+                      (sec_claims, (u'핵심 수치', u'데이터 없음', u'회사를 주어로 한 주장이 없다.')),
+                      (sec_sources, (u'출처', u'0건', u'출처가 붙은 줄이 없다.'))):
+        h = fn(c, n) or vc_figs.sec_empty(n, *empty)
+        parts.append(h); n += 1
     sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시.' % esc(rname(c))) \
-        if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 그림은 전부 데이터(data/valuechain/chains/%s)에서 세웠고 값마다 출처가 붙는다. 데이터에 없는 값(단위경제·마진 풀·시나리오)은 그리지 않는다.' % c.id
+        if c.id == 'tsmc' else esc(c.meta.get('note') or '') + (
+            (u' 3·4·6절(단위경제·마진 풀·시나리오)과 5·7절 점수·시간축은 <a href="%s">조사 보고서</a>에서, 나머지는 데이터(data/valuechain/chains/%s)에서 세웠다. 추정치는 ~로 표시.' % (esc(rname(c)), c.id))
+            if report_path(c) else
+            (u' 그림은 데이터(data/valuechain/chains/%s)에서 세웠고 값마다 출처가 붙는다. 조사 보고서가 없어 3·4·6절은 자리만 있다.' % c.id))
     return u'''<!doctype html>
 <html lang="ko">
 <head>
