@@ -61,10 +61,10 @@ def check_css(text):
     (2026-09-13 .hdr 가 그렇게 깨져 .hdrbar 가 사라지고 머리글이 상자·서랍 위에 얹혔다).
     중괄호 균형과, 규칙 밖에 홀로 선 선언 줄을 잡는다."""
     depth, bad = 0, []
-    for i, line in enumerate(text.split('
-'), 1):
+    for i, line in enumerate(text.splitlines(), 1):
         st = line.strip()
-        if depth == 0 and st and not st.startswith(('/*', '@', '}', '*')) and '{' not in st                 and ':' in st and not st.endswith(','):
+        if depth == 0 and st and not st.startswith(('/*', '@', '}', '*')) and '{' not in st \
+                and ':' in st and not st.endswith(','):
             bad.append('%d: %s' % (i, st[:60]))
         depth += line.count('{') - line.count('}')
     if depth != 0 or bad:
