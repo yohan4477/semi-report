@@ -54,8 +54,10 @@ HBM = (445, 470, 160, 40)   # 밑줄 글자가 상자 폭을 넘지 않게 140 �
 # 선: (from, to, 굵기, 색). 굵기는 받은 그림의 「대략적 금액 규모」 그대로, 최대만 4 → 3 으로 눌렀다
 T2_T1 = [('hemlock', 'wafer'), ('stella', 'gas'), ('hoya', 'resist'), ('zeiss', 'asml'),
          ('edwards', 'equip'), ('ajinomoto', 'abf')]
-T1_TSMC = [('wafer', 2.5), ('siltron', 1.2), ('resist', 1.5), ('asml', 3), ('equip', 3),
-           ('abf', 1.2), ('specialty', 1), ('gas', 1.2), ('dist', 1), ('power', 1.5)]
+# Tier 1 → TSMC 는 Tier 2 → Tier 1 과 같은 꼴 — 굵기 하나(1.2), 금액 규모를 굵기로 말하지 않는다
+# (2026-09-13 「tier2 → tier1 처럼 선 만들어」). 굵기 차이는 고객 쪽에만 남는다
+T1_TSMC = [('wafer', 1.2), ('siltron', 1.2), ('resist', 1.2), ('asml', 1.2), ('equip', 1.2),
+           ('abf', 1.2), ('specialty', 1.2), ('gas', 1.2), ('dist', 1.2), ('power', 1.2)]
 TSMC_CUST = [('nvidia', 3), ('apple', 3), ('amd', 2), ('qcom', 1.5), ('hyper', 2), ('intel', 1), ('sony', 1.2)]
 CUST_FIN = [('nvidia', 'f_hyper'), ('apple', 'f_foxconn'), ('amd', 'f_server'), ('qcom', 'f_phone'),
             ('hyper', 'f_hyper'), ('sony', 'f_auto')]
@@ -180,7 +182,7 @@ def render():
              % (hx + hw, hy + hh / 2, ny + nh - 8, nx, ORANGE))
     o.append('<text x="705" y="440" font-size="11" fill="%s">HBM은 NVIDIA 원가에서</text>'
              '<text x="705" y="454" font-size="11" fill="%s">TSMC보다 큼 (~$3.5k vs ~$2.3k)</text>' % (ORANGE, ORANGE))
-    o.append('<text x="10" y="545" font-size="11" fill="#6B7785">선 굵기 = 대략적 금액 규모. 점선 박스 = 중개·유통. 한국 노드 2곳은 2025~26년 SK그룹에서 이탈.</text>')
+    o.append('<text x="10" y="545" font-size="11" fill="#6B7785">고객 쪽 선 굵기 = 대략적 금액 규모. 점선 박스 = 중개·유통. 한국 노드 2곳은 2025~26년 SK그룹에서 이탈.</text>')
     o.append('</svg>')
     return '\n      '.join(o)
 
