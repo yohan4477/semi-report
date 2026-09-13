@@ -552,7 +552,7 @@ def sec_map_data(c, n):
     rows = max(len(t1_boxes), len(t2_boxes), len(cust), len(fin), 5)
     H = 40 + rows * PITCH + 40
     out = [u'<svg viewBox="0 0 960 %d" role="img" aria-label="%s 밸류체인 지도">' % (H, esc(me))]
-    out.append(u'<defs><marker id="m-%s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5 0 10z" fill="%s"/></marker></defs>' % (c.id, SUP))
+    out.append(u'<defs><marker id="m-%s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L10 5 0 10z" fill="%s"/></marker></defs>' % (c.id, SUP))
     out.append(u'<g font-size="13" fill="%s"><text x="10" y="22">Tier 2 원료·부품</text><text x="235" y="22">Tier 1 소재·장비·유통</text><text x="620" y="22">고객</text><text x="800" y="22">최종 수요</text></g>' % MUTE)
 
     def box(col, i, fill, stroke, dashed, l1, l2):
@@ -604,10 +604,10 @@ def sec_map_data(c, n):
         out.append(u'<text x="%d" y="%.0f" text-anchor="middle" fill="#fff" font-size="%d"%s>%s</text>' % (mx + mw / 2, ty, fs, ' font-weight="600"' if bold else ' opacity=".9"', esc(txt)))
         ty += fs + 8
     # 선은 TSMC 장(tsmc_map)과 같은 규칙 — 통로마다 세로 줄기 하나, 상자에서 줄기로 가로선, 줄기에서
-    # 다음 칸으로 가지. 화살촉 없음, 회색 1.2(줄기 1.6). 2026-09-13 「다 통일하라고」
+    # 다음 칸으로 가지. 상자로 드는 끝에만 촉, 회색 1.2(줄기 1.6). 2026-09-13 「다 통일하라고」
     seg = []
-    def hline(x0, y, x1, w=1.2):
-        seg.append(u'<path d="M%.0f %.0fH%.0f" stroke-width="%s"/>' % (x0, y, x1, w))
+    def hline(x0, y, x1, w=1.2, head=False):
+        seg.append(u'<path d="M%.0f %.0fH%.0f" stroke-width="%s"%s/>' % (x0, y, x1, w, u' marker-end="url(#m-%s)"' % c.id if head else u''))
     def vline(x, y0, y1, w=1.6):
         if abs(y1 - y0) > 0.5:
             seg.append(u'<path d="M%.0f %.0fV%.0f" stroke-width="%s"/>' % (x, y0, y1, w))
@@ -619,9 +619,9 @@ def sec_map_data(c, n):
         y0, y1 = a_[1] + a_[3] / 2.0, t_[1] + t_[3] / 2.0
         if i in bends:
             gx = t2r + 8 + (bends.index(i) + 1) * (t1l - t2r - 16) / (len(bends) + 1)
-            hline(a_[0] + a_[2], y0, gx); vline(gx, y0, y1, 1.2); hline(gx, y1, t_[0])
+            hline(a_[0] + a_[2], y0, gx); vline(gx, y0, y1, 1.2); hline(gx, y1, t_[0], head=True)
         else:
-            hline(a_[0] + a_[2], y0, t_[0])
+            hline(a_[0] + a_[2], y0, t_[0], head=True)
     # Tier 1 → 회사: 줄기 하나
     if t1_boxes:
         t1r = COLS['t1'][0] + COLS['t1'][1]
@@ -630,7 +630,7 @@ def sec_map_data(c, n):
         for i, y in enumerate(ys):
             hline(t1r, y, gx)
         vline(gx, min(ys + [my + mh / 2.0]), max(ys + [my + mh / 2.0]))
-        hline(gx, my + mh / 2.0, mx, 1.6)
+        hline(gx, my + mh / 2.0, mx, 1.6, head=True)
     # 회사 → 고객: 줄기 하나
     if cust:
         cl = COLS['cust'][0]
@@ -639,7 +639,7 @@ def sec_map_data(c, n):
         hline(mx + mw, my + mh / 2.0, gx, 1.6)
         vline(gx, min(ys + [my + mh / 2.0]), max(ys + [my + mh / 2.0]))
         for y in ys:
-            hline(gx, y, cl)
+            hline(gx, y, cl, head=True)
     # 고객 → 최종 수요: 줄기 하나
     if fin:
         cr, fl = COLS['cust'][0] + COLS['cust'][1], COLS['fin'][0]
@@ -650,7 +650,7 @@ def sec_map_data(c, n):
             hline(cr, y, gx)
         vline(gx, min(src_ys + dst_ys), max(src_ys + dst_ys))
         for y in dst_ys:
-            hline(gx, y, fl)
+            hline(gx, y, fl, head=True)
     out.append(u'<g stroke="%s" fill="none">%s</g>' % (SUP, u''.join(seg)))
     out.append(u'<text x="10" y="%d" font-size="11" fill="%s">선 굵기에는 뜻이 없다(금액 관측이 없다). 점선 상자 = 중개·유통. 상자 안 값은 관측이 붙은 줄만.</text></svg>' % (H - 12, MUTE))
     legend = (u'<div class="legend"><span class="l-tsmc">%s</span><span class="l-kr">한국 회사</span><span class="l-jp">병목(공급 여력 HIGH 이상)</span>'

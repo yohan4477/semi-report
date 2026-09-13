@@ -4,7 +4,7 @@ u"""TSMC 그림 장 1절 전체 지도 — 받은 손 그림(tsmc_map_orig)의 �
 
 받은 그림은 곡선이 상자 위를 지나고(HBM 점선이 인텔·소니 글자를 덮었다) 화살촉이 선 굵기를
 따라 커져 엔비디아·애플 상자를 가렸다. 여기서는 탐색기와 같은 규칙으로 긋는다 — 칸 사이 통로
-에서만 세로로 움직이고(가로·세로·가로 세 토막), 화살촉은 없다(2026-09-13 「화살표로 그만 괴롭혀라」 — 흐름은 왼쪽에서 오른쪽), 같은 통로의 선은 자리를
+에서만 세로로 움직이고(가로·세로·가로 세 토막), 상자로 드는 선 끝에만 촉(크기 고정), 줄기에 붙는 가로선에는 촉이 없다, 같은 통로의 선은 자리를
 나눠 겹치지 않는다. 상자 좌표는 원문 SVG 그대로다.
 """
 
@@ -138,7 +138,7 @@ def render():
     for i, (a, b) in enumerate(T2_T1):
         ax, ay, aw, ah = _box(a); bx, by, bw, bh = _box(b)
         gx = gx0 + 8 + (verticals.index((a, b)) + 1) * (gx1 - gx0 - 16) / (len(verticals) + 1) if (a, b) in verticals else gx0
-        o.append('<path d="%s" stroke-width="1.2"/>' % _path(ax + aw, ay + ah / 2, gx, bx, by + bh / 2))
+        o.append('<path d="%s" stroke-width="1.2" marker-end="url(#ma)"/>' % _path(ax + aw, ay + ah / 2, gx, bx, by + bh / 2))
     o.append('</g>')
 
     # Tier 1 → TSMC: 통로 425~470 에 세로 줄기 하나(x=447). 상자마다 가로선이 줄기에 붙고, 줄기에서
@@ -150,7 +150,7 @@ def render():
     for a, wd in T1_TSMC:
         ax, ay, aw, ah = _box(a)
         o.append('<path d="M%d %d H%d" stroke-width="%s"/>' % (ax + aw, ay + ah / 2, trunk_x, wd))
-    o.append('<path d="M%d %d H%d" stroke-width="1.6"/>' % (trunk_x, ty + th / 2, tx))
+    o.append('<path d="M%d %d H%d" stroke-width="1.6" marker-end="url(#ma)"/>' % (trunk_x, ty + th / 2, tx))
     o.append('</g>')
 
     # TSMC → 고객: 통로 580~620 에 세로 줄기 하나(x=600). TSMC 에서 줄기로 한 줄, 줄기에서 고객마다 가지
@@ -161,7 +161,7 @@ def render():
     o.append('<path d="M%d %d V%d" stroke-width="1.6"/>' % (trunk_x, min(ys_dst + [ty + th / 2]), max(ys_dst + [ty + th / 2])))
     for b, wd in TSMC_CUST:
         bx, by, bw, bh = _box(b)
-        o.append('<path d="M%d %d H%d" stroke-width="%s"/>' % (trunk_x, by + bh / 2, bx, wd))
+        o.append('<path d="M%d %d H%d" stroke-width="%s" marker-end="url(#ma)"/>' % (trunk_x, by + bh / 2, bx, wd))
     o.append('</g>')
 
     # 고객 → 최종 수요: 통로 770~800 에 세로 줄기 하나(x=785). 고객마다 가로선이 줄기에 붙고,
@@ -176,7 +176,7 @@ def render():
         o.append('<path d="M%d %d H%d"/>' % (ax + aw, ay + ah / 2, trunk_x))
     for b in dsts:
         bx, by, bw, bh = _box(b)
-        o.append('<path d="M%d %d H%d"/>' % (trunk_x, by + bh / 2, bx))
+        o.append('<path d="M%d %d H%d" marker-end="url(#ma)"/>' % (trunk_x, by + bh / 2, bx))
     o.append('</g>')
 
     # HBM → NVIDIA(점선): HBM 상자 위 변에서 TSMC→고객 세로 줄기(x=600)를 그대로 타고 올라가다
