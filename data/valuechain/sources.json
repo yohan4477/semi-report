@@ -907,7 +907,7 @@
   "published_date": "2026-08-12",
   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm",
   "accessed_date": "2026-09-12",
-  "note": "고객 집중도 C·D·E, 잔여 이행 의무, 공급사 수. 03 의 S003"
+  "note": "고객 집중도 C·D·E, 잔여 이행 의무, 공급사 수, 2분기·상반기 재무제표(현금흐름표 포함). 03 의 S003"
  },
  {
   "id": "ne_microsoft",
@@ -1628,5 +1628,35 @@
   "url": "https://investor.tsmc.com/english/quarterly-results/2026/q2",
   "accessed_date": "2026-09-12",
   "note": "2026년 7월 16일 발표. 매출·마진·순이익·EPS, 플랫폼별·공정별·지역별 매출 비중, 웨이퍼 출하, 분기·상반기 capex, 3분기 가이던스, 2026년 연간 capex·매출 성장률 가이던스 상향, 애리조나 추가 1,000억 달러 투자 발표가 여기 있다. 관리보고서는 investor.tsmc.com/english/quarterly-results/2026/q2 아래 \"2Q26 ManagementReport.pdf\", 녹취록은 같은 경로의 \"TSMC 2Q26 Transcript.pdf\""
+ },
+ {
+  "id": "ne_pr_q2",
+  "publisher": "Nebius Group",
+  "title": "Nebius reports second quarter 2026 financial results (PR)",
+  "source_type": "primary_company",
+  "published_date": "2026-08-12",
+  "url": "https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf",
+  "accessed_date": "2026-09-12",
+  "note": "2분기·상반기 매출·비용·현금흐름 표. 설비투자를 분기 단위로 나눈 유일한 공식 자료"
+ },
+ {
+  "id": "ne_shl_q2",
+  "publisher": "Nebius Group",
+  "title": "Nebius Group Letter to shareholders Q2 2026",
+  "source_type": "primary_company",
+  "published_date": "2026-08-12",
+  "url": "https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf",
+  "accessed_date": "2026-09-12",
+  "note": "CEO 아르카디 볼로시의 주주 서한. 랜드마크 고객 4건, AI 클라우드 부문 EBITDA, 2026년 말 계약 전력 5GW 목표, Vera Rubin NVL72 초기 물량, 마이크로소프트 트랜치 인도 완료를 담는다"
+ },
+ {
+  "id": "ne_q2_call",
+  "publisher": "The Motley Fool",
+  "title": "Nebius (NBIS) Q2 2026 Earnings Call Transcript",
+  "source_type": "reputable_media",
+  "published_date": "2026-08-19",
+  "url": "https://www.fool.com/earnings/call-transcripts/2026/08/19/nebius-nbis-q2-2026-earnings-call-transcript/",
+  "accessed_date": "2026-09-12",
+  "note": "CFO 다도 알론소가 2026년 연간 가이던스(ARR·매출·EBITDA 마진·설비투자)를 그대로 재확인한 8월 12일 콘퍼런스콜 대본. 실적 발표 자료 자체에는 가이던스 수치가 없다"
  }
 ]

@@ -258,20 +258,20 @@
  },
  {
   "id": "nebius",
-  "name": "Nebius",
+  "name": "Nebius Group N.V.",
   "name_ko": "네비우스",
-  "entity_type": "end_user",
-  "legal_name": "Nebius",
+  "entity_type": "company",
+  "legal_name": "Nebius Group N.V.",
   "display_name": "네비우스",
-  "region": "North America·Global",
+  "region": "Europe",
   "parent_entity_id": null,
-  "primary_role": "Data center",
+  "primary_role": "AI cloud",
   "other_roles": [],
-  "country": "미국·글로벌",
+  "country": "네덜란드",
   "categories": [
-   "Data center"
+   "AI cloud"
   ],
-  "desc": "첫 미국 배치 328MW",
+  "desc": "AI 클라우드 운영사이자 그룹 모법인. 매출의 거의 전부가 AI 클라우드 부문에서 난다",
   "anon": false
  },
  {
@@ -4972,6 +4972,78 @@
    "State-backed fund"
   ],
   "desc": "2024년 JSR 을 인수해 비상장으로 돌린 일본 정부계 펀드다",
+  "anon": false
+ },
+ {
+  "id": "reflection-ai",
+  "name": "Reflection",
+  "name_ko": "리플렉션",
+  "entity_type": "end_user",
+  "legal_name": "Reflection",
+  "display_name": "리플렉션",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "오픈소스 모델을 훈련·서빙하는 다년 계약으로 2026년 2분기 랜드마크 딜 4건 가운데 하나로 이름이 실명 공개됐다",
+  "anon": false
+ },
+ {
+  "id": "cohere",
+  "name": "Cohere Inc.",
+  "name_ko": "코히어",
+  "entity_type": "end_user",
+  "legal_name": "Cohere Inc.",
+  "display_name": "코히어",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": "캐나다",
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "에이전틱 AI 솔루션 확장을 위해 네비우스와 협력한다. 2026년 2분기 랜드마크 딜 4건 가운데 하나로 이름이 실명 공개됐다",
+  "anon": false
+ },
+ {
+  "id": "ami",
+  "name": "AMI",
+  "name_ko": "AMI",
+  "entity_type": "end_user",
+  "legal_name": "AMI",
+  "display_name": "AMI",
+  "region": "North America",
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": "미국",
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "얀 르쿤이 공동창업했다. 세계모델 연구·훈련에 네비우스 컴퓨트·스토리지 인프라를 쓴다",
+  "anon": false
+ },
+ {
+  "id": "higgsfield",
+  "name": "Higgsfield",
+  "name_ko": "힉스필드",
+  "entity_type": "end_user",
+  "legal_name": "Higgsfield",
+  "display_name": "힉스필드",
+  "region": null,
+  "parent_entity_id": null,
+  "primary_role": "AI cloud user",
+  "other_roles": [],
+  "country": null,
+  "categories": [
+   "AI cloud user"
+  ],
+  "desc": "네비우스의 초기 AI 클라우드 고객 가운데 하나. 최초 계약 대비 사용량이 20배 넘게 늘었다",
   "anon": false
  }
 ]

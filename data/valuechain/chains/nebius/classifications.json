@@ -73,6 +73,24 @@
      "source_ids": [
       "ne_6k_q2_ex991"
      ]
+    },
+    {
+     "metric": "revenue_type_share",
+     "value": 98.3,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "H1 2026",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "네비우스 총매출",
+     "evidence_level": "ESTIMATED",
+     "confidence": 0.9,
+     "method_note": "964.6 ÷ 981.3 (Ex.99.1)",
+     "source_ids": [
+      "ne_6k_q2_ex991"
+     ]
     }
    ],
    "source_ids": [

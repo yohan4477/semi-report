@@ -747,6 +747,130 @@
   "supply_source_ids": []
  },
  {
+  "id": "cloud-reflection",
+  "source_entity": "nebius",
+  "target_entity": "reflection-ai",
+  "relationship_type": "SELLS_TO",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "AI 클라우드",
+  "source_role": "매출원",
+  "target_role": "고객",
+  "valid_from": "2026-04-01",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "notes": "2026년 2분기 랜드마크 딜 4건 중 하나. 체결일은 분기 안이라고만 밝혀 분기 첫날로 둔다. 개별 계약금액은 비공개, 4건 평균 TCV 10억 달러 초과만 공개됐다",
+  "revenue_type_ids": [
+   "rt-ne-rev-ai-cloud"
+  ],
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
+ },
+ {
+  "id": "cloud-cohere",
+  "source_entity": "nebius",
+  "target_entity": "cohere",
+  "relationship_type": "SELLS_TO",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "AI 클라우드",
+  "source_role": "매출원",
+  "target_role": "고객",
+  "valid_from": "2026-04-01",
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "notes": "2026년 2분기 랜드마크 딜 4건 중 하나. 개별 계약금액은 비공개",
+  "revenue_type_ids": [
+   "rt-ne-rev-ai-cloud"
+  ],
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
+ },
+ {
+  "id": "cloud-higgsfield",
+  "source_entity": "nebius",
+  "target_entity": "higgsfield",
+  "relationship_type": "SELLS_TO",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "AI 클라우드",
+  "source_role": "매출원",
+  "target_role": "고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "notes": "네비우스의 초기 고객. 최초 계약 시점은 비공개, 2026년 여름 기준 사용량이 20배 넘게 늘었다",
+  "revenue_type_ids": [
+   "rt-ne-rev-ai-cloud"
+  ],
+  "supply_source_ids": [],
+  "contractual_customer": "CONFIRMED"
+ },
+ {
+  "id": "cloud-ami",
+  "source_entity": "nebius",
+  "target_entity": "ami",
+  "relationship_type": "SELLS_TO",
+  "lane": "DOWNSTREAM",
+  "subsystem": "Application",
+  "component": "AI 클라우드",
+  "source_role": "매출원",
+  "target_role": "고객",
+  "valid_from": null,
+  "valid_to": null,
+  "status": "ACTIVE",
+  "evidence_level": "CONFIRMED",
+  "source_tier": null,
+  "target_tier": "CONTRACTUAL_CUSTOMER",
+  "economic_importance": null,
+  "capacity_criticality": null,
+  "integration_criticality": null,
+  "confidence_band": "high",
+  "flows": [],
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "notes": "쓰는 것은 확인되고 계약 여부를 명시한 문장은 없다",
+  "contractual_customer": "UNVERIFIED",
+  "revenue_type_ids": [
+   "rt-ne-rev-ai-cloud"
+  ],
+  "supply_source_ids": []
+ },
+ {
   "id": "token-revolut",
   "source_entity": "nebius",
   "target_entity": "revolut",

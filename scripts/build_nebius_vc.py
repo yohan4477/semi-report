@@ -39,7 +39,21 @@ SOURCES = [
  ('ne_6k_q2_ex992', 'SEC / Nebius Group', 'Q2 2026 Form 6-K Exhibit 99.2',
   'primary_official', '2026-08-12',
   'https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm',
-  '고객 집중도 C·D·E, 잔여 이행 의무, 공급사 수. 03 의 S003'),
+  '고객 집중도 C·D·E, 잔여 이행 의무, 공급사 수, 2분기·상반기 재무제표(현금흐름표 포함). 03 의 S003'),
+ ('ne_pr_q2', 'Nebius Group', 'Nebius reports second quarter 2026 financial results (PR)',
+  'primary_company', '2026-08-12',
+  'https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf',
+  '2분기·상반기 매출·비용·현금흐름 표. 설비투자를 분기 단위로 나눈 유일한 공식 자료'),
+ ('ne_shl_q2', 'Nebius Group', 'Nebius Group Letter to shareholders Q2 2026',
+  'primary_company', '2026-08-12',
+  'https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf',
+  'CEO 아르카디 볼로시의 주주 서한. 랜드마크 고객 4건, AI 클라우드 부문 EBITDA, 2026년 말 '
+  '계약 전력 5GW 목표, Vera Rubin NVL72 초기 물량, 마이크로소프트 트랜치 인도 완료를 담는다'),
+ ('ne_q2_call', 'The Motley Fool', 'Nebius (NBIS) Q2 2026 Earnings Call Transcript',
+  'reputable_media', '2026-08-19',
+  'https://www.fool.com/earnings/call-transcripts/2026/08/19/nebius-nbis-q2-2026-earnings-call-transcript/',
+  'CFO 다도 알론소가 2026년 연간 가이던스(ARR·매출·EBITDA 마진·설비투자)를 그대로 '
+  '재확인한 8월 12일 콘퍼런스콜 대본. 실적 발표 자료 자체에는 가이던스 수치가 없다'),
  ('ne_microsoft', 'Nebius', 'Nebius announces multi-billion dollar agreement with Microsoft '
   'for AI infrastructure', 'primary_company', '2025-09-08',
   'https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-'
@@ -124,7 +138,8 @@ SOURCES = [
 ]
 
 REGION = {'네덜란드': 'Europe', '미국': 'North America', '영국': 'Europe',
-          '핀란드': 'Europe', '프랑스': 'Europe', '글로벌': 'Global'}
+          '핀란드': 'Europe', '프랑스': 'Europe', '글로벌': 'Global',
+          '캐나다': 'North America'}
 
 # ── 엔티티 (04 E001~E029 중 이 사슬이 새로 세우는 것) ───────────────
 ENTITIES = [
@@ -159,6 +174,16 @@ ENTITIES = [
   ['AI cloud user'], '영국 첫 배치의 파트너로 이름이 들어갔다'),
  ('prima-mente', 'Prima Mente', '프리마 멘테', 'end_user', '영국', ['AI cloud user'],
   'H200 32기 예약 클러스터로 대규모 사전학습을 돌린다'),
+ ('reflection-ai', 'Reflection', '리플렉션', 'end_user', '미국', ['AI cloud user'],
+  '오픈소스 모델을 훈련·서빙하는 다년 계약으로 2026년 2분기 랜드마크 딜 4건 가운데 '
+  '하나로 이름이 실명 공개됐다'),
+ ('cohere', 'Cohere Inc.', '코히어', 'end_user', '캐나다', ['AI cloud user'],
+  '에이전틱 AI 솔루션 확장을 위해 네비우스와 협력한다. 2026년 2분기 랜드마크 딜 4건 '
+  '가운데 하나로 이름이 실명 공개됐다'),
+ ('ami', 'AMI', 'AMI', 'end_user', '미국', ['AI cloud user'],
+  '얀 르쿤이 공동창업했다. 세계모델 연구·훈련에 네비우스 컴퓨트·스토리지 인프라를 쓴다'),
+ ('higgsfield', 'Higgsfield', '힉스필드', 'end_user', None, ['AI cloud user'],
+  '네비우스의 초기 AI 클라우드 고객 가운데 하나. 최초 계약 대비 사용량이 20배 넘게 늘었다'),
  ('ne-cust-c', 'Anonymous Customer C', '익명 고객 C', 'company', None, ['Customer'],
   '공시가 비중만 밝힌 고객. 실명은 비공개다'),
  ('ne-cust-d', 'Anonymous Customer D', '익명 고객 D', 'company', None, ['Customer'],
@@ -320,6 +345,23 @@ R = [
  ('cloud-basecamp', 'ne-rev-ai-cloud', 'basecamp-research', 'SELLS_TO', 'DOWNSTREAM',
   'Application', '영국 AI 인프라', '매출원', '고객', '2025-11-06', None, 'ACTIVE',
   'CONFIRMED', None, 'CONTRACTUAL_CUSTOMER', ['ne_uk'], None),
+ ('cloud-reflection', 'ne-rev-ai-cloud', 'reflection-ai', 'SELLS_TO', 'DOWNSTREAM',
+  'Application', 'AI 클라우드', '매출원', '고객', '2026-04-01', None, 'ACTIVE', 'CONFIRMED',
+  None, 'CONTRACTUAL_CUSTOMER', ['ne_shl_q2'],
+  '2026년 2분기 랜드마크 딜 4건 중 하나. 체결일은 분기 안이라고만 밝혀 분기 첫날로 둔다. '
+  '개별 계약금액은 비공개, 4건 평균 TCV 10억 달러 초과만 공개됐다'),
+ ('cloud-cohere', 'ne-rev-ai-cloud', 'cohere', 'SELLS_TO', 'DOWNSTREAM', 'Application',
+  'AI 클라우드', '매출원', '고객', '2026-04-01', None, 'ACTIVE', 'CONFIRMED', None,
+  'CONTRACTUAL_CUSTOMER', ['ne_shl_q2'],
+  '2026년 2분기 랜드마크 딜 4건 중 하나. 개별 계약금액은 비공개'),
+ ('cloud-higgsfield', 'ne-rev-ai-cloud', 'higgsfield', 'SELLS_TO', 'DOWNSTREAM',
+  'Application', 'AI 클라우드', '매출원', '고객', None, None, 'ACTIVE', 'CONFIRMED', None,
+  'CONTRACTUAL_CUSTOMER', ['ne_shl_q2'],
+  '네비우스의 초기 고객. 최초 계약 시점은 비공개, 2026년 여름 기준 사용량이 20배 넘게 늘었다'),
+ ('cloud-ami', 'ne-rev-ai-cloud', 'ami', 'SELLS_TO', 'DOWNSTREAM', 'Application',
+  'AI 클라우드', '매출원', '고객', None, None, 'ACTIVE', 'CONFIRMED', None,
+  'CONTRACTUAL_CUSTOMER', ['ne_shl_q2'],
+  '쓰는 것은 확인되고 계약 여부를 명시한 문장은 없다'),
  # 토큰 팩토리·예약 용량
  ('token-revolut', 'ne-rev-token-factory', 'revolut', 'SELLS_TO', 'DOWNSTREAM', 'Application',
   '토큰 팩토리', '매출원', '고객', '2026-01-01', None, 'ACTIVE', 'CONFIRMED', None,
@@ -394,6 +436,10 @@ O = [
  ('o-ne-nvidia-invest', 'nv-invest', 'investment_value', 2000, None, None, USDM,
   '2026', '2026-03-11', '2026-03-11', '2026-03-11', '투자 총액', 'CURRENT', 'CONFIRMED',
   1.0, None, ['ne_nvidia']),
+ # H1 2026 몫 — Ex.99.1 의 AI 클라우드 964.6 ÷ 총매출 981.3. 같은 계산값이라 ESTIMATED
+ ('o-ne-ai-cloud-share-h1', 'ne-rev-ai-cloud-edge', 'revenue_type_share', 98.3, None, None,
+  PCT, 'H1 2026', '2026-01-01', '2026-06-30', '2026-06-30', '네비우스 총매출', 'CURRENT',
+  'ESTIMATED', 0.9, '964.6 ÷ 981.3 (Ex.99.1)', ['ne_6k_q2_ex991']),
 ]
 
 CLAIMS = [
@@ -476,6 +522,53 @@ CLAIMS = [
  ('clm-ne-anon-nomap', '익명 고객 C·D·E 를 공개 실명 고객에 잇는 근거는 공시에 없다.',
   NE, None, '2026', 'CONFIRMED', 1.0, ['ne_6k_q2_ex992'],
   '01 조사도 매핑을 거부했다. 이 사슬에는 가설표가 없다'),
+ # 2026-Q2 실적으로 갱신 — 여기부터
+ ('clm-ne-q2-cloud-ebitda', 'AI 클라우드 부문의 2분기 조정 EBITDA 는 2억 8,570만 달러, '
+  '마진 49.7%다. 그룹 전체 조정 EBITDA(2억 3,620만 달러)보다 부문 실적이 높다.', NE, None,
+  'Q2 2026', 'CONFIRMED', 1.0, ['ne_6k_q2_ex991', 'ne_shl_q2'],
+  '아브라이드·트리플텐이 그룹 EBITDA 를 부문보다 낮춘다'),
+ ('clm-ne-q2-capex', '2026년 2분기 설비투자가 56억 5,740만 달러, 상반기 누계 81억 3,030만 '
+  '달러다.', NE, None, 'Q2 2026', 'CONFIRMED', 1.0, ['ne_pr_q2', 'ne_6k_q2_ex992'], None),
+ ('clm-ne-q2-landmark', '2026년 2분기에 AI 클라우드 부문 랜드마크 계약 4건을 새로 맺었다. '
+  '평균 총계약금액(TCV)이 10억 달러를 넘고 MW 당 연간계약가치는 2,000만~2,500만 달러다.',
+  NE, None, 'Q2 2026', 'CONFIRMED', 1.0, ['ne_shl_q2'],
+  '4건 중 리플렉션·코히어만 실명이 공개됐다. 나머지 둘은 「미국 AI 신생랩」·「미국 퀀트 '
+  '트레이딩사」로만 적혀 이름을 짓지 않는다'),
+ ('clm-ne-2026-guidance', '2026년 연간 가이던스로 연환산매출(ARR) 70억~90억 달러, 그룹 '
+  '매출 30억~34억 달러, 조정 EBITDA 마진 약 40%, 설비투자 200억~250억 달러를 그대로 '
+  '유지한다고 밝혔다.', NE, None, '2026', 'CONFIRMED', 1.0, ['ne_q2_call'],
+  '실적 발표 자료·주주 서한 본문에는 수치가 없고 콘퍼런스콜에서 CFO 다도 알론소가 '
+  '"We continue to expect..." 로 재확인했다'),
+ ('clm-ne-5gw-target', '2026년 말 계약 전력 목표를 직전 4GW 초과에서 5GW로 다시 '
+  '올려 잡았다.', NE, None, '2026', 'CONFIRMED', 1.0, ['ne_shl_q2'], None),
+ ('clm-ne-vera-rubin', '엔비디아 Vera Rubin NVL72 시스템 초기 물량을 받아 컴퓨트· '
+  '네트워킹·오케스트레이션 통합을 하나의 시스템으로 검증하고 있다.', NE, 'nvidia',
+  '2026-08~', 'CONFIRMED', 1.0, ['ne_shl_q2'],
+  '출하량이 늘면 상용 제공으로 넘어간다는 계획이고, 고객과도 이미 접촉하고 있다'),
+ ('clm-ne-msft-delivered', '마이크로소프트 계약의 모든 용량 트랜치를 인도했고 그 중 '
+  '두 트랜치는 최근 한 달 새 전달됐다.', 'nebius-inc', 'microsoft', 'Q2 2026',
+  'CONFIRMED', 1.0, ['ne_shl_q2'], '몇 MW 인지는 밝히지 않았다'),
+ ('clm-ne-q3-shortterm', '2026년 3분기에 첫 단기 용량 계약(3~6개월, 프리미엄 가격)을 '
+  '체결했다. 용량은 4분기에 가동될 예정이다.', NE, None, 'Q3 2026', 'CONFIRMED', 1.0,
+  ['ne_shl_q2'], '2분기 실적 발표 시점(8월 12일)에 3분기 진행 상황으로 적힌 문장이다'),
+ ('clm-ne-reflection', '리플렉션이 오픈소스 모델을 훈련·서빙하는 다년 계약으로 '
+  '네비우스를 택했다.', 'reflection-ai', NE, '2026 Q2', 'CONFIRMED', 1.0, ['ne_shl_q2'],
+  '개별 계약금액은 비공개다'),
+ ('clm-ne-cohere', '코히어는 에이전틱 AI 솔루션 확장을 위해 네비우스와 협력한다.',
+  'cohere', NE, '2026 Q2', 'CONFIRMED', 1.0, ['ne_shl_q2'], '개별 계약금액은 비공개다'),
+ ('clm-ne-ami', '얀 르쿤이 공동창업한 AMI 는 세계모델 연구·훈련에 네비우스 컴퓨트· '
+  '스토리지 인프라를 쓴다.', 'ami', NE, '2026', 'CONFIRMED', 1.0, ['ne_shl_q2'],
+  '계약 여부를 명시한 문장은 없다'),
+ ('clm-ne-higgsfield', '힉스필드는 네비우스의 초기 AI 클라우드 고객 가운데 하나로 '
+  '최초 계약 대비 사용량이 20배 넘게 늘었다. 이 여름 AI 로만 만든 95분 장편영화를 '
+  '네비우스 인프라로 완성했다.', 'higgsfield', NE, '2026', 'CONFIRMED', 1.0,
+  ['ne_shl_q2'], None),
+ ('clm-ne-basecamp-eden', '베이스캠프 리서치는 신종 생물 100만 종 이상에서 얻은 '
+  '9조 7,000억 토큰으로 280억 변수 생물학 기반모델 EDEN 을 학습했다. 이전 사내 환경보다 '
+  '20배 빠르다.', 'basecamp-research', NE, '2026', 'CONFIRMED', 1.0, ['ne_shl_q2'], None),
+ ('clm-ne-prima-detail', '프리마 멘테는 알츠하이머·파킨슨병 후성유전학 기반모델을 '
+  '10억에서 680억 변수로 키워 혈액 샘플만으로 89~97% 진단 정확도를 냈다.', 'prima-mente',
+  NE, '2026', 'CONFIRMED', 1.0, ['ne_shl_q2'], None),
 ]
 
 PROJECTS = [
@@ -506,7 +599,7 @@ CONTRACT_BY_ID = {
     'cloud-lynx': 'UNVERIFIED', 'cloud-roboforce': 'UNVERIFIED',
     'cloud-basecamp': 'UNVERIFIED', 'token-revolut': 'UNVERIFIED',
     'token-sword': 'UNVERIFIED', 'reserved-prima': 'UNVERIFIED',
-    'inference-palantir': 'UNVERIFIED',
+    'inference-palantir': 'UNVERIFIED', 'cloud-ami': 'UNVERIFIED',
 }
 
 
@@ -621,3 +714,7 @@ if __name__ == '__main__':
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import vc_norm
     vc_norm.main()
+    # 계약 고객 근거 칸(contractual_customer)은 migrate_vc2 가 채운다(멱등) — 이 줄이
+    # 없으면 다음 실행에서 merge() 가 기존에 채워진 칸을 지운 새 관계로 덮어쓴다
+    import migrate_vc2
+    migrate_vc2.main()

@@ -466,5 +466,217 @@
   "note": "01 조사도 매핑을 거부했다. 이 사슬에는 가설표가 없다",
   "subject_classification": null,
   "object_classification": null
+ },
+ {
+  "id": "clm-ne-q2-cloud-ebitda",
+  "statement": "AI 클라우드 부문의 2분기 조정 EBITDA 는 2억 8,570만 달러, 마진 49.7%다. 그룹 전체 조정 EBITDA(2억 3,620만 달러)보다 부문 실적이 높다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q2 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_6k_q2_ex991",
+   "ne_shl_q2"
+  ],
+  "note": "아브라이드·트리플텐이 그룹 EBITDA 를 부문보다 낮춘다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-q2-capex",
+  "statement": "2026년 2분기 설비투자가 56억 5,740만 달러, 상반기 누계 81억 3,030만 달러다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q2 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_pr_q2",
+   "ne_6k_q2_ex992"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-q2-landmark",
+  "statement": "2026년 2분기에 AI 클라우드 부문 랜드마크 계약 4건을 새로 맺었다. 평균 총계약금액(TCV)이 10억 달러를 넘고 MW 당 연간계약가치는 2,000만~2,500만 달러다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q2 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "4건 중 리플렉션·코히어만 실명이 공개됐다. 나머지 둘은 「미국 AI 신생랩」·「미국 퀀트 트레이딩사」로만 적혀 이름을 짓지 않는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-2026-guidance",
+  "statement": "2026년 연간 가이던스로 연환산매출(ARR) 70억~90억 달러, 그룹 매출 30억~34억 달러, 조정 EBITDA 마진 약 40%, 설비투자 200억~250억 달러를 그대로 유지한다고 밝혔다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_q2_call"
+  ],
+  "note": "실적 발표 자료·주주 서한 본문에는 수치가 없고 콘퍼런스콜에서 CFO 다도 알론소가 \"We continue to expect...\" 로 재확인했다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-5gw-target",
+  "statement": "2026년 말 계약 전력 목표를 직전 4GW 초과에서 5GW로 다시 올려 잡았다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-vera-rubin",
+  "statement": "엔비디아 Vera Rubin NVL72 시스템 초기 물량을 받아 컴퓨트· 네트워킹·오케스트레이션 통합을 하나의 시스템으로 검증하고 있다.",
+  "subject": "nebius",
+  "object": "nvidia",
+  "period": "2026-08~",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "출하량이 늘면 상용 제공으로 넘어간다는 계획이고, 고객과도 이미 접촉하고 있다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-msft-delivered",
+  "statement": "마이크로소프트 계약의 모든 용량 트랜치를 인도했고 그 중 두 트랜치는 최근 한 달 새 전달됐다.",
+  "subject": "nebius-inc",
+  "object": "microsoft",
+  "period": "Q2 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "몇 MW 인지는 밝히지 않았다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-q3-shortterm",
+  "statement": "2026년 3분기에 첫 단기 용량 계약(3~6개월, 프리미엄 가격)을 체결했다. 용량은 4분기에 가동될 예정이다.",
+  "subject": "nebius",
+  "object": null,
+  "period": "Q3 2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "2분기 실적 발표 시점(8월 12일)에 3분기 진행 상황으로 적힌 문장이다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-reflection",
+  "statement": "리플렉션이 오픈소스 모델을 훈련·서빙하는 다년 계약으로 네비우스를 택했다.",
+  "subject": "reflection-ai",
+  "object": "nebius",
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "개별 계약금액은 비공개다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-cohere",
+  "statement": "코히어는 에이전틱 AI 솔루션 확장을 위해 네비우스와 협력한다.",
+  "subject": "cohere",
+  "object": "nebius",
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "개별 계약금액은 비공개다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-ami",
+  "statement": "얀 르쿤이 공동창업한 AMI 는 세계모델 연구·훈련에 네비우스 컴퓨트· 스토리지 인프라를 쓴다.",
+  "subject": "ami",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": "계약 여부를 명시한 문장은 없다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-higgsfield",
+  "statement": "힉스필드는 네비우스의 초기 AI 클라우드 고객 가운데 하나로 최초 계약 대비 사용량이 20배 넘게 늘었다. 이 여름 AI 로만 만든 95분 장편영화를 네비우스 인프라로 완성했다.",
+  "subject": "higgsfield",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-basecamp-eden",
+  "statement": "베이스캠프 리서치는 신종 생물 100만 종 이상에서 얻은 9조 7,000억 토큰으로 280억 변수 생물학 기반모델 EDEN 을 학습했다. 이전 사내 환경보다 20배 빠르다.",
+  "subject": "basecamp-research",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-ne-prima-detail",
+  "statement": "프리마 멘테는 알츠하이머·파킨슨병 후성유전학 기반모델을 10억에서 680억 변수로 키워 혈액 샘플만으로 89~97% 진단 정확도를 냈다.",
+  "subject": "prima-mente",
+  "object": "nebius",
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "ne_shl_q2"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
  }
 ]
