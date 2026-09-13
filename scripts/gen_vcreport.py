@@ -28,7 +28,7 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUTDIR = os.path.join(ROOT, u'대시보드')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_tsmc_page  # noqa: E402  TSMC 2~8절 원문 그림
-import tsmc_map_orig  # noqa: E402  TSMC 1절 원문 지도(손으로 그린 SVG)
+import tsmc_map  # noqa: E402  TSMC 1절 지도 — 받은 상자에 선만 다시 그은 것
 import vc_figs  # noqa: E402  다른 사슬의 2~7절 — 데이터로 세운 그림
 
 EV_KO = {'CONFIRMED': u'공시로 확인', 'ESTIMATED': u'추정', 'INFERRED': u'정황 추론',
@@ -347,7 +347,8 @@ def page(c, chains):
     # 탐색기는 기업분석 장의 고정 층과 상단 칩으로만 간다
     if c.id == 'tsmc':
         # 받은 보고서 1~8절 그대로(손으로 그린 지도 포함). 데이터 절도 안 붙인다
-        raw = tsmc_map_orig.SECTION_1_ORIG + gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', '')
+        # 1절 지도는 받은 상자 그대로에 선만 다시 그은 것(tsmc_map) — 원문 SVG 는 tsmc_map_orig 에 남겨 둔다
+        raw = tsmc_map.section() + gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', '')
         raw = raw.replace('<svg ', '<div class="sv"><svg ').replace('</svg>', '</svg></div>')
         # 병목 히트맵은 점수 칸이 좁아 폰 화면에도 한눈에 든다 — 옆으로 밀지 않고 맞춘다(fit)
         raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat fit">').replace('</table>', '</table></div>')
