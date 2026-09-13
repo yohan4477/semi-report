@@ -4,7 +4,8 @@ u"""파운드리 사슬 — TSMC. 앞단(공급)과 뒷단(고객)을 한 사슬
 원문은 data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md 하나다. 거기 없는 숫자·
 회사·관계는 넣지 않는다. 원문의 근거 등급 A/B/C 를 evidence_level 로 옮긴다 —
 A → CONFIRMED, B → ESTIMATED, C → INFERRED. 원문이 「미공개」라 적은 비중은 값을 비우고
-UNDISCLOSED 잔여로 닫는다. 원문에 주소가 없어 출처 url 은 전부 None 이다.
+UNDISCLOSED 잔여로 닫는다. 조사 원장이 댄 출처는 주소가 없어 url 이 None 이다. 2026년
+2분기 실적 발표(tsmc_2q2026)처럼 회사 IR 페이지 주소를 직접 확인한 출처만 url 을 적는다.
 
   · 이미 전역에 선 상자(tsmc·apple·nvidia·amd·marvell·mediatek·intel·google·aws·
     microsoft·meta·oracle·coreweave·foxconn·quanta-computer·wistron·sk-hynix·
@@ -65,6 +66,7 @@ F20 = 'tsmc_20f_2025'
 AR25 = 'tsmc_ar_2025'
 AR22 = 'tsmc_ar_2022'
 F05 = 'tsmc_20f_2005'
+Q226 = 'tsmc_2q2026'
 
 # ── 출처 — 조사 원장 하나에 원문이 이름을 댄 공시를 곁들인다. url 은 원문에 없다 ──
 # (id, publisher, title, source_type, published_date, note)
@@ -83,6 +85,14 @@ SOURCES = [
   u'2025년판과 대조해야 한다'),
  (F05, 'TSMC', u'TSMC 2005년 Form 20-F', 'primary_official', None,
   u'원재료비 안의 웨이퍼 42%·화학 20%·가스 9% 구성이 실린 옛 공시다. 구조 참고용'),
+ (Q226, 'TSMC', u'TSMC 2026년 2분기(2026-04~06) 실적 발표 — Quarterly Management Report·'
+  u'Earnings Release·컨퍼런스콜 녹취록', 'primary_official', '2026-07-16',
+  u'2026년 7월 16일 발표. 매출·마진·순이익·EPS, 플랫폼별·공정별·지역별 매출 비중, 웨이퍼 '
+  u'출하, 분기·상반기 capex, 3분기 가이던스, 2026년 연간 capex·매출 성장률 가이던스 상향, '
+  u'애리조나 추가 1,000억 달러 투자 발표가 여기 있다. 관리보고서는 '
+  u'investor.tsmc.com/english/quarterly-results/2026/q2 아래 '
+  u'"2Q26 ManagementReport.pdf", 녹취록은 같은 경로의 "TSMC 2Q26 Transcript.pdf"',
+  'https://investor.tsmc.com/english/quarterly-results/2026/q2'),
  ('apple_10k_fy2025', 'Apple', u'Apple 2025 회계연도 Form 10-K', 'primary_official',
   '2025-10', u'특정 부품을 단일 공급원에 의존한다고 적는다. TSMC 실명은 10-K 가 아니라 '
   u'공급업체 리스트에 오른다'),
@@ -806,6 +816,16 @@ for eid, label, pct in REV:
        '2025-01-01', '2025-12-31', '2025-12-31', u'TSMC 2025 총매출', 'CURRENT',
        'CONFIRMED', [F20], note=u'20-F 의 플랫폼별 매출 구분이다')
 
+# 플랫폼별 매출 — 2026년 2분기(분모가 연간과 달라 같은 관계에 별도 시계열로 붙는다)
+REV_2026Q2 = [('tsmc-rev-hpc', 'HPC', 66.0), ('tsmc-rev-smartphone', u'스마트폰', 22.0),
+              ('tsmc-rev-iot', 'IoT', 5.0), ('tsmc-rev-automotive', u'자동차', 4.0),
+              ('tsmc-rev-dce', 'DCE', 1.0), ('tsmc-rev-other', u'기타', 2.0)]
+for eid, label, pct in REV_2026Q2:
+    O_('o-' + eid + '-2026q2', eid + '-edge', 'platform_revenue_share', pct, PCT,
+       '2026 Q2', '2026-04-01', '2026-06-30', '2026-06-30', u'TSMC 2026 2분기 총매출',
+       'CURRENT', 'CONFIRMED', [Q226],
+       note=u'2026년 2분기 실적 발표의 플랫폼별 매출 구분이다')
+
 
 # ── 주장 ────────────────────────────────────────────────────────────
 # (id, statement, subject, object, period, evidence_level, confidence, sources, note)
@@ -830,9 +850,12 @@ CLAIMS = [
    u'분모는 회사 총매출이 아니라 웨이퍼 매출이다'),
  C('clm-tsmc-capex-2025', u'2025년 Capex 는 NT$1조2,724억이다.', TS, '2025', 'CONFIRMED',
    A25),
- C('clm-tsmc-capex-2026', u'2026년 Capex 계획은 US$520~560억으로 제시됐고 이후 '
-   u'US$600~640억으로 올려 잡는 이야기가 나왔다.', TS, '2026', 'INFERRED', [L],
-   u'상향은 공시가 아니라 언론 보도 수준이다'),
+ C('clm-tsmc-capex-2026', u'2026년 Capex 가이던스는 연초 US$520~560억에서 2026년 2분기 '
+   u'실적 발표(2026-07-16)로 US$600~640억으로 공식 상향됐고, 그 가운데 70~80% 는 첨단 '
+   u'공정, 약 10% 는 특수 공정, 10~20% 는 첨단 패키징·테스트·마스크 제작 등에 배정된다.', TS,
+   '2026', 'CONFIRMED', [Q226, L],
+   u'배정 비율은 실적 콜에서 CFO 웬델 황이 밝혔다. 4절 원문의 「이후 올려 잡는 이야기」는 '
+   u'이 발표로 확정됐다'),
  C('clm-tsmc-foundry20-2025', u'2025년 Foundry 2.0 점유율은 40% 로 2024년 34% 에서 '
    u'올랐다.', TS, '2025', 'CONFIRMED', A25),
  C('clm-tsmc-platform-2025', u'2025년 플랫폼별 매출은 HPC 58%(NT$2조1,929억)·스마트폰 '
@@ -1113,6 +1136,51 @@ CLAIMS += [
    '2026-09', 'INFERRED', [L]),
 ]
 
+# 18절 2026년 2분기 실적 — 2026-07-16 발표. 관계는 그대로 두고 tsmc 를 주어로 한 주장만 얹는다
+CLAIMS += [
+ C('clm-tsmc-revenue-2026q2', u'2026년 2분기 매출은 NT$1조2,703.8억(US$402.0억)으로 '
+   u'전분기 대비 12.0%, 전년 동기 대비 NT$ 기준 36.0%·달러 기준 33.7% 늘었다.', TS,
+   '2026 Q2', 'CONFIRMED', [Q226]),
+ C('clm-tsmc-margin-2026q2', u'2026년 2분기 매출총이익률은 67.7%(1분기 66.2%·전년 동기 '
+   u'58.6%), 영업이익률은 60.3%(1분기 58.1%), 순이익률은 55.6%(1분기 50.5%)다.', TS,
+   '2026 Q2', 'CONFIRMED', [Q226],
+   u'매출총이익률 상승은 원가 개선과 가동률 상승 덕이고 해외팹 희석이 일부 상쇄했다'),
+ C('clm-tsmc-netincome-2026q2', u'2026년 2분기 순이익은 NT$7,065.6억으로 전분기 대비 '
+   u'23.4%, 전년 동기 대비 77.4% 늘었고 희석 EPS 는 NT$27.25(ADR 당 US$4.31)다.', TS,
+   '2026 Q2', 'CONFIRMED', [Q226],
+   u'비영업 이익 NT$958.3억 가운데 뱅가드(VIS) 지분 처분·평가 이익 NT$632.0억이 크게 '
+   u'들어갔다'),
+ C('clm-tsmc-shipments-2026q2', u'2026년 2분기 웨이퍼 출하는 12인치 환산 433.6만 장으로 '
+   u'1분기 417.4만 장·전년 동기 371.8만 장에서 늘었다(전분기 대비 3.9%·전년 동기 대비 '
+   u'16.6%).', TS, '2026 Q2', 'CONFIRMED', [Q226]),
+ C('clm-tsmc-platform-2026q2', u'2026년 2분기 플랫폼별 매출은 HPC 66%·스마트폰 22%·IoT '
+   u'5%·자동차 4%·DCE 1%·기타 2%로, HPC 비중이 2025년 연간 58%·1분기 61%에서 더 '
+   u'올랐다.', TS, '2026 Q2', 'CONFIRMED', [Q226],
+   u'전분기 대비로는 HPC +20%·IoT +4%·자동차 +15%·DCE +5%·기타 +5% 늘고 스마트폰은 '
+   u'−4% 였다'),
+ C('clm-tsmc-node-mix-2026q2', u'2026년 2분기 웨이퍼 매출 비중은 2nm 3%·3nm 30%·5nm '
+   u'33%·7nm 11%·16/20nm 6%·28nm 6%·40/45nm 2%·65nm 4%·90nm~0.13um 2%·0.15um 이상 '
+   u'3%이고, 7nm 이하 첨단 공정 합계는 77%로 2025년 연간 74%에서 올랐다.', TS, '2026 Q2',
+   'CONFIRMED', [Q226]),
+ C('clm-tsmc-region-2026q2', u'2026년 2분기 지역별 매출은 고객 본사 기준 북미 78%·아태 '
+   u'8%·중국 6%·일본 4%·EMEA 4%로, 2025년 연간 북미 75%·중국 9%에서 북미 비중이 더 '
+   u'커졌다.', TS, '2026 Q2', 'CONFIRMED', [Q226]),
+ C('clm-tsmc-capex-2026q2', u'2026년 2분기 capex 는 US$157.0억이고 상반기 누계는 '
+   u'US$268.0억(1분기 US$111.0억)이다.', TS, '2026 Q2', 'CONFIRMED', [Q226]),
+ C('clm-tsmc-guidance-3q26', u'2026년 3분기 가이던스는 매출 US$446~458억, 매출총이익률 '
+   u'65~67%, 영업이익률 56~58%(가정 환율 US$1=NT$32)이고, 2나노 가파른 램프업이 3분기 '
+   u'매출총이익률을 3~4%p 낮출 것으로 본다.', TS, '2026 Q3', 'CONFIRMED', [Q226]),
+ C('clm-tsmc-revenue-growth-2026', u'2026년 2분기 실적 발표에서 2026년 연간 매출 성장률 '
+   u'가이던스가 달러 기준 40%대 초반(slightly above 40%)으로 올라갔다.', TS, '2026',
+   'CONFIRMED', [Q226], u'2분기 매출 US$40.2억은 자체 가이던스 상단이었다'),
+ C('clm-tsmc-arizona-100bn', u'2026년 7월 16일 실적 콜에서 애리조나에 미화 1,000억 '
+   u'달러를 추가 투자해 2나노 이하 로직 팹 여러 곳과 첨단 패키징 팹을 더 짓는다고 '
+   u'밝혔고, 대만에서도 첨단·패키징 팹 13곳을 향후 수년에 걸쳐 짓는다고 밝혔다.', TS,
+   '2026-07-16', 'CONFIRMED', [Q226],
+   u'애리조나 누적 투자 총액은 실적 콜에서 애널리스트 질문으로만 언급됐고 회사가 직접 '
+   u'확정 총액을 밝히지는 않았다'),
+]
+
 
 # ── 공급원 분류 — vc_norm 이 옮긴 뒤 이름표와 비중을 얹는다 ───────────
 SS_DEFS = [
@@ -1196,9 +1264,10 @@ def ent(t):
 
 
 def src(t):
+    u"""출처 튜플은 6칸(url 없음)이거나 7칸째에 확인된 url 을 얹는다."""
     return {'id': t[0], 'publisher': t[1], 'title': t[2], 'source_type': t[3],
-            'published_date': t[4], 'url': None, 'accessed_date': ACCESSED,
-            'note': t[5]}
+            'published_date': t[4], 'url': t[6] if len(t) > 6 else None,
+            'accessed_date': ACCESSED, 'note': t[5]}
 
 
 def claim(t):

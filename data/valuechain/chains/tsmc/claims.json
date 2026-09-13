@@ -113,16 +113,17 @@
  },
  {
   "id": "clm-tsmc-capex-2026",
-  "statement": "2026년 Capex 계획은 US$520~560억으로 제시됐고 이후 US$600~640억으로 올려 잡는 이야기가 나왔다.",
+  "statement": "2026년 Capex 가이던스는 연초 US$520~560억에서 2026년 2분기 실적 발표(2026-07-16)로 US$600~640억으로 공식 상향됐고, 그 가운데 70~80% 는 첨단 공정, 약 10% 는 특수 공정, 10~20% 는 첨단 패키징·테스트·마스크 제작 등에 배정된다.",
   "subject": "tsmc",
   "object": null,
   "period": "2026",
-  "evidence_level": "INFERRED",
+  "evidence_level": "CONFIRMED",
   "confidence": 1.0,
   "source_ids": [
+   "tsmc_2q2026",
    "tsmc_report_2026_09_12"
   ],
-  "note": "상향은 공시가 아니라 언론 보도 수준이다",
+  "note": "배정 비율은 실적 콜에서 CFO 웬델 황이 밝혔다. 4절 원문의 「이후 올려 잡는 이야기」는 이 발표로 확정됐다",
   "subject_classification": null,
   "object_classification": null
  },
@@ -1445,6 +1446,171 @@
    "tsmc_report_2026_09_12"
   ],
   "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-revenue-2026q2",
+  "statement": "2026년 2분기 매출은 NT$1조2,703.8억(US$402.0억)으로 전분기 대비 12.0%, 전년 동기 대비 NT$ 기준 36.0%·달러 기준 33.7% 늘었다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-margin-2026q2",
+  "statement": "2026년 2분기 매출총이익률은 67.7%(1분기 66.2%·전년 동기 58.6%), 영업이익률은 60.3%(1분기 58.1%), 순이익률은 55.6%(1분기 50.5%)다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": "매출총이익률 상승은 원가 개선과 가동률 상승 덕이고 해외팹 희석이 일부 상쇄했다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-netincome-2026q2",
+  "statement": "2026년 2분기 순이익은 NT$7,065.6억으로 전분기 대비 23.4%, 전년 동기 대비 77.4% 늘었고 희석 EPS 는 NT$27.25(ADR 당 US$4.31)다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": "비영업 이익 NT$958.3억 가운데 뱅가드(VIS) 지분 처분·평가 이익 NT$632.0억이 크게 들어갔다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-shipments-2026q2",
+  "statement": "2026년 2분기 웨이퍼 출하는 12인치 환산 433.6만 장으로 1분기 417.4만 장·전년 동기 371.8만 장에서 늘었다(전분기 대비 3.9%·전년 동기 대비 16.6%).",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-platform-2026q2",
+  "statement": "2026년 2분기 플랫폼별 매출은 HPC 66%·스마트폰 22%·IoT 5%·자동차 4%·DCE 1%·기타 2%로, HPC 비중이 2025년 연간 58%·1분기 61%에서 더 올랐다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": "전분기 대비로는 HPC +20%·IoT +4%·자동차 +15%·DCE +5%·기타 +5% 늘고 스마트폰은 −4% 였다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-node-mix-2026q2",
+  "statement": "2026년 2분기 웨이퍼 매출 비중은 2nm 3%·3nm 30%·5nm 33%·7nm 11%·16/20nm 6%·28nm 6%·40/45nm 2%·65nm 4%·90nm~0.13um 2%·0.15um 이상 3%이고, 7nm 이하 첨단 공정 합계는 77%로 2025년 연간 74%에서 올랐다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-region-2026q2",
+  "statement": "2026년 2분기 지역별 매출은 고객 본사 기준 북미 78%·아태 8%·중국 6%·일본 4%·EMEA 4%로, 2025년 연간 북미 75%·중국 9%에서 북미 비중이 더 커졌다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-capex-2026q2",
+  "statement": "2026년 2분기 capex 는 US$157.0억이고 상반기 누계는 US$268.0억(1분기 US$111.0억)이다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q2",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-guidance-3q26",
+  "statement": "2026년 3분기 가이던스는 매출 US$446~458억, 매출총이익률 65~67%, 영업이익률 56~58%(가정 환율 US$1=NT$32)이고, 2나노 가파른 램프업이 3분기 매출총이익률을 3~4%p 낮출 것으로 본다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026 Q3",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": null,
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-revenue-growth-2026",
+  "statement": "2026년 2분기 실적 발표에서 2026년 연간 매출 성장률 가이던스가 달러 기준 40%대 초반(slightly above 40%)으로 올라갔다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": "2분기 매출 US$40.2억은 자체 가이던스 상단이었다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-tsmc-arizona-100bn",
+  "statement": "2026년 7월 16일 실적 콜에서 애리조나에 미화 1,000억 달러를 추가 투자해 2나노 이하 로직 팹 여러 곳과 첨단 패키징 팹을 더 짓는다고 밝혔고, 대만에서도 첨단·패키징 팹 13곳을 향후 수년에 걸쳐 짓는다고 밝혔다.",
+  "subject": "tsmc",
+  "object": null,
+  "period": "2026-07-16",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "tsmc_2q2026"
+  ],
+  "note": "애리조나 누적 투자 총액은 실적 콜에서 애널리스트 질문으로만 언급됐고 회사가 직접 확정 총액을 밝히지는 않았다",
   "subject_classification": null,
   "object_classification": null
  }

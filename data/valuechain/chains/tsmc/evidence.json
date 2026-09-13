@@ -2878,5 +2878,65 @@
   "evidence": "20-F 의 플랫폼별 매출 구분이다",
   "hypothesis_id": null,
   "classification_id": "rt-tsmc-rev-other"
+ },
+ {
+  "id": "tsmc-e289",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_2q2026",
+  "evidence_type": "direct",
+  "evidence": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-hpc"
+ },
+ {
+  "id": "tsmc-e290",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_2q2026",
+  "evidence_type": "direct",
+  "evidence": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-smartphone"
+ },
+ {
+  "id": "tsmc-e291",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_2q2026",
+  "evidence_type": "direct",
+  "evidence": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-iot"
+ },
+ {
+  "id": "tsmc-e292",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_2q2026",
+  "evidence_type": "direct",
+  "evidence": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-automotive"
+ },
+ {
+  "id": "tsmc-e293",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_2q2026",
+  "evidence_type": "direct",
+  "evidence": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-dce"
+ },
+ {
+  "id": "tsmc-e294",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "tsmc_2q2026",
+  "evidence_type": "direct",
+  "evidence": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+  "hypothesis_id": null,
+  "classification_id": "rt-tsmc-rev-other"
  }
 ]

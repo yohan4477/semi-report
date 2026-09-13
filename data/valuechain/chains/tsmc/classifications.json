@@ -218,10 +218,29 @@
      "source_ids": [
       "tsmc_20f_2025"
      ]
+    },
+    {
+     "metric": "platform_revenue_share",
+     "value": 4.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "TSMC 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_2q2026"
+     ]
     }
    ],
    "source_ids": [
-    "tsmc_20f_2025"
+    "tsmc_20f_2025",
+    "tsmc_2q2026"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -258,10 +277,29 @@
      "source_ids": [
       "tsmc_20f_2025"
      ]
+    },
+    {
+     "metric": "platform_revenue_share",
+     "value": 1.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "TSMC 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_2q2026"
+     ]
     }
    ],
    "source_ids": [
-    "tsmc_20f_2025"
+    "tsmc_20f_2025",
+    "tsmc_2q2026"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -298,10 +336,29 @@
      "source_ids": [
       "tsmc_20f_2025"
      ]
+    },
+    {
+     "metric": "platform_revenue_share",
+     "value": 66.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "TSMC 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_2q2026"
+     ]
     }
    ],
    "source_ids": [
-    "tsmc_20f_2025"
+    "tsmc_20f_2025",
+    "tsmc_2q2026"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -338,10 +395,29 @@
      "source_ids": [
       "tsmc_20f_2025"
      ]
+    },
+    {
+     "metric": "platform_revenue_share",
+     "value": 5.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "TSMC 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_2q2026"
+     ]
     }
    ],
    "source_ids": [
-    "tsmc_20f_2025"
+    "tsmc_20f_2025",
+    "tsmc_2q2026"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -378,10 +454,29 @@
      "source_ids": [
       "tsmc_20f_2025"
      ]
+    },
+    {
+     "metric": "platform_revenue_share",
+     "value": 2.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "TSMC 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_2q2026"
+     ]
     }
    ],
    "source_ids": [
-    "tsmc_20f_2025"
+    "tsmc_20f_2025",
+    "tsmc_2q2026"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -418,10 +513,29 @@
      "source_ids": [
       "tsmc_20f_2025"
      ]
+    },
+    {
+     "metric": "platform_revenue_share",
+     "value": 22.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 Q2",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "TSMC 2026 2분기 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": 1.0,
+     "method_note": "2026년 2분기 실적 발표의 플랫폼별 매출 구분이다",
+     "source_ids": [
+      "tsmc_2q2026"
+     ]
     }
    ],
    "source_ids": [
-    "tsmc_20f_2025"
+    "tsmc_20f_2025",
+    "tsmc_2q2026"
    ],
    "residual": {
     "status": "UNDISCLOSED",
