@@ -122,7 +122,8 @@ def render():
     o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="#D6ECEA" stroke="%s"/>' % (ox, oy, ow, oh, TEAL))
     o.append('<text x="525" y="416" text-anchor="middle" font-size="12">ASE·SPIL · Amkor</text>'
              '<text x="525" y="431" text-anchor="middle" font-size="11" fill="#6B7785">CoWoS 외주 24~27만 장</text>')
-    o.append('<path d="M525 350V%d" stroke="%s" stroke-width="2" fill="none"/>' % (oy, TEAL))
+    # 외주(OSAT)로 내려가는 선만 촉을 둔다 — 가로 흐름과 달리 아래로 빠지는 길이라 방향이 필요하다
+    o.append('<path d="M525 350V%d" stroke="%s" stroke-width="2" fill="none" marker-end="url(#mt)"/>' % (oy, TEAL))
     hx, hy, hw, hh = HBM
     o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="#F6E3C8" stroke="%s"/>' % (hx, hy, hw, hh, ORANGE))
     o.append('<text x="525" y="486" text-anchor="middle" font-size="12">SK hynix HBM</text>'

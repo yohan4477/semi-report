@@ -603,24 +603,55 @@ def sec_map_data(c, n):
     for txt, fs, bold in lines:
         out.append(u'<text x="%d" y="%.0f" text-anchor="middle" fill="#fff" font-size="%d"%s>%s</text>' % (mx + mw / 2, ty, fs, ' font-weight="600"' if bold else ' opacity=".9"', esc(txt)))
         ty += fs + 8
-    paths = []
-
-    def bez(x0, y0, x1, y1):
-        mid = (x0 + x1) / 2.0
-        paths.append(u'M%.0f %.0fC%.0f %.0f %.0f %.0f %.0f %.0f' % (x0, y0, mid, y0, mid, y1, x1, y1))
-    for i, b in enumerate(t2_boxes):
-        a, t = geo[('t2', i)], geo[('t1', b[4])]
-        bez(a[0] + a[2], a[1] + a[3] / 2.0, t[0], t[1] + t[3] / 2.0)
-    for i in range(len(t1_boxes)):
-        g = geo[('t1', i)]
-        bez(g[0] + g[2], g[1] + g[3] / 2.0, mx, my + 20 + (mh - 40) * (i + 0.5) / max(1, len(t1_boxes)))
-    for i in range(len(cust)):
-        g = geo[('cust', i)]
-        bez(mx + mw, my + 20 + (mh - 40) * (i + 0.5) / max(1, len(cust)), g[0], g[1] + g[3] / 2.0)
-    for i, (e, ci) in enumerate(fin):
-        a, t = geo[('cust', ci)], geo[('fin', i)]
-        bez(a[0] + a[2], a[1] + a[3] / 2.0, t[0], t[1] + t[3] / 2.0)
-    out.append(u'<g stroke="%s" stroke-width="1.3" fill="none" marker-end="url(#m-%s)"><path d="%s"/></g>' % (SUP, c.id, u''.join(paths)))
+    # 선은 TSMC 장(tsmc_map)과 같은 규칙 — 통로마다 세로 줄기 하나, 상자에서 줄기로 가로선, 줄기에서
+    # 다음 칸으로 가지. 화살촉 없음, 회색 1.2(줄기 1.6). 2026-09-13 「다 통일하라고」
+    seg = []
+    def hline(x0, y, x1, w=1.2):
+        seg.append(u'<path d="M%.0f %.0fH%.0f" stroke-width="%s"/>' % (x0, y, x1, w))
+    def vline(x, y0, y1, w=1.6):
+        if abs(y1 - y0) > 0.5:
+            seg.append(u'<path d="M%.0f %.0fV%.0f" stroke-width="%s"/>' % (x, y0, y1, w))
+    # Tier 2 → Tier 1: 같은 줄이면 곧게, 아니면 통로에서 한 번 꺾는다(자리를 나눠 겹치지 않게)
+    t2r, t1l = COLS['t2'][0] + COLS['t2'][1], COLS['t1'][0]
+    bends = [i for i, bx in enumerate(t2_boxes) if abs((geo[('t2', i)][1] + geo[('t2', i)][3] / 2.0) - (geo[('t1', bx[4])][1] + geo[('t1', bx[4])][3] / 2.0)) > 0.5]
+    for i, bx in enumerate(t2_boxes):
+        a_, t_ = geo[('t2', i)], geo[('t1', bx[4])]
+        y0, y1 = a_[1] + a_[3] / 2.0, t_[1] + t_[3] / 2.0
+        if i in bends:
+            gx = t2r + 8 + (bends.index(i) + 1) * (t1l - t2r - 16) / (len(bends) + 1)
+            hline(a_[0] + a_[2], y0, gx); vline(gx, y0, y1, 1.2); hline(gx, y1, t_[0])
+        else:
+            hline(a_[0] + a_[2], y0, t_[0])
+    # Tier 1 → 회사: 줄기 하나
+    if t1_boxes:
+        t1r = COLS['t1'][0] + COLS['t1'][1]
+        gx = (t1r + mx) / 2.0
+        ys = [geo[('t1', i)][1] + geo[('t1', i)][3] / 2.0 for i in range(len(t1_boxes))]
+        for i, y in enumerate(ys):
+            hline(t1r, y, gx)
+        vline(gx, min(ys + [my + mh / 2.0]), max(ys + [my + mh / 2.0]))
+        hline(gx, my + mh / 2.0, mx, 1.6)
+    # 회사 → 고객: 줄기 하나
+    if cust:
+        cl = COLS['cust'][0]
+        gx = (mx + mw + cl) / 2.0
+        ys = [geo[('cust', i)][1] + geo[('cust', i)][3] / 2.0 for i in range(len(cust))]
+        hline(mx + mw, my + mh / 2.0, gx, 1.6)
+        vline(gx, min(ys + [my + mh / 2.0]), max(ys + [my + mh / 2.0]))
+        for y in ys:
+            hline(gx, y, cl)
+    # 고객 → 최종 수요: 줄기 하나
+    if fin:
+        cr, fl = COLS['cust'][0] + COLS['cust'][1], COLS['fin'][0]
+        gx = (cr + fl) / 2.0
+        src_ys = sorted(set(geo[('cust', ci)][1] + geo[('cust', ci)][3] / 2.0 for _e, ci in fin))
+        dst_ys = [geo[('fin', i)][1] + geo[('fin', i)][3] / 2.0 for i in range(len(fin))]
+        for y in src_ys:
+            hline(cr, y, gx)
+        vline(gx, min(src_ys + dst_ys), max(src_ys + dst_ys))
+        for y in dst_ys:
+            hline(gx, y, fl)
+    out.append(u'<g stroke="%s" fill="none">%s</g>' % (SUP, u''.join(seg)))
     out.append(u'<text x="10" y="%d" font-size="11" fill="%s">선 굵기에는 뜻이 없다(금액 관측이 없다). 점선 상자 = 중개·유통. 상자 안 값은 관측이 붙은 줄만.</text></svg>' % (H - 12, MUTE))
     legend = (u'<div class="legend"><span class="l-tsmc">%s</span><span class="l-kr">한국 회사</span><span class="l-jp">병목(공급 여력 HIGH 이상)</span>'
               u'<span class="l-cust">고객</span><span class="l-sup">그 밖의 공급사</span></div>' % esc(me))
