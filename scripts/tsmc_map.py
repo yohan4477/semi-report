@@ -125,7 +125,7 @@ def render():
     hx, hy, hw, hh = HBM
     o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="#F6E3C8" stroke="%s"/>' % (hx, hy, hw, hh, ORANGE))
     o.append('<text x="525" y="486" text-anchor="middle" font-size="12">SK hynix HBM</text>'
-             '<text x="525" y="501" text-anchor="middle" font-size="11" fill="#6B7785">고객이 별도 조달 → CoWoS 합류</text>')
+             '<text x="530" y="501" text-anchor="middle" font-size="10.5" fill="#6B7785">고객이 별도 조달 → CoWoS 합류</text>')
     o.append('<path d="M525 %d V%d" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>' % (hy, oy + oh, ORANGE))
 
     # ── 선 ──
