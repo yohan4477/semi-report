@@ -123,7 +123,7 @@ CSS = u'''
     .tw table{min-width:0}
     .tw table.fit{min-width:0;font-size:11.5px;table-layout:fixed;width:100%}
     .heat.fit th,.heat.fit td{padding:6px 3px;overflow-wrap:anywhere}
-    .heat.fit th{font-size:10px;line-height:1.2}
+    .heat.fit th{font-size:10px;line-height:1.2;white-space:normal}
     .heat.fit th:nth-child(1),.heat.fit td:nth-child(1){width:28%}
     .heat.fit th:nth-child(2),.heat.fit td:nth-child(2){width:30%}
     .heat.fit td.c{width:auto;padding:6px 0}
