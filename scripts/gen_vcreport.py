@@ -6,9 +6,11 @@ u"""밸류체인 보고서 장 — 사슬마다 한 장. 대시보드/<회사> �
 classifications·relationships·observations·sources)에서 세운다. TSMC 는 1절 전체 지도를 손으로 그린 SVG 대신
 탐색기로 이식하고(상자·선은 chains/tsmc 데이터), 2~8절은 받은 그림 그대로, 뒤에 데이터 절을 붙인다.
 
-절(데이터가 없으면 그 절은 안 세운다):
-  1 전체 지도(탐색기)  2 핵심 수치(주장)  3 매출원 구성  4 공급원 구성  5 병목  6 고객 집중도
-  7 지분·소유  8 출처 (6 은 고객·전방시장 비중)
+절(데이터가 없으면 그 절은 안 세운다). TSMC 가 아닌 사슬은 TSMC 2~8절과 같은 꼴(번호 절·짧은 설명·
+그림 하나)을 데이터로만 세운다 — vc_figs.py(2026-09-13, 「TSMC 처럼 다른 회사도 포맷을 맞춘다」):
+  1 전체 지도(탐색기)  2 매출 트리  3 공급원 트리  4 병목 히트맵  5 고객 집중도  6 시간축
+  7 지분·소유(지도)  8 핵심 수치(주장)  9 출처
+TSMC 는 1 지도, 2~8 받은 그림, 9 부터 데이터 절(핵심 수치·매출원·공급원·병목·고객·지분·출처).
 
   PYTHONIOENCODING=utf-8 python scripts/gen_vcreport.py
 """
@@ -26,6 +28,7 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUTDIR = os.path.join(ROOT, u'대시보드')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_tsmc_page  # noqa: E402  TSMC 2~8절 원문 그림
+import vc_figs  # noqa: E402  다른 사슬의 2~7절 — 데이터로 세운 그림
 
 EV_KO = {'CONFIRMED': u'공시로 확인', 'ESTIMATED': u'추정', 'INFERRED': u'정황 추론',
          'UNDISCLOSED': u'비공개', 'HISTORICAL_CURRENT_UNKNOWN': u'과거 관측·현재 미상'}
@@ -81,6 +84,7 @@ CSS = u'''
   th{font-weight:500;color:var(--mute)}
   td.nw{white-space:nowrap}
   .heat td.c{width:76px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  .heat th{white-space:nowrap}
   .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
   .ev{display:inline-block;font-size:11.5px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--mute);white-space:nowrap}
   .ev.c{border-color:var(--tsmc);color:var(--tsmc)}
@@ -111,11 +115,12 @@ CSS = u'''
     h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}
     nav.chains{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin-bottom:20px}
     nav.chains a{white-space:nowrap;flex:none}
-    .sv svg{min-width:720px}
+    /* 그림·표는 되도록 한 화면 폭에 — 옆으로 밀지 않는다(2026-09-13). 글자는 셀 안에서 줄바꿈 */
     .cl{grid-template-columns:1fr}
     .cl .src{grid-column:1}
-    table{font-size:12.5px} th,td{padding:6px 6px}
-    .tw table{min-width:640px}
+    table{font-size:11.5px} th,td{padding:5px 4px;overflow-wrap:anywhere}
+    td.nw{white-space:normal}
+    .tw table{min-width:0}
     .tw table.fit{min-width:0;font-size:11.5px;table-layout:fixed;width:100%}
     .heat.fit th,.heat.fit td{padding:6px 3px;overflow-wrap:anywhere}
     .heat.fit th{font-size:10px;line-height:1.2}
@@ -228,9 +233,8 @@ def sec_shares(c, n, kind, title, note, cls):
         sh = latest_share(x)
         if not sh:
             continue
-        v = sh.get('value')
-        txt = (u'%s~%s%%' % (fmt(sh.get('value_low')), fmt(sh.get('value_high')))) if v is None else (u'%s%%' % fmt(v))
-        w = v if v is not None else (sh.get('value_high') or 0)
+        txt = vc_figs.share_txt(sh)
+        w = vc_figs.share_pct(sh) or 0  # 막대는 percent 만. 금액으로 적힌 갈래는 글자만 남긴다
         items.append((w, x.get('label'), txt, sh.get('period'), sh.get('denominator')))
     if not items:
         return ''
@@ -349,15 +353,19 @@ def page(c, chains):
         raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat fit">').replace('</table>', '</table></div>')
         parts.append(raw)
         n = 9
-    for fn in (sec_claims,
+        fns = (sec_claims,
                lambda cc, k: sec_shares(cc, k, 'revenue_types', u'매출원 구성', u'매출 갈래마다 가장 최근 비중.', ''),
                lambda cc, k: sec_shares(cc, k, 'supply_sources', u'공급원 구성', u'공급 갈래마다 가장 최근 비중.', ' sup'),
-               sec_bottleneck, sec_customers, sec_equity, sec_sources):
+               sec_bottleneck, sec_customers, sec_equity, sec_sources)
+    else:
+        # 다른 사슬 — TSMC 2~8절과 같은 꼴을 데이터로 세운다. 트리가 비중을 보여 주니 막대 절은 안 겹친다
+        fns = vc_figs.SECTIONS + (sec_claims, sec_sources)
+    for fn in fns:
         h = fn(c, n)
         if h:
             parts.append(h); n += 1
     sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 1절 전체 지도는 손으로 그린 지도를 탐색기로 이식한 것이고 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % esc(rname(c))) \
-        if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 숫자는 전부 데이터(data/valuechain/chains/%s)에서 나오고 출처가 붙는다.' % c.id
+        if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 그림은 전부 데이터(data/valuechain/chains/%s)에서 세웠고 값마다 출처가 붙는다. 데이터에 없는 값(단위경제·마진 풀·시나리오)은 그리지 않는다.' % c.id
     return u'''<!doctype html>
 <html lang="ko">
 <head>
