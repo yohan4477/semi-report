@@ -1641,7 +1641,9 @@ function route(edges, geo, fcol){
         clearY = rightSide ? Math.max(clearY, g.y + g.h + CLR)
                            : Math.min(clearY, g.y - CLR);
       });
-      if (window.console) console.warn('vc route: ' + e.id + ' 가 중간 상자('
+      // 비켜 간 것은 설계된 예비 경로다 — 그려진 선이 규약을 지켰는지는 check_vcroute 가 잰다.
+      // 경고(warn)로 두면 check_vcui U2 가 정상 예비 경로까지 FAIL 로 세어 info 로 남긴다
+      if (window.console) console.info('vc route: ' + e.id + ' 가 중간 상자('
         + hit.map(function(g){ return g.id + '@' + g.col + ':' + Math.round(g.y) + '~'
                                     + Math.round(g.y + g.h); }).join(',')
         + ')에 걸려 ' + Math.round(y1) + ' 대신 ' + Math.round(clearY)
