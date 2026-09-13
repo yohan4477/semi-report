@@ -1,0 +1,1668 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>네비우스 밸류체인 조사 — 앞단(공급) / 뒷단(고객)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#EEF1F4;--ink:#1C2733;--mute:#6B7785;--line:#C9D1DA;--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;
+    --kr:#B4620A;--kr-soft:#F6E3C8;--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.55}
+  main{max-width:960px;margin:0 auto;padding:28px 18px 64px}
+  h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-0.01em}
+  .sub{color:var(--mute);margin:0 0 18px;font-size:14px}
+  .sub a,.note a,td a{color:var(--tsmc)}
+  nav.chains{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 28px}
+  nav.chains a{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:#fff}
+  nav.chains a.on{background:var(--tsmc);border-color:var(--tsmc);color:#fff}
+  section{margin:0 0 44px;padding-top:18px;border-top:2px solid var(--ink)}
+  h2{font-size:18px;font-weight:600;margin:0 0 4px}
+  h2 small{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
+  p.note{margin:0 0 14px;color:var(--mute);font-size:13.5px;max-width:70ch}
+  svg{width:100%;height:auto;display:block;font-family:inherit}
+  .frame{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;height:640px}
+  .frame iframe{width:100%;height:100%;border:0;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px;color:var(--mute)}
+  .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .l-tsmc::before{background:var(--tsmc)} .l-kr::before{background:var(--kr)} .l-jp::before{background:var(--jp)} .l-cust::before{background:var(--cust)} .l-sup::before{background:#8A96A3}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:500;color:var(--mute)}
+  td.nw{white-space:nowrap}
+  .heat td.c{width:76px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  .heat th{white-space:nowrap}
+  .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
+  .ev{display:inline-block;font-size:11.5px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--mute);white-space:nowrap}
+  .ev.c{border-color:var(--tsmc);color:var(--tsmc)}
+  .bars{margin-top:6px}
+  .bar{display:grid;grid-template-columns:200px 1fr 120px;gap:10px;align-items:center;font-size:13.5px;padding:4px 0}
+  .bar .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .tr{height:16px;background:#fff;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--tsmc)}
+  .bar.sup .fill{background:var(--sup)}
+  .bar .val{color:var(--mute);white-space:nowrap}
+  .tl{position:relative;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl .yr{position:relative;margin:0 0 18px}
+  .tl .yr::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--tsmc)}
+  .tl b{display:block;font-weight:600;margin-bottom:2px}
+  .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
+  .tl .row span:first-child{color:var(--mute)}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .sv{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* 핵심 수치 — 표가 아니라 줄 목록. 좁은 화면에서 네 칸 표는 출처 칸이 잘려 나갔다 */
+  .claims{margin-top:6px}
+  .cl{display:grid;grid-template-columns:110px 1fr;gap:4px 14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .cl .per{color:var(--mute);white-space:nowrap}
+  .cl .st{margin:0}
+  .cl .src{grid-column:2;font-size:12px;color:var(--mute)}
+  .cl .src a{color:var(--tsmc)}
+  @media (max-width:640px){
+    h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}
+    nav.chains{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin-bottom:20px}
+    nav.chains a{white-space:nowrap;flex:none}
+    /* 그림·표는 되도록 한 화면 폭에 — 옆으로 밀지 않는다(2026-09-13). 글자는 셀 안에서 줄바꿈 */
+    .cl{grid-template-columns:1fr}
+    .cl .src{grid-column:1}
+    table{font-size:11.5px} th,td{padding:5px 4px;overflow-wrap:anywhere}
+    td.nw{white-space:normal}
+    .tw table{min-width:0}
+    .tw table.fit{min-width:0;font-size:11.5px;table-layout:fixed;width:100%}
+    .heat.fit th,.heat.fit td{padding:6px 3px;overflow-wrap:anywhere}
+    .heat.fit th{font-size:10px;line-height:1.2;white-space:normal}
+    .heat.fit th:nth-child(1),.heat.fit td:nth-child(1){width:28%}
+    .heat.fit th:nth-child(2),.heat.fit td:nth-child(2){width:30%}
+    .heat.fit td.c{width:auto;padding:6px 0}
+    .bar{grid-template-columns:100px 1fr 96px} .bar .val{white-space:normal;font-size:12px;line-height:1.25}
+  }
+  /* 조사 보고서(마크다운) */
+  .md h2{margin-top:28px;padding-top:18px;border-top:2px solid var(--ink)}
+  .md h3{font-size:15.5px;margin:22px 0 6px}
+  .md p{max-width:80ch}
+  .md ul,.md ol{padding-left:22px}
+  .md li{margin:3px 0}
+  .md blockquote{margin:10px 0;padding:6px 12px;border-left:3px solid var(--line);color:var(--mute)}
+  .md pre{background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+  .md code{font-size:13px}
+  .md .tw{overflow-x:auto}
+  .md table{font-size:13px}
+  .md hr{border:0;border-top:1px solid var(--line);margin:22px 0}
+</style>
+</head>
+<body>
+<main>
+  <h1>네비우스 밸류체인 조사 — 앞단(공급) / 뒷단(고객)</h1>
+  <p class="sub">조사 보고서 원문 그대로. 그림은 <a href="네비우스 밸류체인.html">네비우스 밸류체인 그림 장</a>, 상자·선은 <a href="밸류체인 탐색기.html?focal=nebius&amp;open=*">탐색기</a>. 원문 파일 <code>data/valuechain/reports/nebius-밸류체인-조사-2026-09-13.md</code>.</p>
+  <nav class="chains"><a href="기업분석 대시보드.html">← 기업분석</a><a href="블룸에너지 밸류체인.html">블룸에너지</a><a href="반도체 기판 밸류체인.html">반도체 기판</a><a href="네비우스 밸류체인.html">네비우스</a><a href="엔비디아 밸류체인.html">엔비디아</a><a href="태양유전 밸류체인.html">태양유전</a><a href="TSMC 밸류체인.html">TSMC</a><a href="네비우스 밸류체인 조사.html" class="on">네비우스 조사 보고서</a><a href="밸류체인 탐색기.html">탐색기</a></nav>
+  <div class="md">
+<p>작성일: 2026-09-13
+기준 자료: 네비우스 그룹 2025년 Form 20-F(2026.4.30 SEC 제출), 2026년 2분기 Form 6-K 부속서 99.1·99.2(2026.8.12), 같은 날 주주 서한, 2026년 8월 19일 실적 콜 전사, 회사 보도자료, 저장소 안 SemiAnalysis 번역본</p>
+<h2>0. 읽는 법 — 근거 등급</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>등급</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>네비우스 또는 상대 회사의 공시·IR 자료에 실명·수치로 적힌 것</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>공시에 의존 관계는 적혔으나 금액·비중이 비공개인 것</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>공시 값을 재료로 한 계산, 또는 업계 보도·저장소 원문의 추정</td>
+</tr>
+</tbody>
+</table></div>
+<p>네비우스는 고객 실명을 공시에서 밝히지 않는다. 2026년 2분기 부속서 99.2는 매출의 10%를 넘는 고객을 C·D·E 세 곳으로만 적었고, 설비투자가 몰린 공급사도 "세 곳"이라고만 했다[12-3]. 그래서 뒷단은 "공시의 집중도(A) + 보도자료의 계약 실명(A) + 둘을 잇는 계산(C)"을 겹쳐 봐야 한다. 앞단은 반대로 20-F가 엔비디아를 실명으로 지목한다.</p>
+<p>이 보고서에서 <strong>숫자 앞의 <code>~</code>는 계산한 값</strong>이고, 계산식과 가정을 그 자리에 같이 적었다. 계산의 재료는 전부 공시 값이다.</p>
+<hr>
+<h2>1. 네비우스 본체 — 핵심 수치</h2>
+<h3>1-1. 손익 (A, [12-2]·[12-6]·[12-20])</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>2025 연간</th>
+<th>2026 2분기</th>
+<th>2026 상반기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출</td>
+<td>5억 2,980만 달러</td>
+<td>5억 8,230만 달러 (+454% 전년비)</td>
+<td>9억 8,130만 달러 (+529%)</td>
+</tr>
+<tr>
+<td>AI 클라우드 매출</td>
+<td>(공시 없음)</td>
+<td>5억 7,490만 달러 (+514%)</td>
+<td>9억 6,460만 달러 (+614%)</td>
+</tr>
+<tr>
+<td>매출원가</td>
+<td>1억 6,620만 달러 (31%)</td>
+<td>1억 3,360만 달러 (23%)</td>
+<td>2억 3,740만 달러 (24%)</td>
+</tr>
+<tr>
+<td>제품개발비</td>
+<td>1억 7,730만 달러 (33%)</td>
+<td>1억 9,100만 달러 (33%)</td>
+<td>2억 5,840만 달러 (26%)</td>
+</tr>
+<tr>
+<td>판매관리비</td>
+<td>3억 7,850만 달러 (71%)</td>
+<td>1억 7,390만 달러 (30%)</td>
+<td>3억 1,770만 달러 (32%)</td>
+</tr>
+<tr>
+<td>감가상각비</td>
+<td>4억 400만 달러 (76%)</td>
+<td>2억 5,970만 달러 (45%)</td>
+<td>4억 7,170만 달러 (48%)</td>
+</tr>
+<tr>
+<td>영업손익</td>
+<td>−5억 9,620만 달러</td>
+<td>−1억 7,590만 달러</td>
+<td>−3억 390만 달러</td>
+</tr>
+<tr>
+<td>조정 EBITDA</td>
+<td>−6,490만 달러</td>
+<td>+2억 3,620만 달러 (41%)</td>
+<td>+3억 6,570만 달러 (37%)</td>
+</tr>
+<tr>
+<td>설비투자</td>
+<td>40억 6,600만 달러</td>
+<td>56억 5,740만 달러</td>
+<td>81억 3,030만 달러</td>
+</tr>
+</tbody>
+</table></div>
+<p>2분기 제품개발비 1억 9,100만 달러 가운데 1억 1,590만 달러는 아이겐 AI 인수에 딸린 비경상 주식보상·합병후 비용이다[12-4]. 이것을 걷어 내면 경상 제품개발비는 매출의 약 13%다.</p>
+<h3>1-2. 부문별 (A, [12-2])</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>부문</th>
+<th>2026 2분기 매출</th>
+<th>2026 2분기 조정 EBITDA</th>
+<th>마진</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>네비우스 AI 클라우드</strong></td>
+<td>5억 7,490만 달러</td>
+<td>2억 8,570만 달러</td>
+<td>49.7%</td>
+</tr>
+<tr>
+<td>아브라이드 (자율주행)</td>
+<td>100만 달러</td>
+<td>−4,010만 달러</td>
+<td>—</td>
+</tr>
+<tr>
+<td>트리플텐 (에듀테크)</td>
+<td>1,000만 달러</td>
+<td>−940만 달러</td>
+<td>—</td>
+</tr>
+<tr>
+<td>그룹 합계</td>
+<td>5억 8,230만 달러</td>
+<td>2억 3,620만 달러</td>
+<td>40.6%</td>
+</tr>
+</tbody>
+</table></div>
+<p>AI 클라우드가 그룹 매출의 98.7%다(574.9 ÷ 582.3, C). 부문 조정 EBITDA가 그룹 합계보다 4,950만 달러 크다. 아브라이드와 트리플텐이 그만큼 깎는다.</p>
+<h3>1-3. 재무상태·계약 (A, [12-3]·[12-4])</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>2026-06-30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>유형자산 순액</td>
+<td>130억 4,520만 달러 (2025-12-31 55억 5,330만 달러)</td>
+</tr>
+<tr>
+<td>총자산</td>
+<td>279억 6,150만 달러</td>
+</tr>
+<tr>
+<td>현금·현금성자산</td>
+<td>80억 4,210만 달러</td>
+</tr>
+<tr>
+<td>차입금 합계</td>
+<td>85억 4,570만 달러 (유동 4,670만, 비유동 84억 9,900만)</td>
+</tr>
+<tr>
+<td>운용리스부채</td>
+<td>16억 2,530만 달러</td>
+</tr>
+<tr>
+<td>잔여 이행 의무(RPO)</td>
+<td>374억 9,060만 달러, 전액 AI 클라우드</td>
+</tr>
+<tr>
+<td>연환산매출(ARR)</td>
+<td>30억 달러 (6월 마지막 달 매출 × 12)</td>
+</tr>
+<tr>
+<td>고객 약정 총액</td>
+<td>400억 달러 초과</td>
+</tr>
+</tbody>
+</table></div>
+<p>RPO 인식 시기는 2028년 6월까지 36%, 그다음 24개월에 40%, 나머지 24%다[12-3]. 서버·네트워크 장비의 내용연수는 2026년 1월 1일부터 4년에서 5년으로 늘렸다[12-4].</p>
+<h3>1-4. 고객 집중도 (A, [12-3])</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>고객</th>
+<th>2026 2분기</th>
+<th>2026 상반기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>고객 C</td>
+<td>24%</td>
+<td>26%</td>
+</tr>
+<tr>
+<td>고객 D</td>
+<td>21%</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>고객 E</td>
+<td>14%</td>
+<td>(10% 미만)</td>
+</tr>
+<tr>
+<td>상위 3사 합계</td>
+<td>59%</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>공시는 C·D·E 를 마이크로소프트·메타 같은 공개 계약 상대에 잇지 않았다. 이 보고서도 잇지 않는다.</p>
+<h3>1-5. 2026년 가이던스 (A, [12-5])</h3>
+<p>CFO 다도 알론소가 2026년 8월 19일 콜에서 재확인했다. ARR 70억~90억 달러, 그룹 매출 30억~34억 달러, 조정 EBITDA 마진 약 40%, 설비투자 200억~250억 달러. 연말 연결 전력은 800MW~1GW, 연말 계약 전력 목표는 5GW다. 2027년부터는 해마다 1GW 넘게 배치할 계획이다.</p>
+<hr>
+<h2>2. 뒷단 (매출 → 고객 → 고객의 고객)</h2>
+<h3>2-1. Tier 1 고객</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>고객</th>
+<th>등급</th>
+<th>계약 내용</th>
+<th>공시에서 확인되는 것</th>
+<th>금액</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>마이크로소프트</strong></td>
+<td>A</td>
+<td>전용 GPU 인프라 5년</td>
+<td>2025년 9월 8일 발표. 2026년 2분기까지 모든 용량 트랜치 인도 완료, 그중 둘은 최근 한 달 안에 전달[12-4]</td>
+<td>174억 달러, 선택 서비스까지 194억 달러[12-7]</td>
+</tr>
+<tr>
+<td><strong>메타</strong></td>
+<td>A</td>
+<td>전용 용량 5년, 인도는 2027년 초 시작</td>
+<td>2026년 3월 16일 발표. 2분기에도 이 계약을 받칠 건설이 진행 중[12-4]</td>
+<td>120억 달러 + 잔여 용량 구매 약정 최대 150억 달러[12-8]</td>
+</tr>
+<tr>
+<td><strong>리플렉션 AI</strong></td>
+<td>A</td>
+<td>오픈소스 모델 학습·서빙 다년 계약</td>
+<td>2분기 랜드마크 4건 중 하나. 개별 금액 비공개[12-4]</td>
+<td>비공개</td>
+</tr>
+<tr>
+<td><strong>코히어</strong></td>
+<td>A</td>
+<td>에이전틱 AI 확장 협력</td>
+<td>2분기 랜드마크 4건 중 하나. 개별 금액 비공개[12-4]</td>
+<td>비공개</td>
+</tr>
+<tr>
+<td>미국 AI 신생랩 1곳</td>
+<td>A(익명)</td>
+<td>프런티어 모델 개발</td>
+<td>주주 서한이 이름을 밝히지 않았다[12-4]</td>
+<td>비공개</td>
+</tr>
+<tr>
+<td>미국 퀀트 트레이딩사 1곳</td>
+<td>A(익명)</td>
+<td>금융권 첫 대형 계약</td>
+<td>같은 자리[12-4]</td>
+<td>비공개</td>
+</tr>
+<tr>
+<td>고객 C·D·E</td>
+<td>A(익명)</td>
+<td>—</td>
+<td>2026 2분기 매출의 24%·21%·14%[12-3]</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>2분기 랜드마크 계약 4건은 평균 총계약금액(TCV)이 10억 달러를 넘고, 전력 1MW당 연간계약가치(ACV)가 2,000만~2,500만 달러다. 4건의 TCV 합계는 직전 분기 대비 약 4배, 신규 고객에서 나온 TCV 는 9배 넘게 늘었다[12-4].</p>
+<h3>2-2. 이름이 공개된 이용사 (계약 금액은 전부 비공개, A)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>쓰는 것</th>
+<th>공개된 수치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>힉스필드</td>
+<td>초기 고객, 영상 생성</td>
+<td>최초 계약 대비 사용량 20배 초과. 95분 장편영화를 네비우스 인프라로 제작[12-4]</td>
+</tr>
+<tr>
+<td>베이스캠프 리서치</td>
+<td>생물학 기반모델 EDEN</td>
+<td>280억 변수, 9조 7,000억 토큰, 신종 100만 종. 사내 환경 대비 학습 속도 20배[12-4]</td>
+</tr>
+<tr>
+<td>프리마 멘테</td>
+<td>알츠하이머·파킨슨 후성유전 모델</td>
+<td>10억 → 680억 변수, 혈액 샘플 진단 정확도 89~97%. H200 32기 예약 클러스터[12-4]</td>
+</tr>
+<tr>
+<td>AMI (얀 르쿤 공동창업)</td>
+<td>세계모델 연구</td>
+<td>컴퓨트·스토리지 인프라[12-4]</td>
+</tr>
+<tr>
+<td>레볼루트</td>
+<td>AI 클라우드 + 토큰 팩토리</td>
+<td>H100 200기 초과 가동, 사기 방지·고객 응대[12-28]</td>
+</tr>
+<tr>
+<td>소드 헬스</td>
+<td>블랙웰 전용 엔드포인트 + 토큰 팩토리</td>
+<td>최악 응답시간을 자릿수 단위로 단축[12-4]</td>
+</tr>
+<tr>
+<td>리크래프트·프라임 인텔렉트·로보포스·링크스 애널리틱스</td>
+<td>기반모델 학습, 분산 학습·강화학습(GB200 NVL72), 물리 AI, 그래프 AI</td>
+<td>리크래프트 200억 변수, 로보포스 준비 시간 70% 감소[12-28]</td>
+</tr>
+</tbody>
+</table></div>
+<h3>2-3. 고객의 고객 (Tier 2 뒷단)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>경로</th>
+<th>다음에 오는 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>마이크로소프트 →</td>
+<td>애저 고객, 오픈AI 워크로드 (금액 배분은 공시 없음)</td>
+</tr>
+<tr>
+<td>메타 →</td>
+<td>라마 계열 학습·추론, 메타 사내 제품</td>
+</tr>
+<tr>
+<td>리플렉션·코히어·AMI →</td>
+<td>오픈소스 개발자, 에이전틱 AI 를 쓰는 기업</td>
+</tr>
+<tr>
+<td>팔란티어 →</td>
+<td>통합을 마친 팔란티어 상용 고객. 개별 실명은 비공개[12-16]</td>
+</tr>
+<tr>
+<td>힉스필드·리크래프트 →</td>
+<td>영상·이미지 생성 최종 소비자</td>
+</tr>
+</tbody>
+</table></div>
+<p>팔란티어는 2026년 9월 8일에 주권 AI 우선 파트너로 발표됐다. 계약 금액이나 용량을 밝힌 문장이 없으므로 이 보고서는 팔란티어를 직접 고객으로 세지 않고 판매 경로로만 적는다.</p>
+<h3>2-4. 계약이 세 갈래로 갈린다 (A, [12-4]·[12-5])</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>갈래</th>
+<th>기간</th>
+<th>MW당 연간계약가치</th>
+<th>쓰임</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>단기</td>
+<td>3~6개월</td>
+<td>4,000만~5,000만 달러</td>
+<td>시한이 급한 고객. 2026년 3분기에 첫 건 체결, 4분기 가동</td>
+</tr>
+<tr>
+<td>중기 (주력)</td>
+<td>1~3년</td>
+<td>2,000만~2,500만 달러</td>
+<td>AI 랩·기업. 2분기 랜드마크 4건이 여기</td>
+</tr>
+<tr>
+<td>장기</td>
+<td>다년</td>
+<td>공시 없음</td>
+<td>투자적격 등급 고객. 담보부 조달의 바탕</td>
+</tr>
+</tbody>
+</table></div>
+<p>2026년 기준 매출을 받치는 계약의 MW당 연간계약가치는 1,200만 달러이고, 2분기에 새로 맺은 계약은 2,000만 달러를 넘었다[12-4]. 회사는 신세대 GPU 가격이 오른 것과, 구세대 GPU 값도 1분기보다 30% 넘게 올려 받은 것을 이유로 든다.</p>
+<hr>
+<h2>3. 앞단 (매출원가 → 공급사 → 공급사의 공급사)</h2>
+<h3>3-1. 원가가 두 군데로 갈린다</h3>
+<p>네비우스의 손익계산서는 하드웨어 값을 매출원가에 넣지 않는다. GPU 는 유형자산으로 잡혀 5년에 걸쳐 감가상각비로 나온다. 그래서 앞단으로 나가는 돈은 두 줄에 나뉘어 앉는다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>줄</th>
+<th>2026 2분기</th>
+<th>매출 대비</th>
+<th>무엇이 들었나</th>
+<th>연결되는 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출원가</td>
+<td>1억 3,360만 달러</td>
+<td>23%</td>
+<td>코로케이션 임차료, 운용리스, 전력, 운영 인력</td>
+<td>에퀴닉스·데이터원·전력 공급사[12-4]</td>
+</tr>
+<tr>
+<td>감가상각비</td>
+<td>2억 5,970만 달러</td>
+<td>45%</td>
+<td>GPU·네트워크 장비(5년), 데이터센터 설비</td>
+<td>엔비디아, 부지·건설사[12-4]</td>
+</tr>
+</tbody>
+</table></div>
+<p>회사가 감가상각비 증가의 주된 이유로 "GPU 관련 설비투자와 데이터센터 하드웨어"를 든다[12-4]. 돈이 움직이는 차례로 보면 이렇다. ① 고객이 선수금을 낸다(2026년에 90억 달러 넘게 받을 예정, 계약의 70%에 선수금이 붙고 해당 설비투자의 50~60%를 덮는다). ② 그 돈으로 엔비디아에 GPU 대금을 낸다(2026년 2분기 설비투자 56억 5,740만 달러). ③ 장비가 부지에 들어가 가동되면 5년에 걸쳐 감가상각비로 장부에 잡힌다. ④ 매출은 계약 기간에 걸쳐 나눠 인식된다. 선수금은 받은 시점에 매출이 아니라 부채로 잡힌다.</p>
+<h3>3-2. 공급사 실명</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>공급사</th>
+<th>등급</th>
+<th>공급하는 것</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>엔비디아</strong></td>
+<td>A</td>
+<td>GPU, AI 네트워크(InfiniBand·Spectrum-X 계열), Vera CPU</td>
+<td>20-F 위험요인: "We currently rely on Nvidia for the GPU chips we use and on a limited number of other suppliers for other key components in our infrastructure."[12-1]</td>
+</tr>
+<tr>
+<td><strong>블룸에너지</strong></td>
+<td>A</td>
+<td>계량기 뒤 SOFC(고체산화물 연료전지 — 세라믹 전해질로 가스에서 바로 전기를 뽑는 방식) 전력. 1차 프로젝트 328MW</td>
+<td>2026년 5월 20일 발표[12-10]</td>
+</tr>
+<tr>
+<td><strong>데이터원</strong></td>
+<td>A</td>
+<td>뉴저지 바인랜드 시설 소유·운영, 네비우스는 임차</td>
+<td>[12-17]</td>
+</tr>
+<tr>
+<td><strong>노스이스트 프리캐스트</strong></td>
+<td>A</td>
+<td>바인랜드 시공</td>
+<td>[12-17]</td>
+</tr>
+<tr>
+<td><strong>에퀴닉스</strong></td>
+<td>A</td>
+<td>파리 PA10(생드니) 코로케이션</td>
+<td>[12-18]</td>
+</tr>
+<tr>
+<td><strong>WEKA / VAST 데이터</strong></td>
+<td>A</td>
+<td>스토리지 소프트웨어. 네비우스 하드웨어 위에 얹는다</td>
+<td>파트너 카탈로그[12-19]</td>
+</tr>
+</tbody>
+</table></div>
+<p>부속서 99.2 는 설비투자 기준으로 집중된 공급사가 2025년 말 두 곳, 2026년 6월 말 세 곳이라고만 적었다. 실명도, 각각의 비중도 밝히지 않았다[12-3]. 엔비디아가 그 셋 가운데 하나라고 단정할 근거는 공시에 없다.</p>
+<h3>3-3. 공급사의 공급사 (Tier 2)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>Tier 1</th>
+<th>Tier 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>엔비디아 GPU</td>
+<td>TSMC(로직 다이·CoWoS 패키징), SK하이닉스·마이크론·삼성(HBM — 고대역폭 메모리), 이비덴·유니마이크론(ABF 기판), ASE·앰코(후공정)</td>
+</tr>
+<tr>
+<td>엔비디아 네트워크</td>
+<td>광모듈·스위치 ODM</td>
+</tr>
+<tr>
+<td>블룸에너지 SOFC</td>
+<td>스택 세라믹, 인터커넥트, 주변장치(BOP)</td>
+</tr>
+<tr>
+<td>데이터센터 전기설비</td>
+<td>변압기·스위치기어·중압반. 리드타임이 가장 긴 품목군</td>
+</tr>
+<tr>
+<td>부지 전력</td>
+<td>계통 접속, 가스 공급</td>
+</tr>
+</tbody>
+</table></div>
+<p>엔비디아 뒷쪽 사슬의 단가·마진은 이 저장소의 TSMC 밸류체인 조사(<code>data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md</code>) 14절에 원가 적층으로 정리돼 있다. 여기서는 되풀이하지 않는다.</p>
+<h3>3-4. 부지와 전력</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>부지</th>
+<th>상태</th>
+<th>용량</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>만찰라 (핀란드)</td>
+<td>가동 중, 확장 완료</td>
+<td>75MW (2026-03-31 기준)</td>
+<td>[12-11]·[12-1]</td>
+</tr>
+<tr>
+<td>라펜란타 (핀란드)</td>
+<td>건설</td>
+<td>최대 310MW, 첫 용량 2027년</td>
+<td>[12-11]</td>
+</tr>
+<tr>
+<td>인디펜던스 (미주리)</td>
+<td>2026-05-12 착공</td>
+<td>잠재 최대 1.2GW</td>
+<td>[12-12]</td>
+</tr>
+<tr>
+<td>바인랜드 (뉴저지)</td>
+<td>데이터원 소유, 네비우스 임차</td>
+<td>공시 없음</td>
+<td>[12-17]</td>
+</tr>
+<tr>
+<td>파리 PA10</td>
+<td>가동 중</td>
+<td>공시 없음</td>
+<td>[12-18]</td>
+</tr>
+<tr>
+<td>영국·이스라엘·아이슬란드·에스토니아·스페인·오클라호마·앨라배마·미네소타·캔자스시티·펜실베이니아</td>
+<td>주주 서한 지도에 표시</td>
+<td>개별 용량 공시 없음</td>
+<td>[12-4]</td>
+</tr>
+</tbody>
+</table></div>
+<p>2026년 2분기에 영국·에스토니아·핀란드에 부지를 더했다. 연말 계약 전력 목표는 2025년 11월 1GW 초과 → 2026년 2월 2.5GW 초과 → 5월 3GW 초과 → 8월 5GW 로 세 번 올랐다[12-4].</p>
+<h3>3-5. 자산 경량 모델 (A, [12-15])</h3>
+<p>2026년 7월 15일에 내놓은 방식이다. 파트너가 부지·전력·하드웨어를 사서 소유하고, 네비우스는 시스템 설계·레퍼런스 디자인·클라우드 플랫폼·영업 조직을 맡는다. 주주 서한의 표현으로는 "파트너가 낸 자본으로 만든 용량을 최소한의 자기 자본 지출로 고마진 매출로 바꾼다"[12-4]. 소유 형태는 셋으로 갈린다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>형태</th>
+<th>부지·전력</th>
+<th>하드웨어</th>
+<th>플랫폼·영업</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>자가 데이터센터</td>
+<td>네비우스</td>
+<td>네비우스</td>
+<td>네비우스</td>
+</tr>
+<tr>
+<td>코로케이션</td>
+<td>파트너</td>
+<td>네비우스</td>
+<td>네비우스</td>
+</tr>
+<tr>
+<td>자산 경량</td>
+<td>파트너</td>
+<td>파트너</td>
+<td>네비우스</td>
+</tr>
+</tbody>
+</table></div>
+<p>자산 경량에서 네비우스가 받는 수수료율은 공시에 없다. 이 보고서의 단위경제는 코로케이션·자가 형태를 기준으로 세웠다.</p>
+<hr>
+<h2>4. 매출 드라이버 트리 (2026년 2분기 기준)</h2>
+<h3>Level 0</h3>
+<p>매출 = AI 클라우드 매출 + 아브라이드 + 트리플텐
+= 5억 8,230만 달러 = 5억 7,490만(98.7%) + 100만 + 1,000만 [12-2]</p>
+<h3>Level 1 — AI 클라우드 매출 = 매출 내는 전력(MW) × MW당 연간계약가치 ÷ 4</h3>
+<p>2026년 기준 계약의 MW당 연간계약가치는 1,200만 달러다(A, [12-4]).
+2분기 매출을 연환산하면 5억 8,230만 × 4 = 23억 2,920만 달러.
+→ 매출을 내고 있는 전력 ~194MW (= 2,329 ÷ 12.0, C)</p>
+<p>연말 연결 전력 가이던스 800MW~1GW[12-5]와 맞추면, 2026년 하반기에 연결 전력이 네 배 넘게 늘어야 한다는 뜻이다. 이것이 2026년 매출 가이던스 30억~34억 달러와 ARR 가이던스 70억~90억 달러 사이의 간격을 설명한다. ARR 은 12월 한 달 매출을 12배 한 값이라 연말 용량을 반영하고, 매출은 한 해 평균 용량을 반영한다.</p>
+<h3>Level 2 — 매출 내는 전력 = 계약 전력 × 건설 진척 × 가동</h3>
+<ul>
+<li>계약 전력: 2026년 말 5GW 목표. 부지와 전력 계약으로 확보한 것이지 설치한 용량이 아니다[12-4]</li>
+<li>연결 전력: 2026년 말 800MW~1GW. 2027년부터 해마다 1GW 넘게 추가 계획[12-5]</li>
+<li>전력·설비 리드타임: 뉴저지에서 50MW 를 목표 4개월에 못 맞추고 10~11개월이 걸렸다[12-27]</li>
+</ul>
+<h3>Level 2 — MW당 연간계약가치 = Σ(계약 갈래별 비중 × 갈래별 단가)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>갈래</th>
+<th>MW당 연간계약가치</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026년 기준 계약</td>
+<td>1,200만 달러</td>
+<td>[12-4]</td>
+</tr>
+<tr>
+<td>2분기 신규 중기 계약</td>
+<td>2,000만~2,500만 달러</td>
+<td>[12-4]·[12-5]</td>
+</tr>
+<tr>
+<td>3분기 단기 계약</td>
+<td>4,000만~5,000만 달러</td>
+<td>[12-4]·[12-5]</td>
+</tr>
+</tbody>
+</table></div>
+<p>가격이 오른 이유로 회사가 든 것은 신세대 GPU 단가 상승, 구세대 GPU 가격의 30% 초과 인상, 그리고 첫 용량 경매다. 경매는 블랙웰 기준 지금까지 받아 본 가격보다 15% 높게, 파이프라인 대비 20% 높게 낙찰됐다[12-5].</p>
+<h3>Level 2 — GPU 1장·1시간으로 바꿔 보면 (C)</h3>
+<p>MW당 1,200만 달러 ÷ 8,760시간 = MW·시간당 ~1,370달러.
+1MW 에 들어가는 GPU 수는 공시에 없다. 저장소 원문에서 GB300 NVL72 기준 50~100MW 클러스터에 2만 4,000~4만 8,000장(MW당 480장)[12-22], 퍼머스 멜버른 42MW 에 GB300 1만 8,000대(MW당 ~428장)[12-23]가 나온다. 가운데를 잡아 MW당 450장으로 두면:</p>
+<div class="tw"><table>
+<thead><tr>
+<th>계약 갈래</th>
+<th>GPU 1장·1시간 환산</th>
+<th>저장소 원문의 시장 시세</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026년 기준 계약 (1,200만/MW)</td>
+<td>~3.0달러</td>
+<td>네오클라우드 등급 3~4달러대[12-26]</td>
+</tr>
+<tr>
+<td>2분기 신규 중기 (2,250만/MW)</td>
+<td>~5.7달러</td>
+<td>GB300 1년 임대 시작가 6.75달러, 6년 고정가 ~4.00달러[12-23]</td>
+</tr>
+<tr>
+<td>3분기 단기 (4,500만/MW)</td>
+<td>~11.4달러</td>
+<td>AWS p6-b200 스팟 최고 14달러[12-22]</td>
+</tr>
+</tbody>
+</table></div>
+<p>네비우스가 홈페이지에 내건 온디맨드 가격은 월 첫 1,000 GPU-시간까지 1.50달러다[12-26]. 그 가격은 맛보기용이고, 매출의 실체는 계약 물량이다.</p>
+<h3>드라이버 → 밸류체인 연결</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>드라이버</th>
+<th>연결 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>계약 전력</td>
+<td>전력회사, 블룸에너지, 부지 개발사</td>
+</tr>
+<tr>
+<td>연결 전력</td>
+<td>데이터원·노스이스트 프리캐스트(시공), 변압기·스위치기어 공급사</td>
+</tr>
+<tr>
+<td>MW당 GPU 수</td>
+<td>엔비디아 (세대가 바뀌면 랙당 전력이 오른다)</td>
+</tr>
+<tr>
+<td>MW당 가격</td>
+<td>마이크로소프트·메타·리플렉션·코히어 등 뒷단</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>5. 비용 드라이버 트리와 단위경제</h2>
+<h3>5-1. Level 0</h3>
+<p>영업손익 = 매출 − 매출원가 − 제품개발비 − 판매관리비 − 감가상각비
+= 5억 8,230만 − 1억 3,360만 − 1억 9,100만 − 1억 7,390만 − 2억 5,970만 = <strong>−1억 7,590만 달러 (−30.2%)</strong> [12-2]</p>
+<p>조정 EBITDA 는 여기에 감가상각비와 주식보상비(2분기 1억 250만 달러), 인수 관련 비용을 되더해 구한다. 그래서 +2억 3,620만 달러가 된다. 두 숫자의 거리가 곧 이 사업의 성격이다. 현금은 남지만 하드웨어가 닳는 값을 빼면 아직 적자다.</p>
+<h3>5-2. 단위를 무엇으로 잡을 것인가</h3>
+<p>이 보고서는 단위를 <strong>계약 전력 1MW의 1년</strong>으로 잡는다. GPU 1장·1시간이 아니라 1MW·1년을 쓰는 이유는 네비우스가 가격을 MW당 연간계약가치로 공시하기 때문이다[12-4]. GPU 장수는 공시에 없고 세대마다 랙당 전력이 달라서, GPU 단위로 내려가면 계산의 재료 하나가 추정치가 된다. 4절 끝에 GPU·시간 환산을 따로 적어 두었다.</p>
+<h3>5-3. 1MW·1년의 워터폴 (2026년 2분기 실적 비율을 그대로 쓴다)</h3>
+<p>매출 1,200만 달러(MW당 연간계약가치, A)에 2분기 손익 비율(A)을 곱한다.</p>
+<p>오른쪽 칸은 2분기에 새로 맺은 계약 가격(MW당 2,250만 달러, 2,000만~2,500만의 가운데)으로 같은 1MW 를 판 경우다. 용량을 만드는 원가는 파는 값이 올라도 그대로이므로 비용 줄을 그대로 두었다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>2026년 기준 계약</th>
+<th>2분기 신규 중기 계약</th>
+<th>누가 받는가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출 (MW당 연간계약가치)</td>
+<td>+1,200만 달러</td>
+<td>+2,250만 달러</td>
+<td>—</td>
+</tr>
+<tr>
+<td>매출원가</td>
+<td>−275만 달러</td>
+<td>−275만 달러</td>
+<td>에퀴닉스·데이터원(임차), 전력 공급사, 운영 인력</td>
+</tr>
+<tr>
+<td>감가상각비</td>
+<td>−535만 달러</td>
+<td>−535만 달러</td>
+<td>엔비디아(GPU·네트워크), 부지·설비</td>
+</tr>
+<tr>
+<td>제품개발비 (경상)</td>
+<td>−155만 달러</td>
+<td>−155만 달러</td>
+<td>사내 엔지니어</td>
+</tr>
+<tr>
+<td>제품개발비 (아이겐 AI 비경상)</td>
+<td>−239만 달러</td>
+<td>−239만 달러</td>
+<td>인수 대가</td>
+</tr>
+<tr>
+<td>판매관리비</td>
+<td>−358만 달러</td>
+<td>−358만 달러</td>
+<td>사내 영업·관리, 자문·법률</td>
+</tr>
+<tr>
+<td><strong>= 영업손익</strong></td>
+<td><strong>−362만 달러 (−30%)</strong></td>
+<td><strong>+688만 달러 (+31%)</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>왼쪽 칸의 비용 줄은 2026년 2분기 실적 비율을 그대로 옮긴 것이다(매출원가 23%, 감가상각비 45%, 제품개발비 33%, 판매관리비 30%). 가격만 1.9배가 되면 적자 362만 달러가 흑자 688만 달러로 바뀐다.</p>
+<p>가장 큰 항목은 감가상각비다. 이것을 뒤집으면 설비투자 규모가 나온다. 내용연수 5년 정액이므로 MW당 설비투자 ~2,680만 달러(= 535만 × 5, C).</p>
+<p>같은 값을 다른 길로도 구할 수 있다. 회사는 2분기에 맺은 계약의 회수 기간을 1년 10개월이라고 밝혔고, 그 기간에 회수하는 대상은 "관련 설비투자와 이에 딸린 운영비"다[12-4]. MW당 연간계약가치 2,000만 달러 × 1.833년 = 3,667만 달러. 여기서 운영비(매출의 23%)를 그 기간만큼 빼면 3,667만 × 0.77 = ~2,820만 달러. 두 길이 2,680만과 2,820만으로 만난다. 이 보고서는 <strong>MW당 설비투자 ~2,700만 달러</strong>를 쓴다.</p>
+<h3>5-4. GPU 1장·1시간으로 내려 보면 (C)</h3>
+<p>MW당 450장, 연 8,760시간으로 나눈다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>GPU·시간당</th>
+<th>저장소 원문의 대조값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출 (2026년 기준 계약)</td>
+<td>~3.04달러</td>
+<td>네오클라우드 등급 3~4달러[12-26]</td>
+</tr>
+<tr>
+<td>감가상각비</td>
+<td>~1.36달러</td>
+<td>지상 IT 자본비용 1.81달러[12-24]</td>
+</tr>
+<tr>
+<td>매출원가(임차·전력·운영)</td>
+<td>~0.70달러</td>
+<td>전력만 0.21달러(kWh 8.7센트·PUE 1.35·가동률 80%), 데이터센터 자본비용 0.36달러[12-24]</td>
+</tr>
+<tr>
+<td>사내 인건비·플랫폼</td>
+<td>~1.31달러</td>
+<td>—</td>
+</tr>
+<tr>
+<td>영업손익</td>
+<td>~−0.33달러</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>저장소 원문의 지상 데이터센터 모델은 IT 자본비용 1.81달러에 데이터센터 0.36달러, 전력 0.21달러를 더해 2.38달러인데, 이 보고서의 2.06달러(감가상각 + 매출원가)보다 조금 높다[12-24]. 그 모델은 15년 수명의 데이터센터를 직접 세우는 경우를 가정한다.</p>
+<h3>5-5. 금융비용</h3>
+<p>하드웨어 대금을 미리 내야 하므로 자금 조달 조건이 곧 수익성이다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>조달</th>
+<th>금액</th>
+<th>조건</th>
+<th>시점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>담보부 차입</td>
+<td>7억 7,500만 달러</td>
+<td>SOFR + 2.50%, 2030-10-31 만기. 배치를 마친 GPU 인프라와 투자적격 고객 계약 현금흐름이 담보</td>
+<td>2026-07[12-13]</td>
+</tr>
+<tr>
+<td>전환사채 (2030년 만기)</td>
+<td>34억 5,000만 달러</td>
+<td>0.50%</td>
+<td>2026-08[12-14]</td>
+</tr>
+<tr>
+<td>전환사채 (2034년 만기)</td>
+<td>23억 달러</td>
+<td>4.50%</td>
+<td>2026-08[12-14]</td>
+</tr>
+<tr>
+<td>시장가 발행(ATM)</td>
+<td>약 28억 달러</td>
+<td>클래스 A 1,270만 주, 가중평균 223.6달러</td>
+<td>2026 상반기[12-4]</td>
+</tr>
+<tr>
+<td>고객 선수금</td>
+<td>2026년 90억 달러 초과 예상</td>
+<td>계약의 70%에 붙고 해당 설비투자의 50~60%를 덮는다</td>
+<td>[12-4]</td>
+</tr>
+</tbody>
+</table></div>
+<p>저장소 원문은 이 차이가 얼마나 큰지를 재어 두었다. 오프테이크·백스톱을 낀 담보부 조달이 약 5.62%, 최상위 네오클라우드의 무담보 조달이 약 10%이고, LTV 70~80% 구조에서 이 4%포인트 차이가 세전이익률을 14.8%에서 5.4%로 떨어뜨린다[12-23]. 네비우스가 2026년 7월 담보부 조달을 처음 쓴 것과, 고객 선수금으로 설비투자의 절반 이상을 덮는 것이 같은 문제에 대한 답이다.</p>
+<h3>5-6. 마진을 바꾸는 다섯 지렛대</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>지렛대</th>
+<th>방향</th>
+<th>2026년 상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MW당 계약 가격</td>
+<td>가장 크다. 원가는 그대로고 차액이 전부 이익으로 남는다</td>
+<td>1,200만 → 2,000만~2,500만 달러[12-4]</td>
+</tr>
+<tr>
+<td>내용연수</td>
+<td>4년 → 5년으로 늘려 연 감가상각비가 20% 줄었다</td>
+<td>2026-01-01 적용[12-4]</td>
+</tr>
+<tr>
+<td>가동·판매율</td>
+<td>계약 안 된 용량은 원가만 낸다</td>
+<td>2027년 용량을 지금도 다 팔 수 있으나 일부를 남겨 둔다고 밝혔다[12-4]</td>
+</tr>
+<tr>
+<td>조달 금리</td>
+<td>담보부와 무담보 사이 약 4%포인트[12-23]</td>
+<td>담보부 첫 건 SOFR+2.50%[12-13]</td>
+</tr>
+<tr>
+<td>자산 경량 비중</td>
+<td>감가상각비가 파트너 장부로 넘어간다</td>
+<td>2026-07 도입, 수수료율 비공개[12-15]</td>
+</tr>
+</tbody>
+</table></div>
+<h3>5-7. 비용 → 앞단 연결</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>비용 항목</th>
+<th>연결 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>감가상각비</td>
+<td>엔비디아(GPU·네트워크·Vera CPU), 전기설비 공급사, 시공사</td>
+</tr>
+<tr>
+<td>매출원가</td>
+<td>에퀴닉스·데이터원(임차), 전력회사, 블룸에너지</td>
+</tr>
+<tr>
+<td>제품개발비</td>
+<td>사내 엔지니어. 아이겐 AI·클라리파이·타빌리 인수로 늘었다</td>
+</tr>
+<tr>
+<td>이자비용</td>
+<td>전환사채·담보부 차입 투자자</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>6. 병목·단일소스 리스크 스코어</h2>
+<p>점수는 대체 가능성(1 = 대체 불가 ~ 5 = 쉬움), 리드타임(1 = 3년 이상 ~ 5 = 수개월), 지정학(1 = 단일국 집중 ~ 5 = 분산)이다. <strong>합계가 낮을수록 위험하다.</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th>병목</th>
+<th>지배 회사</th>
+<th>점유</th>
+<th>대체</th>
+<th>리드타임</th>
+<th>지정학</th>
+<th>합계</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI GPU</td>
+<td>엔비디아</td>
+<td>20-F가 의존을 실명으로 적었다</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td><strong>5</strong></td>
+<td>생산은 TSMC 대만. 대체가 없다기보다 성능 세대가 고객 요구다</td>
+</tr>
+<tr>
+<td>AI 네트워크</td>
+<td>엔비디아</td>
+<td>InfiniBand·Spectrum-X</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td><strong>6</strong></td>
+<td>GPU와 묶여 들어온다</td>
+</tr>
+<tr>
+<td>HBM (엔비디아 뒤)</td>
+<td>SK하이닉스·마이크론·삼성</td>
+<td>3사</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td><strong>6</strong></td>
+<td>Tier 2. GPU 원가에서 가장 큰 부품</td>
+</tr>
+<tr>
+<td>계통 접속 전력</td>
+<td>지역 전력회사</td>
+<td>부지마다 다르다</td>
+<td>2</td>
+<td>1</td>
+<td>4</td>
+<td><strong>7</strong></td>
+<td>리드타임이 가장 길다. 뉴저지 50MW 가 목표 4개월 대신 10~11개월[12-27]</td>
+</tr>
+<tr>
+<td>전기설비(변압기·스위치기어)</td>
+<td>분산</td>
+<td>—</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td><strong>7</strong></td>
+<td>리드타임이 용량 일정을 정한다</td>
+</tr>
+<tr>
+<td>설비투자 공급사 집중</td>
+<td>세 곳 (실명 비공개)</td>
+<td>공시가 "세 곳"이라고만 적었다[12-3]</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td><strong>7</strong></td>
+<td>2025년 말 두 곳에서 늘었다</td>
+</tr>
+<tr>
+<td>고객 집중</td>
+<td>고객 C·D·E</td>
+<td>2026 2분기 매출의 59%[12-3]</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td><strong>8</strong></td>
+<td>한 곳이 빠지면 그 용량을 다시 팔아야 한다</td>
+</tr>
+<tr>
+<td>계량기 뒤 전력(연료전지)</td>
+<td>블룸에너지</td>
+<td>1차 328MW[12-10]</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td><strong>9</strong></td>
+<td>계통 대기줄을 건너뛰는 길. 가스 공급이 앞단</td>
+</tr>
+<tr>
+<td>부지·건설</td>
+<td>데이터원·노스이스트 프리캐스트 등</td>
+<td>부지마다 다르다</td>
+<td>3</td>
+<td>2</td>
+<td>4</td>
+<td><strong>9</strong></td>
+<td>자산 경량 모델이 완화 수단</td>
+</tr>
+<tr>
+<td>코로케이션</td>
+<td>에퀴닉스 등</td>
+<td>분산</td>
+<td>4</td>
+<td>3</td>
+<td>4</td>
+<td><strong>11</strong></td>
+<td>파리 PA10 등</td>
+</tr>
+<tr>
+<td>자본 조달</td>
+<td>채권시장·선수금 고객</td>
+<td>—</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td><strong>11</strong></td>
+<td>값이 아니라 조건이 위험. 5-5절</td>
+</tr>
+<tr>
+<td>스토리지 소프트웨어</td>
+<td>WEKA·VAST 데이터</td>
+<td>둘 다 쓴다[12-19]</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td><strong>13</strong></td>
+<td>이중 소싱이 이미 돼 있다</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>요약:</strong> 가장 낮은 셋은 엔비디아 GPU(5), 엔비디아 네트워크와 HBM(6)이다. 그다음이 전력과 전기설비, 그리고 공급사 셋으로 몰린 설비투자(각 7)다. 네비우스의 리스크는 소재가 아니라 ① 한 회사에서 사는 하드웨어와 ② 현물로 존재하는 전력·설비의 리드타임, 이렇게 두 종류로 갈린다. 앞의 것은 돈으로 못 풀고, 뒤의 것은 계약 전력을 5GW 까지 미리 잡아 두는 방식으로 풀고 있다.</p>
+<hr>
+<h2>7. 마진 풀 — GPU 1장·1시간을 따라가면</h2>
+<p>2분기 신규 중기 계약 가격(MW당 2,250만 달러, 2,000만~2,500만의 가운데)으로 판 GPU 1장·1시간의 돈이 어디로 가는지 본다. 원가는 5-4절의 값을 그대로 쓴다. 용량을 만드는 원가는 파는 값이 올라도 그대로이기 때문이다. 제품개발비는 비경상분을 뺀 경상분만 넣었다.</p>
+<h3>7-1. 원가 적층 (GPU 1장·1시간)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>단계</th>
+<th>회사</th>
+<th>원가 기여</th>
+<th>누적</th>
+<th>성격</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU·네트워크 시스템 감가상각</td>
+<td>엔비디아</td>
+<td>~1.09달러</td>
+<td>1.09달러</td>
+<td>5년 정액. 감가상각비의 80%로 잡았다</td>
+</tr>
+<tr>
+<td>부지·건물·전기설비 감가상각</td>
+<td>시공사·설비사</td>
+<td>~0.27달러</td>
+<td>1.36달러</td>
+<td>나머지 20%</td>
+</tr>
+<tr>
+<td>코로케이션 임차·전력·운영</td>
+<td>에퀴닉스·데이터원·전력회사·블룸에너지</td>
+<td>~0.70달러</td>
+<td>2.06달러</td>
+<td>매출원가 23%</td>
+</tr>
+<tr>
+<td>사내 인건비·플랫폼</td>
+<td>네비우스</td>
+<td>~1.31달러</td>
+<td>3.37달러</td>
+<td>경상 제품개발비 + 판매관리비</td>
+</tr>
+<tr>
+<td><strong>판매가 (신규 중기 계약)</strong></td>
+<td></td>
+<td><strong>~5.70달러</strong></td>
+<td></td>
+<td>MW당 2,250만 달러 환산</td>
+</tr>
+<tr>
+<td><strong>네비우스 영업이익</strong></td>
+<td></td>
+<td><strong>~2.33달러</strong></td>
+<td></td>
+<td>~41%</td>
+</tr>
+</tbody>
+</table></div>
+<p>감가상각비를 엔비디아 쪽 80%와 부지·설비 20%로 나눈 것은 이 보고서의 계산이다(C). 설비투자 2,700만 달러 가운데 하드웨어와 부지의 비중을 회사가 밝힌 적이 없다. 저장소 원문의 지상 데이터센터 모델에서 IT 자본비용과 데이터센터 자본비용의 비가 대략 72대 28인 것[12-24]을 참고했고, 네비우스는 부지를 상당 부분 임차하므로 하드웨어 쪽으로 더 기울여 잡았다.</p>
+<h3>7-2. 해석</h3>
+<ul>
+<li>판매가 5.70달러 가운데 엔비디아로 1.09달러(19%), 전력·부지·임차로 0.97달러(17%), 네비우스 자기 인건비로 1.31달러(23%), 영업이익으로 2.33달러(41%)가 간다.</li>
+<li>2026년 기준 계약 가격 3.04달러로 같은 계산을 하면 영업이익이 −0.33달러다. 원가는 그대로인데 가격만 1.9배가 되면서 적자가 41% 마진으로 바뀐다. <strong>이 사업의 손익은 가동률보다 계약 가격이 정한다.</strong></li>
+<li>회수 기간 1년 10개월은 5년 내용연수의 37%다. 남은 3년 2개월이 그대로 이익이라는 뜻인데, 그 기간에 GPU 세대가 두 번 바뀐다. 저장소 원문이 재어 둔 H100 1년 계약 단가는 2025년 10월 시간당 1.70달러 저점에서 2026년 3월 2.35달러로 올랐다[12-22]. 구세대 가격이 내려가지만은 않는다는 실증이다.</li>
+<li>이 GPU·시간을 산 고객이 파는 것은 토큰이다. 네비우스도 토큰 팩토리로 그 층에 들어가 있고, 2분기에 상용 추론 워크로드가 3배 넘게 늘었다[12-4].</li>
+</ul>
+<hr>
+<h2>8. 시나리오 민감도</h2>
+<p>기준선은 5-3절 워터폴의 오른쪽 칸이다. 1MW·1년, 매출 2,250만 달러, 영업이익 688만 달러.
+가정: 감가상각비·제품개발비·판매관리비는 고정, 매출원가는 매출에 비례, MW당 설비투자 2,700만 달러, MW당 GPU 450장, 내용연수 5년.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>시나리오</th>
+<th>충격 경로</th>
+<th>매출</th>
+<th>영업손익 변화</th>
+<th>전파</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 단기 계약 4,500만 달러/MW</strong></td>
+<td>3분기 첫 건 수준. 3~6개월 프리미엄</td>
+<td>+2,250만</td>
+<td><strong>+2,250만 달러</strong></td>
+<td>뒷: 시한이 급한 고객. 물량은 작다</td>
+</tr>
+<tr>
+<td><strong>② 2026년 기준 가격으로 회귀</strong></td>
+<td>신규 계약 가격이 1,200만 달러/MW로 되돌아가면</td>
+<td>−1,050만</td>
+<td><strong>−1,050만 달러</strong></td>
+<td>뒷: 신규 고객 협상력 반전 / 앞: 원가 불변이라 앞단에 전파 없음</td>
+</tr>
+<tr>
+<td><strong>③ 재계약 공백 6개월</strong></td>
+<td>고객 C(매출의 24%)급 계약이 끝나고 6개월 비는 경우</td>
+<td>−1,125만</td>
+<td><strong>−1,125만 달러</strong></td>
+<td>뒷: 고객 집중 리스크의 값. 앞단 원가는 그대로 나간다</td>
+</tr>
+<tr>
+<td><strong>④ 판매율 80%</strong></td>
+<td>용량의 20%가 계약 없이 대기</td>
+<td>−450만</td>
+<td><strong>−450만 달러</strong></td>
+<td>앞: 전력·임차는 줄지 않는다</td>
+</tr>
+<tr>
+<td><strong>⑤ 내용연수 4년 환원</strong></td>
+<td>2026년에 늘린 5년을 되돌리면</td>
+<td>0</td>
+<td><strong>−134만 달러</strong></td>
+<td>회계 가정. 조정 EBITDA 에는 영향 없음</td>
+</tr>
+<tr>
+<td><strong>⑥ 전력 단가 +50%</strong></td>
+<td>kWh 8.7센트 → 13센트, PUE 1.35 기준 MW당 연 103만 달러 → 154만 달러[12-24]</td>
+<td>0</td>
+<td><strong>−52만 달러</strong></td>
+<td>앞: 전력회사. 블룸 연료전지 비중이 완충</td>
+</tr>
+<tr>
+<td><strong>⑦ 무담보 조달 전환</strong></td>
+<td>설비투자 2,700만 달러의 절반을 5.62% 대신 10%로[12-23]</td>
+<td>0</td>
+<td><strong>−59만 달러</strong> (세전이익 기준)</td>
+<td>앞: 채권 투자자. 선수금 50~60%가 이 노출을 줄인다</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>핵심:</strong> ①②③이 나머지 넷을 합친 것보다 훨씬 크고, 셋 다 계약 가격과 계약 공백이라는 같은 축에 있다. 회계 가정(⑤)·전력(⑥)·금리(⑦)를 모두 나쁜 쪽으로 놓아도 245만 달러인데, 가격이 2026년 수준으로 되돌아가는 것 하나가 1,050만 달러를 깎는다. 그래서 2026~27년 네비우스의 손익을 읽을 때 봐야 할 숫자는 매출도 용량도 아니고 <strong>새로 맺은 계약의 MW당 연간계약가치</strong>다. 회사가 그 값을 분기마다 밝히고 있다는 점이 이 회사를 밖에서 읽기 쉽게 만든다.</p>
+<hr>
+<h2>9. 시간축 2026~2030</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>시기</th>
+<th>네비우스 이벤트</th>
+<th>앞단에 오는 주문</th>
+<th>뒷단에 오는 제품</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2026</strong></td>
+<td>연결 전력 800MW~1GW, 계약 전력 5GW 목표. 설비투자 200억~250억 달러, 선수금 90억 달러 초과. 담보부 7억 7,500만·전환사채 57억 5,000만 달러 조달. 인디펜던스 5월 착공</td>
+<td>엔비디아 GB300·Vera Rubin NVL72 초도 물량 수령. 블룸에너지 1차 328MW. 데이터원 바인랜드, 노스이스트 프리캐스트 시공. 변압기·전기설비</td>
+<td>마이크로소프트 전 트랜치 인도 완료. 2분기 랜드마크 4건의 용량이 연말에 도착. 3분기 단기 계약이 4분기 가동</td>
+</tr>
+<tr>
+<td><strong>2027</strong></td>
+<td>해마다 1GW 넘게 배치 시작. 라펜란타 첫 용량. 2분기 랜드마크 계약이 매출로 잡히는 첫 해</td>
+<td>Vera Rubin 상용 배치. 라펜란타(최대 310MW)·인디펜던스(최대 1.2GW) 건설 본격화</td>
+<td>메타 120억 달러 계약 인도 시작(2027년 초). 팔란티어 경유 주권 AI 고객</td>
+</tr>
+<tr>
+<td><strong>2028</strong></td>
+<td>2026년 설비투자의 감가상각이 온전히 한 해에 실린다. RPO 374억 9,060만 달러의 36%가 2028년 6월까지 인식[12-3]</td>
+<td>2026년에 산 GPU 의 첫 교체 시점이 다가온다</td>
+<td>메타 잔여 용량 구매 약정(최대 150억 달러) 발동 여부</td>
+</tr>
+<tr>
+<td><strong>2029~30</strong></td>
+<td>2030년 10월 31일 담보부 차입 만기, 2030년 만기 전환사채 34억 5,000만 달러. RPO 의 40%가 2028~30년에 인식</td>
+<td>엔비디아와 함께 세운 2030년 말 5GW 초과 시스템 목표[12-9]</td>
+<td>마이크로소프트 계약이 2031년까지, 메타 계약이 2032년까지 이어진다</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>시차 규칙:</strong> 전력 계약(t) → 부지 건설·계통 접속(t+12~24개월) → GPU 설치·가동(t+3~6개월) → 매출 인식(계약 기간에 걸쳐) → 감가상각비(가동 시점부터 5년). 2026년의 설비투자 200억~250억 달러는 2027~2031년의 원가로 남는다. 그 기간에 그 용량이 얼마에 팔려 있는지가 손익의 전부다.</p>
+<hr>
+<h2>10. 지분·자본 연결</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>지분 관계</th>
+<th>다른 주주</th>
+<th>밸류체인 위치</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>엔비디아 → 네비우스</strong></td>
+<td>20억 달러 투자[12-9]</td>
+<td>—</td>
+<td>앞단 최대 공급사</td>
+<td>공급사가 주주이자 전략 파트너다. 같은 발표에 2030년 말까지 5GW 넘는 시스템 목표가 들어 있다. 지분율은 공시로 확인되지 않는다</td>
+</tr>
+<tr>
+<td><strong>네비우스 → 아브라이드</strong></td>
+<td>연결 자회사</td>
+<td>—</td>
+<td>밸류체인 밖</td>
+<td>2026 2분기 조정 EBITDA −4,010만 달러. 그룹 마진을 부문보다 낮추는 쪽</td>
+</tr>
+<tr>
+<td><strong>네비우스 → 트리플텐</strong></td>
+<td>연결 자회사</td>
+<td>—</td>
+<td>밸류체인 밖</td>
+<td>같은 분기 −940만 달러</td>
+</tr>
+<tr>
+<td><strong>네비우스 → 클릭하우스</strong></td>
+<td>소수 지분(지분법)</td>
+<td>2026년 1월 4억 달러 시리즈 D, 밸류 약 150억 달러 보도[12-4]</td>
+<td>밸류체인 밖</td>
+<td>스핀아웃. 2026 상반기 투자 재평가이익 7억 8,060만 달러의 배경</td>
+</tr>
+<tr>
+<td><strong>네비우스 → 톨로카</strong></td>
+<td>소수 지분, 2025년 2분기부터 의결권 통제 없음</td>
+<td>베조스 익스페디션</td>
+<td>AI 학습 데이터</td>
+<td>고객의 앞단에 해당한다. 연결에서 빠졌다</td>
+</tr>
+<tr>
+<td><strong>데이터원 → 바인랜드</strong></td>
+<td>데이터원이 소유·운영, 네비우스가 임차</td>
+<td>노스이스트 프리캐스트가 시공</td>
+<td>부지</td>
+<td>지분이 아니라 임차 구조로 자본 부담을 넘긴 사례</td>
+</tr>
+<tr>
+<td><strong>네비우스 ← 아이겐 AI·클라리파이·타빌리</strong></td>
+<td>인수 완료</td>
+<td>—</td>
+<td>소프트웨어</td>
+<td>추론 최적화와 에이전트용 웹 접근을 사들였다. 2분기 제품개발비의 1억 1,590만 달러가 여기서 나왔다</td>
+</tr>
+<tr>
+<td><strong>자산 경량 파트너</strong></td>
+<td>지분 없음</td>
+<td>—</td>
+<td>부지·전력·하드웨어</td>
+<td>파트너가 자산을 온전히 갖고 네비우스는 플랫폼과 영업만 맡는다[12-15]</td>
+</tr>
+</tbody>
+</table></div>
+<h3>해석</h3>
+<ol>
+<li>앞단 최대 공급사인 엔비디아가 주주 자리에 함께 있다. TSMC 가 뒷단 중개(GUC)와 앞단 성숙 캐파(VIS)를 지분으로 쥔 것과는 방향이 반대다. 네비우스는 앞단에 자기 지분을 넣는 대신, 앞단이 자기에게 자본을 넣도록 했다.</li>
+<li>자본 구조의 핵심은 지분이 아니라 계약이다. 선수금 90억 달러(설비투자의 50~60%), 담보부 차입 7억 7,500만 달러(투자적격 고객 계약이 담보), 전환사채 57억 5,000만 달러가 2026년 설비투자 200억~250억 달러를 받친다. 고객 계약이 곧 담보물이다.</li>
+<li>아브라이드·트리플텐은 밸류체인 바깥이지만 손익에는 들어온다. AI 클라우드 부문 마진 49.7%와 그룹 마진 40.6% 사이의 9.1%포인트가 그 값이다.</li>
+</ol>
+<hr>
+<h2>11. 검증 상태 및 미확인 항목</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026 2분기 손익·재무상태·부문·고객 집중도</td>
+<td>확인 완료 (A, 6-K 부속서 99.1·99.2)</td>
+</tr>
+<tr>
+<td>MW당 연간계약가치 1,200만 / 2,000만~2,500만 / 4,000만~5,000만 달러</td>
+<td>확인 완료 (A, 주주 서한 3~4쪽·실적 콜)</td>
+</tr>
+<tr>
+<td>회수 기간 1년 10개월, 선수금 50~60%</td>
+<td>확인 완료 (A, 주주 서한)</td>
+</tr>
+<tr>
+<td>내용연수 5년(4년에서 변경)</td>
+<td>확인 완료 (A, 주주 서한 10쪽·부속서 99.2)</td>
+</tr>
+<tr>
+<td>2026 가이던스 (ARR 70억~90억, 매출 30억~34억, 설비투자 200억~250억 달러, 연결 전력 800MW~1GW)</td>
+<td>확인 완료 (A, 실적 콜). 발표 자료 본문에는 수치가 없다</td>
+</tr>
+<tr>
+<td>매출 내는 전력 ~194MW</td>
+<td>계산 (C). 연환산 매출 ÷ MW당 연간계약가치. 회사가 밝힌 값이 아니다</td>
+</tr>
+<tr>
+<td>MW당 설비투자 ~2,700만 달러</td>
+<td>계산 (C). 감가상각비 × 5년과 회수 기간 두 길이 2,680만·2,820만으로 만난다</td>
+</tr>
+<tr>
+<td>MW당 GPU 450장</td>
+<td>저장소 원문의 두 사례(480·428)를 잡아 쓴 값 (C). 네비우스 공시에 없다</td>
+</tr>
+<tr>
+<td>감가상각비 가운데 엔비디아 쪽 80%</td>
+<td>이 보고서의 가정 (C). 회사는 하드웨어와 부지의 비중을 밝힌 적이 없다</td>
+</tr>
+<tr>
+<td>설비투자 공급사 세 곳의 실명</td>
+<td>미확인. 공시가 숫자만 밝힌다</td>
+</tr>
+<tr>
+<td>고객 C·D·E 의 실명</td>
+<td>미확인. 공개 계약 상대에 잇는 근거가 공시에 없다</td>
+</tr>
+<tr>
+<td>마이크로소프트·메타 계약의 MW 규모</td>
+<td>미확인. 계약 금액만 공개됐다</td>
+</tr>
+<tr>
+<td>바인랜드·파리·영국·이스라엘 부지의 MW</td>
+<td>미확인. 저장소 원문에 뉴저지 최대 300MW 가 있으나 회사 공시가 아니다[12-27]</td>
+</tr>
+<tr>
+<td>자산 경량 모델의 수수료율</td>
+<td>미확인</td>
+</tr>
+<tr>
+<td>2025년 연간 AI 클라우드 부문 매출</td>
+<td>미확인. 2025년 4분기 발표는 그룹 합계만 밝혔다</td>
+</tr>
+<tr>
+<td>전력 단가 (MWh당)</td>
+<td>미확인. 20-F 는 에너지 가격 변동을 위험요인으로만 적는다</td>
+</tr>
+<tr>
+<td>엔비디아의 네비우스 지분율</td>
+<td>미확인. 투자 금액 20억 달러만 공시됐다</td>
+</tr>
+</tbody>
+</table></div>
+<h3>다음 확장 순서</h3>
+<ol>
+<li>2026년 3분기 6-K — 신규 계약의 MW당 연간계약가치, 연결 전력, 단기 계약 첫 건의 실적 기여</li>
+<li>2026년 20-F(2027년 4월 예정) — 설비투자 공급사 집중도의 연간 수치, 유형자산 구성(서버·건물·건설중자산)</li>
+<li>마이크로소프트·메타 10-K — 네비우스를 실명으로 적은 문구와 약정 금액</li>
+<li>엔비디아 10-K 지분 투자 명세 — 네비우스 지분율</li>
+<li>블룸에너지 10-K — 네비우스향 계약 용량과 매출 인식 시기. 이 저장소에 bloom-energy 사슬이 따로 있다</li>
+</ol>
+<hr>
+<h2>12. 출처</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>번호</th>
+<th>발행</th>
+<th>제목</th>
+<th>날짜</th>
+<th>URL / 경로</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12-1</td>
+<td>네비우스 그룹</td>
+<td>2025 Form 20-F</td>
+<td>2026-04-30</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm">https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm</a></td>
+</tr>
+<tr>
+<td>12-2</td>
+<td>네비우스 그룹</td>
+<td>Q2 2026 Form 6-K 부속서 99.1</td>
+<td>2026-08-12</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm">https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d1.htm</a></td>
+</tr>
+<tr>
+<td>12-3</td>
+<td>네비우스 그룹</td>
+<td>Q2 2026 Form 6-K 부속서 99.2</td>
+<td>2026-08-12</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm">https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm</a></td>
+</tr>
+<tr>
+<td>12-4</td>
+<td>네비우스 그룹</td>
+<td>2026년 2분기 주주 서한</td>
+<td>2026-08-12</td>
+<td><a href="https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf">https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf</a></td>
+</tr>
+<tr>
+<td>12-5</td>
+<td>Motley Fool</td>
+<td>네비우스 2026년 2분기 실적 콜 전사</td>
+<td>2026-08-19</td>
+<td><a href="https://www.fool.com/earnings/call-transcripts/2026/08/19/nebius-nbis-q2-2026-earnings-call-transcript/">https://www.fool.com/earnings/call-transcripts/2026/08/19/nebius-nbis-q2-2026-earnings-call-transcript/</a></td>
+</tr>
+<tr>
+<td>12-6</td>
+<td>네비우스 그룹</td>
+<td>2026년 2분기 실적 발표</td>
+<td>2026-08-12</td>
+<td><a href="https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf">https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf</a></td>
+</tr>
+<tr>
+<td>12-7</td>
+<td>네비우스</td>
+<td>마이크로소프트와 AI 인프라 계약</td>
+<td>2025-09-08</td>
+<td><a href="https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure">https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure</a></td>
+</tr>
+<tr>
+<td>12-8</td>
+<td>네비우스</td>
+<td>메타와 새 AI 인프라 계약</td>
+<td>2026-03-16</td>
+<td><a href="https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta">https://nebius.com/newsroom/nebius-signs-new-ai-infrastructure-agreement-with-meta</a></td>
+</tr>
+<tr>
+<td>12-9</td>
+<td>네비우스</td>
+<td>엔비디아와 풀스택 AI 클라우드 확대 제휴</td>
+<td>2026-03-11</td>
+<td><a href="https://nebius.com/newsroom/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud">https://nebius.com/newsroom/nvidia-and-nebius-partner-to-scale-full-stack-ai-cloud</a></td>
+</tr>
+<tr>
+<td>12-10</td>
+<td>네비우스</td>
+<td>블룸에너지와 전력 제휴</td>
+<td>2026-05-20</td>
+<td><a href="https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out">https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out</a></td>
+</tr>
+<tr>
+<td>12-11</td>
+<td>네비우스</td>
+<td>핀란드 310MW AI 팩토리</td>
+<td>2026-03-31</td>
+<td><a href="https://nebius.com/newsroom/nebius-to-construct-310-mw-ai-factory-in-finland">https://nebius.com/newsroom/nebius-to-construct-310-mw-ai-factory-in-finland</a></td>
+</tr>
+<tr>
+<td>12-12</td>
+<td>네비우스</td>
+<td>첫 기가와트급 AI 팩토리 승인</td>
+<td>2026-03-03</td>
+<td><a href="https://nebius.com/newsroom/nebius-secures-approval-for-its-first-gigawatt-scale-ai-factory">https://nebius.com/newsroom/nebius-secures-approval-for-its-first-gigawatt-scale-ai-factory</a></td>
+</tr>
+<tr>
+<td>12-13</td>
+<td>네비우스</td>
+<td>첫 담보부 조달 7억 7,500만 달러</td>
+<td>2026-07-17</td>
+<td><a href="https://nebius.com/newsroom/nebius-raises-775-million-in-first-secured-debt-financing-to-accelerate-global-buildout">https://nebius.com/newsroom/nebius-raises-775-million-in-first-secured-debt-financing-to-accelerate-global-buildout</a></td>
+</tr>
+<tr>
+<td>12-14</td>
+<td>네비우스</td>
+<td>전환사채 57억 5,000만 달러 발행 완료</td>
+<td>2026-08-24</td>
+<td><a href="https://nebius.com/newsroom/nebius-group-announces-closing-of-private-offering-of-convertible-senior-notes-with-aggregate-gross-proceeds-of-approximately-5-75-billion">https://nebius.com/newsroom/nebius-group-announces-closing-of-private-offering-of-convertible-senior-notes-with-aggregate-gross-proceeds-of-approximately-5-75-billion</a></td>
+</tr>
+<tr>
+<td>12-15</td>
+<td>네비우스</td>
+<td>인프라 제휴형 사업 모델 도입</td>
+<td>2026-07-15</td>
+<td><a href="https://nebius.com/newsroom/nebius-introduces-business-model-to-scale-ai-cloud-globally-through-infrastructure-partnerships">https://nebius.com/newsroom/nebius-introduces-business-model-to-scale-ai-cloud-globally-through-infrastructure-partnerships</a></td>
+</tr>
+<tr>
+<td>12-16</td>
+<td>네비우스</td>
+<td>팔란티어와 주권 AI 스택 제휴</td>
+<td>2026-09-08</td>
+<td><a href="https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers">https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers</a></td>
+</tr>
+<tr>
+<td>12-17</td>
+<td>네비우스</td>
+<td>뉴저지 바인랜드 부지</td>
+<td>2026</td>
+<td><a href="https://nebius.com/vinelandnj">https://nebius.com/vinelandnj</a></td>
+</tr>
+<tr>
+<td>12-18</td>
+<td>네비우스</td>
+<td>파리 GPU 클러스터 가동</td>
+<td>2024</td>
+<td><a href="https://nebius.com/blog/posts/nebius-launches-gpu-cluster-in-paris-france">https://nebius.com/blog/posts/nebius-launches-gpu-cluster-in-paris-france</a></td>
+</tr>
+<tr>
+<td>12-19</td>
+<td>네비우스</td>
+<td>WEKA·VAST 데이터 파트너 카탈로그</td>
+<td>2025</td>
+<td><a href="https://nebius.com/partner-catalog/weka">https://nebius.com/partner-catalog/weka</a> · <a href="https://nebius.com/partner-catalog/vast">https://nebius.com/partner-catalog/vast</a></td>
+</tr>
+<tr>
+<td>12-20</td>
+<td>네비우스 그룹</td>
+<td>2025년 4분기·연간 실적 발표</td>
+<td>2026-02-12</td>
+<td><a href="https://assets.nebius.com/assets/2829268f-924f-4846-87b5-2365b7e58b41/Financial%20results_Q4%202025_11022026.pdf">https://assets.nebius.com/assets/2829268f-924f-4846-87b5-2365b7e58b41/Financial%20results_Q4%202025_11022026.pdf</a></td>
+</tr>
+<tr>
+<td>12-21</td>
+<td>저장소</td>
+<td>TSMC 밸류체인 조사</td>
+<td>2026-09-12</td>
+<td>data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md</td>
+</tr>
+<tr>
+<td>12-22</td>
+<td>저장소</td>
+<td>GPU 대란, 임대편 — H100 1년 임대 가격 지수 출범</td>
+<td>2026-04-02</td>
+<td>content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md</td>
+</tr>
+<tr>
+<td>12-23</td>
+<td>저장소</td>
+<td>엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티</td>
+<td>2026-07-06</td>
+<td>content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱...</td>
+</tr>
+<tr>
+<td>12-24</td>
+<td>저장소</td>
+<td>우주로 담대하게 (데이터센터 단위원가 모델)</td>
+<td>2026-06-03</td>
+<td>content/newsletter/ai_infra/business/[260603] 우주로 담대하게.md</td>
+</tr>
+<tr>
+<td>12-25</td>
+<td>저장소</td>
+<td>메타 컴퓨트 — 모두가 네오클라우드가 되고 싶어한다</td>
+<td>2026-07-02</td>
+<td>content/newsletter/ai_infra/business/[260702] 메타 컴퓨트 - 모두가 네오클라우드가 되고 싶어한다.md</td>
+</tr>
+<tr>
+<td>12-26</td>
+<td>저장소</td>
+<td>ClusterMAX 등급 체계 (GPU 클라우드 임대 가격)</td>
+<td>2026</td>
+<td>input/clippings/The GPU Cloud ClusterMAX™ Rating System How to Rent GPUs.md · input/clippings/ClusterMAX™ 2.0.md</td>
+</tr>
+<tr>
+<td>12-27</td>
+<td>저장소</td>
+<td>뉴저지 부지·전력 관련 뉴스레터</td>
+<td>2026</td>
+<td>content/newsletter/ai_infra/power/[260303]·[260619]·[260910]</td>
+</tr>
+<tr>
+<td>12-28</td>
+<td>네비우스</td>
+<td>고객 사례 (레볼루트·리크래프트·소드 헬스·프라임 인텔렉트·링크스·로보포스·프리마 멘테)</td>
+<td>2026</td>
+<td><a href="https://nebius.com/customer-stories/">https://nebius.com/customer-stories/</a> 아래 각 항목</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</main>
+</body>
+</html>

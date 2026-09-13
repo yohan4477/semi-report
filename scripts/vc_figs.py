@@ -431,7 +431,7 @@ def sec_equity_map(c, n):
                % (H - 8, MUTE, (u' ' + u' · '.join(more)) if more else u''))
     out.append(u'</g></svg>')
     return u'''  <section>
-    <h2>%d. 지분·소유<small>거래 위에 소유를 겹치기</small></h2>
+    <h2>%d. 지분·소유<small>지분·자회사·협력 선</small></h2>
     <p class="note">기업 구조 선 %d개. 지분율은 관측이 붙은 줄에만 적고, 없는 줄은 관계 이름만 남긴다. 주황은 한국 회사. 탐색기는 이 선을 따라가지 않고 서랍에만 보인다.</p>
     <div class="sv">%s</div>
   </section>
@@ -643,23 +643,28 @@ def sec_unit(c, n, fg):
     cols = 2 + len(steps)
     cw = min(90, int(860 / cols) - 30)
     gap = int((860 - cw * cols) / (cols - 1))
-    out = [u'<svg viewBox="0 0 960 260" role="img" aria-label="%s"><g font-size="12" fill="%s">' % (esc(u.get('title') or ''), INK)]
+    lim = 13 if cols <= 7 else 11
+    out = [u'<svg viewBox="0 0 960 280" role="img" aria-label="%s"><g font-size="12" fill="%s">' % (esc(u.get('title') or ''), INK)]
+
+    def lab(x, i, txt, bold=False):
+        # 이웃 라벨과 안 겹치게 두 줄을 번갈아 쓴다
+        return u'<text x="%d" y="%d" text-anchor="middle" font-size="11"%s>%s</text>' % (x + cw / 2, 12 if i % 2 == 0 else 28, ' font-weight="600"' if bold else '', esc(cut(txt, lim)))
     x = 40
-    out.append(u'<rect x="%d" y="30" width="%d" height="180" fill="%s"/><text x="%d" y="22" text-anchor="middle" font-weight="600">%s</text>' % (x, cw, TG, x + cw / 2, esc(st['label'])))
-    top = 30.0
-    for s in steps:
+    out.append(u'<rect x="%d" y="40" width="%d" height="180" fill="%s"/>' % (x, cw, TG) + lab(x, 0, st['label'], True))
+    top = 40.0
+    for i, s in enumerate(steps, 1):
         x += cw + gap
         h = max(1.0, float(s['value']) * scale)
-        out.append(u'<rect x="%d" y="%.0f" width="%d" height="%.0f" fill="%s"/><text x="%d" y="22" text-anchor="middle">%s</text><text x="%d" y="%.0f" text-anchor="middle" fill="%s">−%s</text>'
-                   % (x, top, cw, h, SUP, x + cw / 2, esc(cut(s['label'], 9)), x + cw / 2, top + h + 14, MUTE, _money(float(s['value']))))
+        out.append(u'<rect x="%d" y="%.0f" width="%d" height="%.0f" fill="%s"/>' % (x, top, cw, h, SUP) + lab(x, i, s['label'])
+                   + u'<text x="%d" y="%.0f" text-anchor="middle" fill="%s" font-size="11">−%s</text>' % (x + cw / 2, top + h + 13, MUTE, _money(float(s['value']))))
         top += h
     x += cw + gap
-    out.append(u'<rect x="%d" y="%.0f" width="%d" height="%.0f" fill="%s"/><text x="%d" y="22" text-anchor="middle" font-weight="600">%s</text>' % (x, top, cw, max(1.0, 210 - top), TG, x + cw / 2, esc(en['label'])))
+    out.append(u'<rect x="%d" y="%.0f" width="%d" height="%.0f" fill="%s"/>' % (x, top, cw, max(1.0, 220 - top), TG) + lab(x, len(steps) + 1, en['label'], True))
     if en.get('sub'):
-        out.append(u'<text x="%d" y="230" text-anchor="middle" fill="%s" font-weight="500">%s</text>' % (x + cw / 2, TG, esc(en['sub'])))
-    out.append(u'<line x1="40" y1="210" x2="%d" y2="210" stroke="%s"/>' % (x + cw, LINE))
+        out.append(u'<text x="%d" y="240" text-anchor="middle" fill="%s" font-weight="500">%s</text>' % (x + cw / 2, TG, esc(en['sub'])))
+    out.append(u'<line x1="40" y1="220" x2="%d" y2="220" stroke="%s"/>' % (x + cw, LINE))
     if u.get('foot'):
-        out.append(u'<text x="40" y="250" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(u['foot'], 90))))
+        out.append(u'<text x="40" y="268" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(u['foot'], 90))))
     out.append(u'</g></svg>')
     return _sec(n, u.get('title') or u'단위경제', u.get('small') or '', esc(u.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
 
@@ -673,18 +678,28 @@ def sec_pool(c, n, fg):
     out = [u'<svg viewBox="0 0 960 190" role="img" aria-label="%s"><g font-size="12">' % esc(p.get('title') or '')]
     out.append(u'<text x="10" y="30" fill="%s">원가 적층 %s</text>' % (MUTE, esc(_money(sum(float(s['value']) for s in p['cost'])))))
     x = 150.0
+    last = [0.0, 0.0, 0.0]  # 줄마다 마지막 라벨의 오른끝 — 좁은 칸이 이어져도 라벨이 안 겹친다
     for i, s in enumerate(p['cost'][:7]):
         w = max(1.0, float(s['value']) * scale)
         col = COL.get(s.get('who'), SUP)
         out.append(u'<rect x="%.0f" y="14" width="%.0f" height="24" fill="%s"/>' % (x, w, col))
-        out.append(u'<text x="%.0f" y="%d" text-anchor="middle" fill="%s">%s</text>' % (x + w / 2, 55 if i % 2 == 0 else 72, col if col != SUP else MUTE, esc(cut(s['label'], 14))))
+        txt = cut(s['label'], 16)
+        tw = len(txt) * 7.0
+        row = i % 3
+        cx = max(x + w / 2, last[row] + 8 + tw / 2)
+        last[row] = cx + tw / 2
+        out.append(u'<text x="%.0f" y="%d" text-anchor="middle" fill="%s" font-size="11">%s</text>' % (cx, (55, 71, 87)[row], col if col != SUP else MUTE, esc(txt)))
         x += w
     cost_w = x - 150.0
     out.append(u'<text x="10" y="120" fill="%s">%s</text>' % (MUTE, esc(p['price']['label'])))
     out.append(u'<rect x="150" y="104" width="%.0f" height="24" fill="%s"/><rect x="%.0f" y="104" width="%.0f" height="24" fill="%s"/>' % (cost_w, LINE, 150 + cost_w, max(1.0, 795 - cost_w), CUST))
     out.append(u'<text x="%.0f" y="146" text-anchor="middle" fill="%s">원가 %s</text>' % (150 + cost_w / 2, MUTE, esc(_money(cost_w / scale))))
     if p.get('owner'):
-        out.append(u'<text x="%.0f" y="146" text-anchor="middle" fill="%s" font-weight="500">%s</text>' % (150 + cost_w + (795 - cost_w) / 2, CUST, esc(cut(p['owner'].get('label') or '', 40))))
+        ow = 795 - cost_w
+        if ow >= 260:
+            out.append(u'<text x="%.0f" y="146" text-anchor="middle" fill="%s" font-weight="500">%s</text>' % (150 + cost_w + ow / 2, CUST, esc(cut(p['owner'].get('label') or '', 40))))
+        else:
+            out.append(u'<text x="945" y="146" text-anchor="end" fill="%s" font-weight="500">%s</text>' % (CUST, esc(cut(p['owner'].get('label') or '', 40))))
     if p.get('foot'):
         out.append(u'<text x="10" y="180" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(p['foot'], 100))))
     out.append(u'</g></svg>')
@@ -728,14 +743,14 @@ def sec_scenario(c, n, fg):
         v = float(b['value'])
         w = max(2.0, abs(v) * px)
         col = JP if i == 0 and len(neg) > 1 else SUP
-        out.append(u'<text x="470" y="%d" text-anchor="end">%s</text><rect x="%.0f" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" text-anchor="end" fill="%s">%s</text>'
-                   % (y + 12, esc(cut(b['label'], 22)), 480 - w, y, w, col, 472 - w, y + 13, col if col == JP else MUTE, esc(_money(v))))
+        out.append(u'<text x="490" y="%d">%s</text><rect x="%.0f" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" text-anchor="end" fill="%s">%s</text>'
+                   % (y + 13, esc(cut(b['label'], 26)), 480 - w, y, w, col, 472 - w, y + 13, col if col == JP else MUTE, esc(_money(v))))
         y += 40
     for b in pos:
         v = float(b['value'])
         w = max(2.0, v * px)
-        out.append(u'<text x="490" y="%d">%s</text><rect x="480" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" fill="%s" font-weight="500">+%s</text>'
-                   % (y + 12, esc(cut(b['label'], 22)), y, w, TG, 488 + w, y + 13, TG, esc(_money(v))))
+        out.append(u'<text x="470" y="%d" text-anchor="end">%s</text><rect x="480" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" fill="%s" font-weight="500">+%s</text>'
+                   % (y + 13, esc(cut(b['label'], 26)), y, w, TG, 488 + w, y + 13, TG, esc(_money(v))))
         y += 40
     if s.get('foot'):
         out.append(u'<text x="10" y="%d" fill="%s" font-size="11">%s</text>' % (H - 8, MUTE, esc(cut(s['foot'], 100))))

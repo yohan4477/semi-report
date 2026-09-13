@@ -1,0 +1,1694 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>블룸에너지 밸류체인 조사 — 앞단(공급) / 뒷단(고객)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#EEF1F4;--ink:#1C2733;--mute:#6B7785;--line:#C9D1DA;--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;
+    --kr:#B4620A;--kr-soft:#F6E3C8;--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.55}
+  main{max-width:960px;margin:0 auto;padding:28px 18px 64px}
+  h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-0.01em}
+  .sub{color:var(--mute);margin:0 0 18px;font-size:14px}
+  .sub a,.note a,td a{color:var(--tsmc)}
+  nav.chains{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 28px}
+  nav.chains a{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:#fff}
+  nav.chains a.on{background:var(--tsmc);border-color:var(--tsmc);color:#fff}
+  section{margin:0 0 44px;padding-top:18px;border-top:2px solid var(--ink)}
+  h2{font-size:18px;font-weight:600;margin:0 0 4px}
+  h2 small{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
+  p.note{margin:0 0 14px;color:var(--mute);font-size:13.5px;max-width:70ch}
+  svg{width:100%;height:auto;display:block;font-family:inherit}
+  .frame{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;height:640px}
+  .frame iframe{width:100%;height:100%;border:0;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px;color:var(--mute)}
+  .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .l-tsmc::before{background:var(--tsmc)} .l-kr::before{background:var(--kr)} .l-jp::before{background:var(--jp)} .l-cust::before{background:var(--cust)} .l-sup::before{background:#8A96A3}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:500;color:var(--mute)}
+  td.nw{white-space:nowrap}
+  .heat td.c{width:76px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  .heat th{white-space:nowrap}
+  .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
+  .ev{display:inline-block;font-size:11.5px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--mute);white-space:nowrap}
+  .ev.c{border-color:var(--tsmc);color:var(--tsmc)}
+  .bars{margin-top:6px}
+  .bar{display:grid;grid-template-columns:200px 1fr 120px;gap:10px;align-items:center;font-size:13.5px;padding:4px 0}
+  .bar .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .tr{height:16px;background:#fff;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--tsmc)}
+  .bar.sup .fill{background:var(--sup)}
+  .bar .val{color:var(--mute);white-space:nowrap}
+  .tl{position:relative;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl .yr{position:relative;margin:0 0 18px}
+  .tl .yr::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--tsmc)}
+  .tl b{display:block;font-weight:600;margin-bottom:2px}
+  .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
+  .tl .row span:first-child{color:var(--mute)}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .sv{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  /* 핵심 수치 — 표가 아니라 줄 목록. 좁은 화면에서 네 칸 표는 출처 칸이 잘려 나갔다 */
+  .claims{margin-top:6px}
+  .cl{display:grid;grid-template-columns:110px 1fr;gap:4px 14px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .cl .per{color:var(--mute);white-space:nowrap}
+  .cl .st{margin:0}
+  .cl .src{grid-column:2;font-size:12px;color:var(--mute)}
+  .cl .src a{color:var(--tsmc)}
+  @media (max-width:640px){
+    h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}
+    nav.chains{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;margin-bottom:20px}
+    nav.chains a{white-space:nowrap;flex:none}
+    /* 그림·표는 되도록 한 화면 폭에 — 옆으로 밀지 않는다(2026-09-13). 글자는 셀 안에서 줄바꿈 */
+    .cl{grid-template-columns:1fr}
+    .cl .src{grid-column:1}
+    table{font-size:11.5px} th,td{padding:5px 4px;overflow-wrap:anywhere}
+    td.nw{white-space:normal}
+    .tw table{min-width:0}
+    .tw table.fit{min-width:0;font-size:11.5px;table-layout:fixed;width:100%}
+    .heat.fit th,.heat.fit td{padding:6px 3px;overflow-wrap:anywhere}
+    .heat.fit th{font-size:10px;line-height:1.2;white-space:normal}
+    .heat.fit th:nth-child(1),.heat.fit td:nth-child(1){width:28%}
+    .heat.fit th:nth-child(2),.heat.fit td:nth-child(2){width:30%}
+    .heat.fit td.c{width:auto;padding:6px 0}
+    .bar{grid-template-columns:100px 1fr 96px} .bar .val{white-space:normal;font-size:12px;line-height:1.25}
+  }
+  /* 조사 보고서(마크다운) */
+  .md h2{margin-top:28px;padding-top:18px;border-top:2px solid var(--ink)}
+  .md h3{font-size:15.5px;margin:22px 0 6px}
+  .md p{max-width:80ch}
+  .md ul,.md ol{padding-left:22px}
+  .md li{margin:3px 0}
+  .md blockquote{margin:10px 0;padding:6px 12px;border-left:3px solid var(--line);color:var(--mute)}
+  .md pre{background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;overflow-x:auto;font-size:12.5px;line-height:1.45}
+  .md code{font-size:13px}
+  .md .tw{overflow-x:auto}
+  .md table{font-size:13px}
+  .md hr{border:0;border-top:1px solid var(--line);margin:22px 0}
+</style>
+</head>
+<body>
+<main>
+  <h1>블룸에너지 밸류체인 조사 — 앞단(공급) / 뒷단(고객)</h1>
+  <p class="sub">조사 보고서 원문 그대로. 그림은 <a href="블룸에너지 밸류체인.html">블룸에너지 밸류체인 그림 장</a>, 상자·선은 <a href="밸류체인 탐색기.html?focal=bloom-energy&amp;open=*">탐색기</a>. 원문 파일 <code>data/valuechain/reports/bloom-energy-밸류체인-조사-2026-09-13.md</code>.</p>
+  <nav class="chains"><a href="기업분석 대시보드.html">← 기업분석</a><a href="블룸에너지 밸류체인.html">블룸에너지</a><a href="반도체 기판 밸류체인.html">반도체 기판</a><a href="네비우스 밸류체인.html">네비우스</a><a href="엔비디아 밸류체인.html">엔비디아</a><a href="태양유전 밸류체인.html">태양유전</a><a href="TSMC 밸류체인.html">TSMC</a><a href="블룸에너지 밸류체인 조사.html" class="on">블룸에너지 조사 보고서</a><a href="밸류체인 탐색기.html">탐색기</a></nav>
+  <div class="md">
+<p>작성일: 2026-09-13
+기준 자료: Bloom Energy Form 10-K(FY2024·FY2025), Form 10-Q 및 10-Q/A(2026 2분기), Form 8-K 별지 99.1(2026 2분기 실적), Form SD 분쟁광물 보고서, Form 424B7(오라클 워런트), 한국거래소 KIND 공급계약 공시(코세스·서진시스템·LS일렉트릭), MTAR Technologies 연차보고서, 카오리히트트리트먼트 연차보고서, 통관 기록, SemiAnalysis 번역본 2편</p>
+<p>사슬 데이터: <code>data/valuechain/chains/bloom-energy/</code>(claims 52 · observations 41 · relationships 89 · classifications · bom · financials)</p>
+<hr>
+<h2>0. 읽는 법 — 근거 등급</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>등급</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>블룸 또는 상대 회사의 공시(10-K, 10-Q, 8-K, Form SD, KIND, 인도·대만 연차보고서)에 실명·수치로 명시</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>관계는 공시로 확인되나 금액·물량·조달 비중이 비공개. 방향만 쓴다</td>
+</tr>
+<tr>
+<td><strong>C</strong></td>
+<td>추정·2차 보도·통관 기록. 수식과 가정을 옆에 적는다</td>
+</tr>
+</tbody>
+</table></div>
+<p>블룸은 10-K에서 고객 집중도를 비중으로만 밝히고 법인명을 거의 공개하지 않는다. FY2025 최대 고객 43%는 예외로, 브룩필드 계열 펀드 JV(합작 프로젝트 회사)라는 것이 재무제표 주석의 금액과 맞아떨어져 A로 읽힌다. 나머지 자리는 비중만 A이고 그 자리에 앉은 회사 이름은 전부 가설이다. 앞단은 반대다. 블룸이 공급사 명단을 내놓지 않는 대신 상대 회사들이 각자 공시한다. MTAR은 인도 연차보고서에서 핫박스 공급 비중을 직접 밝히고, 코세스·서진시스템·LS일렉트릭은 한국거래소 공시로 계약 금액과 기간을 낸다. 그래서 앞단 금액은 상대 공시에서 오고, 그 금액을 블룸 원가에 얹는 나눗셈만 추정이다.</p>
+<p>이 보고서가 쓰는 두 개의 인공 분모를 먼저 밝힌다. 블룸은 출하 MW를 공시하지 않는다. ① 매출 환산 MW = 제품 매출 ÷ $3.0M/MW. 앵커는 2023년 SK에코플랜트 500MW 판매계약의 약 15억 달러다(be_sk_500mw_2023). ② 매출 환산 MW당 제품 원가 = 제품 매출원가 ÷ ①. 두 값 모두 출하 통계가 아니라 원가를 나눌 자리를 만들려고 세운 것이고, 이 보고서의 모든 「1MW」는 이 뜻이다.</p>
+<hr>
+<h2>1. 블룸 본체 — 핵심 수치</h2>
+<h3>1-1. 손익 (A, 10-K·10-Q·8-K)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>FY2024</th>
+<th>FY2025</th>
+<th>2026 상반기</th>
+<th>2026 2분기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>총매출</td>
+<td>$1,473.9M</td>
+<td>$2,024.0M</td>
+<td>$1,816.4M</td>
+<td>$1,065.4M</td>
+</tr>
+<tr>
+<td>전년 동기비</td>
+<td></td>
+<td>+37.3%</td>
+<td>+126.4%</td>
+<td>+165.5%</td>
+</tr>
+<tr>
+<td>매출총이익률</td>
+<td>27.5%</td>
+<td>29.0%</td>
+<td>32.0%</td>
+<td>33.4%</td>
+</tr>
+<tr>
+<td>영업이익</td>
+<td>$22.9M</td>
+<td>$72.8M</td>
+<td>$254.4M</td>
+<td>$182.2M</td>
+</tr>
+<tr>
+<td>순이익</td>
+<td></td>
+<td></td>
+<td>$266.9M</td>
+<td>$196.3M</td>
+</tr>
+<tr>
+<td>영업비용</td>
+<td>~$382M</td>
+<td>~$514M</td>
+<td>$326.7M</td>
+<td>$173.3M</td>
+</tr>
+</tbody>
+</table></div>
+<p>FY2025 영업비용은 매출총이익 $587.0M에서 영업이익 $72.8M을 뺀 값이다(C, 계산). 2026 2분기 영업비용 내역은 연구개발 $58.9M · 판매마케팅 $43.0M · 일반관리 $71.4M이다(A).</p>
+<p>FY2026 가이던스(2026-07-28 제시, A): 매출 39억~42억 달러, 비GAAP 총마진 약 34%, 비GAAP 영업이익 8억~9억 달러, 비GAAP 주당순이익 2.55~2.85달러. 중간값 기준 전년 대비 매출 100% 성장이다. 가이던스는 회사 발표치이고 확정 실적이 아니다.</p>
+<h3>1-2. 매출 구성 (A)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>매출원</th>
+<th>FY2024</th>
+<th>FY2025</th>
+<th>2026 상반기</th>
+<th>성격</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>제품(Energy Server·전해조)</td>
+<td>73.6%</td>
+<td>75.7%</td>
+<td><strong>87.5%</strong></td>
+<td>인도 시점에 인식</td>
+</tr>
+<tr>
+<td>설치</td>
+<td>8.3%</td>
+<td>10.1%</td>
+<td>4.2%</td>
+<td>현장 역무, 진행 기준</td>
+</tr>
+<tr>
+<td>서비스</td>
+<td>14.5%</td>
+<td>11.3%</td>
+<td>7.2%</td>
+<td>유지·보수와 성능 보증, 계약 기간에 걸쳐</td>
+</tr>
+<tr>
+<td>전력</td>
+<td>3.6%</td>
+<td>3.0%</td>
+<td>1.1%</td>
+<td>직접 보유·운영 설비의 전기 판매</td>
+</tr>
+</tbody>
+</table></div>
+<p>제품 비중이 2년 만에 73.6%에서 87.5%로 올라갔다. 블룸이 설비를 직접 보유하고 전기를 파는 구조에서, 설비를 팔고 대금을 한 번에 받는 구조로 옮겨간 결과다. 회계로 보면 매출이 잡히는 시점이 15년에 걸친 전력 판매에서 인도 시점 한 번으로 앞당겨졌다는 뜻이고, 이 이동이 2026년 매출이 두 배로 뛴 회계적 경로다.</p>
+<h3>1-3. 매출원가와 마진의 두 층 (A + C)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>층</th>
+<th>FY2025</th>
+<th>2026 상반기</th>
+<th>근거</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>제품 매출</td>
+<td>$1,531.3M</td>
+<td>$1,588.8M</td>
+<td>A</td>
+</tr>
+<tr>
+<td>제품 매출원가</td>
+<td>$992.8M</td>
+<td>$1,023.2M</td>
+<td>A</td>
+</tr>
+<tr>
+<td>제품 매출총이익률</td>
+<td>35.2%</td>
+<td>35.6%</td>
+<td>A</td>
+</tr>
+<tr>
+<td>비제품(설치·서비스·전력) 매출</td>
+<td>$492.7M</td>
+<td>$227.7M</td>
+<td>A</td>
+</tr>
+<tr>
+<td>비제품 매출총이익률</td>
+<td>~9.8%</td>
+<td>~6.8%</td>
+<td>C, 총계에서 차감</td>
+</tr>
+<tr>
+<td>매출 환산 MW</td>
+<td>~510MW</td>
+<td>~530MW</td>
+<td>C, 제품 매출 ÷ $3.0M/MW</td>
+</tr>
+<tr>
+<td>매출 환산 MW당 제품 원가</td>
+<td>~$1.95M</td>
+<td>~$1.93M</td>
+<td>C</td>
+</tr>
+</tbody>
+</table></div>
+<p>여기서 이 회사 손익의 뼈대가 나온다. 제품 마진은 35% 언저리에서 거의 안 움직였고(FY2024 36.8% → FY2025 35.2% → 2026 상반기 35.6%), MW당 원가도 $1.89M → $1.95M → $1.93M으로 붙어 있다. 전사 총마진이 27.5%에서 33.4%로 오른 것은 원가가 내려가서가 아니라 마진이 7% 안팎인 설치·서비스·전력 매출의 비중이 26.4%에서 12.5%로 줄었기 때문이다(C, 위 표에서 계산). 믹스가 마진을 올렸고 제조 원가는 제자리다.</p>
+<h3>1-4. 물량과 남은 계약 (A)</h3>
+<p>미이행 이행의무는 2026년 6월 30일 기준 제품 판매·설치 역무 중심 4억 4,240만 달러이며 1~2년 안에 매출로 인식될 것으로 회사는 본다. 서비스 계약 중심 이연분 5,170만 달러는 1~25년에 걸쳐 인식된다. 2025년 12월 31일 기준은 각각 3억 9,440만 달러·2,500만 달러였다(A, 10-Q). 이 숫자가 분기 매출 10억 달러보다 작다는 점이 중요하다. 블룸의 대형 계약(오라클 2.8GW, AEP 1GW)은 확정 발주가 들어올 때마다 이행의무로 잡히는 구조라, 계약 상한 GW를 백로그처럼 읽으면 안 된다.</p>
+<p>AI 인프라 부문은 스무 곳 가까운 고객과 약 250MW에 걸쳐 있다고 회사가 밝혔다(2026-08-06, A). 분모는 AI 인프라 고객 부문이고 전체 배치나 총 백로그가 아니다.</p>
+<hr>
+<h2>2. 뒷단 (매출 → 고객 → 고객의 고객)</h2>
+<h3>2-1. 이 사슬에서 「고객」이 네 겹이다</h3>
+<p>블룸 뒷단을 읽기 어려운 이유는 돈을 내는 쪽, 설비를 사는 쪽, 전기를 쓰는 쪽, 프로젝트 비용을 최종 부담하는 쪽이 전부 다른 회사이기 때문이다. 10-K가 말하는 「고객」은 첫 번째 층뿐이다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>층</th>
+<th>이름</th>
+<th>하는 일</th>
+<th>보기</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>계약 고객</td>
+<td>10-K 집중도 표에 앉는 법인</td>
+<td>블룸에 대금을 낸다</td>
+<td>브룩필드 계열 펀드 JV, AEP, SK에너닉스</td>
+</tr>
+<tr>
+<td>금융 스폰서</td>
+<td>펀드를 굴리는 모회사</td>
+<td>프로젝트에 자본을 마련한다</td>
+<td>브룩필드, 한국산업은행</td>
+</tr>
+<tr>
+<td>부지·개발</td>
+<td>땅과 인허가</td>
+<td>프로젝트를 세운다</td>
+<td>보더플렉스, 치리사테크놀로지파크스</td>
+</tr>
+<tr>
+<td>최종 사용자</td>
+<td>전기를 쓰는 쪽</td>
+<td>장기 계약으로 비용을 낸다</td>
+<td>오라클, AWS, 콜로직스, 코어위브, 네비우스</td>
+</tr>
+</tbody>
+</table></div>
+<p>블룸이 SEC에 오라클 워런트를 「고객의 고객」에게 주는 대가로 회계처리한 것이 이 구분의 공시 근거다(A, 10-Q/A·424B7). 오라클은 전략·상업 계약 당사자이면서도 블룸의 계약상 구매 주체라는 직접 증거는 없다. 같은 이유로 AEP 오하이오 사례에서 AWS와 콜로직스가 프로젝트 비용 전액을 부담하지만, 두 회사가 블룸의 계약 고객이 되는 것은 아니다. 사이에 AEP 오하이오라는 층이 있다(A, AEP 보도자료).</p>
+<h3>2-2. 고객 집중도 (A, 10-K·10-Q)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>기간</th>
+<th>1위</th>
+<th>2위</th>
+<th>3위</th>
+<th>상위 3사 합</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FY2024</td>
+<td>23%</td>
+<td>16%</td>
+<td>14%</td>
+<td>53%</td>
+</tr>
+<tr>
+<td>FY2025</td>
+<td><strong>43%</strong></td>
+<td>13%</td>
+<td>12%</td>
+<td>68%</td>
+</tr>
+<tr>
+<td>2026 상반기</td>
+<td><strong>44%</strong></td>
+<td>~21%</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>2026 2분기</td>
+<td><strong>73%</strong></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>FY2024 1위 23%는 약 3.39억 달러이고 같은 해 특수관계자 매출 3.386억 달러와 사실상 같아 SK에코플랜트로 읽힌다(C). SK에코플랜트는 2025년 7월 10일까지 특수관계였다. FY2025 1위 43%는 브룩필드 계열 펀드 JV다(A). 제품 8억 980만 + 설치 5,230만 = 8억 6,210만 달러이고 총매출의 42.6%로 공시 43%와 맞는다. 2위 13%(약 2.63억 달러)는 AEP 매입 법인이라는 가설이 있고(C, 초기 주문 100MW × $2.5~3.0M/MW = 2.5~3.0억 달러가 겹친다), 3위 12%(약 2.43억 달러)는 SK에너닉스 또는 그 프로젝트 법인이라는 가설이 있다(C, 80MW × $3.0M/MW = 2.4억 달러가 겹친다). 금액이 겹친다는 것은 법인 확인이 아니다.</p>
+<p>2026년이 이 사슬에서 가장 중요한 변화다. 상반기 44%(약 7억 9,920만 달러)와 2분기 73%(약 7억 7,770만 달러)는 같은 익명 계약 고객으로 본다(C, 신뢰도 0.8). 2분기 금액만으로 상반기 총액의 42.8%에 달해 두 자리가 별개 법인이라는 가정은 공시된 상반기 집중도와 맞지 않는다. 한 분기 매출의 73%가 이름 없는 한 곳에서 나온다는 것이 이 회사의 현재 모습이다. SEC 문서에 오라클 이름이 「고객의 고객」 자리에 붙어 있어 오라클 연관 가설의 신뢰도는 4.0/5로 잡히지만, 이 비중을 오라클 매출로 옮겨 적지 않는다.</p>
+<h3>2-3. 계약 용량 (A, 회사·상대 보도자료)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>상대</th>
+<th>용량</th>
+<th>성격</th>
+<th>날짜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>오라클</td>
+<td>최대 2.8GW, 초기 1.2GW 계약·배치 중</td>
+<td>전략 계약. 상한이지 발주가 아니다</td>
+<td>2026-04-13</td>
+</tr>
+<tr>
+<td>프로젝트 주피터(뉴멕시코)</td>
+<td>계획 상한 2.45GW</td>
+<td>보더플렉스 개발, 오라클이 최종 사용자</td>
+<td>2026-04-27</td>
+</tr>
+<tr>
+<td>AEP</td>
+<td>최대 1GW, 초기 주문 100MW</td>
+<td>조달 계약</td>
+<td>2024-11-14</td>
+</tr>
+<tr>
+<td>네비우스</td>
+<td>328MW</td>
+<td>첫 미국 배치, 10년 전력계약</td>
+<td>2026-05-20</td>
+</tr>
+<tr>
+<td>에퀴닉스</td>
+<td>100MW 초과(가동 ~75MW + 공사 중 30MW)</td>
+<td>누적 관계</td>
+<td>2025-02-20</td>
+</tr>
+<tr>
+<td>SK에너닉스</td>
+<td>80MW(충주 40 + 대소원 40)</td>
+<td>한국산업은행 프로젝트 금융</td>
+<td>2024-11-07</td>
+</tr>
+<tr>
+<td>구글 와이오밍</td>
+<td>900MW</td>
+<td>SemiAnalysis 보도</td>
+<td>2026</td>
+</tr>
+<tr>
+<td>히타치(일본)</td>
+<td>비공개</td>
+<td>기획·설계·제어 통합·운영 지원 제휴</td>
+<td>2026-09-01</td>
+</tr>
+</tbody>
+</table></div>
+<p>용량 GW 숫자는 매출 상한이지 확정 발주가 아니다. 오라클 2.8GW에 $3.0M/MW를 곱하면 84억 달러가 되는데, 같은 시점 미이행 이행의무는 4억 4,240만 달러다. 이 간극이 계약 상한과 장부의 거리다.</p>
+<h3>2-4. 공개된 최종 사용자 (A, 각 보도자료)</h3>
+<p>데이터센터: 오라클, AWS(AEP 오하이오 힐리아드 부지 72.9MW 설비), 콜로직스, 코어위브(일리노이 볼로, 부지는 치리사 소유), 네비우스, 에퀴닉스, 인텔, AT&amp;T, 버라이즌.
+상업·산업: 미탁컴퓨팅(프리몬트 AI 서버 제조 캠퍼스에 독립형 마이크로그리드 + 기존 새너제이 설치), 퀀타컴퓨터(AI 하드웨어 제조 시설 용량 150% 이상 확대), 월마트, 홈디포, 페라리, 페덱스.</p>
+<p>공개된 설치 고객이라는 것이 계약상 구매 주체라는 뜻은 아니다. 부지 네 곳은 설비가 놓였는데 계약 상대가 원문에 없어 사슬 데이터에서 자리표로 닫혀 있다.</p>
+<h3>2-5. 왜 데이터센터가 연료전지로 갈아타는가 (A, SemiAnalysis 번역본)</h3>
+<p>이 수요가 어디서 오는지는 저장소 안 SemiAnalysis 번역본이 설명한다. SOFC(고체산화물 연료전지 — 세라믹 전해질로 산소를 이온으로 바꿔 보내고 반대편에서 천연가스와 반응시켜 태우지 않고 전기를 뽑는 방식)는 화염 연소가 없어 NOx 같은 통상 오염물질을 거의 내지 않는다. 그래서 미국 PSD(정밀심사) 문턱 아래에 머물러 표준허가 경로를 탈 수 있다. 텍사스의 560MW 블룸 연료전지 발전소 신청은 900달러짜리 표준허가 수수료만 내고 2025년 12월 19일 접수에서 2026년 1월 14일 승인까지 갔고, TCEQ는 PSD·Title V 어느 기준으로도 주요배출원이 아니라고 결론냈다. 오라클 프로젝트 주피터와 네비우스 뉴저지는 인허가 지연 때문에 급하게 연소식 설계를 연료전지로 바꿨다. 그 결과 데이터센터 BTM(자가발전) 발주에서 연료전지 수주는 사실상 블룸 한 곳이다. 3.8GW 대 0.03GW다(전부 <code>[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md</code>).</p>
+<h3>2-6. 이 갈아타기에 붙는 값 (A, SemiAnalysis 번역본)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>방식</th>
+<th>초기 투자</th>
+<th>납기·설치</th>
+<th>유지보수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>블룸 SOFC</td>
+<td>$3,000~4,000/kW</td>
+<td>설치 수 주</td>
+<td>스택 수명 5~6년, 셀 교체가 서비스 비용의 약 65%</td>
+</tr>
+<tr>
+<td>항공유도 가스터빈</td>
+<td>$1,700~2,000/kW</td>
+<td>18~36개월</td>
+<td></td>
+</tr>
+<tr>
+<td>산업용 가스터빈</td>
+<td>$1,500~1,800/kW</td>
+<td>12~36개월</td>
+<td></td>
+</tr>
+<tr>
+<td>왕복동 엔진</td>
+<td>$1,700~2,000/kW</td>
+<td>15~24개월</td>
+</tr>
+</tbody>
+</table></div>
+<p>출처: <code>content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md</code></p>
+<p>초기 투자가 두 배인데도 팔리는 이유가 바로 위 표의 두 번째 열이다. 그리고 이 $3,000~4,000/kW는 설치까지 끝낸 값이고, 블룸 제품 매출에서 뽑은 앵커 $3.0M/MW는 설비만의 값이다. 두 숫자의 간극이 5절 아래에 나오는 설치·부지 전기 층이다.</p>
+<hr>
+<h2>3. 앞단 (매출원가 → 공급사 → 공급사의 공급사)</h2>
+<h3>3-1. 매출원가 구조 — 회사 공시가 없다</h3>
+<p>블룸은 매출원가를 항목별로 나누지 않는다. 아래 비중은 사슬 데이터의 BOM 작업 모델(<code>bom/2026-current.json</code>)이며 회사 공식 BOM(자재 명세)이 아니다. 분모는 매출 환산 MW당 제품 원가 약 $1.93M(2026 상반기)이고, 각 항목 금액은 비중 × $1.93M으로 계산한 것이다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>계통</th>
+<th>비중(추정)</th>
+<th>1MW당(추정)</th>
+<th>확신</th>
+<th>받는 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>인터커넥트</td>
+<td>24%</td>
+<td>~$463k</td>
+<td>MEDIUM</td>
+<td>포리테타이완, 플러스메탈테크(코팅)</td>
+</tr>
+<tr>
+<td>핫박스·파워유닛</td>
+<td>19%</td>
+<td>~$367k</td>
+<td>MEDIUM_HIGH</td>
+<td>MTAR테크놀로지스, 카오리히트트리트먼트</td>
+</tr>
+<tr>
+<td>전력 전자</td>
+<td>14%</td>
+<td>~$270k</td>
+<td>LOW_MEDIUM</td>
+<td>캐벨폴리텍, 산미나-SCI 인디아, 블룸에너지인디아</td>
+</tr>
+<tr>
+<td>잔여·중복 조정</td>
+<td>14%</td>
+<td>~$270k</td>
+<td>LOW</td>
+<td>계측·단열·물류 등</td>
+</tr>
+<tr>
+<td>셀·전기화학</td>
+<td>12%</td>
+<td>~$232k</td>
+<td>MEDIUM</td>
+<td>차오저우 싼환(CCTC), 아모센스</td>
+</tr>
+<tr>
+<td>블룸 내부 전환</td>
+<td>11%</td>
+<td>~$212k</td>
+<td>LOW</td>
+<td>블룸 자체 공정</td>
+</tr>
+<tr>
+<td>기계·모듈</td>
+<td>6%</td>
+<td>~$116k</td>
+<td>LOW_MEDIUM</td>
+<td>서진시스템, 텍슨, 내시인더스트리스, 한선엔지니어링, 둥관자펑</td>
+</tr>
+<tr>
+<td>합계</td>
+<td>100%</td>
+<td>~$1,930k</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>비직관적인 자리가 둘 있다. ① 셀이 12%뿐이다. 이 회사의 기술 핵심인 스칸디아 안정화 지르코니아 전해질은 원가에서 가장 큰 항목이 아니다. 가장 큰 항목은 인터커넥트(셀과 셀 사이에서 전기를 모으고 가스를 나누는 금속 판)로 24%다. ② 반대로 공급 위험은 셀 쪽에 몰려 있다(6절).</p>
+<h3>3-2. 앞단 공급사 — 상대 공시로 확인되는 것</h3>
+<p><strong>① 셀·전해질 (병목)</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>국적</th>
+<th>공시</th>
+<th>내용</th>
+<th>등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>차오저우 싼환(CCTC)</strong></td>
+<td>중국</td>
+<td>선전 300408</td>
+<td>SOFC 전해질 세라믹 격막·기판. 2026년 조달 점유 75~80% 추정. 2014년 상반기 CCTC 매출의 9.54%를 블룸이 차지한 1위 고객이었다는 IPO 기록이 관계의 1차 근거</td>
+<td>관계 A / 점유 C</td>
+</tr>
+<tr>
+<td><strong>아모센스</strong></td>
+<td>한국</td>
+<td>코스닥</td>
+<td>SOFC 세라믹 기판. 2026년 신규 진입. 월 20만 → 60만 장 확대 계획</td>
+<td>관계 A / 물량 A</td>
+</tr>
+<tr>
+<td>산화스칸듐 공급사</td>
+<td>비공개</td>
+<td>회사 블로그</td>
+<td>복수국 복수 업체라고만 밝힌다. 물량·조달 전략 비공개. 산업 부산물 회수 기반</td>
+<td>B</td>
+</tr>
+</tbody>
+</table></div>
+<p>세라믹 계통에는 통관 기록으로만 잡히는 회사가 둘 더 있다. 융저우밍루이세라믹(중국, 기술 세라믹 플레이트·심)과 CUMI 카보런덤유니버설(인도, 고알루미나 엔지니어링·내화 세라믹)이다. 둘 다 관계는 확인되지만 어느 하위 계통에 쓰이는지는 추론이라 전해질 기판 공급과 분리해 둔다.</p>
+<p>아모센스 점유율은 분모가 둘이라 나란히 비교하면 안 된다. 연 720만 장 생산 능력을 블룸 1.5GW 가동률 기준 연 수요 4,500~4,950만 장으로 나누면 15~16%, 2.0GW 기준 약 6,670만 장으로 나누면 11~12%다(C, 1GW당 3,000~3,300만 장 가정).</p>
+<p><strong>② 인터커넥트 (원가 최대 계통)</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>국적</th>
+<th>내용</th>
+<th>등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>포리테타이완</strong></td>
+<td>대만</td>
+<td>크롬 합금 인터커넥트 플레이트. 2024년 10월 현장 취재 기준 「포리테와 캐나다 공급사가 대략 50:50」. 2026년에도 선적과 공식 공지로 관계가 이어진다</td>
+<td>관계 A / 점유 C</td>
+</tr>
+<tr>
+<td>플러스메탈테크</td>
+<td>대만</td>
+<td>코팅을 끝낸 인터커넥트. 포리테 → 플러스메탈 → 블룸 순서가 사슬 데이터의 정본</td>
+<td>A</td>
+</tr>
+<tr>
+<td>스택폴인터내셔널파우더메탈</td>
+<td>캐나다</td>
+<td>2014~2018년 공동 특허. 2024년 취재의 「캐나다 공급사」 후보이나 현재 공급 여부는 모른다</td>
+<td>C</td>
+</tr>
+<tr>
+<td>크롬 합금 모재 공급사</td>
+<td>비공개</td>
+<td>플레이트가 크롬 합금이라는 것만 확인된다</td>
+<td>B</td>
+</tr>
+</tbody>
+</table></div>
+<p>포리테가 받는 부분의 크기를 하나만 계산할 수 있다. 650kW 파워유닛 한 대에 플레이트 30,000장이 들고, 이를 0.65MW로 나누면 MW당 46,154장, 장당 약 6달러를 곱하면 <strong>MW당 약 $277,000</strong>이다(C, method-porite-content). 3-1의 인터커넥트 계통 MW당 $463k와 견주면 포리테 플레이트가 그 계통의 약 60%를 차지한다. 남는 40%가 플러스메탈의 코팅과 성형 부가가치라는 설명과 어긋나지 않는다.</p>
+<p><strong>③ 핫박스·파워유닛</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>국적</th>
+<th>공시</th>
+<th>내용</th>
+<th>등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MTAR테크놀로지스</strong></td>
+<td>인도</td>
+<td>인도 상장, 연차보고서</td>
+<td>블룸 핫박스 요구량의 약 50~60%를 공급한다고 회사가 직접 밝힌다. 전해조 유닛은 단독 공급으로 설명된다. 판금 어셈블리·인클로저·ASP 어셈블리도 함께</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td><strong>카오리히트트리트먼트</strong></td>
+<td>대만</td>
+<td>대만 8996, 연차보고서</td>
+<td>블룸이 카오리 2025 회계연도 순매출 신대만달러 65억 8,062만에서 26억 4,959만을 차지해 40.26%다. 2024년은 18억 7,352만으로 28.47%였다</td>
+<td><strong>A</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>핫박스는 이 사슬에서 상대 공시가 가장 깨끗한 자리다. 다만 두 숫자의 분모가 반대 방향이다. MTAR의 50~60%는 블룸 요구량이 분모이고, 카오리의 40.26%는 카오리 매출이 분모다. 카오리 점유율을 「100% − MTAR」로 45%라고 읽는 것은 보수적 추론일 뿐 공식 수치가 아니다(C, method-kaori-complement). 남은 부분을 한 회사가 다 맡는다는 보장이 없다.</p>
+<p><strong>④ 전력 전자</strong></p>
+<p>캐벨폴리텍(대만, 전력 변환·전원 공급), 산미나-SCI 인디아(인도, 정지형 컨버터·DC-DC 어셈블리 — CCE CORVA 선적 반복 확인), 블룸에너지인디아(블룸 자회사, 전력 조절·제어), 사이프러스인더스트리스인디아(인도, 와이어 하네스). 넷 다 직접 공급이 통관 기록으로 확인되나(A) 조달 비중은 공개되지 않았다.</p>
+<p>캐벨과 산미나 사이의 블룸 전용 하도급 관계는 확인되지 않아 두 회사를 독립 노드로 둔다. 세 곳의 선적을 단순히 더하면 부품과 조립과 통합이 겹쳐 이중계산된다.</p>
+<p><strong>⑤ 기계·모듈</strong></p>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>국적</th>
+<th>공시</th>
+<th>내용</th>
+<th>등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>서진시스템</strong></td>
+<td>한국</td>
+<td>KIND 2026-07-15</td>
+<td>SOFC 모듈과 셀 제외 주요 부품 <strong>5,263.8만 달러</strong>(₩785.47억), 2026-07-15~2027-03-22, 베트남 공장 EXW. 해외법인을 거쳐 생산되지만 실행 자회사는 공시가 특정하지 않는다</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td><strong>한선엔지니어링</strong></td>
+<td>한국</td>
+<td>더벨 2026-06-24</td>
+<td>연료·가스 분배 배관 모듈. 2026년 6월 블룸 글로벌 공급사 인증. 정확한 조달 비중은 비공개</td>
+<td>관계 A / 비중 B</td>
+</tr>
+</tbody>
+</table></div>
+<p>같은 계통에 통관 기록으로 잡히는 회사가 넷 더 있다. 텍슨(한국, 강판 인클로저·도어·KPE 인클로저, 서진시스템 계열사 → 텍슨반도체베트남), 내시인더스트리스(인도, 인클로저·섀시 — 서진 산하로 묶을 근거가 없어 독립 노드로 둔다), 둥관자펑기계설비(중국, CM1 빌드베이스 키트·사이드패널·워터스키드 접합 조립품), 울프엔지니어링상하이와 테크노플렉스 베트남(발전기 배기관·배기 연결). 텍슨의 블룸 선적을 서진시스템 5,263.8만 달러 계약과 같은 범위·발주로 가정하지 않는다.</p>
+<p>서진시스템 계약에는 MW가 없다. 8개월 생산량 시나리오로만 폭을 잡으면 667MW일 때 MW당 $79,000, 1.0GW일 때 $53,000, 1.33GW일 때 $40,000이다(C, method-seojin-sensitivity). 3-1의 기계·모듈 계통 MW당 $116k와 견주면 서진이 그 계통의 34~69%를 차지한다는 폭이 나온다. 계약에 MW가 없으므로 중앙값을 세우지 않는다.</p>
+<p><strong>⑥ 단열·계측</strong></p>
+<p>유니콘인슐레이션스(말레이시아, 미세다공 단열재), 저장춘후이·오카자키제작소(중국·일본, 열전대), 마이크로센서(중국, 레벨 트랜스미터), 프로테크닉 우장(중국, DC 팬 — 과거 공급 이력은 있으나 현재 주력 여부 불확실). 전부 통관 기록 기반이고 조달 비중은 공개되지 않았다.</p>
+<h3>3-3. 제조 장비 — BOM이 아니라 증설 병목</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>국적</th>
+<th>공시</th>
+<th>내용</th>
+<th>등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>코세스</strong></td>
+<td>한국</td>
+<td>KIND 2026-07-13</td>
+<td>전극셀 코팅 자동화 장비 <strong>1억 달러</strong>(₩1,504.2억), 2026-07-10~2026-10-29</td>
+<td><strong>A</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>코세스 계약은 제품 BOM이 아니라 설비 투자다. 원가 비중은 0이지만 증설 병목으로서의 중요도는 사슬 데이터에서 VERY_HIGH로 잡혀 있다. 이 1억 달러가 시험 라인에 이은 4GW 양산 라인용이라는 2차 보도가 있으나 신뢰도 0.5다(C, 한국경제 2026-07-16). 1억 달러를 4GW로 나눠 공장 투자 단가로 읽으면 안 된다. 특정 자동화 장비 묶음이다. 2025년 11월 이후 블룸 관련 누적 수주는 2,300억 원 수준으로 보도된다(C, 공시 합산이 아니다).</p>
+<h3>3-4. 부지 전기 — 제품 원가 밖의 층</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>공시</th>
+<th>계약</th>
+<th>등급</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LS일렉트릭</strong></td>
+<td>KIND 2026-04-29</td>
+<td>뉴멕시코 데이터센터 배전반·배전 변압기 <strong>2억 1,652.6만 달러</strong>(₩3,189.6억), 2026-04-28~2027-03-29</td>
+<td><strong>A</strong></td>
+</tr>
+<tr>
+<td>LS일렉트릭</td>
+<td>KIND</td>
+<td>와이오밍 데이터센터 추가 <strong>3,426만 달러</strong>, 2026-08-01~2027-06-30</td>
+<td>A</td>
+</tr>
+</tbody>
+</table></div>
+<p>이 계약은 블룸 제품 BOM이 아니라 부지 전기 인프라 층이다. 공시 주체는 LS일렉트릭 본사이고 북미 프로젝트 실행은 미국 법인이 맡는다. 뉴멕시코 계약은 프로젝트 주피터를 향한 것으로 보이나(지역과 시점이 붙는다) LS와 오라클을 직접 잇는 문장은 없다(C, 신뢰도 0.95).</p>
+<p>이 층의 크기가 중요하다. 2억 1,652.6만 달러를 주피터 계획 상한 2.45GW로 나누면 MW당 약 $88,000이다(C). 블룸이 2026년 8월 내놓은 Power Connect는 전기 통합을 현장에서 공장으로 옮겨 현장 전기 설치 시간을 40% 넘게 줄인다고 회사가 밝혔는데(A), 배전반·변압기 같은 부지 전기 공급사가 없어지는 것은 아니다.</p>
+<h3>3-5. 앞단의 앞단 (Tier 2)</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>소재</th>
+<th>Tier 1</th>
+<th>Tier 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>스칸디아 안정화 지르코니아 전해질</td>
+<td>차오저우 싼환, 아모센스</td>
+<td>산화스칸듐(복수국 복수 업체, 비공개, 산업 부산물 회수)</td>
+</tr>
+<tr>
+<td>인터커넥트 플레이트</td>
+<td>포리테타이완</td>
+<td>크롬·철 합금 모재(공급사 비공개)</td>
+</tr>
+<tr>
+<td>3TG(주석·탄탈럼·텅스텐·금)</td>
+<td>실사 대상 협력사 136곳</td>
+<td>블룸은 하류에서 소비할 뿐 광산·제련소·정제소에서 직접 사지 않는다</td>
+</tr>
+</tbody>
+</table></div>
+<p>2026년 4월 23일 기준 3TG 실사 대상 협력사 136곳 전부가 유효한 CMRT를 제출했다(A, Form SD). 분모는 분쟁광물 대상 협력사이고 전체 1차 협력사 수가 아니다. 별도로 2026년 1분기 통관 스냅샷에서는 1차 협력사 53곳이 확인되는데, 선적 건수는 조달 비중이 아니므로 관계 신호로만 쓴다.</p>
+<h3>3-6. 운영 투입 (제조 원가 아님)</h3>
+<p>가동 중인 Energy Server가 먹는 천연가스·바이오가스·혼소 수소는 공급사가 전부 비공개다. 이 층은 블룸 매출원가가 아니라 설비를 굴리는 쪽의 연료비다. 블룸이 직접 보유·운영하는 설비(FY2025 전력 매출 6,035만 달러 부분)에서만 블룸 원가로 잡힌다.</p>
+<hr>
+<h2>4. 매출 드라이버 트리 (FY2026 가이던스 중간값 기준)</h2>
+<h3>Level 0</h3>
+<p>매출 = 제품 + 설치 + 서비스 + 전력
+= $4,050M(가이던스 중간값, A) ≈ 제품 87.5% + 설치 4.2% + 서비스 7.2% + 전력 1.1%(2026 상반기 구성 적용, C)</p>
+<h3>Level 1 — 제품 매출 = 매출 환산 MW × ASP 앵커</h3>
+<p>= 약 1,181MW × $3.0M/MW (C)
+2026 상반기 530MW의 연율 1,060MW에서 하반기 가속을 얹은 값이다. FY2024 362MW → FY2025 510MW → FY2026 ~1,181MW.</p>
+<h3>Level 2 — 매출 환산 MW = 생산 능력 × 가동률</h3>
+<ul>
+<li>생산 능력: 사슬 데이터가 쓰는 분모는 1.5GW와 2.0GW 두 가지다(아모센스 점유율 계산에서). 회사는 GW 단위 생산 능력을 8-K에 적지 않는다.</li>
+<li>증설 제약: 코세스 전극셀 코팅 자동화 장비 1억 달러(2026-07~10). 이 라인이 서면 셀 공정 상한이 올라간다.</li>
+<li>소재 제약: 아모센스 월 20만 → 60만 장. 세라믹 기판이 두 곳으로 늘어난 것이 2026년의 가장 큰 공급망 변화다.</li>
+</ul>
+<h3>Level 2 — ASP = 계약 구조에 따라 달라진다</h3>
+<p>$3.0M/MW 앵커는 2023년 SK 500MW 계약에서 나온 값이고 회사가 반복 공시하는 단가가 아니다. AEP 가설이 쓰는 $2.5~3.0M/MW, SK에너닉스 가설이 쓰는 $3.0M/MW도 같은 자리에서 왔다. 이 앵커가 흔들리면 매출 환산 MW와 MW당 원가가 같은 방향으로 흔들리고 제품 마진율은 그대로다.</p>
+<h3>Level 1 — 비제품 매출</h3>
+<p>설치는 진행 기준으로 잡히고, 서비스는 계약 기간에 걸쳐 인식되며, 전력은 직접 보유 설비에서 나온다. 2026년에 이 셋의 비중이 12.5%로 줄었다. 스택 수명이 5~6년이므로 2020~21년 배치분의 셀 교체가 2026~27년부터 서비스 매출로 돌아온다.</p>
+<h3>드라이버 → 밸류체인 연결</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>드라이버</th>
+<th>연결 회사</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>셀 생산 능력</td>
+<td>차오저우 싼환·아모센스(기판), 코세스(코팅 자동화 장비)</td>
+</tr>
+<tr>
+<td>핫박스 생산 능력</td>
+<td>MTAR, 카오리</td>
+</tr>
+<tr>
+<td>인도 속도</td>
+<td>서진시스템·텍슨(모듈·인클로저), 한선엔지니어링(배관 모듈)</td>
+</tr>
+<tr>
+<td>부지 전력화</td>
+<td>LS일렉트릭(배전반·변압기), 슈퍼커패시터 공급사</td>
+</tr>
+<tr>
+<td>계약 고객</td>
+<td>브룩필드 계열 펀드 JV(자본), AEP·SK에코플랜트(채널), 오라클(최종 사용자)</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>5. 비용 드라이버 트리와 1MW 단위경제</h2>
+<h3>Level 0</h3>
+<p>영업이익 = 매출 − 매출원가 − 영업비용
+FY2025: $2,024.0M − ~$1,437.0M(71.0%) − ~$514.2M(25.4%) = <strong>$72.8M(3.6%)</strong> (매출·영업이익 A, 매출원가·영업비용 C)
+2026 상반기: $1,816.4M − $1,235.3M(68.0%) − $326.7M(18.0%) = <strong>$254.4M(14.0%)</strong> (A)</p>
+<p>영업이익률이 3.6%에서 14.0%로 뛴 원인 두 가지를 나눠 보면, 총마진 개선이 3.0%p이고 영업비용 비중 하락이 7.4%p다. 매출이 두 배가 되는 동안 영업비용은 그만큼 늘지 않았다. 이 회사의 2026년 이익은 제조 원가가 내려가서가 아니라 고정비를 나눌 매출이 커져서 나왔다.</p>
+<h3>Level 1 — 제품 매출원가 = 매출 환산 MW × MW당 원가</h3>
+<p>2026 상반기: 530MW × ~$1.93M/MW = $1,023.2M (원가 A, 분해 C)</p>
+<h3>단위경제 — 1MW의 워터폴 (추정, US$천)</h3>
+<pre><code>제품 판매가                    $3,000
+ − 인터커넥트        ~$463   ← 포리테타이완 · 플러스메탈테크
+ − 핫박스·파워유닛    ~$367   ← MTAR · 카오리
+ − 전력 전자          ~$270   ← 캐벨 · 산미나 인디아 · 블룸에너지인디아
+ − 잔여·중복 조정     ~$270   ← 계측 · 단열 · 물류
+ − 셀·전기화학        ~$232   ← 차오저우 싼환 · 아모센스
+ − 블룸 내부 전환     ~$212   ← 블룸 자체 공정
+ − 기계·모듈          ~$116   ← 서진시스템 · 텍슨 · 한선 · 내시
+ = 1MW당 매출총이익  ~$1,070   (제품 매출총이익률 ~35.6%)
+</code></pre>
+<p>단위를 SOFC 시스템 1MW로 잡은 이유는 블룸이 출하 대수도 출하 MW도 공시하지 않기 때문이다. Energy Server 1대는 약 325kW이고(SemiAnalysis 번역본), 사슬 데이터의 포리테 계산은 650kW 파워유닛을 쓴다. 세대가 달라 대수 단위로는 여러 해를 잇지 못한다. MW는 계약 공시·보도자료가 모두 쓰는 유일한 공통 단위다.</p>
+<p>이 워터폴에서 봐야 할 것 셋. ① 판매가 $3,000k 가운데 외부 공급사에게 나가는 것이 $1,718k(57.3%)이고, 블룸 안에 남는 것은 내부 전환 원가 $212k(7.1%)와 매출총이익 $1,070k(35.6%)를 합한 $1,282k(42.7%)다. ② 한국 회사가 받는 자리는 기계·모듈 $116k와 셀 일부뿐이라 1MW당으로는 작다. 한국 공급사의 계약 금액이 큰 것은 단가가 높아서가 아니라 물량이 커서다. ③ 이 $3,000은 설비 값이고, 같은 설비를 부지에 세워 돌리기까지는 $3,000~4,000/kW, 즉 MW당 $3,000~4,000천이 든다(SemiAnalysis). 차액에 설치 역무와 LS일렉트릭이 대는 배전반·변압기(MW당 약 $88k, 주피터 기준 추정)와 슈퍼커패시터가 들어간다.</p>
+<h3>Level 1 — 영업비용</h3>
+<p>2026 상반기 $326.7M = 연구개발 $107.5M 수준 + 판매마케팅 + 일반관리(2분기 내역 R&amp;D $58.9M · S&amp;M $43.0M · G&amp;A $71.4M에서 연율화). 일반관리가 가장 큰 항목이라는 점이 눈에 띈다. SemiAnalysis 번역본이 적듯 블룸은 터빈·엔진만큼 검증되지 않은 기술이라 설치와 O&amp;M 대부분을 직접 맡고 직원을 채용·훈련한다. 전 세계 2,000명 이상을 고용한다(A, 8-K).</p>
+<h3>마진을 움직이는 다섯 지렛대</h3>
+<div class="tw"><table>
+<thead><tr>
+<th>지렛대</th>
+<th>효과</th>
+<th>2026년 상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출 믹스</td>
+<td>제품 비중 1%p당 전사 총마진 ~0.29%p(제품 35.6% vs 비제품 6.8%)</td>
+<td>73.6% → 87.5%. 이미 대부분 진행됐다</td>
+</tr>
+<tr>
+<td>영업비용 희석</td>
+<td>매출 2배에 영업비용은 덜 늘었다</td>
+<td>영업비용 비중 25.4% → 18.0%</td>
+</tr>
+<tr>
+<td>MW당 원가</td>
+<td>2024 $1.89M → 2025 $1.95M → 2026 상반기 $1.93M</td>
+<td>거의 안 움직였다. 코세스 자동화 라인이 변수</td>
+</tr>
+<tr>
+<td>ASP</td>
+<td>앵커 $3.0M/MW. 대형 계약의 단가 조건은 비공개</td>
+<td>상한 GW 계약에 물량 할인이 붙는지 알 수 없다</td>
+</tr>
+<tr>
+<td>서비스 교체 주기</td>
+<td>스택 수명 5~6년, 셀 교체가 서비스 비용의 약 65%</td>
+<td>2020~21년 배치분이 2026~27년 교체 구간</td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>6. 병목·단일소스 리스크 스코어</h2>
+<p>점수: 대체 가능성(1 = 대체 불가 ~ 5 = 쉬움), 리드타임(1 = 3년+ ~ 5 = 수개월), 지정학(1 = 단일국 집중 ~ 5 = 분산). <strong>합계가 낮을수록 위험하다.</strong> 사슬 데이터에서 공급 여력 등급(capacity_criticality)이 붙은 9개 관계를 바탕으로 매겼다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>병목</th>
+<th>지배 회사</th>
+<th>점유</th>
+<th>대체</th>
+<th>리드타임</th>
+<th>지정학</th>
+<th>합계</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOFC 전해질 세라믹 기판</td>
+<td>차오저우 싼환(CCTC)</td>
+<td>75~80%(추정)</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td><strong>4</strong></td>
+<td>VERY_HIGH. 중국 단일. 아모센스 진입으로 완화 시작</td>
+</tr>
+<tr>
+<td>전극셀 코팅 자동화 장비</td>
+<td>코세스</td>
+<td>단독(추정)</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td><strong>6</strong></td>
+<td>VERY_HIGH. 원가 비중 0, 증설 상한은 여기서</td>
+</tr>
+<tr>
+<td>인터커넥트 플레이트</td>
+<td>포리테타이완 + 플러스메탈테크</td>
+<td>2024년 ~50%, 현재 비공개</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td><strong>6</strong></td>
+<td>HIGH. 원가 최대 계통(24%), 대만 집중</td>
+</tr>
+<tr>
+<td>부지 전기 BoP(배전반·변압기)</td>
+<td>LS일렉트릭 외</td>
+<td>비공개</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td><strong>6</strong></td>
+<td>데이터센터 자체 수요와 겹쳐 초과수요</td>
+</tr>
+<tr>
+<td>슈퍼커패시터(섬 운전 안정화)</td>
+<td>비공개</td>
+<td>비공개</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td><strong>7</strong></td>
+<td>주피터 2.45GW면 약 1.6GW 필요. 선례 58MW</td>
+</tr>
+<tr>
+<td>산화스칸듐</td>
+<td>비공개 복수국 복수 업체</td>
+<td>비공개</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td><strong>7</strong></td>
+<td>HIGH. 부산물 회수 기반이라 증산이 더디다</td>
+</tr>
+<tr>
+<td>핫박스·파워유닛</td>
+<td>MTAR 50~60% + 카오리</td>
+<td>합쳐 대부분</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td><strong>7</strong></td>
+<td>HIGH. 인도·대만 두 나라로 나뉜 것이 완충</td>
+</tr>
+<tr>
+<td>SOFC 모듈·주요 부품</td>
+<td>서진시스템(텍슨)</td>
+<td>비공개</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td><strong>9</strong></td>
+<td>MEDIUM. 베트남 생산이라 관세가 변수</td>
+</tr>
+<tr>
+<td>천연가스 공급(운영 투입)</td>
+<td>비공개</td>
+<td>비공개</td>
+<td>3</td>
+<td>2</td>
+<td>4</td>
+<td><strong>9</strong></td>
+<td>제조 원가가 아니라 설비를 굴리는 쪽 비용</td>
+</tr>
+<tr>
+<td>세라믹 기판 2차 공급</td>
+<td>아모센스</td>
+<td>설비 기준 15~16%(1.5GW 분모)</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td><strong>10</strong></td>
+<td>MEDIUM. 병목을 푸는 쪽</td>
+</tr>
+<tr>
+<td>열전대·계측</td>
+<td>저장춘후이·오카자키·마이크로센서</td>
+<td>비공개</td>
+<td>4</td>
+<td>4</td>
+<td>3</td>
+<td><strong>11</strong></td>
+<td>다변화돼 있다</td>
+</tr>
+<tr>
+<td>배관 모듈·인클로저</td>
+<td>한선·내시·텍슨·둥관자펑</td>
+<td>비공개</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td><strong>12</strong></td>
+<td>가장 안전한 층</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>요약:</strong> 최상위 위험은 ① 차오저우 싼환 한 곳에 전해질 기판의 75~80%가 걸려 있다는 것, ② 코세스·포리테·부지 전기가 나란히 6점이라는 것이다. ①은 중국 단일국이면서 대체가 어렵다는 두 이유가 겹친다. ②의 셋은 성격이 다르다. 코세스는 증설 속도를, 포리테는 원가 최대 계통을, 부지 전기는 전력화 시점을 각각 쥔다.</p>
+<p>가장 과소평가된 자리는 슈퍼커패시터다. SemiAnalysis 실사 결과 블룸의 용량 비율은 출력 기준 약 3:2로 확인되는데, 이를 주피터 2.45GW에 적용하면 약 1.6GW가 필요하다. 기존 최대 선례가 58MW인 것을 생각하면 이 부품이 없어서 프로젝트가 밀릴 가능성이 연료전지 자체보다 크다. 블룸 10-K에도, 어느 공급사 공시에도 이 부품의 공급사 이름이 없다.</p>
+<p>한국이 쥔 병목은 코세스(장비) 하나뿐이고, 나머지 한국 회사(아모센스·서진시스템·한선엔지니어링·LS일렉트릭)는 병목을 푸는 쪽이거나 다변화된 층에 있다.</p>
+<hr>
+<h2>7. 마진 풀 — 1MW를 따라가면</h2>
+<p>기준: SOFC 시스템 1MW, 2026년 상반기 원가 구조. 전부 추정(C), 크기 비교용이다.</p>
+<h3>7-1. 원가 적층</h3>
+<p>5절 워터폴과 같은 값을 누적으로 다시 쌓고, 제품 매출 밖의 두 층을 뒤에 붙인다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>단계</th>
+<th>회사</th>
+<th>원가 기여</th>
+<th>누적</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>전해질 기판·세라믹</td>
+<td>차오저우 싼환(75~80%), 아모센스</td>
+<td>~$232k</td>
+<td>$232k</td>
+<td>블룸이 CCTC 매출에서 차지하는 비중은 2014년 9.54%가 마지막 공시</td>
+</tr>
+<tr>
+<td>인터커넥트 플레이트</td>
+<td>포리테타이완</td>
+<td>~$277k</td>
+<td>$509k</td>
+<td>MW당 46,154장 × 장당 약 $6</td>
+</tr>
+<tr>
+<td>인터커넥트 코팅·성형</td>
+<td>플러스메탈테크</td>
+<td>~$186k</td>
+<td>$695k</td>
+<td>인터커넥트 계통 $463k의 잔여</td>
+</tr>
+<tr>
+<td>핫박스·파워유닛</td>
+<td>MTAR(50~60%), 카오리</td>
+<td>~$367k</td>
+<td>$1,062k</td>
+<td>블룸이 카오리 2025년 순매출의 40.26%</td>
+</tr>
+<tr>
+<td>전력 전자</td>
+<td>캐벨, 산미나 인디아, 블룸에너지인디아</td>
+<td>~$270k</td>
+<td>$1,332k</td>
+<td>셋 가운데 하나는 블룸 자회사</td>
+</tr>
+<tr>
+<td>기계·모듈</td>
+<td>서진시스템($40~80k), 텍슨, 한선, 내시</td>
+<td>~$116k</td>
+<td>$1,448k</td>
+<td>서진 계약 5,263.8만 달러</td>
+</tr>
+<tr>
+<td>계측·단열·물류(잔여) + 블룸 내부 전환</td>
+<td>저장춘후이·오카자키·유니콘 외 / 블룸</td>
+<td>~$270k + ~$212k</td>
+<td>$1,930k</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>블룸 제품 판매가</strong></td>
+<td></td>
+<td><strong>$3,000k</strong></td>
+<td></td>
+<td><strong>제품 매출총이익률 ~35.6%</strong></td>
+</tr>
+<tr>
+<td>(부지 전기 BoP)</td>
+<td>LS일렉트릭 외</td>
+<td>~$88k</td>
+<td></td>
+<td>제품 매출 밖. 주피터 계약에서 역산</td>
+</tr>
+<tr>
+<td><strong>부지에 세우기까지</strong></td>
+<td></td>
+<td><strong>$3,000~4,000k</strong></td>
+<td></td>
+<td>SemiAnalysis TCO 기준. 차액에 설치 역무가 들어간다</td>
+</tr>
+</tbody>
+</table></div>
+<h3>7-2. 이익 배분</h3>
+<p>1MW 매출 $3,000k에서 블룸이 가져가는 매출총이익은 약 $1,070k로 35.6%다. 나머지 $1,930k가 공급사에게 간다. 그 가운데 블룸 내부 전환 $212k와 자회사 블룸에너지인디아 분을 빼면 외부 공급사에게 가는 것은 약 $1,700k, 판매가의 57%다.</p>
+<p>TSMC 사슬과 견주면 방향이 반대다. TSMC 사슬에서는 엔비디아가 GPU 판매가의 78%를 이익으로 가져가고 제조사는 5%만 가져간다. 블룸은 제조사이자 판매자여서 판매가의 35.6%를 매출총이익으로 잡지만, 영업비용을 빼고 나면 2026년 상반기 영업이익률이 14.0%다. 설치와 O&amp;M을 직접 하기로 한 선택의 값이 이 21.6%p다.</p>
+<p>공급사 쪽에서 보면 크기가 완전히 달라진다. 카오리는 블룸 한 곳에서 순매출의 40.26%를 얻고, MTAR은 핫박스 요구량의 절반 이상을 맡는다. 한국 회사들에는 계약 금액 자체가 사건이다. LS일렉트릭 2억 1,652.6만 달러, 코세스 1억 달러, 서진시스템 5,263.8만 달러가 2026년 상반기에 한꺼번에 공시됐다. 블룸 쪽 1MW 원가표에서 보면 각각 작은 자리지만, 받는 쪽 손익계산서에서는 그렇지 않다.</p>
+<h3>7-3. MW당 원가가 안 내려간다는 것의 뜻</h3>
+<p>2024년 $1.89M → 2025년 $1.95M → 2026년 상반기 $1.93M. 물량이 362MW에서 연율 1,060MW로 세 배가 되는 동안 MW당 원가가 안 내려갔다. 규모의 경제가 아직 원가에 안 왔다는 뜻이고, 코세스 자동화 장비가 이 자리를 겨냥한 투자로 읽힌다. 8절 시나리오 ⑥이 이 경로다.</p>
+<hr>
+<h2>8. 시나리오 민감도</h2>
+<p><strong>기준선:</strong> FY2026 가이던스 중간값 매출 $4,050M, 비GAAP 총마진 약 34%, 비GAAP 영업이익 $850M(전부 회사 공표치, A). FY2025 실적(매출 $2,024.0M, 총마진 29.0%, 영업이익 $72.8M)을 기준선으로 쓰지 않은 이유는 2026년에 매출이 두 배가 되어 FY2025 구조로 잰 충격이 현재 규모와 안 맞기 때문이다.</p>
+<p><strong>가정(C):</strong> 제품 한계이익률 35.6%(2026 상반기 제품 매출총이익률), 비제품 한계이익률 6.8%(같은 기간 역산), 영업비용 연 $653M 고정(2026 상반기 $326.7M의 연율). 매출 구성은 2026 상반기 기준으로 제품 87.5% · 비제품 12.5%. 이 모델은 GAAP 기준이라 회사의 비GAAP 가이던스와 층이 다르다. 아래 표는 수준이 아니라 변화폭만 읽는다.</p>
+<div class="tw"><table>
+<thead><tr>
+<th>시나리오</th>
+<th>충격 경로</th>
+<th>매출</th>
+<th>총마진</th>
+<th>영업이익</th>
+<th>전파</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>① 최대 고객 인도 20% 이연</td>
+<td>상반기 44% 고객의 인도 다섯 중 하나가 다음 해로</td>
+<td>−$356M</td>
+<td>변화 없음</td>
+<td><strong>−$114M</strong></td>
+<td>뒷: 오라클 연관 배치 지연 / 앞: 코세스·서진 발주가 먼저 늦춰진다</td>
+</tr>
+<tr>
+<td>② 제품 단가 −5%</td>
+<td>대형 계약의 물량 할인. 원가는 그대로</td>
+<td>−$177M</td>
+<td>−1.6%p</td>
+<td><strong>−$177M</strong></td>
+<td>앞: 원가 압박이 포리테·MTAR 단가 재협상으로 간다</td>
+</tr>
+<tr>
+<td>③ 차오저우 싼환 전해질 3개월 중단</td>
+<td>제품 생산 25% 정지. 아모센스로 전량 대체 불가</td>
+<td>−$886M</td>
+<td>변화 없음</td>
+<td><strong>−$315M</strong></td>
+<td>6절 최상위 위험 실현. 아모센스 월 60만 장으로는 못 메운다</td>
+</tr>
+<tr>
+<td>④ 부지 전기·슈퍼커패시터 지연으로 인도 10% 이연</td>
+<td>설비는 나갔는데 부지가 전력화 안 된다</td>
+<td>−$405M</td>
+<td>−0.4%p</td>
+<td><strong>−$129M</strong></td>
+<td>앞: LS일렉트릭 납기 / 뒷: 주피터·네비우스 가동 시점</td>
+</tr>
+<tr>
+<td>⑤ 관세·소재로 제품원가 +5%</td>
+<td>베트남·인도·중국 선적에 관세. 크롬 합금 상승</td>
+<td>변화 없음</td>
+<td>−3.1%p</td>
+<td><strong>−$114M</strong></td>
+<td>앞: 서진(베트남)·MTAR(인도)·둥관자펑(중국)이 직접 맞는다</td>
+</tr>
+<tr>
+<td>⑥ 코세스 자동화로 제품원가 −5%</td>
+<td>전극셀 코팅 라인 가동. MW당 $1.93M → $1.83M</td>
+<td>변화 없음</td>
+<td>+3.1%p</td>
+<td><strong>+$114M</strong></td>
+<td>앞: 셀 공정 인건비 감소 / 회사: 7-3의 원가 정체가 풀린다</td>
+</tr>
+<tr>
+<td>⑦ 가이던스 상단 달성</td>
+<td>매출 $4,200M</td>
+<td>+$150M</td>
+<td>변화 없음</td>
+<td><strong>+$48M</strong></td>
+<td>하반기 인도가 계획대로 나간 경우</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>핵심:</strong> 크기로 보면 ③(전해질 중단, −$315M)이 ②(단가 −5%, −$177M)의 두 배 가까이 된다. 이 회사의 손익을 가장 크게 흔드는 것은 가격도 수요도 아니라 중국 한 곳의 세라믹 기판 공급이다. 그리고 ①과 ④를 합치면 −$243M인데, 둘 다 물량이 줄어서가 아니라 시점이 밀려서 생기는 손실이다. 매출 상한이 GW 단위로 잡혀 있는 회사에서 위험은 수요 쪽이 아니라 인도 시점 쪽에 있다.</p>
+<p>⑤와 ⑥은 같은 크기로 반대 방향이다. 2026~27년 블룸 마진의 방향은 「관세·소재 상승 − 자동화 절감」의 순합으로 정해지고, 두 항목 모두 매출과 무관하다.</p>
+<hr>
+<h2>9. 시간축 2026~2030</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>시기</th>
+<th>블룸 이벤트</th>
+<th>앞단에 오는 주문</th>
+<th>뒷단에 오는 제품</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2026</strong></td>
+<td>매출 가이던스 39~42억 달러(중간값 +100%). 2분기 영업이익 $182.2M. Power Connect 출시. 미이행 이행의무 $442.4M</td>
+<td>코세스 1억 달러(7/10~10/29). 서진시스템 5,263.8만 달러(7/15~). LS일렉트릭 2억 1,652.6만 + 3,426만 달러. 아모센스 월 20만 → 60만 장. 한선 인증(6/24)</td>
+<td>오라클 최대 2.8GW 중 1.2GW 계약·배치. 네비우스 328MW. 미탁 프리몬트. 히타치 일본(9/1). 구글 와이오밍 900MW</td>
+</tr>
+<tr>
+<td><strong>2027</strong></td>
+<td>코세스 라인이 겨냥한 4GW 양산 체제(2차 보도, 신뢰도 0.5). 미이행 이행의무 $442.4M이 매출로 인식되는 구간</td>
+<td>서진 종료(3/22). LS일렉트릭 뉴멕시코 종료(3/29)·와이오밍 종료(6/30) → 후속 발주 여부가 한국 공급사 실적의 갈림길</td>
+<td>프로젝트 주피터 단계 가동(계획 상한 2.45GW). AEP 최대 1GW의 잔여 발주</td>
+</tr>
+<tr>
+<td><strong>2028</strong></td>
+<td>브룩필드 250억 달러 프레임워크가 받치는 프로젝트의 배치 구간</td>
+<td>전해질 기판 2차 공급 비중 확대 여부(아모센스)</td>
+<td>네비우스 10년 전력계약 2년차. 에퀴닉스 100MW 이후</td>
+</tr>
+<tr>
+<td><strong>2029~30</strong></td>
+<td>2020~21년 배치분의 스택 교체가 서비스 매출로 돌아온다(수명 5~6년, 셀 교체가 서비스 비용의 약 65%)</td>
+<td>셀 교체 수요가 차오저우 싼환·아모센스에 신규 물량으로 간다</td>
+<td>전력망이 뚫린 부지에서 연료전지가 백업·피커로 재배치되는 구간</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>시차 규칙:</strong> 계약 상한 발표(t) → 확정 발주와 이행의무 계상(t+3~12개월) → 공급사 KIND 공시(t+3~9개월) → 인도와 매출 인식(t+6~18개월). 2026년 상반기에 한국 공급사 공시 세 건이 몰린 것은 2024~25년 계약 상한 발표가 확정 발주로 바뀌었다는 신호다. 반대로 2027년 상반기에 세 계약이 나란히 끝나므로, 그때 후속 공시가 안 나오면 2026년이 정점이었다는 뜻이 된다.</p>
+<hr>
+<h2>10. 지분·자본 연결</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>회사</th>
+<th>지분</th>
+<th>밸류체인 위치</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>블룸SK퓨얼셀</strong></td>
+<td>블룸 + SK에코플랜트 합작, 비율 비공개</td>
+<td>한국 완제품 조립</td>
+<td>2020년 가동, 2023년 범위를 완제품 조립으로 확대</td>
+</tr>
+<tr>
+<td><strong>블룸에너지인디아</strong></td>
+<td>블룸 자회사</td>
+<td>전력 조절·제어</td>
+<td>전력 전자 계통 일부를 내부화했다. 캐벨·산미나와 나란히 선다</td>
+</tr>
+<tr>
+<td><strong>제3의 비계열 법인</strong></td>
+<td>블룸이 5,000만 달러 프로젝트 관련 지분투자</td>
+<td>고객 프로젝트</td>
+<td>2026-06-30 기준(A). 프로젝트 법인·SPV 층의 존재를 뒷받침한다. 주피터 법인으로 특정할 근거는 없다</td>
+</tr>
+<tr>
+<td><strong>브룩필드 계열 펀드 JV</strong></td>
+<td>브룩필드가 조성</td>
+<td>FY2025 최대 계약 고객(43%)</td>
+<td>브룩필드가 250억 달러 프레임워크로 자본을 마련하고, 펀드 JV가 설비를 사고, 그 아래 SPV가 프로젝트를 보유한다. SPV 법인명 비공개</td>
+</tr>
+<tr>
+<td><strong>오라클</strong></td>
+<td>블룸 주식 워런트를 받았다</td>
+<td>최종 사용자</td>
+<td>SEC가 워런트 대가를 「고객의 고객」에게 주는 것으로 회계처리한다. 고객이 공급사 주식을 갖는 구조</td>
+</tr>
+<tr>
+<td><strong>AEP → AEP 오하이오</strong></td>
+<td>완전 자회사</td>
+<td>유틸리티·채널·금융</td>
+<td>한 회사가 세 역할을 겸한다. AWS·콜로직스가 장기 계약으로 프로젝트 비용 전액을 낸다</td>
+</tr>
+<tr>
+<td><strong>SK에코플랜트 → SK에코플랜트아메리카스</strong></td>
+<td>완전 자회사</td>
+<td>유통·EPC</td>
+<td>상거래 상대는 본사, 미국 현장 실행은 이 법인. 2025-07-10까지 특수관계</td>
+</tr>
+<tr>
+<td><strong>SK에너닉스 → 80MW 프로젝트 법인</strong></td>
+<td>한국산업은행 프로젝트 금융</td>
+<td>충주 40MW + 대소원 40MW</td>
+<td>한국 정책금융이 이 사슬에 들어와 있다</td>
+</tr>
+<tr>
+<td><strong>서진시스템 → 텍슨 → 텍슨반도체베트남</strong></td>
+<td>지배</td>
+<td>기계·모듈</td>
+<td>모듈 계약과 인클로저 선적이 같은 그룹 안에서 나뉜다</td>
+</tr>
+<tr>
+<td><strong>LS일렉트릭 → LS일렉트릭아메리카</strong></td>
+<td>완전 자회사</td>
+<td>부지 전기</td>
+<td>공시 주체는 본사, 북미 실행은 미국 법인</td>
+</tr>
+<tr>
+<td><strong>보더플렉스 · 치리사테크놀로지파크스</strong></td>
+<td>독립</td>
+<td>주피터·볼로 부지</td>
+<td>부지를 가진 쪽과 쓰는 쪽(오라클·코어위브)이 갈린다</td>
+</tr>
+<tr>
+<td>차오저우 싼환·포리테·MTAR·카오리·코세스·서진·아모센스·LS일렉트릭</td>
+<td>블룸 지분 없음</td>
+<td>앞단 전체</td>
+<td>블룸은 공급사를 지분으로 통제하지 않는다</td>
+</tr>
+</tbody>
+</table></div>
+<h3>해석</h3>
+<p>① 블룸은 앞단을 지분으로 하나도 쥐고 있지 않다. 전해질 기판의 75~80%를 대는 차오저우 싼환도, 핫박스 절반 이상을 대는 MTAR도 순수 거래 관계다. 대신 조립(블룸SK퓨얼셀)과 전력 전자(블룸에너지인디아)를 내부화했고, 설치·O&amp;M을 직접 한다. 수직통합의 방향이 소재가 아니라 현장 쪽으로 나 있다.</p>
+<p>② 반대로 뒷단에는 자본이 겹겹이 들어와 있다. 브룩필드가 자본을 마련하고, 오라클은 워런트로 지분을 받고, 블룸 자신도 고객 프로젝트 법인에 5,000만 달러를 넣었다. 계약 고객이 펀드 JV라는 것은 블룸이 파는 상대가 전기를 쓸 회사가 아니라 프로젝트를 보유할 금융 기구라는 뜻이다. FY2025 매출의 43%가 이 경로에서 나왔다.</p>
+<p>③ 한국 정책금융(산업은행)과 미국 유틸리티(AEP)가 각각 한국·미국 프로젝트의 자금과 실행을 맡는다. 두 나라 모두 규제받는 공적 성격의 주체가 블룸 설비의 배치 속도를 쥐고 있다.</p>
+<hr>
+<h2>11. 검증 상태 및 미확인 항목</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>항목</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FY2024·FY2025 매출·마진·영업이익, 2026 상반기·2분기 손익</td>
+<td>확인 완료 (A)</td>
+</tr>
+<tr>
+<td>매출원가 항목별 구성</td>
+<td>회사 미공시. BOM 작업 모델은 전부 추정 (C)</td>
+</tr>
+<tr>
+<td>출하 MW·생산 능력 GW</td>
+<td><strong>미공시</strong>. 매출 환산 MW는 $3.0M/MW 앵커로 만든 인공 분모다</td>
+</tr>
+<tr>
+<td>$3.0M/MW 앵커</td>
+<td>2023년 SK 500MW 계약 한 건에서 나왔다. 2026년 대형 계약 단가가 같은지 알 수 없다 (C)</td>
+</tr>
+<tr>
+<td>FY2025 1위 고객 43% = 브룩필드 계열 펀드 JV</td>
+<td>금액 대조로 확인 (A)</td>
+</tr>
+<tr>
+<td>FY2025 2위 13% = AEP, 3위 12% = SK에너닉스</td>
+<td>비중은 A, 법인 지목은 가설 (C, 신뢰도 0.45·0.40)</td>
+</tr>
+<tr>
+<td>2026 상반기 44% · 2분기 73% 고객의 정체</td>
+<td><strong>미확인</strong>. 같은 법인이라는 것만 추론 (C, 신뢰도 0.8). 오라클 연관 가설 신뢰도 4.0/5</td>
+</tr>
+<tr>
+<td>MTAR 핫박스 50~60% / 카오리 40.26%</td>
+<td>양쪽 연차보고서 직접 공시 (A). 단 카오리의 분모는 카오리 순매출이지 블룸 조달 물량이 아니다</td>
+</tr>
+<tr>
+<td>차오저우 싼환 75~80%</td>
+<td>2차 조사·업계 추정 (C). 2014년 IPO 공모설명서의 관계 기록만 1차 자료</td>
+</tr>
+<tr>
+<td>포리테 2024년 ~50%, 스택폴의 정체</td>
+<td>2024년 10월 현장 취재 시점 관측 (C). 2025·2026년 공개 자료 없음. 공동 특허가 현재 조달을 뒷받침하지 않는다</td>
+</tr>
+<tr>
+<td>Energy Server 1대 용량</td>
+<td>SemiAnalysis는 약 325kW, 사슬 데이터 포리테 계산은 650kW 파워유닛. <strong>세대 차이인지 정의 차이인지 미확인</strong></td>
+</tr>
+<tr>
+<td>슈퍼커패시터 공급사</td>
+<td><strong>미확인</strong>. 어느 공시에도 이름이 없다. 6절에서 가장 과소평가된 자리로 적은 이유</td>
+</tr>
+<tr>
+<td>산화스칸듐 공급사·물량 / 블룸SK퓨얼셀 지분율 / 오라클 워런트 규모</td>
+<td>전부 <strong>미확인</strong>. 앞의 둘은 회사가 「복수국 복수 업체」·비공개로만 밝히고, 워런트 금액은 424B7에 있으나 이 조사에서 안 열었다</td>
+</tr>
+<tr>
+<td>코세스 1억 달러 = 4GW 라인</td>
+<td>2차 보도 (C, 신뢰도 0.5). 공시에 4GW라는 말이 없다</td>
+</tr>
+<tr>
+<td>통관 기록 기반 협력사 / 설치·서비스 매출총이익률</td>
+<td>선적은 확인(A)이나 조달 비중은 전부 미공개. 비제품 마진은 총계에서 제품을 뺀 역산 (C)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>다음 확장 순서</h3>
+<ol>
+<li>블룸 10-K FY2025 「Concentration of Risk」와 「Commitments」 전문 — 공급사 집중도 문구와 구매 약정 확인</li>
+<li>차오저우 싼환(선전 300408) 2025년 연차보고서 — 고객 집중도 표에 블룸이 몇 %로 나오는지. 지금 75~80%의 유일한 반대편 검증 경로</li>
+<li>포리테타이완·플러스메탈테크 대만 공시 — 2025·2026년 블룸 매출 비중</li>
+<li>아모센스·코세스·서진시스템 사업보고서 — 블룸 매출 비중과 수주 잔고</li>
+<li>주피터·네비우스 부지의 슈퍼커패시터 발주처 추적 — 6절 최대 공백</li>
+</ol>
+<hr>
+<h2>12. 출처</h2>
+<div class="tw"><table>
+<thead><tr>
+<th>번호</th>
+<th>발행</th>
+<th>제목</th>
+<th>날짜</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12-1</td>
+<td>Bloom Energy</td>
+<td>Form 10-K (FY2025)</td>
+<td>2026-02-09</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm">https://www.sec.gov/Archives/edgar/data/1664703/000162828026006516/be-20251231.htm</a></td>
+</tr>
+<tr>
+<td>12-2</td>
+<td>Bloom Energy</td>
+<td>Form 10-K (FY2024)</td>
+<td>2025-02</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828025008747/be-20241231.htm">https://www.sec.gov/Archives/edgar/data/1664703/000162828025008747/be-20241231.htm</a></td>
+</tr>
+<tr>
+<td>12-3</td>
+<td>Bloom Energy</td>
+<td>Form 10-Q (2026 Q2)</td>
+<td>2026-07-28</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026050247/be-20260630.htm">https://www.sec.gov/Archives/edgar/data/1664703/000162828026050247/be-20260630.htm</a></td>
+</tr>
+<tr>
+<td>12-4</td>
+<td>Bloom Energy</td>
+<td>Form 10-Q/A (2026 Q2 정정)</td>
+<td>2026-07-29</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026050325/be-20260630.htm">https://www.sec.gov/Archives/edgar/data/1664703/000162828026050325/be-20260630.htm</a></td>
+</tr>
+<tr>
+<td>12-5</td>
+<td>Bloom Energy</td>
+<td>Form 8-K 별지 99.1 — 2026 2분기 실적과 가이던스 상향</td>
+<td>2026-07-28</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026050150/ex991_q226financialresults.htm">https://www.sec.gov/Archives/edgar/data/1664703/000162828026050150/ex991_q226financialresults.htm</a></td>
+</tr>
+<tr>
+<td>12-6</td>
+<td>Bloom Energy</td>
+<td>Form 8-K 별지 99.1 — 2025 4분기·연간 실적</td>
+<td>2026-02-05</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000162828026005798/ex991_q42025financialresul.htm">https://www.sec.gov/Archives/edgar/data/1664703/000162828026005798/ex991_q42025financialresul.htm</a></td>
+</tr>
+<tr>
+<td>12-7</td>
+<td>Bloom Energy</td>
+<td>Form 424B7 (오라클 워런트)</td>
+<td>2026-04-27</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000119312526179296/d253699d424b7.htm">https://www.sec.gov/Archives/edgar/data/1664703/000119312526179296/d253699d424b7.htm</a></td>
+</tr>
+<tr>
+<td>12-8</td>
+<td>Bloom Energy</td>
+<td>Form SD 분쟁광물 보고서 별지 1.01</td>
+<td>2026-06-01</td>
+<td><a href="https://www.sec.gov/Archives/edgar/data/1664703/000119312526251628/d61094dex101.htm">https://www.sec.gov/Archives/edgar/data/1664703/000119312526251628/d61094dex101.htm</a></td>
+</tr>
+<tr>
+<td>12-9</td>
+<td>Bloom Energy</td>
+<td>Bloom Energy and Oracle expand strategic partnership (최대 2.8GW)</td>
+<td>2026-04-13</td>
+<td><a href="https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/">https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/</a></td>
+</tr>
+<tr>
+<td>12-10</td>
+<td>Oracle</td>
+<td>Oracle, BorderPlex and Bloom Energy to power Project Jupiter</td>
+<td>2026-04-27</td>
+<td><a href="https://www.oracle.com/news/announcement/oracle-borderplex-and-bloom-energy-to-power-project-jupiter-with-fuel-cell-technology-2026-04-27/">https://www.oracle.com/news/announcement/oracle-borderplex-and-bloom-energy-to-power-project-jupiter-with-fuel-cell-technology-2026-04-27/</a></td>
+</tr>
+<tr>
+<td>12-11</td>
+<td>Bloom Energy</td>
+<td>Gigawatt fuel cell procurement agreement with AEP</td>
+<td>2024-11-14</td>
+<td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2024/Bloom-Energy-Announces-Gigawatt-Fuel-Cell-Procurement-Agreement-with-AEP-to-Power-AI-Data-Centers/default.aspx">https://investor.bloomenergy.com/press-releases/press-release-details/2024/Bloom-Energy-Announces-Gigawatt-Fuel-Cell-Procurement-Agreement-with-AEP-to-Power-AI-Data-Centers/default.aspx</a></td>
+</tr>
+<tr>
+<td>12-12</td>
+<td>Bloom Energy</td>
+<td>World's largest fuel cell installation (SK에너닉스 80MW)</td>
+<td>2024-11-07</td>
+<td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2024/Bloom-Energy-Announces-Worlds-Largest-Fuel-Cell-Installation-in-History/default.aspx">https://investor.bloomenergy.com/press-releases/press-release-details/2024/Bloom-Energy-Announces-Worlds-Largest-Fuel-Cell-Installation-in-History/default.aspx</a></td>
+</tr>
+<tr>
+<td>12-13</td>
+<td>Bloom Energy</td>
+<td>Bloom Energy and SK ecoplant announce 500MW sales agreement</td>
+<td>2023</td>
+<td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2023/Bloom-Energy-and-SK-ecoplant-Announce-500-MW-Sales-Agreement-Strengthening-Existing-Partnership/default.aspx">https://investor.bloomenergy.com/press-releases/press-release-details/2023/Bloom-Energy-and-SK-ecoplant-Announce-500-MW-Sales-Agreement-Strengthening-Existing-Partnership/default.aspx</a></td>
+</tr>
+<tr>
+<td>12-14</td>
+<td>Bloom Energy</td>
+<td>Brookfield and Bloom Energy expand AI infrastructure partnership (250억 달러)</td>
+<td>2026-06-30</td>
+<td><a href="https://www.bloomenergy.com/news/brookfield-and-bloom-energy-expand-ai-infrastructure-partnership/">https://www.bloomenergy.com/news/brookfield-and-bloom-energy-expand-ai-infrastructure-partnership/</a></td>
+</tr>
+<tr>
+<td>12-15</td>
+<td>Nebius</td>
+<td>Nebius and Bloom Energy partner (328MW)</td>
+<td>2026-05-20</td>
+<td><a href="https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out">https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out</a></td>
+</tr>
+<tr>
+<td>12-16</td>
+<td>Bloom Energy</td>
+<td>Bloom expands data center power agreement with Equinix (100MW 초과)</td>
+<td>2025-02-20</td>
+<td><a href="https://www.bloomenergy.com/news/bloom-energy-expands-data-center-power-agreement-with-equinix-surpassing-100mw/">https://www.bloomenergy.com/news/bloom-energy-expands-data-center-power-agreement-with-equinix-surpassing-100mw/</a></td>
+</tr>
+<tr>
+<td>12-17</td>
+<td>Bloom Energy</td>
+<td>Bloom·미탁 파트너십 확대 (AI 인프라 약 250MW)</td>
+<td>2026-08-06</td>
+<td><a href="https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Continues-to-Set-the-Standard-for-AI-Onsite-Power-with-Expanded-MiTAC-Partnership/default.aspx">https://investor.bloomenergy.com/press-releases/press-release-details/2026/Bloom-Energy-Continues-to-Set-the-Standard-for-AI-Onsite-Power-with-Expanded-MiTAC-Partnership/default.aspx</a></td>
+</tr>
+<tr>
+<td>12-18</td>
+<td>Hitachi</td>
+<td>Hitachi-Bloom onsite power collaboration in Japan</td>
+<td>2026-09-01</td>
+<td><a href="https://www.hitachi.com/en/press/articles/2026/09/0901b/">https://www.hitachi.com/en/press/articles/2026/09/0901b/</a></td>
+</tr>
+<tr>
+<td>12-19</td>
+<td>Bloom Energy</td>
+<td>Bloom Energy introduces Power Connect</td>
+<td>2026-08-19</td>
+<td><a href="https://www.bloomenergy.com/news/bloom-energy-introduces-power-connect/">https://www.bloomenergy.com/news/bloom-energy-introduces-power-connect/</a></td>
+</tr>
+<tr>
+<td>12-20</td>
+<td>Bloom Energy</td>
+<td>Demystifying scandium oxide</td>
+<td>2026</td>
+<td><a href="https://www.bloomenergy.com/blog/demystifying-scandium-oxide-why-it-matters-in-bloom-fuel-cells/">https://www.bloomenergy.com/blog/demystifying-scandium-oxide-why-it-matters-in-bloom-fuel-cells/</a></td>
+</tr>
+<tr>
+<td>12-21</td>
+<td>Bloom Energy</td>
+<td>Bloom·코어위브 파트너십 발표</td>
+<td>2024-07-16</td>
+<td><a href="https://www.bloomenergy.com/news/bloom-energy-and-coreweave-partner-to-revolutionize-ai-data-center-power-solutions/">https://www.bloomenergy.com/news/bloom-energy-and-coreweave-partner-to-revolutionize-ai-data-center-power-solutions/</a></td>
+</tr>
+<tr>
+<td>12-22</td>
+<td>AEP Ohio</td>
+<td>AEP 오하이오 온사이트 전력 프로젝트</td>
+<td>2025-06-05</td>
+<td><a href="https://www.aep.com/news/stories/view/10262/">https://www.aep.com/news/stories/view/10262/</a></td>
+</tr>
+<tr>
+<td>12-23</td>
+<td>MTAR Technologies</td>
+<td>Annual Report FY2024-25 (핫박스 50~60%)</td>
+<td>2025-08</td>
+<td><a href="https://mtar.in/wp-content/uploads/2025/08/Annual-Report-FY-2024-25.pdf">https://mtar.in/wp-content/uploads/2025/08/Annual-Report-FY-2024-25.pdf</a></td>
+</tr>
+<tr>
+<td>12-24</td>
+<td>MTAR Technologies</td>
+<td>Annual Report FY2024</td>
+<td>2024-08-17</td>
+<td><a href="https://mtar.in/wp-content/uploads/2025/03/Annual-Report-FY-2024-Aug-17-2024.pdf">https://mtar.in/wp-content/uploads/2025/03/Annual-Report-FY-2024-Aug-17-2024.pdf</a></td>
+</tr>
+<tr>
+<td>12-25</td>
+<td>Kaori Heat Treatment</td>
+<td>2025 연차보고서 (블룸 40.26%)</td>
+<td>2026</td>
+<td><a href="https://www.kaori.com.tw/tw/uploads/filelist/1000/2/1778739932_dc80eed76adc9748.pdf">https://www.kaori.com.tw/tw/uploads/filelist/1000/2/1778739932_dc80eed76adc9748.pdf</a></td>
+</tr>
+<tr>
+<td>12-26</td>
+<td>KGI</td>
+<td>Kaori Heat Treatment (8996 TT)</td>
+<td>2024-06-06</td>
+<td><a href="https://www.kgi.com.hk/en/-/media/files/kgishk/research-reports/tw-reports/2024/01/kaori-heat-treatment_8996-tt_06062024.pdf">https://www.kgi.com.hk/en/-/media/files/kgishk/research-reports/tw-reports/2024/01/kaori-heat-treatment_8996-tt_06062024.pdf</a></td>
+</tr>
+<tr>
+<td>12-27</td>
+<td>KRX KIND</td>
+<td>코세스 공급계약 공시 (1억 달러)</td>
+<td>2026-07-13</td>
+<td><a href="https://kind.krx.co.kr/external/2026/07/13/000131/20260713000113/70370.htm">https://kind.krx.co.kr/external/2026/07/13/000131/20260713000113/70370.htm</a></td>
+</tr>
+<tr>
+<td>12-28</td>
+<td>KRX KIND</td>
+<td>서진시스템 공급계약 공시 (5,263.8만 달러)</td>
+<td>2026-07-15</td>
+<td><a href="https://kind.krx.co.kr/external/2026/07/15/000165/20260715000002/70012.htm">https://kind.krx.co.kr/external/2026/07/15/000165/20260715000002/70012.htm</a></td>
+</tr>
+<tr>
+<td>12-29</td>
+<td>KRX KIND</td>
+<td>LS ELECTRIC 공급계약 공시 (2억 1,652.6만 달러)</td>
+<td>2026-04-29</td>
+<td><a href="https://kind.krx.co.kr/external/2026/04/29/000110/20260428001034/91370.htm">https://kind.krx.co.kr/external/2026/04/29/000110/20260428001034/91370.htm</a></td>
+</tr>
+<tr>
+<td>12-30</td>
+<td>KRX KIND</td>
+<td>서진시스템 2025 사업보고서</td>
+<td>2026-03-23</td>
+<td><a href="https://kind.krx.co.kr/external/2026/03/23/002251/20260323009399/11011.htm">https://kind.krx.co.kr/external/2026/03/23/002251/20260323009399/11011.htm</a></td>
+</tr>
+<tr>
+<td>12-31</td>
+<td>더벨</td>
+<td>한선엔지니어링 블룸 글로벌 공급사 인증</td>
+<td>2026-06-24</td>
+<td><a href="https://www.thebell.co.kr/front/newsview.asp?code=0104&amp;key=202606231744045760105369">https://www.thebell.co.kr/front/newsview.asp?code=0104&amp;key=202606231744045760105369</a></td>
+</tr>
+<tr>
+<td>12-32</td>
+<td>Seoul Economic Daily</td>
+<td>미국 AI 데이터센터 전력난과 한국 공급사 (아모센스 월 60만 장)</td>
+<td>2026-07-29</td>
+<td><a href="https://en.sedaily.com/finance/2026/07/29/us-ai-data-center-power-crunch-drives-korean-suppliers">https://en.sedaily.com/finance/2026/07/29/us-ai-data-center-power-crunch-drives-korean-suppliers</a></td>
+</tr>
+<tr>
+<td>12-33</td>
+<td>한국경제</td>
+<td>코세스 7월 블룸 수주와 4GW 양산 라인 맥락</td>
+<td>2026-07-16</td>
+<td><a href="https://www.hankyung.com/article/202607168611O">https://www.hankyung.com/article/202607168611O</a></td>
+</tr>
+<tr>
+<td>12-34</td>
+<td>Yicai</td>
+<td>차오저우 싼환·블룸 공급 관계 보도</td>
+<td>2025-2026</td>
+<td><a href="https://www.yicai.com/brief/102939658.html">https://www.yicai.com/brief/102939658.html</a></td>
+</tr>
+<tr>
+<td>12-35</td>
+<td>CCTC</td>
+<td>IPO 공모설명서 고객 공시 (2014년 블룸 9.54%)</td>
+<td>2014</td>
+<td><a href="https://money.finance.sina.com.cn/corp/view/vISSUE_RaiseExplanationDetail.php?id=1558553&amp;stockid=300408">https://money.finance.sina.com.cn/corp/view/vISSUE_RaiseExplanationDetail.php?id=1558553&amp;stockid=300408</a></td>
+</tr>
+<tr>
+<td>12-36</td>
+<td>CommonWealth Magazine</td>
+<td>대만 공급망 현장 취재 (포리테 ~50%)</td>
+<td>2024-10-02</td>
+<td><a href="https://english.cw.com.tw/article/article.action?id=3781">https://english.cw.com.tw/article/article.action?id=3781</a></td>
+</tr>
+<tr>
+<td>12-37</td>
+<td>Porite Taiwan</td>
+<td>SOFC 공급사 공지</td>
+<td>2026-05-11</td>
+<td><a href="https://tw.porite.com/en-US/newsc27-the-growing-demand-for-sofc-systems-in-taiwan-and-the-role-of-powder-metallurgy-components">https://tw.porite.com/en-US/newsc27-the-growing-demand-for-sofc-systems-in-taiwan-and-the-role-of-powder-metallurgy-components</a></td>
+</tr>
+<tr>
+<td>12-38</td>
+<td>Google Patents</td>
+<td>블룸·스택폴 금속 인터커넥트 공동 특허</td>
+<td>2015~2018</td>
+<td><a href="https://patents.google.com/patent/US20150244004A1/en">https://patents.google.com/patent/US20150244004A1/en</a></td>
+</tr>
+<tr>
+<td>12-39</td>
+<td>Tarifflo</td>
+<td>블룸 1분기 공급사 통관 스냅샷 (1차 협력사 53곳)</td>
+<td>2026 Q1</td>
+<td><a href="https://www.tarifflo.com/trade-data/bloom-energy-15e60e">https://www.tarifflo.com/trade-data/bloom-energy-15e60e</a></td>
+</tr>
+<tr>
+<td>12-40</td>
+<td>Seair·ImportInfo·ImportGenius·ImportKey·Mati Logistics</td>
+<td>포리테·산미나·캐벨·내시·텍슨·둥관자펑·CUMI·밍루이·사이프러스·유니콘·울프·열전대·마이크로센서 통관 기록</td>
+<td>2025-2026</td>
+<td>(사슬 데이터 <code>sources.json</code> 의 <code>customs_*</code> 항목)</td>
+</tr>
+<tr>
+<td>12-41</td>
+<td>SemiAnalysis(저장소 번역본)</td>
+<td>AI 랩들은 어떻게 전력난을 해결하는가 — 온사이트 가스 딥다이브</td>
+<td>2025-12-31</td>
+<td><code>content/newsletter/ai_infra/power/[251231] AI 랩들은 어떻게 전력난을 해결하는가 - 온사이트 가스 딥다이브.md</code></td>
+</tr>
+<tr>
+<td>12-42</td>
+<td>SemiAnalysis(저장소 번역본)</td>
+<td>데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 Part 1</td>
+<td>2026-09-10</td>
+<td><code>content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr>
+<h2>13. 그림</h2>
+<p>시각 요약은 <code>data/valuechain/chains/bloom-energy/report_figs.json</code>이 그림 생성기에 넘긴다. 다섯 장이다. ① 1MW 단위경제 워터폴(5절) ② 1MW 마진 풀(7절) ③ 병목 히트맵(6절) ④ 시나리오 토네이도(8절) ⑤ 2026~30 시간축(9절). 지분 지도(10절)는 여섯 번째로 붙는다. 모든 값은 본문과 같은 숫자다.</p>
+</div>
+</main>
+</body>
+</html>
