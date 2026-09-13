@@ -102,7 +102,10 @@ function pickShare(kind, x, year){
     var a = y4(sh.period_start) || y4(sh.as_of_date);
     var b = y4(sh.period_end) || y4(sh.as_of_date) || a;
     if (!a) return;
-    if (a <= y && y <= b) { if (!cover || b > (y4(cover.period_end) || 0)) cover = sh; }
+    // 같은 해를 덮는 값이 여럿이면 끝나는 날이 늦은 것(연간보다 그 뒤 분기) — 해가 아니라 날짜로 견준다
+    if (a <= y && y <= b) {
+      if (!cover || (sh.period_end || sh.as_of_date || '') > (cover.period_end || cover.as_of_date || '')) cover = sh;
+    }
     else if (b < y && b > prevY) { prevY = b; prev = sh; }
   });
   if (cover) return cover;

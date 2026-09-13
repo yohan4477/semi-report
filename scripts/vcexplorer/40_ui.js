@@ -702,9 +702,12 @@ function App(){
         // 가운데가 아니라 위에서 1/4 자리에 둔다. 펴진 이웃은 대개 아래로 자라난다
         var z = rf.getZoom ? rf.getZoom() : 1;
         var cv = document.querySelector('.canvas');
-        var lift = cv ? (cv.clientHeight / z) * 0.25 : 0;
-        rf.setCenter(n.position.x + COL_W / 2, n.position.y + BOX_H / 2 + lift,
-                     { zoom: z, duration: 420 });
+        var H = cv ? cv.clientHeight / z : 0, lift = H * 0.25;
+        var cy = n.position.y + BOX_H / 2 + lift;
+        // 판이 짧으면 1/4 자리 규칙이 판 위에 빈 하늘을 만든다 — 머리글 밑(y=0)보다 위로는
+        // 안 올린다. 누른 상자는 그래도 화면 안에 있다(판 꼭대기가 상자보다 위다)
+        if (H && cy - H / 2 < 0) cy = H / 2;
+        rf.setCenter(n.position.x + COL_W / 2, cy, { zoom: z, duration: 420 });
       }
       setPanTo(null);
     }, 80);
