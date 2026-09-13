@@ -4,7 +4,7 @@ u"""TSMC 그림 장 1절 전체 지도 — 받은 손 그림(tsmc_map_orig)의 �
 
 받은 그림은 곡선이 상자 위를 지나고(HBM 점선이 인텔·소니 글자를 덮었다) 화살촉이 선 굵기를
 따라 커져 엔비디아·애플 상자를 가렸다. 여기서는 탐색기와 같은 규칙으로 긋는다 — 칸 사이 통로
-에서만 세로로 움직이고(가로·세로·가로 세 토막), 화살촉 크기는 고정, 같은 통로의 선은 자리를
+에서만 세로로 움직이고(가로·세로·가로 세 토막), 화살촉은 없다(2026-09-13 「화살표로 그만 괴롭혀라」 — 흐름은 왼쪽에서 오른쪽), 같은 통로의 선은 자리를
 나눠 겹치지 않는다. 상자 좌표는 원문 SVG 그대로다.
 """
 
@@ -122,7 +122,7 @@ def render():
     o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="#D6ECEA" stroke="%s"/>' % (ox, oy, ow, oh, TEAL))
     o.append('<text x="525" y="416" text-anchor="middle" font-size="12">ASE·SPIL · Amkor</text>'
              '<text x="525" y="431" text-anchor="middle" font-size="11" fill="#6B7785">CoWoS 외주 24~27만 장</text>')
-    o.append('<path d="M525 350V%d" stroke="%s" stroke-width="2" fill="none" marker-end="url(#mt)"/>' % (oy, TEAL))
+    o.append('<path d="M525 350V%d" stroke="%s" stroke-width="2" fill="none"/>' % (oy, TEAL))
     hx, hy, hw, hh = HBM
     o.append('<rect x="%d" y="%d" width="%d" height="%d" rx="3" fill="#F6E3C8" stroke="%s"/>' % (hx, hy, hw, hh, ORANGE))
     o.append('<text x="525" y="486" text-anchor="middle" font-size="12">SK hynix HBM</text>'
@@ -131,7 +131,7 @@ def render():
 
     # ── 선 ──
     # Tier 2 → Tier 1: 통로 190~235. 세로로 가는 선은 통로 안에서 자리를 나눈다
-    o.append('<g stroke="%s" fill="none" marker-end="url(#ma)">' % GREY)
+    o.append('<g stroke="%s" fill="none">' % GREY)
     gx0, gx1 = 190, 235
     verticals = [e for e in T2_T1 if _box(e[0])[1] != _box(e[1])[1]]
     for i, (a, b) in enumerate(T2_T1):
@@ -149,7 +149,7 @@ def render():
     for a, wd in T1_TSMC:
         ax, ay, aw, ah = _box(a)
         o.append('<path d="M%d %d H%d" stroke-width="%s"/>' % (ax + aw, ay + ah / 2, trunk_x, wd))
-    o.append('<path d="M%d %d H%d" stroke-width="1.6" marker-end="url(#ma)"/>' % (trunk_x, ty + th / 2, tx))
+    o.append('<path d="M%d %d H%d" stroke-width="1.6"/>' % (trunk_x, ty + th / 2, tx))
     o.append('</g>')
 
     # TSMC → 고객: 통로 580~620 에 세로 줄기 하나(x=600). TSMC 에서 줄기로 한 줄, 줄기에서 고객마다 가지
@@ -160,7 +160,7 @@ def render():
     o.append('<path d="M%d %d V%d" stroke-width="1.6"/>' % (trunk_x, min(ys_dst + [ty + th / 2]), max(ys_dst + [ty + th / 2])))
     for b, wd in TSMC_CUST:
         bx, by, bw, bh = _box(b)
-        o.append('<path d="M%d %d H%d" stroke-width="%s" marker-end="url(#ma)"/>' % (trunk_x, by + bh / 2, bx, wd))
+        o.append('<path d="M%d %d H%d" stroke-width="%s"/>' % (trunk_x, by + bh / 2, bx, wd))
     o.append('</g>')
 
     # 고객 → 최종 수요: 통로 770~800 에 세로 줄기 하나(x=785). 고객마다 가로선이 줄기에 붙고,
@@ -175,12 +175,12 @@ def render():
         o.append('<path d="M%d %d H%d"/>' % (ax + aw, ay + ah / 2, trunk_x))
     for b in dsts:
         bx, by, bw, bh = _box(b)
-        o.append('<path d="M%d %d H%d" marker-end="url(#ma)"/>' % (trunk_x, by + bh / 2, bx))
+        o.append('<path d="M%d %d H%d"/>' % (trunk_x, by + bh / 2, bx))
     o.append('</g>')
 
     # HBM → NVIDIA(점선): 상자 위를 지나지 않게 TSMC·고객 통로(x=612)로 올라가 엔비디아 왼쪽 변 아래쪽에 닿는다
     nx, ny, nw, nh = _box('nvidia')
-    o.append('<path d="M%d %d H617 V%d H%d" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#mo)"/>'
+    o.append('<path d="M%d %d H617 V%d H%d" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>'
              % (hx + hw, hy + hh / 2, ny + nh - 8, nx, ORANGE))
     o.append('<text x="705" y="440" font-size="11" fill="%s">HBM은 NVIDIA 원가에서</text>'
              '<text x="705" y="454" font-size="11" fill="%s">TSMC보다 큼 (~$3.5k vs ~$2.3k)</text>' % (ORANGE, ORANGE))
