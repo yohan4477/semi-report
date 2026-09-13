@@ -308,7 +308,8 @@ def sec_sources(c, n):
 
 # ── 장 ─────────────────────────────────────────────────────────────────
 def page(c, chains):
-    nav = u''.join(u'<a href="%s"%s>%s</a>' % (esc(fname(x)), ' class="on"' if x.id == c.id else '', esc(x.label)) for x in chains)
+    nav = u'<a href="기업분석 대시보드.html">← 기업분석</a>'
+    nav += u''.join(u'<a href="%s"%s>%s</a>' % (esc(fname(x)), ' class="on"' if x.id == c.id else '', esc(x.label)) for x in chains)
     if report_path(c):
         nav += u'<a href="%s">%s 조사 보고서</a>' % (esc(rname(c)), esc(c.label))
     nav += u'<a href="밸류체인 탐색기.html">탐색기</a>'
@@ -376,7 +377,8 @@ def report_page(c, chains):
     title = re.sub(r'<.*?>', '', m.group(1)) if m else (u'%s 밸류체인 조사' % c.label)
     if m:
         body = body[m.end():]
-    nav = u''.join(u'<a href="%s">%s</a>' % (esc(fname(x)), esc(x.label)) for x in chains)
+    nav = u'<a href="기업분석 대시보드.html">← 기업분석</a>'
+    nav += u''.join(u'<a href="%s">%s</a>' % (esc(fname(x)), esc(x.label)) for x in chains)
     nav += u'<a href="%s" class="on">%s 조사 보고서</a><a href="밸류체인 탐색기.html">탐색기</a>' % (esc(rname(c)), esc(c.label))
     return u'''<!doctype html>
 <html lang="ko">

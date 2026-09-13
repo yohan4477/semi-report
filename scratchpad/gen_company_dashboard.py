@@ -146,6 +146,8 @@ def card_of(c):
         'points': points_of(c),
         'figs': [(1, fig[0], fig[1], fig[2])] if fig else [],
         'note': '<b>보기</b> — %s' % links_of(c),
+        # 목록에서 회사 이름을 누르면 그 회사의 그림 장(보고서 꼴)으로 간다 — 카드를 펴지 않는다
+        '_href': vr.fname(c),
     }
 
 
