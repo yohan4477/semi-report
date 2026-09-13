@@ -934,6 +934,10 @@ function App(){
           onClick: function(){ setAll(!allOpen); } }, allOpen ? '접기' : '전부 펴기') : null,
         canDrw ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
           onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null,
+        // 보고서 장 — 사슬마다 한 장(gen_vcreport.py). iframe 안이면 부모가 그 장이라 안 단다
+        (gr.chain && window.self === window.top) ? h('a', { key:'rp', className:'btn',
+          href: encodeURI(((CHAINS[gr.chain].meta || {}).label || gr.chain) + ' 밸류체인.html'),
+          title:'이 사슬의 보고서 장' }, '보고서') : null,
         menuBox
       ]);
 

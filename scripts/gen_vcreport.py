@@ -1,0 +1,353 @@
+# -*- coding: utf-8 -*-
+u"""밸류체인 보고서 장 — 사슬마다 한 장. 대시보드/<회사> 밸류체인.html
+
+2026-09-13 사용자가 준 TSMC 그림 장(보고서 꼴: 제목·절·짧은 설명·그림)을 틀로 삼는다. 전체 지도
+절에는 밸류체인 탐색기(?focal=…&open=*)를 끼우고, 나머지 절은 그 사슬의 데이터(claims·
+classifications·relationships·observations·sources)에서 세운다. TSMC 는 원문 보고서의 2~8절
+(gen_tsmc_page.SECTIONS_2_8)을 그대로 두고 데이터 절을 뒤에 붙인다.
+
+절(데이터가 없으면 그 절은 안 세운다):
+  1 전체 지도(탐색기)  2 핵심 수치(주장)  3 매출원 구성  4 공급원 구성  5 병목  6 고객 집중도
+  7 지분·소유  8 출처 (6 은 고객·전방시장 비중)
+
+  PYTHONIOENCODING=utf-8 python scripts/gen_vcreport.py
+"""
+import glob
+import io
+import json
+import os
+import re
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA = os.path.join(ROOT, 'data', 'valuechain')
+OUTDIR = os.path.join(ROOT, u'대시보드')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import gen_tsmc_page  # noqa: E402  TSMC 2~8절 원문 그림
+
+EV_KO = {'CONFIRMED': u'공시로 확인', 'ESTIMATED': u'추정', 'INFERRED': u'정황 추론',
+         'UNDISCLOSED': u'비공개', 'HISTORICAL_CURRENT_UNKNOWN': u'과거 관측·현재 미상'}
+CRIT_KO = {'VERY_HIGH': (u'매우 높음', 'h1'), 'HIGH': (u'높음', 'h3'), 'MEDIUM': (u'중간', 'h5')}
+REL_KO = {'INVESTS_IN': u'지분 투자', 'SUBSIDIARY_OF': u'자회사', 'OPERATES_THROUGH': u'운영 자회사',
+          'CORPORATE_CONTROL': u'지배', 'EXECUTES_THROUGH_SUBSIDIARY': u'실행 자회사',
+          'HOLDS_PROJECT': u'프로젝트 보유', 'FINANCES': u'금융', 'JV_ASSEMBLY': u'합작',
+          'INTERNAL_MATERIAL_SUPPLY': u'내부 소재 공급', 'INTRAGROUP_SUPPLY': u'그룹 내 공급',
+          'MANUFACTURES': u'제조', 'PROCESSING': u'가공', 'SUPPLIES': u'공급',
+          'EQUIPMENT_SUPPLY': u'장비 공급', 'OPERATES_AT_SITE': u'부지 운영', 'OWNS_SITE': u'부지 소유',
+          'DEVELOPS': u'개발', 'INVESTS': u'투자'}
+
+
+def rd(p):
+    with io.open(p, encoding='utf-8') as f:
+        return json.load(f)
+
+
+def esc(s):
+    return (s or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def fmt(v):
+    if v is None:
+        return ''
+    return ('%g' % v) if isinstance(v, (int, float)) else str(v)
+
+
+CSS = u'''
+  :root{--paper:#EEF1F4;--ink:#1C2733;--mute:#6B7785;--line:#C9D1DA;--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;
+    --kr:#B4620A;--kr-soft:#F6E3C8;--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.55}
+  main{max-width:960px;margin:0 auto;padding:28px 18px 64px}
+  h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-0.01em}
+  .sub{color:var(--mute);margin:0 0 18px;font-size:14px}
+  .sub a,.note a,td a{color:var(--tsmc)}
+  nav.chains{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 28px}
+  nav.chains a{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:#fff}
+  nav.chains a.on{background:var(--tsmc);border-color:var(--tsmc);color:#fff}
+  section{margin:0 0 44px;padding-top:18px;border-top:2px solid var(--ink)}
+  h2{font-size:18px;font-weight:600;margin:0 0 4px}
+  h2 small{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
+  p.note{margin:0 0 14px;color:var(--mute);font-size:13.5px;max-width:70ch}
+  svg{width:100%;height:auto;display:block;font-family:inherit}
+  .frame{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;height:640px}
+  .frame iframe{width:100%;height:100%;border:0;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px;color:var(--mute)}
+  .legend span::before{content:"";display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .l-tsmc::before{background:var(--tsmc)} .l-kr::before{background:var(--kr)} .l-jp::before{background:var(--jp)} .l-cust::before{background:var(--cust)} .l-sup::before{background:#8A96A3}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
+  th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-weight:500;color:var(--mute)}
+  td.nw{white-space:nowrap}
+  .heat td.c{width:76px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
+  .ev{display:inline-block;font-size:11.5px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--mute);white-space:nowrap}
+  .ev.c{border-color:var(--tsmc);color:var(--tsmc)}
+  .bars{margin-top:6px}
+  .bar{display:grid;grid-template-columns:200px 1fr 120px;gap:10px;align-items:center;font-size:13.5px;padding:4px 0}
+  .bar .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .tr{height:16px;background:#fff;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--tsmc)}
+  .bar.sup .fill{background:var(--sup)}
+  .bar .val{color:var(--mute);white-space:nowrap}
+  .tl{position:relative;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+  .tl .yr{position:relative;margin:0 0 18px}
+  .tl .yr::before{content:"";position:absolute;left:-21px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--tsmc)}
+  .tl b{display:block;font-weight:600;margin-bottom:2px}
+  .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
+  .tl .row span:first-child{color:var(--mute)}
+  @media (max-width:520px){h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}}
+'''
+
+
+class Chain(object):
+    def __init__(self, ck, ents, srcs):
+        b = os.path.join(DATA, 'chains', ck)
+        self.id = ck
+        self.meta = rd(os.path.join(b, 'chain.json'))
+        self.focal = self.meta['focal_entity']
+        self.label = self.meta.get('label') or self.focal
+        self.rels = rd(os.path.join(b, 'relationships.json'))
+        self.cls = rd(os.path.join(b, 'classifications.json'))
+        self.claims = rd(os.path.join(b, 'claims.json')) if os.path.exists(os.path.join(b, 'claims.json')) else []
+        self.obs = rd(os.path.join(b, 'observations.json')) if os.path.exists(os.path.join(b, 'observations.json')) else []
+        self.ents, self.srcs = ents, srcs
+
+    def nm(self, i):
+        e = self.ents.get(i) or {}
+        return e.get('name_ko') or e.get('display_name') or e.get('name') or i
+
+    def src_html(self, ids):
+        out = []
+        for s in ids or []:
+            x = self.srcs.get(s)
+            if not x:
+                continue
+            t = esc(x.get('title') or s)
+            d = x.get('published_date')
+            lab = t + ((u' (%s)' % d) if d else '')
+            out.append((u'<a href="%s">%s</a>' % (esc(x['url']), lab)) if x.get('url') else lab)
+        return u' · '.join(out)
+
+
+def period_key(p):
+    u"""기간 문자열을 대충 시간순으로 — FY2027 Q1 > 2026 Q2 > 2026 > FY2026 > 2025."""
+    p = p or ''
+    m = re.search(r'(\d{4})', p)
+    y = int(m.group(1)) if m else 0
+    q = re.search(r'Q(\d)', p)
+    h = re.search(r'H(\d)', p)
+    sub = (int(q.group(1)) * 2 if q else (int(h.group(1)) * 4 if h else 9))
+    return (y, sub, p)
+
+
+# ── 절 ─────────────────────────────────────────────────────────────────
+def sec_map(c, n):
+    q = 'focal=%s&amp;open=*' % c.focal
+    return u'''  <section>
+    <h2>%d. 전체 지도<small>앞단 → %s → 뒷단</small></h2>
+    <p class="note">밸류체인 탐색기로 그린다. 상자와 선은 데이터에서 나오고 상자를 누르면 근거가 열린다. 색은 소속: 청록 타겟, 주황 한국 회사, 진홍 병목(공급 여력 HIGH 이상), 남색 고객. 중개·유통은 점선 테두리. 선 굵기에는 뜻이 없다. <a href="밸류체인 탐색기.html?%s">새 창에서 크게 보기</a></p>
+    <div class="frame"><iframe src="밸류체인 탐색기.html?%s" title="%s 밸류체인 탐색기" loading="lazy"></iframe></div>
+    <div class="legend"><span class="l-tsmc">타겟</span><span class="l-kr">한국 회사</span><span class="l-jp">병목</span><span class="l-cust">고객</span><span class="l-sup">그 밖의 공급사</span></div>
+  </section>
+''' % (n, esc(c.label), q, q, esc(c.label))
+
+
+def sec_claims(c, n):
+    rows = [x for x in c.claims if x.get('subject') == c.focal]
+    if not rows:
+        return ''
+    rows.sort(key=lambda x: period_key(x.get('period')), reverse=True)
+    tr = []
+    for x in rows[:16]:
+        ev = x.get('evidence_level') or ''
+        tr.append(u'<tr><td class="nw">%s</td><td>%s</td><td class="nw"><span class="ev%s">%s</span></td><td>%s</td></tr>' % (
+            esc(x.get('period') or u'시점 미상'), esc(x.get('statement')),
+            ' c' if ev == 'CONFIRMED' else '', esc(EV_KO.get(ev, ev)), c.src_html(x.get('source_ids'))))
+    return u'''  <section>
+    <h2>%d. 핵심 수치<small>최신 공시부터</small></h2>
+    <p class="note">회사를 주어로 한 주장 %d건 가운데 최근 %d건. 근거 등급은 공시로 확인, 추정, 정황 추론 순으로 약하다.</p>
+    <table><tr><th>시점</th><th>내용</th><th>근거</th><th>출처</th></tr>%s</table>
+  </section>
+''' % (n, len(rows), min(16, len(rows)), u''.join(tr))
+
+
+def latest_share(x):
+    best = None
+    for sh in x.get('shares') or []:
+        if sh.get('value') is None and sh.get('value_low') is None:
+            continue
+        k = (sh.get('period_end') or sh.get('as_of_date') or '', )
+        if best is None or k > (best.get('period_end') or best.get('as_of_date') or '',):
+            best = sh
+    return best
+
+
+def sec_shares(c, n, kind, title, note, cls):
+    items = []
+    for x in c.cls.get(kind) or []:
+        sh = latest_share(x)
+        if not sh:
+            continue
+        v = sh.get('value')
+        txt = (u'%s~%s%%' % (fmt(sh.get('value_low')), fmt(sh.get('value_high')))) if v is None else (u'%s%%' % fmt(v))
+        w = v if v is not None else (sh.get('value_high') or 0)
+        items.append((w, x.get('label'), txt, sh.get('period'), sh.get('denominator')))
+    if not items:
+        return ''
+    items.sort(key=lambda t: -(t[0] or 0))
+    dens = sorted(set((t[4] or u'분모 미상') for t in items))
+    bars = u''.join(u'<div class="bar%s"><span class="lab" title="%s">%s</span><div class="tr"><div class="fill" style="width:%s%%"></div></div><span class="val">%s · %s</span></div>' % (
+        cls, esc(t[4] or ''), esc(t[1]), min(100, max(0, t[0] or 0)), esc(t[2]), esc(t[3] or '')) for t in items)
+    return u'''  <section>
+    <h2>%d. %s<small>분류마다 가장 최근 값</small></h2>
+    <p class="note">%s 분모: %s. 분모가 다른 값은 한 줄에서 더하지 않는다.</p>
+    <div class="bars">%s</div>
+  </section>
+''' % (n, title, note, esc(u' / '.join(dens)), bars)
+
+
+def sec_bottleneck(c, n):
+    rows = [r for r in c.rels if r.get('capacity_criticality') in CRIT_KO]
+    if not rows:
+        return ''
+    order = {'VERY_HIGH': 0, 'HIGH': 1, 'MEDIUM': 2}
+    rows.sort(key=lambda r: (order[r['capacity_criticality']], c.nm(r['source_entity'])))
+    ss = dict((x['id'], x.get('label')) for x in c.cls.get('supply_sources') or [])
+    tr = []
+    for r in rows:
+        ko, hcls = CRIT_KO[r['capacity_criticality']]
+        item = u'·'.join(ss.get(i, i) for i in (r.get('supply_source_ids') or [])) or (r.get('component') or '')
+        tr.append(u'<tr><td class="nw">%s</td><td>%s</td><td>%s</td><td class="c %s">%s</td><td><span class="ev%s">%s</span></td><td>%s</td></tr>' % (
+            esc(c.nm(r['source_entity'])), esc(c.nm(r['target_entity'])), esc(item), hcls, ko,
+            ' c' if r.get('evidence_level') == 'CONFIRMED' else '', esc(EV_KO.get(r.get('evidence_level'), '')),
+            esc((r.get('notes') or '')[:120])))
+    return u'''  <section>
+    <h2>%d. 병목<small>공급 여력 등급이 적힌 줄</small></h2>
+    <p class="note">관계 데이터의 공급 여력 등급(capacity_criticality)이 중간 이상인 공급 줄 %d개. 탐색기에서 진홍으로 칠한 상자와 같다.</p>
+    <table class="heat"><tr><th>공급사</th><th>받는 쪽</th><th>품목</th><th>등급</th><th>근거</th><th>비고</th></tr>%s</table>
+  </section>
+''' % (n, len(rows), u''.join(tr))
+
+
+def sec_customers(c, n):
+    rid = dict((r['id'], r) for r in c.rels)
+    rows = []
+    for o in c.obs:
+        r = rid.get(o.get('relationship_id'))
+        if not r or r.get('lane') != 'DOWNSTREAM' or r.get('source_entity') != c.focal:
+            continue
+        if not re.search(r'share$', o.get('metric') or '') or o.get('unit') not in ('percent', '%'):
+            continue
+        v = o.get('value')
+        txt = (u'%s~%s%%' % (fmt(o.get('value_low')), fmt(o.get('value_high')))) if v is None else (u'%s%%' % fmt(v))
+        rows.append((period_key(o.get('period')), c.nm(r['target_entity']), o.get('period'), txt,
+                     o.get('denominator') or '', o.get('evidence_level'), o.get('source_ids')))
+    if not rows:
+        return ''
+    rows.sort(key=lambda t: (t[0], t[1]), reverse=True)
+    tr = u''.join(u'<tr><td class="nw">%s</td><td class="nw">%s</td><td class="nw">%s</td><td>%s</td><td><span class="ev%s">%s</span></td><td>%s</td></tr>' % (
+        esc(t[1]), esc(t[2] or ''), esc(t[3]), esc(t[4]), ' c' if t[5] == 'CONFIRMED' else '', esc(EV_KO.get(t[5], '')), c.src_html(t[6])) for t in rows[:20])
+    return u'''  <section>
+    <h2>%d. 고객·전방시장 비중<small>타겟에서 나가는 줄의 비중 관측</small></h2>
+    <p class="note">타겟에서 나가는 줄에 붙은 비중 관측 %d건. 고객 실명이 아니라 전방시장 갈래일 수도 있고, 익명 고객은 공시가 이름을 안 밝힌 자리다.</p>
+    <table><tr><th>고객·전방</th><th>시점</th><th>비중</th><th>분모</th><th>근거</th><th>출처</th></tr>%s</table>
+  </section>
+''' % (n, len(rows), tr)
+
+
+def sec_equity(c, n):
+    rows = [r for r in c.rels if r.get('lane') == 'CORPORATE']
+    if not rows:
+        return ''
+    tr = u''.join(u'<tr><td class="nw">%s</td><td class="nw">%s</td><td class="nw">%s</td><td class="nw">%s</td><td>%s</td></tr>' % (
+        esc(c.nm(r['source_entity'])), esc(REL_KO.get(r.get('relationship_type'), r.get('relationship_type'))),
+        esc(c.nm(r['target_entity'])), esc(r.get('valid_from') or ''), esc((r.get('notes') or '')[:140])) for r in rows)
+    return u'''  <section>
+    <h2>%d. 지분·소유<small>거래 위에 소유를 겹치기</small></h2>
+    <p class="note">기업 구조 선 %d개. 탐색기는 이 선을 따라가지 않고 서랍에만 보인다.</p>
+    <table><tr><th>주체</th><th>관계</th><th>대상</th><th>부터</th><th>비고</th></tr>%s</table>
+  </section>
+''' % (n, len(rows), tr)
+
+
+def sec_sources(c, n):
+    used = set()
+    for r in c.rels:
+        used.update(r.get('source_ids') or [])
+    for x in c.claims + c.obs:
+        used.update(x.get('source_ids') or [])
+    rows = [c.srcs[s] for s in used if s in c.srcs]
+    if not rows:
+        return ''
+    rows.sort(key=lambda s: (s.get('published_date') or ''), reverse=True)
+    tr = u''.join(u'<tr><td class="nw">%s</td><td>%s</td><td>%s</td></tr>' % (
+        esc(s.get('published_date') or ''), esc(s.get('publisher') or ''),
+        (u'<a href="%s">%s</a>' % (esc(s['url']), esc(s.get('title') or s['id']))) if s.get('url') else esc(s.get('title') or s['id'])) for s in rows)
+    return u'''  <section>
+    <h2>%d. 출처<small>%d건</small></h2>
+    <table><tr><th>날짜</th><th>발행</th><th>문서</th></tr>%s</table>
+  </section>
+''' % (n, len(rows), tr)
+
+
+# ── 장 ─────────────────────────────────────────────────────────────────
+def page(c, chains):
+    nav = u''.join(u'<a href="%s"%s>%s</a>' % (esc(fname(x)), ' class="on"' if x.id == c.id else '', esc(x.label)) for x in chains)
+    nav += u'<a href="밸류체인 탐색기.html">탐색기</a>'
+    parts, n = [], 1
+    parts.append(sec_map(c, n)); n += 1
+    if c.id == 'tsmc':
+        # 원문 보고서의 2~8절 그림을 그대로. 번호는 원문과 같이 2~8
+        parts.append(gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', ''))
+        n = 9
+    for fn in (sec_claims,
+               lambda cc, k: sec_shares(cc, k, 'revenue_types', u'매출원 구성', u'매출 갈래마다 가장 최근 비중.', ''),
+               lambda cc, k: sec_shares(cc, k, 'supply_sources', u'공급원 구성', u'공급 갈래마다 가장 최근 비중.', ' sup'),
+               sec_bottleneck, sec_customers, sec_equity, sec_sources):
+        h = fn(c, n)
+        if h:
+            parts.append(h); n += 1
+    sub = (u'보고서 「TSMC 밸류체인 조사」(2026-09-12, 저장소 <code>%s</code>)의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 근거 등급은 A 공시 실명·수치, B 공시에 의존 명시(수치 비공개), C 추정·보도.' % gen_tsmc_page.REPORT) \
+        if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 숫자는 전부 데이터(data/valuechain/chains/%s)에서 나오고 출처가 붙는다.' % c.id
+    return u'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>%s 밸류체인 — 그림으로 보기</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>%s</style>
+</head>
+<body>
+<main>
+  <h1>%s 밸류체인 — 그림으로 보기</h1>
+  <p class="sub">%s</p>
+  <nav class="chains">%s</nav>
+%s</main>
+</body>
+</html>
+''' % (esc(c.label), CSS, esc(c.label), sub, nav, u''.join(parts))
+
+
+def fname(c):
+    return u'%s 밸류체인.html' % c.label
+
+
+def build():
+    ents = dict((e['id'], e) for e in rd(os.path.join(DATA, 'entities.json')))
+    srcs = dict((s['id'], s) for s in rd(os.path.join(DATA, 'sources.json')))
+    base = os.path.join(DATA, 'chains')
+    chains = [Chain(d, ents, srcs) for d in sorted(os.listdir(base))
+              if os.path.exists(os.path.join(base, d, 'chain.json'))]
+    for c in chains:
+        html = page(c, chains)
+        out = os.path.join(OUTDIR, fname(c))
+        with io.open(out, 'w', encoding='utf-8', newline='\n') as f:
+            f.write(html)
+        print(u'%s · %d KB' % (os.path.relpath(out, ROOT), len(html.encode('utf-8')) // 1024))
+
+
+if __name__ == '__main__':
+    sys.stdout.reconfigure(encoding='utf-8')
+    build()

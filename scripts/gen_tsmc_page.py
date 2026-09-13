@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-u"""TSMC 밸류체인 — 그림으로 보기. 대시보드/TSMC 밸류체인.html 을 만든다.
+u"""TSMC 그림 장의 원문 절(2~8절) 상수. 장 자체는 gen_vcreport.py 가 만든다.
 
 원문은 data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md 하나다. 2~8절의 값은 그 원문의
 8·9·11·14·15·16·17절에서 왔고 추정치는 ~ 로 표시한다. 1절(전체 지도)만 손으로 그린 SVG 대신
@@ -258,14 +258,5 @@ SECTIONS_2_8 = u'''
 '''
 
 
-def build():
-    html = HEAD.replace('__REPORT__', REPORT) + SECTION_1 + SECTIONS_2_8
-    with io.open(OUT, 'w', encoding='utf-8', newline='\n') as f:
-        f.write(html)
-    print(u'%s · %d KB' % (os.path.relpath(OUT, ROOT), len(html.encode('utf-8')) // 1024))
-
-
-if __name__ == '__main__':
-    import sys
-    sys.stdout.reconfigure(encoding='utf-8')
-    build()
+# 2026-09-13 이후 장은 gen_vcreport.py 가 만든다(사슬마다 한 장). 이 파일은 TSMC 원문 그림 2~8절과
+# 원문 경로만 갖는 상수 모듈이다

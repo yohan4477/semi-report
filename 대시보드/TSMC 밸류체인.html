@@ -6,31 +6,21 @@
 <title>TSMC 밸류체인 — 그림으로 보기</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --paper:#EEF1F4;      /* 실리콘 회색 */
-    --ink:#1C2733;
-    --mute:#6B7785;
-    --line:#C9D1DA;
-    --tsmc:#0E6B66;       /* 웨이퍼 청록 */
-    --tsmc-soft:#D6ECEA;
-    --kr:#B4620A;         /* 한국 노드 */
-    --kr-soft:#F6E3C8;
-    --jp:#9B1C3A;         /* 일본 병목 */
-    --jp-soft:#F3D5DC;
-    --cust:#31507A;       /* 고객 */
-    --cust-soft:#D9E2EF;
-  }
+  :root{--paper:#EEF1F4;--ink:#1C2733;--mute:#6B7785;--line:#C9D1DA;--tsmc:#0E6B66;--tsmc-soft:#D6ECEA;
+    --kr:#B4620A;--kr-soft:#F6E3C8;--jp:#9B1C3A;--jp-soft:#F3D5DC;--cust:#31507A;--cust-soft:#D9E2EF;--sup:#8A96A3}
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.55}
   main{max-width:960px;margin:0 auto;padding:28px 18px 64px}
   h1{font-size:26px;font-weight:600;margin:0 0 4px;letter-spacing:-0.01em}
-  .sub{color:var(--mute);margin:0 0 28px;font-size:14px}
-  .sub a{color:var(--tsmc)}
+  .sub{color:var(--mute);margin:0 0 18px;font-size:14px}
+  .sub a,.note a,td a{color:var(--tsmc)}
+  nav.chains{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 28px}
+  nav.chains a{font-size:13px;padding:4px 10px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:#fff}
+  nav.chains a.on{background:var(--tsmc);border-color:var(--tsmc);color:#fff}
   section{margin:0 0 44px;padding-top:18px;border-top:2px solid var(--ink)}
   h2{font-size:18px;font-weight:600;margin:0 0 4px}
   h2 small{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
   p.note{margin:0 0 14px;color:var(--mute);font-size:13.5px;max-width:70ch}
-  p.note a{color:var(--tsmc)}
   svg{width:100%;height:auto;display:block;font-family:inherit}
   .frame{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;height:640px}
   .frame iframe{width:100%;height:100%;border:0;display:block}
@@ -40,8 +30,18 @@
   table{border-collapse:collapse;width:100%;font-size:13.5px;margin-top:8px}
   th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
   th{font-weight:500;color:var(--mute)}
-  .heat td.c{width:56px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
+  td.nw{white-space:nowrap}
+  .heat td.c{width:76px;text-align:center;color:#fff;font-weight:500;border-radius:3px}
   .h1{background:#7F1D1D}.h2{background:#B91C1C}.h3{background:#D97706}.h4{background:#5B8C5A}.h5{background:#2F6F4E}
+  .ev{display:inline-block;font-size:11.5px;padding:1px 6px;border:1px solid var(--line);border-radius:3px;color:var(--mute);white-space:nowrap}
+  .ev.c{border-color:var(--tsmc);color:var(--tsmc)}
+  .bars{margin-top:6px}
+  .bar{display:grid;grid-template-columns:200px 1fr 120px;gap:10px;align-items:center;font-size:13.5px;padding:4px 0}
+  .bar .lab{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .tr{height:16px;background:#fff;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--tsmc)}
+  .bar.sup .fill{background:var(--sup)}
+  .bar .val{color:var(--mute);white-space:nowrap}
   .tl{position:relative;padding-left:22px}
   .tl::before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
   .tl .yr{position:relative;margin:0 0 18px}
@@ -49,19 +49,19 @@
   .tl b{display:block;font-weight:600;margin-bottom:2px}
   .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
   .tl .row span:first-child{color:var(--mute)}
-  @media (max-width:520px){h1{font-size:22px} .frame{height:520px}}
+  @media (max-width:520px){h1{font-size:22px} .frame{height:520px} .bar{grid-template-columns:120px 1fr 90px}}
 </style>
 </head>
 <body>
 <main>
   <h1>TSMC 밸류체인 — 그림으로 보기</h1>
   <p class="sub">보고서 「TSMC 밸류체인 조사」(2026-09-12, 저장소 <code>data/valuechain/reports/tsmc-밸류체인-조사-2026-09-12.md</code>)의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 근거 등급은 A 공시 실명·수치, B 공시에 의존 명시(수치 비공개), C 추정·보도.</p>
-  <!-- 1. 전체 지도 — 밸류체인 탐색기 -->
+  <nav class="chains"><a href="블룸에너지 밸류체인.html">블룸에너지</a><a href="반도체 기판 밸류체인.html">반도체 기판</a><a href="네비우스 밸류체인.html">네비우스</a><a href="엔비디아 밸류체인.html">엔비디아</a><a href="태양유전 밸류체인.html">태양유전</a><a href="TSMC 밸류체인.html" class="on">TSMC</a><a href="밸류체인 탐색기.html">탐색기</a></nav>
   <section>
     <h2>1. 전체 지도<small>앞단 → TSMC → 뒷단</small></h2>
-    <p class="note">밸류체인 탐색기로 그린다. 상자와 선은 데이터에서 나오고 상자를 누르면 근거가 열린다. 색은 소속: 청록 TSMC, 주황 한국 회사, 진홍 병목(공급 여력 HIGH 이상), 남색 고객. 중개·유통은 점선 테두리. 선 굵기에는 뜻이 없다. <a href="밸류체인 탐색기.html?focal=tsmc&amp;open=*">새 창에서 크게 보기</a></p>
+    <p class="note">밸류체인 탐색기로 그린다. 상자와 선은 데이터에서 나오고 상자를 누르면 근거가 열린다. 색은 소속: 청록 타겟, 주황 한국 회사, 진홍 병목(공급 여력 HIGH 이상), 남색 고객. 중개·유통은 점선 테두리. 선 굵기에는 뜻이 없다. <a href="밸류체인 탐색기.html?focal=tsmc&amp;open=*">새 창에서 크게 보기</a></p>
     <div class="frame"><iframe src="밸류체인 탐색기.html?focal=tsmc&amp;open=*" title="TSMC 밸류체인 탐색기" loading="lazy"></iframe></div>
-    <div class="legend"><span class="l-tsmc">TSMC·외주</span><span class="l-kr">한국 노드</span><span class="l-jp">병목</span><span class="l-cust">고객</span><span class="l-sup">기타 공급사</span></div>
+    <div class="legend"><span class="l-tsmc">타겟</span><span class="l-kr">한국 회사</span><span class="l-jp">병목</span><span class="l-cust">고객</span><span class="l-sup">그 밖의 공급사</span></div>
   </section>
 
   <!-- 2. 매출 드라이버 트리 -->
@@ -228,6 +228,40 @@
         <text x="480" y="298" text-anchor="middle" fill="#6B7785" font-size="11">한국 노드는 TSMC 지분 없음. 두산 언아웃(2027~34)에 고객 품질 인증 조건 포함.</text>
       </g>
     </svg>
+  </section>
+  <section>
+    <h2>9. 핵심 수치<small>최신 공시부터</small></h2>
+    <p class="note">회사를 주어로 한 주장 71건 가운데 최근 16건. 근거 등급은 공시로 확인, 추정, 정황 추론 순으로 약하다.</p>
+    <table><tr><th>시점</th><th>내용</th><th>근거</th><th>출처</th></tr><tr><td class="nw">2029~2030</td><td>2030년 재생에너지 목표 경로와 Foundry 2.0 점유 40% 유지 여부가 걸린다. 앞단에서는 대만 해상풍력 PPA 와 전력 병목 해소가 캐파 상한을 정한다</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2028</td><td>A14 양산, 애리조나 Fab3 와 패키징 공장, 두산–SK실트론 언아웃 2년차가 걸린다. 앞단에는 High-NA EUV 본격 도입으로 ASML·자이스·호야가 걸리고 웨이퍼 EUV 등급 인증이 넓어진다. 뒷단에는 2nm 세대 가속기가 나온다</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2027</td><td>단가 5~10% 인상, 애리조나 Fab2(3nm) 하반기 양산, JASM Fab2(3nm)와 드레스덴 ESMC(28·16nm) 가동, A16 확대가 걸린다. 앞단에는 미국·일본·독일 현지 소재·가스 공급망 구축과 2026년 Capex 의 감가상각 유입이 오고, 뒷단에서는 3nm 미국산 칩 첫 출하와 SK하이닉스 HBM4 베이스 다이 위탁이 시작된다</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>웨이퍼 가격은 해마다 3~10% 오르고 2027년에는 5~10% 인상 협의가 거론된다. 2nm 은 2025년 4분기 양산에 들어가 2026~27년 믹스 상향을 끈다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>AI 수요가 20% 줄면 AI 가 매출의 약 35% 라 매출이 7% 빠지고 가동률이 88% 에서 80% 로 내려가 매출 −US$86억·GM −4.5%p·영업이익 −US$65억(−10%)이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>대만 전기요금이 15% 오르면 유틸리티 약 US$37억 가운데 전력 80% 에 붙어 GM −0.4%p·영업이익 −US$4.5억이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>NT$ 가 5% 절상되면 회사 가이던스(1% 당 GM −0.4%p)대로 GM −2.0%p·영업이익 −US$24억이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>2027년 단가를 8% 올리면 원가가 그대로라 매출 +US$98억이 마진으로 다 들어와 GM +3.2%p·영업이익 +US$98억(+16%)이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>애리조나·구마모토·드레스덴 램프는 가이던스대로 GM 을 2~3%p 희석해 영업이익 −US$30억이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>2026년 CoWoS 캐파가 70% 늘면 비웨이퍼 매출 +US$60억에 외주 비중 상승으로 GM 이 0.3%p 내려가 영업이익 +US$25억이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>일본 EUV 소재 수출이 석 달 막히면 7nm 이하 74% 가운데 EUV 노드 생산이 멈춰 매출 −US$150억 이상·영업이익 −US$120억 이상이 된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026~2027</td><td>단가 인상과 NT$ 절상이 같은 크기로 반대 방향이라 2026~27년 마진의 방향은 가격 인상에서 NT$ 절상과 해외팹 희석을 뺀 순합이 정하고, 세 항목 모두 물량과 무관하다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026-09</td><td>CoWoS 캐파 병목은 TSMC 자체가 캐파를  쥐고 대체 가능성 2·리드타임 2·지정학 1 으로 합계 5 이다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026-09</td><td>최상위 위험은 대만 전력, EUV 생태계(ASML 과 자이스), 일본 EUV 소재 네 갈래(블랭크·레지스트·트랙·ABF)이고 세 번째가 가장 과소평가된다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026-09</td><td>한미반도체는 TC 본더 주 고객이 SK하이닉스이고 TSMC CoWoS 직납이 확인되지 않아 직접 노드로 세우지 않았다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr><tr><td class="nw">2026-09</td><td>솔브레인·동진쎄미켐·이엔에프테크놀로지는 TSMC 공급사 명단에 없고 주 고객이 삼성·SK하이닉스라 이 사슬에서 뺐다.</td><td class="nw"><span class="ev">정황 추론</span></td><td>TSMC 밸류체인 조사 — 앞단/뒷단 (2026-09-12)</td></tr></table>
+  </section>
+  <section>
+    <h2>10. 매출원 구성<small>분류마다 가장 최근 값</small></h2>
+    <p class="note">매출 갈래마다 가장 최근 비중. 분모: TSMC 2026 2분기 총매출. 분모가 다른 값은 한 줄에서 더하지 않는다.</p>
+    <div class="bars"><div class="bar"><span class="lab" title="TSMC 2026 2분기 총매출">고성능 컴퓨팅(HPC) 매출</span><div class="tr"><div class="fill" style="width:66.0%"></div></div><span class="val">66% · 2026 Q2</span></div><div class="bar"><span class="lab" title="TSMC 2026 2분기 총매출">스마트폰 매출</span><div class="tr"><div class="fill" style="width:22.0%"></div></div><span class="val">22% · 2026 Q2</span></div><div class="bar"><span class="lab" title="TSMC 2026 2분기 총매출">IoT 매출</span><div class="tr"><div class="fill" style="width:5.0%"></div></div><span class="val">5% · 2026 Q2</span></div><div class="bar"><span class="lab" title="TSMC 2026 2분기 총매출">자동차 매출</span><div class="tr"><div class="fill" style="width:4.0%"></div></div><span class="val">4% · 2026 Q2</span></div><div class="bar"><span class="lab" title="TSMC 2026 2분기 총매출">기타 매출</span><div class="tr"><div class="fill" style="width:2.0%"></div></div><span class="val">2% · 2026 Q2</span></div><div class="bar"><span class="lab" title="TSMC 2026 2분기 총매출">디지털 소비자 가전(DCE) 매출</span><div class="tr"><div class="fill" style="width:1.0%"></div></div><span class="val">1% · 2026 Q2</span></div></div>
+  </section>
+  <section>
+    <h2>11. 공급원 구성<small>분류마다 가장 최근 값</small></h2>
+    <p class="note">공급 갈래마다 가장 최근 비중. 분모: TSMC 2025 매출원가 / TSMC 웨이퍼 수요. 분모가 다른 값은 한 줄에서 더하지 않는다.</p>
+    <div class="bars"><div class="bar sup"><span class="lab" title="TSMC 웨이퍼 수요">실리콘 웨이퍼</span><div class="tr"><div class="fill" style="width:96.0%"></div></div><span class="val">92~96% · 2020~2022</span></div><div class="bar sup"><span class="lab" title="TSMC 2025 매출원가">장비</span><div class="tr"><div class="fill" style="width:45.0%"></div></div><span class="val">45% · 2025</span></div><div class="bar sup"><span class="lab" title="TSMC 2025 매출원가">유틸리티</span><div class="tr"><div class="fill" style="width:8.0%"></div></div><span class="val">7~8% · 2025</span></div></div>
+  </section>
+  <section>
+    <h2>12. 병목<small>공급 여력 등급이 적힌 줄</small></h2>
+    <p class="note">관계 데이터의 공급 여력 등급(capacity_criticality)이 중간 이상인 공급 줄 20개. 탐색기에서 진홍으로 칠한 상자와 같다.</p>
+    <table class="heat"><tr><th>공급사</th><th>받는 쪽</th><th>품목</th><th>등급</th><th>근거</th><th>비고</th></tr><tr><td class="nw">AGC</td><td>TSMC</td><td>마스크 블랭크·펠리클</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>호야와 함께 EUV 블랭크를 지배한다</td></tr><tr><td class="nw">ASML</td><td>TSMC</td><td>장비</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>EUV 노광기를 혼자 만든다. 익명 최대 매입처 A 사로 읽힌다</td></tr><tr><td class="nw">JSR</td><td>TSMC</td><td>포토레지스트</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>EUV 레지스트 일본 3사 가운데 하나다</td></tr><tr><td class="nw">대만전력</td><td>TSMC</td><td>유틸리티</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>대만 전력·용수를 혼자 맡아 대체가 없다. 2024~25년 산업용 요금 인상이 원가에 바로 들어왔다</td></tr><tr><td class="nw">도쿄오카공업(TOK)</td><td>TSMC</td><td>포토레지스트</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>EUV 레지스트 일본 3사 가운데 하나다</td></tr><tr><td class="nw">도쿄일렉트론</td><td>TSMC</td><td>장비</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>EUV 트랙(코터·디벨로퍼)을 사실상 혼자 낸다</td></tr><tr><td class="nw">신에츠화학</td><td>TSMC</td><td>포토레지스트</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>EUV 레지스트 일본 3사 가운데 하나다</td></tr><tr><td class="nw">아지노모토 파인테크노</td><td>이비덴</td><td>ABF 기판·CoWoS 외주</td><td class="c h1">매우 높음</td><td><span class="ev">정황 추론</span></td><td>ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다</td></tr><tr><td class="nw">아지노모토 파인테크노</td><td>유니마이크론</td><td>ABF 기판·CoWoS 외주</td><td class="c h1">매우 높음</td><td><span class="ev">정황 추론</span></td><td>ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다</td></tr><tr><td class="nw">아지노모토 파인테크노</td><td>킨서스</td><td>ABF 기판·CoWoS 외주</td><td class="c h1">매우 높음</td><td><span class="ev">정황 추론</span></td><td>ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다</td></tr><tr><td class="nw">아지노모토 파인테크노</td><td>난야PCB</td><td>ABF 기판·CoWoS 외주</td><td class="c h1">매우 높음</td><td><span class="ev">정황 추론</span></td><td>ABF 필름의 95% 넘는 몫을 혼자 쥔다. CoWoS 기판의 기초 소재다</td></tr><tr><td class="nw">호야</td><td>TSMC</td><td>마스크 블랭크·펠리클</td><td class="c h1">매우 높음</td><td><span class="ev c">공시로 확인</span></td><td>호야와 AGC 가 EUV 블랭크의 93% 가까이를 쥔다. 마스크는 TSMC 자체 마스크샵이 만든다</td></tr><tr><td class="nw">KLA</td><td>TSMC</td><td>장비</td><td class="c h3">높음</td><td><span class="ev c">공시로 확인</span></td><td>공정제어·검사에 대체재가 없다</td></tr><tr><td class="nw">미쓰이화학</td><td>TSMC</td><td>마스크 블랭크·펠리클</td><td class="c h3">높음</td><td><span class="ev c">공시로 확인</span></td><td>EUV 펠리클을 대부분 만든다</td></tr><tr><td class="nw">SK실트론</td><td>TSMC</td><td>실리콘 웨이퍼</td><td class="c h5">중간</td><td><span class="ev c">공시로 확인</span></td><td>국내 유일한 300mm 제조사. TSMC 비중은 비공개다</td></tr><tr><td class="nw">글로벌웨이퍼스</td><td>TSMC</td><td>실리콘 웨이퍼</td><td class="c h5">중간</td><td><span class="ev c">공시로 확인</span></td><td>세계 3위권. 텍사스 셔먼 신공장을 세운다</td></tr><tr><td class="nw">스미코</td><td>TSMC</td><td>실리콘 웨이퍼</td><td class="c h5">중간</td><td><span class="ev c">공시로 확인</span></td><td>세계 2위 웨이퍼사로 300mm 로직 비중이 높다</td></tr><tr><td class="nw">신에츠한도타이(SEH)</td><td>TSMC</td><td>실리콘 웨이퍼</td><td class="c h5">중간</td><td><span class="ev c">공시로 확인</span></td><td>세계 1위 웨이퍼사. 모회사 신에츠화학이 포토레지스트도 함께 낸다</td></tr><tr><td class="nw">실트로닉</td><td>TSMC</td><td>실리콘 웨이퍼</td><td class="c h5">중간</td><td><span class="ev c">공시로 확인</span></td><td>바커케미 자회사로 폴리실리콘부터 수직으로 묶였다</td></tr><tr><td class="nw">포모사스미코</td><td>TSMC</td><td>실리콘 웨이퍼</td><td class="c h5">중간</td><td><span class="ev c">공시로 확인</span></td><td>포모사플라스틱 그룹과 스미코의 합작사다</td></tr></table>
+  </section>
+  <section>
+    <h2>13. 고객·전방시장 비중<small>타겟에서 나가는 줄의 비중 관측</small></h2>
+    <p class="note">타겟에서 나가는 줄에 붙은 비중 관측 6건. 고객 실명이 아니라 전방시장 갈래일 수도 있고, 익명 고객은 공시가 이름을 안 밝힌 자리다.</p>
+    <table><tr><th>고객·전방</th><th>시점</th><th>비중</th><th>분모</th><th>근거</th><th>출처</th></tr><tr><td class="nw">2위 고객(비공개)</td><td class="nw">2025</td><td class="nw">17%</td><td>TSMC 총매출</td><td><span class="ev c">공시로 확인</span></td><td>TSMC 2025년 Form 20-F (2026-04)</td></tr><tr><td class="nw">1위 고객(비공개)</td><td class="nw">2025</td><td class="nw">19%</td><td>TSMC 총매출</td><td><span class="ev c">공시로 확인</span></td><td>TSMC 2025년 Form 20-F (2026-04)</td></tr><tr><td class="nw">2위 고객(비공개)</td><td class="nw">2024</td><td class="nw">12%</td><td>TSMC 총매출</td><td><span class="ev c">공시로 확인</span></td><td>TSMC 2025년 Form 20-F (2026-04)</td></tr><tr><td class="nw">1위 고객(비공개)</td><td class="nw">2024</td><td class="nw">22%</td><td>TSMC 총매출</td><td><span class="ev c">공시로 확인</span></td><td>TSMC 2025년 Form 20-F (2026-04)</td></tr><tr><td class="nw">2위 고객(비공개)</td><td class="nw">2023</td><td class="nw">11%</td><td>TSMC 총매출</td><td><span class="ev c">공시로 확인</span></td><td>TSMC 2025년 Form 20-F (2026-04)</td></tr><tr><td class="nw">1위 고객(비공개)</td><td class="nw">2023</td><td class="nw">25%</td><td>TSMC 총매출</td><td><span class="ev c">공시로 확인</span></td><td>TSMC 2025년 Form 20-F (2026-04)</td></tr></table>
+  </section>
+  <section>
+    <h2>14. 지분·소유<small>거래 위에 소유를 겹치기</small></h2>
+    <p class="note">기업 구조 선 26개. 탐색기는 이 선을 따라가지 않고 서랍에만 보인다.</p>
+    <table><tr><th>주체</th><th>관계</th><th>대상</th><th>부터</th><th>비고</th></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">JASM</td><td class="nw"></td><td>구마모토 특수공정·3nm 팹. 고객이 캐파에 출자해 물량을 묶었다</td></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">ESMC</td><td class="nw"></td><td>드레스덴 28·16nm 자동차 팹. 유럽 자동차 IDM 3사가 고객 겸 주주다</td></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">TSMC 애리조나</td><td class="nw"></td><td>CHIPS 법 보조금 66억 달러와 세액공제가 붙어 미 정부가 사실상 자본 파트너다</td></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">GUC</td><td class="nw"></td><td>뒷단 중개를 지분으로 쥔다</td></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">뱅가드(VIS)</td><td class="nw"></td><td>성숙 노드 이관처다. 싱가포르 VSMC 는 NXP 와의 합작이다</td></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">비세라</td><td class="nw"></td><td>CIS 컬러필터·마이크로렌즈. 지분은 70%대로만 적힌다</td></tr><tr><td class="nw">TSMC</td><td class="nw">지분 투자</td><td class="nw">신텍</td><td class="nw"></td><td>WLCSP 패키징 회사다</td></tr><tr><td class="nw">소니</td><td class="nw">지분 투자</td><td class="nw">JASM</td><td class="nw"></td><td>고객이 캐파에 출자해 주주로 들어왔다</td></tr><tr><td class="nw">덴소</td><td class="nw">지분 투자</td><td class="nw">JASM</td><td class="nw"></td><td>고객이 캐파에 출자해 주주로 들어왔다</td></tr><tr><td class="nw">도요타</td><td class="nw">지분 투자</td><td class="nw">JASM</td><td class="nw"></td><td>고객이 캐파에 출자해 주주로 들어왔다</td></tr><tr><td class="nw">보쉬</td><td class="nw">지분 투자</td><td class="nw">ESMC</td><td class="nw"></td><td>고객이 캐파에 출자해 주주로 들어왔다</td></tr><tr><td class="nw">인피니온</td><td class="nw">지분 투자</td><td class="nw">ESMC</td><td class="nw"></td><td>고객이 캐파에 출자해 주주로 들어왔다</td></tr><tr><td class="nw">NXP</td><td class="nw">지분 투자</td><td class="nw">ESMC</td><td class="nw"></td><td>고객이 캐파에 출자해 주주로 들어왔다</td></tr><tr><td class="nw">ASE 테크놀로지</td><td class="nw">지분 투자</td><td class="nw">SPIL</td><td class="nw"></td><td>2018년 합병으로 ASE 가 SPIL 을 100% 쥔다. CoWoS 외주 두 곳이 사실상 한 그룹이고 앰코가 유일한 독립 대안이다</td></tr><tr><td class="nw">일본투자공사(JIC)</td><td class="nw">지분 투자</td><td class="nw">JSR</td><td class="nw">2024</td><td>2024년 비상장화로 일본 정부가 병목 소재를 직접 쥐었다</td></tr><tr><td class="nw">㈜두산</td><td class="nw">지분 투자</td><td class="nw">SK실트론</td><td class="nw">2026-07-31</td><td>SPA 2.3조 원에 70.6%. 2027~34년 EBITDA 초과, 주요 고객사 품질 인증, 미국 자회사 자산 처분에 걸린 언아웃이 붙는다. 100% 가치는 5조 원 중반으로 평가됐고 최태원 지분 29.4% 는 별도 협상이다</td></tr><tr><td class="nw">SK㈜</td><td class="nw">지분 투자</td><td class="nw">SK실트론</td><td class="nw"></td><td>SK㈜ 51.0% 와 TRS 19.6% 를 합쳐 70.6%. 매각 계약은 맺었으나 클로징 대기라 아직 지배주주다</td></tr><tr><td class="nw">한앤컴퍼니</td><td class="nw">지분 투자</td><td class="nw">SK스페셜티</td><td class="nw">2025-03-31</td><td>2025년 3월 31일 약 2.6조 원에 85% 를 인수해 SK㈜ 연결에서 빠졌다</td></tr><tr><td class="nw">SK㈜</td><td class="nw">지분 투자</td><td class="nw">SK스페셜티</td><td class="nw">2025-03-31</td><td>85% 를 넘기고 15% 를 남겼다</td></tr><tr><td class="nw">린데</td><td class="nw">운영 자회사</td><td class="nw">린데리엔화</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr><tr><td class="nw">리엔화실업</td><td class="nw">운영 자회사</td><td class="nw">린데리엔화</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr><tr><td class="nw">간토화학</td><td class="nw">운영 자회사</td><td class="nw">간토PPC</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr><tr><td class="nw">PPC</td><td class="nw">운영 자회사</td><td class="nw">간토PPC</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr><tr><td class="nw">포모사플라스틱 그룹</td><td class="nw">운영 자회사</td><td class="nw">포모사스미코</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr><tr><td class="nw">스미코</td><td class="nw">운영 자회사</td><td class="nw">포모사스미코</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr><tr><td class="nw">니혼산소 홀딩스</td><td class="nw">운영 자회사</td><td class="nw">니혼산소 대만</td><td class="nw"></td><td>대만 현지 생산·유통을 이 법인으로 굴린다. 지분율은 원문에 없다</td></tr></table>
+  </section>
+  <section>
+    <h2>15. 출처<small>21건</small></h2>
+    <table><tr><th>날짜</th><th>발행</th><th>문서</th></tr><tr><td class="nw">2026-09-12</td><td>조사 원장</td><td>TSMC 밸류체인 조사 — 앞단/뒷단</td></tr><tr><td class="nw">2026-07-31</td><td>㈜두산</td><td>타법인주식 취득 결정</td></tr><tr><td class="nw">2026-07-16</td><td>TSMC</td><td><a href="https://investor.tsmc.com/english/quarterly-results/2026/q2">TSMC 2026년 2분기(2026-04~06) 실적 발표 — Quarterly Management Report·Earnings Release·컨퍼런스콜 녹취록</a></td></tr><tr><td class="nw">2026-04</td><td>TSMC</td><td>TSMC 2025년 Form 20-F</td></tr><tr><td class="nw">2026-02-25</td><td>NVIDIA Corporation</td><td><a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm">FY2026 Form 10-K</a></td></tr><tr><td class="nw">2025-10</td><td>Apple</td><td>Apple 2025 회계연도 Form 10-K</td></tr><tr><td class="nw">2025-03-31</td><td>SK㈜</td><td>타법인주식 처분 결정</td></tr><tr><td class="nw">2024</td><td>Apple</td><td><a href="https://www.supplychainreports.apple/files/doc_downloads/2024/04/Apple-Supplier-List.pdf">Apple Supplier List</a></td></tr><tr><td class="nw"></td><td>Broadcom</td><td>Broadcom 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>TSMC</td><td>TSMC 2022년 대만 연차보고서(TWSE)</td></tr><tr><td class="nw"></td><td>Intel</td><td>Intel 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>ASML</td><td>ASML 2025년 연차보고서</td></tr><tr><td class="nw"></td><td>SK실트론 / DART</td><td>SK실트론 사업보고서·반기보고서</td></tr><tr><td class="nw"></td><td>MediaTek</td><td>MediaTek 대만 공시(TWSE 2454)</td></tr><tr><td class="nw"></td><td>AMD</td><td>AMD 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>Lam Research</td><td>Lam Research 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>Amkor Technology</td><td>Amkor 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>Qualcomm</td><td>Qualcomm 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>TSMC</td><td>TSMC 2005년 Form 20-F</td></tr><tr><td class="nw"></td><td>Applied Materials</td><td>Applied Materials 2025 회계연도 Form 10-K</td></tr><tr><td class="nw"></td><td>TSMC</td><td>TSMC 2025년 대만 연차보고서(TWSE)</td></tr></table>
   </section>
 </main>
 </body>

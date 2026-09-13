@@ -460,6 +460,7 @@ font-size:13px;border-bottom:1px solid var(--line2);transition:background .28s e
 .btn{border:1px solid var(--line);background:var(--paper);color:var(--ink2);
 padding:6px 10px;border-radius:5px;font:inherit;font-size:12.5px;cursor:pointer}
 .btn.on{background:var(--ink1);color:#fff;border-color:var(--ink1)}
+a.btn{text-decoration:none;display:inline-block;line-height:normal}
 .crumb{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--paper);
 border-bottom:1px solid var(--line);font-size:12px;color:var(--ink3);overflow-x:auto;
 white-space:nowrap}
@@ -3570,6 +3571,10 @@ function App(){
           onClick: function(){ setAll(!allOpen); } }, allOpen ? '접기' : '전부 펴기') : null,
         canDrw ? h('button', { key:'dw', className:'btn' + (drw ? ' on' : ''),
           onClick: function(){ setDrw(!drw); } }, '근거 서랍') : null,
+        // 보고서 장 — 사슬마다 한 장(gen_vcreport.py). iframe 안이면 부모가 그 장이라 안 단다
+        (gr.chain && window.self === window.top) ? h('a', { key:'rp', className:'btn',
+          href: encodeURI(((CHAINS[gr.chain].meta || {}).label || gr.chain) + ' 밸류체인.html'),
+          title:'이 사슬의 보고서 장' }, '보고서') : null,
         menuBox
       ]);
 
