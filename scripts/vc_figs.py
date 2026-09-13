@@ -744,36 +744,89 @@ def sec_heat_report(c, n, fg):
     return _sec(n, u'병목 리스크 히트맵', u'합계 낮을수록 위험', u'대체 가능성·리드타임·지정학 각 1~5점. ' + esc(h.get('note') or ''), body)
 
 
+def _report_md(c):
+    import glob as _glob
+    base = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'data', 'valuechain', 'reports')
+    hits = sorted(_glob.glob(_os.path.join(base, c.id + '-*.md')))
+    return hits[-1] if hits else None
+
+
+def _strip_md(t):
+    return re.sub(r'\*\*(.*?)\*\*', r'\1', (t or '')).strip()
+
+
+def parse_scenarios(path):
+    u"""조사 보고서의 시나리오 절 표를 읽는다 — (기준선·가정 줄들, [{name, path, profit, spread}]).
+    열 이름은 사슬마다 조금씩 다르다(영업이익 / 영업이익 변화 / 영업손익 변화). 시나리오·충격 경로·
+    영업…·전파 네 열만 이름으로 집는다."""
+    txt = _io.open(path, encoding='utf-8').read()
+    m = re.search(r'^## [^\n]*시나리오[^\n]*\n(.*?)(?=^## |\Z)', txt, re.S | re.M)
+    if not m:
+        return [], []
+    body = m.group(1)
+    lead, rows, head = [], [], None
+    for line in body.split('\n'):
+        st = line.strip()
+        if not st:
+            continue
+        if st.startswith('|'):
+            cells = [_strip_md(x) for x in st.strip('|').split('|')]
+            if head is None:
+                head = cells
+                continue
+            if set(st.replace('|', '').strip()) <= set('-: '):
+                continue
+            if len(cells) < 3:
+                continue
+            def col(pred):
+                for i, hname in enumerate(head):
+                    if pred(hname) and i < len(cells):
+                        return cells[i]
+                return ''
+            rows.append({'name': cells[0], 'path': col(lambda h: u'충격' in h),
+                         'profit': col(lambda h: u'영업' in h), 'spread': col(lambda h: u'전파' in h)})
+        elif head is None and not st.startswith('#'):
+            lead.append(_strip_md(st).lstrip('- '))
+        elif head is not None and st.startswith('**') or st.startswith(u'**핵심'):
+            break
+    return lead, rows
+
+
+def _num_sign(t):
+    u"""영업이익 칸에서 첫 숫자와 부호 — 막대 길이용. 「−$65억 (−10%)」「(603억, −50%)」「+2,250만 달러」."""
+    t = t or ''
+    m = re.search(r'([−\-+(]?)\s*\$?\s*([\d][\d,]*\.?\d*)', t)
+    if not m:
+        return 0.0
+    v = float(m.group(2).replace(',', '') or 0)
+    neg = m.group(1) in (u'−', '-', '(') or t.strip().startswith('(')
+    return -v if neg else v
+
+
 def sec_scenario(c, n, fg):
-    s = fg.get('scenario')
-    if not s or not s.get('bars'):
-        return sec_empty(n, u'시나리오 민감도', u'조사 보고서 없음', u'기준 영업이익과 충격별 변화는 조사 보고서의 가정이 있어야 선다.')
-    bars = s['bars'][:7]
-    neg = sorted([b for b in bars if float(b['value']) < 0], key=lambda b: float(b['value']))
-    pos = sorted([b for b in bars if float(b['value']) >= 0], key=lambda b: float(b['value']))
-    px = 360.0 / (max(abs(float(b['value'])) for b in bars) or 1.0)
-    H = 40 + 40 * len(bars) + 30
-    out = [u'<svg viewBox="0 0 960 %d" role="img" aria-label="시나리오 토네이도"><g font-size="12" fill="%s">' % (H, INK)]
-    out.append(u'<line x1="480" y1="20" x2="480" y2="%d" stroke="%s" stroke-width="1.5"/>' % (H - 30, INK))
-    y = 30
-    for i, b in enumerate(neg):
-        v = float(b['value'])
-        w = max(2.0, abs(v) * px)
-        col = JP if i == 0 and len(neg) > 1 else SUP
-        out.append(u'<text x="490" y="%d">%s</text><rect x="%.0f" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" text-anchor="end" fill="%s">%s</text>'
-                   % (y + 13, esc(cut(b['label'], 26)), 480 - w, y, w, col, 472 - w, y + 13, col if col == JP else MUTE, esc(_money(v))))
-        y += 40
-    for b in pos:
-        v = float(b['value'])
-        w = max(2.0, v * px)
-        out.append(u'<text x="470" y="%d" text-anchor="end">%s</text><rect x="480" y="%d" width="%.0f" height="18" fill="%s"/><text x="%.0f" y="%d" fill="%s" font-weight="500">+%s</text>'
-                   % (y + 13, esc(cut(b['label'], 26)), y, w, TG, 488 + w, y + 13, TG, esc(_money(v))))
-        y += 40
-    if s.get('foot'):
-        out.append(u'<text x="10" y="%d" fill="%s" font-size="11">%s</text>' % (H - 8, MUTE, esc(cut(s['foot'], 100))))
-    out.append(u'</g></svg>')
-    sm, nt = _split_small(s.get('small'), s.get('note'))
-    return _sec(n, u'시나리오 민감도', sm, esc(nt), u'<div class="sv">%s</div>' % u''.join(out))
+    u"""6절 시나리오 — 시나리오마다 「왜 이만큼(충격 경로) · 이익이 얼마나(막대) · 어디로 번지나(전파)」.
+    토네이도 막대 하나로는 무엇을 가정한 시나리오인지 안 읽혔다(2026-09-13 「시나리오가 뭘 설명하던가」)."""
+    rp = _report_md(c)
+    lead, rows = parse_scenarios(rp) if rp else ([], [])
+    if not rows:
+        return sec_empty(n, u'시나리오', u'조사 보고서 없음', u'기준선과 충격별 변화는 조사 보고서의 시나리오 표가 있어야 선다.')
+    mags = [abs(_num_sign(r['profit'])) for r in rows]
+    mx = max(mags) or 1.0
+    items = []
+    for r, mag in zip(rows, mags):
+        v = _num_sign(r['profit'])
+        cls = 'neg' if v < 0 else 'pos'
+        items.append(u'<div class="sc"><div class="sc-h"><b>%s</b><span class="sc-v %s">%s</span></div>'
+                     u'<div class="sc-bar"><div class="sc-fill %s" style="width:%d%%"></div></div>'
+                     u'<p class="sc-p"><b>왜 이만큼.</b> %s</p><p class="sc-p"><b>어디로 번지나.</b> %s</p></div>'
+                     % (esc(r['name']), cls, esc(r['profit'] or u'변화 미상'), cls, int(round(100.0 * mag / mx)),
+                        esc(r['path'] or u'—'), esc(r['spread'] or u'—')))
+    note = u' '.join(lead)[:400]
+    s6 = fg.get('scenario') or {}
+    small = s6.get('small') or u'영업이익 변화'
+    return _sec(n, u'시나리오 민감도', small, esc(note) or u'조사 보고서의 기준선과 가정으로 잰 변화폭이다.',
+                u'<p class="note">시나리오는 「이것 하나가 바뀌면 이익이 얼마나 움직이나」를 재는 가정이다. 막대는 영업이익 변화 크기, 진홍은 줄고 청록은 는다. 그 밑의 두 줄이 무엇이 바뀌었는지와 그 충격이 사슬의 어디로 번지는지다.</p>'
+                u'<div class="scn">%s</div>' % u''.join(items))
 
 
 def sec_timeline_report(c, n, fg):

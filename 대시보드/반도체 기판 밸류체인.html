@@ -50,6 +50,16 @@
   .tl b{display:block;font-weight:600;margin-bottom:2px}
   .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
   .tl .row span:first-child{color:var(--mute)}
+  /* 6절 시나리오 — 시나리오마다 이름·변화 값·막대·왜·번지는 곳 */
+  .scn{margin-top:8px}
+  .sc{padding:10px 0;border-bottom:1px solid var(--line)}
+  .sc-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px}
+  .sc-v{white-space:nowrap;font-weight:600}
+  .sc-v.neg{color:var(--jp)} .sc-v.pos{color:var(--tsmc)}
+  .sc-bar{height:8px;background:#fff;border:1px solid var(--line);border-radius:3px;margin:6px 0 6px;overflow:hidden}
+  .sc-fill{height:100%} .sc-fill.neg{background:var(--jp)} .sc-fill.pos{background:var(--tsmc)}
+  .sc-p{margin:2px 0;font-size:13px;color:var(--mute);max-width:80ch}
+  .sc-p b{color:var(--ink);font-weight:500}
   .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .sv{overflow-x:auto;-webkit-overflow-scrolling:touch}
   /* 핵심 수치 — 표가 아니라 줄 목록. 좁은 화면에서 네 칸 표는 출처 칸이 잘려 나갔다 */
@@ -124,8 +134,8 @@
   </section>
   <section>
     <h2>6. 시나리오 민감도<small>반기 영업이익 변화, 억 원</small></h2>
-    <p class="note">기준 영업이익 1,216억 원(2026 상반기). 매출 15% 감소가 절반을 가져간다.</p>
-    <div class="sv"><svg viewBox="0 0 960 350" role="img" aria-label="시나리오 토네이도"><g font-size="12" fill="#1C2733"><line x1="480" y1="20" x2="480" y2="320" stroke="#1C2733" stroke-width="1.5"/><text x="490" y="43">AI·서버 주문 −15%</text><rect x="120" y="30" width="360" height="18" fill="#9B1C3A"/><text x="112" y="43" text-anchor="end" fill="#9B1C3A">-603</text><text x="490" y="83">신규 설비 4,970억 가동</text><rect x="233" y="70" width="247" height="18" fill="#8A96A3"/><text x="225" y="83" text-anchor="end" fill="#6B7785">-414</text><text x="490" y="123">원재료 +10%(구리)</text><rect x="318" y="110" width="162" height="18" fill="#8A96A3"/><text x="310" y="123" text-anchor="end" fill="#6B7785">-272</text><text x="490" y="163">원화 5% 절상</text><rect x="426" y="150" width="54" height="18" fill="#8A96A3"/><text x="418" y="163" text-anchor="end" fill="#6B7785">-90</text><text x="490" y="203">ABF +30%</text><rect x="458" y="190" width="22" height="18" fill="#8A96A3"/><text x="450" y="203" text-anchor="end" fill="#6B7785">-37</text><text x="470" y="243" text-anchor="end">가동률 84%→92%</text><rect x="480" y="230" width="220" height="18" fill="#0E6B66"/><text x="708" y="243" fill="#0E6B66" font-weight="500">+368</text><text x="470" y="283" text-anchor="end">평균 판가 +5%</text><rect x="480" y="270" width="223" height="18" fill="#0E6B66"/><text x="711" y="283" fill="#0E6B66" font-weight="500">+374</text><text x="10" y="342" fill="#6B7785" font-size="11">가정: 반기 고정비 2,802억 원, 한계이익률 53.8%(성격별 비용 공시에서 역산)</text></g></svg></div>
+    <p class="note">기준선은 2026년 상반기 실적 그대로다. 매출 7,473억 원, 매출총이익률 24.1%, 영업이익 1,216억 원. 가정은 5절에서 뽑은 둘이다. 반기 고정비 2,802억 원, 한계이익률 53.8%.</p>
+    <p class="note">시나리오는 「이것 하나가 바뀌면 이익이 얼마나 움직이나」를 재는 가정이다. 막대는 영업이익 변화 크기, 진홍은 줄고 청록은 는다. 그 밑의 두 줄이 무엇이 바뀌었는지와 그 충격이 사슬의 어디로 번지는지다.</p><div class="scn"><div class="sc"><div class="sc-h"><b>① AI·서버 주문 15% 감소</b><span class="sc-v neg">(603억, −50%)</span></div><div class="sc-bar"><div class="sc-fill neg" style="width:100%"></div></div><p class="sc-p"><b>왜 이만큼.</b> 반기 매출 7,473억 × 15%</p><p class="sc-p"><b>어디로 번지나.</b> 앞단: CCL·프리프레그 매입 감소로 LG화학·두산전자에 즉시. 외주처 먼저 회수. 뒷단: 800G·AI 가속기 MLB 라인</p></div><div class="sc"><div class="sc-h"><b>② 평균 판가 5% 인상</b><span class="sc-v pos">+374억 (+31%)</span></div><div class="sc-bar"><div class="sc-fill pos" style="width:62%"></div></div><p class="sc-p"><b>왜 이만큼.</b> 원가 불변, 전액 이익 유입</p><p class="sc-p"><b>어디로 번지나.</b> 뒷단: (가)(나)(다) 세 고객이 흡수. AMD 랙 BOM의 0.15% 상승에 그쳐 전가 여지 있다</p></div><div class="sc"><div class="sc-h"><b>③ 가동률 84% → 92%</b><span class="sc-v pos">+368억 (+30%)</span></div><div class="sc-bar"><div class="sc-fill pos" style="width:61%"></div></div><p class="sc-p"><b>왜 이만큼.</b> 생산 393 → 429천㎡, 매출 +9.2%</p><p class="sc-p"><b>어디로 번지나.</b> 앞단: 소재 매입 비례 증가. 증설 없이 얻는 물량</p></div><div class="sc"><div class="sc-h"><b>④ 신규 설비 4,970억 원 가동</b><span class="sc-v neg">(414억, −34%)</span></div><div class="sc-bar"><div class="sc-fill neg" style="width:69%"></div></div><p class="sc-p"><b>왜 이만큼.</b> 연 감가상각 828억 원(내용연수 6년, 기존 상각률 16.5%로 역산)</p><p class="sc-p"><b>어디로 번지나.</b> 2028년부터. 가동률이 따라오지 않으면 이 줄이 그대로 이익을 깎는다</p></div><div class="sc"><div class="sc-h"><b>⑤ 구리 상승으로 원재료 10% 인상</b><span class="sc-v neg">(272억, −22%)</span></div><div class="sc-bar"><div class="sc-fill neg" style="width:45%"></div></div><p class="sc-p"><b>왜 이만큼.</b> 원재료·소모품 사용액 2,724억 × 10%</p><p class="sc-p"><b>어디로 번지나.</b> 앞단: LG화학·두산전자가 먼저 올리고 대덕전자가 판가로 넘기는지가 갈림길</p></div><div class="sc"><div class="sc-h"><b>⑥ 원화 5% 절상</b><span class="sc-v neg">(90억, −7%)</span></div><div class="sc-bar"><div class="sc-fill neg" style="width:15%"></div></div><p class="sc-p"><b>왜 이만큼.</b> 직수출 45%에만 반영</p><p class="sc-p"><b>어디로 번지나.</b> 로컬 수출 51%도 달러 연동분이 있어 실제 충격은 이보다 클 수 있다</p></div><div class="sc"><div class="sc-h"><b>⑦ ABF 30% 인상</b><span class="sc-v neg">(37억, −3%)</span></div><div class="sc-bar"><div class="sc-fill neg" style="width:6%"></div></div><p class="sc-p"><b>왜 이만큼.</b> ABF 매입 125억 × 30%</p><p class="sc-p"><b>어디로 번지나.</b> 앞단: 아지노모토. 금액은 작으나 공급 중단 위험과 한 묶음이다</p></div></div>
   </section>
   <section>
     <h2>7. 시간축 2026~2030</h2>

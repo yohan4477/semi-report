@@ -50,6 +50,16 @@
   .tl b{display:block;font-weight:600;margin-bottom:2px}
   .tl .row{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:13.5px}
   .tl .row span:first-child{color:var(--mute)}
+  /* 6절 시나리오 — 시나리오마다 이름·변화 값·막대·왜·번지는 곳 */
+  .scn{margin-top:8px}
+  .sc{padding:10px 0;border-bottom:1px solid var(--line)}
+  .sc-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px}
+  .sc-v{white-space:nowrap;font-weight:600}
+  .sc-v.neg{color:var(--jp)} .sc-v.pos{color:var(--tsmc)}
+  .sc-bar{height:8px;background:#fff;border:1px solid var(--line);border-radius:3px;margin:6px 0 6px;overflow:hidden}
+  .sc-fill{height:100%} .sc-fill.neg{background:var(--jp)} .sc-fill.pos{background:var(--tsmc)}
+  .sc-p{margin:2px 0;font-size:13px;color:var(--mute);max-width:80ch}
+  .sc-p b{color:var(--ink);font-weight:500}
   .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .sv{overflow-x:auto;-webkit-overflow-scrolling:touch}
   /* 핵심 수치 — 표가 아니라 줄 목록. 좁은 화면에서 네 칸 표는 출처 칸이 잘려 나갔다 */
