@@ -3,8 +3,8 @@ u"""밸류체인 보고서 장 — 사슬마다 한 장. 대시보드/<회사> �
 
 2026-09-13 사용자가 준 TSMC 그림 장(보고서 꼴: 제목·절·짧은 설명·그림)을 틀로 삼는다. 전체 지도
 절에는 밸류체인 탐색기(?focal=…&open=*)를 끼우고, 나머지 절은 그 사슬의 데이터(claims·
-classifications·relationships·observations·sources)에서 세운다. TSMC 는 받은 보고서 1~8절(손으로 그린
-지도 포함)을 그대로 두고 9절에 탐색기를 「추가」한 뒤 데이터 절을 붙인다.
+classifications·relationships·observations·sources)에서 세운다. TSMC 는 1절 전체 지도를 손으로 그린 SVG 대신
+탐색기로 이식하고(상자·선은 chains/tsmc 데이터), 2~8절은 받은 그림 그대로, 뒤에 데이터 절을 붙인다.
 
 절(데이터가 없으면 그 절은 안 세운다):
   1 전체 지도(탐색기)  2 핵심 수치(주장)  3 매출원 구성  4 공급원 구성  5 병목  6 고객 집중도
@@ -26,7 +26,6 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUTDIR = os.path.join(ROOT, u'대시보드')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_tsmc_page  # noqa: E402  TSMC 2~8절 원문 그림
-import tsmc_map_orig  # noqa: E402  TSMC 1절 원문 지도(손으로 그린 SVG)
 
 EV_KO = {'CONFIRMED': u'공시로 확인', 'ESTIMATED': u'추정', 'INFERRED': u'정황 추론',
          'UNDISCLOSED': u'비공개', 'HISTORICAL_CURRENT_UNKNOWN': u'과거 관측·현재 미상'}
@@ -314,14 +313,13 @@ def page(c, chains):
         nav += u'<a href="%s">%s 조사 보고서</a>' % (esc(rname(c)), esc(c.label))
     nav += u'<a href="밸류체인 탐색기.html">탐색기</a>'
     parts, n = [], 1
+    # 1절 전체 지도는 탐색기다 — TSMC 는 손으로 그린 SVG 를 탐색기로 이식했다(2026-09-13).
+    # 그 지도의 상자·선은 chains/tsmc 데이터로 옮겨져 탐색기가 그린다
+    parts.append(sec_map(c, n)); n += 1
     if c.id == 'tsmc':
-        # 받은 보고서 1~8절을 손 안 대고 그대로 두고, 탐색기 절은 9절로 「추가」한다
-        parts.append(tsmc_map_orig.SECTION_1_ORIG)
+        # 2~8절은 받은 그림 그대로. 번호도 원문과 같다
         parts.append(gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', ''))
         n = 9
-        parts.append(sec_map(c, n, u'데이터로 다시 그린 전체 지도')); n += 1
-    else:
-        parts.append(sec_map(c, n)); n += 1
     for fn in (sec_claims,
                lambda cc, k: sec_shares(cc, k, 'revenue_types', u'매출원 구성', u'매출 갈래마다 가장 최근 비중.', ''),
                lambda cc, k: sec_shares(cc, k, 'supply_sources', u'공급원 구성', u'공급 갈래마다 가장 최근 비중.', ' sup'),
@@ -329,7 +327,7 @@ def page(c, chains):
         h = fn(c, n)
         if h:
             parts.append(h); n += 1
-    sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % esc(rname(c))) \
+    sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 1절 전체 지도는 손으로 그린 지도를 탐색기로 이식한 것이고 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % esc(rname(c))) \
         if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 숫자는 전부 데이터(data/valuechain/chains/%s)에서 나오고 출처가 붙는다.' % c.id
     return u'''<!doctype html>
 <html lang="ko">
