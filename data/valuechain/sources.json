@@ -1588,5 +1588,35 @@
   "url": null,
   "accessed_date": "2026-09-12",
   "note": "2024~2025년 매출·영업이익과 SK하이닉스가 상반기 매출의 18% 라는 고객 구성이 여기 있다"
+ },
+ {
+  "id": "ty_tanshin_q1fy27",
+  "publisher": "TAIYO YUDEN",
+  "title": "Consolidated Financial Results for the Three Months Ended June 30, 2026",
+  "source_type": "primary_official",
+  "published_date": "2026-08-05",
+  "url": "https://pdf.irpocket.com/C6976/xoA3/ieAo/jaMu/s1QB.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "FY2027 1분기(2026-04-01~06-30) 매출 93,897백만엔(+10.7%)·영업이익 4,818백만엔(+53.3%). 제품별 Capacitors 69,022(73.5%)·Inductors 15,934(17.0%)·Others 8,941(9.5%). 이 분기부터 Integrated Modules & Devices 를 Others 에 합쳤다(전년 동기 3,608백만엔 재분류)"
+ },
+ {
+  "id": "ty_pres_q1fy27",
+  "publisher": "TAIYO YUDEN",
+  "title": "Earnings Release Conference — First quarter for the year ending March 31, 2027",
+  "source_type": "primary_official",
+  "published_date": "2026-08-05",
+  "url": "https://pdf.irpocket.com/C6976/xoA3/ieAo/jaMu/q6fR.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "커패시터 수주 +41% QoQ·수주잔고 +78%, BB 비율 전사 1.58·커패시터 1.72. IT 인프라·산업용과 자동차 합계 55%. FY2027 전망 상향: 매출 424,000(전 384,000)·영업이익 45,000(전 30,000)·설비투자 42,000(전 40,000)·감가상각 50,000·R&D 15,000백만엔. 제품별 전망 Capacitors 316,500·Inductors 71,500·Others 36,000. 환율 가정 159.70엔, ¥1 변동에 매출 19억·영업이익 9억엔"
+ },
+ {
+  "id": "ty_qa_q1fy27",
+  "publisher": "TAIYO YUDEN",
+  "title": "Summary of Q&A for the Earnings Release Conference for the First Quarter",
+  "source_type": "primary_official",
+  "published_date": "2026-08-05",
+  "url": "https://pdf.irpocket.com/C6976/xoA3/tx0r/adlJ/ICcp.pdf",
+  "accessed_date": "2026-09-11",
+  "note": "AI 서버용 커패시터 매출은 1분기에 전년 동기 대비 약 80% 늘었다. 물류 차질로 커패시터 매출 40억엔 남짓이 밀렸다. 2분기 고정비 +35억엔(감가상각), 하반기 +45억엔"
  }
 ]

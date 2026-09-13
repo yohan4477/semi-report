@@ -73,10 +73,29 @@
      "source_ids": [
       "ty_product_2026"
      ]
+    },
+    {
+     "metric": "capacitor_revenue_share",
+     "value": 73.5,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2027 Q1",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_tanshin_q1fy27"
+     ]
     }
    ],
    "source_ids": [
-    "ty_product_2026"
+    "ty_product_2026",
+    "ty_tanshin_q1fy27"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -112,10 +131,29 @@
      "source_ids": [
       "ty_product_2026"
      ]
+    },
+    {
+     "metric": "inductor_revenue_share",
+     "value": 17.0,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2027 Q1",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_tanshin_q1fy27"
+     ]
     }
    ],
    "source_ids": [
-    "ty_product_2026"
+    "ty_product_2026",
+    "ty_tanshin_q1fy27"
    ],
    "residual": {
     "status": "UNDISCLOSED",
@@ -162,7 +200,7 @@
     "source_ids": [
      "ty_product_2026"
     ],
-    "note": "실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM010)"
+    "note": "실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM010). FY2027 1분기부터 회사가 이 갈래를 Others 에 합쳐 적어 분기 비중이 따로 없다"
    }
   },
   {
@@ -190,10 +228,29 @@
      "source_ids": [
       "ty_product_2026"
      ]
+    },
+    {
+     "metric": "others_revenue_share",
+     "value": 9.5,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "FY2027 Q1",
+     "period_start": "2026-04-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "회사 총매출",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": null,
+     "source_ids": [
+      "ty_tanshin_q1fy27"
+     ]
     }
    ],
    "source_ids": [
-    "ty_product_2026"
+    "ty_product_2026",
+    "ty_tanshin_q1fy27"
    ],
    "residual": {
     "status": "UNDISCLOSED",

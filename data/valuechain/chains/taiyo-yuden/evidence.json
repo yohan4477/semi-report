@@ -361,6 +361,36 @@
  },
  {
   "id": "ty-e037",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ty_tanshin_q1fy27",
+  "evidence_type": "direct",
+  "evidence": "69,022백만엔 / 93,897백만엔",
+  "hypothesis_id": null,
+  "classification_id": "rt-ty-rev-capacitor"
+ },
+ {
+  "id": "ty-e038",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ty_tanshin_q1fy27",
+  "evidence_type": "direct",
+  "evidence": "15,934백만엔 / 93,897백만엔",
+  "hypothesis_id": null,
+  "classification_id": "rt-ty-rev-inductor"
+ },
+ {
+  "id": "ty-e039",
+  "relationship_id": null,
+  "metric_id": null,
+  "source_id": "ty_tanshin_q1fy27",
+  "evidence_type": "direct",
+  "evidence": "8,941백만엔 / 93,897백만엔. 이 분기부터 옛 Integrated Modules & Devices 가 Others 에 든다",
+  "hypothesis_id": null,
+  "classification_id": "rt-ty-rev-others"
+ },
+ {
+  "id": "ty-e040",
   "relationship_id": "ty-app-it-infra-industrial",
   "metric_id": "o-ty-it-infra-share",
   "source_id": "ty_ledger_04",
@@ -370,7 +400,7 @@
   "classification_id": null
  },
  {
-  "id": "ty-e038",
+  "id": "ty-e041",
   "relationship_id": "ty-app-automotive",
   "metric_id": "o-ty-automotive-share",
   "source_id": "ty_ledger_04",
@@ -380,7 +410,7 @@
   "classification_id": null
  },
  {
-  "id": "ty-e039",
+  "id": "ty-e042",
   "relationship_id": "ty-app-communication",
   "metric_id": "o-ty-communication-share",
   "source_id": "ty_ledger_04",
@@ -390,7 +420,7 @@
   "classification_id": null
  },
  {
-  "id": "ty-e040",
+  "id": "ty-e043",
   "relationship_id": "ty-app-information-equipment",
   "metric_id": "o-ty-info-equip-share",
   "source_id": "ty_ledger_04",
@@ -400,7 +430,7 @@
   "classification_id": null
  },
  {
-  "id": "ty-e041",
+  "id": "ty-e044",
   "relationship_id": "ty-app-consumer",
   "metric_id": "o-ty-consumer-share",
   "source_id": "ty_ledger_04",
@@ -410,7 +440,7 @@
   "classification_id": null
  },
  {
-  "id": "ty-e042",
+  "id": "ty-e045",
   "relationship_id": "ty-app-it-infra-industrial",
   "metric_id": "o-ty-ai-exposure-scenario",
   "source_id": "ai_share_scenario",

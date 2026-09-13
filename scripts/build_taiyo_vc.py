@@ -34,6 +34,24 @@ CHAIN = os.path.join(DATA, 'chains', 'taiyo-yuden')
 TY = 'taiyo-yuden'
 
 SOURCES = [
+ ('ty_tanshin_q1fy27', 'TAIYO YUDEN',
+  'Consolidated Financial Results for the Three Months Ended June 30, 2026', 'primary_official',
+  '2026-08-05', 'https://pdf.irpocket.com/C6976/xoA3/ieAo/jaMu/s1QB.pdf',
+  'FY2027 1분기(2026-04-01~06-30) 매출 93,897백만엔(+10.7%)·영업이익 4,818백만엔(+53.3%). '
+  '제품별 Capacitors 69,022(73.5%)·Inductors 15,934(17.0%)·Others 8,941(9.5%). 이 분기부터 '
+  'Integrated Modules & Devices 를 Others 에 합쳤다(전년 동기 3,608백만엔 재분류)'),
+ ('ty_pres_q1fy27', 'TAIYO YUDEN',
+  'Earnings Release Conference — First quarter for the year ending March 31, 2027',
+  'primary_official', '2026-08-05', 'https://pdf.irpocket.com/C6976/xoA3/ieAo/jaMu/q6fR.pdf',
+  '커패시터 수주 +41% QoQ·수주잔고 +78%, BB 비율 전사 1.58·커패시터 1.72. IT 인프라·산업용과 '
+  '자동차 합계 55%. FY2027 전망 상향: 매출 424,000(전 384,000)·영업이익 45,000(전 30,000)·'
+  '설비투자 42,000(전 40,000)·감가상각 50,000·R&D 15,000백만엔. 제품별 전망 Capacitors '
+  '316,500·Inductors 71,500·Others 36,000. 환율 가정 159.70엔, ¥1 변동에 매출 19억·영업이익 9억엔'),
+ ('ty_qa_q1fy27', 'TAIYO YUDEN',
+  'Summary of Q&A for the Earnings Release Conference for the First Quarter', 'primary_official',
+  '2026-08-05', 'https://pdf.irpocket.com/C6976/xoA3/tx0r/adlJ/ICcp.pdf',
+  'AI 서버용 커패시터 매출은 1분기에 전년 동기 대비 약 80% 늘었다. 물류 차질로 커패시터 매출 '
+  '40억엔 남짓이 밀렸다. 2분기 고정비 +35억엔(감가상각), 하반기 +45억엔'),
  ('ty_fin_2026', 'TAIYO YUDEN', 'Financial Statements', 'primary_official', '2026-03-31',
   'https://www.yuden.co.jp/en/ir/financial/financial_data.html',
   'FY2026(2026년 3월 결산) 매출 355,341백만엔·매출원가 273,412백만엔·매출총이익 81,928백만엔'),
@@ -302,6 +320,16 @@ O = [
  ('o-ty-others-share', 'ty-rev-others-edge', 'others_revenue_share', 6.9, None,
   None, PCT, 'FY2026', FY26_START, FY26_END, FY26_END, '회사 총매출', 'CURRENT',
   'CONFIRMED', None, None, ['ty_product_2026'], '24,453백만엔(04 RevenueTypes 탭)'),
+ ('o-ty-capacitor-share-q1fy27', 'ty-rev-capacitor-edge', 'capacitor_revenue_share', 73.5,
+  None, None, PCT, 'FY2027 Q1', Q1FY27_START, Q1FY27_END, Q1FY27_END, '회사 총매출', 'CURRENT',
+  'CONFIRMED', None, None, ['ty_tanshin_q1fy27'], '69,022백만엔 / 93,897백만엔'),
+ ('o-ty-inductor-share-q1fy27', 'ty-rev-inductor-edge', 'inductor_revenue_share', 17.0,
+  None, None, PCT, 'FY2027 Q1', Q1FY27_START, Q1FY27_END, Q1FY27_END, '회사 총매출', 'CURRENT',
+  'CONFIRMED', None, None, ['ty_tanshin_q1fy27'], '15,934백만엔 / 93,897백만엔'),
+ ('o-ty-others-share-q1fy27', 'ty-rev-others-edge', 'others_revenue_share', 9.5,
+  None, None, PCT, 'FY2027 Q1', Q1FY27_START, Q1FY27_END, Q1FY27_END, '회사 총매출', 'CURRENT',
+  'CONFIRMED', None, None, ['ty_tanshin_q1fy27'],
+  '8,941백만엔 / 93,897백만엔. 이 분기부터 옛 Integrated Modules & Devices 가 Others 에 든다'),
  ('o-ty-it-infra-share', 'ty-app-it-infra-industrial', 'IT_infra_industrial_share', 27,
   None, None, PCT, 'FY2027 Q1', Q1FY27_START, Q1FY27_END, Q1FY27_END,
   '분기 회사 매출(전방별 분류)', 'CURRENT', 'CONFIRMED', None, None, ['ty_ledger_04'],
@@ -328,6 +356,40 @@ O = [
 ]
 
 CLAIMS = [
+ ('clm-ty-q1fy27-results',
+  '태양유전의 FY2027 1분기(2026년 4~6월) 매출은 93,897백만엔으로 전년 동기보다 10.7% 늘었고 '
+  '영업이익은 4,818백만엔으로 53.3% 늘었다. 평균 환율은 달러당 158.8엔이다.', TY, None,
+  'FY2027 Q1', 'CONFIRMED', None, ['ty_tanshin_q1fy27'],
+  '전 분기 대비 매출 +5%·영업이익 +39%. 가동률 효과 +18억엔, 환율 효과 매출 +65억·영업이익 +26억엔(YoY)'),
+ ('clm-ty-q1fy27-product-mix',
+  'FY2027 1분기 제품별 매출은 Capacitors 69,022백만엔(73.5%)·Inductors 15,934백만엔(17.0%)·'
+  'Others 8,941백만엔(9.5%)이다. 이 분기부터 Integrated Modules & Devices 를 Others 에 합쳐 '
+  '적는다.', TY, None, 'FY2027 Q1', 'CONFIRMED', None, ['ty_tanshin_q1fy27'],
+  '전년 동기 Integrated Modules & Devices 3,608백만엔이 Others 로 재분류됐다. 커패시터 +14.7%·'
+  '인덕터 +7.4%·기타 -8.5%(YoY)'),
+ ('clm-ty-q1fy27-orders',
+  'FY2027 1분기 커패시터 수주는 전 분기보다 41% 늘고 수주잔고는 78% 늘었다. BB 비율은 전사 '
+  '1.58, 커패시터 1.72다.', TY, None, 'FY2027 Q1', 'CONFIRMED', None, ['ty_pres_q1fy27'],
+  'AI 서버를 포함한 IT 인프라·산업용과 메모리 모듈 등 정보기기용이 이끌었다'),
+ ('clm-ty-q1fy27-application',
+  'FY2027 1분기 IT 인프라·산업용과 자동차 매출을 합친 비중은 55%다. IT 인프라·산업용은 AI 서버용 '
+  '커패시터가 성장을 이끌었고 자동차는 중국 수요 부진으로 줄었다.', TY, None, 'FY2027 Q1',
+  'CONFIRMED', None, ['ty_pres_q1fy27'], '전방별 다섯 갈래의 % 는 원장(04 O004~O008)에 있다'),
+ ('clm-ty-q1fy27-ai-server',
+  'FY2027 1분기 AI 서버용 커패시터 매출은 전년 동기보다 약 80% 늘었다. 물류 차질로 커패시터 매출 '
+  '40억엔 남짓이 이 분기에 못 잡혔다.', TY, None, 'FY2027 Q1', 'CONFIRMED', None,
+  ['ty_qa_q1fy27'], 'AI 서버용 매출의 절대 금액과 비중은 밝히지 않았다'),
+ ('clm-ty-forecast-fy2027-revised',
+  '태양유전은 2026-08-05 FY2027 전망을 매출 424,000백만엔(전 384,000)·영업이익 45,000백만엔'
+  '(전 30,000)·설비투자 42,000백만엔(전 40,000)으로 올렸다. 제품별 전망은 Capacitors '
+  '316,500·Inductors 71,500·Others 36,000백만엔이다.', TY, None, 'FY2027', 'CONFIRMED', None,
+  ['ty_pres_q1fy27'],
+  '감가상각 50,000·R&D 15,000백만엔. 환율 가정 159.70엔, ¥1 변동에 매출 19억·영업이익 9억엔. '
+  '매출 상향 400억엔 가운데 약 200억엔은 환율, 약 60억엔은 가동률 효과라고 Q&A 에서 밝혔다'),
+ ('clm-ty-q2fy27-guidance',
+  'FY2027 2분기 매출은 1분기보다 15~19% 늘 것으로 안내했다. Capacitors +16~20%·Inductors '
+  '+17~21%·Others +3~7%, 환율 가정 160엔이다.', TY, None, 'FY2027 Q2', 'CONFIRMED', None,
+  ['ty_pres_q1fy27'], '2분기 고정비는 감가상각 증가로 35억엔 늘 것으로 봤다(Q&A)'),
  ('clm-ty-revenue-fy2026',
   '태양유전의 FY2026(2026년 3월 결산) 매출은 355,341백만엔, 매출원가는 273,412백만엔, '
   '매출총이익은 81,928백만엔이다.', TY, None, 'FY2026', 'CONFIRMED', None, ['ty_fin_2026'],
@@ -477,7 +539,8 @@ RT_MAP = {
 RT_RESIDUAL = {
  RT_CAP: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개(RCM008)',
  RT_IND: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM009)',
- RT_MOD: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM010)',
+ RT_MOD: '실명 고객 매핑 밖의 잔여 고객 배분은 비공개. 개별로 못 가르는 고객을 포함(RCM010). '
+         'FY2027 1분기부터 회사가 이 갈래를 Others 에 합쳐 적어 분기 비중이 따로 없다',
  RT_OTH: '믿을 만한 고객 매핑이 없어 전량 배분 미상(RCM011)',
 }
 SS_LABEL = {'ss-inductor-material': ('인덕터 코어·자성 분말', 'Inductor core / magnetic powder'),
