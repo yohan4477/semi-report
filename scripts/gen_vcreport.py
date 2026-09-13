@@ -28,6 +28,7 @@ DATA = os.path.join(ROOT, 'data', 'valuechain')
 OUTDIR = os.path.join(ROOT, u'대시보드')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_tsmc_page  # noqa: E402  TSMC 2~8절 원문 그림
+import tsmc_map_orig  # noqa: E402  TSMC 1절 원문 지도(손으로 그린 SVG)
 import vc_figs  # noqa: E402  다른 사슬의 2~7절 — 데이터로 세운 그림
 
 EV_KO = {'CONFIRMED': u'공시로 확인', 'ESTIMATED': u'추정', 'INFERRED': u'정황 추론',
@@ -342,21 +343,16 @@ def page(c, chains):
         nav += u'<a href="%s">%s 조사 보고서</a>' % (esc(rname(c)), esc(c.label))
     nav += u'<a href="밸류체인 탐색기.html">탐색기</a>'
     parts, n = [], 1
-    # 1절 전체 지도는 탐색기다 — TSMC 는 손으로 그린 SVG 를 탐색기로 이식했다(2026-09-13).
-    # 그 지도의 상자·선은 chains/tsmc 데이터로 옮겨져 탐색기가 그린다
-    parts.append(sec_map(c, n)); n += 1
+    # 탐색기 절은 장에서 걷었다(2026-09-13 「밸류체인 화면도 없애고 그냥 원 보고서로」) —
+    # 탐색기는 기업분석 장의 고정 층과 상단 칩으로만 간다
     if c.id == 'tsmc':
-        # 2~8절은 받은 그림 그대로. 번호도 원문과 같다
-        raw = gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', '')
+        # 받은 보고서 1~8절 그대로(손으로 그린 지도 포함). 데이터 절도 안 붙인다
+        raw = tsmc_map_orig.SECTION_1_ORIG + gen_tsmc_page.SECTIONS_2_8.replace('</main>\n</body>\n</html>\n', '')
         raw = raw.replace('<svg ', '<div class="sv"><svg ').replace('</svg>', '</svg></div>')
         # 병목 히트맵은 점수 칸이 좁아 폰 화면에도 한눈에 든다 — 옆으로 밀지 않고 맞춘다(fit)
         raw = raw.replace('<table class="heat">', '<div class="tw"><table class="heat fit">').replace('</table>', '</table></div>')
         parts.append(raw)
-        n = 9
-        fns = (sec_claims,
-               lambda cc, k: sec_shares(cc, k, 'revenue_types', u'매출원 구성', u'매출 갈래마다 가장 최근 비중.', ''),
-               lambda cc, k: sec_shares(cc, k, 'supply_sources', u'공급원 구성', u'공급 갈래마다 가장 최근 비중.', ' sup'),
-               sec_bottleneck, sec_customers, sec_equity, sec_sources)
+        fns = ()
     else:
         # 다른 사슬 — TSMC 2~8절과 같은 꼴을 데이터로 세운다. 트리가 비중을 보여 주니 막대 절은 안 겹친다
         fns = vc_figs.SECTIONS + (sec_claims, sec_sources)
@@ -364,7 +360,7 @@ def page(c, chains):
         h = fn(c, n)
         if h:
             parts.append(h); n += 1
-    sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시. 1절 전체 지도는 손으로 그린 지도를 탐색기로 이식한 것이고 9절부터는 데이터(chains/tsmc)에서 세운 절이다.' % esc(rname(c))) \
+    sub = (u'보고서 <a href="%s">「TSMC 밸류체인 조사」</a>의 시각 요약. 수치는 2025년 공시 기준, 추정치는 ~로 표시.' % esc(rname(c))) \
         if c.id == 'tsmc' else esc(c.meta.get('note') or '') + u' 그림은 전부 데이터(data/valuechain/chains/%s)에서 세웠고 값마다 출처가 붙는다. 데이터에 없는 값(단위경제·마진 풀·시나리오)은 그리지 않는다.' % c.id
     return u'''<!doctype html>
 <html lang="ko">
