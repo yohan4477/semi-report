@@ -634,6 +634,21 @@ def _money(v):
     return u'{:,.0f}'.format(v) if abs(v) >= 100 else (u'%g' % v)
 
 
+def _split_small(small, note):
+    u"""h2 의 <small> 은 한 토막만. 긴 가정 문장은 폰에서 세 줄로 접혀 제목처럼 읽혀서 note 앞으로 내린다.
+    토막은 「, 」(쉼표+공백)로 가른다 — 2,250 같은 숫자 안 쉼표는 안 가른다. 단위 토막이 보통 맨 뒤라 뒤에서부터 고른다."""
+    small = (small or '').strip()
+    if len(small) <= 24:
+        return small, note
+    segs = [t.strip() for t in re.split(r',\s+', small) if t.strip()]
+    head = u''
+    for t in reversed(segs):
+        if len(t) <= 24:
+            head = t
+            break
+    rest = u', '.join(t for t in segs if t != head)
+    return head, ((rest + u'. ') if rest else u'') + (note or '')
+
 def sec_unit(c, n, fg):
     u = fg.get('unit')
     if not u or not u.get('steps'):
@@ -666,7 +681,8 @@ def sec_unit(c, n, fg):
     if u.get('foot'):
         out.append(u'<text x="40" y="268" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(u['foot'], 90))))
     out.append(u'</g></svg>')
-    return _sec(n, u.get('title') or u'단위경제', u.get('small') or '', esc(u.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
+    sm, nt = _split_small(u.get('small'), u.get('note'))
+    return _sec(n, u.get('title') or u'단위경제', sm, esc(nt), u'<div class="sv">%s</div>' % u''.join(out))
 
 
 def sec_pool(c, n, fg):
@@ -703,7 +719,8 @@ def sec_pool(c, n, fg):
     if p.get('foot'):
         out.append(u'<text x="10" y="180" fill="%s" font-size="11">%s</text>' % (MUTE, esc(cut(p['foot'], 100))))
     out.append(u'</g></svg>')
-    return _sec(n, p.get('title') or u'마진 풀', p.get('small') or '', esc(p.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
+    sm, nt = _split_small(p.get('small'), p.get('note'))
+    return _sec(n, p.get('title') or u'마진 풀', sm, esc(nt), u'<div class="sv">%s</div>' % u''.join(out))
 
 
 def _hc(v):
@@ -755,7 +772,8 @@ def sec_scenario(c, n, fg):
     if s.get('foot'):
         out.append(u'<text x="10" y="%d" fill="%s" font-size="11">%s</text>' % (H - 8, MUTE, esc(cut(s['foot'], 100))))
     out.append(u'</g></svg>')
-    return _sec(n, u'시나리오 민감도', s.get('small') or '', esc(s.get('note') or ''), u'<div class="sv">%s</div>' % u''.join(out))
+    sm, nt = _split_small(s.get('small'), s.get('note'))
+    return _sec(n, u'시나리오 민감도', sm, esc(nt), u'<div class="sv">%s</div>' % u''.join(out))
 
 
 def sec_timeline_report(c, n, fg):
