@@ -370,14 +370,15 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "dd_filing_1h2024"
+   "dd_filing_1h2024",
+   "dd_filing_1h2026"
   ],
-  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
+  "notes": "2024 상반기 보고서의 주요 거래처. 2026 반기보고서도 같은 넷을 다시 든다. 현재 제품별 배분은 비공시라 배분 미상",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mem-hynix",
@@ -401,14 +402,15 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "dd_filing_1h2024"
+   "dd_filing_1h2024",
+   "dd_filing_1h2026"
   ],
-  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
+  "notes": "2024 상반기 보고서의 주요 거래처. 2026 반기보고서도 같은 넷을 다시 든다. 현재 제품별 배분은 비공시라 배분 미상",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mem-amkor",
@@ -432,14 +434,15 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "dd_filing_1h2024"
+   "dd_filing_1h2024",
+   "dd_filing_1h2026"
   ],
-  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
+  "notes": "2024 상반기 보고서의 주요 거래처. 2026 반기보고서도 같은 넷을 다시 든다. 현재 제품별 배분은 비공시라 배분 미상",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mem-stats",
@@ -463,14 +466,15 @@
   "confidence_band": "high",
   "flows": [],
   "source_ids": [
-   "dd_filing_1h2024"
+   "dd_filing_1h2024",
+   "dd_filing_1h2026"
   ],
-  "notes": "2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상",
+  "notes": "2024 상반기 보고서의 주요 거래처. 2026 반기보고서도 같은 넷을 다시 든다. 현재 제품별 배분은 비공시라 배분 미상",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-tesla",
@@ -541,11 +545,11 @@
    "dd_ir_ssd_optical"
   ],
   "notes": "IR 가 거래와 물량 증가를 밝혔다. 비공개인 것은 상대 실명뿐이다",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-optical",
@@ -572,11 +576,11 @@
    "dd_ir_ssd_optical"
   ],
   "notes": "IR 가 거래를 밝혔다. 비공개인 것은 상대 실명뿐이다",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "fcbga-pcie",
@@ -603,11 +607,11 @@
    "dd_ir_pcie"
   ],
   "notes": "2026 하반기 이후 로드맵. IR 가 밝힌 것은 계획이고 상대 실명은 비공개다",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-fcbga"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mlb-amd",
@@ -724,11 +728,11 @@
    "dd_ir_800g"
   ],
   "notes": "IR 가 신규 고객 확보와 양산 진입을 밝혔다. 비공개인 것은 실명뿐이다",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-mlb"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "mlb-cisco",
@@ -799,11 +803,11 @@
    "dd_ar_fy2025"
   ],
   "notes": "공시가 (가)로만 밝힌다. 삼성전자·SK하이닉스 등으로 임의 매핑하지 않는다",
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "unalloc-anon2",
@@ -830,11 +834,11 @@
    "dd_ar_fy2025"
   ],
   "notes": null,
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  },
  {
   "id": "unalloc-anon3",
@@ -861,10 +865,10 @@
    "dd_ar_fy2025"
   ],
   "notes": null,
+  "contractual_customer": "CONFIRMED",
   "revenue_type_ids": [
    "rt-dd-rev-unallocated"
   ],
-  "supply_source_ids": [],
-  "contractual_customer": "CONFIRMED"
+  "supply_source_ids": []
  }
 ]

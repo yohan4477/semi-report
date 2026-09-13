@@ -2971,20 +2971,20 @@
  },
  {
   "id": "broadcom",
-  "name": "Broadcom Inc.",
+  "name": "Broadcom",
   "name_ko": "브로드컴",
   "entity_type": "company",
-  "legal_name": "Broadcom Inc.",
+  "legal_name": "Broadcom",
   "display_name": "브로드컴",
-  "region": "미국",
+  "region": "North America",
   "parent_entity_id": null,
-  "primary_role": "Fabless chip maker",
+  "primary_role": "Chip maker",
   "other_roles": [],
   "country": "미국",
   "categories": [
-   "Fabless chip maker"
+   "Chip maker"
   ],
-  "desc": "구글 TPU·메타 MTIA 같은 커스텀 AI ASIC 과 네트워킹 스위치를 설계해 파운드리에 맡긴다",
+  "desc": "PCIe 스위치·광·네트워크 제품이 겹친다. 대덕전자 공급 근거는 아직 없다",
   "anon": false
  },
  {

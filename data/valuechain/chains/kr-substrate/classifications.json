@@ -29,10 +29,30 @@
       "dd_ar_fy2025"
      ],
      "source_date": "2026-03-18"
+    },
+    {
+     "metric": "purchase_share",
+     "value": 7.85,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "2026 H1 원재료 매입액",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": "2026 반기보고서 「3. 원재료 및 생산설비」가 표",
+     "source_ids": [
+      "dd_filing_1h2026"
+     ],
+     "source_date": "2026-08-13"
     }
    ],
    "source_ids": [
-    "dd_ar_fy2025"
+    "dd_ar_fy2025",
+    "dd_filing_1h2026"
    ]
   },
   {
@@ -62,10 +82,30 @@
       "dd_ar_fy2025"
      ],
      "source_date": "2026-03-18"
+    },
+    {
+     "metric": "purchase_share",
+     "value": 60.38,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "2026 H1 원재료 매입액",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": "2026 반기보고서 「3. 원재료 및 생산설비」가 표",
+     "source_ids": [
+      "dd_filing_1h2026"
+     ],
+     "source_date": "2026-08-13"
     }
    ],
    "source_ids": [
-    "dd_ar_fy2025"
+    "dd_ar_fy2025",
+    "dd_filing_1h2026"
    ]
   },
   {
@@ -95,10 +135,30 @@
       "dd_ar_fy2025"
      ],
      "source_date": "2026-03-18"
+    },
+    {
+     "metric": "purchase_share",
+     "value": 41.29,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "2026 H1 부재료 매입액",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": "2026 반기보고서 「3. 원재료 및 생산설비」가 표",
+     "source_ids": [
+      "dd_filing_1h2026"
+     ],
+     "source_date": "2026-08-13"
     }
    ],
    "source_ids": [
-    "dd_ar_fy2025"
+    "dd_ar_fy2025",
+    "dd_filing_1h2026"
    ]
   },
   {
@@ -128,10 +188,30 @@
       "dd_ar_fy2025"
      ],
      "source_date": "2026-03-18"
+    },
+    {
+     "metric": "purchase_share",
+     "value": 25.75,
+     "value_low": null,
+     "value_high": null,
+     "unit": "percent",
+     "period": "2026 H1",
+     "period_start": "2026-01-01",
+     "period_end": "2026-06-30",
+     "as_of_date": "2026-06-30",
+     "denominator": "2026 H1 원재료 매입액",
+     "evidence_level": "CONFIRMED",
+     "confidence": null,
+     "method_note": "2026 반기보고서 「3. 원재료 및 생산설비」가 표",
+     "source_ids": [
+      "dd_filing_1h2026"
+     ],
+     "source_date": "2026-08-13"
     }
    ],
    "source_ids": [
-    "dd_ar_fy2025"
+    "dd_ar_fy2025",
+    "dd_filing_1h2026"
    ]
   }
  ],

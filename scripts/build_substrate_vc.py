@@ -22,6 +22,9 @@ SOURCES = [
  ('dd_filing_1h2024', '대덕전자 / KRX KIND', '2024 반기보고서 주요 거래처', 'primary_official',
   '2024-08-14', 'https://kind.krx.co.kr/',
   '주요 거래처로 삼성전자·SK하이닉스·앰코테크놀로지코리아·스태츠칩팩코리아를 든다'),
+ ('dd_filing_1h2026', '대덕전자 / DART', '2026 반기보고서', 'primary_official', '2026-08-13',
+  'https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260813001620',
+  '2026 상반기 원재료·부재료 매입 비중, 주요 거래처, 수주상황, 생산능력·가동률·설비투자'),
  ('dd_ir_mix', '증권사 리서치', '메모리·비메모리·MLB 매출 구성', 'analyst_estimate',
   '2025-04-30',
   None, 'FY2024 메모리 패키지기판 비중'),
@@ -184,17 +187,21 @@ R = [
  # ── 메모리 패키지기판 고객 ───────────────────────────────────────
  ('mem-samsung', 'dd-rev-memory', 'samsung-electronics', 'SELLS_TO', 'DOWNSTREAM',
   'Chip maker', '메모리 패키지기판', '매출원', '고객', '2024-06-30', None, 'ACTIVE', 'CONFIRMED',
-  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024'],
-  '2024 반기 공시가 이름을 든다. 매출원 안의 몫은 공개되지 않았다'),
+  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024', 'dd_filing_1h2026'],
+  '2024 반기 공시가 이름을 든다. 2026 반기보고서도 같은 넷을 다시 든다. 매출원 안의 몫은 '
+  '공개되지 않았다'),
  ('mem-hynix', 'dd-rev-memory', 'sk-hynix', 'SELLS_TO', 'DOWNSTREAM', 'Chip maker',
   '메모리 패키지기판', '매출원', '고객', '2024-06-30', None, 'ACTIVE', 'CONFIRMED',
-  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024'], None),
+  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024', 'dd_filing_1h2026'],
+  '2026 반기보고서도 같은 이름을 다시 든다'),
  ('mem-amkor', 'dd-rev-memory', 'amkor-korea', 'SELLS_TO', 'DOWNSTREAM', 'OSAT',
   '패키지 기판', '매출원', '고객', '2024-06-30', None, 'ACTIVE', 'CONFIRMED',
-  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024'], None),
+  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024', 'dd_filing_1h2026'],
+  '2026 반기보고서도 같은 이름을 다시 든다'),
  ('mem-stats', 'dd-rev-memory', 'stats-chippac-korea', 'SELLS_TO', 'DOWNSTREAM', 'OSAT',
   '패키지 기판', '매출원', '고객', '2024-06-30', None, 'ACTIVE', 'CONFIRMED',
-  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024'], None),
+  None, 'CONTRACTUAL_CUSTOMER', ['dd_filing_1h2024', 'dd_filing_1h2026'],
+  '2026 반기보고서도 같은 이름을 다시 든다'),
  ('mem-app', 'samsung-electronics', 'app-server-mobile', 'END_USER_DEPLOYMENT', 'DOWNSTREAM',
   'Application', 'DDR5·GDDR7·LPDDR·NAND·SoCAMM', '고객', '전방', None, None, 'ACTIVE',
   'ESTIMATED', None, 'END_USER', ['dd_ir_mix'], '메모리 기판이 실리는 자리'),
@@ -336,6 +343,29 @@ CLAIMS = [
   'FY2025 생산능력은 약 100.2만 제곱미터, 생산은 약 75.9만 제곱미터로 가동률 약 76%다.',
   DD, None, 'FY2025', 'CONFIRMED', 1.0, ['dd_ar_fy2025'],
   '제품별 편차가 커서 전사 평균을 FC-BGA 가동률로 읽으면 안 된다'),
+ ('clm-dd-material-mix-2026h1',
+  '2026 상반기 원재료 매입은 CCL 60.38%, 프리프레그 25.75%, ABF 7.85% 구조이고 부재료 매입은'
+  ' PGC 41.29%다.', DD, None, '2026 H1', 'CONFIRMED', 1.0, ['dd_filing_1h2026'],
+  'FY2025(62.2%·26.0%·6.7%·42.2%) 대비 CCL·프리프레그·PGC 비중은 소폭 낮아지고 ABF 비중은'
+  ' 소폭 높아졌다'),
+ ('clm-dd-named-customers-2026h1',
+  '2026 반기보고서도 주요 거래처로 삼성전자·SK하이닉스·앰코테크놀로지코리아·스태츠칩팩코리아를'
+  ' 다시 든다.', DD, 'samsung-electronics', '2026 H1', 'CONFIRMED', 1.0, ['dd_filing_1h2026'],
+  '2024 반기보고서와 같은 넷이다. 매출원별 배분은 이번에도 공개되지 않았다'),
+ ('clm-dd-capacity-2026h1',
+  '2026 상반기 생산능력은 약 46.6만 제곱미터, 생산실적은 약 39.3만 제곱미터로 가동률 84%다.',
+  DD, None, '2026 H1', 'CONFIRMED', 1.0, ['dd_filing_1h2026'],
+  '전사 평균이라 FC-BGA 개별 가동률로 읽지 않는다. FY2025 전사 평균 약 76%보다 높다'),
+ ('clm-dd-backlog-2026h1',
+  '2026 상반기 수주총액은 49.0만 제곱미터·1조 777억 원, 기납품은 37.8만 제곱미터·7,449억 원,'
+  ' 6월 30일 현재 수주잔고는 11.2만 제곱미터·3,328억 원이다.',
+  DD, None, '2026 H1', 'CONFIRMED', 1.0, ['dd_filing_1h2026'],
+  '전자부품 특성상 단납기 주문생산이라 수주잔고가 반기 매출 대비 작다고 공시가 적는다'),
+ ('clm-dd-capex-2026h1',
+  '2026 상반기 시점 진행 중인 설비투자는 2027년까지 기계장치 등 2,700억 원·건물 등 2,130억'
+  ' 원이고, 2026년 7월에는 기계장치 등 4,970억 원 규모의 신규 투자를 추가로 결정했다.',
+  DD, None, '2026-2027', 'CONFIRMED', 1.0, ['dd_filing_1h2026'],
+  '건물 투자는 2026년 5월 시작이라 반기 말 시점에는 이제 막 진행 중이다'),
 ]
 
 REGION = {'한국': 'Korea', '일본': 'Japan', '대만': 'Taiwan', '중국': 'China',
@@ -357,10 +387,17 @@ def src(t):
 
 
 # 계약상 구매 주체라는 근거가 어디까지인지는 줄마다 다르다 (Drive 04 role_to).
-# 공시가 이름을 든 넷만 확인이고, 보도·2차자료로 아는 쪽은 확인 전이다
+# 그 줄의 evidence_level 을 그대로 옮긴다 — CONFIRMED(공시 실명이거나 IR 가 거래 자체를
+# 확인한 익명 고객·공시가 든 익명 상위고객)는 CONFIRMED, 보도·2차자료로만 아는 쪽은
+# UNVERIFIED. v13(check_vc)이 DOWNSTREAM 이고 타겟이 focal 인 줄마다 이 칸을 요구한다
 CONTRACT_BY_ID = {
     'fcbga-tesla': 'UNVERIFIED', 'mlb-amd': 'UNVERIFIED', 'mlb-spacex': 'UNVERIFIED',
     'mlb-cisco': 'UNVERIFIED',
+    'mem-samsung': 'CONFIRMED', 'mem-hynix': 'CONFIRMED', 'mem-amkor': 'CONFIRMED',
+    'mem-stats': 'CONFIRMED',
+    'fcbga-ssd': 'CONFIRMED', 'fcbga-optical': 'CONFIRMED', 'fcbga-pcie': 'CONFIRMED',
+    'mlb-800g': 'CONFIRMED',
+    'unalloc-anon1': 'CONFIRMED', 'unalloc-anon2': 'CONFIRMED', 'unalloc-anon3': 'CONFIRMED',
 }
 
 
@@ -439,12 +476,32 @@ def evidence():
 
 
 # 04 Observations OBS001~OBS004 — 공급원별 매입 비중. 분모가 둘이다(원재료 매입액 셋,
-# 부재료 매입액 하나). 띠는 분모가 같은 셋만 숫자로 적고 PGC 는 손 얹었을 때만 보인다
+# 부재료 매입액 하나). 띠는 분모가 같은 셋만 숫자로 적고 PGC 는 손 얹었을 때만 보인다.
+# 2026 반기보고서 「3. 원재료 및 생산설비」가 표가 2026 H1 줄을 더한다 — 기간마다
+# period 가 달라 apply_supply_shares() 가 period 로만 걸러 옛 줄을 지운다
+# (id, value, denominator, period, period_start, period_end, as_of_date,
+#  source_id, source_date, method_note)
 SS_SHARES = [
- ('ss-ccl-substrate', 62.2, u'FY2025 원재료 매입액', u'OBS001'),
- ('ss-prepreg', 26.0, u'FY2025 원재료 매입액', u'OBS002'),
- ('ss-abf-film', 6.7, u'FY2025 원재료 매입액', u'OBS003'),
- ('ss-pgc-plating', 42.2, u'FY2025 부재료 매입액', u'OBS004'),
+ ('ss-ccl-substrate', 62.2, u'FY2025 원재료 매입액', 'FY2025', '2025-01-01',
+  '2025-12-31', '2025-12-31', 'dd_ar_fy2025', '2026-03-18', u'04 의 OBS001'),
+ ('ss-prepreg', 26.0, u'FY2025 원재료 매입액', 'FY2025', '2025-01-01',
+  '2025-12-31', '2025-12-31', 'dd_ar_fy2025', '2026-03-18', u'04 의 OBS002'),
+ ('ss-abf-film', 6.7, u'FY2025 원재료 매입액', 'FY2025', '2025-01-01',
+  '2025-12-31', '2025-12-31', 'dd_ar_fy2025', '2026-03-18', u'04 의 OBS003'),
+ ('ss-pgc-plating', 42.2, u'FY2025 부재료 매입액', 'FY2025', '2025-01-01',
+  '2025-12-31', '2025-12-31', 'dd_ar_fy2025', '2026-03-18', u'04 의 OBS004'),
+ ('ss-ccl-substrate', 60.38, u'2026 H1 원재료 매입액', '2026 H1', '2026-01-01',
+  '2026-06-30', '2026-06-30', 'dd_filing_1h2026', '2026-08-13',
+  u'2026 반기보고서 「3. 원재료 및 생산설비」가 표'),
+ ('ss-prepreg', 25.75, u'2026 H1 원재료 매입액', '2026 H1', '2026-01-01',
+  '2026-06-30', '2026-06-30', 'dd_filing_1h2026', '2026-08-13',
+  u'2026 반기보고서 「3. 원재료 및 생산설비」가 표'),
+ ('ss-abf-film', 7.85, u'2026 H1 원재료 매입액', '2026 H1', '2026-01-01',
+  '2026-06-30', '2026-06-30', 'dd_filing_1h2026', '2026-08-13',
+  u'2026 반기보고서 「3. 원재료 및 생산설비」가 표'),
+ ('ss-pgc-plating', 41.29, u'2026 H1 부재료 매입액', '2026 H1', '2026-01-01',
+  '2026-06-30', '2026-06-30', 'dd_filing_1h2026', '2026-08-13',
+  u'2026 반기보고서 「3. 원재료 및 생산설비」가 표'),
 ]
 
 
@@ -479,7 +536,8 @@ def apply_v21():
         if r['id'] in DD_UNALLOC:
             r['revenue_type_ids'] = [RT_UN]
             r.pop('revenue_type_map', None)
-            r['notes'] = u'2024 상반기 보고서의 주요 거래처. 현재 제품별 배분은 비공시라 배분 미상'
+            r['notes'] = (u'2024 상반기 보고서의 주요 거래처. 2026 반기보고서도 같은 넷을 다시'
+                          u' 든다. 현재 제품별 배분은 비공시라 배분 미상')
         m = DD_RT_MAP.get(r['id'])
         if m:
             r['revenue_type_ids'] = [x[0] for x in m]
@@ -498,25 +556,27 @@ def apply_v21():
 
 
 def apply_supply_shares():
-    u"""vc_norm 이 옮긴 분류 위에 공급원 매입 비중을 얹는다. 멱등."""
+    u"""vc_norm 이 옮긴 분류 위에 공급원 매입 비중을 얹는다. 멱등.
+
+    period 로만 걸러 지운다 — 같은 공급원에 기간이 다른 줄(FY2025·2026 H1)이 나란히
+    남는다."""
     cp = os.path.join(CHAIN, 'classifications.json')
     cls = json.load(io.open(cp, encoding='utf-8'))
     by = dict((x['id'], x) for x in cls['supply_sources'])
-    for sid, v, den, obsid in SS_SHARES:
+    for sid, v, den, period, p_start, p_end, as_of, src, src_date, note in SS_SHARES:
         x = by.get(sid)
         if not x:
             continue
         row = {'metric': 'purchase_share', 'value': v, 'value_low': None, 'value_high': None,
-               'unit': 'percent', 'period': 'FY2025', 'period_start': '2025-01-01',
-               'period_end': '2025-12-31', 'as_of_date': '2025-12-31', 'denominator': den,
+               'unit': 'percent', 'period': period, 'period_start': p_start,
+               'period_end': p_end, 'as_of_date': as_of, 'denominator': den,
                'evidence_level': 'CONFIRMED', 'confidence': None,
-               'method_note': u'04 의 %s' % obsid, 'source_ids': ['dd_ar_fy2025'],
-               'source_date': '2026-03-18'}
+               'method_note': note, 'source_ids': [src], 'source_date': src_date}
         x['shares'] = [s for s in x.get('shares') or []
                        if not (s.get('metric') == 'purchase_share'
-                               and s.get('period') == 'FY2025')] + [row]
-        if 'dd_ar_fy2025' not in x.get('source_ids', []):
-            x.setdefault('source_ids', []).append('dd_ar_fy2025')
+                               and s.get('period') == period)] + [row]
+        if src not in x.get('source_ids', []):
+            x.setdefault('source_ids', []).append(src)
     dump(cp, cls)
 
 

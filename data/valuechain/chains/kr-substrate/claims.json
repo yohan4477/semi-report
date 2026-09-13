@@ -148,5 +148,80 @@
   "note": "제품별 편차가 커서 전사 평균을 FC-BGA 가동률로 읽으면 안 된다",
   "subject_classification": null,
   "object_classification": null
+ },
+ {
+  "id": "clm-dd-material-mix-2026h1",
+  "statement": "2026 상반기 원재료 매입은 CCL 60.38%, 프리프레그 25.75%, ABF 7.85% 구조이고 부재료 매입은 PGC 41.29%다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "2026 H1",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_filing_1h2026"
+  ],
+  "note": "FY2025(62.2%·26.0%·6.7%·42.2%) 대비 CCL·프리프레그·PGC 비중은 소폭 낮아지고 ABF 비중은 소폭 높아졌다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-dd-named-customers-2026h1",
+  "statement": "2026 반기보고서도 주요 거래처로 삼성전자·SK하이닉스·앰코테크놀로지코리아·스태츠칩팩코리아를 다시 든다.",
+  "subject": "daeduck-electronics",
+  "object": "samsung-electronics",
+  "period": "2026 H1",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_filing_1h2026"
+  ],
+  "note": "2024 반기보고서와 같은 넷이다. 매출원별 배분은 이번에도 공개되지 않았다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-dd-capacity-2026h1",
+  "statement": "2026 상반기 생산능력은 약 46.6만 제곱미터, 생산실적은 약 39.3만 제곱미터로 가동률 84%다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "2026 H1",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_filing_1h2026"
+  ],
+  "note": "전사 평균이라 FC-BGA 개별 가동률로 읽지 않는다. FY2025 전사 평균 약 76%보다 높다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-dd-backlog-2026h1",
+  "statement": "2026 상반기 수주총액은 49.0만 제곱미터·1조 777억 원, 기납품은 37.8만 제곱미터·7,449억 원, 6월 30일 현재 수주잔고는 11.2만 제곱미터·3,328억 원이다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "2026 H1",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_filing_1h2026"
+  ],
+  "note": "전자부품 특성상 단납기 주문생산이라 수주잔고가 반기 매출 대비 작다고 공시가 적는다",
+  "subject_classification": null,
+  "object_classification": null
+ },
+ {
+  "id": "clm-dd-capex-2026h1",
+  "statement": "2026 상반기 시점 진행 중인 설비투자는 2027년까지 기계장치 등 2,700억 원·건물 등 2,130억 원이고, 2026년 7월에는 기계장치 등 4,970억 원 규모의 신규 투자를 추가로 결정했다.",
+  "subject": "daeduck-electronics",
+  "object": null,
+  "period": "2026-2027",
+  "evidence_level": "CONFIRMED",
+  "confidence": 1.0,
+  "source_ids": [
+   "dd_filing_1h2026"
+  ],
+  "note": "건물 투자는 2026년 5월 시작이라 반기 말 시점에는 이제 막 진행 중이다",
+  "subject_classification": null,
+  "object_classification": null
  }
 ]
