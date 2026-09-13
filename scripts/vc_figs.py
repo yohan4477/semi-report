@@ -824,7 +824,8 @@ def sec_scenario(c, n, fg):
     # 머리글은 기준선 한 줄뿐 — 가정·풀이는 조사 보고서 몫이다(「이렇게 주저리 써야 하냐」)
     sents = [x.strip() for x in re.split(r'(?<=\.)\s+', lead[0] if lead else u'') if x.strip()]
     # 숫자가 든 첫 문장 — 「기준선은 5-3절 워터폴의 오른쪽 칸이다」 같은 자리 안내는 건너뛴다
-    base = next((x for x in sents if re.search(r'\d', x)), sents[0] if sents else u'').rstrip('.')
+    money = re.compile(u'(매출|영업이익|영업손익)|\d[\d,\.]*\s*(억|만|백만|달러|엔|원|M|%|\$)')
+    base = next((x for x in sents if money.search(x)), sents[0] if sents else u'').rstrip('.')
     base = re.sub(r'^\s*기준선\s*[:：]\s*', u'기준선 ', base)
     if not base.startswith(u'기준선'):
         base = u'기준선 ' + base
