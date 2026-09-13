@@ -178,10 +178,12 @@ def render():
         o.append('<path d="M%d %d H%d"/>' % (trunk_x, by + bh / 2, bx))
     o.append('</g>')
 
-    # HBM → NVIDIA(점선): 상자 위를 지나지 않게 TSMC·고객 통로(x=612)로 올라가 엔비디아 왼쪽 변 아래쪽에 닿는다
+    # HBM → NVIDIA(점선): HBM 상자 위 변에서 TSMC→고객 세로 줄기(x=600)를 그대로 타고 올라가다
+    # 엔비디아 줄에서 오른쪽으로 꺾어 든다(2026-09-13 「점선도 세로선 따라가다가 오른쪽으로 꺾어」).
+    # 줄기 위에 겹쳐 그리므로 회색 선 다음에 긋는다
     nx, ny, nw, nh = _box('nvidia')
-    o.append('<path d="M%d %d H617 V%d H%d" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>'
-             % (hx + hw, hy + hh / 2, ny + nh - 8, nx, ORANGE))
+    o.append('<path d="M600 %d V%d H%d" stroke="%s" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>'
+             % (hy, ny + nh / 2, nx, ORANGE))
     o.append('<text x="705" y="440" font-size="11" fill="%s">HBM은 NVIDIA 원가에서</text>'
              '<text x="705" y="454" font-size="11" fill="%s">TSMC보다 큼 (~$3.5k vs ~$2.3k)</text>' % (ORANGE, ORANGE))
     o.append('<text x="10" y="545" font-size="11" fill="#6B7785">점선 박스 = 중개·유통. 한국 노드 2곳은 2025~26년 SK그룹에서 이탈.</text>')
