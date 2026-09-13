@@ -56,6 +56,21 @@ __SCRIPTS__
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
+def check_css(text):
+    u"""규칙 하나가 일찍 닫히면 남은 선언이 다음 규칙의 선택자를 먹어 그 규칙이 통째로 사라진다
+    (2026-09-13 .hdr 가 그렇게 깨져 .hdrbar 가 사라지고 머리글이 상자·서랍 위에 얹혔다).
+    중괄호 균형과, 규칙 밖에 홀로 선 선언 줄을 잡는다."""
+    depth, bad = 0, []
+    for i, line in enumerate(text.split('
+'), 1):
+        st = line.strip()
+        if depth == 0 and st and not st.startswith(('/*', '@', '}', '*')) and '{' not in st                 and ':' in st and not st.endswith(','):
+            bad.append('%d: %s' % (i, st[:60]))
+        depth += line.count('{') - line.count('}')
+    if depth != 0 or bad:
+        raise SystemExit(u'app.css 가 깨졌다 — 중괄호 깊이 %d, 규칙 밖 선언 %s' % (depth, bad[:3]))
+
+
 def _read(name):
     with io.open(os.path.join(HERE, 'vcexplorer', name), encoding='utf-8') as f:
         return f.read()
@@ -64,6 +79,7 @@ def _read(name):
 # 화면의 CSS 와 앱은 scripts/vcexplorer/ 의 실제 파일이다. 파이썬 문자열에 박아 두면
 # 편집기가 JS 로 읽지 못하고 이스케이프가 두 겹이 된다
 CSS = _read('app.css')
+check_css(CSS)
 
 # 앱은 네 장이다 — 데이터 색인 / 자리 잡기 / 그래프 세우기 / 화면. 번호 순으로 이어 붙이고
 # 한 함수 안에 감싼다. 장마다 첫 두 줄은 이름과 한 줄 설명이다

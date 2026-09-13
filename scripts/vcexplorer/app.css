@@ -178,11 +178,10 @@ line-height:22px;text-align:center;box-shadow:0 1px 3px rgba(20,26,40,.3);pointe
 .more.l{right:auto;left:-9px}
 .nd.lane .more.l{right:auto;left:-6px}
 .hdr{width:156px;height:44px;text-align:center;padding:5px 6px;background:var(--hi);
---hi:#e2e7ec}
-.hdr.focal{background:var(--tsmc-soft);border-color:var(--tsmc)}
-.hdr.cust{background:var(--cust-soft);border-color:var(--cust)}
 border:1px solid var(--line);border-radius:5px;pointer-events:none;overflow:hidden;
 box-sizing:border-box}
+.hdr.focal{background:var(--tsmc-soft);border-color:var(--tsmc)}
+.hdr.cust{background:var(--cust-soft);border-color:var(--cust)}
 .hdrbar{position:absolute;left:0;top:0;right:0;height:50px;pointer-events:none;z-index:5;
 overflow:hidden;background:linear-gradient(var(--bg) 70%,rgba(238,241,244,0))}
 .hdrbar .hdr .hl{font-size:1em}
