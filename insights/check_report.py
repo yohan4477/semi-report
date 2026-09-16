@@ -299,6 +299,9 @@ MODEL_EXTRA = [
                  'Capital, Offtake and Datacenters.md'),
     os.path.join(_CLIP, 'SpaceX 10GW in 2027 – Why It’s Real, Will Drive $300B ARR '
                  'for SpaceX, and Why Microsoft Will Be the Largest Offtaker.md'),
+    # AgentX 층(2026-09-17)의 재료 — 루빈 에이전틱 편과 AgentX 편
+    os.path.join(_CLIP, 'Vera Rubin NVL72 Agentic Inference 67x better Performance per Dollar.md'),
+    os.path.join(_CLIP, 'AgentX - InferenceXv3 Does CUDA Moat Hold up in Agentic Inferencing.md'),
 ]
 
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),

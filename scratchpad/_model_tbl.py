@@ -740,6 +740,8 @@ TABLES = {
 # 부르는 쪽에서는 한 사전으로 보여야 본문 표와 사실표가 갈리지 않는다
 import _capex_tbl as _ct                                          # noqa: E402
 TABLES.update(_ct.TABLES)
+import _agentx_tbl as _axt                                        # noqa: E402
+TABLES.update(_axt.TABLES)
 
 
 def rows_text():

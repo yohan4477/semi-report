@@ -56,6 +56,8 @@ def main():
         '```', run('check_wafer.py').rstrip(), '```\n',
         '## 회수 기간 모델 출력\n',
         '```', run('check_spacex.py').rstrip(), '```\n',
+        '## AgentX 프런티어 모델 출력\n',
+        '```', run('check_agentx.py').rstrip(), '```\n',
         '## 본문에 실린 표 — 모델이 계산해서 낸 값\n',
         '보고서 본문의 표와 이 글자는 `scratchpad/_model_tbl.py` 한 함수에서 나온다.',
         '표를 고치면 이 사실표가 같이 바뀌므로 둘이 갈릴 수 없다.\n',

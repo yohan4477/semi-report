@@ -360,6 +360,12 @@ def report_model_br_html(head=True):
                               'model-br', head)
 
 
+def report_model_ax_html(head=True):
+    """AgentX 프런티어. 본문은 insights/reports/model-agentx-2026-09-17.md."""
+    return _report_model_html(_model_part1.HEAD_AX, _model_part1.report_ax,
+                              'model-ax', head)
+
+
 def report_model_waf_html(head=True):
     """자본에서 웨이퍼까지. 본문은 insights/reports/model-wafer-2026-09-10.md."""
     return _report_model_html(_model_part1.HEAD_WAF, _model_part1.report_waf,

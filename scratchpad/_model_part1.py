@@ -23,6 +23,7 @@ import _model_tbl as mt
 import _model_eq as me
 import _model_eqtree as et
 import _capex_fig as cf
+import _agentx_fig as axf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_C = os.path.join(ROOT, 'insights', 'reports', 'model-cluster-2026-09-09.md')
@@ -38,6 +39,7 @@ SRC_SX = os.path.join(ROOT, 'insights', 'reports', 'model-payback-2026-09-10.md'
 SRC_BR = os.path.join(ROOT, 'insights', 'reports', 'model-bridge-2026-09-10.md')
 SRC_WAF = os.path.join(ROOT, 'insights', 'reports', 'model-wafer-2026-09-10.md')
 SRC_BS = os.path.join(ROOT, 'insights', 'reports', 'model-backstop-2026-09-12.md')
+SRC_AX = os.path.join(ROOT, 'insights', 'reports', 'model-agentx-2026-09-17.md')
 
 _NOTE = ('값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 '
          '읽은 값은 몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열이나 '
@@ -109,6 +111,18 @@ HEAD_GRD = _head('⑱', 'model-grd',
 HEAD_BS = _head('㉓', 'model-bs',
                 '엔비디아 우발채무 5,300억 달러 — 1기가와트당 부담으로 나누면 6.5기가와트가 되고, 그 단가가 우리 자본 단가와 맞는다',
                 'SemiAnalysis 영문 클리핑 1편의 본문 값 · 이 층 앞 두 글의 단가')
+
+HEAD_AX = _head('㉔', 'model-ax',
+                '베라 루빈 에이전틱 추론 — 원문 숫자 28칸이 공개 데이터에서 그대로 나오고, 「67배」는 곡선 끝 1.4 TPS 에 걸려 있다',
+                'SemiAnalysis 영문 클리핑 2편 · InferenceX 공개 API 행 · InferenceX 대시보드 앱 코드')
+
+GROUPS_AX = [('계산을 세운다', 1, 2),
+             ('맞는 자리와 어긋난 자리', 3, 4),
+             ('돈으로 바꾸면', 5, 6)]
+
+LEAD_AX = ('루빈 글의 메가와트당·1달러당·기가와트당 숫자를 InferenceX 가 공개한 측정 행과 '
+           '앱 코드로 다시 냅니다. 대조한 35칸 가운데 28칸이 맞고, 제목값 「67배」는 GB300 '
+           'TRT-LLM 곡선이 끝나기 직전에 선 값이라 속도에 따라 크게 바뀝니다.')
 
 GROUPS_BS = [('대차대조표 바깥', 1, 2),
              ('앞 글과 맞는 자리', 3, 4),
@@ -217,6 +231,18 @@ LEAD_CLUSTER = ('리서치 회사가 낸 표를 옮겨 적는 대신 그 표를 
 LEAD_INFER = ('AMD MI300X 는 빌려서 쓰면 엔비디아 H200 에 지고, 사서 쓰면 작업 종류에 따라 이깁니다. 원문은 임대 시세로만 답했습니다. 발표된 표를 다시 세우니 운영비는 전수로 맞았고, 자본비 여덟 칸이 어긋난 원인은 표에 찍힌 할인율의 반올림이었습니다.')
 
 CAPTION = {
+    'AXCURVE': ('같은 속도에 선을 그어 곡선 셋을 읽는다', axf.FIG_CURVE,
+                '점은 측정 행, 선은 앱과 같은 단조 곡선으로 이은 값입니다(API 2026-09-13 스냅숏). '
+                '① 5절 매출을 셈한 속도(루빈영문 L142) '
+                '② 3절 메가와트당 표의 속도(루빈영문 L124) '
+                '③ 4절 「67배」의 속도(루빈영문 L70)'),
+    'AXRANK': ('100 TPS 에서 1메가와트가 내는 토큰 — 일곱 설정', axf.FIG_RANK,
+               '값은 우리 모델이 낸 것이고 원문 L124·L126 과 둘째 자리까지 같습니다. 짙은 막대가 루빈입니다.'),
+    'AXEDGE': ('곡선 끝 앞 2 TPS 안에서 달러당 배수가 60 에서 67 로 간다', axf.FIG_EDGE,
+               '선은 사서 운영할 때 원가로 낸 모델 배수입니다. '
+               '① 원문이 적은 속도(루빈영문 L70) '
+               '② 모델이 원문 배수에 닿는 속도 '
+               '③ GB300 TRT 가 잰 가장 빠른 점(루빈영문 L76)'),
     'BSCOVER': ('6년치 바닥값을 다 받쳐 주는 AICP 만 짓는 값을 넘는다', cf.FIG_BSCOVER,
                 '막대 셋은 원문이 적은 1기가와트당 부담이고 짙은 칸이 AICP 입니다. 점선은 '
                 '우리가 되짚은 짓는 자본 — 잔존가치보증 부담 94억을 상한 25퍼센트로 나눈 '
@@ -476,6 +502,14 @@ def _table(rows):
 
 
 TBL_NOTE = {
+    'AXHW': '전력과 원가는 InferenceX 대시보드 앱 코드(커밋 6f17111)의 값이고, 측정 점과 속도 범위는 '
+            'API 스냅숏에서 셌습니다. 프런티어는 더 빠르면서 처리량도 큰 점이 있는 점을 버린 것입니다.',
+    'AXMW': '처리량은 프런티어를 단조 곡선으로 보간한 값이고, 장수는 1,000킬로와트를 칩당 전력으로 '
+            '나눈 값입니다. 차이가 1퍼센트 안이면 일치로 적었습니다.',
+    'AXGW': '토큰 가격과 가동률은 앱의 기본값입니다. GB300 TRT 의 캐시 적중만 서버가 재지 않아 '
+            '트레이스 이론값이 들어갔습니다.',
+    'AXGAP': '차이는 모델을 발표치로 나눈 상대 차이입니다. 엔진을 안 적은 칸은 원문 값에 가장 가까운 '
+             '엔진으로 셌습니다.',
     'BSSHEET': '항목 넷과 총액은 10-Q 값이고, 이름 없는 두 항목과 배수는 총액에서 뺀 값입니다. '
                '원문은 그 둘의 이름을 안 적었습니다.',
     'BSGW': '계약 총액과 용량은 원문 값이고 1기가와트당 부담은 그것을 나눈 값입니다. '
@@ -791,6 +825,10 @@ def report_sx(sec, p, fig):
 
 def report_br(sec, p, fig):
     return _report(SRC_BR, 'model-br', LEAD_BR, GROUPS_BR, sec, p, fig)
+
+
+def report_ax(sec, p, fig):
+    return _report(SRC_AX, 'model-ax', LEAD_AX, GROUPS_AX, sec, p, fig)
 
 
 def report_waf(sec, p, fig):

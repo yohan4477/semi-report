@@ -92,16 +92,27 @@ def best(fn, lo, hi):
     return max((fn(x / 10), x / 10) for x in range(int(lo * 10), int(hi * 10) + 1))
 
 
+def _linear(front, s):
+    """곧은 선 보간 — 앱의 단조 곡선과 견주려고만 둔다."""
+    pts = [(AX._x(e), AX._y(e)) for e in front]
+    for (x0, y0), (x1, y1) in zip(pts, pts[1:]):
+        if x0 <= s <= x1:
+            return y0 + (y1 - y0) * (s - x0) / (x1 - x0)
+    return None
+
+
 class Tally:
     def __init__(self):
         self.fails = 0
         self.gaps = 0
+        self.matched = 0
 
     def match(self, name, got, key, fmt='%.3g', pp=False):
         """pp=True 면 퍼센트 칸이라 상대 오차 대신 1퍼센트포인트 안을 본다."""
         want = pub(key)
         ok = got is not None and (abs(got - want) <= 1 if pp else abs(got / want - 1) <= TOL)
         self.fails += not ok
+        self.matched += 1
         print('  %-30s 모델 %s · 발표 %s (L%d)%s'
               % (name, 'N/A' if got is None else fmt % got, fmt % want, line(key),
                  '' if ok else '  FAIL'))
@@ -146,12 +157,13 @@ def main():
     print()
     print('── 1달러당 토큰 — 사서 운영할 때 ' + '─' * 34)
     t.gap('170 TPS 루빈 ÷ GB300 TRT', own('vr', 'gb300_trt', 170), 'x170_vr_trt_own',
-          '곡선 끝 171.53 바로 앞이라 속도 1 에 배수가 3 넘게 움직인다')
+          '곡선 끝 171.53 바로 앞이라 속도 1 차이에 배수가 3 넘게 바뀐다')
     for s in (169, 170, 171, 171.4):
         print('    %6.1f TPS  %.1f배' % (s, own('vr', 'gb300_trt', s)))
     lo, hi = own('vr', 'gb300_trt', 75), own('vr', 'gb300_trt', 100)
     ok = pub('own_range_lo') <= lo * 1.01 and hi <= pub('own_range_hi')
     t.fails += not ok
+    t.matched += 1
     print('  %-30s 모델 %.2f~%.2f · 발표 %g~%g (L%d)%s'
           % ('75~100 TPS 루빈 ÷ GB300 TRT', lo, hi, pub('own_range_lo'), pub('own_range_hi'),
              line('own_range_lo'), '' if ok else '  FAIL'))
@@ -173,7 +185,7 @@ def main():
     print('── 75 TPS · 가동률 60% 에서 기가와트당 연 매출·이익 (십억 달러) ' + '─' * 6)
     g_vr, g_sgl, g_trt = gw('vr', 75), gw('gb300_sgl', 75), gw('gb300_trt', 75)
     for name, g in (('루빈', g_vr), ('GB300 SGLang', g_sgl), ('GB300 TRT', g_trt)):
-        print('    %-12s 처리량 %6.0f · 캐시 적중 %.3f · 입력 몫 %.4f · 섞은 단가 $%.4f/M'
+        print('    %-12s 처리량 %6.0f · 캐시 적중 %.3f · 입력 비중 %.4f · 섞은 단가 $%.4f/M'
               % (name, g['tput'], g['hit'], g['share'], g['price']))
     t.match('루빈 매출', g_vr['revenue'] / 1e9, 'rev_vr', '%.4g')
     t.match('루빈 이익', g_vr['profit'] / 1e9, 'profit_vr', '%.4g')
@@ -200,6 +212,23 @@ def main():
     t.match('GB300 TRT 하루 매출 ($M)', d_trt, 'fleet_daily_trt')
     t.match('루빈 하루 매출 ($M)', d_vr, 'fleet_daily_vr', '%.2g')
     t.match('루빈 ÷ GB300 TRT', d_vr / d_trt, 'fleet_ratio', '%.2g')
+
+    print()
+    print('── 본문이 쓰는 파생값 ' + '─' * 46)
+    b21 = [e for e in RAW['rows'] if e['hardware'] == 'b300' and e['framework'] == 'vllm'
+           and e['date'] == '2026-08-21']
+    print('  B300 vLLM 08-21 측정만의 가장 느린 점 %.1f TPS — 100 TPS 를 못 읽는다'
+          % min(AX._x(e) for e in b21))
+    print('  170 TPS 에서 GPU 한 장 처리량 — GB300 TRT %.0f tok/s · 루빈 %.0f tok/s'
+          % (tput('gb300_trt', 170), tput('vr', 170)))
+    print('  100 TPS GB300 TRT ÷ SGLang — 곧은 선 %.3f · 단조 곡선 %.3f · 원문 %.3f'
+          % (_linear(S['gb300_trt'][1], 100) / _linear(S['gb300_sgl'][1], 100),
+             tput('gb300_trt', 100) / tput('gb300_sgl', 100),
+             pub('permw100_gb300_trt') / pub('permw100_gb300_sgl')))
+    print('  100 TPS GPU 한 장 처리량 루빈 ÷ GB300 SGLang %.2f배 · 1MW 장수 비 %.2f'
+          % (tput('vr', 100) / tput('gb300_sgl', 100),
+             hw('gb300', 'power_kw') / hw('vr200', 'power_kw')))
+    print('  대조한 원문 칸 %d = 맞는 칸 %d + 어긋남 %d' % (t.matched + t.gaps, t.matched, t.gaps))
 
     print('\n맞는 칸 FAIL %d · 적어 둔 어긋남 %d' % (t.fails, t.gaps))
     print('총 FAIL %d' % t.fails)
