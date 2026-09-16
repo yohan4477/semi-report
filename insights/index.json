@@ -15705,9 +15705,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-09-16",
+"built": "2026-09-17",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 2116,
+"files": 2118,
 "files_stat": {
 "content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
 "89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
@@ -19413,6 +19413,10 @@
 "8dfb473a7fbc90c409180cc799d53a442ec93562",
 37
 ],
+"content/understanding/채널 씨모어/2026-09-13-pharma-cro.md": [
+"87adca0e59f4808762d1c8b521cd67a04a6ed53e",
+35
+],
 "content/understanding/채널 씨모어/raw/2024-05-02-dea-reit.md": [
 "7690a0a84539a5e9523be23b9e9207a63416482b",
 87
@@ -19880,6 +19884,10 @@
 "content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md": [
 "e1d3b4a1b3cc4e435076fa0b0beb085afc2c5a91",
 122
+],
+"content/understanding/채널 씨모어/raw/2026-09-13-pharma-cro.md": [
+"778bdad25c18f5b3ee396df71b14ab60dde723ea",
+96
 ],
 "content/understanding/통합/A-이란전쟁-원유수급.md": [
 "b3375b1268c20d7415b7cfef7ec1af4ff859d037",
@@ -24174,8 +24182,8 @@
 213
 ]
 },
-"fingerprint": "38fe6ccc5838cb1c665971d3047b38ba81416556",
-"lines": 446048
+"fingerprint": "9c0efd5378bbdccc18f458d4a3d415b31dc8e6f0",
+"lines": 446179
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
