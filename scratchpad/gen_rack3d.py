@@ -123,6 +123,9 @@ P = {
     'hbm': dict(name='HBM4 스택', count='패키지당 8개', kind='src',
                 spec='패키지 합계 288GB, 대역폭 22TB/s(초기 출하는 20TB/s 에 못 미칠 수 있다). 스택 배치는 도식',
                 cite=GTC + ' L99 · ' + R + ' L104·L118', child='hbm'),
+    'iochip': dict(name='I/O 칩렛', count='원문에 없음', kind='schema',
+                   spec='Rubin 은 3nm 로 옮기며 입출력(I/O)을 별도 칩렛으로 떼어 냈다. 칩렛 수와 자리는 원문에 없어 하나로만 그렸다',
+                   cite=R + ' L98'),
     'interposer': dict(name='인터포저', count='1', kind='schema',
                        spec='다이와 HBM 을 나란히 올리는 2.5D 판. Rubin 의 인터포저 종류는 이 원문에 없다', cite='—'),
     'substrate': dict(name='패키지 기판', count='1', kind='schema', spec='원문에 규격 없음', cite='—'),
@@ -282,7 +285,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -460,8 +463,12 @@ const BUILD = {
     box('die', [3.2, 0.5, 4.6], [1.9, 1.05, 0], [2, 2, 0], 3);
     for (let i=0;i<8;i++){
       const side = i < 4 ? -1 : 1, k = i % 4;
-      box('hbm', [1.6, 1.2, 2.0], [side*5.0, 1.4, -3.3 + k*2.2], [side*4, 3 + k*0.4, (k-1.5)*1.2], 2);
+      const x = side*5.0, z = -3.3 + k*2.2, ex = side*4, ez = (k-1.5)*1.2, ey = 3 + k*0.4;
+      box('hbm', [1.6, 0.16, 2.0], [x, 0.9, z], [ex, ey, ez], 3);                  // 베이스 다이
+      for (let j=0;j<12;j++)                                                       // DRAM 12단 — 분해하면 층 사이가 벌어진다
+        box('hbm', [1.6, 0.07, 2.0], [x, 1.02 + j*0.085, z], [ex, ey + j*0.12, ez], j%2 ? 1 : 2);
     }
+    box('iochip', [1.8, 0.4, 1.6], [0, 1.0, 3.4], [0, 3, 4], 2);
     box('lid', [15, 0.5, 13], [0, 2.4, 0], [0, 10, 0], 0, {op:.45});
     for (const [w, d, x, z] of [[16, .8, 0, -6.9], [16, .8, 0, 6.9], [.8, 13, -7.6, 0], [.8, 13, 7.6, 0]])
       box('lid', [w, 1.2, d], [x, 1.5, z], [0, 8, 0], 1);
