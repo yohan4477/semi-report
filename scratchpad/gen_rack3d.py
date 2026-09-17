@@ -97,7 +97,18 @@ P = {
                       cite=R + ' L360'),
     'bf4': dict(name='BlueField-4 모듈', count='1개', kind='src',
                 spec='전면 중앙 DPU. 온보드 LPDDR5x 128GB · SSD 512GB · AST2600 BMC. KV 캐시 전용 3번째 네트워크(ICMS/CMX)의 핵심 실리콘',
-                cite=R + ' L222·L243'),
+                cite=R + ' L222·L243', child='bf4'),
+    'bfboard': dict(name='BlueField-4 모듈 보드', count='1', kind='schema', spec='모듈 판. 크기와 부품 배치는 원문에 없어 도식', cite=R + ' L243'),
+    'bfpkg': dict(name='BlueField-4 패키지', count='1', kind='src',
+                  spec='새로 설계하지 않고 Grace CPU 다이를 재사용해 ConnectX-9 다이와 함께 패키징한 800G DPU. 저장장치 컨트롤러 역할도 겸한다',
+                  cite=R + ' L158'),
+    'gracedie': dict(name='Grace CPU 다이', count='패키지당 1', kind='src', spec='BlueField-4 에 재사용한 Grace CPU 다이', cite=R + ' L158'),
+    'cx9die': dict(name='ConnectX-9 다이', count='패키지당 1', kind='src', spec='800G NIC 다이. Grace 다이와 한 패키지에 들어간다', cite=R + ' L157·L158'),
+    'bfmem': dict(name='온보드 메모리 128GB', count='합계 128GB', kind='src',
+                  spec='BlueField-3 의 4배 용량. 한 원문은 LPDDR5, 다른 줄은 LPDDR5x 로 적었다. 칩 수와 배치는 원문에 없어 한 덩어리로 그렸다',
+                  cite=R + ' L158·L243'),
+    'bfssd': dict(name='SSD 512GB', count='1', kind='src', spec='BlueField-4 모듈에 내장된 SSD. 형태는 도식', cite=R + ' L243'),
+    'bmc': dict(name='AST2600 BMC', count='1', kind='src', spec='원격 관리용 컨트롤러', cite=R + ' L243'),
     'pwr': dict(name='전력 공급 모듈', count='1개', kind='src',
                 spec='50V 를 12V 로 낮춰 전면 모듈에 나눈다. 전면 가운데 BlueField-4 위쪽(평면도 기준)', cite=R + ' L244 · ' + TSV_),
     'mgmt': dict(name='시스템 관리 모듈', count='1개', kind='src',
@@ -157,6 +168,7 @@ LEVELS = [
     ('strata', 'Strata', 'Rubin GPU 2 + Vera CPU 1 + SOCAMM 8, 콜드플레이트 한 판'),
     ('rubin', 'Rubin 패키지', '연산 다이 2 + HBM4 스택 8'),
     ('hbm', 'HBM4 스택', 'DRAM 코어 다이 12단 + 로직 베이스 다이'),
+    ('bf4', 'BlueField-4', 'Grace CPU 다이 + ConnectX-9 다이 한 패키지 · 온보드 메모리 128GB · SSD 512GB · BMC'),
 ]
 
 TIERS = {
@@ -246,7 +258,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="wrap">
 <p class="back"><a href="../모델링 대시보드.html">← 모델링 대시보드</a></p>
 <h1>베라 루빈 NVL72 — 10MW 홀에서 HBM4 다이까지 분해도</h1>
-<p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 컴퓨트 트레이에서는 BlueField-4 모듈 안으로도 갈라집니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
 <div class="crumb" id="crumb"></div>
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
@@ -292,7 +304,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -492,6 +504,16 @@ const BUILD = {
       box('lid', [w, 1.2, d], [x, 1.5, z], [0, 8, 0], 1);
     return {pos:[18, 16, 20], target:[0,0.8,0]};
   },
+  bf4(){
+    box('bfboard', [30, 0.8, 22], [0, 0, 0], [0, -8, 0], 0);
+    box('bfpkg', [10, 0.8, 10], [-6, 0.8, -2], [-4, 4, -2], 1);
+    box('gracedie', [3.6, 0.5, 4.2], [-8.2, 1.45, -2], [-6, 10, -3], 3);
+    box('cx9die', [3.0, 0.5, 3.4], [-3.6, 1.45, -2], [-2, 10, -1], 3);
+    box('bfmem', [7, 0.9, 5], [6, 0.85, -5], [6, 6, -6], 2);
+    box('bfssd', [12, 0.8, 4.5], [5, 0.8, 6], [6, 5, 8], 1);
+    box('bmc', [2.4, 0.5, 2.4], [-9, 0.65, 7], [-6, 4, 7], 3);
+    return {pos:[26, 28, 34], target:[0,0,0]};
+  },
   hbm(){
     box('base', [8, 0.9, 10], [0, 0, 0], [0, -3, 0], 3);
     for (let i=0;i<12;i++) box('dram', [8, 0.28, 10], [0, 0.75 + i*0.34, 0], [0, i*0.9, 0], i%2?1:0);
@@ -508,6 +530,20 @@ function fit(dirv){
   const d = new THREE.Vector3(...dirv).normalize();
   camera.position.copy(c).addScaledVector(d, dist); camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
   controls.target.copy(c); controls.update();
+  for (let pass = 0; pass < 2; pass++) {
+    camera.updateMatrixWorld();
+    let lo = new THREE.Vector2(Infinity, Infinity), hi = new THREE.Vector2(-Infinity, -Infinity);
+    for (const x of [b.min.x, b.max.x]) for (const y of [b.min.y, b.max.y]) for (const z of [b.min.z, b.max.z]) {
+      const v = new THREE.Vector3(x, y, z).project(camera);
+      lo.min(new THREE.Vector2(v.x, v.y)); hi.max(new THREE.Vector2(v.x, v.y));
+    }
+    const off = new THREE.Vector2((lo.x + hi.x) / 2, (lo.y + hi.y) / 2);
+    const h = 2 * Math.tan(fov / 2) * dist, w = h * camera.aspect;
+    const right = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
+    const up = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 1);
+    const shift = right.multiplyScalar(off.x * w / 2).add(up.multiplyScalar(off.y * h / 2));
+    camera.position.add(shift); controls.target.add(shift); controls.update();
+  }
   const span = Math.max(sz.x, sz.y, sz.z);
   ground.scale.set(span * 6, span * 6, 1); ground.position.set(c.x, b.min.y - span * 0.02, c.z);
   sun.position.set(c.x + span * 0.8, c.y + span * 1.6, c.z + span * 1.1); sun.target.position.copy(c);
@@ -563,14 +599,16 @@ function load(lv, keepCam){
   location.hash = lv;
 }
 
+const PARENT = {rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
 function crumb(){
   const el = document.getElementById('crumb'); el.innerHTML = '';
-  const idx = LEVELS.findIndex(x=>x[0]===level);
-  LEVELS.slice(0, idx+1).forEach((L, i) => {
+  const path = []; for (let k = level; k; k = PARENT[k]) path.unshift(k);
+  path.forEach((k, i) => {
+    const L = LEVELS.find(x => x[0] === k);
     if (i) { const s = document.createElement('span'); s.textContent = '›'; el.appendChild(s); }
     const b = document.createElement('button'); b.textContent = L[1];
-    b.setAttribute('aria-current', i===idx ? 'true' : 'false');
-    b.onclick = () => load(L[0]); el.appendChild(b);
+    b.setAttribute('aria-current', i === path.length - 1 ? 'true' : 'false');
+    b.onclick = () => load(k); el.appendChild(b);
   });
 }
 
