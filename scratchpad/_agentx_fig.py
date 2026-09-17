@@ -94,7 +94,7 @@ def _key(y):
     return ''.join(out)
 
 
-FIG_CURVE = _svg(W, 420, '같은 속도에 선을 그어 곡선 셋을 읽는다', ''.join(
+FIG_CURVE = _svg(W, 420, '루빈과 GB300 두 엔진 — 곡선 셋을 같은 속도 선에서 읽는다', ''.join(
     [_lt(20, 26, '가로 사용자 한 명이 받는 속도(P90 TPS) · 세로 GPU 한 장 처리량(tok/s)'),
      _axes()]
     + [_curve(*s) for s in _SERIES]
