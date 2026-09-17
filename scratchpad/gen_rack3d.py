@@ -570,6 +570,23 @@ function fit(dirv){
 }
 
 const SPREAD = 0.55;
+let camTween = null;
+function refit(){
+  if (walk) return;
+  const dir = camera.position.clone().sub(controls.target).normalize();
+  const p0 = camera.position.clone(), t0 = controls.target.clone();
+  fit([dir.x, dir.y, dir.z]);
+  const p1 = camera.position.clone(), t1 = controls.target.clone();
+  camera.position.copy(p0); controls.target.copy(t0); controls.update();
+  const start = performance.now();
+  camTween = now => {
+    let k = Math.min(1, (now - start) / 450); k = k * k * (3 - 2 * k);
+    camera.position.lerpVectors(p0, p1, k); controls.target.lerpVectors(t0, t1, k); controls.update();
+    dirty = true;
+    if (k >= 1) camTween = null;
+  };
+}
+
 function layout(){
   for (const m of items){
     const {a, e, o} = m.userData;
@@ -663,11 +680,12 @@ canvas.addEventListener('pointerup', ev => {
 
 const ex = document.getElementById('ex');
 ex.addEventListener('input', () => { explode = +ex.value; layout(); if (tiersOn) buildTiers(); });
+ex.addEventListener('change', () => refit());
 let anim = null;
 document.getElementById('play').onclick = () => {
   const from = explode, to = explode > 0.5 ? 0 : 1, t0 = performance.now();
   anim = t => { const k = Math.min(1, (t - t0)/1200), s = k<.5 ? 4*k*k*k : 1-Math.pow(-2*k+2,3)/2;
-    explode = from + (to-from)*s; ex.value = explode; layout(); if (k>=1) anim = null; };
+    explode = from + (to-from)*s; ex.value = explode; layout(); if (tiersOn) buildTiers(); if (k>=1) { anim = null; refit(); } };
 };
 document.getElementById('reset').onclick = () => load(level);
 
@@ -677,7 +695,9 @@ for (const [label, path] of SOURCES){ const li = document.createElement('li'); l
 function resize(){
   const w = canvas.clientWidth, h = canvas.clientHeight;
   if (canvas.width !== Math.floor(w*renderer.getPixelRatio()) || canvas.height !== Math.floor(h*renderer.getPixelRatio())){
+    const first = canvas.width === 300 && canvas.height === 150;
     renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); dirty = true;
+    if (!first && group && !walk) { clearTimeout(resize.t); resize.t = setTimeout(refit, 200); }
   }
 }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
@@ -805,6 +825,7 @@ let lastT = 0;
 function loop(t){
   resize(); if (anim) anim(t);
   const dt = Math.min(0.05, (t - lastT) / 1000); lastT = t;
+  if (camTween) camTween(t);
   if (walk) stepWalk(dt); else controls.update();
   if ((level === 'hall' || tiersOn) && flowTex.length && !SMALL && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
@@ -816,7 +837,7 @@ function loop(t){
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
-window.__rack = {load, select, setWalk, tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
+window.__rack = {load, select, setWalk, refit, tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
 </script>
 </body>
 </html>
