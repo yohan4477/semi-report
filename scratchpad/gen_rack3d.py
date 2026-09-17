@@ -246,6 +246,10 @@ TOUR = [
          title='BlueField-4 — KV 캐시 네트워크',
          text='Grace CPU 다이와 ConnectX-9 다이를 한 패키지로 묶은 800G DPU 다. 온보드 메모리 128GB 와 SSD 512GB 를 싣고 NVMe-oF·RDMA 로 KV 캐시를 옮긴다.',
          cite=R + ' L158·L243·L250'),
+    dict(level='compare', ex=0.35, sel=None, dir=[0.15, 1.1, 1.0],
+         title='GB300 과 무엇이 바뀌었나',
+         text='GB300 은 NIC 와 OSFP 케이지를 DensiLink 케이블로 이어 조립의 가장 큰 고장 지점이었고 15% 는 공랭이었다. 루빈은 미드플레인으로 케이블을 걷고 100% 액체로 냉각한다. 왼쪽 GB300 부품의 자리는 도식이다.',
+         cite=R + ' L227·L242·L303·L368'),
 ]
 
 DIFFS = [
@@ -452,7 +456,7 @@ composer.addPass(new RenderPass(scene, camera));
 const gtao = SMALL ? null : new GTAOPass(scene, camera, 640, 480);
 if (gtao) { gtao.blendIntensity = 0.85; composer.addPass(gtao); }
 const outline = new OutlinePass(new THREE.Vector2(640, 480), scene, camera);
-outline.edgeStrength = 5; outline.edgeGlow = 0.25; outline.edgeThickness = 1.6; outline.pulsePeriod = 0;
+outline.edgeStrength = 7; outline.edgeGlow = 0.35; outline.edgeThickness = 2.2; outline.pulsePeriod = 0;
 composer.addPass(outline);
 composer.addPass(new OutputPass());
 function themeColors(){
@@ -1018,11 +1022,36 @@ function diffPanel(){
   document.getElementById('info').innerHTML =
     `<h2>GB300 과 루빈 컴퓨트 트레이 — 무엇이 바뀌었나</h2>
      <div class="tw"><table class="tt"><thead><tr><th>항목</th><th>GB300 (왼쪽)</th><th>루빈 (오른쪽)</th></tr></thead><tbody>${rows}</tbody></table></div>
-     <p class="src">줄을 누르면 양쪽 해당 부품에 윤곽선이 뜬다. 출처 — ${R_SRC} L104·L220·L227·L242·L266·L274·L275·L277·L289·L290·L303·L312·L362·L368·L388·L395·L522·L681.
+     <p class="src"><button class="go" id="pairall">모두 보기</button></p>
+     <p class="src">줄을 누르면 양쪽 해당 부품만 남기고 나머지를 흐린다. 출처 — ${R_SRC} L104·L220·L227·L242·L266·L274·L275·L277·L289·L290·L303·L312·L362·L368·L388·L395·L522·L681.
      GB300 쪽 부품의 개수와 자리는 원문에 없어 모두 도식이다.</p>`;
+  document.getElementById('pairall').onclick = () => {
+    pair = null; selected = null;
+    for (const m of items) { m.material.opacity = m.userData.op0 || 1; m.material.transparent = !!m.userData.op0; m.material.depthWrite = !m.userData.op0; m.material.needsUpdate = true; }
+    document.querySelectorAll('#info tr[data-i]').forEach(x => x.style.fontWeight = '');
+    paint(); refit();
+  };
   document.querySelectorAll('#info tr[data-i]').forEach(tr => tr.onclick = () => {
     const d = DIFFS[+tr.dataset.i]; if (!d[3]) return;
-    pair = [d[3], d[4]]; selected = d[3]; paint();
+    pair = [d[3], d[4]]; selected = d[3];
+    for (const m of items) {
+      const keep = pair.includes(m.userData.id);
+      m.material.transparent = !keep || !!m.userData.op0;
+      m.material.opacity = keep ? (m.userData.op0 || 1) : 0.15;
+      m.material.depthWrite = keep; m.material.needsUpdate = true;
+    }
+    paint();
+    const dir = camera.position.clone().sub(controls.target).normalize();
+    const p0 = camera.position.clone(), t0 = controls.target.clone();
+    fit([dir.x, dir.y, dir.z], focusBox(pair));
+    const p1 = camera.position.clone(), t1 = controls.target.clone();
+    camera.position.copy(p0); controls.target.copy(t0); controls.update();
+    const start = performance.now();
+    camTween = now => {
+      let k = Math.min(1, (now - start) / 700); k = k * k * (3 - 2 * k);
+      camera.position.lerpVectors(p0, p1, k); controls.target.lerpVectors(t0, t1, k); controls.update();
+      dirty = true; if (k >= 1) camTween = null;
+    };
     document.querySelectorAll('#info tr[data-i]').forEach(x => x.style.fontWeight = x === tr ? '700' : '');
   });
 }

@@ -148,7 +148,7 @@ const LEVELS = [["hall", "10MW 홀", "루빈 랙 42대 — GPU 3,030장 × 3.3kW
 const SOURCES = [["[260226] 베라 루빈 — 익스트림 코디자인", "content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md"], ["NVIDIA GTC 2025 — Built For Reasoning, Vera Rubin, Kyber (영문)", "input/clippings/NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md"], ["[260416] ISSCC 2026 총정리", "content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md"], ["[260901] 한국의 조 단위 주권 AI 투자", "content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md"], ["[250812] HBM 로드맵", "content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md"], ["NVIDIA 기술 블로그 — Vera Rubin POD (2026)", "https://developer.nvidia.com/blog/nvidia-vera-rubin-pod-seven-chips-five-rack-scale-systems-one-ai-supercomputer/"], ["Transurfing Volatility — Vera Rubin Decoded Pt.4", "https://transurfing-volatility.com/vera-rubin-decoded-pt4/"], ["Schneider Electric NetShelter MGX 랙(NVL72 용) 제품 사양", "https://www.se.com/us/en/product/SEORNVL72X3000/"]];
 const TIERS = {"rows": [["HBM4", "Rubin GPU 4개", "1,152GB", "셈한 값 — 288GB × 4", "[260226] 베라 루빈 — 익스트림 코디자인 L104"], ["LPDDR5X (SOCAMM)", "Vera CPU 2개", "2,048~3,072GB", "셈한 값 — Vera 하나 1,024~1,536GB × 2", "[260226] 베라 루빈 — 익스트림 코디자인 L240"], ["BlueField-4 온보드", "BlueField-4 1개", "LPDDR5x 128GB · SSD 512GB", "원문 값", "[260226] 베라 루빈 — 익스트림 코디자인 L243"], ["E1.S 로컬 SSD", "Orchid 4개에 슬롯 1개씩", "원문에 없음", "—", "[260226] 베라 루빈 — 익스트림 코디자인 L241·L277"]], "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L104·L137·L240·L241·L243·L250·L256·L275·L277·L289", "links": [["Rubin ↔ Vera", "NVLink-C2C 1.8TB/s", "[260226] 베라 루빈 — 익스트림 코디자인 L137"], ["Vera → 미드플레인 → Orchid(ConnectX-9·E1.S)", "PCIe6, 신호 64Gbit/s", "[260226] 베라 루빈 — 익스트림 코디자인 L275·L277·L289"], ["BlueField-4", "KV 캐시 전용 3번째 네트워크(ICMS/CMX) — NVMe-oF·RDMA 로 GPU·CPU 와 따로 KV 를 옮긴다", "[260226] 베라 루빈 — 익스트림 코디자인 L250·L256"]]};
 const R_SRC = "[260226] 베라 루빈 — 익스트림 코디자인";
-const TOUR = [{"level": "hall", "ex": 0.0, "sel": null, "dir": [1.0, 0.9, 1.3], "title": "10MW 홀 — 루빈 랙 42대", "text": "10MW 를 GPU 한 장 3.3kW 로 나누면 3,030장, 랙 하나 72장으로 나누면 42대다(셈한 값). 줄 배치는 도식이다.", "cite": "모델링 층 ㉔ · 루빈 에이전틱 영문 L152"}, {"level": "rack", "ex": 0.35, "sel": "spine", "dir": [-1.0, 0.5, -1.2], "title": "랙 하나 — 트레이 27개와 스파인", "text": "컴퓨트 트레이 18개와 NVLink 스위치 트레이 9개, 전력 셸프 4개가 들어간다. 뒤쪽 스파인은 구리 케이블 카트리지 4개에 5,000가닥이다.", "cite": "NVIDIA 기술 블로그 — Vera Rubin POD (2026) · [260226] 베라 루빈 — 익스트림 코디자인 L523"}, {"level": "tray", "ex": 0.55, "sel": "midplane", "dir": [0.9, 1.1, 0.6], "title": "케이블 없는 컴퓨트 트레이", "text": "미드플레인이 후면 Strata 와 전면 모듈의 PCIe 신호를 잇는다. 케이블을 걷어 트레이 조립이 2시간에서 5분으로 줄었다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L220·L242"}, {"level": "tray", "ex": 0.4, "sel": "uqd", "dir": [0.4, 0.9, -1.4], "title": "냉각수가 들어오는 길", "text": "냉각수는 트레이 좌측 후면 UQD 로 들어와 내부 매니폴드에서 모듈마다 나뉘고 우측 후면 UQD 로 나간다. 100% 액체 냉각이다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L360·L458"}, {"level": "rubin", "ex": 0.75, "sel": "hbm", "dir": [1.0, 0.8, 1.1], "title": "Rubin 패키지 — HBM4 8스택", "text": "레티클 크기 연산 다이 2개 옆에 HBM4 스택 8개가 붙는다. 스택 하나는 12단이고 패키지 합계 288GB, 대역폭 22TB/s 다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L98·L104 · NVIDIA GTC 2025 — Built For Reasoning, Vera Rubin, Kyber (영문) L99"}, {"level": "tray", "ex": 0.5, "sel": null, "tiers": true, "dir": [0.2, 1.4, 0.7], "title": "트레이 하나의 메모리 계층", "text": "HBM 1,152GB(Rubin 4) 위로 Vera 의 SOCAMM 2,048~3,072GB 가 NVLink-C2C 1.8TB/s 로 붙고, 전면 BlueField-4 가 KV 캐시 전용 네트워크를 맡는다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L104·L137·L240·L250"}, {"level": "bf4", "ex": 0.5, "sel": "bfpkg", "dir": [-0.8, 1.0, 1.0], "title": "BlueField-4 — KV 캐시 네트워크", "text": "Grace CPU 다이와 ConnectX-9 다이를 한 패키지로 묶은 800G DPU 다. 온보드 메모리 128GB 와 SSD 512GB 를 싣고 NVMe-oF·RDMA 로 KV 캐시를 옮긴다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L158·L243·L250"}];
+const TOUR = [{"level": "hall", "ex": 0.0, "sel": null, "dir": [1.0, 0.9, 1.3], "title": "10MW 홀 — 루빈 랙 42대", "text": "10MW 를 GPU 한 장 3.3kW 로 나누면 3,030장, 랙 하나 72장으로 나누면 42대다(셈한 값). 줄 배치는 도식이다.", "cite": "모델링 층 ㉔ · 루빈 에이전틱 영문 L152"}, {"level": "rack", "ex": 0.35, "sel": "spine", "dir": [-1.0, 0.5, -1.2], "title": "랙 하나 — 트레이 27개와 스파인", "text": "컴퓨트 트레이 18개와 NVLink 스위치 트레이 9개, 전력 셸프 4개가 들어간다. 뒤쪽 스파인은 구리 케이블 카트리지 4개에 5,000가닥이다.", "cite": "NVIDIA 기술 블로그 — Vera Rubin POD (2026) · [260226] 베라 루빈 — 익스트림 코디자인 L523"}, {"level": "tray", "ex": 0.55, "sel": "midplane", "dir": [0.9, 1.1, 0.6], "title": "케이블 없는 컴퓨트 트레이", "text": "미드플레인이 후면 Strata 와 전면 모듈의 PCIe 신호를 잇는다. 케이블을 걷어 트레이 조립이 2시간에서 5분으로 줄었다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L220·L242"}, {"level": "tray", "ex": 0.4, "sel": "uqd", "dir": [0.4, 0.9, -1.4], "title": "냉각수가 들어오는 길", "text": "냉각수는 트레이 좌측 후면 UQD 로 들어와 내부 매니폴드에서 모듈마다 나뉘고 우측 후면 UQD 로 나간다. 100% 액체 냉각이다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L360·L458"}, {"level": "rubin", "ex": 0.75, "sel": "hbm", "dir": [1.0, 0.8, 1.1], "title": "Rubin 패키지 — HBM4 8스택", "text": "레티클 크기 연산 다이 2개 옆에 HBM4 스택 8개가 붙는다. 스택 하나는 12단이고 패키지 합계 288GB, 대역폭 22TB/s 다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L98·L104 · NVIDIA GTC 2025 — Built For Reasoning, Vera Rubin, Kyber (영문) L99"}, {"level": "tray", "ex": 0.5, "sel": null, "tiers": true, "dir": [0.2, 1.4, 0.7], "title": "트레이 하나의 메모리 계층", "text": "HBM 1,152GB(Rubin 4) 위로 Vera 의 SOCAMM 2,048~3,072GB 가 NVLink-C2C 1.8TB/s 로 붙고, 전면 BlueField-4 가 KV 캐시 전용 네트워크를 맡는다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L104·L137·L240·L250"}, {"level": "bf4", "ex": 0.5, "sel": "bfpkg", "dir": [-0.8, 1.0, 1.0], "title": "BlueField-4 — KV 캐시 네트워크", "text": "Grace CPU 다이와 ConnectX-9 다이를 한 패키지로 묶은 800G DPU 다. 온보드 메모리 128GB 와 SSD 512GB 를 싣고 NVMe-oF·RDMA 로 KV 캐시를 옮긴다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L158·L243·L250"}, {"level": "compare", "ex": 0.35, "sel": null, "dir": [0.15, 1.1, 1.0], "title": "GB300 과 무엇이 바뀌었나", "text": "GB300 은 NIC 와 OSFP 케이지를 DensiLink 케이블로 이어 조립의 가장 큰 고장 지점이었고 15% 는 공랭이었다. 루빈은 미드플레인으로 케이블을 걷고 100% 액체로 냉각한다. 왼쪽 GB300 부품의 자리는 도식이다.", "cite": "[260226] 베라 루빈 — 익스트림 코디자인 L227·L242·L303·L368"}];
 const DIFFS = [["신호 배선", "NIC ↔ OSFP 사이 DensiLink OverPass 케이블 — 가장 큰 고장 지점", "케이블 없음 — 미드플레인이 보드끼리 잇는다", "gbcable", "midplane", "[260226] 베라 루빈 — 익스트림 코디자인 L227·L242·L303"], ["NIC 자리", "후면 Bianca 보드 쪽", "전면 Orchid 모듈로 옮겼다", "gbnic", "orchid", "[260226] 베라 루빈 — 익스트림 코디자인 L289·L312"], ["GPU ↔ NIC 연결", "B300 GPU 가 ConnectX-8 에 직접(2-host NIC)", "Vera 를 거쳐 PCIe6", "gbnic", "cx9", "[260226] 베라 루빈 — 익스트림 코디자인 L274·L275"], ["로컬 NVMe 관리", "BlueField-3", "Orchid 의 ConnectX-9", "gbbf3", "e1s", "[260226] 베라 루빈 — 익스트림 코디자인 L266·L277"], ["냉각", "85% 액체 + 15% 공랭", "100% 액체, 팬 없음", "gbfan", "uqd", "[260226] 베라 루빈 — 익스트림 코디자인 L368"], ["전력 경로", "항상 전력분배보드(PDB)를 거친다", "Strata 는 버스바 50VDC 를 직접 받는다", "gbpdb", "clip", "[260226] 베라 루빈 — 익스트림 코디자인 L395"], ["조립", "콜드플레이트를 최종 조립(L10)에서 붙인다 · 트레이 조립 약 2시간", "보드 조립(L6)에서 미리 붙인다 · 5분", "gbbianca", "strata", "[260226] 베라 루빈 — 익스트림 코디자인 L220·L362·L388"], ["고급 PCB 면적", "기준", "약 2.3배 — Orchid 보드가 주로 늘렸다", "gbtray", "orchid", "[260226] 베라 루빈 — 익스트림 코디자인 L290"], ["HBM", "288GB · 8TB/s", "HBM4 288GB · 22TB/s", "gbbianca", "strata", "[260226] 베라 루빈 — 익스트림 코디자인 L104"], ["랙 TDP", "120~140kW", "180~220kW", null, null, "[260226] 베라 루빈 — 익스트림 코디자인 L522"], ["하이퍼스케일러 교체 범위", "네트워킹·전력·저장·관리 대부분", "전력·BlueField-4·관리 모듈만", null, null, "[260226] 베라 루빈 — 익스트림 코디자인 L681"]];
 const KIND = {src:'원문 값', calc:'셈한 값', schema:'도식'};
 
@@ -177,7 +177,7 @@ composer.addPass(new RenderPass(scene, camera));
 const gtao = SMALL ? null : new GTAOPass(scene, camera, 640, 480);
 if (gtao) { gtao.blendIntensity = 0.85; composer.addPass(gtao); }
 const outline = new OutlinePass(new THREE.Vector2(640, 480), scene, camera);
-outline.edgeStrength = 5; outline.edgeGlow = 0.25; outline.edgeThickness = 1.6; outline.pulsePeriod = 0;
+outline.edgeStrength = 7; outline.edgeGlow = 0.35; outline.edgeThickness = 2.2; outline.pulsePeriod = 0;
 composer.addPass(outline);
 composer.addPass(new OutputPass());
 function themeColors(){
@@ -743,11 +743,36 @@ function diffPanel(){
   document.getElementById('info').innerHTML =
     `<h2>GB300 과 루빈 컴퓨트 트레이 — 무엇이 바뀌었나</h2>
      <div class="tw"><table class="tt"><thead><tr><th>항목</th><th>GB300 (왼쪽)</th><th>루빈 (오른쪽)</th></tr></thead><tbody>${rows}</tbody></table></div>
-     <p class="src">줄을 누르면 양쪽 해당 부품에 윤곽선이 뜬다. 출처 — ${R_SRC} L104·L220·L227·L242·L266·L274·L275·L277·L289·L290·L303·L312·L362·L368·L388·L395·L522·L681.
+     <p class="src"><button class="go" id="pairall">모두 보기</button></p>
+     <p class="src">줄을 누르면 양쪽 해당 부품만 남기고 나머지를 흐린다. 출처 — ${R_SRC} L104·L220·L227·L242·L266·L274·L275·L277·L289·L290·L303·L312·L362·L368·L388·L395·L522·L681.
      GB300 쪽 부품의 개수와 자리는 원문에 없어 모두 도식이다.</p>`;
+  document.getElementById('pairall').onclick = () => {
+    pair = null; selected = null;
+    for (const m of items) { m.material.opacity = m.userData.op0 || 1; m.material.transparent = !!m.userData.op0; m.material.depthWrite = !m.userData.op0; m.material.needsUpdate = true; }
+    document.querySelectorAll('#info tr[data-i]').forEach(x => x.style.fontWeight = '');
+    paint(); refit();
+  };
   document.querySelectorAll('#info tr[data-i]').forEach(tr => tr.onclick = () => {
     const d = DIFFS[+tr.dataset.i]; if (!d[3]) return;
-    pair = [d[3], d[4]]; selected = d[3]; paint();
+    pair = [d[3], d[4]]; selected = d[3];
+    for (const m of items) {
+      const keep = pair.includes(m.userData.id);
+      m.material.transparent = !keep || !!m.userData.op0;
+      m.material.opacity = keep ? (m.userData.op0 || 1) : 0.15;
+      m.material.depthWrite = keep; m.material.needsUpdate = true;
+    }
+    paint();
+    const dir = camera.position.clone().sub(controls.target).normalize();
+    const p0 = camera.position.clone(), t0 = controls.target.clone();
+    fit([dir.x, dir.y, dir.z], focusBox(pair));
+    const p1 = camera.position.clone(), t1 = controls.target.clone();
+    camera.position.copy(p0); controls.target.copy(t0); controls.update();
+    const start = performance.now();
+    camTween = now => {
+      let k = Math.min(1, (now - start) / 700); k = k * k * (3 - 2 * k);
+      camera.position.lerpVectors(p0, p1, k); controls.target.lerpVectors(t0, t1, k); controls.update();
+      dirty = true; if (k >= 1) camTween = null;
+    };
     document.querySelectorAll('#info tr[data-i]').forEach(x => x.style.fontWeight = x === tr ? '700' : '');
   });
 }
