@@ -496,6 +496,18 @@ def main():
             for f in sorted(card_dir.glob('*.xlsx')):
                 shutil.copy2(f, out_dir / f.name)
                 print(f'    파일 {f.name}  ->  {slug}/')
+            # 화면이 같이 싣는 라이브러리·그림(vendor/) — 3D 분해도의 three.js 를 CDN 대신
+            # 사이트에서 준다. 없으면 CDN 이 막힌 곳에서 그림이 안 떴다(2026-09-18 모델링 장)
+            vendor = card_dir / 'vendor'
+            if vendor.is_dir():
+                n_v = 0
+                for f in sorted(vendor.rglob('*')):
+                    if f.is_file() and f.suffix in ('.js', '.jpg', '.png'):
+                        dst = out_dir / 'vendor' / f.relative_to(vendor)
+                        dst.parent.mkdir(parents=True, exist_ok=True)
+                        shutil.copy2(f, dst)
+                        n_v += 1
+                print(f'    vendor {n_v}개  ->  {slug}/vendor/')
 
     for old, (slug, title) in REDIRECTS.items():
         (OUT / f'{old}.html').write_text(REDIRECT_PAGE % {'slug': slug, 'title': title},

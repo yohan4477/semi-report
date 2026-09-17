@@ -242,7 +242,6 @@ PAGE = r'''<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>베라 루빈 랙 분해도</title>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <style>
 :root{--bg:#f6f6f3;--card:#fff;--ink:#1d1d1b;--ink2:#55534e;--ink3:#8d8a83;--line:#dedcd5;--sel:#2a2a28;--mesh0:#e2e0da;--mesh1:#cfcdc7;--mesh2:#b7b5af;--mesh3:#9d9b95}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1c1c1f;--ink:#ecebe6;--ink2:#b3b1aa;--ink3:#86847e;--line:#2d2d31;--sel:#ffffff;--mesh0:#6f6e6a;--mesh1:#8a8984;--mesh2:#a6a5a0;--mesh3:#c9c8c3}}
@@ -295,6 +294,9 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .src code{font-size:12px;word-break:break-all}
 .back{font-size:13px;color:var(--ink2)}
 .back a{color:var(--ink)}
+.fallback{position:absolute;inset:0;background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;text-align:center}
+.fallback img{max-width:100%;max-height:75%;border-radius:8px}
+.fallback p{margin:0;color:var(--ink2);font-size:14px}
 .tt{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
 .tt th,.tt td{border-bottom:1px solid var(--line);padding:5px 4px;text-align:left;vertical-align:top}
 .tt th{color:var(--ink3);font-weight:500}
@@ -310,7 +312,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .pad button[data-k="f"]{grid-column:2;grid-row:1}.pad button[data-k="l"]{grid-column:1;grid-row:2}
 .pad button[data-k="b"]{grid-column:2;grid-row:2}.pad button[data-k="r"]{grid-column:3;grid-row:2}
 </style>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/examples/jsm/"}}</script>
 </head>
 <body>
 <div class="wrap">
@@ -334,6 +336,17 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="panel" style="margin-top:14px"><h2>출처</h2><ul class="src" id="srcs"></ul>
 <p class="src">성격 표시 — <b>원문 값</b>: 원문에 적힌 수 · <b>셈한 값</b>: 원문 값으로 셈한 수 · <b>도식</b>: 원문에 없는 배치나 모양을 그림으로만 둔 것.</p></div>
 </div>
+<script>
+// 3D 가 6초 안에 안 뜨면(WebGL·모듈 스크립트를 못 쓰는 브라우저) 정지 그림으로 바꾼다
+setTimeout(function(){
+  if (window.__rack && window.__rack.ready) return;
+  var st = document.querySelector('.stage'); if (!st) return;
+  var d = document.createElement('div'); d.className = 'fallback';
+  d.innerHTML = '<img src="./vendor/rack-fallback.jpg" alt="10MW 홀 — 루빈 랙 42대 정지 그림">' +
+    '<p>이 브라우저에서는 3D 화면을 그리지 못했습니다. 크롬·사파리 최신판에서 열면 돌려 보고 눌러 들어갈 수 있습니다.</p>';
+  st.appendChild(d);
+}, 6000);
+</script>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
