@@ -21,7 +21,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 #view{display:block;width:100%;height:min(62vh,560px);touch-action:none}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:3px 8px;border-radius:6px;display:none;white-space:nowrap}
-.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ink3)}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ink2);background:var(--card);border-radius:6px;padding:2px 8px;opacity:.9;max-width:calc(100% - 170px)}
 .ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0}
 .ctrl label{font-size:13px;color:var(--ink2)}
 .ctrl input[type=range]{width:220px;accent-color:var(--ink)}
@@ -42,6 +42,10 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .src code{font-size:12px;word-break:break-all}
 .back{font-size:13px;color:var(--ink2)}
 .back a{color:var(--ink)}
+.pad{position:absolute;right:12px;bottom:10px;display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,40px);gap:4px}
+.pad button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;font-size:16px;opacity:.9;touch-action:none}
+.pad button[data-k="f"]{grid-column:2;grid-row:1}.pad button[data-k="l"]{grid-column:1;grid-row:2}
+.pad button[data-k="b"]{grid-column:2;grid-row:2}.pad button[data-k="r"]{grid-column:3;grid-row:2}
 </style>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 </head>
@@ -51,10 +55,11 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <h1>베라 루빈 NVL72 — 10MW 홀에서 HBM4 다이까지 분해도</h1>
 <p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
 <div class="crumb" id="crumb"></div>
-<div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div></div>
+<div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
+<div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button>
 </div>
 <div class="grid">
   <div class="panel"><h2 id="lvtitle"></h2><p class="src" id="lvsub"></p><ul class="parts" id="parts"></ul></div>
@@ -175,6 +180,8 @@ const BUILD = {
   hall(){
     // 42대 = 10MW ÷ 3.3kW ÷ 72 (셈한 값). 7대씩 6줄로 세운 배치는 도식
     const W = 60, D = 120, H = 223.6, per = 7, rows = 6, gapX = 8, aisle = 140;
+    const rowZ = r => (r - (rows - 1) / 2) * (D + aisle / 2) + (r % 2 ? -aisle / 4 : aisle / 4);
+    hallAisleZ = (rowZ(1) + rowZ(2)) / 2; hallHalfX = per * (W + gapX) / 2 + 40;
     let n = 0;
     for (let r = 0; r < rows; r++) {
       const z = (r - (rows - 1) / 2) * (D + aisle / 2) + (r % 2 ? -aisle / 4 : aisle / 4);
@@ -322,6 +329,7 @@ function paint(){
 
 function load(lv, keepCam){
   if (group) { scene.remove(group); group.traverse(o=>{o.geometry&&o.geometry.dispose();o.material&&o.material.dispose&&o.material.dispose();}); }
+  if (typeof walk !== 'undefined' && walk) { walk = false; controls.enabled = true; pad.hidden = true; held.clear(); }
   flowTex.forEach(t => t.dispose()); flowTex.length = 0;
   group = new THREE.Group(); items = []; scene.add(group);
   level = lv; selected = null;
@@ -339,6 +347,7 @@ function load(lv, keepCam){
     b.onclick = () => select(id); b.dataset.id = id; li.appendChild(b); ul.appendChild(li);
   }
   crumb();
+  walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
   document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
   location.hash = lv;
 }
@@ -407,10 +416,63 @@ function resize(){
 }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
 controls.addEventListener('change', () => { dirty = true; });
+let walk = false, yaw = 0, pitch = 0, hallAisleZ = 0, hallHalfX = 300;
+const held = new Set();
+const walkBtn = document.getElementById('walk'), pad = document.getElementById('pad'), hint = document.getElementById('hint');
+function setWalk(on){
+  walk = on; controls.enabled = !on; pad.hidden = !on;
+  walkBtn.textContent = on ? '걷기 끝내기' : '통로 걷기';
+  hint.textContent = on ? '끌어서 둘러보기 · WASD·방향키·화살표 버튼으로 이동 · 랙 누르기' : '끌어서 돌리기 · 휠로 확대 · 부품 누르기';
+  if (on) {
+    camera.position.set(-hallHalfX, 165, hallAisleZ); yaw = -Math.PI / 2; pitch = -0.08;
+    camera.near = 1; camera.far = 5000; camera.updateProjectionMatrix();
+    camera.rotation.set(pitch, yaw, 0, 'YXZ');
+  } else {
+    held.clear(); fit([520, 420, 640]);
+  }
+  dirty = true;
+}
+walkBtn.onclick = () => setWalk(!walk);
+addEventListener('keydown', ev => {
+  if (!walk) return;
+  const k = {KeyW:'f', ArrowUp:'f', KeyS:'b', ArrowDown:'b', KeyA:'l', ArrowLeft:'l', KeyD:'r', ArrowRight:'r'}[ev.code];
+  if (k) { held.add(k); ev.preventDefault(); }
+});
+addEventListener('keyup', ev => {
+  const k = {KeyW:'f', ArrowUp:'f', KeyS:'b', ArrowDown:'b', KeyA:'l', ArrowLeft:'l', KeyD:'r', ArrowRight:'r'}[ev.code];
+  if (k) held.delete(k);
+});
+pad.querySelectorAll('button').forEach(b => {
+  b.addEventListener('pointerdown', ev => { held.add(b.dataset.k); ev.preventDefault(); });
+  for (const e of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(e, () => held.delete(b.dataset.k));
+});
+let look = null;
+canvas.addEventListener('pointerdown', ev => { if (walk) look = [ev.clientX, ev.clientY]; });
+addEventListener('pointerup', () => { look = null; });
+canvas.addEventListener('pointermove', ev => {
+  if (!walk || !look) return;
+  yaw -= (ev.clientX - look[0]) * 0.004; pitch -= (ev.clientY - look[1]) * 0.004;
+  pitch = Math.max(-1.2, Math.min(1.2, pitch)); look = [ev.clientX, ev.clientY];
+  camera.rotation.set(pitch, yaw, 0, 'YXZ'); dirty = true;
+});
+function stepWalk(dt){
+  if (!held.size) return;
+  const sp = 260 * dt, fx = -Math.sin(yaw), fz = -Math.cos(yaw);
+  let dx = 0, dz = 0;
+  if (held.has('f')) { dx += fx; dz += fz; }
+  if (held.has('b')) { dx -= fx; dz -= fz; }
+  if (held.has('l')) { dx += fz; dz -= fx; }
+  if (held.has('r')) { dx -= fz; dz += fx; }
+  camera.position.x = Math.max(-hallHalfX - 80, Math.min(hallHalfX + 80, camera.position.x + dx * sp));
+  camera.position.z += dz * sp;
+  dirty = true;
+}
+
 let lastT = 0;
 function loop(t){
-  resize(); if (anim) anim(t); controls.update();
+  resize(); if (anim) anim(t);
   const dt = Math.min(0.05, (t - lastT) / 1000); lastT = t;
+  if (walk) stepWalk(dt); else controls.update();
   if (level === 'hall' && flowTex.length && !SMALL && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
     dirty = true;
@@ -421,7 +483,7 @@ function loop(t){
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
-window.__rack = {load, select, setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
+window.__rack = {load, select, setWalk, setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
 </script>
 </body>
 </html>
