@@ -225,6 +225,11 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .crumb button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;cursor:pointer}
 .crumb button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .crumb span{color:var(--ink3);font-size:12px}
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
+.jump button{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:8px;padding:5px 10px;font:inherit;font-size:13px;cursor:pointer}
+.jump button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.jump small{color:var(--ink3);margin-left:4px;font-size:11px}
+.jump button[aria-current="true"] small{color:var(--bg);opacity:.7}
 .stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 #view{display:block;width:100%;height:min(62vh,560px);touch-action:none}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:3px 8px;border-radius:6px;display:none;white-space:nowrap}
@@ -266,7 +271,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="wrap">
 <p class="back"><a href="../모델링 대시보드.html">← 모델링 대시보드</a></p>
 <h1>베라 루빈 NVL72 — 10MW 홀에서 HBM4 다이까지 분해도</h1>
-<p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 랙에서는 NVLink 스위치 트레이로, 컴퓨트 트레이에서는 BlueField-4 모듈로도 갈라져 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<p class="lede">아래 단 단추를 누르면 그 단으로 바로 갑니다. 10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 랙에서는 NVLink 스위치 트레이로, 컴퓨트 트레이에서는 BlueField-4 모듈로도 갈라져 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<nav class="jump" id="jump" aria-label="단 바로가기"></nav>
 <div class="crumb" id="crumb"></div>
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
@@ -626,13 +632,25 @@ function load(lv, keepCam){
     b.innerHTML = `<span>${P[id].name}</span><small>${P[id].count}</small>`;
     b.onclick = () => select(id); b.dataset.id = id; li.appendChild(b); ul.appendChild(li);
   }
-  crumb();
+  crumb(); jump();
   walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
   tiersBtn.hidden = lv !== 'tray'; tiersBtn.textContent = '메모리 계층';
   document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
   location.hash = lv;
 }
 
+const JUMP = [['hall', 1], ['rack', 2], ['tray', 3], ['strata', 4], ['rubin', 5], ['hbm', 6], ['bf4', 4], ['swtray', 3]];
+function jump(){
+  const el = document.getElementById('jump'); el.innerHTML = '';
+  for (const [k, depth] of JUMP) {
+    const L = LEVELS.find(x => x[0] === k);
+    const b = document.createElement('button');
+    b.innerHTML = `${L[1]}<small>${depth}단</small>`;
+    b.setAttribute('aria-current', k === level ? 'true' : 'false');
+    b.onclick = () => load(k);
+    el.appendChild(b);
+  }
+}
 const PARENT = {rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
 function crumb(){
   const el = document.getElementById('crumb'); el.innerHTML = '';
