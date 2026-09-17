@@ -498,7 +498,7 @@ let hovered = null;
 const pinRenderer = new CSS2DRenderer();
 pinRenderer.domElement.className = 'pins';
 canvas.parentElement.appendChild(pinRenderer.domElement);
-let pinsOn = !SMALL, pinObjs = [];
+let pinsOn = false, pinObjs = [];
 function declutter(){
   const dots = pinObjs.map(o => o.element.firstChild).filter(d => d.offsetParent !== null);
   for (const d of dots) { d.style.translate = ''; d.style.removeProperty('--lead'); }
@@ -520,7 +520,7 @@ callLayer.className = 'calls';
 const callSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 callLayer.appendChild(callSvg);
 canvas.parentElement.appendChild(callLayer);
-let labelsOn = false, callEls = [];
+let labelsOn = true, callEls = [];
 function buildCalls(){
   callEls.forEach(e => e.remove()); callEls = [];
   callSvg.innerHTML = '';
@@ -538,8 +538,17 @@ function buildCalls(){
 function placeCalls(){
   if (!labelsOn || !callEls.length) return;
   const w = canvas.clientWidth, h = canvas.clientHeight;
-  const only = w < 700;            // 좁은 화면은 고른 부품 하나만 — 열넷을 띄우면 모델이 다 가린다
-  for (const el of callEls) el.style.display = (only && el.dataset.id !== selected) ? 'none' : '';
+  const only = w < 700;            // 좁은 화면은 열넷을 다 띄우면 모델이 가린다
+  let show = null;
+  if (only) {
+    if (selected) show = new Set([selected]);
+    else {                          // 고른 것이 없으면 큰 부품 셋만
+      const size = id => { const m = items.find(x => x.userData.id === id); if (!m) return 0;
+        const b = new THREE.Box3().setFromObject(m), v = b.getSize(new THREE.Vector3()); return v.x * v.y * v.z; };
+      show = new Set(callEls.map(e => e.dataset.id).sort((a, b) => size(b) - size(a)).slice(0, 3));
+    }
+  }
+  for (const el of callEls) el.style.display = (show && !show.has(el.dataset.id)) ? 'none' : '';
   const anchors = callEls.filter(el => el.style.display !== 'none').map(el => {
     const first = items.find(m => m.userData.id === el.dataset.id);
     if (!first) return null;
@@ -1266,6 +1275,7 @@ function setWalk(on){
 walkBtn.onclick = () => setWalk(!walk);
 const pinBtn = document.getElementById('pinbtn');
 pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀';
+const lblInit = document.getElementById('lblbtn'); lblInit.textContent = labelsOn ? '부품 이름 끄기' : '부품 이름';
 pinBtn.onclick = () => { pinsOn = !pinsOn; pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀'; buildPins(); dirty = true; };
 const lblBtn = document.getElementById('lblbtn');
 lblBtn.onclick = () => {
