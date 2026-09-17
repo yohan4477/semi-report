@@ -42,6 +42,11 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .ctrl input[type=range]{width:220px;accent-color:var(--ink)}
 .ctrl button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}
 .grid{display:grid;grid-template-columns:1fr;gap:14px}
+.scrolly{position:relative}
+.sticky{position:sticky;top:10px}
+.track{height:0}
+.scrolly.on .track{height:220vh}
+.scrollhint{font-size:12px;color:var(--ink3);margin:6px 0 0}
 .viewer{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:stretch}
 .legend{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-y:auto;max-height:min(62vh,560px)}
 .legend h2{font-size:15px;margin:0 0 2px}
@@ -112,6 +117,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="tourcap" id="tourcap" hidden><b id="tourtitle"></b><span id="tourtext"></span><small id="tourcite"></small></div>
 <nav class="jump" id="jump" aria-label="단 바로가기"></nav>
 
+<section class="scrolly" id="scrolly">
+<div class="sticky">
 <div class="viewer">
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
@@ -120,6 +127,10 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
   <ol class="parts" id="parts"></ol>
 </aside>
 </div>
+</div>
+<div class="track" id="track" aria-hidden="true"></div>
+</section>
+<p class="scrollhint" id="scrollhint" hidden>페이지를 내리면 분해가 진행되고 설명이 차례로 바뀝니다. 슬라이더로도 됩니다.</p>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
   <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="lblbtn">부품 이름</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
@@ -767,7 +778,7 @@ canvas.addEventListener('pointerup', ev => {
 
 const ex = document.getElementById('ex');
 ex.addEventListener('input', () => { explode = +ex.value; layout(); if (tiersOn) buildTiers(); });
-ex.addEventListener('change', () => refit());
+ex.addEventListener('change', () => { if (!scrollLock) refit(); });
 let anim = null;
 document.getElementById('play').onclick = () => {
   const from = explode, to = explode > 0.5 ? 0 : 1, t0 = performance.now();
@@ -1019,6 +1030,32 @@ function stepWalk(dt){
   camera.position.x = Math.max(-hallHalfX - 80, Math.min(hallHalfX + 80, camera.position.x + dx * sp));
   camera.position.z += dz * sp;
   dirty = true;
+}
+
+// 스크롤 무대 — iyO 식으로 페이지 내림이 분해를 몬다. 폭이 좁거나 동작 줄이기면 안 켠다
+const scrolly = document.getElementById('scrolly');
+const scrollOn = !SMALL && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+let scrollLock = false;
+if (scrollOn) {
+  scrolly.classList.add('on');
+  document.getElementById('scrollhint').hidden = false;
+  let lastStop = -1;
+  addEventListener('scroll', () => {
+    if (!scrollOn || walk) return;
+    const r = scrolly.getBoundingClientRect();
+    const span = scrolly.offsetHeight - innerHeight;
+    if (span <= 0) return;
+    const p = Math.min(1, Math.max(0, -r.top / span));
+    scrollLock = true;
+    explode = p; ex.value = p; layout(); if (tiersOn) buildTiers();
+    // 투어 지점도 같이 넘어간다 — 지금 단에 해당하는 지점만
+    const mine = TOUR.map((t, i) => [t, i]).filter(([t]) => t.level === level);
+    if (mine.length > 1) {
+      const k = Math.min(mine.length - 1, Math.floor(p * mine.length));
+      if (k !== lastStop) { lastStop = k; }
+    }
+    scrollLock = false;
+  }, {passive: true});
 }
 
 let lastT = 0;
