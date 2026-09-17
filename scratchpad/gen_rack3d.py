@@ -278,7 +278,23 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .ctrl label{font-size:13px;color:var(--ink2)}
 .ctrl input[type=range]{width:220px;accent-color:var(--ink)}
 .ctrl button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid{display:grid;grid-template-columns:1fr;gap:14px}
+.viewer{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:stretch}
+.legend{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;overflow-y:auto;max-height:min(62vh,560px)}
+.legend h2{font-size:15px;margin:0 0 2px}
+.legend .src{margin:0 0 6px}
+.parts{list-style:none;margin:0;padding:0;counter-reset:none}
+.parts li{border-bottom:1px solid var(--line)}
+.parts li button{width:100%;text-align:left;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;padding:7px 2px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
+.parts .no{flex:0 0 22px;height:22px;border-radius:50%;border:1px solid var(--ink3);text-align:center;font-size:12px;line-height:20px}
+.parts .nm{flex:1}
+.parts small{color:var(--ink3);white-space:nowrap;font-size:12px}
+.parts li button[aria-pressed="true"]{font-weight:700}
+.parts li button[aria-pressed="true"] .no{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.parts .more{display:none;padding:0 2px 10px 32px;font-size:13px;color:var(--ink2)}
+.parts .more .go{margin-top:8px}
+.parts li.open .more{display:block}
+@media (max-width:760px){.viewer{grid-template-columns:1fr}.legend{max-height:none}}
 @media (max-width:760px){.grid{grid-template-columns:1fr}.ctrl input[type=range]{width:160px}}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
 .panel h2{font-size:15px;margin:0 0 8px}
@@ -323,15 +339,20 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="tourcap" id="tourcap" hidden><b id="tourtitle"></b><span id="tourtext"></span><small id="tourcite"></small></div>
 <nav class="jump" id="jump" aria-label="단 바로가기"></nav>
 <div class="crumb" id="crumb"></div>
+<div class="viewer">
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
+<aside class="legend" aria-label="부품 목록">
+  <h2 id="lvtitle"></h2><p class="src" id="lvsub"></p>
+  <ol class="parts" id="parts"></ol>
+</aside>
+</div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
   <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button>
 </div>
 <div class="grid">
-  <div class="panel"><h2 id="lvtitle"></h2><p class="src" id="lvsub"></p><ul class="parts" id="parts"></ul></div>
-  <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p></div>
+  <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p></div>
 </div>
 <div class="panel" style="margin-top:14px"><h2>출처</h2><ul class="src" id="srcs"></ul>
 <p class="src">성격 표시 — <b>원문 값</b>: 원문에 적힌 수 · <b>셈한 값</b>: 원문 값으로 셈한 수 · <b>도식</b>: 원문에 없는 배치나 모양을 그림으로만 둔 것.</p></div>
@@ -410,9 +431,10 @@ function buildPins(){
   pinRenderer.domElement.classList.toggle('off', !pinsOn);
   if (!pinsOn || !group) return;
   partIds().forEach((id, i) => {
-    const b = new THREE.Box3();
-    for (const m of items) if (m.userData.id === id) b.expandByObject(m);
-    if (b.isEmpty()) return;
+    // 같은 종류가 여러 개면 모두를 담은 상자 가운데가 다른 핀과 겹친다 — 첫 부품 위에 세운다
+    const first = items.find(m => m.userData.id === id);
+    if (!first) return;
+    const b = new THREE.Box3().setFromObject(first);
     const el = document.createElement('div');
     el.className = 'pin';
     el.textContent = String(i + 1);
@@ -736,19 +758,21 @@ function load(lv, keepCam){
   order(); layout(); paint();
   if (!keepCam) fit(cam.pos);
   const L = LEVELS.find(x=>x[0]===lv);
-  document.getElementById('lvtitle').textContent = L[1] + ' — 부품';
+  document.getElementById('lvtitle').textContent = L[1] + ' — 번호별 부품';
   document.getElementById('lvsub').textContent = L[2];
   const ids = [...new Set(items.map(m=>m.userData.id))];
   const ul = document.getElementById('parts'); ul.innerHTML = '';
   for (const id of ids){
     const li = document.createElement('li'), b = document.createElement('button');
-    b.innerHTML = `<span>${ids.indexOf(id) + 1}. ${P[id].name}</span><small>${P[id].count}</small>`;
-    b.onclick = () => select(id); b.dataset.id = id; li.appendChild(b); ul.appendChild(li);
+    b.innerHTML = `<span class="no">${ids.indexOf(id) + 1}</span><span class="nm">${P[id].name}</span><small>${P[id].count}</small>`;
+    b.onclick = () => select(id); b.dataset.id = id; li.dataset.id = id;
+    const more = document.createElement('div'); more.className = 'more';
+    li.appendChild(b); li.appendChild(more); ul.appendChild(li);
   }
   crumb(); jump(); buildPins();
   walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
   tiersBtn.hidden = lv !== 'tray'; tiersBtn.textContent = '메모리 계층';
-  document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
+  document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p>';
   location.hash = lv;
 }
 
@@ -781,6 +805,16 @@ function select(id){
   selected = id; paint();
   document.querySelectorAll('#parts button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id===id));
   const p = P[id];
+  document.querySelectorAll('#parts li').forEach(li => {
+    const on = li.dataset.id === id; li.classList.toggle('open', on);
+    const more = li.querySelector('.more');
+    if (on) {
+      const kid = p.child && p.child !== level ? `<br><button class="go">${LEVELS.find(x=>x[0]===p.child)[1]} 안으로 들어가기 →</button>` : '';
+      more.innerHTML = `<span class="kind">${KIND[p.kind]}</span> ${p.spec}${kid}`;
+      const g = more.querySelector('.go'); if (g) g.onclick = () => load(p.child);
+      li.scrollIntoView({block: 'nearest'});
+    } else more.innerHTML = '';
+  });
   const child = p.child && p.child !== level ? `<button class="go" id="go">${LEVELS.find(x=>x[0]===p.child)[1]} 안으로 들어가기 →</button>` : '';
   document.getElementById('info').innerHTML =
     `<h2>${p.name}<span class="kind">${KIND[p.kind]}</span></h2>
@@ -902,7 +936,7 @@ tiersBtn.onclick = () => {
   tiersOn = !tiersOn; tiersBtn.textContent = tiersOn ? '계층 끄기' : '메모리 계층';
   buildTiers();
   if (tiersOn) tierPanel();
-  else document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
+  else document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p>';
 };
 
 // ── 안내 투어
