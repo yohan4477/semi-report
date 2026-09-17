@@ -114,6 +114,12 @@ P = {
                    cite=R + ' L136·L240'),
     'strataboard': dict(name='Strata 보드', count='1', kind='src',
                         spec='GPU·CPU·SOCAMM 이 올라가는 판. 아래는 전부 보드-투-보드 커넥터라 케이블이 없다', cite=R + ' L240'),
+    'mqd': dict(name='MQD (소형 퀵디스커넥트)', count='원문에 없음', kind='schema',
+                spec='모듈 콜드플레이트가 MQD 로 트레이 내부 매니폴드에 붙는다. 수와 자리는 원문에 없어 입출구 둘로만 그렸다',
+                cite=R + ' L360'),
+    'channels': dict(name='마이크로채널', count='—', kind='schema',
+                     spec='Rubin 콜드플레이트는 채널 간격을 150 → 100마이크론으로 좁힌 MCCP 다. 화면의 줄무늬 간격은 실제 비율이 아닌 도식',
+                     cite=R + ' L361'),
     'coldplate': dict(name='Strata 콜드플레이트', count='1개', kind='src',
                       spec='GPU 2개 + CPU + SOCAMM 을 한 판으로 통째 덮는다. Rubin 쪽은 채널 간격 100마이크론 MCCP',
                       cite=R + ' L361·L369'),
@@ -285,7 +291,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -446,6 +452,17 @@ const BUILD = {
   },
   strata(){
     box('coldplate', [26, 1.2, 36], [0, 3.2, 0], [0, 26, 0], 0, {op:.3});
+    // 콜드플레이트 밑면의 채널 무늬(도식) — GPU 두 자리 위에만, 판과 같이 움직인다
+    for (const x of [-6.5, 6.5]) {
+      const cv = document.createElement('canvas'); cv.width = 128; cv.height = 128;
+      const g2 = cv.getContext('2d'); g2.fillStyle = '#9a9994'; g2.fillRect(0, 0, 128, 128);
+      g2.fillStyle = '#5f5e5a'; for (let i = 0; i < 128; i += 6) g2.fillRect(i, 0, 3, 128);
+      const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace;
+      const ch = box('channels', [9, 0.35, 9], [x, 2.45, -10], [0, 26, 0], 1);
+      ch.material.map = tx; ch.material.needsUpdate = true;
+    }
+    // MQD 입출구 둘(도식)
+    for (const x of [-10, 10]) box('mqd', [2.2, 2.2, 2.2], [x, 4.6, 17], [0, 28, 3], 3);
     box('rubin', [9, 1.6, 9], [-6.5, 1.2, -10], [-6, 12, -8], 3);
     box('rubin', [9, 1.6, 9], [6.5, 1.2, -10], [6, 12, -8], 3);
     box('vera', [7, 1.4, 7], [0, 1.1, 4], [0, 10, 2], 2);
