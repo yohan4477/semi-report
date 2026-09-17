@@ -338,6 +338,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 const P = __PARTS__;
 const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
@@ -366,6 +367,9 @@ ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
+// 틈 그늘 — 작은 화면에서는 끈다
+const gtao = SMALL ? null : new GTAOPass(scene, camera, 640, 480);
+if (gtao) { gtao.blendIntensity = 0.85; composer.addPass(gtao); }
 const outline = new OutlinePass(new THREE.Vector2(640, 480), scene, camera);
 outline.edgeStrength = 5; outline.edgeGlow = 0.25; outline.edgeThickness = 1.6; outline.pulsePeriod = 0;
 composer.addPass(outline);
@@ -779,6 +783,7 @@ function resize(){
     const first = canvas.width === 300 && canvas.height === 150;
     renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); dirty = true;
     composer.setSize(w, h); composer.setPixelRatio(renderer.getPixelRatio());
+    if (gtao) gtao.setSize(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
     if (!first && group && !walk) { clearTimeout(resize.t); resize.t = setTimeout(refit, 200); }
   }
 }
