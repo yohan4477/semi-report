@@ -150,6 +150,21 @@ LEVELS = [
     ('hbm', 'HBM4 스택', 'DRAM 코어 다이 12단 + 로직 베이스 다이'),
 ]
 
+TIERS = {
+    'rows': [
+        ['HBM4', 'Rubin GPU 4개', '1,152GB', '셈한 값 — 288GB × 4', R + ' L104'],
+        ['LPDDR5X (SOCAMM)', 'Vera CPU 2개', '2,048~3,072GB', '셈한 값 — Vera 하나 1,024~1,536GB × 2', R + ' L240'],
+        ['BlueField-4 온보드', 'BlueField-4 1개', 'LPDDR5x 128GB · SSD 512GB', '원문 값', R + ' L243'],
+        ['E1.S 로컬 SSD', 'Orchid 4개에 슬롯 1개씩', '원문에 없음', '—', R + ' L241·L277'],
+    ],
+    'cite': R + ' L104·L137·L240·L241·L243·L250·L256·L275·L277·L289',
+    'links': [
+        ['Rubin ↔ Vera', 'NVLink-C2C 1.8TB/s', R + ' L137'],
+        ['Vera → 미드플레인 → Orchid(ConnectX-9·E1.S)', 'PCIe6, 신호 64Gbit/s', R + ' L275·L277·L289'],
+        ['BlueField-4', 'KV 캐시 전용 3번째 네트워크(ICMS/CMX) — NVMe-oF·RDMA 로 GPU·CPU 와 따로 KV 를 옮긴다', R + ' L250·L256'],
+    ],
+}
+
 SOURCES = [
     (R, 'content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md'),
     (GTC, 'input/clippings/NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md'),
@@ -205,6 +220,11 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .src code{font-size:12px;word-break:break-all}
 .back{font-size:13px;color:var(--ink2)}
 .back a{color:var(--ink)}
+.tt{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+.tt th,.tt td{border-bottom:1px solid var(--line);padding:5px 4px;text-align:left;vertical-align:top}
+.tt th{color:var(--ink3);font-weight:500}
+.tw{overflow-x:auto}
+.pad[hidden]{display:none}
 .pad{position:absolute;right:12px;bottom:10px;display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,40px);gap:4px}
 .pad button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;font-size:16px;opacity:.9;touch-action:none}
 .pad button[data-k="f"]{grid-column:2;grid-row:1}.pad button[data-k="l"]{grid-column:1;grid-row:2}
@@ -222,7 +242,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button>
 </div>
 <div class="grid">
   <div class="panel"><h2 id="lvtitle"></h2><p class="src" id="lvsub"></p><ul class="parts" id="parts"></ul></div>
@@ -239,6 +259,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const P = __PARTS__;
 const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
+const TIERS = __TIERS__;
 const KIND = {src:'원문 값', calc:'셈한 값', schema:'도식'};
 
 const canvas = document.getElementById('view');
@@ -286,7 +307,7 @@ function box(id, size, a, e, t, opts={}){
       new THREE.LineBasicMaterial({color: tone(3), transparent:true, opacity:.5}));
     mesh.add(edges);
   }
-  mesh.userData = {id, a:new THREE.Vector3(...a), e:new THREE.Vector3(...e), t, o: 0};
+  mesh.userData = {id, a:new THREE.Vector3(...a), e:new THREE.Vector3(...e), t, o: 0, op0: opts.op || 0};
   group.add(mesh); items.push(mesh);
   return mesh;
 }
@@ -493,6 +514,7 @@ function paint(){
 function load(lv, keepCam){
   if (group) { scene.remove(group); group.traverse(o=>{o.geometry&&o.geometry.dispose();o.material&&o.material.dispose&&o.material.dispose();}); }
   if (typeof walk !== 'undefined' && walk) { walk = false; controls.enabled = true; pad.hidden = true; held.clear(); }
+  if (typeof tiersOn !== 'undefined' && tiersOn) { tiersOn = false; if (overlay) { scene.remove(overlay); overlay = null; } }
   flowTex.forEach(t => t.dispose()); flowTex.length = 0;
   group = new THREE.Group(); items = []; scene.add(group);
   level = lv; selected = null;
@@ -511,6 +533,7 @@ function load(lv, keepCam){
   }
   crumb();
   walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
+  tiersBtn.hidden = lv !== 'tray'; tiersBtn.textContent = '메모리 계층';
   document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
   location.hash = lv;
 }
@@ -559,7 +582,7 @@ canvas.addEventListener('pointerup', ev => {
 });
 
 const ex = document.getElementById('ex');
-ex.addEventListener('input', () => { explode = +ex.value; layout(); });
+ex.addEventListener('input', () => { explode = +ex.value; layout(); if (tiersOn) buildTiers(); });
 let anim = null;
 document.getElementById('play').onclick = () => {
   const from = explode, to = explode > 0.5 ? 0 : 1, t0 = performance.now();
@@ -579,6 +602,73 @@ function resize(){
 }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
 controls.addEventListener('change', () => { dirty = true; });
+// ── 메모리 계층 보기 — 컴퓨트 트레이 단에서 HBM · SOCAMM · BlueField-4 · E1.S 만 남기고 길을 흐르게 한다
+let tiersOn = false, overlay = null;
+const tiersBtn = document.getElementById('tiers');
+const MEMIDS = new Set(['strata', 'bf4', 'e1s']);
+function tube(pts, radius, dark, light){
+  const curve = new THREE.CatmullRomCurve3(pts.map(v => new THREE.Vector3(...v)));
+  const t = stripe(dark, light); t.repeat.set(Math.max(1, curve.getLength() / 6), 1); t.userData = {dir: 1};
+  flowTex.push(t);
+  const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 48, radius, 10, false),
+    new THREE.MeshStandardMaterial({map: t, roughness: .35, metalness: .2, emissive: new THREE.Color(0x111111)}));
+  overlay.add(m);
+}
+function marker(pos, size, t){
+  const m = new THREE.Mesh(new RoundedBoxGeometry(...size, 2, Math.min(...size) * .2),
+    new THREE.MeshStandardMaterial({color: tone(t), roughness: .3, metalness: .4}));
+  m.position.set(...pos); overlay.add(m);
+}
+function buildTiers(){
+  if (overlay) { scene.remove(overlay); overlay.traverse(o => { o.geometry && o.geometry.dispose(); }); }
+  overlay = null;
+  for (const m of items) {
+    const keep = !tiersOn || MEMIDS.has(m.userData.id);
+    m.material.transparent = !keep || m.material.opacity < 1 || !!m.userData.op0;
+    m.material.opacity = keep ? (m.userData.op0 || 1) : 0.12;
+    m.material.depthWrite = keep; m.material.needsUpdate = true;
+  }
+  if (!tiersOn || level !== 'tray') { dirty = true; return; }
+  overlay = new THREE.Group(); scene.add(overlay);
+  const P3 = m => [m.position.x, m.position.y, m.position.z];
+  const stratas = items.filter(m => m.userData.id === 'strata');
+  const bf4 = items.find(m => m.userData.id === 'bf4');
+  const e1s = items.filter(m => m.userData.id === 'e1s');
+  const mid = items.find(m => m.userData.id === 'midplane');
+  for (const st of stratas) {
+    const [x, y, z] = P3(st);
+    const hbm = [[x - 6, y + 2.2, z - 9], [x + 6, y + 2.2, z - 9]];
+    const soc = [x, y + 1.6, z + 10];
+    for (const h of hbm) { marker(h, [7, 3.2, 7], 3); tube([h, [h[0], y + 5, (h[2] + soc[2]) / 2], soc], .55, '#555', '#eee'); }
+    marker(soc, [16, 1.6, 6], 2);
+    // Vera → 미드플레인 → Orchid E1.S (PCIe6)
+    const [mx, my, mz] = P3(mid);
+    for (const e of e1s.filter(e => Math.sign(e.position.x) === Math.sign(x))) {
+      const [ex, ey, ez] = P3(e);
+      tube([soc, [x * 0.6, my + 3, mz], [ex, ey + 3, ez]], .4, '#444', '#ccc');
+    }
+    const [bx, by, bz] = P3(bf4);
+    tube([soc, [x * 0.3, my + 5, mz], [bx, by + 2, bz]], .4, '#444', '#bbb');
+  }
+  dirty = true;
+}
+function tierPanel(){
+  const r = TIERS.rows.map(x => `<tr><td>${x[0]}</td><td>${x[1]}</td><td>${x[2]}</td><td>${x[3]}</td></tr>`).join('');
+  const l = TIERS.links.map(x => `<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join('');
+  const c = TIERS.cite;
+  document.getElementById('info').innerHTML =
+    `<h2>컴퓨트 트레이 하나의 메모리 계층</h2>
+     <div class="tw"><table class="tt"><thead><tr><th>층</th><th>어디</th><th>트레이 하나 용량</th><th>성격</th></tr></thead><tbody>${r}</tbody></table></div>
+     <div class="tw"><table class="tt"><thead><tr><th>길</th><th>속도·역할</th></tr></thead><tbody>${l}</tbody></table></div>
+     <p class="src">출처 — ${c}. 흐르는 관의 경로 모양은 도식이다.</p>`;
+}
+tiersBtn.onclick = () => {
+  tiersOn = !tiersOn; tiersBtn.textContent = tiersOn ? '계층 끄기' : '메모리 계층';
+  buildTiers();
+  if (tiersOn) tierPanel();
+  else document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
+};
+
 let walk = false, yaw = 0, pitch = 0, hallAisleZ = 0, hallHalfX = 300;
 const held = new Set();
 const walkBtn = document.getElementById('walk'), pad = document.getElementById('pad'), hint = document.getElementById('hint');
@@ -636,7 +726,7 @@ function loop(t){
   resize(); if (anim) anim(t);
   const dt = Math.min(0.05, (t - lastT) / 1000); lastT = t;
   if (walk) stepWalk(dt); else controls.update();
-  if (level === 'hall' && flowTex.length && !SMALL && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if ((level === 'hall' || tiersOn) && flowTex.length && !SMALL && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
     dirty = true;
   }
@@ -646,7 +736,7 @@ function loop(t){
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
-window.__rack = {load, select, setWalk, setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
+window.__rack = {load, select, setWalk, tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
 </script>
 </body>
 </html>
@@ -656,7 +746,8 @@ window.__rack = {load, select, setWalk, setExplode: v => { explode = v; ex.value
 def main():
     html = (PAGE.replace('__PARTS__', json.dumps(P, ensure_ascii=False))
                 .replace('__LEVELS__', json.dumps(LEVELS, ensure_ascii=False))
-                .replace('__SOURCES__', json.dumps(SOURCES, ensure_ascii=False)))
+                .replace('__SOURCES__', json.dumps(SOURCES, ensure_ascii=False))
+                .replace('__TIERS__', json.dumps(TIERS, ensure_ascii=False)))
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('썼다:', OUT, len(html), 'bytes')
 
