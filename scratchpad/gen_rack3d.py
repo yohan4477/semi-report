@@ -21,16 +21,28 @@ R = '[260226] 베라 루빈 — 익스트림 코디자인'
 GTC = 'NVIDIA GTC 2025 — Built For Reasoning, Vera Rubin, Kyber (영문)'
 ISS = '[260416] ISSCC 2026 총정리'
 KOR = '[260901] 한국의 조 단위 주권 AI 투자'
+NVB = 'NVIDIA 기술 블로그 — Vera Rubin POD (2026)'
+TSV_ = 'Transurfing Volatility — Vera Rubin Decoded Pt.4'
+SE = 'Schneider Electric NetShelter MGX 랙(NVL72 용) 제품 사양'
 
 # 부품 사전. kind: src(원문 값) · calc(원문에서 셈한 값) · schema(원문에 없는 배치를 도식으로)
 P = {
     # ── 0 랙 ──
-    'tray': dict(name='컴퓨트 트레이', count='18개', kind='calc',
-                 spec='GPU 패키지 72개 ÷ 트레이당 4개(Strata 2 × Rubin 2)로 셈했다. 조립 시간 2시간 → 5분, 케이블 없는 6모듈 구조',
-                 cite=R + ' L166·L220·L240', child='tray'),
-    'switch': dict(name='NVLink 6 스위치 ASIC', count='36개', kind='src',
-                   spec='랙당 칩 수 36개로 두 배, 칩 하나 대역폭 28.8T 는 NVLink 5 와 같다. 트레이로 몇 개씩 묶이는지는 원문에 없어 한 판에 모아 그렸다',
+    'rackframe': dict(name='MGX 랙 프레임', count='1', kind='src',
+                      spec='48U, 높이 2,236mm × 폭 600mm × 깊이 1,200mm. 랙 전체 부품 약 130만 개·칩 약 1,300개·무게 약 4,000파운드. 치수는 GB 세대 NVL72 용 MGX 랙 제품 사양이다',
+                      cite=SE + ' · ' + NVB),
+    'tray': dict(name='컴퓨트 트레이', count='18개', kind='src',
+                 spec='GPU 72 · Vera 36 을 트레이 18개에 나눠 담는다. 조립 시간 2시간 → 5분, 케이블·호스·팬 없는 모듈 10개 구조. 트레이 높이와 랙 안 위아래 순서는 도식',
+                 cite=NVB + ' · ' + R + ' L166·L220', child='tray'),
+    'switchtray': dict(name='NVLink 스위치 트레이', count='9개', kind='src',
+                       spec='트레이 9개에 NVLink 6 스위치 ASIC 36개. 트레이당 4개는 36 ÷ 9 로 셈한 값',
+                       cite=NVB + ' · ' + R + ' L166'),
+    'switch': dict(name='NVLink 6 스위치 ASIC', count='36개 (트레이당 4개, 셈한 값)', kind='src',
+                   spec='랙당 칩 수 36개로 두 배, 칩 하나 대역폭 28.8T 는 NVLink 5 와 같다',
                    cite=R + ' L156·L166'),
+    'spine': dict(name='NVLink 스파인 카트리지', count='4개', kind='src',
+                  spec='미리 조립한 구리 케이블 카트리지 4개에 케이블 5,000가닥, 합친 길이 2마일 넘음. 랙 뒤쪽 세로 배치는 도식',
+                  cite=NVB),
     'shelf': dict(name='전력 셸프', count='4개', kind='src',
                   spec='110kW 셸프 4개(N+1 이중화), 3상 415~480VAC 를 50VDC 로 낮춰 버스바에 공급. 랙 TDP 180~220kW',
                   cite=R + ' L522·L523'),
@@ -52,9 +64,9 @@ P = {
                 spec='전면 중앙 DPU. 온보드 LPDDR5x 128GB · SSD 512GB · AST2600 BMC. KV 캐시 전용 3번째 네트워크(ICMS/CMX)의 핵심 실리콘',
                 cite=R + ' L222·L243'),
     'pwr': dict(name='전력 공급 모듈', count='1개', kind='src',
-                spec='50V 를 12V 로 낮춰 전면 모듈에 나눈다', cite=R + ' L244'),
+                spec='50V 를 12V 로 낮춰 전면 모듈에 나눈다. 전면 가운데 BlueField-4 위쪽(평면도 기준)', cite=R + ' L244 · ' + TSV_),
     'mgmt': dict(name='시스템 관리 모듈', count='1개', kind='src',
-                 spec='SMM · TPM · DC-SCM 등 보안·관리', cite=R + ' L245'),
+                 spec='SMM · TPM · DC-SCM 등 보안·관리. 전면 가운데 BlueField-4 아래쪽(평면도 기준)', cite=R + ' L245 · ' + TSV_),
     # ── 2 Strata ──
     'rubin': dict(name='Rubin GPU 패키지', count='Strata 당 2개', kind='src',
                   spec='3nm, 레티클 크기 다이 2개 + HBM 8스택. FP4 35 PFLOPS, TDP 최대 2,300W(Max-P)',
@@ -95,7 +107,7 @@ P = {
 }
 
 LEVELS = [
-    ('rack', '랙', 'VR NVL72 랙 — GPU 패키지 72 · Vera 36 · NVLink 6 스위치 ASIC 36'),
+    ('rack', '랙', 'VR NVL72 랙 — 컴퓨트 트레이 18 · NVLink 스위치 트레이 9 · 전력 셸프 4 · 스파인 카트리지 4'),
     ('tray', '컴퓨트 트레이', '후면 Strata 2 · 가운데 미드플레인 · 전면 Orchid 4 + BlueField-4·전력·관리'),
     ('strata', 'Strata', 'Rubin GPU 2 + Vera CPU 1 + SOCAMM 8, 콜드플레이트 한 판'),
     ('rubin', 'Rubin 패키지', '연산 다이 2 + HBM4 스택 8'),
@@ -108,6 +120,9 @@ SOURCES = [
     (ISS, 'content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md'),
     (KOR, 'content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md'),
     ('[250812] HBM 로드맵', 'content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md'),
+    (NVB, 'https://developer.nvidia.com/blog/nvidia-vera-rubin-pod-seven-chips-five-rack-scale-systems-one-ai-supercomputer/'),
+    (TSV_, 'https://transurfing-volatility.com/vera-rubin-decoded-pt4/'),
+    (SE, 'https://www.se.com/us/en/product/SEORNVL72X3000/'),
 ]
 
 PAGE = r'''<!doctype html>
@@ -212,30 +227,30 @@ function box(id, size, a, e, t, opts={}){
 
 const BUILD = {
   rack(){
-    // 트레이 18 을 9 · 스위치 판 · 9 로 두고 전력 셸프 4 를 위에 — 위아래 순서는 원문에 없는 도식
-    const H = 4.4, W = 60, D = 90;
-    let y = 0;
+    // 치수 비율은 MGX 랙(600 × 2,236 × 1,200mm)을 cm 로. 장비는 트레이 18 · 스위치 트레이 9 · 셸프 4.
+    // 장비 높이와 위아래 순서는 원문에 없는 도식이다 — 셸프 둘 · 트레이 9 · 스위치 9 · 트레이 9 · 셸프 둘
+    const W = 60, D = 120, HR = 223.6, H = 5.2;
     const slots = [];
-    for (let i=0;i<9;i++) slots.push(['tray', H]);
-    slots.push(['switch', H*2]);
-    for (let i=0;i<9;i++) slots.push(['tray', H]);
-    for (let i=0;i<4;i++) slots.push(['shelf', H]);
-    const total = slots.reduce((s,x)=>s+x[1],0);
-    y = -total/2;
-    slots.forEach(([id,h],i) => {
-      const cy = y + h/2; y += h;
-      const k = i - slots.length/2;
-      box(id, [W, h*0.9, D], [0, cy, 0], [0, k*2.2, 0], id==='tray'?1:(id==='switch'?2:0));
+    for (let i=0;i<2;i++) slots.push('shelf');
+    for (let i=0;i<9;i++) slots.push('tray');
+    for (let i=0;i<9;i++) slots.push('switchtray');
+    for (let i=0;i<9;i++) slots.push('tray');
+    for (let i=0;i<2;i++) slots.push('shelf');
+    const total = slots.length * H;
+    let y = total/2;
+    slots.forEach((id, i) => {
+      const cy = y - H/2; y -= H;
+      const k = slots.length/2 - i;
+      box(id, [W-4, H*0.86, D-10], [0, cy, 0], [0, k*2.0, 0], id==='tray'?1:(id==='switchtray'?2:0));
+      if (id === 'switchtray') for (let c=0;c<4;c++)
+        box('switch', [6, 1.0, 6], [-16 + c*10.7, cy + H*0.43 + 0.5, -10], [0, k*2.0 + 1.6, 0], 3);
     });
-    // 스위치 판 위 ASIC 36 — 원문 개수
-    const sw = items.find(m=>m.userData.id==='switch');
-    for (let r=0;r<3;r++) for (let c=0;c<12;c++){
-      const chip = box('switch', [3.4, 1.2, 3.4], [sw.userData.a.x-22+c*4, sw.userData.a.y+H*0.5, -30+r*10], [0, sw.userData.e.y+3, 0], 3);
-    }
-    box('busbar', [6, total, 3], [0, 0, -D/2-4], [0, 0, -40], 3);
-    box('manifold', [2.5, total, 2.5], [-W/2-3, 0, -D/2-2], [-25, 0, -30], 2);
-    box('manifold', [2.5, total, 2.5], [W/2+3, 0, -D/2-2], [25, 0, -30], 2);
-    return {pos:[150, 70, 160], target:[0,0,0]};
+    box('rackframe', [W, HR, D], [0, 0, 0], [0, 0, 0], 0, {op:.08});
+    for (let c=0;c<4;c++) box('spine', [4, total*0.5, 3], [-18 + c*12, 0, -D/2 + 3], [0, 0, -36 - c*3], 3);
+    box('busbar', [3, total, 2], [0, 0, -D/2 - 1], [0, 0, -18], 2);
+    box('manifold', [2.2, total, 2.2], [-W/2 + 2, 0, -D/2 + 1], [-22, 0, -20], 2);
+    box('manifold', [2.2, total, 2.2], [W/2 - 2, 0, -D/2 + 1], [22, 0, -20], 2);
+    return {pos:[170, 60, 190], target:[0,0,0]};
   },
   tray(){
     box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
@@ -243,9 +258,9 @@ const BUILD = {
     box('midplane', [58, 4, 1.2], [0, 1.4, 0], [0, 12, 0], 2);
     for (const sx of [-1, 1]) for (const k of [0, 1])
       box('orchid', [16, 1.6, 30], [sx*20, -0.4 + k*2.2, 19], [sx*12, k*8, 36], 1);
-    box('bf4', [18, 1.2, 12], [0, 1.6, 12], [0, 10, 30], 2);
-    box('pwr', [18, 1.2, 9], [0, 1.6, 24], [0, 4, 44], 0);
-    box('mgmt', [18, 1.2, 6], [0, 1.6, 32], [0, -4, 58], 0);
+    box('pwr', [18, 1.2, 8], [0, 1.6, 7], [0, 6, 18], 0);
+    box('bf4', [18, 1.2, 12], [0, 1.6, 19], [0, 12, 36], 2);
+    box('mgmt', [18, 1.2, 6], [0, 1.6, 30], [0, 6, 54], 0);
     return {pos:[70, 70, 90], target:[0,0,0]};
   },
   strata(){
