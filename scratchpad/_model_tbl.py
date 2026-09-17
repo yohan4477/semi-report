@@ -742,6 +742,8 @@ import _capex_tbl as _ct                                          # noqa: E402
 TABLES.update(_ct.TABLES)
 import _agentx_tbl as _axt                                        # noqa: E402
 TABLES.update(_axt.TABLES)
+import _agentx_mem_tbl as _amt                                    # noqa: E402
+TABLES.update(_amt.TABLES)
 
 
 def rows_text():

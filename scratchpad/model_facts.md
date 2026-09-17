@@ -668,6 +668,150 @@ API 추론으로 팔 때                100 M       0.50년      0.57년        
 총 FAIL 0
 ```
 
+## AgentX 메모리 모델 출력
+
+```
+── 1. 입력 토큰의 출처 — DSv4 B200 SGLang (b200-nscale) ──────────────
+  동시성    8  dram  GPU  97.3% · 바깥   0.0% · 계산   3.9% | GPU KV 0.38 · DRAM KV 0.76 |   6617 tok/s
+  동시성   10  dram  GPU  97.2% · 바깥   0.0% · 계산   4.0% | GPU KV 0.40 · DRAM KV 0.93 |   7955 tok/s
+  동시성   16  dram  GPU  93.2% · 바깥   3.8% · 계산   4.9% | GPU KV 0.66 · DRAM KV 1.00 |  11991 tok/s
+  동시성   64  dram  GPU  89.8% · 바깥   6.6% · 계산   5.7% | GPU KV 0.99 · DRAM KV 0.45 |  35282 tok/s
+  동시성   96  dram  GPU  71.9% · 바깥  23.9% · 계산   6.7% | GPU KV 1.00 · DRAM KV 0.65 |  44109 tok/s
+  동시성  128  dram  GPU  55.3% · 바깥  39.8% · 계산   7.8% | GPU KV 1.00 · DRAM KV 0.77 |  46311 tok/s
+  동시성  160  dram  GPU  27.0% · 바깥  67.8% · 계산   9.3% | GPU KV 1.00 · DRAM KV 0.84 |  46955 tok/s
+  동시성 160 입력 13.53억 토큰 = GPU 3.66억 + 바깥 9.17억 + 계산 1.26억 · DRAM KV 15,064,832/17,909,760 토큰
+  서버가 출처를 센 행 400개 — 새로 계산한 비중 중앙값 6.3% (사분위 4.5~10.5%), 출력 토큰 비중 중앙값 0.77%
+  세 출처 합이 입력의 90~112% 밖인 행 23개 (페이지 단위로 세어 넘친다)
+  합이 맞는 행이 90% 이상
+
+── 2. HBM 이 차는 지점 — 한 노드 실행 ──────────────────────────────
+  dsv4        b200   vllm         dram  fp4  TP8  | HBM 180GB 가중치 105.9GB 여유  56.1GB | 찬 동시성  160 · 한 장 20.00세션 · 세션당   2.8GB
+  dsv4        b200   sglang       dram  fp4  TP8  | HBM 180GB 가중치 105.9GB 여유  56.1GB | 찬 동시성   64 · 한 장  8.00세션 · 세션당   7.0GB
+  dsv4        b300   sglang       dram  fp4  TP8  | HBM 288GB 가중치 105.9GB 여유 153.3GB | 찬 동시성  512 · 한 장 64.00세션 · 세션당   2.4GB
+  dsv4        b300   vllm         dram  fp4  TP4  | HBM 288GB 가중치 211.8GB 여유  47.4GB | 찬 동시성   64 · 한 장  8.00세션 · 세션당   5.9GB
+  dsv4        mi355x sglang       dram  fp4  TP8  | HBM 288GB 가중치 105.9GB 여유 153.3GB | 찬 동시성  128 · 한 장 16.00세션 · 세션당   9.6GB
+  glm5.2      b200   sglang       dram  fp4  TP8  | HBM 180GB 가중치  49.9GB 여유 112.1GB | 찬 동시성    8 · 한 장  1.00세션 · 세션당 112.1GB
+  glm5.2      b300   sglang       dram  fp4  TP8  | HBM 288GB 가중치  49.9GB 여유 209.3GB | 찬 동시성   20 · 한 장  2.50세션 · 세션당  83.7GB
+  glm5.2      b300   sglang       dram  fp8  TP8  | HBM 288GB 가중치  97.0GB 여유 162.2GB | 찬 동시성   16 · 한 장  2.00세션 · 세션당  81.1GB
+  glm5.2      mi355x sglang       dram  fp8  TP8  | HBM 288GB 가중치  97.0GB 여유 162.2GB | 찬 동시성   16 · 한 장  2.00세션 · 세션당  81.1GB
+  kimik3      b300   vllm         dram  fp4  TP8  | HBM 288GB 가중치 184.2GB 여유  75.0GB | 찬 동시성   70 · 한 장  8.75세션 · 세션당   8.6GB
+  kimik3      mi355x atom         dram  fp4  TP8  | HBM 288GB 가중치 184.2GB 여유  75.0GB | 찬 동시성   14 · 한 장  1.75세션 · 세션당  42.9GB
+  kimik3      mi355x atom         none  fp4  TP8  | HBM 288GB 가중치 184.2GB 여유  75.0GB | 찬 동시성    4 · 한 장  0.50세션 · 세션당 150.1GB
+  minimaxm3   b200   vllm         dram  fp4  TP4  | HBM 180GB 가중치  56.6GB 여유 105.4GB | 찬 동시성   25 · 한 장  6.25세션 · 세션당  16.9GB
+  minimaxm3   b200   trt          dram  fp4  TP4  | HBM 180GB 가중치  56.6GB 여유 105.4GB | 찬 동시성   30 · 한 장  7.50세션 · 세션당  14.1GB
+  minimaxm3   b300   trt          dram  fp4  TP2  | HBM 288GB 가중치 113.2GB 여유 146.0GB | 찬 동시성   20 · 한 장 10.00세션 · 세션당  14.6GB
+  minimaxm3   b300   trt          dram  fp4  TP4  | HBM 288GB 가중치  56.6GB 여유 202.6GB | 찬 동시성   30 · 한 장  7.50세션 · 세션당  27.0GB
+  minimaxm3   b300   vllm         dram  fp4  TP2  | HBM 288GB 가중치 113.2GB 여유 146.0GB | 찬 동시성   24 · 한 장 12.00세션 · 세션당  12.2GB
+  minimaxm3   h100   vllm         dram  fp8  TP8  | HBM  80GB 가중치  55.0GB 여유  17.0GB | 찬 동시성    6 · 한 장  0.75세션 · 세션당  22.7GB
+  minimaxm3   h100   vllm         dram+nvme fp8  TP8  | HBM  80GB 가중치  55.0GB 여유  17.0GB | 찬 동시성    7 · 한 장  0.88세션 · 세션당  19.5GB
+  minimaxm3   h100   vllm         none  fp8  TP8  | HBM  80GB 가중치  55.0GB 여유  17.0GB | 찬 동시성    6 · 한 장  0.75세션 · 세션당  22.7GB
+  minimaxm3   h100   vllm         nvme  fp8  TP8  | HBM  80GB 가중치  55.0GB 여유  17.0GB | 찬 동시성    7 · 한 장  0.88세션 · 세션당  19.5GB
+  minimaxm3   mi355x atom         dram  fp4  TP4  | HBM 288GB 가중치  56.6GB 여유 202.6GB | 찬 동시성   48 · 한 장 12.00세션 · 세션당  16.9GB
+  qwen3.5     b200   sglang       dram  fp4  TP2  | HBM 180GB 가중치 106.9GB 여유  55.1GB | 찬 동시성   18 · 한 장  9.00세션 · 세션당   6.1GB
+  qwen3.5     b200   sglang       dram  fp4  TP4  | HBM 180GB 가중치  53.5GB 여유 108.5GB | 찬 동시성   64 · 한 장 16.00세션 · 세션당   6.8GB
+  qwen3.5     b200   sglang       none  fp4  TP2  | HBM 180GB 가중치 106.9GB 여유  55.1GB | 찬 동시성   14 · 한 장  7.00세션 · 세션당   7.9GB
+  qwen3.5     b200   sglang       none  fp4  TP4  | HBM 180GB 가중치  53.5GB 여유 108.5GB | 찬 동시성   48 · 한 장 12.00세션 · 세션당   9.0GB
+  qwen3.5     b200   sglang       dram  fp8  TP4  | HBM 180GB 가중치 103.9GB 여유  58.1GB | 찬 동시성   32 · 한 장  8.00세션 · 세션당   7.3GB
+  qwen3.5     b200   sglang       dram  fp8  TP8  | HBM 180GB 가중치  51.9GB 여유 110.1GB | 찬 동시성   64 · 한 장  8.00세션 · 세션당  13.8GB
+  qwen3.5     b200   sglang       none  fp8  TP8  | HBM 180GB 가중치  51.9GB 여유 110.1GB | 찬 동시성   62 · 한 장  7.75세션 · 세션당  14.2GB
+  qwen3.5     b300   sglang       dram  fp4  TP2  | HBM 288GB 가중치 106.9GB 여유 152.3GB | 찬 동시성   56 · 한 장 28.00세션 · 세션당   5.4GB
+  qwen3.5     b300   sglang       dram  fp8  TP2  | HBM 288GB 가중치 207.8GB 여유  51.4GB | 찬 동시성   32 · 한 장 16.00세션 · 세션당   3.2GB
+  qwen3.5     b300   sglang       none  fp8  TP2  | HBM 288GB 가중치 207.8GB 여유  51.4GB | 찬 동시성   12 · 한 장  6.00세션 · 세션당   8.6GB
+  qwen3.5     b300   sglang       none  fp8  TP4  | HBM 288GB 가중치 103.9GB 여유 155.3GB | 찬 동시성   72 · 한 장 18.00세션 · 세션당   8.6GB
+  qwen3.5     h100   sglang       dram  fp8  TP8  | HBM  80GB 가중치  51.9GB 여유  20.1GB | 찬 동시성    8 · 한 장  1.00세션 · 세션당  20.1GB
+  qwen3.5     h100   sglang       none  fp8  TP8  | HBM  80GB 가중치  51.9GB 여유  20.1GB | 찬 동시성    8 · 한 장  1.00세션 · 세션당  20.1GB
+  qwen3.5     mi355x sglang       dram  fp4  TP2  | HBM 288GB 가중치 106.9GB 여유 152.3GB | 찬 동시성   40 · 한 장 20.00세션 · 세션당   7.6GB
+  qwen3.8next h100   sglang       none  fp8  TP8  | HBM  80GB 가중치  23.2GB 여유  48.8GB | 찬 동시성   16 · 한 장  2.00세션 · 세션당  24.4GB
+
+  모델별 세션당 HBM (GB) — 중앙값 · 범위 · 설정 수
+    dsv4           5.9 ·   2.4~  9.6 · 5
+    qwen3.5        8.2 ·   3.2~ 20.1 · 14
+    minimaxm3     18.2 ·  12.2~ 27.0 · 10
+    qwen3.8next   24.4 ·  24.4~ 24.4 · 1
+    kimik3        42.9 ·   8.6~150.1 · 3
+    glm5.2        82.4 ·  81.1~112.1 · 4
+  DSv4 < MiniMax M3 < GLM-5.2 순서
+  GLM-5.2 ÷ DSv4 = 13.9배
+
+── 2-B. 같은 모델, HBM 만 다를 때 — Qwen3.5 FP4 TP2 ────────────────
+  b200  여유 HBM 55.1GB · 찬 지점 한 장 9.0세션
+  b300  여유 HBM 152.3GB · 찬 지점 한 장 28.0세션
+  여유 HBM 2.76배 → 세션 3.11배 · 탄력성 1.13
+  세션이 여유 HBM 만큼은 는다
+  규격 용량으로는 1.60배 — 가중치가 고정으로 빠져 여유분은 2.76배가 된다
+
+── 3. DRAM 내려놓기 켠 곡선 ÷ 끈 곡선 — 같은 사용자 속도 ────────────
+  dsv4        b200-nscale    sglang        fp4  TP8  끈 최대    4011 · 켠 최대   46955 tok/s | 같은 속도 구간 없음
+  dsv4        b300-dsxe      sglang        fp4  TP8  끈 최대   21194 · 켠 최대   76939 tok/s | 75 TPS 1.43
+  dsv4        b300-nv        vllm          fp4  TP4  끈 최대   10966 · 켠 최대   48603 tok/s | 같은 속도 구간 없음
+  dsv4        b300-nv        vllm          fp4  TP8  끈 최대    3224 · 켠 최대  108881 tok/s | 같은 속도 구간 없음
+  dsv4        mi355x-amds    sglang        fp4  TP8  끈 최대   11299 · 켠 최대   52737 tok/s | 같은 속도 구간 없음
+  glm5.2      mi355x-amds    sglang        fp8  TP8  끈 최대    6524 · 켠 최대    6944 tok/s | 같은 속도 구간 없음
+  kimik3      mi355x-amds    atom          fp4  TP8  끈 최대    2508 · 켠 최대   11323 tok/s | 같은 속도 구간 없음
+  kimik3      mi355x-amds    vllm          fp4  TP8  끈 최대    1295 · 켠 최대   10947 tok/s | 같은 속도 구간 없음
+  minimaxm3   b200-dgxc      vllm          fp4  TP4  끈 최대   27638 · 켠 최대   44144 tok/s | 100 TPS 1.46 · 125 TPS 1.18
+  minimaxm3   b300-nv        vllm          fp4  TP4  끈 최대   34983 · 켠 최대   47486 tok/s | 같은 속도 구간 없음
+  minimaxm3   h100-dgxc      vllm          fp8  TP8  끈 최대     720 · 켠 최대     990 tok/s | 같은 속도 구간 없음
+  minimaxm3   h200-dgxc      vllm          fp8  TP8  끈 최대    6757 · 켠 최대    7023 tok/s | 같은 속도 구간 없음
+  minimaxm3   mi300x-amd     vllm          fp8  TP8  끈 최대    2698 · 켠 최대    2417 tok/s | 같은 속도 구간 없음
+  minimaxm3   mi355x-amds    atom          fp4  TP4  끈 최대   39304 · 켠 최대   30374 tok/s | 같은 속도 구간 없음
+  qwen3.5     b200-dgxc      sglang        fp4  TP2  끈 최대   34834 · 켠 최대   71322 tok/s | 100 TPS 1.90 · 125 TPS 1.85
+  qwen3.5     b200-dgxc      sglang        fp4  TP4  끈 최대   44198 · 켠 최대   55429 tok/s | 같은 속도 구간 없음
+  qwen3.5     b200-nscale    sglang        fp8  TP4  끈 최대   21588 · 켠 최대   38013 tok/s | 같은 속도 구간 없음
+  qwen3.5     b200-nscale    sglang        fp8  TP8  끈 최대   26244 · 켠 최대   25763 tok/s | 같은 속도 구간 없음
+  qwen3.5     b300-nv        sglang        fp4  TP2  끈 최대   66287 · 켠 최대  105330 tok/s | 75 TPS 1.39
+  qwen3.5     b300-nv        sglang        fp8  TP2  끈 최대   24762 · 켠 최대   55593 tok/s | 같은 속도 구간 없음
+  qwen3.5     h100-dgxc      sglang        fp8  TP8  끈 최대    4353 · 켠 최대    6053 tok/s | 125 TPS 1.12
+  qwen3.5     h200-dgxc      sglang        fp8  TP8  끈 최대    9535 · 켠 최대   13520 tok/s | 75 TPS 1.12 · 100 TPS 1.14 · 125 TPS 1.06
+  qwen3.5     mi355x-amds    sglang        fp4  TP2  끈 최대   50434 · 켠 최대   71113 tok/s | 100 TPS 1.16
+  같은 속도에서 잰 칸 11개 · 켠 ÷ 끈 중앙값 1.18 · 범위 1.06~1.90
+
+── 4. MiniMax M3 H100 vLLM — 내려놓기 없음·DRAM·SSD·DRAM+SSD ────────
+  dram      mooncake    동시성  5 |   599 tok/s · P90  6.7 TPS · 첫 토큰 P90    17초 | GPU 89.3% · 바깥  3.7% · 계산 2,228,058토큰
+  dram      mooncake    동시성  6 |   661 tok/s · P90  6.4 TPS · 첫 토큰 P90    18초 | GPU 72.5% · 바깥 20.5% · 계산 2,566,256토큰
+  dram      mooncake    동시성  7 |   802 tok/s · P90  5.3 TPS · 첫 토큰 P90    18초 | GPU 73.3% · 바깥 20.0% · 계산 2,758,707토큰
+  dram      mooncake    동시성  8 |   945 tok/s · P90  5.5 TPS · 첫 토큰 P90    21초 | GPU 64.3% · 바깥 29.4% · 계산 2,900,306토큰
+  dram      mooncake    동시성  9 |   841 tok/s · P90  5.3 TPS · 첫 토큰 P90    66초 | GPU 47.8% · 바깥 44.8% · 계산 3,272,534토큰
+  dram      mooncake    동시성 10 |   990 tok/s · P90  3.8 TPS · 첫 토큰 P90   125초 | GPU 27.0% · 바깥 64.7% · 계산 4,076,878토큰
+  dram+nvme vllm-native 동시성  7 |   840 tok/s · P90  5.6 TPS · 첫 토큰 P90    18초 | GPU 73.6% · 바깥 19.9% · 계산 2,764,422토큰
+  dram+nvme vllm-native 동시성  8 |   906 tok/s · P90  5.3 TPS · 첫 토큰 P90    24초 | GPU 68.3% · 바깥 25.4% · 계산 2,880,231토큰
+  dram+nvme vllm-native 동시성  9 |   864 tok/s · P90  5.0 TPS · 첫 토큰 P90    57초 | GPU 57.3% · 바깥 35.4% · 계산 3,278,675토큰
+  dram+nvme vllm-native 동시성 10 |   779 tok/s · P90  3.0 TPS · 첫 토큰 P90   186초 | GPU 35.8% · 바깥 55.7% · 계산 3,723,620토큰
+  dram+nvme vllm-native 동시성 11 |   800 tok/s · P90  3.3 TPS · 첫 토큰 P90   162초 | GPU 28.0% · 바깥 63.0% · 계산 4,097,743토큰
+  dram+nvme vllm-native 동시성 12 |   734 tok/s · P90  2.7 TPS · 첫 토큰 P90   228초 | GPU 27.4% · 바깥 61.9% · 계산 5,531,939토큰
+  dram+nvme vllm-native 동시성 13 |   842 tok/s · P90  3.4 TPS · 첫 토큰 P90   210초 | GPU 24.5% · 바깥 64.9% · 계산 5,957,589토큰
+  dram+nvme vllm-native 동시성 14 |   792 tok/s · P90  2.8 TPS · 첫 토큰 P90   247초 | GPU 26.3% · 바깥 62.6% · 계산 6,186,171토큰
+  none      -           동시성  1 |   575 tok/s · P90 18.3 TPS · 첫 토큰 P90     9초 | GPU 96.3% · 바깥  0.0% · 계산 746,660토큰
+  none      -           동시성  2 |   650 tok/s · P90 12.3 TPS · 첫 토큰 P90    34초 | GPU 95.4% · 바깥  0.0% · 계산 1,064,661토큰
+  none      -           동시성  3 |   561 tok/s · P90  7.7 TPS · 첫 토큰 P90    14초 | GPU 93.1% · 바깥  0.0% · 계산 1,536,056토큰
+  none      -           동시성  4 |   641 tok/s · P90  6.7 TPS · 첫 토큰 P90    13초 | GPU 93.8% · 바깥  0.0% · 계산 1,812,388토큰
+  none      -           동시성  5 |   648 tok/s · P90  7.1 TPS · 첫 토큰 P90    13초 | GPU 90.0% · 바깥  0.0% · 계산 3,384,030토큰
+  none      -           동시성  6 |   718 tok/s · P90  6.9 TPS · 첫 토큰 P90    17초 | GPU 71.7% · 바깥  0.0% · 계산 10,700,045토큰
+  none      -           동시성  7 |   720 tok/s · P90  4.0 TPS · 첫 토큰 P90    62초 | GPU 69.6% · 바깥  0.0% · 계산 11,799,114토큰
+  none      -           동시성  8 |   370 tok/s · P90  1.4 TPS · 첫 토큰 P90   193초 | GPU 46.3% · 바깥  0.0% · 계산 15,952,572토큰
+  nvme      vllm-simple 동시성  7 |   746 tok/s · P90  4.6 TPS · 첫 토큰 P90    20초 | GPU 73.1% · 바깥 19.7% · 계산 2,841,332토큰
+  nvme      vllm-simple 동시성  8 |  1035 tok/s · P90  6.3 TPS · 첫 토큰 P90    20초 | GPU 67.2% · 바깥 26.4% · 계산 3,148,744토큰
+  nvme      vllm-simple 동시성  9 |   738 tok/s · P90  4.5 TPS · 첫 토큰 P90    61초 | GPU 49.4% · 바깥 42.5% · 계산 3,332,035토큰
+  nvme      vllm-simple 동시성 10 |   944 tok/s · P90  4.0 TPS · 첫 토큰 P90   137초 | GPU 27.5% · 바깥 64.0% · 계산 4,109,465토큰
+  nvme      vllm-simple 동시성 11 |   874 tok/s · P90  3.2 TPS · 첫 토큰 P90   167초 | GPU 13.7% · 바깥 76.8% · 계산 4,524,853토큰
+  nvme      vllm-simple 동시성 12 |   953 tok/s · P90  3.9 TPS · 첫 토큰 P90   156초 | GPU  6.5% · 바깥 83.0% · 계산 6,095,904토큰
+  nvme      vllm-simple 동시성 13 |   837 tok/s · P90  3.7 TPS · 첫 토큰 P90   266초 | GPU  5.7% · 바깥 83.0% · 계산 6,340,425토큰
+  nvme      vllm-simple 동시성 14 |   699 tok/s · P90  2.7 TPS · 첫 토큰 P90   259초 | GPU  4.4% · 바깥 83.3% · 계산 6,566,444토큰
+  동시성 8: SSD ÷ DRAM 처리량 1.10 · 없음 ÷ DRAM 0.39 · 계산 토큰 없음 ÷ SSD 5.1배
+  SSD 가 DRAM 의 90% 이상 · 없음은 절반 아래
+
+── 5. CPU-GPU 연결 방식별 바깥 층 적중 최댓값 — 엔진이 같이 달라 인과 아님 ──
+  NVLink-C2C   gb200  행  16 · 바깥 적중 최댓값  56.9% · 중앙값  2.7%
+  NVLink-C2C   gb300  행   5 · 바깥 적중 최댓값  31.6% · 중앙값 15.4%
+  PCIe 5.0     b200   행  64 · 바깥 적중 최댓값  67.8% · 중앙값  7.4%
+  PCIe 5.0     h100   행  10 · 바깥 적중 최댓값  85.5% · 중앙값 24.9%
+  PCIe 5.0     h200   행  32 · 바깥 적중 최댓값  83.3% · 중앙값 15.0%
+  PCIe 6.0     b300   행  57 · 바깥 적중 최댓값  80.5% · 중앙값  5.9%
+  원문에 없음       mi355x 행  42 · 바깥 적중 최댓값  70.9% · 중앙값  1.9%
+
+총 FAIL 0
+```
+
 ## 본문에 실린 표 — 모델이 계산해서 낸 값
 
 보고서 본문의 표와 이 글자는 `scratchpad/_model_tbl.py` 한 함수에서 나온다.
@@ -1228,6 +1372,56 @@ GPU 한 장 처리량 (tok/s) · 211,185 · 80,187 · 93,574 · 모델이 낸 �
 80 TPS 루빈 ÷ B300 (사서 운영) · L94 · 9.64 · 10 · -3.6% · 원문이 엔진을 안 적었다 · vLLM 기준
 80 TPS 임대 토큰 더 (%) · L88 · 60.1 · 62 · -3.1% · 엔진 미기재 · SGLang 기준, TRT 면 43
 임대 최대 배수 · L88 · 6.26 · 16 · -60.9% · SGLang 대비 최대 6, TRT 대비 최대 62 — 16 은 안 나온다
+
+### 표 MEMSPEC — 칩마다 HBM 과 CPU-GPU 연결 — 원문 규격
+칩 · HBM 용량 · HBM 대역폭 · CPU-GPU 연결 · 호스트 메모리 · 성격
+H100 · 80GB · — · PCIe 5.0 128GB/s · 원문에 없음 · 원문 값
+H200 · 144GB · 4.8TB/s · PCIe 5.0 128GB/s · 원문에 없음 · 원문 값
+B200 · 180GB · 8TB/s · PCIe 5.0 128GB/s · 원문에 없음 · 원문 값
+B300 · 288GB · 8TB/s · PCIe 6.0 256GB/s · 원문에 없음 · 원문 값
+GB200 NVL72 · 192GB · 8TB/s · NVLink-C2C 900GB/s · Grace LPDDR5X 480GB · 원문 값
+GB300 NVL72 · 288GB · 8TB/s · NVLink-C2C 900GB/s · Grace LPDDR5X 480GB · 원문 값
+Vera Rubin NVL72 · 288GB · 22TB/s · NVLink-C2C 1,800GB/s · Vera LPDDR5X 1.5TB · 원문 값
+MI355X · 288GB · 8TB/s · 원문에 없음 · 원문에 없음 · 원문 값
+
+### 표 MEMTIER — DeepSeek V4 Pro · B200 · SGLang — 입력 토큰은 어디서 오나
+동시성 · GPU 캐시에서 · DRAM 에서 · 새로 계산 · GPU KV 사용률 · DRAM KV 사용률 · GPU 한 장 처리량
+8 · 97.3% · 0.0% · 3.9% · 0.38 · 0.76 · 6,617 tok/s
+10 · 97.2% · 0.0% · 4.0% · 0.40 · 0.93 · 7,955 tok/s
+16 · 93.2% · 3.8% · 4.9% · 0.66 · 1.00 · 11,991 tok/s
+64 · 89.8% · 6.6% · 5.7% · 0.99 · 0.45 · 35,282 tok/s
+96 · 71.9% · 23.9% · 6.7% · 1.00 · 0.65 · 44,109 tok/s
+128 · 55.3% · 39.8% · 7.8% · 1.00 · 0.77 · 46,311 tok/s
+160 · 27.0% · 67.8% · 9.3% · 1.00 · 0.84 · 46,955 tok/s
+
+### 표 MEMSESS — HBM 이 찬 지점에서 세션 하나가 쓰는 HBM — 모델별
+모델 · 세션당 HBM 중앙값 · 범위 · 설정 수 · 성격
+DeepSeek V4 Pro · 5.9GB · 2.4~9.6GB · 5 · 모델이 낸 값 — 여유 HBM ÷ 찬 지점의 한 장 세션 수
+Qwen3.5 · 8.2GB · 3.2~20.1GB · 14 · 모델이 낸 값 — 여유 HBM ÷ 찬 지점의 한 장 세션 수
+MiniMax M3 · 18.2GB · 12.2~27.0GB · 10 · 모델이 낸 값 — 여유 HBM ÷ 찬 지점의 한 장 세션 수
+Qwen3.8 Flash Next · 24.4GB · 24.4~24.4GB · 1 · 모델이 낸 값 — 여유 HBM ÷ 찬 지점의 한 장 세션 수
+Kimi K3 · 42.9GB · 8.6~150.1GB · 3 · 모델이 낸 값 — 여유 HBM ÷ 찬 지점의 한 장 세션 수
+GLM-5.2 · 82.4GB · 81.1~112.1GB · 4 · 모델이 낸 값 — 여유 HBM ÷ 찬 지점의 한 장 세션 수
+
+### 표 MEMDRAM — DRAM 내려놓기를 켠 곡선 ÷ 끈 곡선 — 같은 속도에서 잰 칸만
+모델 · 칩 · 엔진 · 정밀도·TP · 같은 속도에서 켠 ÷ 끈
+DeepSeek V4 Pro · B300 · sglang · FP4 · TP8 · 75 TPS 1.43배
+MiniMax M3 · B200 · vllm · FP4 · TP4 · 100 TPS 1.46배 · 125 TPS 1.18배
+Qwen3.5 · B200 · sglang · FP4 · TP2 · 100 TPS 1.90배 · 125 TPS 1.85배
+Qwen3.5 · B300 · sglang · FP4 · TP2 · 75 TPS 1.39배
+Qwen3.5 · H100 · sglang · FP8 · TP8 · 125 TPS 1.12배
+Qwen3.5 · H200 · sglang · FP8 · TP8 · 75 TPS 1.12배 · 100 TPS 1.14배 · 125 TPS 1.06배
+Qwen3.5 · MI355X · sglang · FP4 · TP2 · 100 TPS 1.16배
+
+### 표 MEMSSD — MiniMax M3 · H100 8장 · vLLM — 내려놓기 넷
+내려놓기 · 소프트웨어 · 동시성 · GPU 한 장 처리량 · 첫 토큰 P90 · GPU 캐시 · 바깥 층 · 새로 계산한 토큰
+끔 · — · 8 · 370 tok/s · 193초 · 46.3% · 0.0% · 15,952,572
+DRAM · mooncake · 8 · 945 tok/s · 21초 · 64.3% · 29.4% · 2,900,306
+DRAM · mooncake · 10 · 990 tok/s · 125초 · 27.0% · 64.7% · 4,076,878
+SSD · vllm-simple · 8 · 1,035 tok/s · 20초 · 67.2% · 26.4% · 3,148,744
+SSD · vllm-simple · 10 · 944 tok/s · 137초 · 27.5% · 64.0% · 4,109,465
+DRAM+SSD · vllm-native · 8 · 906 tok/s · 24초 · 68.3% · 25.4% · 2,880,231
+DRAM+SSD · vllm-native · 10 · 779 tok/s · 186초 · 35.8% · 55.7% · 3,723,620
 
 ## 원자료가 온 글의 주소
 

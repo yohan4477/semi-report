@@ -24,6 +24,7 @@ import _model_eq as me
 import _model_eqtree as et
 import _capex_fig as cf
 import _agentx_fig as axf
+import _agentx_mem_fig as amf
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_C = os.path.join(ROOT, 'insights', 'reports', 'model-cluster-2026-09-09.md')
@@ -40,6 +41,7 @@ SRC_BR = os.path.join(ROOT, 'insights', 'reports', 'model-bridge-2026-09-10.md')
 SRC_WAF = os.path.join(ROOT, 'insights', 'reports', 'model-wafer-2026-09-10.md')
 SRC_BS = os.path.join(ROOT, 'insights', 'reports', 'model-backstop-2026-09-12.md')
 SRC_AX = os.path.join(ROOT, 'insights', 'reports', 'model-agentx-2026-09-17.md')
+SRC_AXM = os.path.join(ROOT, 'insights', 'reports', 'model-agentx-mem-2026-09-17.md')
 
 _NOTE = ('값의 출처가 셋입니다. 원문 글자는 줄 번호로 인용하고, 원문이 실은 표 그림에서 '
          '읽은 값은 몇 번 그림인지 밝히고, 우리 모델이 낸 값은 표의 「성격」 열이나 '
@@ -115,6 +117,18 @@ HEAD_BS = _head('㉓', 'model-bs',
 HEAD_AX = _head('㉔', 'model-ax',
                 '베라 루빈 에이전틱 추론 — 원문 숫자 28칸이 공개 데이터에서 그대로 나오고, 「67배」는 곡선 끝 1.4 TPS 에 걸려 있다',
                 'SemiAnalysis 영문 클리핑 2편 · InferenceX 공개 API 행 · InferenceX 대시보드 앱 코드')
+
+HEAD_AXM = _head('㉕', 'model-axm',
+                 '에이전틱 추론의 메모리 드라이버 — 세션 하나의 HBM 은 모델에 따라 열 배 넘게 갈리고, DRAM·SSD 는 모자란 용량을 채운다',
+                 'InferenceX 실행 요약 파일 769행 · SemiAnalysis 원문의 칩 규격 · HF 파라미터 수')
+
+GROUPS_AXM = [('측정의 뼈대', 1, 2),
+              ('HBM', 3, 4),
+              ('바깥 층과 순서', 5, 6)]
+
+LEAD_AXM = ('InferenceX 실행 요약 파일에서 GPU·DRAM KV 저장 공간과 입력 토큰의 출처를 꺼내, '
+            '처리량을 정하는 메모리 드라이버의 크기 순서를 셉니다. 모델의 KV 구조가 가장 크고, '
+            'HBM 여유 용량, DRAM·SSD 층이 그 뒤입니다.')
 
 GROUPS_AX = [('계산을 세운다', 1, 2),
              ('맞는 자리와 어긋난 자리', 3, 4),
@@ -231,6 +245,14 @@ LEAD_CLUSTER = ('리서치 회사가 낸 표를 옮겨 적는 대신 그 표를 
 LEAD_INFER = ('AMD MI300X 는 빌려서 쓰면 엔비디아 H200 에 지고, 사서 쓰면 작업 종류에 따라 이깁니다. 원문은 임대 시세로만 답했습니다. 발표된 표를 다시 세우니 운영비는 전수로 맞았고, 자본비 여덟 칸이 어긋난 원인은 표에 찍힌 할인율의 반올림이었습니다.')
 
 CAPTION = {
+    'MEMTIER': ('동시성을 올리면 GPU 캐시가 비고 DRAM 이 그 자리를 채운다', amf.FIG_TIER,
+                '기둥은 서버가 출처별로 센 입력 토큰을 세 칸 합이 100 이 되게 편 비율입니다. '
+                '① GPU KV 사용률이 0.95 를 처음 넘은 동시성'),
+    'MEMSESS': ('세션 하나가 쓰는 HBM 은 모델에 따라 열 배 넘게 갈린다', amf.FIG_SESS,
+                '막대는 모델마다 설정 여럿의 중앙값, 선은 그 범위이며 가로는 로그 눈금이라 0 에서 시작하지 않습니다. '
+                '세션당 HBM 은 우리 모델이 낸 것이고 여유 HBM 가정(규격의 90퍼센트)에 기댑니다.'),
+    'MEMSSD': ('HBM 이 모자란 H100 에서 SSD 층이 DRAM 층만큼 처리량을 되살린다', amf.FIG_SSD,
+               '실험 브랜치의 한 번 측정이고 층마다 내려놓기 소프트웨어가 다릅니다. 짙은 막대가 SSD 입니다.'),
     'AXCURVE': ('루빈과 GB300 두 엔진 — 곡선 셋을 같은 속도 선에서 읽는다', axf.FIG_CURVE,
                 '점은 측정 행, 선은 앱과 같은 단조 곡선으로 이은 값입니다(API 2026-09-13 스냅숏). '
                 '① 5절 매출을 셈한 속도(루빈영문 L142) '
@@ -502,6 +524,11 @@ def _table(rows):
 
 
 TBL_NOTE = {
+    'MEMSPEC': '값은 전부 SemiAnalysis 원문에서 인용했습니다. B200 HBM 은 원문끼리 180GB 와 192GB 로 갈려 180GB 를 적었습니다.',
+    'MEMTIER': '세 칸은 서버가 페이지 단위로 세어 합이 100퍼센트를 조금 넘을 수 있습니다. DRAM KV 사용률은 DRAM 에 잡은 KV 저장 공간 대비입니다.',
+    'MEMSESS': '여유 HBM 은 규격 용량의 90퍼센트에서 가중치(파라미터 수 × 정밀도별 바이트 ÷ 텐서 병렬 수)를 뺀 우리 가정입니다.',
+    'MEMDRAM': '내려놓기를 끈 곡선과 켠 곡선이 같은 사용자 속도를 둘 다 잰 칸만 적었습니다. 나머지 설정은 겹치는 속도가 없습니다.',
+    'MEMSSD': '실험 브랜치 codex/h100-minimaxm3-nvme-agentx 의 실행이고 SSD 예산은 8TB 입니다. 소프트웨어가 층마다 달라 저장 장치만의 효과가 아닙니다.',
     'AXHW': '전력과 원가는 InferenceX 대시보드 앱 코드(커밋 6f17111)의 값이고, 측정 점과 속도 범위는 '
             'API 스냅숏에서 셌습니다. 프런티어는 더 빠르면서 처리량도 큰 점이 있는 점을 버린 것입니다.',
     'AXMW': '처리량은 프런티어를 단조 곡선으로 보간한 값이고, 장수는 1,000킬로와트를 칩당 전력으로 '
@@ -825,6 +852,10 @@ def report_sx(sec, p, fig):
 
 def report_br(sec, p, fig):
     return _report(SRC_BR, 'model-br', LEAD_BR, GROUPS_BR, sec, p, fig)
+
+
+def report_axm(sec, p, fig):
+    return _report(SRC_AXM, 'model-axm', LEAD_AXM, GROUPS_AXM, sec, p, fig)
 
 
 def report_ax(sec, p, fig):

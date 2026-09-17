@@ -302,6 +302,12 @@ MODEL_EXTRA = [
     # AgentX 층(2026-09-17)의 재료 — 루빈 에이전틱 편과 AgentX 편
     os.path.join(_CLIP, 'Vera Rubin NVL72 Agentic Inference 67x better Performance per Dollar.md'),
     os.path.join(_CLIP, 'AgentX - InferenceXv3 Does CUDA Moat Hold up in Agentic Inferencing.md'),
+    # AgentX 메모리 층(2026-09-17)의 칩 규격 재료
+    os.path.join(_CLIP, 'CPUs are Back The Datacenter CPU Landscape in 2026.md'),
+    os.path.join(_CLIP, 'AMD Advancing AI MI350X and MI400 UALoE72, MI500 UAL256.md'),
+    os.path.join(ROOT, 'content', 'newsletter', 'ai_infra', 'compute',
+                 '[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md'),
+    os.path.join(ROOT, 'scratchpad', 'agentx_spec_facts.md'),
 ]
 
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
