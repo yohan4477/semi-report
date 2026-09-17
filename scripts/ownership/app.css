@@ -1,0 +1,72 @@
+/* 지분 대시보드 — 색은 회색만. 굵기가 지분 크기, 실선이 부모 선, 점선이 그 밖의 동일인측 선 */
+:root{--paper:#fff;--bg:#F1F2F4;--ink1:#1d2229;--ink2:#3d444e;--ink3:#6b737e;--ink4:#9aa1ab;
+--line:#cfd4da;--line2:#e3e6ea;--hi:#e6e8eb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink1);
+font:14px/1.6 "IBM Plex Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif;
+font-variant-numeric:tabular-nums}
+a{color:inherit;text-decoration:none;border-bottom:1px solid var(--line)}
+a:hover{border-bottom-color:var(--ink2)}
+.wrap{max-width:1400px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:22px;margin:0 0 4px;letter-spacing:-.3px}
+.meta{color:var(--ink3);font-size:13px;margin:0 0 14px}
+.meta b{color:var(--ink2);font-weight:600}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.bar button{font:inherit;font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:5px;
+background:var(--paper);color:var(--ink2);cursor:pointer}
+.bar button:hover{border-color:var(--ink3)}
+.bar input{font:inherit;font-size:13px;padding:5px 10px;border:1px solid var(--line);border-radius:5px;
+min-width:0;flex:1;max-width:260px;background:var(--paper)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink3);margin:0 0 10px}
+.legend svg{vertical-align:middle;margin-right:5px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:14px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:minmax(0,1fr)}}
+.board{background:var(--paper);border:1px solid var(--line2);border-radius:8px;overflow:auto;
+max-height:78vh;-webkit-overflow-scrolling:touch}
+.board svg{display:block}
+.nd{cursor:pointer}
+.nd rect.bx{fill:var(--paper);stroke:var(--line);stroke-width:1}
+.nd.listed rect.bx{stroke:var(--ink2);stroke-width:1.4}
+.nd.person rect.bx{fill:var(--hi);stroke:var(--ink3)}
+.nd.foreign rect.bx{stroke-dasharray:3 2}
+.nd text{font-size:12.5px;fill:var(--ink1);dominant-baseline:middle}
+.nd.listed text.nm{font-weight:600}
+.nd text.tag{font-size:10.5px;fill:var(--ink3)}
+.nd rect.more{fill:var(--ink2);stroke:none}
+.nd .more-t{font-size:10.5px;fill:#fff;text-anchor:middle}
+.nd.sel rect.bx{stroke:var(--ink1);stroke-width:2.2}
+.nd.dim{opacity:.35}
+.ed{fill:none;stroke:var(--ink4)}
+.ed.sec{stroke-dasharray:4 3}
+.ed.on{stroke:var(--ink1)}
+.ed.dim{opacity:.18}
+.pl{font-size:10.5px;fill:var(--ink2)}
+.pl.dim{opacity:.25}
+.panel{background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:14px 16px;
+position:sticky;top:12px;max-height:78vh;overflow:auto}
+.panel h2{font-size:16px;margin:0 0 2px}
+.panel .sub{font-size:12px;color:var(--ink3);margin:0 0 10px}
+.panel h3{font-size:12.5px;color:var(--ink3);font-weight:600;margin:14px 0 4px}
+.panel table{width:100%;border-collapse:collapse;font-size:12.5px}
+.panel td{padding:3px 0;border-bottom:1px solid var(--line2);vertical-align:top}
+.panel td.n{text-align:right;white-space:nowrap;padding-left:8px}
+.panel td .c{display:block;font-size:11px;color:var(--ink3)}
+.panel .empty{color:var(--ink3);font-size:13px}
+.panel .src{font-size:11.5px;color:var(--ink3);margin-top:12px;line-height:1.5}
+.moved{font-size:11px;color:var(--ink2)}
+.notes{margin-top:18px;background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:12px 16px;font-size:13px}
+.notes h2{font-size:14px;margin:0 0 6px}
+.notes .tw{overflow-x:auto}
+.notes table{border-collapse:collapse;font-size:12.5px;min-width:420px}
+.notes td,.notes th{padding:4px 10px 4px 0;border-bottom:1px solid var(--line2);text-align:left;white-space:nowrap}
+.notes th{color:var(--ink3);font-weight:600}
+.fam{background:var(--paper);border:1px solid var(--line2);border-radius:8px;padding:12px 16px;margin:0 0 12px}
+.fam h2{font-size:14px;margin:0 0 6px}
+.tw{overflow-x:auto}
+.fam table{border-collapse:collapse;font-size:13px}
+.fam th,.fam td{padding:5px 14px 5px 0;border-bottom:1px solid var(--line2);white-space:nowrap;text-align:right}
+.fam tr:first-child th{color:var(--ink3);font-weight:600;font-size:12px}
+.fam th:first-child{text-align:left;font-weight:600}
+.fam .r{font-size:11px;color:var(--ink3);font-weight:400}
+.fam td.z{color:var(--ink4)}
+.fam tr.sum th,.fam tr.sum td{border-bottom:0;color:var(--ink2);font-weight:600}

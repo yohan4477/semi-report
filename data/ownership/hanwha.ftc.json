@@ -1,0 +1,4297 @@
+{
+ "rcept_no": "20260529000294",
+ "report_nm": "대규모기업집단현황공시[연1회공시및1/4분기용(대표회사)]",
+ "rcept_dt": "20260529",
+ "basis": "금년도 지정일 기준",
+ "url": "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20260529000294",
+ "owners": [
+  {
+   "company": "(주)한화",
+   "cat": "동일인",
+   "name": "김승연",
+   "common": 8488979.0,
+   "common_pct": 12.04,
+   "pref": 1470000.0,
+   "pref_pct": 7.5,
+   "total": 9958979.0,
+   "total_pct": 11.05
+  },
+  {
+   "company": "(주)한화",
+   "cat": "배우자/혈족1촌",
+   "name": "김동관",
+   "common": 7322022.0,
+   "common_pct": 10.38,
+   "pref": 860654.0,
+   "pref_pct": 4.39,
+   "total": 8182676.0,
+   "total_pct": 9.08
+  },
+  {
+   "company": "(주)한화",
+   "cat": "배우자/혈족1촌",
+   "name": "김동선",
+   "common": 4029312.0,
+   "common_pct": 5.71,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4029312.0,
+   "total_pct": 4.47
+  },
+  {
+   "company": "(주)한화",
+   "cat": "배우자/혈족1촌",
+   "name": "김동원",
+   "common": 4029312.0,
+   "common_pct": 5.71,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4029312.0,
+   "total_pct": 4.47
+  },
+  {
+   "company": "(주)한화",
+   "cat": "비영리법인",
+   "name": "북일학원",
+   "common": 1371105.0,
+   "common_pct": 1.94,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1371105.0,
+   "total_pct": 1.52
+  },
+  {
+   "company": "(주)한화",
+   "cat": "등기된 임원",
+   "name": "김우석",
+   "common": 4100.0,
+   "common_pct": 0.01,
+   "pref": 216.0,
+   "pref_pct": 0.0,
+   "total": 4316.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "(주)한화",
+   "cat": "등기된 임원",
+   "name": "류두형",
+   "common": 8583.0,
+   "common_pct": 0.01,
+   "pref": 216.0,
+   "pref_pct": 0.0,
+   "total": 8799.0,
+   "total_pct": 0.01
+  },
+  {
+   "company": "(주)한화",
+   "cat": "자기주식",
+   "name": "(주)한화",
+   "common": 1132437.0,
+   "common_pct": 1.61,
+   "pref": 156425.0,
+   "pref_pct": 0.8,
+   "total": 1288862.0,
+   "total_pct": 1.43
+  },
+  {
+   "company": "(주)한화",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 16607919.0,
+   "common_pct": 23.55,
+   "pref": 1170479.0,
+   "pref_pct": 5.97,
+   "total": 17778398.0,
+   "total_pct": 19.73
+  },
+  {
+   "company": "(주)대전역세권개발피에프브이",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 8500000.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8500000.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "(주)대전역세권개발피에프브이",
+   "cat": "계열회사",
+   "name": "한화커넥트(주)",
+   "common": 1360000.0,
+   "common_pct": 8.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1360000.0,
+   "total_pct": 8.0
+  },
+  {
+   "company": "(주)대전역세권개발피에프브이",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 340000.0,
+   "common_pct": 2.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 340000.0,
+   "total_pct": 2.0
+  },
+  {
+   "company": "엣지코어피에프브이(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 900000.0,
+   "common_pct": 94.74,
+   "pref": null,
+   "pref_pct": null,
+   "total": 900000.0,
+   "total_pct": 90.0
+  },
+  {
+   "company": "에프티아이피에프브이(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 900000.0,
+   "common_pct": 94.74,
+   "pref": null,
+   "pref_pct": null,
+   "total": 900000.0,
+   "total_pct": 90.0
+  },
+  {
+   "company": "원주그린(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 1583646.0,
+   "common_pct": 49.57,
+   "pref": 98799.0,
+   "pref_pct": 100.0,
+   "total": 1682445.0,
+   "total_pct": 51.09
+  },
+  {
+   "company": "아산배방개발(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 700000.0,
+   "common_pct": 70.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 700000.0,
+   "total_pct": 70.0
+  },
+  {
+   "company": "에이치헤리티지(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 500000.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 500000.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "에이치헤리티지(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 500000.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 500000.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "에코이앤오(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 440000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 440000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "대전에코텍(주)",
+   "cat": "계열회사",
+   "name": "에코이앤오(주)",
+   "common": 20000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 20000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)에이치씨앤디",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 990000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 990000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)수서역환승센터복합개발",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 4644000.0,
+   "common_pct": 46.16,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4644000.0,
+   "total_pct": 46.16
+  },
+  {
+   "company": "(주)서울역북부역세권개발",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 7200000.0,
+   "common_pct": 40.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 7200000.0,
+   "total_pct": 40.0
+  },
+  {
+   "company": "(주)서울역북부역세권개발",
+   "cat": "계열회사",
+   "name": "한화커넥트(주)",
+   "common": 5220000.0,
+   "common_pct": 29.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 5220000.0,
+   "total_pct": 29.0
+  },
+  {
+   "company": "(주)서울역북부역세권개발",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 5220000.0,
+   "common_pct": 29.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 5220000.0,
+   "total_pct": 29.0
+  },
+  {
+   "company": "(주)서울역북부역세권개발",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 360000.0,
+   "common_pct": 2.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 360000.0,
+   "total_pct": 2.0
+  },
+  {
+   "company": "한화모멘텀(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 3000000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 3000000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화로보틱스(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 69074682.0,
+   "common_pct": 67.97,
+   "pref": null,
+   "pref_pct": null,
+   "total": 69074682.0,
+   "total_pct": 67.97
+  },
+  {
+   "company": "한화로보틱스(주)",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 32551846.0,
+   "common_pct": 32.03,
+   "pref": null,
+   "pref_pct": null,
+   "total": 32551846.0,
+   "total_pct": 32.03
+  },
+  {
+   "company": "한화비전(주)",
+   "cat": "자기주식",
+   "name": "한화비전(주)",
+   "common": 110848.0,
+   "common_pct": 0.22,
+   "pref": null,
+   "pref_pct": null,
+   "total": 110848.0,
+   "total_pct": 0.22
+  },
+  {
+   "company": "한화비전(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 17141530.0,
+   "common_pct": 33.95,
+   "pref": null,
+   "pref_pct": null,
+   "total": 17141530.0,
+   "total_pct": 33.95
+  },
+  {
+   "company": "한화세미텍(주)",
+   "cat": "계열회사",
+   "name": "한화비전(주)",
+   "common": 2710971.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2710971.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동관",
+   "common": 81400.0,
+   "common_pct": 0.05,
+   "pref": null,
+   "pref_pct": null,
+   "total": 81400.0,
+   "total_pct": 0.05
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "비영리법인",
+   "name": "북일학원",
+   "common": 260362.0,
+   "common_pct": 0.15,
+   "pref": null,
+   "pref_pct": null,
+   "total": 260362.0,
+   "total_pct": 0.15
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "등기된 임원",
+   "name": "남정운",
+   "common": 22926.0,
+   "common_pct": 0.01,
+   "pref": null,
+   "pref_pct": null,
+   "total": 22926.0,
+   "total_pct": 0.01
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "등기된 임원",
+   "name": "박승덕",
+   "common": 27149.0,
+   "common_pct": 0.02,
+   "pref": 81.0,
+   "pref_pct": 0.0,
+   "total": 27230.0,
+   "total_pct": 0.02
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "등기된 임원",
+   "name": "장재수",
+   "common": 2000.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "등기된 임원",
+   "name": "이아영",
+   "common": 2000.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "등기된 임원",
+   "name": "송광호",
+   "common": 2000.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "등기된 임원",
+   "name": "배성호",
+   "common": 2000.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "자기주식",
+   "name": "한화솔루션(주)",
+   "common": 2437481.0,
+   "common_pct": 1.42,
+   "pref": 30733.0,
+   "pref_pct": 1.19,
+   "total": 2468214.0,
+   "total_pct": 1.41
+  },
+  {
+   "company": "한화솔루션(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 62420460.0,
+   "common_pct": 36.31,
+   "pref": 641746.0,
+   "pref_pct": 24.92,
+   "total": 63062206.0,
+   "total_pct": 36.15
+  },
+  {
+   "company": "에이치씨씨홀딩스(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 3060000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 3060000.0,
+   "total_pct": 51.0
+  },
+  {
+   "company": "에이치씨씨홀딩스(주)",
+   "cat": "동일인측이 아닌 최다주주",
+   "name": "헤겔 유한회사",
+   "common": null,
+   "common_pct": null,
+   "pref": 2940000.0,
+   "pref_pct": 100.0,
+   "total": 2940000.0,
+   "total_pct": 49.0
+  },
+  {
+   "company": "한화케미칼오버시즈홀딩스(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 154000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 154000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화컴파운드(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 174513.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 174513.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화엔엑스엠디(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 10000000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 10000000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화이센셜(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 11284338.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 11284338.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화첨단소재(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 4340094.0,
+   "common_pct": 52.76,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4340094.0,
+   "total_pct": 52.76
+  },
+  {
+   "company": "에이치앤지케미칼(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 1465332.0,
+   "common_pct": 51.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1465332.0,
+   "total_pct": 51.0
+  },
+  {
+   "company": "(주)한화도시개발",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 3697667.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 3697667.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)제이용인테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 700000.0,
+   "common_pct": 70.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 700000.0,
+   "total_pct": 70.0
+  },
+  {
+   "company": "(주)제이용인테크노밸리",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 50000.0,
+   "common_pct": 5.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 50000.0,
+   "total_pct": 5.0
+  },
+  {
+   "company": "(주)제삼용인테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 750000.0,
+   "common_pct": 75.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 750000.0,
+   "total_pct": 75.0
+  },
+  {
+   "company": "(주)안성테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 150000.0,
+   "common_pct": 75.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 150000.0,
+   "total_pct": 75.0
+  },
+  {
+   "company": "(주)안성테크노밸리",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 10000.0,
+   "common_pct": 5.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 10000.0,
+   "total_pct": 5.0
+  },
+  {
+   "company": "(주)에이치밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 1632000.0,
+   "common_pct": 51.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1632000.0,
+   "total_pct": 51.0
+  },
+  {
+   "company": "(주)에이치밸리",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 1568000.0,
+   "common_pct": 49.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1568000.0,
+   "total_pct": 49.0
+  },
+  {
+   "company": "(주)경기용인테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 750000.0,
+   "common_pct": 75.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 750000.0,
+   "total_pct": 75.0
+  },
+  {
+   "company": "(주)경기용인테크노밸리",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 50000.0,
+   "common_pct": 5.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 50000.0,
+   "total_pct": 5.0
+  },
+  {
+   "company": "(주)서오창테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 146000.0,
+   "common_pct": 74.49,
+   "pref": null,
+   "pref_pct": null,
+   "total": 146000.0,
+   "total_pct": 73.0
+  },
+  {
+   "company": "(주)서오창테크노밸리",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 10000.0,
+   "common_pct": 5.1,
+   "pref": null,
+   "pref_pct": null,
+   "total": 10000.0,
+   "total_pct": 5.0
+  },
+  {
+   "company": "(주)안성테크노로지스틱스",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 4000000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4000000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)에이치테크노로지스틱스",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 40000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 40000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)알이씨데이터센터",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 190000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 190000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)김해테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 160000.0,
+   "common_pct": 80.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 160000.0,
+   "total_pct": 80.0
+  },
+  {
+   "company": "(주)에이치테크노밸리",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 800000.0,
+   "common_pct": 80.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 800000.0,
+   "total_pct": 80.0
+  },
+  {
+   "company": "(주)울산복합도시개발",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 1350000.0,
+   "common_pct": 45.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1350000.0,
+   "total_pct": 45.0
+  },
+  {
+   "company": "한화커넥트(주)",
+   "cat": "동일인",
+   "name": "김승연",
+   "common": 46197.0,
+   "common_pct": 0.71,
+   "pref": null,
+   "pref_pct": null,
+   "total": 46197.0,
+   "total_pct": 0.71
+  },
+  {
+   "company": "한화커넥트(주)",
+   "cat": "자기주식",
+   "name": "한화커넥트(주)",
+   "common": 2.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화커넥트(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 3164694.0,
+   "common_pct": 48.32,
+   "pref": null,
+   "pref_pct": null,
+   "total": 3164694.0,
+   "total_pct": 48.32
+  },
+  {
+   "company": "한화커넥트(주)",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 1240359.0,
+   "common_pct": 18.94,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1240359.0,
+   "total_pct": 18.94
+  },
+  {
+   "company": "알이100솔라팩토리1호(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 8800.0,
+   "common_pct": 40.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8800.0,
+   "total_pct": 40.0
+  },
+  {
+   "company": "알이100솔라팩토리1호(주)",
+   "cat": "동일인측이 아닌 최다주주",
+   "name": "중소기업은행(KIAMCO뉴딜인프라사모특별자산투자신탁제1호(일반)의 신탁업자 지위)",
+   "common": 8800.0,
+   "common_pct": 40.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8800.0,
+   "total_pct": 40.0
+  },
+  {
+   "company": "인사이트홀딩스(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 1000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "하이패스태양광(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 275400.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 275400.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "영암큐파워솔라팜1호(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 2300.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2300.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "하동햇빛나눔태양광발전(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 80000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 80000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "고북주민태양광발전(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 5121.0,
+   "common_pct": 90.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 5121.0,
+   "total_pct": 90.0
+  },
+  {
+   "company": "한화갤러리아(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동선",
+   "common": 32664643.0,
+   "common_pct": 16.6,
+   "pref": null,
+   "pref_pct": null,
+   "total": 32664643.0,
+   "total_pct": 16.6
+  },
+  {
+   "company": "한화갤러리아(주)",
+   "cat": "비영리법인",
+   "name": "북일학원",
+   "common": 293635.0,
+   "common_pct": 0.15,
+   "pref": null,
+   "pref_pct": null,
+   "total": 293635.0,
+   "total_pct": 0.15
+  },
+  {
+   "company": "한화갤러리아(주)",
+   "cat": "자기주식",
+   "name": "한화갤러리아(주)",
+   "common": 87914.0,
+   "common_pct": 0.04,
+   "pref": null,
+   "pref_pct": null,
+   "total": 87914.0,
+   "total_pct": 0.04
+  },
+  {
+   "company": "한화갤러리아(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 71121265.0,
+   "common_pct": 36.15,
+   "pref": null,
+   "pref_pct": null,
+   "total": 71121265.0,
+   "total_pct": 36.15
+  },
+  {
+   "company": "한화갤러리아(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 2698416.0,
+   "common_pct": 1.37,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2698416.0,
+   "total_pct": 1.37
+  },
+  {
+   "company": "(주)에프지코리아",
+   "cat": "계열회사",
+   "name": "한화갤러리아(주)",
+   "common": 2300000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2300000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)비노갤러리아",
+   "cat": "계열회사",
+   "name": "한화갤러리아(주)",
+   "common": 196000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 196000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "퓨어플러스(주)",
+   "cat": "계열회사",
+   "name": "한화갤러리아(주)",
+   "common": 62500.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 62500.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)한화갤러리아타임월드",
+   "cat": "계열회사",
+   "name": "한화갤러리아(주)",
+   "common": 6000133.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 6000133.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)베러스쿱크리머리",
+   "cat": "계열회사",
+   "name": "한화갤러리아(주)",
+   "common": 800000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 800000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화호텔앤드리조트(주)",
+   "cat": "비영리법인",
+   "name": "천안북일학원",
+   "common": 48184.0,
+   "common_pct": 0.39,
+   "pref": null,
+   "pref_pct": null,
+   "total": 48184.0,
+   "total_pct": 0.39
+  },
+  {
+   "company": "한화호텔앤드리조트(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 6164034.0,
+   "common_pct": 49.8,
+   "pref": null,
+   "pref_pct": null,
+   "total": 6164034.0,
+   "total_pct": 49.8
+  },
+  {
+   "company": "한화호텔앤드리조트(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 6135624.0,
+   "common_pct": 49.57,
+   "pref": null,
+   "pref_pct": null,
+   "total": 6135624.0,
+   "total_pct": 49.57
+  },
+  {
+   "company": "(주)우리집에프앤비",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 250001.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 250001.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "(주)우리집에프앤비",
+   "cat": "기타",
+   "name": "소셜솔루션(유)",
+   "common": null,
+   "common_pct": null,
+   "pref": 249999.0,
+   "pref_pct": 100.0,
+   "total": 249999.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "아쿠아플라넷(주)",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 100000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 100000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)제주해양과학관",
+   "cat": "계열회사",
+   "name": "아쿠아플라넷(주)",
+   "common": 2836626.0,
+   "common_pct": 89.9,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2836626.0,
+   "total_pct": 89.9
+  },
+  {
+   "company": "(주)제주해양과학관",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 154611.0,
+   "common_pct": 4.9,
+   "pref": null,
+   "pref_pct": null,
+   "total": 154611.0,
+   "total_pct": 4.9
+  },
+  {
+   "company": "(주)일산씨월드",
+   "cat": "계열회사",
+   "name": "아쿠아플라넷(주)",
+   "common": 1912000.0,
+   "common_pct": 53.11,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1912000.0,
+   "total_pct": 53.11
+  },
+  {
+   "company": "(주)일산씨월드",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 1656000.0,
+   "common_pct": 46.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1656000.0,
+   "total_pct": 46.0
+  },
+  {
+   "company": "(주)여수씨월드",
+   "cat": "계열회사",
+   "name": "아쿠아플라넷(주)",
+   "common": 1579800.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1579800.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "농업회사법인그린투모로우(주)",
+   "cat": "등기된 임원",
+   "name": "양안석",
+   "common": 113360.0,
+   "common_pct": 10.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 113360.0,
+   "total_pct": 10.0
+  },
+  {
+   "company": "농업회사법인그린투모로우(주)",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 1020240.0,
+   "common_pct": 90.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1020240.0,
+   "total_pct": 90.0
+  },
+  {
+   "company": "한화푸드테크(주)",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 4100000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4100000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)한화에스테이트서비스",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 180000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 180000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화넥스트(주)",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 200000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 200000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)케이비부산오시리아호텔위탁관리부동산투자회사",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 600000.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 600000.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "(주)정상북한산리조트",
+   "cat": "계열회사",
+   "name": "한화호텔앤드리조트(주)",
+   "common": 345000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 345000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)아워홈",
+   "cat": "계열회사",
+   "name": "우리집에프앤비(주)",
+   "common": 11550950.0,
+   "common_pct": 50.62,
+   "pref": null,
+   "pref_pct": null,
+   "total": 11550950.0,
+   "total_pct": 50.62
+  },
+  {
+   "company": "(주)크린누리",
+   "cat": "계열회사",
+   "name": "(주)아워홈",
+   "common": 2200000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2200000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)에프앤씨시스템",
+   "cat": "계열회사",
+   "name": "(주)아워홈",
+   "common": 100000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 100000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "고메드갤러리아(주)",
+   "cat": "계열회사",
+   "name": "(주)아워홈",
+   "common": 131300.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 131300.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화에너지(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동관",
+   "common": 67713340.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 67713340.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "한화에너지(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동원",
+   "common": 27085337.0,
+   "common_pct": 20.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 27085337.0,
+   "total_pct": 20.0
+  },
+  {
+   "company": "한화에너지(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동선",
+   "common": 13542668.0,
+   "common_pct": 10.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 13542668.0,
+   "total_pct": 10.0
+  },
+  {
+   "company": "부여바이오(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 468000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 468000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "여수에코에너지(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 7856000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 7856000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "여수에코파워(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 98000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 98000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "여수퓨어파워(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 98000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 98000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "대산그린에너지(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 4998000.0,
+   "common_pct": 49.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4998000.0,
+   "total_pct": 49.0
+  },
+  {
+   "company": "한화토탈에너지스(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 9582658.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 9582658.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "한화토탈에너지스(주)",
+   "cat": "동일인측이 아닌 최다주주",
+   "name": "TotalEnergies Holdings UK Limited",
+   "common": 9582658.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 9582658.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "(주)에스아이티테크",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 1800000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1800000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화신한테라와트아워(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 50001.0,
+   "common_pct": 33.33,
+   "pref": null,
+   "pref_pct": null,
+   "total": 50001.0,
+   "total_pct": 33.33
+  },
+  {
+   "company": "한화임팩트(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 22129168.0,
+   "common_pct": 52.07,
+   "pref": null,
+   "pref_pct": null,
+   "total": 22129168.0,
+   "total_pct": 52.07
+  },
+  {
+   "company": "한화임팩트(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 20371242.0,
+   "common_pct": 47.93,
+   "pref": null,
+   "pref_pct": null,
+   "total": 20371242.0,
+   "total_pct": 47.93
+  },
+  {
+   "company": "한화솔라파워(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 565200.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 565200.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "해모둠태양광(주)",
+   "cat": "계열회사",
+   "name": "한화솔라파워(주)",
+   "common": 255000.0,
+   "common_pct": 51.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 255000.0,
+   "total_pct": 51.0
+  },
+  {
+   "company": "석문호수상태양광(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 2887800.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2887800.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화솔라파워글로벌(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 38000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 38000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화임팩트글로벌(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 14636200.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 14636200.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "인천에이치투(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 1020000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1020000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)그로들",
+   "cat": "계열회사",
+   "name": "B123 Corporation",
+   "common": 165000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 165000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "파워시스템즈엠에프지코리아(유)",
+   "cat": "계열회사",
+   "name": "Hanwha Power US, LLC.",
+   "common": 6653000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 6653000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화파워(주)",
+   "cat": "계열회사",
+   "name": "Hanwha Power Holdings Corp.",
+   "common": 1110000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1110000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화엔진(주)",
+   "cat": "자기주식",
+   "name": "한화엔진(주)",
+   "common": 21607.0,
+   "common_pct": 0.03,
+   "pref": null,
+   "pref_pct": null,
+   "total": 21607.0,
+   "total_pct": 0.03
+  },
+  {
+   "company": "한화엔진(주)",
+   "cat": "계열회사",
+   "name": "한화임팩트(주)",
+   "common": 27345628.0,
+   "common_pct": 32.77,
+   "pref": null,
+   "pref_pct": null,
+   "total": 27345628.0,
+   "total_pct": 32.77
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동관",
+   "common": 4954.0,
+   "common_pct": 0.01,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4954.0,
+   "total_pct": 0.01
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "손재일",
+   "common": 11113.0,
+   "common_pct": 0.02,
+   "pref": null,
+   "pref_pct": null,
+   "total": 11113.0,
+   "total_pct": 0.02
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "전휴재",
+   "common": 50.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 50.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "권내현",
+   "common": 271.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 271.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "김동현",
+   "common": 1.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "김성조",
+   "common": 236.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 236.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "김종서",
+   "common": 150.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 150.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "김주일",
+   "common": 24.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 24.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "김진영",
+   "common": 1274.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1274.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "김철홍",
+   "common": 499.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 499.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "남정운",
+   "common": 50.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 50.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "박종태",
+   "common": 10.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 10.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "방정석",
+   "common": 6.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 6.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "안장혁",
+   "common": 129.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 129.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "오기환",
+   "common": 570.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 570.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "오동욱",
+   "common": 87.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 87.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "오세정",
+   "common": 37.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 37.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "유가영",
+   "common": 2.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "이권섭",
+   "common": 49.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 49.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "장세영",
+   "common": 15.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 15.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "전병근",
+   "common": 157.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 157.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "전연보",
+   "common": 50.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 50.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "정수미",
+   "common": 10.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 10.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "최승영",
+   "common": 1.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "등기된 임원",
+   "name": "황형주",
+   "common": 4.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 4.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "자기주식",
+   "name": "한화에어로스페이스(주)",
+   "common": 114613.0,
+   "common_pct": 0.22,
+   "pref": null,
+   "pref_pct": null,
+   "total": 114613.0,
+   "total_pct": 0.22
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 16595161.0,
+   "common_pct": 32.18,
+   "pref": null,
+   "pref_pct": null,
+   "total": 16595161.0,
+   "total_pct": 32.18
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "계열회사",
+   "name": "Hanwha Impact Partners Inc.",
+   "common": 1171584.0,
+   "common_pct": 2.27,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1171584.0,
+   "total_pct": 2.27
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "계열회사",
+   "name": "Hanwha Energy Corporation Singapore Pte. Ltd.",
+   "common": 380419.0,
+   "common_pct": 0.74,
+   "pref": null,
+   "pref_pct": null,
+   "total": 380419.0,
+   "total_pct": 0.74
+  },
+  {
+   "company": "한화에어로스페이스(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 163037.0,
+   "common_pct": 0.32,
+   "pref": null,
+   "pref_pct": null,
+   "total": 163037.0,
+   "total_pct": 0.32
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "등기된 임원",
+   "name": "손재일",
+   "common": 174.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 174.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "등기된 임원",
+   "name": "황형주",
+   "common": null,
+   "common_pct": null,
+   "pref": null,
+   "pref_pct": null,
+   "total": null,
+   "total_pct": null
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "등기된 임원",
+   "name": "이우종",
+   "common": null,
+   "common_pct": null,
+   "pref": null,
+   "pref_pct": null,
+   "total": null,
+   "total_pct": null
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "등기된 임원",
+   "name": "구본선",
+   "common": null,
+   "common_pct": null,
+   "pref": null,
+   "pref_pct": null,
+   "total": null,
+   "total_pct": null
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "등기된 임원",
+   "name": "김승모",
+   "common": 200.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 200.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "자기주식",
+   "name": "한화시스템(주)",
+   "common": 1926128.0,
+   "common_pct": 1.02,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1926128.0,
+   "total_pct": 1.02
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "계열회사",
+   "name": "한화에어로스페이스(주)",
+   "common": 88289321.0,
+   "common_pct": 46.73,
+   "pref": null,
+   "pref_pct": null,
+   "total": 88289321.0,
+   "total_pct": 46.73
+  },
+  {
+   "company": "한화시스템(주)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 24174187.0,
+   "common_pct": 12.8,
+   "pref": null,
+   "pref_pct": null,
+   "total": 24174187.0,
+   "total_pct": 12.8
+  },
+  {
+   "company": "바닐라스튜디오(주)",
+   "cat": "계열회사",
+   "name": "H-FOUNDATION PTE.LTD",
+   "common": 8992000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8992000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화오션(주)",
+   "cat": "자기주식",
+   "name": "한화오션(주)",
+   "common": 55587.0,
+   "common_pct": 0.02,
+   "pref": null,
+   "pref_pct": null,
+   "total": 55587.0,
+   "total_pct": 0.02
+  },
+  {
+   "company": "한화오션(주)",
+   "cat": "계열회사",
+   "name": "한화에어로스페이스(주)",
+   "common": 93277036.0,
+   "common_pct": 30.44,
+   "pref": null,
+   "pref_pct": null,
+   "total": 93277036.0,
+   "total_pct": 30.44
+  },
+  {
+   "company": "한화오션(주)",
+   "cat": "계열회사",
+   "name": "한화시스템(주)",
+   "common": 22169660.0,
+   "common_pct": 7.24,
+   "pref": null,
+   "pref_pct": null,
+   "total": 22169660.0,
+   "total_pct": 7.24
+  },
+  {
+   "company": "천장산풍력(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 222840.0,
+   "common_pct": 90.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 222840.0,
+   "total_pct": 90.0
+  },
+  {
+   "company": "보령녹도해상풍력(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 2000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "영광칠해해상풍력(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 2000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "신안우이해상풍력(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 134300000.0,
+   "common_pct": 43.89,
+   "pref": null,
+   "pref_pct": null,
+   "total": 134300000.0,
+   "total_pct": 43.89
+  },
+  {
+   "company": "영덕블루윈드(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 166000.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 166000.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "영덕블루윈드(주)",
+   "cat": "동일인측이 아닌 최다주주",
+   "name": "(주)세연",
+   "common": 166000.0,
+   "common_pct": 50.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 166000.0,
+   "total_pct": 50.0
+  },
+  {
+   "company": "고군산해상풍력(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 2000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화오션에코텍(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 8504250.0,
+   "common_pct": 98.51,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8504250.0,
+   "total_pct": 98.51
+  },
+  {
+   "company": "한화오션엔지니어링(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 1158711.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1158711.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "오션이앤아이(주)",
+   "cat": "계열회사",
+   "name": "한화오션(주)",
+   "common": 60000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 60000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)한화이글스",
+   "cat": "동일인",
+   "name": "김승연",
+   "common": 30000.0,
+   "common_pct": 10.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 30000.0,
+   "total_pct": 10.0
+  },
+  {
+   "company": "(주)한화이글스",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 120000.0,
+   "common_pct": 40.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 120000.0,
+   "total_pct": 40.0
+  },
+  {
+   "company": "(주)한화이글스",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 120000.0,
+   "common_pct": 40.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 120000.0,
+   "total_pct": 40.0
+  },
+  {
+   "company": "(주)한화이글스",
+   "cat": "계열회사",
+   "name": "(주)한화갤러리아타임월드",
+   "common": 30000.0,
+   "common_pct": 10.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 30000.0,
+   "total_pct": 10.0
+  },
+  {
+   "company": "한화위탁관리부동산투자회사(주)",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 54195444.0,
+   "common_pct": 30.18,
+   "pref": null,
+   "pref_pct": null,
+   "total": 54195444.0,
+   "total_pct": 30.18
+  },
+  {
+   "company": "한화위탁관리부동산투자회사(주)",
+   "cat": "계열회사",
+   "name": "한화손해보험(주)",
+   "common": 28736000.0,
+   "common_pct": 16.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 28736000.0,
+   "total_pct": 16.0
+  },
+  {
+   "company": "한화위탁관리부동산투자회사(주)",
+   "cat": "계열회사",
+   "name": "한화자산운용(주)",
+   "common": 1262248.0,
+   "common_pct": 0.7,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1262248.0,
+   "total_pct": 0.7
+  },
+  {
+   "company": "(주)한화육삼시티",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 2000000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2000000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)한화저축은행",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 61600000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 61600000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화에비에이션(주)",
+   "cat": "계열회사",
+   "name": "한화에어로스페이스(주)",
+   "common": 281109.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 281109.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "에이치글로벌파트너스(유)",
+   "cat": "계열회사",
+   "name": "한화에너지(주)",
+   "common": 40000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 40000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화생명보험(주)",
+   "cat": "배우자/혈족1촌",
+   "name": "김동원",
+   "common": 300000.0,
+   "common_pct": 0.03,
+   "pref": null,
+   "pref_pct": null,
+   "total": 300000.0,
+   "total_pct": 0.03
+  },
+  {
+   "company": "한화생명보험(주)",
+   "cat": "등기된 임원",
+   "name": "이경근",
+   "common": 120166.0,
+   "common_pct": 0.01,
+   "pref": null,
+   "pref_pct": null,
+   "total": 120166.0,
+   "total_pct": 0.01
+  },
+  {
+   "company": "한화생명보험(주)",
+   "cat": "등기된 임원",
+   "name": "유창민",
+   "common": 29100.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 29100.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화생명보험(주)",
+   "cat": "자기주식",
+   "name": "한화생명보험(주)",
+   "common": 117139750.0,
+   "common_pct": 13.49,
+   "pref": null,
+   "pref_pct": null,
+   "total": 117139750.0,
+   "total_pct": 13.49
+  },
+  {
+   "company": "한화생명보험(주)",
+   "cat": "계열회사",
+   "name": "(주)한화",
+   "common": 375519118.0,
+   "common_pct": 43.24,
+   "pref": null,
+   "pref_pct": null,
+   "total": 375519118.0,
+   "total_pct": 43.24
+  },
+  {
+   "company": "한화생명보험(주)",
+   "cat": "계열회사",
+   "name": "(주)한화갤러리아타임월드",
+   "common": 15204166.0,
+   "common_pct": 1.75,
+   "pref": null,
+   "pref_pct": null,
+   "total": 15204166.0,
+   "total_pct": 1.75
+  },
+  {
+   "company": "한화생명금융서비스(주)",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 45000000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 45000000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화손해사정(주)",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 100000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 100000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화자산운용(주)",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 214000000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 214000000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화손해보험(주)",
+   "cat": "등기된 임원",
+   "name": "나채범",
+   "common": 40000.0,
+   "common_pct": 0.03,
+   "pref": null,
+   "pref_pct": null,
+   "total": 40000.0,
+   "total_pct": 0.03
+  },
+  {
+   "company": "한화손해보험(주)",
+   "cat": "등기된 임원",
+   "name": "박성규",
+   "common": 105599.0,
+   "common_pct": 0.09,
+   "pref": null,
+   "pref_pct": null,
+   "total": 105599.0,
+   "total_pct": 0.07
+  },
+  {
+   "company": "한화손해보험(주)",
+   "cat": "자기주식",
+   "name": "한화손해보험(주)",
+   "common": 1118489.0,
+   "common_pct": 0.96,
+   "pref": null,
+   "pref_pct": null,
+   "total": 1118489.0,
+   "total_pct": 0.72
+  },
+  {
+   "company": "한화손해보험(주)",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 59957146.0,
+   "common_pct": 51.36,
+   "pref": 38000000.0,
+   "pref_pct": 100.0,
+   "total": 97957146.0,
+   "total_pct": 63.3
+  },
+  {
+   "company": "한화라이프랩(주)",
+   "cat": "계열회사",
+   "name": "한화생명보험(주)",
+   "common": 8400000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8400000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "(주)아이에프씨그룹",
+   "cat": "계열회사",
+   "name": "한화생명금융서비스(주)",
+   "common": 96600.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 96600.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "한화투자증권(주)",
+   "cat": "등기된 임원",
+   "name": "손종민",
+   "common": 8378.0,
+   "common_pct": 0.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 8378.0,
+   "total_pct": 0.0
+  },
+  {
+   "company": "한화투자증권(주)",
+   "cat": "자기주식",
+   "name": "한화투자증권(주)",
+   "common": 677387.0,
+   "common_pct": 0.31,
+   "pref": 600000.0,
+   "pref_pct": 100.0,
+   "total": 1277387.0,
+   "total_pct": 0.58
+  },
+  {
+   "company": "한화투자증권(주)",
+   "cat": "계열회사",
+   "name": "한화자산운용(주)",
+   "common": 99231824.0,
+   "common_pct": 45.36,
+   "pref": null,
+   "pref_pct": null,
+   "total": 99231824.0,
+   "total_pct": 45.24
+  },
+  {
+   "company": "한화인베스트먼트(주)",
+   "cat": "계열회사",
+   "name": "한화솔루션(주)",
+   "common": 747000.0,
+   "common_pct": 100.0,
+   "pref": null,
+   "pref_pct": null,
+   "total": 747000.0,
+   "total_pct": 100.0
+  },
+  {
+   "company": "히어로손해사정(주)",
+   "cat": "계열회사",
+   "name": "한화손해보험(주)",
+   "common": 2240000.0,
+   "common_pct": 85.11,
+   "pref": null,
+   "pref_pct": null,
+   "total": 2240000.0,
+   "total_pct": 70.0
+  },
+  {
+   "company": "히어로손해사정(주)",
+   "cat": "기타",
+   "name": "롯데손해보험(주)",
+   "common": 392000.0,
+   "common_pct": 14.89,
+   "pref": 568000.0,
+   "pref_pct": 100.0,
+   "total": 960000.0,
+   "total_pct": 30.0
+  },
+  {
+   "company": "피플라이프(주)",
+   "cat": "자기주식",
+   "name": "한화피플라이프(주)",
+   "common": null,
+   "common_pct": null,
+   "pref": 12230.0,
+   "pref_pct": 100.0,
+   "total": 12230.0,
+   "total_pct": 0.12
+  },
+  {
+   "company": "피플라이프(주)",
+   "cat": "계열회사",
+   "name": "한화생명금융서비스(주)",
+   "common": 10102745.0,
+   "common_pct": 99.18,
+   "pref": null,
+   "pref_pct": null,
+   "total": 10102745.0,
+   "total_pct": 99.06
+  }
+ ],
+ "matrix": [
+  {
+   "investor": "(주)한화",
+   "investee": "(주)한화",
+   "book": 38498.0,
+   "common_pct": 1.61,
+   "pref_pct": 78.59,
+   "total_pct": 1.43
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)대전역세권개발피에프브이",
+   "book": 40619.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "한화커넥트(주)",
+   "investee": "(주)대전역세권개발피에프브이",
+   "book": 6163.0,
+   "common_pct": 8.0,
+   "total_pct": 8.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "(주)대전역세권개발피에프브이",
+   "book": 1700.0,
+   "common_pct": 2.0,
+   "total_pct": 2.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "엣지코어피에프브이(주)",
+   "book": 4500.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "에프티아이피에프브이(주)",
+   "book": 4500.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "원주그린(주)",
+   "book": null,
+   "common_pct": 51.09,
+   "total_pct": 51.09
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "아산배방개발(주)",
+   "book": null,
+   "common_pct": 70.0,
+   "total_pct": 70.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "에이치헤리티지(주)",
+   "book": 500.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "에이치헤리티지(주)",
+   "book": null,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "에코이앤오(주)",
+   "book": 9759.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "에코이앤오(주)",
+   "investee": "대전에코텍(주)",
+   "book": 100.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)에이치씨앤디",
+   "book": 990.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)수서역환승센터복합개발",
+   "book": 21662.0,
+   "common_pct": 46.16,
+   "total_pct": 46.16
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)서울역북부역세권개발",
+   "book": 25525.0,
+   "common_pct": 29.0,
+   "total_pct": 29.0
+  },
+  {
+   "investor": "한화커넥트(주)",
+   "investee": "(주)서울역북부역세권개발",
+   "book": 22086.0,
+   "common_pct": 29.0,
+   "total_pct": 29.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "(주)서울역북부역세권개발",
+   "book": 1800.0,
+   "common_pct": 2.0,
+   "total_pct": 2.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화모멘텀(주)",
+   "book": 238293.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화로보틱스(주)",
+   "book": 62831.0,
+   "common_pct": 67.97,
+   "total_pct": 67.97
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "한화로보틱스(주)",
+   "book": 29609.0,
+   "common_pct": 32.0,
+   "total_pct": 32.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화비전(주)",
+   "book": 90837.0,
+   "common_pct": 33.95,
+   "total_pct": 33.95
+  },
+  {
+   "investor": "한화비전(주)",
+   "investee": "한화비전(주)",
+   "book": 3924.0,
+   "common_pct": 0.22,
+   "total_pct": 0.22
+  },
+  {
+   "investor": "한화비전(주)",
+   "investee": "한화세미텍(주)",
+   "book": 433021.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화솔루션(주)",
+   "book": 1273520.0,
+   "common_pct": 36.31,
+   "pref_pct": 24.92,
+   "total_pct": 36.15
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화솔루션(주)",
+   "book": 106157.0,
+   "common_pct": 1.42,
+   "pref_pct": 1.19,
+   "total_pct": 1.41
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "에이치씨씨홀딩스(주)",
+   "book": 133645.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화케미칼오버시즈홀딩스(주)",
+   "book": 95014.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화컴파운드(주)",
+   "book": 80851.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화엔엑스엠디(주)",
+   "book": 44951.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화이센셜(주)",
+   "book": 335593.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화첨단소재(주)",
+   "book": 400383.0,
+   "common_pct": 52.76,
+   "total_pct": 52.76
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "에이치앤지케미칼(주)",
+   "book": 146533.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)한화도시개발",
+   "book": 56875.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)제이용인테크노밸리",
+   "book": 250.0,
+   "common_pct": 5.0,
+   "total_pct": 5.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)제이용인테크노밸리",
+   "book": 3012.0,
+   "common_pct": 70.0,
+   "total_pct": 70.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)제삼용인테크노밸리",
+   "book": 3750.0,
+   "common_pct": 75.0,
+   "total_pct": 75.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)안성테크노밸리",
+   "book": 50.0,
+   "common_pct": 5.0,
+   "total_pct": 5.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)안성테크노밸리",
+   "book": null,
+   "common_pct": 75.0,
+   "total_pct": 75.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)에이치밸리",
+   "book": null,
+   "common_pct": 49.0,
+   "total_pct": 49.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)에이치밸리",
+   "book": 1122.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)경기용인테크노밸리",
+   "book": 250.0,
+   "common_pct": 5.0,
+   "total_pct": 5.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)경기용인테크노밸리",
+   "book": 6149.0,
+   "common_pct": 75.0,
+   "total_pct": 75.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)서오창테크노밸리",
+   "book": 50.0,
+   "common_pct": 5.0,
+   "total_pct": 5.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)서오창테크노밸리",
+   "book": null,
+   "common_pct": 73.0,
+   "total_pct": 73.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)안성테크노로지스틱스",
+   "book": 30816.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)에이치테크노로지스틱스",
+   "book": 200.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)알이씨데이터센터",
+   "book": 8600.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)김해테크노밸리",
+   "book": 800.0,
+   "common_pct": 80.0,
+   "total_pct": 80.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)에이치테크노밸리",
+   "book": 3536.0,
+   "common_pct": 80.0,
+   "total_pct": 80.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)울산복합도시개발",
+   "book": null,
+   "common_pct": 45.0,
+   "total_pct": 45.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화커넥트(주)",
+   "book": 191977.0,
+   "common_pct": 48.32,
+   "total_pct": 48.32
+  },
+  {
+   "investor": "한화커넥트(주)",
+   "investee": "한화커넥트(주)",
+   "book": 0.0,
+   "common_pct": 0.0,
+   "total_pct": 0.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "한화커넥트(주)",
+   "book": 77344.0,
+   "common_pct": 18.94,
+   "total_pct": 18.94
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "알이100솔라팩토리1호(주)",
+   "book": null,
+   "common_pct": 40.0,
+   "total_pct": 40.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "인사이트홀딩스(주)",
+   "book": 1000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "하이패스태양광(주)",
+   "book": 27717.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "영암큐파워솔라팜1호(주)",
+   "book": 1269.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "하동햇빛나눔태양광발전(주)",
+   "book": 400.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "고북주민태양광발전(주)",
+   "book": 2009.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화갤러리아(주)",
+   "book": 143627.0,
+   "common_pct": 36.31,
+   "pref_pct": 24.92,
+   "total_pct": 36.15
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화갤러리아(주)",
+   "book": 6476.0,
+   "common_pct": 1.39,
+   "pref_pct": 0.37,
+   "total_pct": 1.37
+  },
+  {
+   "investor": "한화갤러리아(주)",
+   "investee": "한화갤러리아(주)",
+   "book": 230.0,
+   "common_pct": 0.04,
+   "pref_pct": 0.19,
+   "total_pct": 0.04
+  },
+  {
+   "investor": "한화갤러리아(주)",
+   "investee": "(주)에프지코리아",
+   "book": 24000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화갤러리아(주)",
+   "investee": "(주)비노갤러리아",
+   "book": 5500.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화갤러리아(주)",
+   "investee": "퓨어플러스(주)",
+   "book": 14618.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화갤러리아(주)",
+   "investee": "(주)한화갤러리아타임월드",
+   "book": 163295.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화갤러리아(주)",
+   "investee": "(주)베러스쿱크리머리",
+   "book": 40000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화호텔앤드리조트(주)",
+   "book": 249132.0,
+   "common_pct": 49.8,
+   "total_pct": 49.8
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화호텔앤드리조트(주)",
+   "book": 560001.0,
+   "common_pct": 49.57,
+   "total_pct": 49.57
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "한화호텔앤드리조트(주)",
+   "book": 1092.0,
+   "common_pct": 0.16,
+   "total_pct": 0.16
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "(주)우리집에프앤비",
+   "book": 250001.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "아쿠아플라넷(주)",
+   "book": 44354.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)제주해양과학관",
+   "book": null,
+   "common_pct": 4.9,
+   "total_pct": 4.9
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)일산씨월드",
+   "book": null,
+   "common_pct": 46.0,
+   "total_pct": 46.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "농업회사법인그린투모로우(주)",
+   "book": 3447.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "한화푸드테크(주)",
+   "book": 59278.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "(주)한화에스테이트서비스",
+   "book": 900.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "한화넥스트(주)",
+   "book": 139732.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "(주)케이비부산오시리아호텔위탁관리부동산투자회사",
+   "book": 15000.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "한화호텔앤드리조트(주)",
+   "investee": "(주)정상북한산리조트",
+   "book": 30000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)우리집에프앤비",
+   "investee": "(주)아워홈",
+   "book": 750811.0,
+   "common_pct": 50.62,
+   "total_pct": 50.62
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화임팩트(주)",
+   "book": 3594751.0,
+   "common_pct": 47.93,
+   "total_pct": 47.93
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화에어로스페이스(주)",
+   "book": 1500245.0,
+   "common_pct": 32.18,
+   "total_pct": 32.18
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "(주)한화이글스",
+   "book": null,
+   "common_pct": 40.0,
+   "total_pct": 40.0
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "(주)한화이글스",
+   "book": 4130.0,
+   "common_pct": 40.0,
+   "total_pct": 40.0
+  },
+  {
+   "investor": "(주)한화갤러리아타임월드",
+   "investee": "(주)한화이글스",
+   "book": null,
+   "common_pct": 10.0,
+   "total_pct": 10.0
+  },
+  {
+   "investor": "(주)한화",
+   "investee": "한화생명보험(주)",
+   "book": 1449073.0,
+   "common_pct": 43.24,
+   "total_pct": 43.24
+  },
+  {
+   "investor": "(주)한화갤러리아타임월드",
+   "investee": "한화생명보험(주)",
+   "book": 74272.0,
+   "common_pct": 1.75,
+   "total_pct": 1.75
+  },
+  {
+   "investor": "한화솔루션(주)",
+   "investee": "한화인베스트먼트(주)",
+   "book": 4000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "(주)한화",
+   "book": 456799.0,
+   "common_pct": 23.55,
+   "pref_pct": 5.97,
+   "total_pct": 19.73
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "(주)서울역북부역세권개발",
+   "book": 29831.0,
+   "common_pct": 40.0,
+   "total_pct": 40.0
+  },
+  {
+   "investor": "아쿠아플라넷(주)",
+   "investee": "(주)제주해양과학관",
+   "book": 17633.0,
+   "common_pct": 89.9,
+   "total_pct": 89.9
+  },
+  {
+   "investor": "아쿠아플라넷(주)",
+   "investee": "(주)일산씨월드",
+   "book": null,
+   "common_pct": 53.11,
+   "total_pct": 53.11
+  },
+  {
+   "investor": "아쿠아플라넷(주)",
+   "investee": "(주)여수씨월드",
+   "book": 8077.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)아워홈",
+   "investee": "(주)크린누리",
+   "book": 1192.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)아워홈",
+   "investee": "(주)에프앤씨시스템",
+   "book": 130.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "(주)아워홈",
+   "investee": "고메드갤러리아(주)",
+   "book": 131300.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "부여바이오(주)",
+   "book": 23400.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "여수에코에너지(주)",
+   "book": 39280.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "여수에코파워(주)",
+   "book": 490.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "여수퓨어파워(주)",
+   "book": 490.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "대산그린에너지(주)",
+   "book": 24990.0,
+   "common_pct": 49.0,
+   "total_pct": 49.0
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "한화토탈에너지스(주)",
+   "book": 1501685.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "(주)에스아이티테크",
+   "book": 2947.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "한화신한테라와트아워(주)",
+   "book": 4497.0,
+   "common_pct": 33.33,
+   "total_pct": 33.33
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "한화임팩트(주)",
+   "book": 1114745.0,
+   "common_pct": 52.07,
+   "total_pct": 52.07
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "한화솔라파워(주)",
+   "book": 4820.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화솔라파워(주)",
+   "investee": "해모둠태양광(주)",
+   "book": 1275.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "석문호수상태양광(주)",
+   "book": 13393.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "한화솔라파워글로벌(주)",
+   "book": 5583.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "한화임팩트글로벌(주)",
+   "book": 5466771.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "인천에이치투(주)",
+   "book": 99182.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화임팩트(주)",
+   "investee": "한화엔진(주)",
+   "book": 314183.0,
+   "common_pct": 32.77,
+   "total_pct": 32.77
+  },
+  {
+   "investor": "한화엔진(주)",
+   "investee": "한화엔진(주)",
+   "book": 1901.0,
+   "common_pct": 0.03,
+   "total_pct": 0.03
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "한화에어로스페이스(주)",
+   "book": 203633.0,
+   "common_pct": 0.32,
+   "total_pct": 0.32
+  },
+  {
+   "investor": "한화에어로스페이스(주)",
+   "investee": "한화에어로스페이스(주)",
+   "book": 21020.0,
+   "common_pct": 0.22,
+   "total_pct": 0.22
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "한화시스템(주)",
+   "book": 2758275.0,
+   "common_pct": 12.8,
+   "total_pct": 12.8
+  },
+  {
+   "investor": "한화에어로스페이스(주)",
+   "investee": "한화시스템(주)",
+   "book": 1003013.0,
+   "common_pct": 46.73,
+   "total_pct": 46.73
+  },
+  {
+   "investor": "한화시스템(주)",
+   "investee": "한화시스템(주)",
+   "book": 34121.0,
+   "common_pct": 1.02,
+   "total_pct": 1.02
+  },
+  {
+   "investor": "한화에어로스페이스(주)",
+   "investee": "한화오션(주)",
+   "book": 3468824.0,
+   "common_pct": 30.44,
+   "total_pct": 30.44
+  },
+  {
+   "investor": "한화시스템(주)",
+   "investee": "한화오션(주)",
+   "book": 2664793.0,
+   "common_pct": 7.24,
+   "total_pct": 7.24
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "한화오션(주)",
+   "book": 5839.0,
+   "common_pct": 0.02,
+   "total_pct": 0.02
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "천장산풍력(주)",
+   "book": 756.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "보령녹도해상풍력(주)",
+   "book": null,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "영광칠해해상풍력(주)",
+   "book": 10.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "신안우이해상풍력(주)",
+   "book": 136284.0,
+   "common_pct": 43.89,
+   "total_pct": 43.89
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "영덕블루윈드(주)",
+   "book": 830.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "고군산해상풍력(주)",
+   "book": 10.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "한화오션에코텍(주)",
+   "book": 172200.0,
+   "common_pct": 98.51,
+   "total_pct": 98.51
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "한화오션엔지니어링(주)",
+   "book": 11497.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화오션(주)",
+   "investee": "오션이앤아이(주)",
+   "book": 300.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에어로스페이스(주)",
+   "investee": "한화에비에이션(주)",
+   "book": 140555.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화에너지(주)",
+   "investee": "에이치글로벌파트너스(유)",
+   "book": 760.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화",
+   "book": 495297.0,
+   "common_pct": 25.16,
+   "pref_pct": 84.56,
+   "total_pct": 21.16
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)대전역세권개발피에프브이",
+   "book": 48482.0,
+   "common_pct": 60.0,
+   "total_pct": 60.0
+  },
+  {
+   "investor": "소계",
+   "investee": "엣지코어피에프브이(주)",
+   "book": 4500.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "소계",
+   "investee": "에프티아이피에프브이(주)",
+   "book": 4500.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "소계",
+   "investee": "원주그린(주)",
+   "book": null,
+   "common_pct": 51.09,
+   "total_pct": 51.09
+  },
+  {
+   "investor": "소계",
+   "investee": "아산배방개발(주)",
+   "book": null,
+   "common_pct": 70.0,
+   "total_pct": 70.0
+  },
+  {
+   "investor": "소계",
+   "investee": "에이치헤리티지(주)",
+   "book": 500.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "에코이앤오(주)",
+   "book": 9759.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "대전에코텍(주)",
+   "book": 100.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에이치씨앤디",
+   "book": 990.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)수서역환승센터복합개발",
+   "book": 21662.0,
+   "common_pct": 46.16,
+   "total_pct": 46.16
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)서울역북부역세권개발",
+   "book": 79242.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화모멘텀(주)",
+   "book": 238293.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화로보틱스(주)",
+   "book": 92440.0,
+   "common_pct": 99.97,
+   "total_pct": 99.97
+  },
+  {
+   "investor": "소계",
+   "investee": "한화비전(주)",
+   "book": 94761.0,
+   "common_pct": 34.17,
+   "total_pct": 34.17
+  },
+  {
+   "investor": "소계",
+   "investee": "한화세미텍(주)",
+   "book": 433021.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화솔루션(주)",
+   "book": 1379677.0,
+   "common_pct": 37.73,
+   "pref_pct": 26.11,
+   "total_pct": 37.56
+  },
+  {
+   "investor": "소계",
+   "investee": "에이치씨씨홀딩스(주)",
+   "book": 133645.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화케미칼오버시즈홀딩스(주)",
+   "book": 95014.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화컴파운드(주)",
+   "book": 80851.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화엔엑스엠디(주)",
+   "book": 44951.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화이센셜(주)",
+   "book": 335593.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화첨단소재(주)",
+   "book": 400383.0,
+   "common_pct": 52.76,
+   "total_pct": 52.76
+  },
+  {
+   "investor": "소계",
+   "investee": "에이치앤지케미칼(주)",
+   "book": 146533.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화도시개발",
+   "book": 56875.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)제이용인테크노밸리",
+   "book": 3262.0,
+   "common_pct": 75.0,
+   "total_pct": 75.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)제삼용인테크노밸리",
+   "book": 3750.0,
+   "common_pct": 75.0,
+   "total_pct": 75.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)안성테크노밸리",
+   "book": 50.0,
+   "common_pct": 80.0,
+   "total_pct": 80.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에이치밸리",
+   "book": 1122.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)경기용인테크노밸리",
+   "book": 6399.0,
+   "common_pct": 80.0,
+   "total_pct": 80.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)서오창테크노밸리",
+   "book": 50.0,
+   "common_pct": 78.0,
+   "total_pct": 78.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)안성테크노로지스틱스",
+   "book": 30816.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에이치테크노로지스틱스",
+   "book": 200.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)알이씨데이터센터",
+   "book": 8600.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)김해테크노밸리",
+   "book": 800.0,
+   "common_pct": 80.0,
+   "total_pct": 80.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에이치테크노밸리",
+   "book": 3536.0,
+   "common_pct": 80.0,
+   "total_pct": 80.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)울산복합도시개발",
+   "book": null,
+   "common_pct": 45.0,
+   "total_pct": 45.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화커넥트(주)",
+   "book": 269321.0,
+   "common_pct": 67.26,
+   "total_pct": 67.26
+  },
+  {
+   "investor": "소계",
+   "investee": "알이100솔라팩토리1호(주)",
+   "book": null,
+   "common_pct": 40.0,
+   "total_pct": 40.0
+  },
+  {
+   "investor": "소계",
+   "investee": "인사이트홀딩스(주)",
+   "book": 1000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "하이패스태양광(주)",
+   "book": 27717.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "영암큐파워솔라팜1호(주)",
+   "book": 1269.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "하동햇빛나눔태양광발전(주)",
+   "book": 400.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "고북주민태양광발전(주)",
+   "book": 2009.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화갤러리아(주)",
+   "book": 150333.0,
+   "common_pct": 37.74,
+   "pref_pct": 25.48,
+   "total_pct": 37.56
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에프지코리아",
+   "book": 24000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)비노갤러리아",
+   "book": 5500.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "퓨어플러스(주)",
+   "book": 14618.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화갤러리아타임월드",
+   "book": 163295.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)베러스쿱크리머리",
+   "book": 40000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화호텔앤드리조트(주)",
+   "book": 810225.0,
+   "common_pct": 99.53,
+   "total_pct": 99.53
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)우리집에프앤비",
+   "book": 250001.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "소계",
+   "investee": "아쿠아플라넷(주)",
+   "book": 44354.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)제주해양과학관",
+   "book": 17633.0,
+   "common_pct": 94.8,
+   "total_pct": 94.8
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)일산씨월드",
+   "book": null,
+   "common_pct": 99.11,
+   "total_pct": 99.11
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)여수씨월드",
+   "book": 8077.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "농업회사법인그린투모로우(주)",
+   "book": 3447.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화푸드테크(주)",
+   "book": 59278.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화에스테이트서비스",
+   "book": 900.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화넥스트(주)",
+   "book": 139732.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)케이비부산오시리아호텔위탁관리부동산투자회사",
+   "book": 15000.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)정상북한산리조트",
+   "book": 30000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)아워홈",
+   "book": 750811.0,
+   "common_pct": 50.62,
+   "total_pct": 50.62
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)크린누리",
+   "book": 1192.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에프앤씨시스템",
+   "book": 130.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "고메드갤러리아(주)",
+   "book": 131300.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "부여바이오(주)",
+   "book": 23400.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "여수에코에너지(주)",
+   "book": 39280.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "여수에코파워(주)",
+   "book": 490.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "여수퓨어파워(주)",
+   "book": 490.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "대산그린에너지(주)",
+   "book": 24990.0,
+   "common_pct": 49.0,
+   "total_pct": 49.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화토탈에너지스(주)",
+   "book": 1501685.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)에스아이티테크",
+   "book": 2947.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화신한테라와트아워(주)",
+   "book": 4497.0,
+   "common_pct": 33.33,
+   "total_pct": 33.33
+  },
+  {
+   "investor": "소계",
+   "investee": "한화임팩트(주)",
+   "book": 4709496.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화솔라파워(주)",
+   "book": 4820.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "해모둠태양광(주)",
+   "book": 1275.0,
+   "common_pct": 51.0,
+   "total_pct": 51.0
+  },
+  {
+   "investor": "소계",
+   "investee": "석문호수상태양광(주)",
+   "book": 13393.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화솔라파워글로벌(주)",
+   "book": 5583.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화임팩트글로벌(주)",
+   "book": 5466771.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "인천에이치투(주)",
+   "book": 99182.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화엔진(주)",
+   "book": 316084.0,
+   "common_pct": 32.8,
+   "total_pct": 32.8
+  },
+  {
+   "investor": "소계",
+   "investee": "한화에어로스페이스(주)",
+   "book": 1724898.0,
+   "common_pct": 32.72,
+   "total_pct": 32.72
+  },
+  {
+   "investor": "소계",
+   "investee": "한화시스템(주)",
+   "book": 3795409.0,
+   "common_pct": 60.55,
+   "total_pct": 60.55
+  },
+  {
+   "investor": "소계",
+   "investee": "한화오션(주)",
+   "book": 6139456.0,
+   "common_pct": 37.7,
+   "total_pct": 37.7
+  },
+  {
+   "investor": "소계",
+   "investee": "천장산풍력(주)",
+   "book": 756.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "소계",
+   "investee": "보령녹도해상풍력(주)",
+   "book": null,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "영광칠해해상풍력(주)",
+   "book": 10.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "신안우이해상풍력(주)",
+   "book": 136284.0,
+   "common_pct": 43.89,
+   "total_pct": 43.89
+  },
+  {
+   "investor": "소계",
+   "investee": "영덕블루윈드(주)",
+   "book": 830.0,
+   "common_pct": 50.0,
+   "total_pct": 50.0
+  },
+  {
+   "investor": "소계",
+   "investee": "고군산해상풍력(주)",
+   "book": 10.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화오션에코텍(주)",
+   "book": 172200.0,
+   "common_pct": 98.51,
+   "total_pct": 98.51
+  },
+  {
+   "investor": "소계",
+   "investee": "한화오션엔지니어링(주)",
+   "book": 11497.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "오션이앤아이(주)",
+   "book": 300.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화이글스",
+   "book": 4130.0,
+   "common_pct": 90.0,
+   "total_pct": 90.0
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화위탁관리부동산투자회사(주)",
+   "book": 239016.0,
+   "common_pct": 30.18,
+   "total_pct": 30.18
+  },
+  {
+   "investor": "한화손해보험(주)",
+   "investee": "한화위탁관리부동산투자회사(주)",
+   "book": 171554.0,
+   "common_pct": 16.0,
+   "total_pct": 16.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화위탁관리부동산투자회사(주)",
+   "book": 410570.0,
+   "common_pct": 46.18,
+   "total_pct": 46.18
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "(주)한화육삼시티",
+   "book": 17592.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화육삼시티",
+   "book": 17592.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "(주)한화저축은행",
+   "book": 178517.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)한화저축은행",
+   "book": 178517.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화에비에이션(주)",
+   "book": 140555.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "에이치글로벌파트너스(유)",
+   "book": 760.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화생명보험(주)",
+   "book": 1523345.0,
+   "common_pct": 13.49,
+   "total_pct": 13.49
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화생명보험(주)",
+   "book": 924085.0,
+   "common_pct": 13.49,
+   "total_pct": 13.49
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화생명금융서비스(주)",
+   "book": 778465.0,
+   "common_pct": 100.0,
+   "pref_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화생명금융서비스(주)",
+   "book": 778465.0,
+   "common_pct": 100.0,
+   "pref_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화손해사정(주)",
+   "book": 4248.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화손해사정(주)",
+   "book": 4248.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화자산운용(주)",
+   "book": 1092861.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화자산운용(주)",
+   "book": 1092861.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화손해보험(주)",
+   "book": 562669.0,
+   "common_pct": 51.36,
+   "pref_pct": 100.0,
+   "total_pct": 63.3
+  },
+  {
+   "investor": "한화손해보험(주)",
+   "investee": "한화손해보험(주)",
+   "book": 5455.0,
+   "common_pct": 0.96,
+   "total_pct": 0.72
+  },
+  {
+   "investor": "소계",
+   "investee": "한화손해보험(주)",
+   "book": null,
+   "common_pct": 52.32,
+   "pref_pct": 100.0,
+   "total_pct": 64.02
+  },
+  {
+   "investor": "한화생명보험(주)",
+   "investee": "한화라이프랩(주)",
+   "book": 47826.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "한화라이프랩(주)",
+   "book": null,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화생명금융서비스(주)",
+   "investee": "(주)아이에프씨그룹",
+   "book": 73822.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "소계",
+   "investee": "(주)아이에프씨그룹",
+   "book": null,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화자산운용(주)",
+   "investee": "한화투자증권(주)",
+   "book": 521049.0,
+   "common_pct": 45.24,
+   "total_pct": 45.24
+  },
+  {
+   "investor": "한화투자증권(주)",
+   "investee": "한화투자증권(주)",
+   "book": 9037.0,
+   "common_pct": 0.31,
+   "pref_pct": 100.0,
+   "total_pct": 0.58
+  },
+  {
+   "investor": "소계",
+   "investee": "한화투자증권(주)",
+   "book": null,
+   "common_pct": 46.39,
+   "pref_pct": 107.6,
+   "total_pct": 45.82
+  },
+  {
+   "investor": "소계",
+   "investee": "한화인베스트먼트(주)",
+   "book": 4000.0,
+   "common_pct": 100.0,
+   "total_pct": 100.0
+  },
+  {
+   "investor": "한화손해보험(주)",
+   "investee": "히어로손해사정(주)",
+   "book": 11200.0,
+   "common_pct": 85.11,
+   "total_pct": 70.0
+  },
+  {
+   "investor": "소계",
+   "investee": "히어로손해사정(주)",
+   "book": null,
+   "common_pct": 85.11,
+   "total_pct": 70.0
+  },
+  {
+   "investor": "한화생명금융서비스(주)",
+   "investee": "한화피플라이프(주)",
+   "book": 258110.0,
+   "common_pct": 99.06,
+   "total_pct": 99.06
+  },
+  {
+   "investor": "소계",
+   "investee": "한화피플라이프(주)",
+   "book": 306.0,
+   "common_pct": 99.06,
+   "pref_pct": 0.12,
+   "total_pct": 99.18
+  },
+  {
+   "investor": "한화피플라이프(주)",
+   "investee": "한화피플라이프(주)",
+   "book": null,
+   "pref_pct": 0.12,
+   "total_pct": 0.12
+  }
+ ]
+}

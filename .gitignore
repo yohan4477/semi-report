@@ -18,3 +18,8 @@ _workspace/
 
 # 클리핑 원본 이미지 — 스크립트로 다시 받는다 (scripts/fetch_clip_images.py)
 input/clip-images/
+
+.env
+
+# 지분 대시보드 공시 원문 캐시(DART 응답·공시 문서 zip) — 수집기가 다시 받는다
+data/ownership/raw/
