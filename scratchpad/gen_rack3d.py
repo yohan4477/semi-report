@@ -334,6 +334,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 const P = __PARTS__;
 const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
@@ -360,6 +364,18 @@ sun.shadow.bias = -0.0004; scene.add(sun); scene.add(sun.target);
 const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMaterial({opacity: .18}));
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const outline = new OutlinePass(new THREE.Vector2(640, 480), scene, camera);
+outline.edgeStrength = 5; outline.edgeGlow = 0.25; outline.edgeThickness = 1.6; outline.pulsePeriod = 0;
+composer.addPass(outline);
+composer.addPass(new OutputPass());
+function themeColors(){
+  scene.background = null; renderer.setClearColor(0x000000, 0);
+  outline.visibleEdgeColor.set(css('--ink')); outline.hiddenEdgeColor.set(css('--ink3'));
+  dirty = true;
+}
+let hovered = null;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
 const KINDMAT = {swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
@@ -649,9 +665,11 @@ function layout(){
 function paint(){
   for (const m of items){
     const on = selected && m.userData.id === selected;
-    m.material.color = on ? new THREE.Color(css('--sel')) : tone(m.userData.t);
-    m.material.emissive = new THREE.Color(on ? 0x1a1a1a : 0x000000);
+    m.material.color = tone(m.userData.t);
+    if (on) m.material.color.lerp(new THREE.Color(css('--sel')), 0.35);
+    m.material.emissive = new THREE.Color(0x000000);
   }
+  outline.selectedObjects = items.filter(m => m.userData.id === selected || (hovered && m.userData.id === hovered));
   dirty = true;
 }
 
@@ -730,6 +748,8 @@ canvas.addEventListener('pointermove', ev => {
   const {hit, x, y} = pick(ev);
   if (hit){ tip.style.display='block'; tip.textContent = P[hit.object.userData.id].name; tip.style.left = (x+12)+'px'; tip.style.top = (y+12)+'px'; canvas.style.cursor='pointer'; }
   else { tip.style.display='none'; canvas.style.cursor='grab'; }
+  const hid = hit ? hit.object.userData.id : null;
+  if (hid !== hovered) { hovered = hid; paint(); }
 });
 let down = null;
 canvas.addEventListener('pointerdown', ev => { down = [ev.clientX, ev.clientY]; });
@@ -758,10 +778,12 @@ function resize(){
   if (canvas.width !== Math.floor(w*renderer.getPixelRatio()) || canvas.height !== Math.floor(h*renderer.getPixelRatio())){
     const first = canvas.width === 300 && canvas.height === 150;
     renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); dirty = true;
+    composer.setSize(w, h); composer.setPixelRatio(renderer.getPixelRatio());
     if (!first && group && !walk) { clearTimeout(resize.t); resize.t = setTimeout(refit, 200); }
   }
 }
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { themeColors(); paint(); });
+themeColors();
 controls.addEventListener('change', () => { dirty = true; });
 // ── 메모리 계층 보기 — 컴퓨트 트레이 단에서 HBM · SOCAMM · BlueField-4 · E1.S 만 남기고 길을 흐르게 한다
 let tiersOn = false, overlay = null;
@@ -839,7 +861,7 @@ function focusBox(ids){
   if (b.isEmpty()) return null;
   // 부품 하나만 담으면 너무 붙으므로 주변을 조금 남긴다
   const whole = new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3());
-  const sz = b.getSize(new THREE.Vector3()).max(whole.getSize(new THREE.Vector3()).multiplyScalar(0.35));
+  const sz = b.getSize(new THREE.Vector3()).max(whole.getSize(new THREE.Vector3()).multiplyScalar(0.6));
   return new THREE.Box3().setFromCenterAndSize(c, sz);
 }
 function tourGo(i){
@@ -951,7 +973,7 @@ function loop(t){
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
     dirty = true;
   }
-  if (dirty) { renderer.render(scene, camera); dirty = false; }
+  if (dirty) { composer.render(); dirty = false; }
   requestAnimationFrame(loop);
 }
 const start = (location.hash || '').slice(1);
