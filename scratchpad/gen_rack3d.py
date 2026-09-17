@@ -32,6 +32,12 @@ P = {
                      spec='10MW 를 GPU 한 장 3.3kW(총전력)로 나누면 3,030장, 랙 하나 72장으로 나누면 42대. '
                           '3.3kW 는 InferenceX 대시보드 앱의 칩 상수, 10MW 조건은 루빈 에이전틱 글의 함대 비교다. 줄 배치는 도식',
                      cite='모델링 층 ㉔ check_agentx · 루빈 에이전틱 영문 L152', child='rack'),
+    'coolant': dict(name='냉각수 공급·회수관', count='줄마다 2', kind='schema',
+                    spec='랙은 100% 액체 냉각이고 트레이마다 좌측 후면 UQD 로 들어와 우측으로 나간다. 홀 배관의 위치·굵기·흐름 방향은 원문에 없어 줄 위 두 관으로만 그렸다. 띠가 움직이는 쪽이 흐름',
+                    cite=R + ' L360·L458'),
+    'busway': dict(name='전력 레일', count='줄마다 1', kind='schema',
+                   spec='랙 전력 셸프가 3상 415~480VAC 를 받아 50VDC 로 낮춘다. 홀 전력선이 레일인지 케이블인지는 원문에 없어 줄 위 레일로만 그렸다',
+                   cite=R + ' L523'),
     'aisle': dict(name='통로 바닥', count='—', kind='schema',
                   spec='랙 줄 사이 통로. 폭과 줄 수는 원문에 없어 도식으로만 그렸다', cite='—'),
     # ── 0 랙 ──
@@ -250,7 +256,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -284,6 +290,27 @@ function box(id, size, a, e, t, opts={}){
 function order(){
   const mags = items.map(m => m.userData.e.length()), mx = Math.max(1e-6, ...mags);
   items.forEach((m, i) => { m.userData.o = mags[i] / mx; });
+}
+
+const flowTex = [];
+function stripe(dark, light){
+  const cv = document.createElement('canvas'); cv.width = 64; cv.height = 8;
+  const g = cv.getContext('2d'); g.fillStyle = dark; g.fillRect(0, 0, 64, 8);
+  g.fillStyle = light; g.fillRect(0, 0, 22, 8);
+  const t = new THREE.CanvasTexture(cv); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+function pipe(id, len, radius, pos, e, dark, light, dir){
+  const t = stripe(dark, light); t.repeat.set(len / 40, 1); t.userData = {dir};
+  flowTex.push(t);
+  const g = new THREE.CylinderGeometry(radius, radius, len, 16, 1, false);
+  g.rotateZ(Math.PI / 2);
+  const m = new THREE.MeshStandardMaterial({map: t, roughness: .4, metalness: .5});
+  const mesh = new THREE.Mesh(g, m);
+  mesh.castShadow = true;
+  mesh.userData = {id, a: new THREE.Vector3(...pos), e: new THREE.Vector3(...e), t: 2, o: 0, keep: true};
+  group.add(mesh); items.push(mesh);
+  return mesh;
 }
 
 const RACK_SLOTS = ['shelf','shelf'].concat(Array(9).fill('tray'), Array(9).fill('switchtray'), Array(9).fill('tray'), ['shelf','shelf']);
@@ -325,6 +352,15 @@ const BUILD = {
       }
     }
     box('aisle', [per * (W + gapX) + 120, 2, rows * (D + aisle / 2) + 120], [0, -1, 0], [0, 0, 0], 0);
+    // 줄마다 위로 공급·회수관 둘과 전력 레일 하나(도식). 공급은 +x, 회수는 -x 로 흐른다
+    const len = per * (W + gapX) + 60;
+    for (let r = 0; r < rows; r++) {
+      const z = (r - (rows - 1) / 2) * (D + aisle / 2) + (r % 2 ? -aisle / 4 : aisle / 4);
+      const up = [0, 70, (r - (rows - 1) / 2) * 26];
+      pipe('coolant', len, 4.5, [0, H + 30, z - 18], up, '#6f6e6a', '#d9d8d3', 1);
+      pipe('coolant', len, 4.5, [0, H + 30, z + 18], up, '#3d3c3a', '#9d9b95', -1);
+      box('busway', [len, 5, 8], [0, H + 14, z], up, 3);
+    }
     return {pos: [520, 420, 640], target: [0, 60, 0]};
   },
   rack(){
@@ -449,6 +485,7 @@ function paint(){
 
 function load(lv, keepCam){
   if (group) { scene.remove(group); group.traverse(o=>{o.geometry&&o.geometry.dispose();o.material&&o.material.dispose&&o.material.dispose();}); }
+  flowTex.forEach(t => t.dispose()); flowTex.length = 0;
   group = new THREE.Group(); items = []; scene.add(group);
   level = lv; selected = null;
   const cam = BUILD[lv]();
@@ -533,7 +570,17 @@ function resize(){
 }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
 controls.addEventListener('change', () => { dirty = true; });
-function loop(t){ resize(); if (anim) anim(t); controls.update(); if (dirty) { renderer.render(scene, camera); dirty = false; } requestAnimationFrame(loop); }
+let lastT = 0;
+function loop(t){
+  resize(); if (anim) anim(t); controls.update();
+  const dt = Math.min(0.05, (t - lastT) / 1000); lastT = t;
+  if (level === 'hall' && flowTex.length && !SMALL && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
+    dirty = true;
+  }
+  if (dirty) { renderer.render(scene, camera); dirty = false; }
+  requestAnimationFrame(loop);
+}
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
