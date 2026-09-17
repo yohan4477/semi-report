@@ -208,7 +208,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 #view{display:block;width:100%;height:min(62vh,560px);touch-action:none}
 .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:3px 8px;border-radius:6px;display:none;white-space:nowrap}
-.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ink2);background:var(--card);border-radius:6px;padding:2px 8px;opacity:.9;max-width:calc(100% - 170px)}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ink2);background:var(--card);border-radius:6px;padding:2px 8px;opacity:.9}
+.hint.walking{max-width:calc(100% - 170px)}
 .ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0}
 .ctrl label{font-size:13px;color:var(--ink2)}
 .ctrl input[type=range]{width:220px;accent-color:var(--ink)}
@@ -503,7 +504,7 @@ function fit(dirv){
   const b = new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3()), sz = b.getSize(new THREE.Vector3());
   const r = sz.length() / 2, fov = camera.fov * Math.PI / 180;
   const aspect = Math.max(0.6, canvas.clientWidth / Math.max(1, canvas.clientHeight));
-  const dist = r / Math.sin(fov / 2) / Math.min(1, aspect) * 1.05;
+  const dist = r / Math.sin(fov / 2) / Math.min(1, aspect) * (aspect < 1 ? 0.95 : 1.05);
   const d = new THREE.Vector3(...dirv).normalize();
   camera.position.copy(c).addScaledVector(d, dist); camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
   controls.target.copy(c); controls.update();
@@ -697,7 +698,7 @@ let walk = false, yaw = 0, pitch = 0, hallAisleZ = 0, hallHalfX = 300;
 const held = new Set();
 const walkBtn = document.getElementById('walk'), pad = document.getElementById('pad'), hint = document.getElementById('hint');
 function setWalk(on){
-  walk = on; controls.enabled = !on; pad.hidden = !on;
+  walk = on; controls.enabled = !on; pad.hidden = !on; hint.classList.toggle('walking', on);
   walkBtn.textContent = on ? '걷기 끝내기' : '통로 걷기';
   hint.textContent = on ? '끌어서 둘러보기 · WASD·방향키·화살표 버튼으로 이동 · 랙 누르기' : '끌어서 돌리기 · 휠로 확대 · 부품 누르기';
   if (on) {
