@@ -419,7 +419,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <section class="scrolly" id="scrolly">
 <div class="sticky">
 <div class="viewer">
-<div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
+<div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품에 대면 이름이 뜬다</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
 <aside class="legend" aria-label="부품 목록">
   <h2 id="lvtitle"></h2><p class="src" id="lvsub"></p>
@@ -549,17 +549,14 @@ function buildCalls(){
 function placeCalls(){
   if (!labelsOn || !callEls.length) return;
   const w = canvas.clientWidth, h = canvas.clientHeight;
-  const only = w < 700;            // 좁은 화면은 열넷을 다 띄우면 모델이 가린다
-  let show = null;
-  if (only) {
-    if (selected) show = new Set([selected]);
-    else {                          // 고른 것이 없으면 큰 부품 셋만
-      const size = id => { const m = items.find(x => x.userData.id === id); if (!m) return 0;
-        const b = new THREE.Box3().setFromObject(m), v = b.getSize(new THREE.Vector3()); return v.x * v.y * v.z; };
-      show = new Set(callEls.map(e => e.dataset.id).sort((a, b) => size(b) - size(a)).slice(0, 3));
-    }
-  }
-  for (const el of callEls) el.style.display = (show && !show.has(el.dataset.id)) ? 'none' : '';
+  // 평소에는 큰 부품 몇만 이름을 띄우고, 가리키거나 고른 부품은 늘 띄운다
+  const top = w < 700 ? 3 : 5;
+  const size = id => { const m = items.find(x => x.userData.id === id); if (!m) return 0;
+    const b = new THREE.Box3().setFromObject(m), v = b.getSize(new THREE.Vector3()); return v.x * v.y * v.z; };
+  const show = new Set(callEls.map(e => e.dataset.id).sort((a, b) => size(b) - size(a)).slice(0, top));
+  if (selected) show.add(selected);
+  if (hovered) show.add(hovered);
+  for (const el of callEls) el.style.display = show.has(el.dataset.id) ? '' : 'none';
   const anchors = callEls.filter(el => el.style.display !== 'none').map(el => {
     const first = items.find(m => m.userData.id === el.dataset.id);
     if (!first) return null;
@@ -922,6 +919,7 @@ function fit(dirv, box){
     camera.position.add(shift); controls.target.add(shift); controls.update();
   }
   const span = Math.max(sz.x, sz.y, sz.z);
+  modelSpan = span;
   ground.scale.set(span * 6, span * 6, 1); ground.position.set(c.x, b.min.y - span * 0.02, c.z);
   sun.position.set(c.x + span * 0.8, c.y + span * 1.6, c.z + span * 1.1); sun.target.position.copy(c);
   const sc = sun.shadow.camera; sc.left = sc.bottom = -span * 1.2; sc.right = sc.top = span * 1.2;
@@ -930,6 +928,7 @@ function fit(dirv, box){
 }
 
 const SPREAD = 0.55;
+let modelSpan = 100;
 let camTween = null;
 function refit(){
   if (walk) return;
@@ -953,6 +952,10 @@ function layout(){
     let k = Math.min(1, Math.max(0, explode * (1 + SPREAD) - o * SPREAD));
     k = k * k * (3 - 2 * k);
     m.position.set(a.x + e.x*k, a.y + e.y*k, a.z + e.z*k);
+    if (hovered && m.userData.id === hovered) {   // 가리킨 부품은 카메라 쪽으로 살짝 나온다
+      const d = camera.position.clone().sub(controls.target).normalize().multiplyScalar(modelSpan * 0.03);
+      m.position.add(d);
+    }
   }
   if (typeof buildPins === 'function' && pinObjs.length) buildPins();
   dirty = true;
@@ -966,7 +969,7 @@ function paint(){
     m.material.emissive = new THREE.Color(0x000000);
   }
   for (const el of callEls) el.setAttribute('aria-pressed', el.dataset.id === selected);
-  if (labelsOn && canvas.clientWidth < 700) placeCalls();
+  if (labelsOn) placeCalls();
   for (const o of pinObjs) { const d = o.element.firstChild; d.setAttribute('aria-pressed', !!(P[selected] && d.title === P[selected].name)); }
   outline.selectedObjects = items.filter(m => m.userData.id === selected || (hovered && m.userData.id === hovered) || (pair && level === 'compare' && pair.includes(m.userData.id)));
   dirty = true;
@@ -1065,7 +1068,7 @@ canvas.addEventListener('pointermove', ev => {
   if (hit){ tip.style.display='block'; tip.textContent = P[hit.object.userData.id].name; tip.style.left = (x+12)+'px'; tip.style.top = (y+12)+'px'; canvas.style.cursor='pointer'; }
   else { tip.style.display='none'; canvas.style.cursor='grab'; }
   const hid = hit ? hit.object.userData.id : null;
-  if (hid !== hovered) { hovered = hid; paint(); }
+  if (hid !== hovered) { hovered = hid; layout(); paint(); }
 });
 let down = null;
 canvas.addEventListener('pointerdown', ev => { down = [ev.clientX, ev.clientY]; });
@@ -1273,7 +1276,7 @@ const walkBtn = document.getElementById('walk'), pad = document.getElementById('
 function setWalk(on){
   walk = on; controls.enabled = !on; pad.hidden = !on; hint.classList.toggle('walking', on);
   walkBtn.textContent = on ? '걷기 끝내기' : '통로 걷기';
-  hint.textContent = on ? '끌어서 둘러보기 · WASD·방향키·화살표 버튼으로 이동 · 랙 누르기' : '끌어서 돌리기 · 휠로 확대 · 부품 누르기';
+  hint.textContent = on ? '끌어서 둘러보기 · WASD·방향키·화살표 버튼으로 이동 · 랙 누르기' : '끌어서 돌리기 · 휠로 확대 · 부품에 대면 이름이 뜬다';
   if (on) {
     camera.position.set(-hallHalfX, 165, hallAisleZ); yaw = -Math.PI / 2; pitch = -0.08;
     camera.near = 1; camera.far = 5000; camera.updateProjectionMatrix();
@@ -1291,8 +1294,8 @@ pinBtn.onclick = () => { pinsOn = !pinsOn; pinBtn.textContent = pinsOn ? '번호
 const lblBtn = document.getElementById('lblbtn');
 lblBtn.onclick = () => {
   labelsOn = !labelsOn; lblBtn.textContent = labelsOn ? '부품 이름 끄기' : '부품 이름';
-  if (labelsOn && canvas.clientWidth < 700 && !selected) hint.textContent = '부품을 누르면 그 부품의 이름이 뜹니다';
-  else if (!labelsOn) hint.textContent = '끌어서 돌리기 · 휠로 확대 · 부품 누르기';
+  if (labelsOn && canvas.clientWidth < 700 && !selected) hint.textContent = '부품에 대면 그 부품의 이름이 뜹니다';
+  else if (!labelsOn) hint.textContent = '끌어서 돌리기 · 휠로 확대 · 부품에 대면 이름이 뜬다';
   if (labelsOn && pinsOn) { pinsOn = false; pinBtn.textContent = '번호 핀'; buildPins(); }   // 번호와 이름이 겹치지 않게
   buildCalls(); refit(); dirty = true;
 };
