@@ -164,7 +164,17 @@
    "side": [],
    "depth": 1,
    "parent": "B123Corporation",
-   "children": 0
+   "children": 0,
+   "cf": 0.0,
+   "cf_terms": [
+    {
+     "from": "B123Corporation",
+     "pct": 100.0,
+     "up": 0.0,
+     "v": 0.0,
+     "unknown": true
+    }
+   ]
   },
   {
    "id": "바닐라스튜디오",
@@ -186,7 +196,17 @@
    "side": [],
    "depth": 1,
    "parent": "H-FOUNDATIONPTE.LTD",
-   "children": 0
+   "children": 0,
+   "cf": 0.0,
+   "cf_terms": [
+    {
+     "from": "H-FOUNDATIONPTE.LTD",
+     "pct": 100.0,
+     "up": 0.0,
+     "v": 0.0,
+     "unknown": true
+    }
+   ]
   },
   {
    "id": "파워시스템즈엠에프지코리아(유)",
@@ -208,7 +228,17 @@
    "side": [],
    "depth": 1,
    "parent": "HanwhaPowerUS,LLC.",
-   "children": 0
+   "children": 0,
+   "cf": 0.0,
+   "cf_terms": [
+    {
+     "from": "HanwhaPowerUS,LLC.",
+     "pct": 100.0,
+     "up": 0.0,
+     "v": 0.0,
+     "unknown": true
+    }
+   ]
   },
   {
    "id": "한화에너지",
@@ -269,7 +299,31 @@
    "side": [],
    "depth": 1,
    "parent": "김동관",
-   "children": 10
+   "children": 10,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "김동관",
+     "pct": 50.0,
+     "up": 100.0,
+     "v": 50.0,
+     "unknown": false
+    },
+    {
+     "from": "김동원",
+     "pct": 20.0,
+     "up": 100.0,
+     "v": 20.0,
+     "unknown": false
+    },
+    {
+     "from": "김동선",
+     "pct": 10.0,
+     "up": 100.0,
+     "v": 10.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화파워",
@@ -291,7 +345,17 @@
    "side": [],
    "depth": 1,
    "parent": "HanwhaPowerHoldingsCorp.",
-   "children": 0
+   "children": 0,
+   "cf": 0.0,
+   "cf_terms": [
+    {
+     "from": "HanwhaPowerHoldingsCorp.",
+     "pct": 100.0,
+     "up": 0.0,
+     "v": 0.0,
+     "unknown": true
+    }
+   ]
   },
   {
    "id": "대산그린에너지",
@@ -313,7 +377,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 39.2,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 49.0,
+     "up": 80.0,
+     "v": 39.2,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "부여바이오",
@@ -335,7 +409,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 100.0,
+     "up": 80.0,
+     "v": 80.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에스아이티테크",
@@ -357,7 +441,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 100.0,
+     "up": 80.0,
+     "v": 80.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치글로벌파트너스(유)",
@@ -379,7 +473,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 100.0,
+     "up": 80.0,
+     "v": 80.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "여수에코에너지",
@@ -401,7 +505,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 100.0,
+     "up": 80.0,
+     "v": 80.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "여수에코파워",
@@ -423,7 +537,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 100.0,
+     "up": 80.0,
+     "v": 80.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "여수퓨어파워",
@@ -445,7 +569,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 80.0,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 100.0,
+     "up": 80.0,
+     "v": 80.0,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화",
@@ -596,7 +730,45 @@
    ],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 18
+   "children": 18,
+   "cf": 52.68,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 23.55,
+     "up": 80.0,
+     "v": 18.84,
+     "unknown": false
+    },
+    {
+     "from": "김승연",
+     "pct": 12.04,
+     "up": 100.0,
+     "v": 12.04,
+     "unknown": false
+    },
+    {
+     "from": "김동관",
+     "pct": 10.38,
+     "up": 100.0,
+     "v": 10.38,
+     "unknown": false
+    },
+    {
+     "from": "김동선",
+     "pct": 5.71,
+     "up": 100.0,
+     "v": 5.71,
+     "unknown": false
+    },
+    {
+     "from": "김동원",
+     "pct": 5.71,
+     "up": 100.0,
+     "v": 5.71,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화신한테라와트아워",
@@ -618,7 +790,17 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 0
+   "children": 0,
+   "cf": 26.664,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 33.33,
+     "up": 80.0,
+     "v": 26.664,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화임팩트",
@@ -649,7 +831,24 @@
    "side": [],
    "depth": 2,
    "parent": "한화에너지",
-   "children": 8
+   "children": 8,
+   "cf": 50.8481,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 52.07,
+     "up": 80.0,
+     "v": 41.656,
+     "unknown": false
+    },
+    {
+     "from": "한화솔루션",
+     "pct": 47.93,
+     "up": 19.1781,
+     "v": 9.1921,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "대전역세권개발피에프브이",
@@ -689,7 +888,31 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 28.3945,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 50.0,
+     "up": 52.68,
+     "v": 26.34,
+     "unknown": false
+    },
+    {
+     "from": "한화커넥트",
+     "pct": 8.0,
+     "up": 16.7463,
+     "v": 1.3397,
+     "unknown": false
+    },
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 2.0,
+     "up": 35.7412,
+     "v": 0.7148,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "서울역북부역세권개발",
@@ -738,7 +961,38 @@
    "side": [],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 41.1877,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 40.0,
+     "up": 50.8481,
+     "v": 20.3392,
+     "unknown": false
+    },
+    {
+     "from": "한화",
+     "pct": 29.0,
+     "up": 52.68,
+     "v": 15.2772,
+     "unknown": false
+    },
+    {
+     "from": "한화커넥트",
+     "pct": 29.0,
+     "up": 16.7463,
+     "v": 4.8564,
+     "unknown": false
+    },
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 2.0,
+     "up": 35.7412,
+     "v": 0.7148,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "석문호수상태양광",
@@ -760,7 +1014,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 50.8481,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 100.0,
+     "up": 50.8481,
+     "v": 50.8481,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "수서역환승센터복합개발",
@@ -782,7 +1046,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 24.3171,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 46.16,
+     "up": 52.68,
+     "v": 24.3171,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "아산배방개발",
@@ -804,7 +1078,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 36.876,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 70.0,
+     "up": 52.68,
+     "v": 36.876,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치씨앤디",
@@ -826,7 +1110,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 52.68,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 100.0,
+     "up": 52.68,
+     "v": 52.68,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치헤리티지",
@@ -857,7 +1151,24 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 35.9291,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 50.0,
+     "up": 52.68,
+     "v": 26.34,
+     "unknown": false
+    },
+    {
+     "from": "한화솔루션",
+     "pct": 50.0,
+     "up": 19.1781,
+     "v": 9.5891,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에코이앤오",
@@ -879,7 +1190,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 1
+   "children": 1,
+   "cf": 52.68,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 100.0,
+     "up": 52.68,
+     "v": 52.68,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에프티아이피에프브이",
@@ -901,7 +1222,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 49.909,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 94.74,
+     "up": 52.68,
+     "v": 49.909,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "엣지코어피에프브이",
@@ -923,7 +1254,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 49.909,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 94.74,
+     "up": 52.68,
+     "v": 49.909,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "원주그린",
@@ -945,7 +1286,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 26.1135,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 49.57,
+     "up": 52.68,
+     "v": 26.1135,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "인천에이치투",
@@ -967,7 +1318,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 50.8481,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 100.0,
+     "up": 50.8481,
+     "v": 50.8481,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화갤러리아",
@@ -1054,7 +1415,31 @@
    ],
    "depth": 3,
    "parent": "한화",
-   "children": 5
+   "children": 5,
+   "cf": 35.9066,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 36.15,
+     "up": 52.68,
+     "v": 19.0438,
+     "unknown": false
+    },
+    {
+     "from": "김동선",
+     "pct": 16.6,
+     "up": 100.0,
+     "v": 16.6,
+     "unknown": false
+    },
+    {
+     "from": "한화솔루션",
+     "pct": 1.37,
+     "up": 19.1781,
+     "v": 0.2627,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화로보틱스",
@@ -1085,7 +1470,24 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 47.2545,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 67.97,
+     "up": 52.68,
+     "v": 35.8066,
+     "unknown": false
+    },
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 32.03,
+     "up": 35.7412,
+     "v": 11.4479,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화모멘텀",
@@ -1114,7 +1516,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 52.68,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 100.0,
+     "up": 52.68,
+     "v": 52.68,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화비전",
@@ -1153,7 +1565,17 @@
    ],
    "depth": 3,
    "parent": "한화",
-   "children": 1
+   "children": 1,
+   "cf": 17.8849,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 33.95,
+     "up": 52.68,
+     "v": 17.8849,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화생명",
@@ -1256,7 +1678,31 @@
    ],
    "depth": 3,
    "parent": "한화",
-   "children": 8
+   "children": 8,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 43.24,
+     "up": 52.68,
+     "v": 22.7788,
+     "unknown": false
+    },
+    {
+     "from": "한화갤러리아타임월드",
+     "pct": 1.75,
+     "up": 35.9066,
+     "v": 0.6284,
+     "unknown": false
+    },
+    {
+     "from": "김동원",
+     "pct": 0.03,
+     "up": 100.0,
+     "v": 0.03,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화솔라파워",
@@ -1278,7 +1724,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 1
+   "children": 1,
+   "cf": 50.8481,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 100.0,
+     "up": 50.8481,
+     "v": 50.8481,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화솔라파워글로벌",
@@ -1300,7 +1756,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 50.8481,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 100.0,
+     "up": 50.8481,
+     "v": 50.8481,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화솔루션",
@@ -1467,7 +1933,24 @@
    ],
    "depth": 3,
    "parent": "한화",
-   "children": 28
+   "children": 28,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 36.31,
+     "up": 52.68,
+     "v": 19.1281,
+     "unknown": false
+    },
+    {
+     "from": "김동관",
+     "pct": 0.05,
+     "up": 100.0,
+     "v": 0.05,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화에어로스페이스",
@@ -1800,7 +2283,45 @@
    ],
    "depth": 3,
    "parent": "한화",
-   "children": 3
+   "children": 3,
+   "cf": 17.2184,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 32.18,
+     "up": 52.68,
+     "v": 16.9524,
+     "unknown": false
+    },
+    {
+     "from": "한화에너지",
+     "pct": 0.32,
+     "up": 80.0,
+     "v": 0.256,
+     "unknown": false
+    },
+    {
+     "from": "김동관",
+     "pct": 0.01,
+     "up": 100.0,
+     "v": 0.01,
+     "unknown": false
+    },
+    {
+     "from": "HanwhaImpactPartnersInc.",
+     "pct": 2.27,
+     "up": 0.0,
+     "v": 0.0,
+     "unknown": true
+    },
+    {
+     "from": "HanwhaEnergyCorporationSingaporePte.Ltd.",
+     "pct": 0.74,
+     "up": 0.0,
+     "v": 0.0,
+     "unknown": true
+    }
+   ]
   },
   {
    "id": "한화엔진",
@@ -1839,7 +2360,17 @@
    ],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 16.6629,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 32.77,
+     "up": 50.8481,
+     "v": 16.6629,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화이글스",
@@ -1888,7 +2419,38 @@
    "side": [],
    "depth": 3,
    "parent": "한화",
-   "children": 0
+   "children": 0,
+   "cf": 42.3339,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 40.0,
+     "up": 52.68,
+     "v": 21.072,
+     "unknown": false
+    },
+    {
+     "from": "김승연",
+     "pct": 10.0,
+     "up": 100.0,
+     "v": 10.0,
+     "unknown": false
+    },
+    {
+     "from": "한화솔루션",
+     "pct": 40.0,
+     "up": 19.1781,
+     "v": 7.6712,
+     "unknown": false
+    },
+    {
+     "from": "한화갤러리아타임월드",
+     "pct": 10.0,
+     "up": 35.9066,
+     "v": 3.5907,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화임팩트글로벌",
@@ -1910,7 +2472,17 @@
    "side": [],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 50.8481,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 100.0,
+     "up": 50.8481,
+     "v": 50.8481,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화토탈에너지스",
@@ -1942,7 +2514,17 @@
    ],
    "depth": 3,
    "parent": "한화임팩트",
-   "children": 0
+   "children": 0,
+   "cf": 25.424,
+   "cf_terms": [
+    {
+     "from": "한화임팩트",
+     "pct": 50.0,
+     "up": 50.8481,
+     "v": 25.424,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화호텔앤드리조트",
@@ -2004,7 +2586,24 @@
    ],
    "depth": 3,
    "parent": "한화",
-   "children": 8
+   "children": 8,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 49.8,
+     "up": 52.68,
+     "v": 26.2346,
+     "unknown": false
+    },
+    {
+     "from": "한화솔루션",
+     "pct": 49.57,
+     "up": 19.1781,
+     "v": 9.5066,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "경기용인테크노밸리",
@@ -2035,7 +2634,24 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 17.0176,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 75.0,
+     "up": 19.1781,
+     "v": 14.3836,
+     "unknown": false
+    },
+    {
+     "from": "한화",
+     "pct": 5.0,
+     "up": 52.68,
+     "v": 2.634,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "고북주민태양광발전",
@@ -2057,7 +2673,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 17.2603,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 90.0,
+     "up": 19.1781,
+     "v": 17.2603,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "김해테크노밸리",
@@ -2079,7 +2705,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 15.3425,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 80.0,
+     "up": 19.1781,
+     "v": 15.3425,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "농업회사법인그린투모로우",
@@ -2111,7 +2747,17 @@
    ],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 0
+   "children": 0,
+   "cf": 32.1671,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 90.0,
+     "up": 35.7412,
+     "v": 32.1671,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "대전에코텍",
@@ -2133,7 +2779,17 @@
    "side": [],
    "depth": 4,
    "parent": "에코이앤오",
-   "children": 0
+   "children": 0,
+   "cf": 52.68,
+   "cf_terms": [
+    {
+     "from": "에코이앤오",
+     "pct": 100.0,
+     "up": 52.68,
+     "v": 52.68,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "베러스쿱크리머리",
@@ -2155,7 +2811,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화갤러리아",
-   "children": 0
+   "children": 0,
+   "cf": 35.9066,
+   "cf_terms": [
+    {
+     "from": "한화갤러리아",
+     "pct": 100.0,
+     "up": 35.9066,
+     "v": 35.9066,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "비노갤러리아",
@@ -2177,7 +2843,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화갤러리아",
-   "children": 0
+   "children": 0,
+   "cf": 35.9066,
+   "cf_terms": [
+    {
+     "from": "한화갤러리아",
+     "pct": 100.0,
+     "up": 35.9066,
+     "v": 35.9066,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "서오창테크노밸리",
@@ -2208,7 +2884,24 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 16.9725,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 74.49,
+     "up": 19.1781,
+     "v": 14.2858,
+     "unknown": false
+    },
+    {
+     "from": "한화",
+     "pct": 5.1,
+     "up": 52.68,
+     "v": 2.6867,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "아쿠아플라넷",
@@ -2230,7 +2923,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 3
+   "children": 3,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "안성테크노로지스틱스",
@@ -2252,7 +2955,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "안성테크노밸리",
@@ -2283,7 +2996,24 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 17.0176,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 75.0,
+     "up": 19.1781,
+     "v": 14.3836,
+     "unknown": false
+    },
+    {
+     "from": "한화",
+     "pct": 5.0,
+     "up": 52.68,
+     "v": 2.634,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "알이100솔라팩토리1호",
@@ -2315,7 +3045,17 @@
    ],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 7.6712,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 40.0,
+     "up": 19.1781,
+     "v": 7.6712,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "알이씨데이터센터",
@@ -2337,7 +3077,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치밸리",
@@ -2368,7 +3118,24 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 35.594,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 49.0,
+     "up": 52.68,
+     "v": 25.8132,
+     "unknown": false
+    },
+    {
+     "from": "한화솔루션",
+     "pct": 51.0,
+     "up": 19.1781,
+     "v": 9.7808,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치씨씨홀딩스",
@@ -2400,7 +3167,17 @@
    ],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치앤지케미칼",
@@ -2422,7 +3199,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 9.7808,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 51.0,
+     "up": 19.1781,
+     "v": 9.7808,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치테크노로지스틱스",
@@ -2444,7 +3231,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에이치테크노밸리",
@@ -2466,7 +3263,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 15.3425,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 80.0,
+     "up": 19.1781,
+     "v": 15.3425,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에프지코리아",
@@ -2488,7 +3295,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화갤러리아",
-   "children": 0
+   "children": 0,
+   "cf": 35.9066,
+   "cf_terms": [
+    {
+     "from": "한화갤러리아",
+     "pct": 100.0,
+     "up": 35.9066,
+     "v": 35.9066,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "영암큐파워솔라팜1호",
@@ -2510,7 +3327,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "우리집에프앤비",
@@ -2542,7 +3369,17 @@
    ],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 1
+   "children": 1,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "울산복합도시개발",
@@ -2564,7 +3401,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 8.6301,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 45.0,
+     "up": 19.1781,
+     "v": 8.6301,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "인사이트홀딩스",
@@ -2586,7 +3433,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "정상북한산리조트",
@@ -2608,7 +3465,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 0
+   "children": 0,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "제삼용인테크노밸리",
@@ -2630,7 +3497,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 14.3836,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 75.0,
+     "up": 19.1781,
+     "v": 14.3836,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "제이용인테크노밸리",
@@ -2661,7 +3538,24 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 16.0587,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 70.0,
+     "up": 19.1781,
+     "v": 13.4247,
+     "unknown": false
+    },
+    {
+     "from": "한화",
+     "pct": 5.0,
+     "up": 52.68,
+     "v": 2.634,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "케이비부산오시리아호텔위탁관리부동산투자회사",
@@ -2683,7 +3577,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 0
+   "children": 0,
+   "cf": 17.8706,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 50.0,
+     "up": 35.7412,
+     "v": 17.8706,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "퓨어플러스",
@@ -2705,7 +3609,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화갤러리아",
-   "children": 0
+   "children": 0,
+   "cf": 35.9066,
+   "cf_terms": [
+    {
+     "from": "한화갤러리아",
+     "pct": 100.0,
+     "up": 35.9066,
+     "v": 35.9066,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "하동햇빛나눔태양광발전",
@@ -2727,7 +3641,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "하이패스태양광",
@@ -2749,7 +3673,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화갤러리아타임월드",
@@ -2771,7 +3705,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화갤러리아",
-   "children": 0
+   "children": 0,
+   "cf": 35.9066,
+   "cf_terms": [
+    {
+     "from": "한화갤러리아",
+     "pct": 100.0,
+     "up": 35.9066,
+     "v": 35.9066,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화넥스트",
@@ -2793,7 +3737,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 0
+   "children": 0,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화도시개발",
@@ -2815,7 +3769,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화라이프랩",
@@ -2837,7 +3801,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 0
+   "children": 0,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화생명금융서비스",
@@ -2859,7 +3833,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 2
+   "children": 2,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화세미텍",
@@ -2881,7 +3865,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화비전",
-   "children": 0
+   "children": 0,
+   "cf": 17.8849,
+   "cf_terms": [
+    {
+     "from": "한화비전",
+     "pct": 100.0,
+     "up": 17.8849,
+     "v": 17.8849,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화손해보험",
@@ -2952,7 +3946,17 @@
    ],
    "depth": 4,
    "parent": "한화생명",
-   "children": 1
+   "children": 1,
+   "cf": 12.0373,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 51.36,
+     "up": 23.4372,
+     "v": 12.0373,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화손해사정",
@@ -2974,7 +3978,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 0
+   "children": 0,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화시스템",
@@ -3088,7 +4102,24 @@
    ],
    "depth": 4,
    "parent": "한화에어로스페이스",
-   "children": 0
+   "children": 0,
+   "cf": 18.2862,
+   "cf_terms": [
+    {
+     "from": "한화에너지",
+     "pct": 12.8,
+     "up": 80.0,
+     "v": 10.24,
+     "unknown": false
+    },
+    {
+     "from": "한화에어로스페이스",
+     "pct": 46.73,
+     "up": 17.2184,
+     "v": 8.0462,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화에비에이션",
@@ -3110,7 +4141,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화에어로스페이스",
-   "children": 0
+   "children": 0,
+   "cf": 17.2184,
+   "cf_terms": [
+    {
+     "from": "한화에어로스페이스",
+     "pct": 100.0,
+     "up": 17.2184,
+     "v": 17.2184,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화에스테이트서비스",
@@ -3132,7 +4173,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 0
+   "children": 0,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화엔엑스엠디",
@@ -3154,7 +4205,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화오션",
@@ -3209,7 +4270,24 @@
    ],
    "depth": 4,
    "parent": "한화에어로스페이스",
-   "children": 9
+   "children": 9,
+   "cf": 6.5652,
+   "cf_terms": [
+    {
+     "from": "한화에어로스페이스",
+     "pct": 30.44,
+     "up": 17.2184,
+     "v": 5.2413,
+     "unknown": false
+    },
+    {
+     "from": "한화시스템",
+     "pct": 7.24,
+     "up": 18.2862,
+     "v": 1.3239,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화위탁관리부동산투자회사",
@@ -3249,7 +4327,31 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 0
+   "children": 0,
+   "cf": 9.1634,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 30.18,
+     "up": 23.4372,
+     "v": 7.0733,
+     "unknown": false
+    },
+    {
+     "from": "한화손해보험",
+     "pct": 16.0,
+     "up": 12.0373,
+     "v": 1.926,
+     "unknown": false
+    },
+    {
+     "from": "한화자산운용",
+     "pct": 0.7,
+     "up": 23.4372,
+     "v": 0.1641,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화육삼시티",
@@ -3271,7 +4373,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 0
+   "children": 0,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화이센셜",
@@ -3293,7 +4405,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화인베스트먼트",
@@ -3315,7 +4437,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화자산운용",
@@ -3337,7 +4469,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 1
+   "children": 1,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화저축은행",
@@ -3359,7 +4501,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화생명",
-   "children": 0
+   "children": 0,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화첨단소재",
@@ -3381,7 +4533,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 10.1184,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 52.76,
+     "up": 19.1781,
+     "v": 10.1184,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화커넥트",
@@ -3431,7 +4593,31 @@
    ],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 16.7463,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 48.32,
+     "up": 19.1781,
+     "v": 9.2669,
+     "unknown": false
+    },
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 18.94,
+     "up": 35.7412,
+     "v": 6.7694,
+     "unknown": false
+    },
+    {
+     "from": "김승연",
+     "pct": 0.71,
+     "up": 100.0,
+     "v": 0.71,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화컴파운드",
@@ -3453,7 +4639,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화케미칼오버시즈홀딩스",
@@ -3475,7 +4671,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔루션",
-   "children": 0
+   "children": 0,
+   "cf": 19.1781,
+   "cf_terms": [
+    {
+     "from": "한화솔루션",
+     "pct": 100.0,
+     "up": 19.1781,
+     "v": 19.1781,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화푸드테크",
@@ -3497,7 +4703,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화호텔앤드리조트",
-   "children": 0
+   "children": 0,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "한화호텔앤드리조트",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "해모둠태양광",
@@ -3519,7 +4735,17 @@
    "side": [],
    "depth": 4,
    "parent": "한화솔라파워",
-   "children": 0
+   "children": 0,
+   "cf": 25.9325,
+   "cf_terms": [
+    {
+     "from": "한화솔라파워",
+     "pct": 51.0,
+     "up": 50.8481,
+     "v": 25.9325,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "고군산해상풍력",
@@ -3541,7 +4767,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 6.5652,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 100.0,
+     "up": 6.5652,
+     "v": 6.5652,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "보령녹도해상풍력",
@@ -3563,7 +4799,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 6.5652,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 100.0,
+     "up": 6.5652,
+     "v": 6.5652,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "신안우이해상풍력",
@@ -3585,7 +4831,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 2.8815,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 43.89,
+     "up": 6.5652,
+     "v": 2.8815,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "아워홈",
@@ -3607,7 +4863,17 @@
    "side": [],
    "depth": 5,
    "parent": "우리집에프앤비",
-   "children": 3
+   "children": 3,
+   "cf": 18.0922,
+   "cf_terms": [
+    {
+     "from": "우리집에프앤비",
+     "pct": 50.62,
+     "up": 35.7412,
+     "v": 18.0922,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "아이에프씨그룹",
@@ -3629,7 +4895,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화생명금융서비스",
-   "children": 0
+   "children": 0,
+   "cf": 23.4372,
+   "cf_terms": [
+    {
+     "from": "한화생명금융서비스",
+     "pct": 100.0,
+     "up": 23.4372,
+     "v": 23.4372,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "여수씨월드",
@@ -3651,7 +4927,17 @@
    "side": [],
    "depth": 5,
    "parent": "아쿠아플라넷",
-   "children": 0
+   "children": 0,
+   "cf": 35.7412,
+   "cf_terms": [
+    {
+     "from": "아쿠아플라넷",
+     "pct": 100.0,
+     "up": 35.7412,
+     "v": 35.7412,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "영광칠해해상풍력",
@@ -3673,7 +4959,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 6.5652,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 100.0,
+     "up": 6.5652,
+     "v": 6.5652,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "영덕블루윈드",
@@ -3705,7 +5001,17 @@
    ],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 3.2826,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 50.0,
+     "up": 6.5652,
+     "v": 3.2826,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "오션이앤아이",
@@ -3727,7 +5033,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 6.5652,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 100.0,
+     "up": 6.5652,
+     "v": 6.5652,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "일산씨월드",
@@ -3758,7 +5074,24 @@
    "side": [],
    "depth": 5,
    "parent": "아쿠아플라넷",
-   "children": 0
+   "children": 0,
+   "cf": 43.215,
+   "cf_terms": [
+    {
+     "from": "한화",
+     "pct": 46.0,
+     "up": 52.68,
+     "v": 24.2328,
+     "unknown": false
+    },
+    {
+     "from": "아쿠아플라넷",
+     "pct": 53.11,
+     "up": 35.7412,
+     "v": 18.9822,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "제주해양과학관",
@@ -3789,7 +5122,24 @@
    "side": [],
    "depth": 5,
    "parent": "아쿠아플라넷",
-   "children": 0
+   "children": 0,
+   "cf": 34.7127,
+   "cf_terms": [
+    {
+     "from": "아쿠아플라넷",
+     "pct": 89.9,
+     "up": 35.7412,
+     "v": 32.1314,
+     "unknown": false
+    },
+    {
+     "from": "한화",
+     "pct": 4.9,
+     "up": 52.68,
+     "v": 2.5813,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "천장산풍력",
@@ -3811,7 +5161,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 5.9087,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 90.0,
+     "up": 6.5652,
+     "v": 5.9087,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "피플라이프",
@@ -3843,7 +5203,17 @@
    ],
    "depth": 5,
    "parent": "한화생명금융서비스",
-   "children": 0
+   "children": 0,
+   "cf": 23.245,
+   "cf_terms": [
+    {
+     "from": "한화생명금융서비스",
+     "pct": 99.18,
+     "up": 23.4372,
+     "v": 23.245,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화오션에코텍",
@@ -3865,7 +5235,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 6.4674,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 98.51,
+     "up": 6.5652,
+     "v": 6.4674,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화오션엔지니어링",
@@ -3887,7 +5267,17 @@
    "side": [],
    "depth": 5,
    "parent": "한화오션",
-   "children": 0
+   "children": 0,
+   "cf": 6.5652,
+   "cf_terms": [
+    {
+     "from": "한화오션",
+     "pct": 100.0,
+     "up": 6.5652,
+     "v": 6.5652,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "한화투자증권",
@@ -3942,7 +5332,17 @@
    ],
    "depth": 5,
    "parent": "한화자산운용",
-   "children": 0
+   "children": 0,
+   "cf": 10.6311,
+   "cf_terms": [
+    {
+     "from": "한화자산운용",
+     "pct": 45.36,
+     "up": 23.4372,
+     "v": 10.6311,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "히어로손해사정",
@@ -3974,7 +5374,17 @@
    ],
    "depth": 5,
    "parent": "한화손해보험",
-   "children": 0
+   "children": 0,
+   "cf": 10.245,
+   "cf_terms": [
+    {
+     "from": "한화손해보험",
+     "pct": 85.11,
+     "up": 12.0373,
+     "v": 10.245,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "고메드갤러리아",
@@ -3996,7 +5406,17 @@
    "side": [],
    "depth": 6,
    "parent": "아워홈",
-   "children": 0
+   "children": 0,
+   "cf": 18.0922,
+   "cf_terms": [
+    {
+     "from": "아워홈",
+     "pct": 100.0,
+     "up": 18.0922,
+     "v": 18.0922,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "에프앤씨시스템",
@@ -4018,7 +5438,17 @@
    "side": [],
    "depth": 6,
    "parent": "아워홈",
-   "children": 0
+   "children": 0,
+   "cf": 18.0922,
+   "cf_terms": [
+    {
+     "from": "아워홈",
+     "pct": 100.0,
+     "up": 18.0922,
+     "v": 18.0922,
+     "unknown": false
+    }
+   ]
   },
   {
    "id": "크린누리",
@@ -4040,7 +5470,17 @@
    "side": [],
    "depth": 6,
    "parent": "아워홈",
-   "children": 0
+   "children": 0,
+   "cf": 18.0922,
+   "cf_terms": [
+    {
+     "from": "아워홈",
+     "pct": 100.0,
+     "up": 18.0922,
+     "v": 18.0922,
+     "unknown": false
+    }
+   ]
   }
  ],
  "edges": [

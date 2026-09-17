@@ -102,12 +102,39 @@ def main():
         return d
 
     family = sorted(n for n, v in nodes.items() if v['kind'] == 'person')
+
+    # 일가 누적 지분(계산값 — 공시에 없다). 회사 c 의 값 = Σ 주주 선(보통주%) × 주주의 값, 사람은 100%.
+    # 국외 계열사는 주주를 모르니 0 으로 두고 foreign_unknown 에 남긴다. 고리가 없어야 끝난다(O4).
+    cf, terms = {}, {}
+
+    def look(c):
+        if c in cf:
+            return cf[c]
+        if nodes[c]['kind'] == 'person':
+            return 100.0
+        if nodes[c].get('foreign'):
+            return 0.0
+        tot, ts = 0.0, []
+        for e in edges:
+            if e['to'] != c:
+                continue
+            up = look(e['from'])
+            v = e['pct'] * up / 100
+            tot += v
+            ts.append({'from': e['from'], 'pct': e['pct'], 'up': round(up, 4), 'v': round(v, 4),
+                       'unknown': bool(nodes[e['from']].get('foreign'))})
+        cf[c], terms[c] = tot, sorted(ts, key=lambda x: -x['v'])
+        return tot
+
     orphans = [c for c in companies if c not in parent]
     out_nodes = []
     for n in sorted(nodes, key=lambda x: (depth(x), x)):
         v = nodes[n]
         v['depth'], v['parent'] = depth(n), parent.get(n)
         v['children'] = sum(1 for p in parent.values() if p == n)
+        if v['kind'] == 'corp' and not v.get('foreign'):
+            v['cf'] = round(look(n), 4)
+            v['cf_terms'] = terms[n]
         out_nodes.append(v)
     data = {'group': '한화', 'source': src_ftc, 'family': family, 'orphans': orphans, 'cycles': cycles,
             'company_count': len(companies),

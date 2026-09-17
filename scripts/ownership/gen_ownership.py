@@ -24,7 +24,7 @@ def main():
     fails = check_own.validate(d)
     if fails:
         sys.exit('check_own FAIL — 굽지 않는다:\n' + '\n'.join(fails))
-    d['start'] = '한화'
+    d['start'] = '한화'  # 첫 화면 — 주소 #회사이름 이 있으면 그 회사
     corps = [n for n in d['nodes'] if n['kind'] == 'corp' and not n.get('foreign')]
     listed = [n for n in corps if n.get('stock')]
     src = d['source']
@@ -73,20 +73,21 @@ def main():
 {fam_table}
 </section>
 <div class="bar">
-<button id="b-listed" type="button">상장사까지 펼치기</button>
-<button id="b-all" type="button">모두 펼치기</button>
+<button id="m-focus" type="button" class="mode">회사 중심</button>
+<button id="m-tree" type="button" class="mode">전체 나무</button>
+<span class="treeonly"><button id="b-listed" type="button">상장사까지 펼치기</button>
+<button id="b-all" type="button">모두 펼치기</button></span>
 <input id="q" list="names" placeholder="회사·사람 이름" aria-label="이름으로 찾기">
 <datalist id="names">{names}</datalist>
 </div>
-<div class="legend">
+<div class="legend treeonly">
 <span><svg width="34" height="8"><path d="M0 4H34" stroke="#9aa1ab" stroke-width="2.6"/></svg>최대 동일인측 주주 50% 이상</span>
 <span><svg width="34" height="8"><path d="M0 4H34" stroke="#9aa1ab" stroke-width="1.8"/></svg>30~50%</span>
 <span><svg width="34" height="8"><path d="M0 4H34" stroke="#9aa1ab" stroke-width="1.1"/></svg>30% 미만</span>
 <span><svg width="34" height="8"><path d="M0 4H34" stroke="#9aa1ab" stroke-width="1.1" stroke-dasharray="4 3"/></svg>상자를 고르면 그 밖의 동일인측 지분(1% 이상)</span>
-<span>숫자 칸을 누르면 아래 계열사가 펼쳐진다</span>
 </div>
 <div class="main">
-<div class="board" id="board"></div>
+<div id="view"></div>
 <aside class="panel" id="panel" aria-live="polite"></aside>
 </div>
 <section class="notes">
