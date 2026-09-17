@@ -1,0 +1,46 @@
+2025-03-17	input/clippings/mer/223798163962.json	부채한도 협상 시즌이 되었다. 미장과 채권, 금값은 어떻게 될까?
+2025-03-21	input/clippings/mer/223803807672.json	미장이 잠깐 안도한 이유, 3월 20일, FOMC 파월 기자회견의 비밀
+2025-03-31	input/clippings/mer/223814796934.json	미국증시 폭락과 미국국채 10년물 폭등이 일어난 이유
+2025-04-01	input/clippings/mer/223816865434.json	마러라고 협정 파문 (feat 100년짜리 미국국채, 미란 보고서)
+2025-04-08	input/clippings/mer/223825857956.json	미국 국채 10년 물이  갑자기 폭락한 이유
+2025-04-09	input/clippings/mer/223823505663.json	트럼프가 미국국채 금리를 낮추는 방법
+2025-04-09	input/clippings/mer/223827584911.json	포트폴리오 근황 (feat 미국국채 10년물, 엔화, 일본 내수주, 조선업)
+2025-04-11	input/clippings/mer/223829362020.json	미장은 내렸고, 미국국채 금리는 장단기가 따로 움직인 의미
+2025-04-14	input/clippings/mer/223831763187.json	미국국채 금리가 오르고, 달러가 약해지는 이유
+2025-04-17	input/clippings/mer/223838109591.json	트럼프, 파월 당장 그만둬라.
+2025-04-19	input/clippings/mer/223839799372.json	중국 자금이 한국국채를 사고있나
+2025-04-26	input/clippings/mer/223845621584.json	한국인들이 연 이자를 15%를 주는 브라질 국채를 사기 시작했다.
+2025-05-06	input/clippings/mer/223856526962.json	대만 보험사들이 최근 환율변동의 주범일까?
+2025-05-08	input/clippings/mer/223857837319.json	환율 변동의 종범 (feat 중국 자금이 한국 국채를 사고 있나? A/S)
+2025-05-08	input/clippings/mer/223858534516.json	5월 FOMC와 파월 기자회견 해설
+2025-05-11	input/clippings/mer/223862112141.json	넥타이 이야기 (feat 연준 파월 의장, 한은 이창용 총재)
+2025-05-16	input/clippings/mer/223866782248.json	환율은 괜찮을까? (feat 한미 밀라노 회담, 대만 보험사)
+2025-05-17	input/clippings/mer/223867554030.json	미국국채금리가 겁나게 오르는 이유
+2025-05-22	input/clippings/mer/223873166379.json	엔화가 다시 강해질까? (feat 일본국채 30년물, YCC, 테이퍼링)
+2025-05-27	input/clippings/mer/223877666349.json	개인 포트폴리오 근황 업데이트(feat 금, 엔화, 미국국채,주택채권)
+2025-05-27	input/clippings/mer/223878455693.json	부록)국민주택채권을 사는 이유
+2025-05-29	input/clippings/mer/223881630482.json	한국은행 기준금리 인하...기사 사진 읽기...트럼프와 오클로..
+2025-06-06	input/clippings/mer/223887755561.json	미국 국채금리를 내리기 위해 SLR규제 완화를 실행할까?
+2025-06-08	input/clippings/mer/223890481137.json	미국의 SLR규제 완화는 어떤 효과가 있을까?
+2025-06-16	input/clippings/mer/223899886085.json	최근 상황 감안 포트폴리오 재점검(feat 금,은,국채,조선주등)
+2025-06-19	input/clippings/mer/223904189513.json	파월 기자회견...트럼프 이란 공격…팔란티어
+2025-06-20	input/clippings/mer/223904806128.json	미국, 지니어스법 상원 통과의 의미(feat 미국국채, 서클)
+2025-06-27	input/clippings/mer/223913191576.json	연준이 SLR 규제 완화를 결정했다. 미장과 국채가격이 동시에 오를까
+2025-07-07	input/clippings/mer/223923817596.json	2조 달러 규모의 미국 국채가 발행된다.
+2025-07-12	input/clippings/mer/223931247450.json	미국의 단기국채 몰빵 발행은 정말 괜찮을까?
+2025-07-16	input/clippings/mer/223935260401.json	미국국채 근황 (feat SLR규제완화 지연, 지니어스법안 부결)
+2025-07-17	input/clippings/mer/223935959712.json	일본 엔화환율과 국채금리 근황 (feat 참정당 돌풍, 참의원 선거)
+2025-07-17	input/clippings/mer/223936689668.json	트럼프의 파월 해임 소동 전말
+2025-08-01	input/clippings/mer/223954627912.json	미국의 단기국채 몰빵 발행은 정말 괜찮을까? A/S
+2025-08-02	input/clippings/mer/223955974433.json	고용보고서 발표, 미장폭락, 9월 금리인하 가능성 높아짐
+2025-08-05	input/clippings/mer/223958119982.json	올해도 잭슨홀 미팅이 다가오고 있다.(feat 금리인하, 파월)
+2025-08-08	input/clippings/mer/223963181458.json	트럼프가 지명한 연준 이사가 이분이라니...
+2025-08-10	input/clippings/mer/223965280067.json	미국 국채를 1,200억 달러나 매각한 범인은?
+2025-08-12	input/clippings/mer/223967469436.json	8월 12일 미국 CPI(소비자물가지수) 발표가 있다. 미장에 영향은?
+2025-08-12	input/clippings/mer/223968413814.json	8월 12일 저녁 9시 30분 CPI 발표결과 간단 A/S
+2025-08-14	input/clippings/mer/223970067798.json	9월 금리인하 확률이 100%라는 기사가 나온다. 변수는 없을까?
+2025-08-19	input/clippings/mer/223974642398.json	연준의 역레포 잔고가 드디어...
+2025-08-22	input/clippings/mer/223979290690.json	리사 쿡 연준이사는 "즉각 사퇴하라!" (feat 트럼프)
+2025-08-23	input/clippings/mer/223980110425.json	파월의 잭슨홀미팅 발표 근황 (feat 파둘기, 평균금리목표제 폐지)
+2025-08-27	input/clippings/mer/223982941308.json	일본은행이 움직이기 시작하나? (feat 금리, 엔화)
+2025-08-27	input/clippings/mer/223984718208.json	트럼프,내각회의에서 연준장악 발언을(feat 미란, 연준이사 리사 쿡)

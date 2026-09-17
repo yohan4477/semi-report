@@ -1,0 +1,53 @@
+2025-09-10	input/clippings/mer/224002614977.json	미국 연방법원, 리사 쿡 연준이사 직위유지 판결, 트럼프 패배?
+2025-09-18	input/clippings/mer/224012349513.json	보라색 넥타이를 맨 파월의 기자회견(feat 연준 금리0.25%인하)
+2025-09-20	input/clippings/mer/224014206322.json	오늘 열린 일본은행 정책회의에서는 금리가 아니라 다른 것을 봐야?
+2025-09-22	input/clippings/mer/224016372320.json	미국 국채는 괜찮을까(feat SLR 완화)
+2025-09-29	input/clippings/mer/224024720853.json	미국 증시는 괜찮을까? (feat 유동성 3형제,지급준비금, RRP, TGA)
+2025-10-04	input/clippings/mer/224030789955.json	4개월 두배 수익률의 비밀(feat 의사소통 훈련과 행간읽는 연습)
+2025-10-05	input/clippings/mer/224031770885.json	장단기금리 역전이 뭐고, 해소되면 어떤일이 생길까?
+2025-10-05	input/clippings/mer/224032232941.json	장단기 금리 역전이 뭐고, 해소되면 어떤 일이 생길까 A/S
+2025-10-07	input/clippings/mer/224033766067.json	일본 증시가 상승하고, 엔화는 약세가 되었다. 이유는?
+2025-10-10	input/clippings/mer/224035745876.json	원달러환율이 1,423원까지 올라가는 이유
+2025-10-10	input/clippings/mer/224036415243.json	파월이 물러나면, 트럼프가 미국 부채를 해결하는 획기적인 방법이?
+2025-10-13	input/clippings/mer/224038622799.json	토요일 새벽, 암호화폐시장에 역대1위 청산이 터진 비밀
+2025-10-15	input/clippings/mer/224041579315.json	파월에게서 드디어 QT 중단 이야기가 나왔다. 그런데, 트럼프가..
+2025-10-17	input/clippings/mer/224043980633.json	미국 증시가 장 마지막에 급락했다. 무엇을 겁낸걸까?
+2025-10-22	input/clippings/mer/224048237166.json	제2의 SVB사태가 올수도 있다는 1.7조달러 규모 사모대출이 뭘까?
+2025-10-24	input/clippings/mer/224051233772.json	다카이치 신임 일본총리의 의외의 보법?
+2025-10-25	input/clippings/mer/224051994047.json	유동성이 수상하다. 파월은 10월 FOMC에서 QT중단을 선언할까?
+2025-10-27	input/clippings/mer/224053950079.json	연준이 변했다 (feat 10월 FOMC에서 QT 중단을 선언할까 A/S)
+2025-10-29	input/clippings/mer/224057315975.json	미국 베선트 재무장관이 일본에게 요구한 두가지?(feat 엔화)
+2025-10-30	input/clippings/mer/224058441227.json	연준, 기준금리 0.25%인하와 QT중단을 선언했다. 파월인터뷰는
+2025-11-02	input/clippings/mer/224061038566.json	포트폴리오가 변경되었다(feat 구리 관련주 매수, 브라질국채 매각)
+2025-11-10	input/clippings/mer/224069150169.json	워렌버핏의 버크셔 해서웨이, 일본 종합상사 비중확대?
+2025-11-11	input/clippings/mer/224070917734.json	트럼프가 미국 부채를 해결하는 획기적인 방법 A/S
+2025-11-13	input/clippings/mer/224074295862.json	이창용 한은총재 발언의 나비효과 (feat 국고채 금리 급등, 환율)
+2025-11-20	input/clippings/mer/224081852608.json	미국 증시와 암호화폐가 비실비실한 이유는 뭐고, 언제 풀릴까?
+2025-11-21	input/clippings/mer/224083033115.json	새벽 미장이 크게 하락한 이유 (feat 엔비디아, 연준위원)
+2025-11-23	input/clippings/mer/224084511045.json	일본 다카이치 총리, 역대 최대규모 재정투입과 엔화 환율은?
+2025-11-24	input/clippings/mer/224085282296.json	이번주 핫이슈는 뭐가될까? (feat 사모대출,CLO,PIK옵션,삼한사온)
+2025-11-29	input/clippings/mer/224091921943.json	유동성 3형제가 풀리면 모든 문제가 해결될까?
+2025-12-03	input/clippings/mer/224095422334.json	일본은행이 금리를 올리면 어떤 일이 벌어질까?
+2025-12-03	input/clippings/mer/224096308091.json	트럼프가 파월 후임 연준의장이 될 사람을 방금 언급한 것 같다.
+2025-12-05	input/clippings/mer/224098132451.json	압류금지 통장이 더 강력해진다 (feat 생계비 계좌 시행예정)
+2025-12-05	input/clippings/mer/224098687308.json	역대최악의 연준의장, 아서 번즈의 재림? (feat 해셋)
+2025-12-06	input/clippings/mer/224099889958.json	PCE(개인소비지출)가 발표되었는데...애매하네...
+2025-12-07	input/clippings/mer/224100335488.json	한국 물가(CPI)가 정말 이렇게 낮을까?
+2025-12-11	input/clippings/mer/224105551030.json	기준금리 0.25%인하, 유사QE 선언. 왕비둘기 파월 등장
+2025-12-13	input/clippings/mer/224107257488.json	파월, "이건 QE(양적완화)가 아니다." 강력하게 주장중
+2025-12-16	input/clippings/mer/224109986852.json	환율관련 긴급 당국회의 개최, 국민연금과 한은간 외환스와프 확대?
+2025-12-19	input/clippings/mer/224114181912.json	일본은행 금리인상의 관전포인트가 뭘까?
+2025-12-23	input/clippings/mer/224118686106.json	환율 관리대책과 2008년 글로벌 금융위기 이야기 2
+2025-12-25	input/clippings/mer/224121472823.json	헤지펀드 vs 국가, 환율전쟁 이야기
+2026-01-02	input/clippings/mer/224131196724.json	한국은행 M2(통화 및 유동성) 개편의 비밀
+2026-01-05	input/clippings/mer/224134023968.json	한국은행 M2의 비밀 A/S(feat 스케일을 잘 봐야 하는 이유)
+2026-01-13	input/clippings/mer/224144392962.json	연준 파월의장을 검찰이 소환하는 이유와 파장은?
+2026-01-15	input/clippings/mer/224148053050.json	M2/GDP증가율에 대한 한국은행의 반박이 나왔다.
+2026-01-20	input/clippings/mer/224152820059.json	일본 다카이치, 중의원 해산을 선언하다.
+2026-01-20	input/clippings/mer/224153495361.json	주절주절...유사시 해외주식을 강제매각 한다고? 등
+2026-01-21	input/clippings/mer/224153982515.json	덴마크 연기금 미국 국채 전량 매도, 대법원 상호 관세 결과 안 나옴
+2026-01-25	input/clippings/mer/224158242930.json	1월23일 금요일 늦은 밤, 원달러 환율이 급변한 비밀? (feat BOJ)
+2026-01-27	input/clippings/mer/224161012479.json	국민연금 긴급 기금운용위원회 회의소집 결과(feat 국내주식 확대)
+2026-01-29	input/clippings/mer/224162958332.json	금이 아니라 은을 사야하는 이유 A/S
+2026-01-29	input/clippings/mer/224163584062.json	파월 기자회견 해설 (feat 기준금리 동결, 보라색 넥타이)
+2026-01-31	input/clippings/mer/224166102400.json	신임 연준의장 지명자 케빈 워시가 흔드는 시장(feat 금,은,암호화폐)

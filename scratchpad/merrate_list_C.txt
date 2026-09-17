@@ -1,0 +1,45 @@
+2026-02-01	input/clippings/mer/224166639439.json	신임 연준의장 지명자 케빈 워시와 미국의 유대인들
+2026-02-02	input/clippings/mer/224167473277.json	차기 연준의장 케빈 워시의 양발운전(금리인하&긴축)은 가능할까?
+2026-02-06	input/clippings/mer/224173545059.json	폭락장에서 진입타이밍은 어떻게 잡아야 할까?
+2026-02-09	input/clippings/mer/224176802219.json	중의원 선거에 압승한 다카이치는 돈을 어떻게 풀까? (feat 공약)
+2026-02-11	input/clippings/mer/224179162516.json	중국정부가 은행들에게 미국국채 매각을 지시했다. 어떤 여파가?
+2026-02-19	input/clippings/mer/224187161115.json	연준이 아니라 재무부가 QE(양적완화)를 시도하나?
+2026-02-20	input/clippings/mer/224188992845.json	블루 아울의 AI,데이터센터 투자펀드 환매 영구중단 사태의 내막?
+2026-03-13	input/clippings/mer/224215293376.json	한국 국채 1년물 9.82%, 250% 폭등의 비밀?
+2026-03-14	input/clippings/mer/224214706765.json	사모대출 펀드런이 시작되었나?
+2026-03-17	input/clippings/mer/224219215836.json	사모대출이 터지는데 2년은 걸린다는데 맞는 말일까?
+2026-03-19	input/clippings/mer/224221728844.json	파월 기자회견(feat 연준 의장과 연준이사 계속하겠다)
+2026-03-23	input/clippings/mer/224226092090.json	신임 한국은행 총재로 지명된 신현송 교수는 어떤 사람일까?
+2026-03-25	input/clippings/mer/224228141524.json	워렌 버핏의 버크셔 헤더웨이가 보험사를 인수하는 이유가 뭘까?
+2026-03-30	input/clippings/mer/224233242850.json	미장은 언제부터 오를수 있을까?
+2026-04-07	input/clippings/mer/224242051536.json	환율에 WGBI 편입효과가 생각보다 적은 비밀은?
+2026-04-11	input/clippings/mer/224248457724.json	파월과 베센트가 은행장들을 긴급 소집한 이유 (feat 미토스)
+2026-04-15	input/clippings/mer/224252069321.json	미장은 언제부터 오를수 있을까? A/S
+2026-04-16	input/clippings/mer/224253415946.json	연준이 RMP를 줄인다고 하는데, 의미가 뭐고 미장에 나쁜 일일까?
+2026-04-16	input/clippings/mer/224254046553.json	한은총재 후보가 지목한 환율상승의 범인은?
+2026-04-22	input/clippings/mer/224260820330.json	케빈 워시 연준의장 후보는 청문회에서 무슨 말을 했나?
+2026-04-23	input/clippings/mer/224261592600.json	연준의장 후보 워시가 주장하는게 뭐고, 미장에 어떤 여파가 미칠까?
+2026-04-27	input/clippings/mer/224266336654.json	트럼프, 파월에 대한 수사 중단 선언. 케빈 워시, 연준의장이 될듯
+2026-04-28	input/clippings/mer/224267499277.json	트럼프, 미국 국채를 매수하다. (feat 미국 국채 입찰 결과, OGE)
+2026-04-30	input/clippings/mer/224269388732.json	국내상장리츠 최초 법정관리,JR글로벌리츠의 속사정
+2026-04-30	input/clippings/mer/224270033973.json	파월, "한동안 연준 이사직을 유지하겠다"의 색다른 해석은?
+2026-05-05	input/clippings/mer/224274714906.json	남들보다 투자수익률을 높이려면 필요한 것?
+2026-05-06	input/clippings/mer/224275543038.json	터키가 금을 파는 속사정은?
+2026-05-07	input/clippings/mer/224277340395.json	미국이 국채를 더 찍겠다고 발표했다. 영향은?
+2026-05-14	input/clippings/mer/224283790534.json	일본은행은 6월 16일 금리를 인상하나? (feat 엔화강세, 베센트)
+2026-05-16	input/clippings/mer/224287048703.json	금요일 국장은 왜 무너졌을까?
+2026-05-21	input/clippings/mer/224291577587.json	일본은행만 아니라 영국에서도 불씨가...
+2026-05-21	input/clippings/mer/224292480472.json	채권자경단이 출몰할 수 있다는 말의 무서운 의미는? 1
+2026-05-22	input/clippings/mer/224292701545.json	채권자경단이 출몰할 수 있다는 말의 무서운 의미는? 2
+2026-06-01	input/clippings/mer/224301880275.json	환율이 떨어지지않고 버티는 이유가 뭘까? 큰 변수 한가지가 있다면?
+2026-06-02	input/clippings/mer/224301486628.json	재미있는 기업분석 (feat 빚투의 지존)
+2026-06-06	input/clippings/mer/224307573432.json	미국 고용지표 발표의 나비효과 (feat 금, 비트코인, 환율)
+2026-06-10	input/clippings/mer/224311307187.json	지금 우리 증시는 (feat 3종세트)
+2026-06-11	input/clippings/mer/224312087790.json	오늘(2026년 6월 11일)이 국장 네마녀의 날이다. 어떤 영향이..
+2026-06-16	input/clippings/mer/224317198846.json	일본은행 금리발표 내용 뜯어보기
+2026-06-17	input/clippings/mer/224317787077.json	서울 아파트 가격은 잡힐수 있을까?
+2026-06-18	input/clippings/mer/224319388680.json	FOMC 기준금리 동결! 점도표 논란과 캐빈 워시 연준의장 기자회견
+2026-06-19	input/clippings/mer/224319891507.json	점도표로 보는 연준 위원들의 속마음
+2026-06-20	input/clippings/mer/224321145776.json	중앙일보 최종부도, JTBC 기업회생의 내막
+2026-06-26	input/clippings/mer/224327359398.json	PCE 4.1%에도 케빈 워시가 금리 인하를 할 수 있는 방법이
+2026-06-28	input/clippings/mer/224325245303.json	환율을 잡기위해 하고있는 일들

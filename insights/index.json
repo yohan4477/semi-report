@@ -5631,7 +5631,14 @@
 "input/clippings/RL Systems Mind the Gap Matching Trainer and Generator Throughput.md#L195",
 "input/clippings/RL Systems Mind the Gap Matching Trainer and Generator Throughput.md#L242",
 "input/clippings/Ultra-High Interactivity on NVIDIA GPUs - TileRT InferenceX.md#L38",
-"input/clippings/Vera Rubin NVL72 Agentic Inference 67x better Performance per Dollar.md#L24"
+"input/clippings/Vera Rubin NVL72 Agentic Inference 67x better Performance per Dollar.md#L24",
+"input/clippings/mer/224410744840.json#L25",
+"input/clippings/mer/224410744840.json#L49",
+"input/clippings/mer/224410744840.json#L51",
+"input/clippings/mer/224410744840.json#L63",
+"input/clippings/mer/224410744840.json#L65",
+"input/clippings/mer/224410744840.json#L81",
+"input/clippings/mer/224410744840.json#L109"
 ],
 "ICAP": [
 "content/newsletter/ai_infra/power/[260626] 미국 전력망 제약 - 2028년까지 40GW+ 자가발전 데이터센터로 가는 길.md#L20",
@@ -7226,7 +7233,11 @@
 "RBC": [
 "content/understanding/신보성 연구위원/[260701] 금리가 두 배 되자 사모대출이 이자를 빌려서 낸다 - 연계성이 만드는 뇌관 - 신보성.md#L147",
 "content/understanding/언더스탠딩 백브리핑/미국이 베네수엘라를 친 건, 캐나다 때문이다.md#L10",
-"content/understanding/언더스탠딩 백브리핑/미국이 베네수엘라를 친 건, 캐나다 때문이다.md#L26"
+"content/understanding/언더스탠딩 백브리핑/미국이 베네수엘라를 친 건, 캐나다 때문이다.md#L26",
+"input/clippings/mer/224407452404.json#L67",
+"input/clippings/mer/224407452404.json#L69",
+"input/clippings/mer/224407457877.json#L48",
+"input/clippings/mer/224407457877.json#L50"
 ],
 "RLWRLD": [
 "content/understanding/피지컬AI/[260518] RLDX-1이 연 것과 안 연 것.md#L6"
@@ -8536,7 +8547,11 @@
 "input/clippings/mer/224399253940.json#L69",
 "input/clippings/mer/224399253940.json#L71",
 "input/clippings/mer/224399253940.json#L89",
-"input/clippings/mer/224399253940.json#L117"
+"input/clippings/mer/224399253940.json#L117",
+"input/clippings/mer/224410243249.json#L1",
+"input/clippings/mer/224410243249.json#L5",
+"input/clippings/mer/224410243249.json#L21",
+"input/clippings/mer/224410243249.json#L82"
 ],
 "SK온": [
 "content/understanding/회계사/[260523] 시총 21조 825억원이 요구하는 내재성장률은 36~46%다 - 에코프로비엠 - 엘곰.md#L13",
@@ -9360,7 +9375,11 @@
 "input/clippings/mer/224399253940.json#L69",
 "input/clippings/mer/224399253940.json#L71",
 "input/clippings/mer/224399253940.json#L89",
-"input/clippings/mer/224399253940.json#L117"
+"input/clippings/mer/224399253940.json#L117",
+"input/clippings/mer/224410243249.json#L1",
+"input/clippings/mer/224410243249.json#L5",
+"input/clippings/mer/224410243249.json#L21",
+"input/clippings/mer/224410243249.json#L82"
 ],
 "SMIC": [
 "content/linkedin/[2605] 링크드인 게시물.md#L23",
@@ -15464,6 +15483,10 @@
 "input/clippings/mer/224352751154.json#L68",
 "input/clippings/mer/224388650215.json#L87",
 "input/clippings/mer/224398051587.json#L81",
+"input/clippings/mer/224408966593.json#L73",
+"input/clippings/mer/224408966593.json#L75",
+"input/clippings/mer/224408966593.json#L81",
+"input/clippings/mer/224412958088.json#L25",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L124"
 ],
 "UBS": [
@@ -15705,9 +15728,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-09-17",
+"built": "2026-09-18",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 2118,
+"files": 2142,
 "files_stat": {
 "content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
 "89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
@@ -24177,13 +24200,109 @@
 "7429a7e482b6fbbeb54c7d4bc893fa920fd7344e",
 149
 ],
+"input/clippings/mer/224402375244.json": [
+"cb5f5a866679372e95d9f35a14950da98f224f5a",
+142
+],
+"input/clippings/mer/224402787474.json": [
+"e1c6b690f586c2a863ce9fba75d32360e89f0d86",
+101
+],
+"input/clippings/mer/224403735059.json": [
+"68ca30e20364ab21f3faabbe71a5677bf986e939",
+149
+],
+"input/clippings/mer/224404359342.json": [
+"6e46ef8f6a000e682317e2ec453fdaa3a977f783",
+89
+],
+"input/clippings/mer/224404876483.json": [
+"dbbabff0f82c62a949bb4d2a905d2f05bb7f9f3d",
+99
+],
+"input/clippings/mer/224405508738.json": [
+"e0f15aeeea01d0802422617babda766989a2694f",
+113
+],
+"input/clippings/mer/224405997070.json": [
+"2ff899d633617bf4dfe6e8487bea210502486f8b",
+83
+],
+"input/clippings/mer/224406702287.json": [
+"fe2955123f719faedde3acdd5468c968ffffbacd",
+150
+],
+"input/clippings/mer/224407452404.json": [
+"c4768be596bf31bbbfff6d305ff4ae0d65bab427",
+98
+],
+"input/clippings/mer/224407457877.json": [
+"4bdb3143ffd6c6d5d7790dc0b326bab893f9e1b8",
+110
+],
+"input/clippings/mer/224407689635.json": [
+"c545bad9d45927a714c63da14cb6dddf6a7ca718",
+243
+],
+"input/clippings/mer/224407903415.json": [
+"90f1a96206b4a5e1c650355c45d906890a753c95",
+61
+],
+"input/clippings/mer/224408966593.json": [
+"6eec277d4323ca1a69ac0a981c4ac3106f284a57",
+171
+],
+"input/clippings/mer/224409005416.json": [
+"2faa33d49c3c0fe7f5423f937bd1cd7d0207d133",
+93
+],
+"input/clippings/mer/224409421013.json": [
+"558bb70d7a565e6e27ff31e4e99cd7702c52dddd",
+113
+],
+"input/clippings/mer/224410243249.json": [
+"307b36b6d9344566e7c54f04edf4150955849fd5",
+82
+],
+"input/clippings/mer/224410744840.json": [
+"60cc07744f333470760f7637bce4dc821d595bbf",
+109
+],
+"input/clippings/mer/224411023780.json": [
+"b101e35cfe93dbc2207cbad94ee845947b85fe1c",
+130
+],
+"input/clippings/mer/224412030235.json": [
+"9abd8f8c74c6a8c78cb7ad58f51d156d2ffcd06f",
+123
+],
+"input/clippings/mer/224412958088.json": [
+"56ed8b467391a64c6e1ec4a0be8fb8a8ed58be70",
+135
+],
+"input/clippings/mer/224413251320.json": [
+"045ed3c3c873aed889c530564f076c6c2729ff5c",
+98
+],
+"input/clippings/mer/224413592982.json": [
+"e6d6937b770a650e30c05edb185e469b8ae2ab32",
+109
+],
+"input/clippings/mer/224413852454.json": [
+"7f2a6453affc45d4f992a9512a135891abafaaff",
+117
+],
+"input/clippings/mer/224414401619.json": [
+"41d7a3d735b6c7615b44e487f411c09047b3e55f",
+102
+],
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md": [
 "01eff2aa9a11a501a660c6160de04eebc3d77fa2",
 213
 ]
 },
-"fingerprint": "9c0efd5378bbdccc18f458d4a3d415b31dc8e6f0",
-"lines": 446179
+"fingerprint": "eba79620ad3f5768336ea01a376ddcc636a7611c",
+"lines": 448999
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -24665,7 +24784,8 @@
 "input/clippings/mer/224389781168.json#L69",
 "input/clippings/mer/224389781168.json#L73",
 "input/clippings/mer/224390987441.json#L63",
-"input/clippings/mer/224391584925.json#L94"
+"input/clippings/mer/224391584925.json#L94",
+"input/clippings/mer/224409005416.json#L43"
 ],
 "구글": [
 "content/aie/2025-08-26-제미나이가-더-깊이-생각하는-법.md#L6",
@@ -27016,6 +27136,10 @@
 "input/clippings/mer/224395000762.json#L102",
 "input/clippings/mer/224395000762.json#L114",
 "input/clippings/mer/224395000762.json#L126",
+"input/clippings/mer/224404876483.json#L45",
+"input/clippings/mer/224404876483.json#L81",
+"input/clippings/mer/224404876483.json#L99",
+"input/clippings/mer/224410744840.json#L91",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L14",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L20",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L26",
@@ -27575,7 +27699,8 @@
 "input/clippings/mer/224332115126.json#L62",
 "input/clippings/mer/224358879817.json#L126",
 "input/clippings/mer/224363874833.json#L75",
-"input/clippings/mer/224386666279.json#L42"
+"input/clippings/mer/224386666279.json#L42",
+"input/clippings/mer/224402787474.json#L93"
 ],
 "기금운용위원회": [
 "content/understanding/미국주식 사관학교/[260601] 국민연금 매도폭탄, 국채로 흡수된다 - 목표비중 올려 위기 넘겼고 미국주식엔 안 간다.md#L10",
@@ -27934,7 +28059,9 @@
 "input/clippings/mer/224363874833.json#L179",
 "input/clippings/mer/224368786980.json#L49",
 "input/clippings/mer/224368786980.json#L101",
-"input/clippings/mer/224386666279.json#L114"
+"input/clippings/mer/224386666279.json#L114",
+"input/clippings/mer/224402375244.json#L46",
+"input/clippings/mer/224402375244.json#L96"
 ],
 "내셔널그리드": [
 "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L51",
@@ -28776,7 +28903,24 @@
 "input/clippings/mer/224395022673.json#L4",
 "input/clippings/mer/224398027941.json#L21",
 "input/clippings/mer/224398027941.json#L25",
-"input/clippings/mer/224400415287.json#L1"
+"input/clippings/mer/224400415287.json#L1",
+"input/clippings/mer/224402375244.json#L1",
+"input/clippings/mer/224406702287.json#L1",
+"input/clippings/mer/224407689635.json#L11",
+"input/clippings/mer/224407689635.json#L68",
+"input/clippings/mer/224407689635.json#L71",
+"input/clippings/mer/224407689635.json#L121",
+"input/clippings/mer/224407689635.json#L192",
+"input/clippings/mer/224410243249.json#L75",
+"input/clippings/mer/224411023780.json#L111",
+"input/clippings/mer/224412030235.json#L7",
+"input/clippings/mer/224412030235.json#L40",
+"input/clippings/mer/224413251320.json#L1",
+"input/clippings/mer/224413852454.json#L3",
+"input/clippings/mer/224413852454.json#L53",
+"input/clippings/mer/224413852454.json#L61",
+"input/clippings/mer/224413852454.json#L91",
+"input/clippings/mer/224414401619.json#L1"
 ],
 "넥스트에라": [
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L43",
@@ -29105,7 +29249,10 @@
 "input/clippings/mer/224394691017.json#L71",
 "input/clippings/mer/224394691017.json#L75",
 "input/clippings/mer/224395022673.json#L36",
-"input/clippings/mer/224401859933.json#L135"
+"input/clippings/mer/224401859933.json#L135",
+"input/clippings/mer/224409005416.json#L65",
+"input/clippings/mer/224409005416.json#L73",
+"input/clippings/mer/224413592982.json#L35"
 ],
 "다난타라": [
 "content/understanding/박팀장/[260715] 경제는 멀쩡한데 환율만 외환위기 수준 - 인도네시아에서 돈이 빠지는 이유 - 박팀장.md#L46",
@@ -31966,7 +32113,9 @@
 "input/clippings/mer/224383455971.json#L137",
 "input/clippings/mer/224401859933.json#L59",
 "input/clippings/mer/224401859933.json#L61",
-"input/clippings/mer/224401859933.json#L93"
+"input/clippings/mer/224401859933.json#L93",
+"input/clippings/mer/224412958088.json#L25",
+"input/clippings/mer/224412958088.json#L103"
 ],
 "레나": [
 "content/aie/2026-06-26-에이전트-평가를-모두에게.md#L44",
@@ -33751,6 +33900,14 @@
 "input/clippings/mer/224355055064.json#L28",
 "input/clippings/mer/224372898270.json#L5",
 "input/clippings/mer/224395000762.json#L78",
+"input/clippings/mer/224403735059.json#L99",
+"input/clippings/mer/224403735059.json#L103",
+"input/clippings/mer/224403735059.json#L105",
+"input/clippings/mer/224403735059.json#L107",
+"input/clippings/mer/224403735059.json#L113",
+"input/clippings/mer/224403735059.json#L115",
+"input/clippings/mer/224403735059.json#L117",
+"input/clippings/mer/224403735059.json#L119",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L77"
 ],
 "마이크론": [
@@ -34402,7 +34559,8 @@
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L111",
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L115",
 "content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md#L3",
-"content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md#L20"
+"content/understanding/한주성/2026-04-05 일본은 금융을 소재로 한 드라마가 많습니다. 메가뱅크, 증권사, 기업 구조조정을 다룬 작품 [1616].md#L20",
+"input/clippings/mer/224407457877.json#L34"
 ],
 "메타": [
 "content/aie/2025-12-26-프롬프트-러닝이-잘-먹히는-이유.md#L51",
@@ -35878,6 +36036,8 @@
 "input/clippings/mer/224390987441.json#L101",
 "input/clippings/mer/224391584925.json#L130",
 "input/clippings/mer/224391584925.json#L132",
+"input/clippings/mer/224404876483.json#L45",
+"input/clippings/mer/224404876483.json#L99",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L16",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L22",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L159"
@@ -41921,7 +42081,146 @@
 "input/clippings/mer/224401859933.json#L125",
 "input/clippings/mer/224401859933.json#L135",
 "input/clippings/mer/224401859933.json#L141",
-"input/clippings/mer/224401859933.json#L143"
+"input/clippings/mer/224401859933.json#L143",
+"input/clippings/mer/224402375244.json#L46",
+"input/clippings/mer/224402375244.json#L100",
+"input/clippings/mer/224402375244.json#L142",
+"input/clippings/mer/224403735059.json#L129",
+"input/clippings/mer/224404359342.json#L1",
+"input/clippings/mer/224404359342.json#L3",
+"input/clippings/mer/224404359342.json#L25",
+"input/clippings/mer/224404359342.json#L27",
+"input/clippings/mer/224404359342.json#L31",
+"input/clippings/mer/224404359342.json#L35",
+"input/clippings/mer/224404359342.json#L39",
+"input/clippings/mer/224404359342.json#L41",
+"input/clippings/mer/224404359342.json#L43",
+"input/clippings/mer/224404359342.json#L51",
+"input/clippings/mer/224404359342.json#L63",
+"input/clippings/mer/224404359342.json#L69",
+"input/clippings/mer/224404359342.json#L75",
+"input/clippings/mer/224404359342.json#L79",
+"input/clippings/mer/224404359342.json#L85",
+"input/clippings/mer/224404359342.json#L89",
+"input/clippings/mer/224404876483.json#L3",
+"input/clippings/mer/224404876483.json#L5",
+"input/clippings/mer/224404876483.json#L47",
+"input/clippings/mer/224404876483.json#L49",
+"input/clippings/mer/224404876483.json#L79",
+"input/clippings/mer/224404876483.json#L85",
+"input/clippings/mer/224404876483.json#L87",
+"input/clippings/mer/224404876483.json#L89",
+"input/clippings/mer/224404876483.json#L99",
+"input/clippings/mer/224405997070.json#L71",
+"input/clippings/mer/224406702287.json#L4",
+"input/clippings/mer/224406702287.json#L8",
+"input/clippings/mer/224406702287.json#L14",
+"input/clippings/mer/224406702287.json#L18",
+"input/clippings/mer/224406702287.json#L30",
+"input/clippings/mer/224406702287.json#L46",
+"input/clippings/mer/224406702287.json#L56",
+"input/clippings/mer/224406702287.json#L58",
+"input/clippings/mer/224406702287.json#L64",
+"input/clippings/mer/224406702287.json#L66",
+"input/clippings/mer/224406702287.json#L72",
+"input/clippings/mer/224406702287.json#L82",
+"input/clippings/mer/224406702287.json#L86",
+"input/clippings/mer/224406702287.json#L100",
+"input/clippings/mer/224406702287.json#L106",
+"input/clippings/mer/224406702287.json#L112",
+"input/clippings/mer/224406702287.json#L114",
+"input/clippings/mer/224406702287.json#L118",
+"input/clippings/mer/224406702287.json#L120",
+"input/clippings/mer/224406702287.json#L124",
+"input/clippings/mer/224406702287.json#L130",
+"input/clippings/mer/224406702287.json#L132",
+"input/clippings/mer/224406702287.json#L136",
+"input/clippings/mer/224406702287.json#L140",
+"input/clippings/mer/224406702287.json#L142",
+"input/clippings/mer/224406702287.json#L148",
+"input/clippings/mer/224407452404.json#L57",
+"input/clippings/mer/224407457877.json#L18",
+"input/clippings/mer/224407457877.json#L20",
+"input/clippings/mer/224407457877.json#L24",
+"input/clippings/mer/224407457877.json#L26",
+"input/clippings/mer/224407457877.json#L34",
+"input/clippings/mer/224407457877.json#L36",
+"input/clippings/mer/224407457877.json#L40",
+"input/clippings/mer/224407457877.json#L42",
+"input/clippings/mer/224407457877.json#L102",
+"input/clippings/mer/224407457877.json#L106",
+"input/clippings/mer/224407457877.json#L108",
+"input/clippings/mer/224407457877.json#L110",
+"input/clippings/mer/224407689635.json#L1",
+"input/clippings/mer/224407689635.json#L3",
+"input/clippings/mer/224407689635.json#L11",
+"input/clippings/mer/224407689635.json#L13",
+"input/clippings/mer/224407689635.json#L14",
+"input/clippings/mer/224407689635.json#L36",
+"input/clippings/mer/224407689635.json#L64",
+"input/clippings/mer/224407689635.json#L71",
+"input/clippings/mer/224407689635.json#L97",
+"input/clippings/mer/224407689635.json#L113",
+"input/clippings/mer/224407689635.json#L117",
+"input/clippings/mer/224407689635.json#L119",
+"input/clippings/mer/224407689635.json#L121",
+"input/clippings/mer/224407689635.json#L123",
+"input/clippings/mer/224407689635.json#L124",
+"input/clippings/mer/224407689635.json#L130",
+"input/clippings/mer/224407689635.json#L142",
+"input/clippings/mer/224407689635.json#L154",
+"input/clippings/mer/224407689635.json#L186",
+"input/clippings/mer/224407689635.json#L190",
+"input/clippings/mer/224407689635.json#L192",
+"input/clippings/mer/224407689635.json#L194",
+"input/clippings/mer/224407689635.json#L195",
+"input/clippings/mer/224407689635.json#L201",
+"input/clippings/mer/224407689635.json#L213",
+"input/clippings/mer/224407689635.json#L217",
+"input/clippings/mer/224407689635.json#L243",
+"input/clippings/mer/224408966593.json#L5",
+"input/clippings/mer/224408966593.json#L17",
+"input/clippings/mer/224408966593.json#L71",
+"input/clippings/mer/224409005416.json#L1",
+"input/clippings/mer/224410744840.json#L103",
+"input/clippings/mer/224410744840.json#L105",
+"input/clippings/mer/224410744840.json#L107",
+"input/clippings/mer/224411023780.json#L118",
+"input/clippings/mer/224411023780.json#L120",
+"input/clippings/mer/224412030235.json#L1",
+"input/clippings/mer/224412030235.json#L5",
+"input/clippings/mer/224412030235.json#L7",
+"input/clippings/mer/224412030235.json#L9",
+"input/clippings/mer/224412030235.json#L10",
+"input/clippings/mer/224412030235.json#L14",
+"input/clippings/mer/224412030235.json#L16",
+"input/clippings/mer/224412030235.json#L28",
+"input/clippings/mer/224412030235.json#L36",
+"input/clippings/mer/224412030235.json#L38",
+"input/clippings/mer/224412030235.json#L40",
+"input/clippings/mer/224412030235.json#L42",
+"input/clippings/mer/224412030235.json#L47",
+"input/clippings/mer/224412030235.json#L49",
+"input/clippings/mer/224412030235.json#L53",
+"input/clippings/mer/224412030235.json#L61",
+"input/clippings/mer/224412030235.json#L63",
+"input/clippings/mer/224412030235.json#L81",
+"input/clippings/mer/224412030235.json#L87",
+"input/clippings/mer/224412030235.json#L91",
+"input/clippings/mer/224412030235.json#L103",
+"input/clippings/mer/224412030235.json#L105",
+"input/clippings/mer/224412030235.json#L121",
+"input/clippings/mer/224412030235.json#L123",
+"input/clippings/mer/224412958088.json#L97",
+"input/clippings/mer/224413251320.json#L16",
+"input/clippings/mer/224413251320.json#L18",
+"input/clippings/mer/224413251320.json#L82",
+"input/clippings/mer/224414401619.json#L10",
+"input/clippings/mer/224414401619.json#L72",
+"input/clippings/mer/224414401619.json#L84",
+"input/clippings/mer/224414401619.json#L92",
+"input/clippings/mer/224414401619.json#L96",
+"input/clippings/mer/224414401619.json#L100"
 ],
 "미국 상무부": [
 "content/understanding/미국주식 사관학교/[260615] 클로드가 90분 만에 전 세계에서 꺼졌다 - AI 모델 수출통제와 각자도생 인프라 수요.md#L9",
@@ -42038,7 +42337,12 @@
 "input/clippings/mer/224389210503.json#L31",
 "input/clippings/mer/224393234027.json#L1",
 "input/clippings/mer/224393234027.json#L9",
-"input/clippings/mer/224396155596.json#L114"
+"input/clippings/mer/224396155596.json#L114",
+"input/clippings/mer/224407689635.json#L14",
+"input/clippings/mer/224407689635.json#L119",
+"input/clippings/mer/224407689635.json#L121",
+"input/clippings/mer/224407689635.json#L123",
+"input/clippings/mer/224407689635.json#L154"
 ],
 "미국 정부": [
 "content/newsletter/ai_infra/business/[260611] 인텔은 지금 자본을 조달해야 한다.md#L45",
@@ -42172,7 +42476,8 @@
 "input/clippings/mer/224381241715.json#L11",
 "input/clippings/mer/224388064734.json#L38",
 "input/clippings/mer/224390337312.json#L133",
-"input/clippings/mer/224399253940.json#L85"
+"input/clippings/mer/224399253940.json#L85",
+"input/clippings/mer/224407689635.json#L97"
 ],
 "미디어텍": [
 "content/linkedin/[2606] 링크드인 게시물.md#L121",
@@ -42231,7 +42536,8 @@
 ],
 "미쓰비시UFJ": [
 "content/understanding/미국주식 사관학교/[260722] 엔화를 지운 펀드가 알고 보니 엔화 약세에 세 겹으로 걸려 있다 - 통화 헤지 ETF DXJ.md#L78",
-"content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L113"
+"content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L113",
+"input/clippings/mer/224407457877.json#L34"
 ],
 "바이트댄스": [
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L6",
@@ -42400,7 +42706,9 @@
 "content/understanding/회계사/[260811] 해맥의 매파 발언 — 9월 인상 확률 51.7%, 한미 금리차 최대 1.25%p - 엘곰.md#L40",
 "content/understanding/회계사/[260824] 매파 회의록이 나온 날 달러가 0.72% 내렸다 - FOMC 회의록 - 엘곰.md#L14",
 "input/clippings/mer/224362387594.json#L9",
-"input/clippings/mer/224362387594.json#L11"
+"input/clippings/mer/224362387594.json#L11",
+"input/clippings/mer/224409005416.json#L69",
+"input/clippings/mer/224413592982.json#L31"
 ],
 "보스턴 다이내믹스": [
 "content/newsletter/robotics/[260608] Unitree의 믿기 힘든 성장 궤적, 여전히 저평가됐다.md#L254",
@@ -43505,7 +43813,21 @@
 "input/clippings/mer/224398051587.json#L77",
 "input/clippings/mer/224398540411.json#L31",
 "input/clippings/mer/224398540411.json#L101",
-"input/clippings/mer/224401859933.json#L93"
+"input/clippings/mer/224401859933.json#L93",
+"input/clippings/mer/224411023780.json#L5",
+"input/clippings/mer/224411023780.json#L17",
+"input/clippings/mer/224411023780.json#L35",
+"input/clippings/mer/224411023780.json#L73",
+"input/clippings/mer/224411023780.json#L79",
+"input/clippings/mer/224411023780.json#L83",
+"input/clippings/mer/224411023780.json#L97",
+"input/clippings/mer/224411023780.json#L99",
+"input/clippings/mer/224411023780.json#L109",
+"input/clippings/mer/224411023780.json#L111",
+"input/clippings/mer/224411023780.json#L113",
+"input/clippings/mer/224411023780.json#L118",
+"input/clippings/mer/224411023780.json#L122",
+"input/clippings/mer/224411023780.json#L130"
 ],
 "산업통상부": [
 "content/understanding/산업정책/[260812] AI 시대 제조업 전환과 원유 수급 - 김정관 산업통상부 장관.md#L1",
@@ -43519,7 +43841,9 @@
 "input/clippings/mer/224295928880.json#L92",
 "input/clippings/mer/224334922024.json#L1",
 "input/clippings/mer/224334922024.json#L79",
-"input/clippings/mer/224334922024.json#L81"
+"input/clippings/mer/224334922024.json#L81",
+"input/clippings/mer/224404876483.json#L7",
+"input/clippings/mer/224404876483.json#L93"
 ],
 "산제이 스리바스타바": [
 "content/understanding/회계사/[260813] 토큰 값이 아니라 회사 아키텍처가 AI 비용을 결정한다 - AI 토크노믹스 - 엘곰.md#L7"
@@ -44976,7 +45300,15 @@
 "input/clippings/mer/224389781168.json#L33",
 "input/clippings/mer/224399253940.json#L69",
 "input/clippings/mer/224399253940.json#L87",
-"input/clippings/mer/224399253940.json#L117"
+"input/clippings/mer/224399253940.json#L117",
+"input/clippings/mer/224405508738.json#L21",
+"input/clippings/mer/224405508738.json#L75",
+"input/clippings/mer/224405508738.json#L77",
+"input/clippings/mer/224405508738.json#L95",
+"input/clippings/mer/224410243249.json#L1",
+"input/clippings/mer/224410243249.json#L5",
+"input/clippings/mer/224410243249.json#L21",
+"input/clippings/mer/224410243249.json#L82"
 ],
 "삼성SDI": [
 "content/understanding/권효재 대표/전쟁 끝나도 계속 간다, 가격보다 중요한 에너지 믹스와 자원 확보 전쟁.md#L60",
@@ -46497,7 +46829,15 @@
 "input/clippings/mer/224386666279.json#L166",
 "input/clippings/mer/224386666279.json#L168",
 "input/clippings/mer/224386666279.json#L178",
-"input/clippings/mer/224389781168.json#L33"
+"input/clippings/mer/224389781168.json#L33",
+"input/clippings/mer/224405508738.json#L21",
+"input/clippings/mer/224405508738.json#L75",
+"input/clippings/mer/224405508738.json#L77",
+"input/clippings/mer/224405508738.json#L95",
+"input/clippings/mer/224410243249.json#L1",
+"input/clippings/mer/224410243249.json#L5",
+"input/clippings/mer/224410243249.json#L21",
+"input/clippings/mer/224410243249.json#L82"
 ],
 "삼익가든맨션": [
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L6",
@@ -46699,7 +47039,11 @@
 "content/understanding/채널 씨모어/raw/2025-06-03-rates-weak-dollar.md#L98",
 "input/clippings/mer/224124491312.json#L5",
 "input/clippings/mer/224124491312.json#L15",
-"input/clippings/mer/224295249964.json#L91"
+"input/clippings/mer/224295249964.json#L91",
+"input/clippings/mer/224407457877.json#L18",
+"input/clippings/mer/224407457877.json#L20",
+"input/clippings/mer/224407457877.json#L28",
+"input/clippings/mer/224407457877.json#L110"
 ],
 "서울": [
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L16",
@@ -47169,7 +47513,13 @@
 "input/clippings/mer/224388650215.json#L25",
 "input/clippings/mer/224395000762.json#L38",
 "input/clippings/mer/224396922598.json#L27",
-"input/clippings/mer/224401859933.json#L101"
+"input/clippings/mer/224401859933.json#L101",
+"input/clippings/mer/224405508738.json#L5",
+"input/clippings/mer/224407903415.json#L5",
+"input/clippings/mer/224409421013.json#L41",
+"input/clippings/mer/224409421013.json#L55",
+"input/clippings/mer/224409421013.json#L57",
+"input/clippings/mer/224409421013.json#L59"
 ],
 "서울시": [
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L6",
@@ -47916,7 +48266,8 @@
 "input/clippings/mer/224180041898.json#L75",
 "input/clippings/mer/224187679101.json#L61",
 "input/clippings/mer/224187679101.json#L63",
-"input/clippings/mer/224359986701.json#L66"
+"input/clippings/mer/224359986701.json#L66",
+"input/clippings/mer/224403735059.json#L129"
 ],
 "손진석": [
 "content/understanding/손진석 기자/[260616] 복지 국가라는 이름 아래 30년 동안 자본시장 국가가 됐다 - 스웨덴의 변신 - 손진석.md#L3",
@@ -52615,6 +52966,9 @@
 "input/clippings/mer/224349989423.json#L62",
 "input/clippings/mer/224349989423.json#L92",
 "input/clippings/mer/224349989423.json#L96",
+"input/clippings/mer/224410744840.json#L1",
+"input/clippings/mer/224410744840.json#L9",
+"input/clippings/mer/224410744840.json#L95",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L16",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L22",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L26",
@@ -57553,6 +57907,10 @@
 "input/clippings/mer/224391584925.json#L164",
 "input/clippings/mer/224391584925.json#L193",
 "input/clippings/mer/224395000762.json#L102",
+"input/clippings/mer/224403735059.json#L135",
+"input/clippings/mer/224403735059.json#L137",
+"input/clippings/mer/224403735059.json#L139",
+"input/clippings/mer/224403735059.json#L141",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L22",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L159"
 ],
@@ -58825,7 +59183,37 @@
 "input/clippings/mer/224398027941.json#L61",
 "input/clippings/mer/224398027941.json#L63",
 "input/clippings/mer/224398027941.json#L65",
-"input/clippings/mer/224398027941.json#L67"
+"input/clippings/mer/224398027941.json#L67",
+"input/clippings/mer/224407689635.json#L144",
+"input/clippings/mer/224407689635.json#L170",
+"input/clippings/mer/224407689635.json#L209",
+"input/clippings/mer/224407689635.json#L211",
+"input/clippings/mer/224407689635.json#L213",
+"input/clippings/mer/224407689635.json#L215",
+"input/clippings/mer/224407689635.json#L243",
+"input/clippings/mer/224409005416.json#L17",
+"input/clippings/mer/224409005416.json#L19",
+"input/clippings/mer/224409005416.json#L61",
+"input/clippings/mer/224409005416.json#L63",
+"input/clippings/mer/224409005416.json#L65",
+"input/clippings/mer/224409005416.json#L73",
+"input/clippings/mer/224409005416.json#L81",
+"input/clippings/mer/224409005416.json#L93",
+"input/clippings/mer/224412030235.json#L24",
+"input/clippings/mer/224412030235.json#L26",
+"input/clippings/mer/224412030235.json#L28",
+"input/clippings/mer/224412030235.json#L30",
+"input/clippings/mer/224412030235.json#L83",
+"input/clippings/mer/224413592982.json#L29",
+"input/clippings/mer/224413592982.json#L35",
+"input/clippings/mer/224413592982.json#L43",
+"input/clippings/mer/224413592982.json#L47",
+"input/clippings/mer/224413592982.json#L109",
+"input/clippings/mer/224414401619.json#L10",
+"input/clippings/mer/224414401619.json#L44",
+"input/clippings/mer/224414401619.json#L50",
+"input/clippings/mer/224414401619.json#L80",
+"input/clippings/mer/224414401619.json#L102"
 ],
 "오라클": [
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
@@ -59180,6 +59568,7 @@
 "input/clippings/mer/224359986701.json#L104",
 "input/clippings/mer/224369325535.json#L142",
 "input/clippings/mer/224381744094.json#L61",
+"input/clippings/mer/224403735059.json#L129",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L16",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L18",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L57"
@@ -60863,6 +61252,45 @@
 "input/clippings/mer/224391584925.json#L130",
 "input/clippings/mer/224391584925.json#L134",
 "input/clippings/mer/224391584925.json#L164",
+"input/clippings/mer/224403735059.json#L1",
+"input/clippings/mer/224403735059.json#L3",
+"input/clippings/mer/224403735059.json#L7",
+"input/clippings/mer/224403735059.json#L13",
+"input/clippings/mer/224403735059.json#L27",
+"input/clippings/mer/224403735059.json#L37",
+"input/clippings/mer/224403735059.json#L43",
+"input/clippings/mer/224403735059.json#L45",
+"input/clippings/mer/224403735059.json#L65",
+"input/clippings/mer/224403735059.json#L69",
+"input/clippings/mer/224403735059.json#L71",
+"input/clippings/mer/224403735059.json#L77",
+"input/clippings/mer/224403735059.json#L81",
+"input/clippings/mer/224403735059.json#L97",
+"input/clippings/mer/224403735059.json#L99",
+"input/clippings/mer/224403735059.json#L101",
+"input/clippings/mer/224403735059.json#L103",
+"input/clippings/mer/224403735059.json#L105",
+"input/clippings/mer/224403735059.json#L107",
+"input/clippings/mer/224403735059.json#L113",
+"input/clippings/mer/224403735059.json#L115",
+"input/clippings/mer/224403735059.json#L117",
+"input/clippings/mer/224403735059.json#L123",
+"input/clippings/mer/224403735059.json#L125",
+"input/clippings/mer/224403735059.json#L127",
+"input/clippings/mer/224403735059.json#L129",
+"input/clippings/mer/224403735059.json#L139",
+"input/clippings/mer/224403735059.json#L141",
+"input/clippings/mer/224403735059.json#L143",
+"input/clippings/mer/224403735059.json#L149",
+"input/clippings/mer/224404876483.json#L81",
+"input/clippings/mer/224410744840.json#L23",
+"input/clippings/mer/224410744840.json#L25",
+"input/clippings/mer/224410744840.json#L27",
+"input/clippings/mer/224410744840.json#L39",
+"input/clippings/mer/224410744840.json#L77",
+"input/clippings/mer/224410744840.json#L81",
+"input/clippings/mer/224410744840.json#L87",
+"input/clippings/mer/224410744840.json#L109",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L16",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L26",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L57",
@@ -60959,7 +61387,8 @@
 "input/clippings/mer/224228141524.json#L168",
 "input/clippings/mer/224228141524.json#L170",
 "input/clippings/mer/224228141524.json#L172",
-"input/clippings/mer/224228141524.json#L180"
+"input/clippings/mer/224228141524.json#L180",
+"input/clippings/mer/224412030235.json#L42"
 ],
 "워런버핏": [
 "content/understanding/채널 씨모어/2025-03-basics.md#L52"
@@ -62889,7 +63318,57 @@
 "input/clippings/mer/224401859933.json#L25",
 "input/clippings/mer/224401859933.json#L27",
 "input/clippings/mer/224401859933.json#L31",
-"input/clippings/mer/224401859933.json#L33"
+"input/clippings/mer/224401859933.json#L33",
+"input/clippings/mer/224404359342.json#L41",
+"input/clippings/mer/224405508738.json#L89",
+"input/clippings/mer/224405508738.json#L93",
+"input/clippings/mer/224405997070.json#L1",
+"input/clippings/mer/224405997070.json#L15",
+"input/clippings/mer/224405997070.json#L25",
+"input/clippings/mer/224405997070.json#L77",
+"input/clippings/mer/224405997070.json#L79",
+"input/clippings/mer/224405997070.json#L83",
+"input/clippings/mer/224407452404.json#L5",
+"input/clippings/mer/224407452404.json#L61",
+"input/clippings/mer/224407452404.json#L63",
+"input/clippings/mer/224407457877.json#L18",
+"input/clippings/mer/224407457877.json#L32",
+"input/clippings/mer/224407457877.json#L36",
+"input/clippings/mer/224407457877.json#L42",
+"input/clippings/mer/224407457877.json#L110",
+"input/clippings/mer/224407689635.json#L170",
+"input/clippings/mer/224408966593.json#L5",
+"input/clippings/mer/224408966593.json#L7",
+"input/clippings/mer/224408966593.json#L13",
+"input/clippings/mer/224408966593.json#L15",
+"input/clippings/mer/224408966593.json#L17",
+"input/clippings/mer/224408966593.json#L19",
+"input/clippings/mer/224408966593.json#L21",
+"input/clippings/mer/224408966593.json#L27",
+"input/clippings/mer/224408966593.json#L29",
+"input/clippings/mer/224408966593.json#L41",
+"input/clippings/mer/224408966593.json#L45",
+"input/clippings/mer/224408966593.json#L47",
+"input/clippings/mer/224408966593.json#L53",
+"input/clippings/mer/224408966593.json#L97",
+"input/clippings/mer/224408966593.json#L99",
+"input/clippings/mer/224408966593.json#L103",
+"input/clippings/mer/224408966593.json#L105",
+"input/clippings/mer/224408966593.json#L109",
+"input/clippings/mer/224408966593.json#L111",
+"input/clippings/mer/224408966593.json#L127",
+"input/clippings/mer/224408966593.json#L137",
+"input/clippings/mer/224408966593.json#L171",
+"input/clippings/mer/224409421013.json#L71",
+"input/clippings/mer/224409421013.json#L73",
+"input/clippings/mer/224409421013.json#L79",
+"input/clippings/mer/224409421013.json#L81",
+"input/clippings/mer/224410243249.json#L11",
+"input/clippings/mer/224413251320.json#L1",
+"input/clippings/mer/224413251320.json#L3",
+"input/clippings/mer/224413251320.json#L14",
+"input/clippings/mer/224413592982.json#L109",
+"input/clippings/mer/224414401619.json#L86"
 ],
 "이관옥": [
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L90",
@@ -62984,7 +63463,19 @@
 "input/clippings/mer/224327635026.json#L27",
 "input/clippings/mer/224327635026.json#L29",
 "input/clippings/mer/224335754009.json#L131",
-"input/clippings/mer/224388650215.json#L87"
+"input/clippings/mer/224388650215.json#L87",
+"input/clippings/mer/224411023780.json#L3",
+"input/clippings/mer/224411023780.json#L73",
+"input/clippings/mer/224411023780.json#L77",
+"input/clippings/mer/224411023780.json#L79",
+"input/clippings/mer/224411023780.json#L85",
+"input/clippings/mer/224411023780.json#L87",
+"input/clippings/mer/224411023780.json#L91",
+"input/clippings/mer/224411023780.json#L93",
+"input/clippings/mer/224411023780.json#L95",
+"input/clippings/mer/224411023780.json#L97",
+"input/clippings/mer/224411023780.json#L99",
+"input/clippings/mer/224412958088.json#L103"
 ],
 "이란": [
 "content/aie/2026-04-26-젬마-딥마인드의-오픈-모델.md#L17",
@@ -64164,7 +64655,20 @@
 "input/clippings/mer/224398540411.json#L77",
 "input/clippings/mer/224398540411.json#L79",
 "input/clippings/mer/224401859933.json#L93",
-"input/clippings/mer/224401859933.json#L147"
+"input/clippings/mer/224401859933.json#L147",
+"input/clippings/mer/224411023780.json#L3",
+"input/clippings/mer/224411023780.json#L31",
+"input/clippings/mer/224411023780.json#L73",
+"input/clippings/mer/224411023780.json#L75",
+"input/clippings/mer/224411023780.json#L79",
+"input/clippings/mer/224411023780.json#L81",
+"input/clippings/mer/224411023780.json#L83",
+"input/clippings/mer/224411023780.json#L85",
+"input/clippings/mer/224411023780.json#L93",
+"input/clippings/mer/224412958088.json#L7",
+"input/clippings/mer/224412958088.json#L13",
+"input/clippings/mer/224412958088.json#L83",
+"input/clippings/mer/224412958088.json#L103"
 ],
 "이레인": [
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L37",
@@ -66301,7 +66805,8 @@
 "input/clippings/mer/224379237136.json#L41",
 "input/clippings/mer/224379237136.json#L51",
 "input/clippings/mer/224379237136.json#L103",
-"input/clippings/mer/224379237136.json#L105"
+"input/clippings/mer/224379237136.json#L105",
+"input/clippings/mer/224410744840.json#L89"
 ],
 "일본": [
 "content/aie/2026-06-26-제미나이-오디오-스택.md#L15",
@@ -68236,7 +68741,50 @@
 "input/clippings/mer/224401859933.json#L133",
 "input/clippings/mer/224401859933.json#L139",
 "input/clippings/mer/224401859933.json#L141",
-"input/clippings/mer/224401859933.json#L147"
+"input/clippings/mer/224401859933.json#L147",
+"input/clippings/mer/224402375244.json#L34",
+"input/clippings/mer/224402375244.json#L38",
+"input/clippings/mer/224402375244.json#L52",
+"input/clippings/mer/224402375244.json#L62",
+"input/clippings/mer/224402375244.json#L70",
+"input/clippings/mer/224402375244.json#L76",
+"input/clippings/mer/224402375244.json#L122",
+"input/clippings/mer/224402375244.json#L142",
+"input/clippings/mer/224405997070.json#L1",
+"input/clippings/mer/224405997070.json#L3",
+"input/clippings/mer/224405997070.json#L5",
+"input/clippings/mer/224405997070.json#L15",
+"input/clippings/mer/224405997070.json#L23",
+"input/clippings/mer/224405997070.json#L25",
+"input/clippings/mer/224405997070.json#L29",
+"input/clippings/mer/224405997070.json#L31",
+"input/clippings/mer/224405997070.json#L33",
+"input/clippings/mer/224405997070.json#L55",
+"input/clippings/mer/224405997070.json#L73",
+"input/clippings/mer/224405997070.json#L77",
+"input/clippings/mer/224405997070.json#L79",
+"input/clippings/mer/224405997070.json#L83",
+"input/clippings/mer/224407452404.json#L3",
+"input/clippings/mer/224407452404.json#L5",
+"input/clippings/mer/224407457877.json#L4",
+"input/clippings/mer/224407457877.json#L16",
+"input/clippings/mer/224407457877.json#L18",
+"input/clippings/mer/224407457877.json#L20",
+"input/clippings/mer/224407457877.json#L22",
+"input/clippings/mer/224407457877.json#L26",
+"input/clippings/mer/224407457877.json#L28",
+"input/clippings/mer/224407457877.json#L32",
+"input/clippings/mer/224407457877.json#L36",
+"input/clippings/mer/224407457877.json#L42",
+"input/clippings/mer/224407457877.json#L62",
+"input/clippings/mer/224407457877.json#L68",
+"input/clippings/mer/224407457877.json#L74",
+"input/clippings/mer/224407457877.json#L100",
+"input/clippings/mer/224407457877.json#L102",
+"input/clippings/mer/224407457877.json#L104",
+"input/clippings/mer/224407457877.json#L106",
+"input/clippings/mer/224407457877.json#L110",
+"input/clippings/mer/224413592982.json#L109"
 ],
 "일본 정부": [
 "content/understanding/류상철 국장/환율 오른다고 서학개미 탓하지 마라.md#L99",
@@ -68495,7 +69043,14 @@
 "input/clippings/mer/224366873842.json#L92",
 "input/clippings/mer/224366873842.json#L96",
 "input/clippings/mer/224367760426.json#L137",
-"input/clippings/mer/224369325535.json#L82"
+"input/clippings/mer/224369325535.json#L82",
+"input/clippings/mer/224405997070.json#L1",
+"input/clippings/mer/224405997070.json#L15",
+"input/clippings/mer/224405997070.json#L25",
+"input/clippings/mer/224405997070.json#L77",
+"input/clippings/mer/224405997070.json#L79",
+"input/clippings/mer/224405997070.json#L83",
+"input/clippings/mer/224413592982.json#L109"
 ],
 "장순원": [
 "content/understanding/_대기 목록.md#L15",
@@ -71464,7 +72019,13 @@
 "input/clippings/mer/224398051587.json#L19",
 "input/clippings/mer/224398051587.json#L21",
 "input/clippings/mer/224398051587.json#L23",
-"input/clippings/mer/224401859933.json#L93"
+"input/clippings/mer/224401859933.json#L93",
+"input/clippings/mer/224404359342.json#L19",
+"input/clippings/mer/224410744840.json#L99",
+"input/clippings/mer/224410744840.json#L103",
+"input/clippings/mer/224410744840.json#L105",
+"input/clippings/mer/224410744840.json#L107",
+"input/clippings/mer/224410744840.json#L109"
 ],
 "중국 인민은행": [
 "content/understanding/미국주식 사관학교/[260614] 금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다 - 인플레이션·경제규모·통화량으로 다시 잰 금 시세.md#L37"
@@ -72174,7 +72735,59 @@
 "input/clippings/mer/224396127598.json#L129",
 "input/clippings/mer/224396127598.json#L131",
 "input/clippings/mer/224396127598.json#L133",
-"input/clippings/mer/224401859933.json#L25"
+"input/clippings/mer/224401859933.json#L25",
+"input/clippings/mer/224404359342.json#L1",
+"input/clippings/mer/224404359342.json#L3",
+"input/clippings/mer/224404359342.json#L7",
+"input/clippings/mer/224404359342.json#L9",
+"input/clippings/mer/224404359342.json#L13",
+"input/clippings/mer/224404359342.json#L17",
+"input/clippings/mer/224404359342.json#L19",
+"input/clippings/mer/224404359342.json#L21",
+"input/clippings/mer/224404359342.json#L23",
+"input/clippings/mer/224404359342.json#L25",
+"input/clippings/mer/224404359342.json#L27",
+"input/clippings/mer/224404359342.json#L31",
+"input/clippings/mer/224404359342.json#L33",
+"input/clippings/mer/224404359342.json#L35",
+"input/clippings/mer/224404359342.json#L37",
+"input/clippings/mer/224404359342.json#L41",
+"input/clippings/mer/224404359342.json#L43",
+"input/clippings/mer/224404359342.json#L53",
+"input/clippings/mer/224404359342.json#L55",
+"input/clippings/mer/224404359342.json#L57",
+"input/clippings/mer/224404359342.json#L63",
+"input/clippings/mer/224404359342.json#L67",
+"input/clippings/mer/224404359342.json#L73",
+"input/clippings/mer/224404359342.json#L75",
+"input/clippings/mer/224404359342.json#L81",
+"input/clippings/mer/224404359342.json#L85",
+"input/clippings/mer/224406702287.json#L1",
+"input/clippings/mer/224406702287.json#L3",
+"input/clippings/mer/224406702287.json#L4",
+"input/clippings/mer/224406702287.json#L8",
+"input/clippings/mer/224406702287.json#L10",
+"input/clippings/mer/224406702287.json#L14",
+"input/clippings/mer/224406702287.json#L20",
+"input/clippings/mer/224406702287.json#L32",
+"input/clippings/mer/224406702287.json#L44",
+"input/clippings/mer/224406702287.json#L60",
+"input/clippings/mer/224406702287.json#L64",
+"input/clippings/mer/224406702287.json#L66",
+"input/clippings/mer/224406702287.json#L86",
+"input/clippings/mer/224406702287.json#L100",
+"input/clippings/mer/224406702287.json#L108",
+"input/clippings/mer/224406702287.json#L110",
+"input/clippings/mer/224406702287.json#L112",
+"input/clippings/mer/224406702287.json#L118",
+"input/clippings/mer/224406702287.json#L120",
+"input/clippings/mer/224406702287.json#L122",
+"input/clippings/mer/224406702287.json#L130",
+"input/clippings/mer/224406702287.json#L136",
+"input/clippings/mer/224406702287.json#L138",
+"input/clippings/mer/224406702287.json#L140",
+"input/clippings/mer/224406702287.json#L144",
+"input/clippings/mer/224406702287.json#L148"
 ],
 "캐터필러": [
 "content/linkedin/[2607] 링크드인 게시물.md#L1161",
@@ -72432,7 +73045,9 @@
 "input/clippings/mer/224393234027.json#L131",
 "input/clippings/mer/224393780073.json#L1",
 "input/clippings/mer/224393780073.json#L7",
-"input/clippings/mer/224393780073.json#L105"
+"input/clippings/mer/224393780073.json#L105",
+"input/clippings/mer/224414401619.json#L20",
+"input/clippings/mer/224414401619.json#L102"
 ],
 "케빈워시": [
 "content/understanding/회계사/[260727] 동결 확률 65~80%, 그래도 인상 카드가 살아있던 이유 - 엘곰.md#L41",
@@ -75599,7 +76214,58 @@
 "input/clippings/mer/224401859933.json#L79",
 "input/clippings/mer/224401859933.json#L117",
 "input/clippings/mer/224401859933.json#L119",
-"input/clippings/mer/224401859933.json#L147"
+"input/clippings/mer/224401859933.json#L147",
+"input/clippings/mer/224404359342.json#L3",
+"input/clippings/mer/224404359342.json#L17",
+"input/clippings/mer/224404359342.json#L37",
+"input/clippings/mer/224404359342.json#L39",
+"input/clippings/mer/224404359342.json#L51",
+"input/clippings/mer/224404359342.json#L53",
+"input/clippings/mer/224404359342.json#L57",
+"input/clippings/mer/224404359342.json#L71",
+"input/clippings/mer/224404359342.json#L75",
+"input/clippings/mer/224404359342.json#L77",
+"input/clippings/mer/224404359342.json#L81",
+"input/clippings/mer/224404359342.json#L89",
+"input/clippings/mer/224406702287.json#L1",
+"input/clippings/mer/224406702287.json#L3",
+"input/clippings/mer/224406702287.json#L4",
+"input/clippings/mer/224406702287.json#L8",
+"input/clippings/mer/224406702287.json#L10",
+"input/clippings/mer/224406702287.json#L18",
+"input/clippings/mer/224406702287.json#L22",
+"input/clippings/mer/224406702287.json#L32",
+"input/clippings/mer/224406702287.json#L38",
+"input/clippings/mer/224406702287.json#L50",
+"input/clippings/mer/224406702287.json#L60",
+"input/clippings/mer/224406702287.json#L66",
+"input/clippings/mer/224406702287.json#L126",
+"input/clippings/mer/224406702287.json#L144",
+"input/clippings/mer/224407689635.json#L243",
+"input/clippings/mer/224408966593.json#L65",
+"input/clippings/mer/224408966593.json#L67",
+"input/clippings/mer/224408966593.json#L69",
+"input/clippings/mer/224408966593.json#L73",
+"input/clippings/mer/224408966593.json#L77",
+"input/clippings/mer/224408966593.json#L83",
+"input/clippings/mer/224408966593.json#L91",
+"input/clippings/mer/224408966593.json#L113",
+"input/clippings/mer/224408966593.json#L117",
+"input/clippings/mer/224408966593.json#L119",
+"input/clippings/mer/224408966593.json#L125",
+"input/clippings/mer/224408966593.json#L151",
+"input/clippings/mer/224408966593.json#L163",
+"input/clippings/mer/224408966593.json#L169",
+"input/clippings/mer/224408966593.json#L171",
+"input/clippings/mer/224411023780.json#L122",
+"input/clippings/mer/224413251320.json#L14",
+"input/clippings/mer/224413251320.json#L40",
+"input/clippings/mer/224413251320.json#L46",
+"input/clippings/mer/224413251320.json#L58",
+"input/clippings/mer/224413251320.json#L64",
+"input/clippings/mer/224413251320.json#L72",
+"input/clippings/mer/224413251320.json#L98",
+"input/clippings/mer/224414401619.json#L102"
 ],
 "트렌드포스": [
 "content/understanding/미국주식 사관학교/[260729] SK하이닉스 실적의 역설 - HBM 1등이라 상승분을 덜 받았다.md#L12",
@@ -76753,6 +77419,7 @@
 "input/clippings/mer/224355055064.json#L16",
 "input/clippings/mer/224355055064.json#L18",
 "input/clippings/mer/224391584925.json#L156",
+"input/clippings/mer/224404876483.json#L81",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L16",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L38"
 ],
@@ -79551,7 +80218,49 @@
 "input/clippings/mer/224399253940.json#L115",
 "input/clippings/mer/224401025776.json#L117",
 "input/clippings/mer/224401859933.json#L101",
-"input/clippings/mer/224401859933.json#L147"
+"input/clippings/mer/224401859933.json#L147",
+"input/clippings/mer/224402375244.json#L1",
+"input/clippings/mer/224402375244.json#L3",
+"input/clippings/mer/224402375244.json#L8",
+"input/clippings/mer/224402375244.json#L60",
+"input/clippings/mer/224402375244.json#L62",
+"input/clippings/mer/224402375244.json#L68",
+"input/clippings/mer/224402375244.json#L70",
+"input/clippings/mer/224402375244.json#L74",
+"input/clippings/mer/224402375244.json#L80",
+"input/clippings/mer/224402375244.json#L122",
+"input/clippings/mer/224402375244.json#L142",
+"input/clippings/mer/224402787474.json#L61",
+"input/clippings/mer/224402787474.json#L95",
+"input/clippings/mer/224404359342.json#L33",
+"input/clippings/mer/224404876483.json#L3",
+"input/clippings/mer/224404876483.json#L51",
+"input/clippings/mer/224404876483.json#L85",
+"input/clippings/mer/224404876483.json#L89",
+"input/clippings/mer/224404876483.json#L97",
+"input/clippings/mer/224404876483.json#L99",
+"input/clippings/mer/224407452404.json#L51",
+"input/clippings/mer/224407452404.json#L61",
+"input/clippings/mer/224407452404.json#L63",
+"input/clippings/mer/224407457877.json#L22",
+"input/clippings/mer/224407457877.json#L38",
+"input/clippings/mer/224407457877.json#L46",
+"input/clippings/mer/224407457877.json#L48",
+"input/clippings/mer/224407457877.json#L66",
+"input/clippings/mer/224407457877.json#L70",
+"input/clippings/mer/224409421013.json#L3",
+"input/clippings/mer/224409421013.json#L73",
+"input/clippings/mer/224410243249.json#L59",
+"input/clippings/mer/224410744840.json#L1",
+"input/clippings/mer/224411023780.json#L21",
+"input/clippings/mer/224411023780.json#L23",
+"input/clippings/mer/224411023780.json#L114",
+"input/clippings/mer/224411023780.json#L126",
+"input/clippings/mer/224412958088.json#L129",
+"input/clippings/mer/224413251320.json#L16",
+"input/clippings/mer/224413251320.json#L18",
+"input/clippings/mer/224413592982.json#L1",
+"input/clippings/mer/224414401619.json#L4"
 ],
 "한국가스공사": [
 "input/clippings/mer/224058494349.json#L26",
@@ -79773,7 +80482,9 @@
 "input/clippings/mer/224392077639.json#L5",
 "input/clippings/mer/224392077639.json#L53",
 "input/clippings/mer/224392077639.json#L70",
-"input/clippings/mer/224392077639.json#L80"
+"input/clippings/mer/224392077639.json#L80",
+"input/clippings/mer/224407452404.json#L61",
+"input/clippings/mer/224407452404.json#L63"
 ],
 "한국전력공사": [
 "content/understanding/미국주식 사관학교/[260601] 국민연금 매도폭탄, 국채로 흡수된다 - 목표비중 올려 위기 넘겼고 미국주식엔 안 간다.md#L83"
@@ -80051,7 +80762,8 @@
 "input/clippings/mer/224281298015.json#L11",
 "input/clippings/mer/224281298015.json#L19",
 "input/clippings/mer/224281298015.json#L27",
-"input/clippings/mer/224352751154.json#L138"
+"input/clippings/mer/224352751154.json#L138",
+"input/clippings/mer/224411023780.json#L93"
 ],
 "현대모비스": [
 "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L35",
@@ -80576,7 +81288,17 @@
 "input/clippings/mer/224398540411.json#L85",
 "input/clippings/mer/224398540411.json#L87",
 "input/clippings/mer/224398540411.json#L95",
-"input/clippings/mer/224398540411.json#L99"
+"input/clippings/mer/224398540411.json#L99",
+"input/clippings/mer/224411023780.json#L25",
+"input/clippings/mer/224411023780.json#L103",
+"input/clippings/mer/224411023780.json#L105",
+"input/clippings/mer/224411023780.json#L109",
+"input/clippings/mer/224411023780.json#L111",
+"input/clippings/mer/224411023780.json#L113",
+"input/clippings/mer/224411023780.json#L114",
+"input/clippings/mer/224411023780.json#L118",
+"input/clippings/mer/224411023780.json#L122",
+"input/clippings/mer/224411023780.json#L130"
 ],
 "휴 짐버": [
 "content/understanding/회계사/[260720] 삼성전자 영업이익 1,800% 급증에도 주가는 7% 빠졌다, CAPEX는 더 이상 성장지표가 아니다 - 엘곰.md#L25"

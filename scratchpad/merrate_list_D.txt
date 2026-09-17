@@ -1,0 +1,41 @@
+2026-07-01	input/clippings/mer/224332562925.json	한국은행의 시장개입 내용과 환율 근황
+2026-07-02	input/clippings/mer/224333756492.json	케빈 워시의 국제무대 데뷔전과 연방대법원의 특이한 판결
+2026-07-02	input/clippings/mer/224334306183.json	금과 은값이 왜 이럴까? 1
+2026-07-04	input/clippings/mer/224335754009.json	일본은행이 엔화약세를 돌리기위해 엔숏세력 타격에 나서나?
+2026-07-06	input/clippings/mer/224337546731.json	청년미래적금 정말 괜찮을까? 예산이 남는다는데
+2026-07-13	input/clippings/mer/224344083594.json	새로운 스테이블 코인 등장, Open USD의 정체는?
+2026-07-15	input/clippings/mer/224347004537.json	미국 CPI 결과가 잘 나왔고, SK하이닉스 주가는 폭등했다.
+2026-07-20	input/clippings/mer/224350983804.json	스페이스X발 회사채 폭락사태 정리 (feat 일론 머스크)
+2026-07-25	input/clippings/mer/224356110315.json	미국 국채금리 폭등이 정말 유가 때문일까?
+2026-07-31	input/clippings/mer/224362387594.json	늦게 올리는 FOMC 결과와 캐빈 워시 연준의장 기자회견 후기
+2026-07-31	input/clippings/mer/224363492458.json	오늘 우리 국장은? (feat PCE)
+2026-08-01	input/clippings/mer/224363874833.json	원화는 왜 강해지고 있을까?
+2026-08-03	input/clippings/mer/224366267736.json	미국과 일본이 엔화환율에 공동으로 개입했나? 미국국채는 어쩔?
+2026-08-04	input/clippings/mer/224366873842.json	미국과 일본, 엔화 공동개입 A/S
+2026-08-05	input/clippings/mer/224367760426.json	미일의 엔화 공동개입에 엔 캐리 청산 이야기가 나오는 이유는?
+2026-08-07	input/clippings/mer/224369325535.json	재무부 분기조달계획이 발표되었다. 결과는?
+2026-08-12	input/clippings/mer/224374683176.json	한국은행도 금을 사기 시작했다. 금값은?
+2026-08-13	input/clippings/mer/224376966792.json	미국 7월 소비자물가지수(CPI)와 잭슨홀 미팅
+2026-08-17	input/clippings/mer/224380392566.json	한국 CPI의 비밀 (feat 한국은행은 금리를 추가인상 할까?)
+2026-08-18	input/clippings/mer/224381241715.json	미국국채 금리가 끝없이 오르는 이유는?
+2026-08-18	input/clippings/mer/224381744094.json	미국국채 금리가 끝없이 오르는 이유는?  빠른 A/S
+2026-08-19	input/clippings/mer/224382901516.json	미국국채금리가 오른다고 AI성장주와 기술주 주가가 왜 내릴까?
+2026-08-20	input/clippings/mer/224384006179.json	미국국채 구하기, 재무부의 바이백은 성공할 수 있을까?
+2026-08-21	input/clippings/mer/224385169198.json	베센트의 바이백에 비트코인 가격이 오르는 비밀
+2026-08-24	input/clippings/mer/224386666279.json	원화는 왜 강해지고 있을까? A/S
+2026-08-24	input/clippings/mer/224388064734.json	재미있는 중복, 재무부의 바이백은 성공할 수있나? A/S
+2026-08-25	input/clippings/mer/224389210503.json	미국 재무부가 TGA로 장기국채를 바이백한다는 데, 어떤 의미일까?
+2026-08-26	input/clippings/mer/224390337312.json	스승이 제자를 공개 저격하다. (feat 드러켄 밀러)
+2026-08-28	input/clippings/mer/224392077639.json	한국은행의 기준금리 연속 인상의 이유와 영향은?
+2026-08-29	input/clippings/mer/224393234027.json	미장, 비트코인, 금값이 오르는 이유 A/S
+2026-08-29	input/clippings/mer/224393780073.json	케빈 워시의 잭슨홀 미팅 발언내용 뜯어보기
+2026-09-02	input/clippings/mer/224396922598.json	신상보다 중고가 좋은 금융상품은?
+2026-09-02	input/clippings/mer/224398027941.json	주절주절...미국국채를 사야하는 타이밍이 오는걸까?
+2026-09-10	input/clippings/mer/224405997070.json	근원CPI가 1.8%인데도, 일본은행의 금리인상이 예상되는 비밀
+2026-09-11	input/clippings/mer/224407689635.json	미국 국채금리가 결국 발작을 시작했다.
+2026-09-12	input/clippings/mer/224409005416.json	CPI가 발표되었고, 9월 금리인상 가능성을 높였다. 변수는?
+2026-09-14	input/clippings/mer/224407452404.json	엔캐리 청산은 왜 일어나지 않을까? 1
+2026-09-14	input/clippings/mer/224407457877.json	엔캐리 청산은 왜 일어나지 않을까? 2
+2026-09-15	input/clippings/mer/224412030235.json	미국국채 10년물이 드디어 5%를 찍었다.
+2026-09-17	input/clippings/mer/224413592982.json	2026년 9월 17일, 새벽 3시, FOMC와 워시 기자회견 관전포인트
+2026-09-17	input/clippings/mer/224414401619.json	미국 연준이 기준금리를 인상했다. 그런데, 이게 끝이 아니다.
