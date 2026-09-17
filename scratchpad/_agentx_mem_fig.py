@@ -138,6 +138,6 @@ def _ssd():
     return ''.join(out)
 
 
-FIG_SSD = _svg(W, 300, 'HBM 이 모자란 H100 에서 SSD 층이 DRAM 층만큼 처리량을 되살린다', ''.join(
+FIG_SSD = _svg(W, 300, 'H100 에서 내려놓기를 끈 처리량보다 SSD 층과 DRAM 층이 두 배 넘게 낸다', ''.join(
     [_lt(20, 26, 'GPU 한 장 처리량(tok/s) · MiniMax M3 · H100 8장 · vLLM · 동시 세션 8'), _ssd()]
 ))

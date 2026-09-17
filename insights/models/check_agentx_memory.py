@@ -53,6 +53,10 @@ def main():
                  '-' if not r.get('cpu_tokens') else '%.2f' % (r['cpu_used_tokens'] / r['cpu_tokens']),
                  r['tput_per_gpu']))
     top = sw[-1]
+    r96 = next(r for r in sw if r['conc'] == 96)
+    print('  동시성 96→%d: 세션 %.1f배 · 처리량 %.0f→%.0f tok/s (%.0f%% 증가)'
+          % (top['conc'], top['conc'] / 96, r96['tput_per_gpu'], top['tput_per_gpu'],
+             (top['tput_per_gpu'] / r96['tput_per_gpu'] - 1) * 100))
     print('  동시성 %d 입력 %.2f억 토큰 = GPU %.2f억 + 바깥 %.2f억 + 계산 %.2f억 · DRAM KV %s/%s 토큰'
           % (top['conc'], top['prompt_total'] / 1e8, top['tok_gpu_hit'] / 1e8, top['tok_ext_hit'] / 1e8,
              top['tok_computed'] / 1e8, format(top['cpu_used_tokens'], ','), format(top['cpu_tokens'], ',')))
