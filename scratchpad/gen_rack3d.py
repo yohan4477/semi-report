@@ -194,6 +194,37 @@ TIERS = {
     ],
 }
 
+TOUR = [
+    dict(level='hall', ex=0.0, sel=None, dir=[1.0, 0.9, 1.3],
+         title='10MW 홀 — 루빈 랙 42대',
+         text='10MW 를 GPU 한 장 3.3kW 로 나누면 3,030장, 랙 하나 72장으로 나누면 42대다(셈한 값). 줄 배치는 도식이다.',
+         cite='모델링 층 ㉔ · 루빈 에이전틱 영문 L152'),
+    dict(level='rack', ex=0.35, sel='spine', dir=[-1.0, 0.5, -1.2],
+         title='랙 하나 — 트레이 27개와 스파인',
+         text='컴퓨트 트레이 18개와 NVLink 스위치 트레이 9개, 전력 셸프 4개가 들어간다. 뒤쪽 스파인은 구리 케이블 카트리지 4개에 5,000가닥이다.',
+         cite=NVB + ' · ' + R + ' L523'),
+    dict(level='tray', ex=0.55, sel='midplane', dir=[0.9, 1.1, 0.6],
+         title='케이블 없는 컴퓨트 트레이',
+         text='미드플레인이 후면 Strata 와 전면 모듈의 PCIe 신호를 잇는다. 케이블을 걷어 트레이 조립이 2시간에서 5분으로 줄었다.',
+         cite=R + ' L220·L242'),
+    dict(level='tray', ex=0.4, sel='uqd', dir=[0.4, 0.9, -1.4],
+         title='냉각수가 들어오는 길',
+         text='냉각수는 트레이 좌측 후면 UQD 로 들어와 내부 매니폴드에서 모듈마다 나뉘고 우측 후면 UQD 로 나간다. 100% 액체 냉각이다.',
+         cite=R + ' L360·L458'),
+    dict(level='rubin', ex=0.75, sel='hbm', dir=[1.0, 0.8, 1.1],
+         title='Rubin 패키지 — HBM4 8스택',
+         text='레티클 크기 연산 다이 2개 옆에 HBM4 스택 8개가 붙는다. 스택 하나는 12단이고 패키지 합계 288GB, 대역폭 22TB/s 다.',
+         cite=R + ' L98·L104 · ' + GTC + ' L99'),
+    dict(level='tray', ex=0.5, sel=None, tiers=True, dir=[0.2, 1.4, 0.7],
+         title='트레이 하나의 메모리 계층',
+         text='HBM 1,152GB(Rubin 4) 위로 Vera 의 SOCAMM 2,048~3,072GB 가 NVLink-C2C 1.8TB/s 로 붙고, 전면 BlueField-4 가 KV 캐시 전용 네트워크를 맡는다.',
+         cite=R + ' L104·L137·L240·L250'),
+    dict(level='bf4', ex=0.5, sel='bfpkg', dir=[-0.8, 1.0, 1.0],
+         title='BlueField-4 — KV 캐시 네트워크',
+         text='Grace CPU 다이와 ConnectX-9 다이를 한 패키지로 묶은 800G DPU 다. 온보드 메모리 128GB 와 SSD 512GB 를 싣고 NVMe-oF·RDMA 로 KV 캐시를 옮긴다.',
+         cite=R + ' L158·L243·L250'),
+]
+
 SOURCES = [
     (R, 'content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md'),
     (GTC, 'input/clippings/NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md'),
@@ -225,6 +256,15 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .crumb button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;cursor:pointer}
 .crumb button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .crumb span{color:var(--ink3);font-size:12px}
+.tour{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:12px 0 4px}
+.tour button{border:1px solid var(--ink);background:var(--card);color:var(--ink);border-radius:999px;min-width:32px;padding:4px 10px;font:inherit;font-size:13px;cursor:pointer}
+.tour #tourplay{background:var(--ink);color:var(--bg)}
+.tour #tourstops{display:flex;flex-wrap:wrap;gap:6px}
+.tour #tourstops button[aria-current="true"]{background:var(--ink);color:var(--bg)}
+.tourcap{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);border-radius:8px;padding:10px 14px;margin:6px 0 8px}
+.tourcap b{display:block;font-size:15px;margin-bottom:2px}
+.tourcap span{display:block;color:var(--ink2);font-size:14px}
+.tourcap small{display:block;color:var(--ink3);font-size:12px;margin-top:4px}
 .jump{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
 .jump button{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:8px;padding:5px 10px;font:inherit;font-size:13px;cursor:pointer}
 .jump button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -272,6 +312,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <p class="back"><a href="../모델링 대시보드.html">← 모델링 대시보드</a></p>
 <h1>베라 루빈 NVL72 — 10MW 홀에서 HBM4 다이까지 분해도</h1>
 <p class="lede">아래 단 단추를 누르면 그 단으로 바로 갑니다. 10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 랙에서는 NVLink 스위치 트레이로, 컴퓨트 트레이에서는 BlueField-4 모듈로도 갈라져 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<div class="tour" id="tour"><button id="tourplay" aria-label="투어 재생">▶ 투어</button><span id="tourstops"></span></div>
+<div class="tourcap" id="tourcap" hidden><b id="tourtitle"></b><span id="tourtext"></span><small id="tourcite"></small></div>
 <nav class="jump" id="jump" aria-label="단 바로가기"></nav>
 <div class="crumb" id="crumb"></div>
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
@@ -296,6 +338,7 @@ const P = __PARTS__;
 const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
 const TIERS = __TIERS__;
+const TOUR = __TOUR__;
 const KIND = {src:'원문 값', calc:'셈한 값', schema:'도식'};
 
 const canvas = document.getElementById('view');
@@ -545,8 +588,8 @@ const BUILD = {
   },
 };
 
-function fit(dirv){
-  const b = new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3()), sz = b.getSize(new THREE.Vector3());
+function fit(dirv, box){
+  const b = box || new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3()), sz = b.getSize(new THREE.Vector3());
   const r = sz.length() / 2, fov = camera.fov * Math.PI / 180;
   const aspect = Math.max(0.6, canvas.clientWidth / Math.max(1, canvas.clientHeight));
   const dist = r / Math.sin(fov / 2) / Math.min(1, aspect) * (aspect < 1 ? 0.95 : 1.05);
@@ -647,7 +690,7 @@ function jump(){
     const b = document.createElement('button');
     b.innerHTML = `${L[1]}<small>${depth}단</small>`;
     b.setAttribute('aria-current', k === level ? 'true' : 'false');
-    b.onclick = () => load(k);
+    b.onclick = () => { tourStop(); document.getElementById('tourcap').hidden = true; load(k); };
     el.appendChild(b);
   }
 }
@@ -787,6 +830,65 @@ tiersBtn.onclick = () => {
   else document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
 };
 
+// ── 안내 투어
+let tourIdx = -1, tourTimer = null;
+const NUM = '①②③④⑤⑥⑦⑧⑨';
+function focusBox(ids){
+  const b = new THREE.Box3();
+  for (const m of items) if (ids.includes(m.userData.id)) b.expandByObject(m);
+  if (b.isEmpty()) return null;
+  // 부품 하나만 담으면 너무 붙으므로 주변을 조금 남긴다
+  const whole = new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3());
+  const sz = b.getSize(new THREE.Vector3()).max(whole.getSize(new THREE.Vector3()).multiplyScalar(0.35));
+  return new THREE.Box3().setFromCenterAndSize(c, sz);
+}
+function tourGo(i){
+  tourIdx = i; const st = TOUR[i];
+  explode = st.ex; ex.value = st.ex;
+  if (level !== st.level || tiersOn) load(st.level, true);
+  if (st.tiers && !tiersOn) { tiersBtn.click(); }
+  if (st.sel) select(st.sel); else { selected = null; paint(); }
+  // 카메라: 지금 자리에서 목표 자리로 날아간다
+  const p0 = camera.position.clone(), t0 = controls.target.clone();
+  fit(st.dir, st.sel ? focusBox([st.sel]) : null);
+  const p1 = camera.position.clone(), t1 = controls.target.clone();
+  camera.position.copy(p0); controls.target.copy(t0); controls.update();
+  const start = performance.now();
+  camTween = now => {
+    let k = Math.min(1, (now - start) / 900); k = k < .5 ? 4*k*k*k : 1 - Math.pow(-2*k + 2, 3) / 2;
+    camera.position.lerpVectors(p0, p1, k); controls.target.lerpVectors(t0, t1, k); controls.update();
+    dirty = true; if (k >= 1) camTween = null;
+  };
+  const cap = document.getElementById('tourcap'); cap.hidden = false;
+  document.getElementById('tourtitle').textContent = `${NUM[i]} ${st.title}`;
+  document.getElementById('tourtext').textContent = st.text;
+  document.getElementById('tourcite').textContent = '출처 — ' + st.cite;
+  document.querySelectorAll('#tourstops button').forEach((b, j) => b.setAttribute('aria-current', j === i));
+}
+function tourStop(){
+  clearInterval(tourTimer); tourTimer = null;
+  document.getElementById('tourplay').textContent = '▶ 투어';
+}
+(() => {
+  const box = document.getElementById('tourstops');
+  TOUR.forEach((st, i) => {
+    const b = document.createElement('button'); b.textContent = NUM[i]; b.title = st.title;
+    b.onclick = () => { tourStop(); tourGo(i); };
+    box.appendChild(b);
+  });
+  document.getElementById('tourplay').onclick = () => {
+    if (tourTimer) { tourStop(); return; }
+    tourGo((tourIdx + 1) % TOUR.length);
+    document.getElementById('tourplay').textContent = '■ 멈춤';
+    tourTimer = setInterval(() => {
+      if (tourIdx >= TOUR.length - 1) { tourStop(); return; }
+      tourGo(tourIdx + 1);
+    }, 6000);
+  };
+  // 사용자가 직접 끌거나 단을 바꾸면 재생을 멈춘다
+  canvas.addEventListener('pointerdown', () => { if (tourTimer) tourStop(); });
+})();
+
 let walk = false, yaw = 0, pitch = 0, hallAisleZ = 0, hallHalfX = 300;
 const held = new Set();
 const walkBtn = document.getElementById('walk'), pad = document.getElementById('pad'), hint = document.getElementById('hint');
@@ -855,7 +957,7 @@ function loop(t){
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
-window.__rack = {load, select, setWalk, refit, tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
+window.__rack = {load, select, setWalk, refit, tourGo, tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
 </script>
 </body>
 </html>
@@ -866,7 +968,8 @@ def main():
     html = (PAGE.replace('__PARTS__', json.dumps(P, ensure_ascii=False))
                 .replace('__LEVELS__', json.dumps(LEVELS, ensure_ascii=False))
                 .replace('__SOURCES__', json.dumps(SOURCES, ensure_ascii=False))
-                .replace('__TIERS__', json.dumps(TIERS, ensure_ascii=False)))
+                .replace('__TIERS__', json.dumps(TIERS, ensure_ascii=False))
+                .replace('__TOUR__', json.dumps(TOUR, ensure_ascii=False)))
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('썼다:', OUT, len(html), 'bytes')
 
