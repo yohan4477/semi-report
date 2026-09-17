@@ -29,10 +29,10 @@ HEADER = ('발표된 계산을 다시 세운다. 리서치 회사가 낸 표와 
           '옮겨 적는 대신 그 계산을 코드로 다시 세우고, 발표치와 칸 단위로 대조해 '
           '어긋난 자리를 남긴다. 값의 출처는 셋이다 — 원문 글자(줄 번호로 인용), '
           '원문이 실은 표 그림(몇 번 그림인지 밝힌다), 우리 모델이 낸 값(표의 「성격」 '
-          '열이 셋을 나눈다).')
+          '열이 셋을 나눈다). 랙에서 HBM4 다이까지 눌러 들어가는 '
+          '<a href="model/rack-vera-rubin-nvl72.html">베라 루빈 NVL72 3D 분해도</a>도 있다.')
 
-FOOTER = ('<a href="model/rack-vera-rubin-nvl72.html">베라 루빈 NVL72 3D 분해도</a> — 랙에서 HBM4 다이까지 눌러 들어가는 화면. '
-          '모델 코드는 <code>insights/models/</code> 에 있고 검사기가 매번 발표치와 '
+FOOTER = ('모델 코드는 <code>insights/models/</code> 에 있고 검사기가 매번 발표치와 '
           '대조한다. 원자료는 <code>insights/models/raw/*.json</code> 이 정본이고, '
           '본문은 <code>insights/reports/model-*.md</code> 다. 이 화면은 생성물이라 '
           '손으로 고치지 않는다.')
