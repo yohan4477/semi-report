@@ -142,6 +142,19 @@ P = {
                   spec='GB200/300 트레이는 85% 액체 + 15% 공랭이었다. 루빈은 100% 액체로 팬을 없앴다. 팬 수는 도식',
                   cite=R + ' L368'),
     'gbtray': dict(name='GB300 컴퓨트 트레이 판', count='1', kind='schema', spec='트레이 판. 모양은 도식', cite='—'),
+    # ── GB200 비교용 ──
+    'g2bianca': dict(name='GB200 Bianca 보드', count='원문에 개수 없음', kind='schema',
+                     spec='루빈 Strata 에 해당하는 GB200 보드. 자리·개수는 도식', cite=R + ' L240·L312'),
+    'g2nic': dict(name='GB200 ConnectX-7', count='원문에 개수 없음', kind='schema',
+                  spec='GB200 은 GPU 가 Grace 와 C2C 로 붙고 Grace 가 PCIe5 로 ConnectX-7 과 통신하는 간접 연결이었다. 루빈도 Vera 를 거치지만 PCIe6 다',
+                  cite=R + ' L273·L275'),
+    'g2cable': dict(name='GB200 DensiLink 케이블', count='원문에 개수 없음', kind='schema',
+                    spec='CX-7 NIC 와 OSFP 케이지를 잇던 케이블. 손상에 취약한 고장 지점이었다', cite=R + ' L227·L303'),
+    'g2cage': dict(name='GB200 OSFP 케이지', count='원문에 개수 없음', kind='schema', spec='전면 광 케이지', cite=R + ' L303'),
+    'g2bf3': dict(name='GB200 BlueField-3', count='원문에 개수 없음', kind='schema', spec='로컬 NVMe 관리', cite=R + ' L266·L277'),
+    'g2pdb': dict(name='GB200 전력분배보드(PDB)', count='1', kind='schema', spec='전력이 항상 PDB 를 거쳤다', cite=R + ' L395'),
+    'g2fan': dict(name='GB200 공랭 팬', count='원문에 개수 없음', kind='schema', spec='85% 액체 + 15% 공랭', cite=R + ' L368'),
+    'g2tray': dict(name='GB200 컴퓨트 트레이 판', count='1', kind='schema', spec='트레이 판. 모양은 도식', cite='—'),
     # ── 2 Strata ──
     'rubin': dict(name='Rubin GPU 패키지', count='Strata 당 2개', kind='src',
                   spec='3nm, 레티클 크기 다이 2개 + HBM 8스택. FP4 35 PFLOPS, TDP 최대 2,300W(Max-P)',
@@ -198,7 +211,7 @@ LEVELS = [
     ('rubin', 'Rubin 패키지', '연산 다이 2 + HBM4 스택 8'),
     ('hbm', 'HBM4 스택', 'DRAM 코어 다이 12단 + 로직 베이스 다이'),
     ('swtray', 'NVLink 스위치 트레이', 'NVLink 6 스위치 ASIC 4개(36 ÷ 9) · 뒤쪽으로 스파인 카트리지에 이어진다'),
-    ('compare', 'GB300 과 비교', '왼쪽 GB300 컴퓨트 트레이(원문이 이름을 댄 부품만, 배치는 도식) · 오른쪽 루빈 컴퓨트 트레이'),
+    ('compare', 'GB200·GB300 과 비교', '왼쪽 GB200 · 가운데 GB300 · 오른쪽 루빈 컴퓨트 트레이. 두 블랙웰 트레이는 원문이 이름을 댄 부품만 세웠고 배치는 도식이다'),
     ('bf4', 'BlueField-4', 'Grace CPU 다이 + ConnectX-9 다이 한 패키지 · 온보드 메모리 128GB · SSD 512GB · BMC'),
 ]
 
@@ -247,23 +260,28 @@ TOUR = [
          text='Grace CPU 다이와 ConnectX-9 다이를 한 패키지로 묶은 800G DPU 다. 온보드 메모리 128GB 와 SSD 512GB 를 싣고 NVMe-oF·RDMA 로 KV 캐시를 옮긴다.',
          cite=R + ' L158·L243·L250'),
     dict(level='compare', ex=0.35, sel=None, dir=[0.15, 1.1, 1.0],
-         title='GB300 과 무엇이 바뀌었나',
-         text='GB300 은 NIC 와 OSFP 케이지를 DensiLink 케이블로 이어 조립의 가장 큰 고장 지점이었고 15% 는 공랭이었다. 루빈은 미드플레인으로 케이블을 걷고 100% 액체로 냉각한다. 왼쪽 GB300 부품의 자리는 도식이다.',
-         cite=R + ' L227·L242·L303·L368'),
+         title='블랙웰 두 세대와 무엇이 바뀌었나',
+         text='GB200 은 GPU 가 Grace 를 거쳐 PCIe5 로 NIC 에 붙었고, GB300 은 ConnectX-8 에 직접 붙였다. 둘 다 NIC 와 케이지를 케이블로 이어 조립의 가장 큰 고장 지점이었고 15% 는 공랭이었다. 루빈은 미드플레인으로 케이블을 걷고 100% 액체로 냉각한다.',
+         cite=R + ' L227·L242·L273·L274·L303·L368'),
 ]
 
+# [항목, GB200, GB300, 루빈, 강조할 부품 셋, 출처]
 DIFFS = [
-    ['신호 배선', 'NIC ↔ OSFP 사이 DensiLink OverPass 케이블 — 가장 큰 고장 지점', '케이블 없음 — 미드플레인이 보드끼리 잇는다', 'gbcable', 'midplane', R + ' L227·L242·L303'],
-    ['NIC 자리', '후면 Bianca 보드 쪽', '전면 Orchid 모듈로 옮겼다', 'gbnic', 'orchid', R + ' L289·L312'],
-    ['GPU ↔ NIC 연결', 'B300 GPU 가 ConnectX-8 에 직접(2-host NIC)', 'Vera 를 거쳐 PCIe6', 'gbnic', 'cx9', R + ' L274·L275'],
-    ['로컬 NVMe 관리', 'BlueField-3', 'Orchid 의 ConnectX-9', 'gbbf3', 'e1s', R + ' L266·L277'],
-    ['냉각', '85% 액체 + 15% 공랭', '100% 액체, 팬 없음', 'gbfan', 'uqd', R + ' L368'],
-    ['전력 경로', '항상 전력분배보드(PDB)를 거친다', 'Strata 는 버스바 50VDC 를 직접 받는다', 'gbpdb', 'clip', R + ' L395'],
-    ['조립', '콜드플레이트를 최종 조립(L10)에서 붙인다 · 트레이 조립 약 2시간', '보드 조립(L6)에서 미리 붙인다 · 5분', 'gbbianca', 'strata', R + ' L220·L362·L388'],
-    ['고급 PCB 면적', '기준', '약 2.3배 — Orchid 보드가 주로 늘렸다', 'gbtray', 'orchid', R + ' L290'],
-    ['HBM', '288GB · 8TB/s', 'HBM4 288GB · 22TB/s', 'gbbianca', 'strata', R + ' L104'],
-    ['랙 TDP', '120~140kW', '180~220kW', None, None, R + ' L522'],
-    ['하이퍼스케일러 교체 범위', '네트워킹·전력·저장·관리 대부분', '전력·BlueField-4·관리 모듈만', None, None, R + ' L681'],
+    ['신호 배선', 'NIC ↔ OSFP 를 DensiLink 케이블로', '같다 — 가장 큰 고장 지점', '케이블 없음, 미드플레인이 보드끼리 잇는다',
+     ['g2cable', 'gbcable', 'midplane'], R + ' L227·L242·L303'],
+    ['NIC 자리', '후면 Bianca 보드 쪽', '같다', '전면 Orchid 모듈', ['g2nic', 'gbnic', 'orchid'], R + ' L289·L312'],
+    ['GPU ↔ NIC 연결', 'Grace 를 거쳐 PCIe5 로 ConnectX-7(간접)', 'B300 이 ConnectX-8 에 직접(2-host NIC)', 'Vera 를 거쳐 PCIe6(간접으로 회귀)',
+     ['g2nic', 'gbnic', 'cx9'], R + ' L273·L274·L275'],
+    ['로컬 NVMe 관리', 'BlueField-3', 'BlueField-3', 'Orchid 의 ConnectX-9', ['g2bf3', 'gbbf3', 'e1s'], R + ' L266·L277'],
+    ['냉각', '85% 액체 + 15% 공랭', '같다', '100% 액체, 팬 없음', ['g2fan', 'gbfan', 'uqd'], R + ' L368'],
+    ['전력 경로', '항상 전력분배보드(PDB)를 거친다', '같다', 'Strata 는 버스바 50VDC 를 직접 받는다', ['g2pdb', 'gbpdb', 'clip'], R + ' L395'],
+    ['조립', '콜드플레이트를 최종 조립(L10)에서 · 트레이 약 2시간', '같다', '보드 조립(L6)에서 미리 · 5분', ['g2bianca', 'gbbianca', 'strata'], R + ' L220·L362·L388'],
+    ['고급 PCB 면적', '원문에 없음', '기준', '약 2.3배 — Orchid 보드가 주로 늘렸다', ['g2tray', 'gbtray', 'orchid'], R + ' L290'],
+    ['HBM', '192GB · 8TB/s', '288GB · 8TB/s', 'HBM4 288GB · 22TB/s', ['g2bianca', 'gbbianca', 'strata'],
+     '[250812] HBM 로드맵 L448 · [251128] TPUv7 L195 · ' + R + ' L104'],
+    ['랙 TDP', '120~140kW', '120~140kW', '180~220kW', None, R + ' L522'],
+    ['SKU', 'NVL72 와 저밀도 NVL36x2 둘', '원문에 없음', '단일 VR NVL72', None, R + ' L166·L176'],
+    ['하이퍼스케일러 교체 범위', '원문에 없음', '네트워킹·전력·저장·관리 대부분', '전력·BlueField-4·관리 모듈만', None, R + ' L681'],
 ]
 
 SOURCES = [
@@ -392,7 +410,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 </div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="cmpbtn" hidden>GB300 과 비교</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
 </div>
 <div class="grid">
   <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p></div>
@@ -513,7 +531,7 @@ function buildPins(){
   dirty = true;
 }
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal', g2bf3:'pcb', g2pdb:'pcb', g2fan:'plastic', g2tray:'metal', gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -726,7 +744,28 @@ const BUILD = {
   },
   compare(){
     // 오른쪽 루빈 트레이 — 트레이 단과 같은 짓기
-    OFF = [42, 0, 0]; BUILD.tray(); OFF = [-42, 0, 0];
+    OFF = [84, 0, 0]; BUILD.tray(); OFF = [0, 0, 0];
+    // 맨 왼쪽 GB200 — 원문이 이름을 댄 부품만, 자리와 개수는 도식
+    OFF = [-84, 0, 0];
+    box('g2tray', [62, 0.6, 90], [0, -1.6, 0], [0, -14, 0], 0);
+    for (const sx of [-1, 1]) {
+      box('g2bianca', [27, 1.2, 38], [sx * 14.5, 0, -24], [sx * 10, 0, -40], 1);
+      box('g2nic', [5, 0.8, 5], [sx * 14.5, 1.1, -8], [sx * 10, 8, -34], 3);
+      box('g2cage', [10, 2, 6], [sx * 18, 0.6, 40], [sx * 12, 0, 36], 2);
+    }
+    for (const sx of [-1, 1]) {
+      const curve = new THREE.CatmullRomCurve3([[sx * 14.5, 1.6, -8], [sx * 16, 4, 10], [sx * 18, 2, 38]].map(v => new THREE.Vector3(v[0] - 84, v[1], v[2])));
+      const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 40, 0.6, 8, false),
+        new THREE.MeshStandardMaterial({color: tone(3), roughness: .5, metalness: .1}));
+      m.castShadow = true;
+      m.userData = {id: 'g2cable', a: new THREE.Vector3(0, 0, 0), e: new THREE.Vector3(0, 10, 10), t: 3, o: 0, op0: 0};
+      group.add(m); items.push(m);
+    }
+    box('g2bf3', [18, 1.2, 12], [0, 1.6, 16], [0, 12, 34], 2);
+    box('g2pdb', [18, 1.2, 8], [0, 1.6, 28], [0, 6, 52], 0);
+    for (const x of [-20, -8, 8, 20]) box('g2fan', [8, 4, 3], [x, 1.8, 44], [0, 4, 30], 1);
+    // 가운데 GB300
+    OFF = [0, 0, 0];
     // 왼쪽 GB300 — 원문이 이름을 댄 부품만, 자리와 개수는 도식
     box('gbtray', [62, 0.6, 90], [0, -1.6, 0], [0, -14, 0], 0);
     for (const sx of [-1, 1]) {
@@ -736,7 +775,7 @@ const BUILD = {
     }
     // NIC → 케이지 케이블(도식) — 흐르는 관 대신 굽은 관 하나씩
     for (const sx of [-1, 1]) {
-      const curve = new THREE.CatmullRomCurve3([[sx * 14.5, 1.6, -8], [sx * 16, 4, 10], [sx * 18, 2, 38]].map(v => new THREE.Vector3(v[0] - 42, v[1], v[2])));
+      const curve = new THREE.CatmullRomCurve3([[sx * 14.5, 1.6, -8], [sx * 16, 4, 10], [sx * 18, 2, 38]].map(v => new THREE.Vector3(v[0], v[1], v[2])));
       const m = new THREE.Mesh(new THREE.TubeGeometry(curve, 40, 0.6, 8, false),
         new THREE.MeshStandardMaterial({color: tone(3), roughness: .5, metalness: .1}));
       m.castShadow = true;
@@ -747,7 +786,7 @@ const BUILD = {
     box('gbpdb', [18, 1.2, 8], [0, 1.6, 28], [0, 6, 52], 0);
     for (const x of [-20, -8, 8, 20]) box('gbfan', [8, 4, 3], [x, 1.8, 44], [0, 4, 30], 1);
     OFF = [0, 0, 0];
-    return {pos: [20, 110, 120], target: [0, 0, 0]};
+    return {pos: [10, 120, 120], target: [0, 0, 0]};
   },
   bf4(){
     box('bfboard', [30, 0.8, 22], [0, 0, 0], [0, -8, 0], 0);
@@ -1018,13 +1057,13 @@ function buildTiers(){
 }
 let pair = null;
 function diffPanel(){
-  const rows = DIFFS.map((d, i) => `<tr data-i="${i}" style="cursor:${d[3] ? 'pointer' : 'default'}"><td>${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td></tr>`).join('');
+  const rows = DIFFS.map((d, i) => `<tr data-i="${i}" style="cursor:${d[4] ? 'pointer' : 'default'}"><td>${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td><td>${d[3]}</td></tr>`).join('');
   document.getElementById('info').innerHTML =
-    `<h2>GB300 과 루빈 컴퓨트 트레이 — 무엇이 바뀌었나</h2>
-     <div class="tw"><table class="tt"><thead><tr><th>항목</th><th>GB300 (왼쪽)</th><th>루빈 (오른쪽)</th></tr></thead><tbody>${rows}</tbody></table></div>
+    `<h2>GB200 · GB300 · 루빈 컴퓨트 트레이 — 무엇이 바뀌었나</h2>
+     <div class="tw"><table class="tt"><thead><tr><th>항목</th><th>GB200 (왼쪽)</th><th>GB300 (가운데)</th><th>루빈 (오른쪽)</th></tr></thead><tbody>${rows}</tbody></table></div>
      <p class="src"><button class="go" id="pairall">모두 보기</button></p>
-     <p class="src">줄을 누르면 양쪽 해당 부품만 남기고 나머지를 흐린다. 출처 — ${R_SRC} L104·L220·L227·L242·L266·L274·L275·L277·L289·L290·L303·L312·L362·L368·L388·L395·L522·L681.
-     GB300 쪽 부품의 개수와 자리는 원문에 없어 모두 도식이다.</p>`;
+     <p class="src">줄을 누르면 세 트레이의 해당 부품만 남기고 나머지를 흐린다. 출처 — ${R_SRC} L104·L166·L176·L220·L227·L242·L266·L273·L274·L275·L277·L289·L290·L303·L312·L362·L368·L388·L395·L522·L681 · [250812] HBM 로드맵 L448 · [251128] TPUv7 L195.
+     GB200·GB300 쪽 부품의 개수와 자리는 원문에 없어 모두 도식이다.</p>`;
   document.getElementById('pairall').onclick = () => {
     pair = null; selected = null;
     for (const m of items) { m.material.opacity = m.userData.op0 || 1; m.material.transparent = !!m.userData.op0; m.material.depthWrite = !m.userData.op0; m.material.needsUpdate = true; }
@@ -1032,8 +1071,8 @@ function diffPanel(){
     paint(); refit();
   };
   document.querySelectorAll('#info tr[data-i]').forEach(tr => tr.onclick = () => {
-    const d = DIFFS[+tr.dataset.i]; if (!d[3]) return;
-    pair = [d[3], d[4]]; selected = d[3];
+    const d = DIFFS[+tr.dataset.i]; if (!d[4]) return;
+    pair = d[4]; selected = d[4][0];
     for (const m of items) {
       const keep = pair.includes(m.userData.id);
       m.material.transparent = !keep || !!m.userData.op0;
