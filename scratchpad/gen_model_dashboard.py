@@ -31,7 +31,8 @@ HEADER = ('발표된 계산을 다시 세운다. 리서치 회사가 낸 표와 
           '원문이 실은 표 그림(몇 번 그림인지 밝힌다), 우리 모델이 낸 값(표의 「성격」 '
           '열이 셋을 나눈다).')
 
-FOOTER = ('모델 코드는 <code>insights/models/</code> 에 있고 검사기가 매번 발표치와 '
+FOOTER = ('<a href="model/rack-vera-rubin-nvl72.html">베라 루빈 NVL72 3D 분해도</a> — 랙에서 HBM4 다이까지 눌러 들어가는 화면. '
+          '모델 코드는 <code>insights/models/</code> 에 있고 검사기가 매번 발표치와 '
           '대조한다. 원자료는 <code>insights/models/raw/*.json</code> 이 정본이고, '
           '본문은 <code>insights/reports/model-*.md</code> 다. 이 화면은 생성물이라 '
           '손으로 고치지 않는다.')
@@ -155,6 +156,9 @@ if __name__ == '__main__':
     dc.render(cards(), '모델링', HEADER, FOOTER, OUT,
               page_slug='model',
               extra_css=rp.REPORT_CSS)
+    # 3D 분해도는 카드가 아니라 딸린 화면이다. render() 가 model/ 을 새로 쓰므로 그 뒤에 낸다
+    import gen_rack3d
+    gen_rack3d.main()
 
     _bad = _rep_toc.check_toc(io.open(OUT, encoding='utf-8').read())
     if _bad:

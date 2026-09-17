@@ -1,0 +1,414 @@
+# -*- coding: utf-8 -*-
+"""베라 루빈 NVL72 3D 분해도 — 랙에서 HBM4 다이까지 다섯 단을 눌러 들어간다.
+
+외부 3D 모델 없이 Three.js 가 상자·판을 런타임에 만든다. 슬라이더가 조립↔분해를 오가고,
+부품을 누르면 이름·개수·규격·출처가 뜨고, 안쪽 단이 있으면 그리로 들어간다.
+
+부품 개수는 값이다(규칙 — 도해 §1). 원문에 있는 개수만 그 수대로 그리고, 셈한 개수는
+「셈한 값」, 원문에 없는 배치·개수는 「도식」으로 부품마다 적는다.
+
+    PYTHONIOENCODING=utf-8 python scratchpad/gen_rack3d.py
+"""
+import io
+import json
+import os
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, '대시보드', 'model', 'rack-vera-rubin-nvl72.html')
+
+R = '[260226] 베라 루빈 — 익스트림 코디자인'
+GTC = 'NVIDIA GTC 2025 — Built For Reasoning, Vera Rubin, Kyber (영문)'
+ISS = '[260416] ISSCC 2026 총정리'
+KOR = '[260901] 한국의 조 단위 주권 AI 투자'
+
+# 부품 사전. kind: src(원문 값) · calc(원문에서 셈한 값) · schema(원문에 없는 배치를 도식으로)
+P = {
+    # ── 0 랙 ──
+    'tray': dict(name='컴퓨트 트레이', count='18개', kind='calc',
+                 spec='GPU 패키지 72개 ÷ 트레이당 4개(Strata 2 × Rubin 2)로 셈했다. 조립 시간 2시간 → 5분, 케이블 없는 6모듈 구조',
+                 cite=R + ' L166·L220·L240', child='tray'),
+    'switch': dict(name='NVLink 6 스위치 ASIC', count='36개', kind='src',
+                   spec='랙당 칩 수 36개로 두 배, 칩 하나 대역폭 28.8T 는 NVLink 5 와 같다. 트레이로 몇 개씩 묶이는지는 원문에 없어 한 판에 모아 그렸다',
+                   cite=R + ' L156·L166'),
+    'shelf': dict(name='전력 셸프', count='4개', kind='src',
+                  spec='110kW 셸프 4개(N+1 이중화), 3상 415~480VAC 를 50VDC 로 낮춰 버스바에 공급. 랙 TDP 180~220kW',
+                  cite=R + ' L522·L523'),
+    'busbar': dict(name='후면 버스바', count='1', kind='src',
+                   spec='50VDC 가 랙 후면 버스바 클립으로 트레이에 들어간다', cite=R + ' L395'),
+    'manifold': dict(name='냉각수 배관', count='—', kind='schema',
+                     spec='원문은 트레이마다 냉각수가 좌측 후면 UQD 로 들어와 내부 매니폴드를 거쳐 우측 후면 UQD 로 나간다고 적었다. 랙 쪽 배관 모양은 원문에 없어 좌우 기둥으로만 그렸다',
+                     cite=R + ' L360·L376'),
+    # ── 1 트레이 ──
+    'strata': dict(name='Strata 모듈', count='트레이당 2개', kind='src',
+                   spec='GB200/300 의 Bianca 보드에 해당. Rubin GPU 2개 + Vera CPU 1개, SOCAMM 소켓 8개. 후면 배치',
+                   cite=R + ' L221·L240', child='strata'),
+    'midplane': dict(name='미드플레인', count='1개', kind='src',
+                     spec='Strata 와 전면 모듈 사이 PCIe 신호를 잇는 다리. 새로 생긴 유일한 모듈', cite=R + ' L242'),
+    'orchid': dict(name='Orchid 모듈', count='트레이당 4개', kind='src',
+                   spec='ConnectX-9 NIC 2개 · 800G 트랜시버 케이지 2개 · E1.S SSD 슬롯 1개. 전면 좌우에 2개씩 쌓인다',
+                   cite=R + ' L241'),
+    'bf4': dict(name='BlueField-4 모듈', count='1개', kind='src',
+                spec='전면 중앙 DPU. 온보드 LPDDR5x 128GB · SSD 512GB · AST2600 BMC. KV 캐시 전용 3번째 네트워크(ICMS/CMX)의 핵심 실리콘',
+                cite=R + ' L222·L243'),
+    'pwr': dict(name='전력 공급 모듈', count='1개', kind='src',
+                spec='50V 를 12V 로 낮춰 전면 모듈에 나눈다', cite=R + ' L244'),
+    'mgmt': dict(name='시스템 관리 모듈', count='1개', kind='src',
+                 spec='SMM · TPM · DC-SCM 등 보안·관리', cite=R + ' L245'),
+    # ── 2 Strata ──
+    'rubin': dict(name='Rubin GPU 패키지', count='Strata 당 2개', kind='src',
+                  spec='3nm, 레티클 크기 다이 2개 + HBM 8스택. FP4 35 PFLOPS, TDP 최대 2,300W(Max-P)',
+                  cite=R + ' L98·L103·L105', child='rubin'),
+    'vera': dict(name='Vera CPU', count='Strata 당 1개', kind='src',
+                 spec='88코어·176스레드, L3 162MB, NVLink-C2C 1.8TB/s 로 Rubin 에 연결, PCIe6·CXL3.1',
+                 cite=R + ' L135·L137·L142'),
+    'socamm': dict(name='SOCAMM (LPDDR5X)', count='8개', kind='src',
+                   spec='192GB·128GB 두 종류, Vera 하나에 1,024GB~1,536GB, 9,600MT/s. 두 줄 배치는 도식',
+                   cite=R + ' L136·L240'),
+    'strataboard': dict(name='Strata 보드', count='1', kind='src',
+                        spec='GPU·CPU·SOCAMM 이 올라가는 판. 아래는 전부 보드-투-보드 커넥터라 케이블이 없다', cite=R + ' L240'),
+    'coldplate': dict(name='Strata 콜드플레이트', count='1개', kind='src',
+                      spec='GPU 2개 + CPU + SOCAMM 을 한 판으로 통째 덮는다. Rubin 쪽은 채널 간격 100마이크론 MCCP',
+                      cite=R + ' L361·L369'),
+    # ── 3 Rubin 패키지 ──
+    'die': dict(name='GPU 연산 다이', count='패키지당 2개', kind='src',
+                spec='3nm 레티클 크기 다이. Rubin 트랜지스터 3,360억 개', cite=R + ' L98·L121'),
+    'hbm': dict(name='HBM4 스택', count='패키지당 8개', kind='src',
+                spec='패키지 합계 288GB, 대역폭 22TB/s(초기 출하는 20TB/s 에 못 미칠 수 있다). 스택 배치는 도식',
+                cite=GTC + ' L99 · ' + R + ' L104·L118', child='hbm'),
+    'interposer': dict(name='인터포저', count='1', kind='schema',
+                       spec='다이와 HBM 을 나란히 올리는 2.5D 판. Rubin 의 인터포저 종류는 이 원문에 없다', cite='—'),
+    'substrate': dict(name='패키지 기판', count='1', kind='schema', spec='원문에 규격 없음', cite='—'),
+    'lid': dict(name='히트스프레더 + 강성보강재', count='1', kind='src',
+                spec='강성보강재를 더하고 액체금속 TIM2 부식을 막으려 금도금. B200·B300 은 덮개만 있었다',
+                cite=R + ' L128'),
+    # ── 4 HBM4 스택 ──
+    'dram': dict(name='DRAM 코어 다이', count='12단', kind='src',
+                 spec='12-Hi, 원문 표기로 층 밀도 24 GB(24Gb). 288GB 를 8스택 × 12층으로 나누면 층당 3GB·스택당 36GB. 버스 폭 2,048비트',
+                 cite=GTC + ' L99'),
+    'base': dict(name='베이스(로직) 다이', count='1', kind='src',
+                 spec='HBM4 부터 로직 공정으로 따로 만든다 — SK하이닉스 N12, 삼성 SF4. 코어 다이는 삼성 1c D램',
+                 cite=ISS + ' L79·L84 · ' + KOR + ' L244'),
+    'tsv': dict(name='TSV 영역', count='—', kind='schema',
+                spec='다이를 수직으로 잇는 관통 전극. HBM4 는 TSV 영역이 넓어져 다이가 20% 커졌다. 전극 수는 원문에 없어 띠로만 그렸다',
+                cite='[250812] HBM 로드맵 L702'),
+}
+
+LEVELS = [
+    ('rack', '랙', 'VR NVL72 랙 — GPU 패키지 72 · Vera 36 · NVLink 6 스위치 ASIC 36'),
+    ('tray', '컴퓨트 트레이', '후면 Strata 2 · 가운데 미드플레인 · 전면 Orchid 4 + BlueField-4·전력·관리'),
+    ('strata', 'Strata', 'Rubin GPU 2 + Vera CPU 1 + SOCAMM 8, 콜드플레이트 한 판'),
+    ('rubin', 'Rubin 패키지', '연산 다이 2 + HBM4 스택 8'),
+    ('hbm', 'HBM4 스택', 'DRAM 코어 다이 12단 + 로직 베이스 다이'),
+]
+
+SOURCES = [
+    (R, 'content/newsletter/ai_infra/compute/[260226] 베라 루빈 - 익스트림 코디자인, 그레이스 블랙웰 오베론에서의 진화.md'),
+    (GTC, 'input/clippings/NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md'),
+    (ISS, 'content/newsletter/ai_infra/memory/[260416] ISSCC 2026 총정리 - HBM4, LPDDR6, CPO, 액티브 LSI 등 차세대 메모리·인터커넥트.md'),
+    (KOR, 'content/newsletter/ai_infra/business/[260901] 한국의 조 단위 주권 AI 투자 - 엔비디아는 웃고 하이닉스는 운다.md'),
+    ('[250812] HBM 로드맵', 'content/newsletter/ai_infra/memory/[250812] HBM 로드맵 - 메모리 벽을 넘는 HBM의 부상과 미래.md'),
+]
+
+PAGE = r'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>베라 루빈 랙 분해도</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<style>
+:root{--bg:#f6f6f3;--card:#fff;--ink:#1d1d1b;--ink2:#55534e;--ink3:#8d8a83;--line:#dedcd5;--sel:#2a2a28;--mesh0:#e2e0da;--mesh1:#cfcdc7;--mesh2:#b7b5af;--mesh3:#9d9b95}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141416;--card:#1c1c1f;--ink:#ecebe6;--ink2:#b3b1aa;--ink3:#86847e;--line:#2d2d31;--sel:#ffffff;--mesh0:#6f6e6a;--mesh1:#8a8984;--mesh2:#a6a5a0;--mesh3:#c9c8c3}}
+:root[data-theme="dark"]{--bg:#141416;--card:#1c1c1f;--ink:#ecebe6;--ink2:#b3b1aa;--ink3:#86847e;--line:#2d2d31;--sel:#ffffff;--mesh0:#6f6e6a;--mesh1:#8a8984;--mesh2:#a6a5a0;--mesh3:#c9c8c3}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
+.lede{color:var(--ink2);margin:0 0 14px;max-width:760px}
+.crumb{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.crumb button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 12px;font:inherit;font-size:13px;cursor:pointer}
+.crumb button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.crumb span{color:var(--ink3);font-size:12px}
+.stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+#view{display:block;width:100%;height:min(62vh,560px);touch-action:none}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:3px 8px;border-radius:6px;display:none;white-space:nowrap}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ink3)}
+.ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0}
+.ctrl label{font-size:13px;color:var(--ink2)}
+.ctrl input[type=range]{width:220px;accent-color:var(--ink)}
+.ctrl button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.ctrl input[type=range]{width:160px}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.panel h2{font-size:15px;margin:0 0 8px}
+.parts{list-style:none;margin:0;padding:0}
+.parts li button{width:100%;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-size:14px;padding:7px 2px;cursor:pointer;display:flex;justify-content:space-between;gap:10px}
+.parts li button:hover,.parts li button[aria-pressed="true"]{font-weight:700}
+.parts small{color:var(--ink3);white-space:nowrap}
+.info dt{font-size:12px;color:var(--ink3);margin-top:8px}
+.info dd{margin:2px 0 0}
+.kind{display:inline-block;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:0 8px;color:var(--ink2);margin-left:6px}
+.go{margin-top:12px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:8px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}
+.src{font-size:13px;color:var(--ink2)}
+.src code{font-size:12px;word-break:break-all}
+.back{font-size:13px;color:var(--ink2)}
+.back a{color:var(--ink)}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body>
+<div class="wrap">
+<p class="back"><a href="../모델링 대시보드.html">← 모델링 대시보드</a></p>
+<h1>베라 루빈 NVL72 — 랙에서 HBM4 다이까지 분해도</h1>
+<p class="lede">랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 다섯 단을 눌러 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<div class="crumb" id="crumb"></div>
+<div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div></div>
+<div class="ctrl">
+  <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button>
+</div>
+<div class="grid">
+  <div class="panel"><h2 id="lvtitle"></h2><p class="src" id="lvsub"></p><ul class="parts" id="parts"></ul></div>
+  <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p></div>
+</div>
+<div class="panel" style="margin-top:14px"><h2>출처</h2><ul class="src" id="srcs"></ul>
+<p class="src">성격 표시 — <b>원문 값</b>: 원문에 적힌 수 · <b>셈한 값</b>: 원문 값으로 셈한 수 · <b>도식</b>: 원문에 없는 배치나 모양을 그림으로만 둔 것.</p></div>
+</div>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+const P = __PARTS__;
+const LEVELS = __LEVELS__;
+const SOURCES = __SOURCES__;
+const KIND = {src:'원문 값', calc:'셈한 값', schema:'도식'};
+
+const canvas = document.getElementById('view');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 5000);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.1));
+const sun = new THREE.DirectionalLight(0xffffff, 1.2); sun.position.set(80, 140, 120); scene.add(sun);
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function tone(i){ return new THREE.Color(css(['--mesh0','--mesh1','--mesh2','--mesh3'][i])); }
+
+let group = null, items = [], level = 'rack', selected = null, explode = +document.getElementById('ex').value;
+
+// 부품 하나 = 상자. a 는 조립 위치, e 는 분해 방향(분해 1.0 일 때 더해지는 벡터)
+function box(id, size, a, e, t, opts={}){
+  const g = new THREE.BoxGeometry(...size);
+  const m = new THREE.MeshStandardMaterial({color: tone(t), roughness:.75, metalness:.1, transparent: !!opts.op, opacity: opts.op || 1, depthWrite: !opts.op});
+  const mesh = new THREE.Mesh(g, m);
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(g), new THREE.LineBasicMaterial({color: tone(3), transparent:true, opacity:.55}));
+  mesh.add(edges);
+  mesh.userData = {id, a:new THREE.Vector3(...a), e:new THREE.Vector3(...e), t};
+  group.add(mesh); items.push(mesh);
+  return mesh;
+}
+
+const BUILD = {
+  rack(){
+    // 트레이 18 을 9 · 스위치 판 · 9 로 두고 전력 셸프 4 를 위에 — 위아래 순서는 원문에 없는 도식
+    const H = 4.4, W = 60, D = 90;
+    let y = 0;
+    const slots = [];
+    for (let i=0;i<9;i++) slots.push(['tray', H]);
+    slots.push(['switch', H*2]);
+    for (let i=0;i<9;i++) slots.push(['tray', H]);
+    for (let i=0;i<4;i++) slots.push(['shelf', H]);
+    const total = slots.reduce((s,x)=>s+x[1],0);
+    y = -total/2;
+    slots.forEach(([id,h],i) => {
+      const cy = y + h/2; y += h;
+      const k = i - slots.length/2;
+      box(id, [W, h*0.9, D], [0, cy, 0], [0, k*2.2, 0], id==='tray'?1:(id==='switch'?2:0));
+    });
+    // 스위치 판 위 ASIC 36 — 원문 개수
+    const sw = items.find(m=>m.userData.id==='switch');
+    for (let r=0;r<3;r++) for (let c=0;c<12;c++){
+      const chip = box('switch', [3.4, 1.2, 3.4], [sw.userData.a.x-22+c*4, sw.userData.a.y+H*0.5, -30+r*10], [0, sw.userData.e.y+3, 0], 3);
+    }
+    box('busbar', [6, total, 3], [0, 0, -D/2-4], [0, 0, -40], 3);
+    box('manifold', [2.5, total, 2.5], [-W/2-3, 0, -D/2-2], [-25, 0, -30], 2);
+    box('manifold', [2.5, total, 2.5], [W/2+3, 0, -D/2-2], [25, 0, -30], 2);
+    return {pos:[150, 70, 160], target:[0,0,0]};
+  },
+  tray(){
+    box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
+    box('strata', [27, 1.2, 38], [14.5, 0, -24], [10, 0, -40], 1);
+    box('midplane', [58, 4, 1.2], [0, 1.4, 0], [0, 12, 0], 2);
+    for (const sx of [-1, 1]) for (const k of [0, 1])
+      box('orchid', [16, 1.6, 30], [sx*20, -0.4 + k*2.2, 19], [sx*12, k*8, 36], 1);
+    box('bf4', [18, 1.2, 12], [0, 1.6, 12], [0, 10, 30], 2);
+    box('pwr', [18, 1.2, 9], [0, 1.6, 24], [0, 4, 44], 0);
+    box('mgmt', [18, 1.2, 6], [0, 1.6, 32], [0, -4, 58], 0);
+    return {pos:[70, 70, 90], target:[0,0,0]};
+  },
+  strata(){
+    box('coldplate', [26, 1.2, 36], [0, 3.2, 0], [0, 26, 0], 0, {op:.3});
+    box('rubin', [9, 1.6, 9], [-6.5, 1.2, -10], [-6, 12, -8], 3);
+    box('rubin', [9, 1.6, 9], [6.5, 1.2, -10], [6, 12, -8], 3);
+    box('vera', [7, 1.4, 7], [0, 1.1, 4], [0, 10, 2], 2);
+    for (let i=0;i<8;i++){
+      const row = i < 4 ? 0 : 1, c = i % 4;
+      box('socamm', [1.6, 0.8, 10], [-7.5 + c*5 , 0.8, 12 + row*5], [(c-1.5)*3, 6 + row*2, 8 + row*4], 1);
+    }
+    box('strataboard', [26, 0.6, 36], [0, 0, 0], [0, -6, 0], 0);
+    return {pos:[40, 38, 44], target:[0,0,0]};
+  },
+  rubin(){
+    box('substrate', [16, 0.8, 14], [0, 0, 0], [0, -6, 0], 0);
+    box('interposer', [12, 0.4, 10], [0, 0.6, 0], [0, -2, 0], 1);
+    box('die', [3.2, 0.5, 4.6], [-1.9, 1.05, 0], [-2, 2, 0], 3);
+    box('die', [3.2, 0.5, 4.6], [1.9, 1.05, 0], [2, 2, 0], 3);
+    for (let i=0;i<8;i++){
+      const side = i < 4 ? -1 : 1, k = i % 4;
+      box('hbm', [1.6, 1.2, 2.0], [side*5.0, 1.4, -3.3 + k*2.2], [side*4, 3 + k*0.4, (k-1.5)*1.2], 2);
+    }
+    box('lid', [15, 0.5, 13], [0, 2.4, 0], [0, 10, 0], 0, {op:.45});
+    return {pos:[18, 16, 20], target:[0,0.8,0]};
+  },
+  hbm(){
+    box('base', [8, 0.9, 10], [0, 0, 0], [0, -3, 0], 3);
+    for (let i=0;i<12;i++) box('dram', [8, 0.28, 10], [0, 0.75 + i*0.34, 0], [0, i*0.9, 0], i%2?1:0);
+    box('tsv', [1.2, 5, 6], [0, 2.4, 0], [9, 0, 0], 2, {op:.5});
+    return {pos:[16, 12, 18], target:[0,2.5,0]};
+  },
+};
+
+function fit(dirv){
+  const b = new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3()), sz = b.getSize(new THREE.Vector3());
+  const r = sz.length() / 2, fov = camera.fov * Math.PI / 180;
+  const aspect = Math.max(0.6, canvas.clientWidth / Math.max(1, canvas.clientHeight));
+  const dist = r / Math.sin(fov / 2) / Math.min(1, aspect) * 1.05;
+  const d = new THREE.Vector3(...dirv).normalize();
+  camera.position.copy(c).addScaledVector(d, dist); camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
+  controls.target.copy(c); controls.update();
+}
+
+function layout(){
+  for (const m of items){
+    const {a, e} = m.userData;
+    m.position.set(a.x + e.x*explode, a.y + e.y*explode, a.z + e.z*explode);
+  }
+}
+
+function paint(){
+  for (const m of items){
+    const on = selected && m.userData.id === selected;
+    m.material.color = on ? new THREE.Color(css('--sel')) : tone(m.userData.t);
+    m.material.emissive = new THREE.Color(0x000000); m.material.opacity = selected && !on ? Math.min(m.material.opacity, 1) : m.material.opacity;
+  }
+}
+
+function load(lv, keepCam){
+  if (group) { scene.remove(group); group.traverse(o=>{o.geometry&&o.geometry.dispose();o.material&&o.material.dispose&&o.material.dispose();}); }
+  group = new THREE.Group(); items = []; scene.add(group);
+  level = lv; selected = null;
+  const cam = BUILD[lv]();
+  layout(); paint();
+  if (!keepCam) fit(cam.pos);
+  const L = LEVELS.find(x=>x[0]===lv);
+  document.getElementById('lvtitle').textContent = L[1] + ' — 부품';
+  document.getElementById('lvsub').textContent = L[2];
+  const ids = [...new Set(items.map(m=>m.userData.id))];
+  const ul = document.getElementById('parts'); ul.innerHTML = '';
+  for (const id of ids){
+    const li = document.createElement('li'), b = document.createElement('button');
+    b.innerHTML = `<span>${P[id].name}</span><small>${P[id].count}</small>`;
+    b.onclick = () => select(id); b.dataset.id = id; li.appendChild(b); ul.appendChild(li);
+  }
+  crumb();
+  document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
+  location.hash = lv;
+}
+
+function crumb(){
+  const el = document.getElementById('crumb'); el.innerHTML = '';
+  const idx = LEVELS.findIndex(x=>x[0]===level);
+  LEVELS.slice(0, idx+1).forEach((L, i) => {
+    if (i) { const s = document.createElement('span'); s.textContent = '›'; el.appendChild(s); }
+    const b = document.createElement('button'); b.textContent = L[1];
+    b.setAttribute('aria-current', i===idx ? 'true' : 'false');
+    b.onclick = () => load(L[0]); el.appendChild(b);
+  });
+}
+
+function select(id){
+  selected = id; paint();
+  document.querySelectorAll('#parts button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id===id));
+  const p = P[id];
+  const child = p.child && p.child !== level ? `<button class="go" id="go">${LEVELS.find(x=>x[0]===p.child)[1]} 안으로 들어가기 →</button>` : '';
+  document.getElementById('info').innerHTML =
+    `<h2>${p.name}<span class="kind">${KIND[p.kind]}</span></h2>
+     <dl><dt>개수</dt><dd>${p.count}</dd><dt>규격·역할</dt><dd>${p.spec}</dd><dt>출처</dt><dd class="src">${p.cite}</dd></dl>${child}`;
+  const go = document.getElementById('go'); if (go) go.onclick = () => load(p.child);
+}
+
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), tip = document.getElementById('tip');
+function pick(ev){
+  const r = canvas.getBoundingClientRect();
+  ptr.set(((ev.clientX - r.left)/r.width)*2-1, -((ev.clientY - r.top)/r.height)*2+1);
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(items, false)[0];
+  return {hit, x: ev.clientX - r.left, y: ev.clientY - r.top};
+}
+canvas.addEventListener('pointermove', ev => {
+  const {hit, x, y} = pick(ev);
+  if (hit){ tip.style.display='block'; tip.textContent = P[hit.object.userData.id].name; tip.style.left = (x+12)+'px'; tip.style.top = (y+12)+'px'; canvas.style.cursor='pointer'; }
+  else { tip.style.display='none'; canvas.style.cursor='grab'; }
+});
+let down = null;
+canvas.addEventListener('pointerdown', ev => { down = [ev.clientX, ev.clientY]; });
+canvas.addEventListener('pointerup', ev => {
+  if (!down || Math.hypot(ev.clientX-down[0], ev.clientY-down[1]) > 5) return;
+  const {hit} = pick(ev);
+  if (hit) select(hit.object.userData.id);
+});
+
+const ex = document.getElementById('ex');
+ex.addEventListener('input', () => { explode = +ex.value; layout(); });
+let anim = null;
+document.getElementById('play').onclick = () => {
+  const from = explode, to = explode > 0.5 ? 0 : 1, t0 = performance.now();
+  anim = t => { const k = Math.min(1, (t - t0)/1200), s = k<.5 ? 4*k*k*k : 1-Math.pow(-2*k+2,3)/2;
+    explode = from + (to-from)*s; ex.value = explode; layout(); if (k>=1) anim = null; };
+};
+document.getElementById('reset').onclick = () => load(level);
+
+const srcs = document.getElementById('srcs');
+for (const [label, path] of SOURCES){ const li = document.createElement('li'); li.innerHTML = `${label} — <code>${path}</code>`; srcs.appendChild(li); }
+
+function resize(){
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (canvas.width !== Math.floor(w*renderer.getPixelRatio()) || canvas.height !== Math.floor(h*renderer.getPixelRatio())){
+    renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
+function loop(t){ resize(); if (anim) anim(t); controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+const start = (location.hash || '').slice(1);
+load(LEVELS.some(x=>x[0]===start) ? start : 'rack');
+requestAnimationFrame(loop);
+window.__rack = {load, select, setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
+</script>
+</body>
+</html>
+'''
+
+
+def main():
+    html = (PAGE.replace('__PARTS__', json.dumps(P, ensure_ascii=False))
+                .replace('__LEVELS__', json.dumps(LEVELS, ensure_ascii=False))
+                .replace('__SOURCES__', json.dumps(SOURCES, ensure_ascii=False)))
+    io.open(OUT, 'w', encoding='utf-8').write(html)
+    print('썼다:', OUT, len(html), 'bytes')
+
+
+if __name__ == '__main__':
+    sys.stdout.reconfigure(encoding='utf-8')
+    main()
