@@ -343,6 +343,9 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .grid{display:grid;grid-template-columns:1fr;gap:14px}
 .scrolly{position:relative}
 .sticky{position:sticky;top:10px}
+.matleg{display:flex;flex-wrap:wrap;gap:4px 14px;margin:6px 0 0;font-size:12px;color:var(--ink2)}
+.matleg span{display:inline-flex;align-items:center;gap:5px}
+.matleg i{width:11px;height:11px;border-radius:3px;border:1px solid var(--line)}
 .track{height:0}
 .scrolly.on .track{height:220vh}
 .scrollhint{font-size:12px;color:var(--ink3);margin:6px 0 0}
@@ -432,8 +435,9 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <p class="scrollhint" id="scrollhint" hidden>페이지를 내리면 분해가 진행되고 설명이 차례로 바뀝니다. 슬라이더로도 됩니다.</p>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="lblbtn">부품 이름</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="lblbtn">부품 이름</button><button id="colbtn">재질 색 끄기</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
 </div>
+<div class="matleg" id="matleg"></div>
 <div class="grid">
   <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p></div>
 </div>
@@ -558,11 +562,25 @@ function placeCalls(){
   if (hovered) show.add(hovered);
   for (const el of callEls) el.style.display = show.has(el.dataset.id) ? '' : 'none';
   const anchors = callEls.filter(el => el.style.display !== 'none').map(el => {
-    const first = items.find(m => m.userData.id === el.dataset.id);
+    // 같은 부품이 여럿이면 카메라에 가장 가까운 낱개에 건다 — 시점이 돌면 끝점도 옮겨 붙는다
+    let first = null, best = Infinity;
+    for (const m of items) {
+      if (m.userData.id !== el.dataset.id) continue;
+      const d = m.position.distanceToSquared(camera.position);
+      if (d < best) { best = d; first = m; }
+    }
     if (!first) return null;
-    const b = new THREE.Box3().setFromObject(first), c = b.getCenter(new THREE.Vector3());
-    c.y = b.max.y;
-    const v = c.clone().project(camera);
+    const b = new THREE.Box3().setFromObject(first);
+    // 상자 꼭짓점 여덟을 화면으로 옮겨, 라벨이 서는 쪽 가장자리를 끝점으로 고른다.
+    // 시점이 돌면 어느 꼭짓점이 뽑히는지가 바뀌므로 끝점도 따라 움직인다
+    const pts = [];
+    for (const x of [b.min.x, b.max.x]) for (const y of [b.min.y, b.max.y]) for (const z of [b.min.z, b.max.z])
+      pts.push(new THREE.Vector3(x, y, z).project(camera));
+    const cv = b.getCenter(new THREE.Vector3()).project(camera);
+    const side = cv.x < 0 ? -1 : 1;
+    let v = pts[0], bestx = -Infinity;
+    for (const q of pts) { const sc = q.x * side; if (sc > bestx) { bestx = sc; v = q; } }
+    v = new THREE.Vector3(v.x, (v.y + cv.y) / 2, cv.z);
     return {el, x: (v.x * 0.5 + 0.5) * w, y: (-v.y * 0.5 + 0.5) * h, z: v.z};
   }).filter(Boolean);
   const sides = {L: [], R: []};
@@ -591,6 +609,13 @@ function placeCalls(){
       callSvg.appendChild(dot);
     }
   }
+}
+function matLegend(){
+  const el = document.getElementById('matleg');
+  if (!el) return;
+  el.hidden = !colorOn;
+  const fams = [...new Set(partIds().map(id => KINDMAT[id]).filter(f => f && MATCOL[f]))];
+  el.innerHTML = fams.map(f => `<span><i style="background:${MATCOL[f]}"></i>${MATNAME[f]}</span>`).join('');
 }
 function partIds(){ return [...new Set(items.map(m => m.userData.id))]; }
 function buildPins(){
@@ -627,7 +652,18 @@ const KINDMAT = {g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal',
   cx9:'die', cage:'metal', e1s:'plastic'};
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-function tone(i){ return new THREE.Color(css(['--mesh0','--mesh1','--mesh2','--mesh3'][i])); }
+// 재질마다 색 — 무엇으로 만든 부품인지가 눈에 들어오게. 밝기는 tone 이, 색만 여기서 섞는다
+const MATCOL = {pcb: '#2a7a4f', die: '#3b6bb5', silicon: '#7d7fb8', metal: '#9aa3ad',
+                glass: '#4f97a8', plastic: '#b5a189', copper: '#c07440'};
+const MATNAME = {pcb: '기판', die: '다이·패키지', silicon: '실리콘', metal: '금속',
+                 glass: '프레임·유전체', plastic: '수지·케이블', copper: '구리'};
+function tone(i, id){
+  const c = new THREE.Color(css(['--mesh0','--mesh1','--mesh2','--mesh3'][i]));
+  const fam = id && KINDMAT[id];
+  if (colorOn && fam && MATCOL[fam]) c.lerp(new THREE.Color(MATCOL[fam]), 0.62);
+  return c;
+}
+let colorOn = true;
 
 let group = null, items = [], level = 'rack', selected = null, explode = +document.getElementById('ex').value;
 
@@ -638,7 +674,7 @@ function box(id, size, a, e, t, opts={}){
   const r = Math.min(Math.min(...size) * 0.22, 1.2);
   const g = r > 0.05 ? new RoundedBoxGeometry(size[0], size[1], size[2], 2, r) : new THREE.BoxGeometry(...size);
   const [metal, rough] = MAT[opts.mat || KINDMAT[id] || 'plastic'];
-  const m = new THREE.MeshStandardMaterial({color: tone(t), roughness: rough, metalness: metal, envMapIntensity: .9,
+  const m = new THREE.MeshStandardMaterial({color: tone(t, id), roughness: rough, metalness: metal, envMapIntensity: .9,
     transparent: !!opts.op, opacity: opts.op || 1, depthWrite: !opts.op});
   const mesh = new THREE.Mesh(g, m);
   mesh.castShadow = !opts.op; mesh.receiveShadow = true;
@@ -964,7 +1000,7 @@ function layout(){
 function paint(){
   for (const m of items){
     const on = selected && m.userData.id === selected;
-    m.material.color = tone(m.userData.t);
+    m.material.color = tone(m.userData.t, m.userData.id);
     if (on) m.material.color.lerp(new THREE.Color(css('--sel')), 0.35);
     m.material.emissive = new THREE.Color(0x000000);
   }
@@ -997,7 +1033,7 @@ function load(lv, keepCam){
     const more = document.createElement('div'); more.className = 'more';
     li.appendChild(b); li.appendChild(more); ul.appendChild(li);
   }
-  crumb(); jump(); buildPins(); buildCalls();
+  crumb(); jump(); buildPins(); buildCalls(); matLegend();
   pair = null;
   walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
   tiersBtn.hidden = lv !== 'tray'; tiersBtn.textContent = '메모리 계층';
@@ -1291,6 +1327,12 @@ const pinBtn = document.getElementById('pinbtn');
 pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀';
 const lblInit = document.getElementById('lblbtn'); lblInit.textContent = labelsOn ? '부품 이름 끄기' : '부품 이름';
 pinBtn.onclick = () => { pinsOn = !pinsOn; pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀'; buildPins(); dirty = true; };
+const colBtn = document.getElementById('colbtn');
+colBtn.onclick = () => {
+  colorOn = !colorOn; colBtn.textContent = colorOn ? '재질 색 끄기' : '재질 색';
+  matLegend();
+  paint();
+};
 const lblBtn = document.getElementById('lblbtn');
 lblBtn.onclick = () => {
   labelsOn = !labelsOn; lblBtn.textContent = labelsOn ? '부품 이름 끄기' : '부품 이름';
