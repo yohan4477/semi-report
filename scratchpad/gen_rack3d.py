@@ -27,6 +27,13 @@ SE = 'Schneider Electric NetShelter MGX 랙(NVL72 용) 제품 사양'
 
 # 부품 사전. kind: src(원문 값) · calc(원문에서 셈한 값) · schema(원문에 없는 배치를 도식으로)
 P = {
+    # ── 홀 ──
+    'rackunit': dict(name='VR NVL72 랙', count='42대 (셈한 값)', kind='calc',
+                     spec='10MW 를 GPU 한 장 3.3kW(총전력)로 나누면 3,030장, 랙 하나 72장으로 나누면 42대. '
+                          '3.3kW 는 InferenceX 대시보드 앱의 칩 상수, 10MW 조건은 루빈 에이전틱 글의 함대 비교다. 줄 배치는 도식',
+                     cite='모델링 층 ㉔ check_agentx · 루빈 에이전틱 영문 L152', child='rack'),
+    'aisle': dict(name='통로 바닥', count='—', kind='schema',
+                  spec='랙 줄 사이 통로. 폭과 줄 수는 원문에 없어 도식으로만 그렸다', cite='—'),
     # ── 0 랙 ──
     'rackframe': dict(name='MGX 랙 프레임', count='1', kind='src',
                       spec='48U, 높이 2,236mm × 폭 600mm × 깊이 1,200mm. 랙 전체 부품 약 130만 개·칩 약 1,300개·무게 약 4,000파운드. 치수는 GB 세대 NVL72 용 MGX 랙 제품 사양이다',
@@ -114,6 +121,7 @@ P = {
 }
 
 LEVELS = [
+    ('hall', '10MW 홀', '루빈 랙 42대 — GPU 3,030장 × 3.3kW ≈ 10MW, 한 대를 누르면 랙 안으로 들어간다'),
     ('rack', '랙', 'VR NVL72 랙 — 컴퓨트 트레이 18 · NVLink 스위치 트레이 9 · 전력 셸프 4 · 스파인 카트리지 4'),
     ('tray', '컴퓨트 트레이', '후면 Strata 2 · 가운데 미드플레인 · 전면 Orchid 4 + BlueField-4·전력·관리'),
     ('strata', 'Strata', 'Rubin GPU 2 + Vera CPU 1 + SOCAMM 8, 콜드플레이트 한 판'),
@@ -182,8 +190,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <body>
 <div class="wrap">
 <p class="back"><a href="../모델링 대시보드.html">← 모델링 대시보드</a></p>
-<h1>베라 루빈 NVL72 — 랙에서 HBM4 다이까지 분해도</h1>
-<p class="lede">랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 다섯 단을 눌러 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<h1>베라 루빈 NVL72 — 10MW 홀에서 HBM4 다이까지 분해도</h1>
+<p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
 <div class="crumb" id="crumb"></div>
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div></div>
 <div class="ctrl">
@@ -227,7 +235,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -264,6 +272,20 @@ function order(){
 }
 
 const BUILD = {
+  hall(){
+    // 42대 = 10MW ÷ 3.3kW ÷ 72 (셈한 값). 7대씩 6줄로 세운 배치는 도식
+    const W = 60, D = 120, H = 223.6, per = 7, rows = 6, gapX = 8, aisle = 140;
+    let n = 0;
+    for (let r = 0; r < rows; r++) {
+      const z = (r - (rows - 1) / 2) * (D + aisle / 2) + (r % 2 ? aisle / 4 : -aisle / 4);
+      for (let c = 0; c < per; c++, n++) {
+        const x = (c - (per - 1) / 2) * (W + gapX);
+        box('rackunit', [W, H, D], [x, H / 2, z], [(c - (per - 1) / 2) * 14, 0, (r - (rows - 1) / 2) * 26], (r + c) % 2 ? 2 : 3);
+      }
+    }
+    box('aisle', [per * (W + gapX) + 120, 2, rows * (D + aisle / 2) + 120], [0, -1, 0], [0, 0, 0], 0);
+    return {pos: [520, 420, 640], target: [0, 60, 0]};
+  },
   rack(){
     // 치수 비율은 MGX 랙(600 × 2,236 × 1,200mm)을 cm 로. 장비는 트레이 18 · 스위치 트레이 9 · 셸프 4.
     // 장비 높이와 위아래 순서는 원문에 없는 도식이다 — 셸프 둘 · 트레이 9 · 스위치 9 · 트레이 9 · 셸프 둘
@@ -464,7 +486,7 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
 controls.addEventListener('change', () => { dirty = true; });
 function loop(t){ resize(); if (anim) anim(t); controls.update(); if (dirty) { renderer.render(scene, camera); dirty = false; } requestAnimationFrame(loop); }
 const start = (location.hash || '').slice(1);
-load(LEVELS.some(x=>x[0]===start) ? start : 'rack');
+load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
 window.__rack = {load, select, setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
 </script>
