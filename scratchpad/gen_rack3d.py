@@ -74,6 +74,21 @@ P = {
                  spec='NIC 를 전면으로 옮겨 200G 이더넷 신호가 케이블 없이 케이지 바로 옆에서 끝난다', cite=R + ' L241·L313'),
     'e1s': dict(name='E1.S SSD 슬롯', count='Orchid 당 1개', kind='src',
                 spec='로컬 NVMe 저장장치. Orchid 모듈의 ConnectX-9 가 관리한다', cite=R + ' L241·L277'),
+    'uqd': dict(name='UQD (냉각수 입출구)', count='2개', kind='src',
+                spec='냉각수가 좌측 후면 UQD 로 들어가 내부 매니폴드에서 모듈마다 나뉘고 우측 후면 UQD 로 나온다. 모듈 콜드플레이트는 MQD 로 매니폴드에 붙는다',
+                cite=R + ' L360·L376'),
+    'clip': dict(name='버스바 클립', count='1', kind='src',
+                 spec='50VDC 가 랙 후면 버스바 클립으로 들어와 좌·우 Strata 에는 직접, 전면 전력분배보드에는 미드플레인 아래 버스바로 간다. 클립 모양은 도식',
+                 cite=R + ' L395'),
+    'paladin': dict(name='Paladin HD2 커넥터', count='미드플레인 앞뒤', kind='schema',
+                    spec='신호는 Strata → Paladin HD2 → PCB 미드플레인 → Paladin HD2 → 딸 모듈 순서로 간다. 커넥터 수와 자리는 원문에 없어 띠로만 그렸다',
+                    cite=R + ' L305·L306'),
+    'chassis': dict(name='트레이 섀시', count='1', kind='schema',
+                    spec='모듈마다 작은 금속 섀시가 있고 섀시가 모듈을 미드플레인·매니폴드에 맞춰 끼운다(블라인드 메이트). 바깥 트레이 판의 모양은 도식',
+                    cite=R + ' L448'),
+    'manifoldi': dict(name='트레이 내부 매니폴드', count='1', kind='src',
+                      spec='좌측 UQD 에서 들어온 냉각수를 모듈 콜드플레이트로 나누고 우측 UQD 로 모은다. 관 모양은 도식',
+                      cite=R + ' L360'),
     'bf4': dict(name='BlueField-4 모듈', count='1개', kind='src',
                 spec='전면 중앙 DPU. 온보드 LPDDR5x 128GB · SSD 512GB · AST2600 BMC. KV 캐시 전용 3번째 네트워크(ICMS/CMX)의 핵심 실리콘',
                 cite=R + ' L222·L243'),
@@ -235,7 +250,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -352,6 +367,14 @@ const BUILD = {
     box('pwr', [18, 1.2, 8], [0, 1.6, 7], [0, 6, 18], 0);
     box('bf4', [18, 1.2, 12], [0, 1.6, 19], [0, 12, 36], 2);
     box('mgmt', [18, 1.2, 6], [0, 1.6, 30], [0, 6, 54], 0);
+    // 섀시 판(도식) — 모듈 아래로 내려간다
+    box('chassis', [62, 0.6, 90], [0, -1.6, 0], [0, -14, 0], 0);
+    // 미드플레인 앞뒤 커넥터 띠(도식) — 미드플레인과 같이 움직인다
+    for (const z of [-1.4, 1.4]) box('paladin', [52, 1.4, 1.0], [0, 0.4, z], [0, 12, z * 3], 3);
+    // 후면 UQD 2 · 버스바 클립 · 내부 매니폴드
+    for (const sx of [-1, 1]) box('uqd', [3.2, 3.2, 4], [sx * 27, 0.6, -45], [sx * 6, 0, -22], 2);
+    box('clip', [8, 3.4, 3], [0, 0.6, -45.5], [0, 0, -26], 3);
+    box('manifoldi', [56, 1.2, 1.6], [0, 1.2, -43], [0, 6, -14], 2);
     return {pos:[70, 70, 90], target:[0,0,0]};
   },
   strata(){
