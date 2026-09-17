@@ -83,6 +83,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .pins{position:absolute;inset:0;pointer-events:none}
 .pin{pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--card);color:var(--ink);border:1px solid var(--ink3);
   font-size:12px;line-height:20px;text-align:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.18);user-select:none}
+.pin{position:relative}
+.pin::after{content:'';position:absolute;left:50%;top:100%;width:1px;height:var(--lead,0px);background:var(--ink3)}
 .pin[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .pins.off{display:none}
 .pad{position:absolute;right:12px;bottom:10px;display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,40px);gap:4px}
@@ -186,6 +188,22 @@ const pinRenderer = new CSS2DRenderer();
 pinRenderer.domElement.className = 'pins';
 canvas.parentElement.appendChild(pinRenderer.domElement);
 let pinsOn = !SMALL, pinObjs = [];
+function declutter(){
+  const dots = pinObjs.map(o => o.element.firstChild).filter(d => d.offsetParent !== null);
+  for (const d of dots) { d.style.translate = ''; d.style.removeProperty('--lead'); }
+  const placed = [];
+  const boxes = dots.map(d => ({d, r: d.getBoundingClientRect()})).sort((a, b) => a.r.top - b.r.top || a.r.left - b.r.left);
+  for (const {d, r} of boxes) {
+    let dy = 0;
+    for (let k = 0; k < 6; k++) {
+      const hit = placed.some(q => Math.abs(q.x - r.left) < 24 && Math.abs(q.y - (r.top + dy)) < 24);
+      if (!hit) break;
+      dy -= 24;
+    }
+    if (dy) { d.style.translate = `0 ${dy}px`; d.style.setProperty('--lead', `${-dy - 11}px`); }
+    placed.push({x: r.left, y: r.top + dy});
+  }
+}
 function partIds(){ return [...new Set(items.map(m => m.userData.id))]; }
 function buildPins(){
   for (const o of pinObjs) scene.remove(o);
@@ -198,11 +216,13 @@ function buildPins(){
     if (!first) return;
     const b = new THREE.Box3().setFromObject(first);
     const el = document.createElement('div');
-    el.className = 'pin';
-    el.textContent = String(i + 1);
-    el.title = P[id].name;
-    el.setAttribute('aria-pressed', id === selected);
-    el.addEventListener('pointerdown', ev => { ev.stopPropagation(); select(id); });
+    const dot = document.createElement('div');
+    dot.className = 'pin';
+    dot.textContent = String(i + 1);
+    dot.title = P[id].name;
+    dot.setAttribute('aria-pressed', id === selected);
+    dot.addEventListener('pointerdown', ev => { ev.stopPropagation(); select(id); });
+    el.appendChild(dot);
     const o = new CSS2DObject(el);
     const c = b.getCenter(new THREE.Vector3());
     o.position.set(c.x, b.max.y, c.z);
@@ -504,7 +524,7 @@ function paint(){
     if (on) m.material.color.lerp(new THREE.Color(css('--sel')), 0.35);
     m.material.emissive = new THREE.Color(0x000000);
   }
-  for (const o of pinObjs) o.element.setAttribute('aria-pressed', P[selected] && o.element.title === P[selected].name);
+  for (const o of pinObjs) { const d = o.element.firstChild; d.setAttribute('aria-pressed', !!(P[selected] && d.title === P[selected].name)); }
   outline.selectedObjects = items.filter(m => m.userData.id === selected || (hovered && m.userData.id === hovered));
   dirty = true;
 }
@@ -825,7 +845,7 @@ function loop(t){
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
     dirty = true;
   }
-  if (dirty) { composer.render(); if (pinsOn) pinRenderer.render(scene, camera); dirty = false; }
+  if (dirty) { composer.render(); if (pinsOn) { pinRenderer.render(scene, camera); declutter(); } dirty = false; }
   requestAnimationFrame(loop);
 }
 const start = (location.hash || '').slice(1);
