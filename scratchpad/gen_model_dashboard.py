@@ -25,12 +25,15 @@ import _xlsx_card                  # noqa: E402  받은 엑셀 부록
 
 OUT = os.path.join(dc.ROOT, '대시보드', '모델링 대시보드.html')
 
-HEADER = ('발표된 계산을 다시 세운다. 리서치 회사가 낸 표와 다른 모델이 낸 엑셀을 '
+HEADER = ('<a href="model/rack-vera-rubin-nvl72.html" '
+          'style="display:inline-block;border:1px solid currentColor;border-radius:999px;'
+          'padding:4px 14px;text-decoration:none;font-weight:600;margin-bottom:8px">'
+          '베라 루빈 NVL72 3D 분해도 열기 →</a><br>'
+          '발표된 계산을 다시 세운다. 리서치 회사가 낸 표와 다른 모델이 낸 엑셀을 '
           '옮겨 적는 대신 그 계산을 코드로 다시 세우고, 발표치와 칸 단위로 대조해 '
           '어긋난 자리를 남긴다. 값의 출처는 셋이다 — 원문 글자(줄 번호로 인용), '
           '원문이 실은 표 그림(몇 번 그림인지 밝힌다), 우리 모델이 낸 값(표의 「성격」 '
-          '열이 셋을 나눈다). 랙에서 HBM4 다이까지 눌러 들어가는 '
-          '<a href="model/rack-vera-rubin-nvl72.html">베라 루빈 NVL72 3D 분해도</a>도 있다.')
+          '열이 셋을 나눈다). 맨 위 단추는 랙에서 HBM4 다이까지 눌러 들어가는 3D 분해도다.')
 
 FOOTER = ('모델 코드는 <code>insights/models/</code> 에 있고 검사기가 매번 발표치와 '
           '대조한다. 원자료는 <code>insights/models/raw/*.json</code> 이 정본이고, '

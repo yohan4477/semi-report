@@ -203,6 +203,8 @@ P = {
                 cite='[250812] HBM 로드맵 L702'),
 }
 
+TAGS = {'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
+
 LEVELS = [
     ('hall', '10MW 홀', '루빈 랙 42대 — GPU 3,030장 × 3.3kW ≈ 10MW, 한 대를 누르면 랙 안으로 들어간다'),
     ('rack', '랙', 'VR NVL72 랙 — 컴퓨트 트레이 18 · NVLink 스위치 트레이 9 · 전력 셸프 4 · 스파인 카트리지 4'),
@@ -378,6 +380,14 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .tw{overflow-x:auto}
 .pad[hidden]{display:none}
 .pins{position:absolute;inset:0;pointer-events:none}
+.calls{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.calls svg{position:absolute;inset:0;width:100%;height:100%}
+.call{position:absolute;pointer-events:auto;background:var(--card);border:1px solid var(--line);border-left:2px solid var(--ink);
+  border-radius:4px;padding:2px 7px;font-size:12px;line-height:1.35;cursor:pointer;max-width:235px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.call b{font-weight:600}
+.call em{font-style:normal;color:var(--ink3);margin-left:5px}
+.call[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.call[aria-pressed="true"] em{color:var(--bg);opacity:.75}
 .pin{pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--card);color:var(--ink);border:1px solid var(--ink3);
   font-size:12px;line-height:20px;text-align:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.18);user-select:none}
 .pin{position:relative}
@@ -410,7 +420,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 </div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="lblbtn">이름 띠</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
 </div>
 <div class="grid">
   <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p></div>
@@ -445,6 +455,7 @@ const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
 const TIERS = __TIERS__;
 const R_SRC = __RSRC__;
+const TAGS = __TAGS__;
 const TOUR = __TOUR__;
 const DIFFS = __DIFFS__;
 const KIND = {src:'원문 값', calc:'셈한 값', schema:'도식'};
@@ -501,6 +512,64 @@ function declutter(){
     }
     if (dy) { d.style.translate = `0 ${dy}px`; d.style.setProperty('--lead', `${-dy - 11}px`); }
     placed.push({x: r.left, y: r.top + dy});
+  }
+}
+const callLayer = document.createElement('div');
+callLayer.className = 'calls';
+const callSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+callLayer.appendChild(callSvg);
+canvas.parentElement.appendChild(callLayer);
+let labelsOn = false, callEls = [];
+function buildCalls(){
+  callEls.forEach(e => e.remove()); callEls = [];
+  callSvg.innerHTML = '';
+  if (!labelsOn || !group) return;
+  partIds().forEach((id, i) => {
+    const el = document.createElement('div');
+    el.className = 'call';
+    el.innerHTML = `<b>${i + 1}. ${P[id].name}</b>${TAGS[id] ? `<em>${TAGS[id]}</em>` : ''}`;
+    el.dataset.id = id;
+    el.addEventListener('pointerdown', ev => { ev.stopPropagation(); select(id); });
+    callLayer.appendChild(el); callEls.push(el);
+  });
+  placeCalls();
+}
+function placeCalls(){
+  if (!labelsOn || !callEls.length) return;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  const anchors = callEls.map(el => {
+    const first = items.find(m => m.userData.id === el.dataset.id);
+    if (!first) return null;
+    const b = new THREE.Box3().setFromObject(first), c = b.getCenter(new THREE.Vector3());
+    c.y = b.max.y;
+    const v = c.clone().project(camera);
+    return {el, x: (v.x * 0.5 + 0.5) * w, y: (-v.y * 0.5 + 0.5) * h, z: v.z};
+  }).filter(Boolean);
+  const sides = {L: [], R: []};
+  for (const a of anchors) (a.x < w / 2 ? sides.L : sides.R).push(a);
+  callSvg.innerHTML = '';
+  for (const [side, list] of Object.entries(sides)) {
+    list.sort((p, q) => p.y - q.y);
+    const gap = 24, top = 8;
+    let y = top;
+    for (const a of list) {
+      const ly = Math.max(y, Math.min(a.y - 10, h - 26));
+      y = ly + gap;
+      a.el.style.top = ly + 'px';
+      if (side === 'L') { a.el.style.left = '8px'; a.el.style.right = ''; }
+      else { a.el.style.right = '8px'; a.el.style.left = ''; }
+      a.el.style.display = a.z > 1 ? 'none' : '';
+      if (a.z > 1) continue;
+      const r = a.el.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
+      const lx = side === 'L' ? r.right - cr.left : r.left - cr.left;
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      line.setAttribute('d', `M${lx} ${ly + 10} L${a.x} ${a.y}`);
+      line.setAttribute('stroke', 'var(--ink3)'); line.setAttribute('stroke-width', '1'); line.setAttribute('fill', 'none');
+      callSvg.appendChild(line);
+      const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      dot.setAttribute('cx', a.x); dot.setAttribute('cy', a.y); dot.setAttribute('r', '2.5'); dot.setAttribute('fill', 'var(--ink)');
+      callSvg.appendChild(dot);
+    }
   }
 }
 function partIds(){ return [...new Set(items.map(m => m.userData.id))]; }
@@ -872,6 +941,7 @@ function paint(){
     if (on) m.material.color.lerp(new THREE.Color(css('--sel')), 0.35);
     m.material.emissive = new THREE.Color(0x000000);
   }
+  for (const el of callEls) el.setAttribute('aria-pressed', el.dataset.id === selected);
   for (const o of pinObjs) { const d = o.element.firstChild; d.setAttribute('aria-pressed', !!(P[selected] && d.title === P[selected].name)); }
   outline.selectedObjects = items.filter(m => m.userData.id === selected || (hovered && m.userData.id === hovered) || (pair && level === 'compare' && pair.includes(m.userData.id)));
   dirty = true;
@@ -899,7 +969,7 @@ function load(lv, keepCam){
     const more = document.createElement('div'); more.className = 'more';
     li.appendChild(b); li.appendChild(more); ul.appendChild(li);
   }
-  crumb(); jump(); buildPins();
+  crumb(); jump(); buildPins(); buildCalls();
   pair = null;
   walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
   tiersBtn.hidden = lv !== 'tray'; tiersBtn.textContent = '메모리 계층';
@@ -1190,6 +1260,12 @@ walkBtn.onclick = () => setWalk(!walk);
 const pinBtn = document.getElementById('pinbtn');
 pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀';
 pinBtn.onclick = () => { pinsOn = !pinsOn; pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀'; buildPins(); dirty = true; };
+const lblBtn = document.getElementById('lblbtn');
+lblBtn.onclick = () => {
+  labelsOn = !labelsOn; lblBtn.textContent = labelsOn ? '이름 띠 끄기' : '이름 띠';
+  if (labelsOn && pinsOn) { pinsOn = false; pinBtn.textContent = '번호 핀'; buildPins(); }   // 번호와 이름이 겹치지 않게
+  buildCalls(); dirty = true;
+};
 addEventListener('keydown', ev => {
   if (!walk) return;
   const k = {KeyW:'f', ArrowUp:'f', KeyS:'b', ArrowDown:'b', KeyA:'l', ArrowLeft:'l', KeyD:'r', ArrowRight:'r'}[ev.code];
@@ -1235,13 +1311,13 @@ function loop(t){
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
     dirty = true;
   }
-  if (dirty) { composer.render(); if (pinsOn) { pinRenderer.render(scene, camera); declutter(); } dirty = false; }
+  if (dirty) { composer.render(); if (pinsOn) { pinRenderer.render(scene, camera); declutter(); } placeCalls(); dirty = false; }
   requestAnimationFrame(loop);
 }
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'hall');
 requestAnimationFrame(loop);
-window.__rack = {load, select, setWalk, refit, tourGo, tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
+window.__rack = {load, select, setWalk, refit, tourGo, labels: () => lblBtn.click(), tiers: () => tiersBtn.click(), setExplode: v => { explode = v; ex.value = v; layout(); }, ready: true};
 </script>
 </body>
 </html>
@@ -1255,7 +1331,8 @@ def main():
                 .replace('__TIERS__', json.dumps(TIERS, ensure_ascii=False))
                 .replace('__TOUR__', json.dumps(TOUR, ensure_ascii=False))
                 .replace('__DIFFS__', json.dumps(DIFFS, ensure_ascii=False))
-                .replace('__RSRC__', json.dumps(R, ensure_ascii=False)))
+                .replace('__RSRC__', json.dumps(R, ensure_ascii=False))
+                .replace('__TAGS__', json.dumps(TAGS, ensure_ascii=False)))
     io.open(OUT, 'w', encoding='utf-8').write(html)
     print('썼다:', OUT, len(html), 'bytes')
 
