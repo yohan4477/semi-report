@@ -328,6 +328,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .jump{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 2px}
 .jump button{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:8px;padding:5px 10px;font:inherit;font-size:13px;cursor:pointer}
 .jump button[aria-current="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.jump button.onpath{border-color:var(--ink2);color:var(--ink)}
 .jump small{color:var(--ink3);margin-left:4px;font-size:11px}
 .jump button[aria-current="true"] small{color:var(--bg);opacity:.7}
 .stage{position:relative;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
@@ -382,12 +383,12 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .pins{position:absolute;inset:0;pointer-events:none}
 .calls{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .calls svg{position:absolute;inset:0;width:100%;height:100%}
-.call{position:absolute;pointer-events:auto;background:var(--card);border:1px solid var(--line);border-left:2px solid var(--ink);
-  border-radius:4px;padding:2px 7px;font-size:12px;line-height:1.35;cursor:pointer;max-width:235px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.call{position:absolute;pointer-events:auto;font-size:12px;line-height:1.35;cursor:pointer;max-width:min(235px,42%);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);
+  text-shadow:0 1px 0 var(--card),0 -1px 0 var(--card),1px 0 0 var(--card),-1px 0 0 var(--card)}
 .call b{font-weight:600}
 .call em{font-style:normal;color:var(--ink3);margin-left:5px}
-.call[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.call[aria-pressed="true"] em{color:var(--bg);opacity:.75}
+.call[aria-pressed="true"]{font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .pin{pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--card);color:var(--ink);border:1px solid var(--ink3);
   font-size:12px;line-height:20px;text-align:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.18);user-select:none}
 .pin{position:relative}
@@ -409,7 +410,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="tour" id="tour"><button id="tourplay" aria-label="투어 재생">▶ 투어</button><span id="tourstops"></span></div>
 <div class="tourcap" id="tourcap" hidden><b id="tourtitle"></b><span id="tourtext"></span><small id="tourcite"></small></div>
 <nav class="jump" id="jump" aria-label="단 바로가기"></nav>
-<div class="crumb" id="crumb"></div>
+
 <div class="viewer">
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
@@ -420,7 +421,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 </div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="lblbtn">이름 띠</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button><button id="lblbtn">부품 이름</button><button id="cmpbtn" hidden>블랙웰과 비교</button>
 </div>
 <div class="grid">
   <div class="panel info" id="info"><h2>부품을 누르세요</h2><p class="src">화면의 부품·번호 핀이나 옆 목록을 누르면 여기에 출처까지 뜹니다.</p></div>
@@ -537,7 +538,9 @@ function buildCalls(){
 function placeCalls(){
   if (!labelsOn || !callEls.length) return;
   const w = canvas.clientWidth, h = canvas.clientHeight;
-  const anchors = callEls.map(el => {
+  const only = w < 700;            // 좁은 화면은 고른 부품 하나만 — 열넷을 띄우면 모델이 다 가린다
+  for (const el of callEls) el.style.display = (only && el.dataset.id !== selected) ? 'none' : '';
+  const anchors = callEls.filter(el => el.style.display !== 'none').map(el => {
     const first = items.find(m => m.userData.id === el.dataset.id);
     if (!first) return null;
     const b = new THREE.Box3().setFromObject(first), c = b.getCenter(new THREE.Vector3());
@@ -558,7 +561,7 @@ function placeCalls(){
       a.el.style.top = ly + 'px';
       if (side === 'L') { a.el.style.left = '8px'; a.el.style.right = ''; }
       else { a.el.style.right = '8px'; a.el.style.left = ''; }
-      a.el.style.display = a.z > 1 ? 'none' : '';
+      if (a.z > 1) a.el.style.display = 'none';
       if (a.z > 1) continue;
       const r = a.el.getBoundingClientRect(), cr = canvas.getBoundingClientRect();
       const lx = side === 'L' ? r.right - cr.left : r.left - cr.left;
@@ -879,7 +882,8 @@ function fit(dirv, box){
   const b = box || new THREE.Box3().setFromObject(group), c = b.getCenter(new THREE.Vector3()), sz = b.getSize(new THREE.Vector3());
   const r = sz.length() / 2, fov = camera.fov * Math.PI / 180;
   const aspect = Math.max(0.6, canvas.clientWidth / Math.max(1, canvas.clientHeight));
-  const dist = r / Math.sin(fov / 2) / Math.min(1, aspect) * (aspect < 1 ? 0.95 : 1.05);
+  const pad = (typeof labelsOn !== 'undefined' && labelsOn && canvas.clientWidth >= 700) ? 1.42 : 1;
+  const dist = r / Math.sin(fov / 2) / Math.min(1, aspect) * (aspect < 1 ? 0.95 : 1.05) * pad;
   const d = new THREE.Vector3(...dirv).normalize();
   camera.position.copy(c).addScaledVector(d, dist); camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
   controls.target.copy(c); controls.update();
@@ -942,6 +946,7 @@ function paint(){
     m.material.emissive = new THREE.Color(0x000000);
   }
   for (const el of callEls) el.setAttribute('aria-pressed', el.dataset.id === selected);
+  if (labelsOn && canvas.clientWidth < 700) placeCalls();
   for (const o of pinObjs) { const d = o.element.firstChild; d.setAttribute('aria-pressed', !!(P[selected] && d.title === P[selected].name)); }
   outline.selectedObjects = items.filter(m => m.userData.id === selected || (hovered && m.userData.id === hovered) || (pair && level === 'compare' && pair.includes(m.userData.id)));
   dirty = true;
@@ -987,13 +992,15 @@ function jump(){
     const b = document.createElement('button');
     b.innerHTML = `${L[1]}<small>${depth}단</small>`;
     b.setAttribute('aria-current', k === level ? 'true' : 'false');
+    const path = []; for (let x = level; x; x = PARENT[x]) path.push(x);
+    if (k !== level && path.includes(k)) b.classList.add('onpath');
     b.onclick = () => { tourStop(); document.getElementById('tourcap').hidden = true; load(k); };
     el.appendChild(b);
   }
 }
 const PARENT = {compare:'tray', rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
 function crumb(){
-  const el = document.getElementById('crumb'); el.innerHTML = '';
+  const el = document.getElementById('crumb'); if (!el) return; el.innerHTML = '';
   const path = []; for (let k = level; k; k = PARENT[k]) path.unshift(k);
   path.forEach((k, i) => {
     const L = LEVELS.find(x => x[0] === k);
@@ -1262,9 +1269,11 @@ pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀';
 pinBtn.onclick = () => { pinsOn = !pinsOn; pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀'; buildPins(); dirty = true; };
 const lblBtn = document.getElementById('lblbtn');
 lblBtn.onclick = () => {
-  labelsOn = !labelsOn; lblBtn.textContent = labelsOn ? '이름 띠 끄기' : '이름 띠';
+  labelsOn = !labelsOn; lblBtn.textContent = labelsOn ? '부품 이름 끄기' : '부품 이름';
+  if (labelsOn && canvas.clientWidth < 700 && !selected) hint.textContent = '부품을 누르면 그 부품의 이름이 뜹니다';
+  else if (!labelsOn) hint.textContent = '끌어서 돌리기 · 휠로 확대 · 부품 누르기';
   if (labelsOn && pinsOn) { pinsOn = false; pinBtn.textContent = '번호 핀'; buildPins(); }   // 번호와 이름이 겹치지 않게
-  buildCalls(); dirty = true;
+  buildCalls(); refit(); dirty = true;
 };
 addEventListener('keydown', ev => {
   if (!walk) return;
