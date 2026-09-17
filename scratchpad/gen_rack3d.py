@@ -300,6 +300,11 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .tt th{color:var(--ink3);font-weight:500}
 .tw{overflow-x:auto}
 .pad[hidden]{display:none}
+.pins{position:absolute;inset:0;pointer-events:none}
+.pin{pointer-events:auto;width:22px;height:22px;border-radius:50%;background:var(--card);color:var(--ink);border:1px solid var(--ink3);
+  font-size:12px;line-height:20px;text-align:center;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.18);user-select:none}
+.pin[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pins.off{display:none}
 .pad{position:absolute;right:12px;bottom:10px;display:grid;grid-template-columns:repeat(3,40px);grid-template-rows:repeat(2,40px);gap:4px}
 .pad button{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;font-size:16px;opacity:.9;touch-action:none}
 .pad button[data-k="f"]{grid-column:2;grid-row:1}.pad button[data-k="l"]{grid-column:1;grid-row:2}
@@ -320,7 +325,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
 <div class="ctrl">
   <label for="ex">분해</label><input id="ex" type="range" min="0" max="1" step="0.01" value="0.35">
-  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button>
+  <button id="play">조립 ↔ 분해</button><button id="reset">시점 처음으로</button><button id="walk" hidden>통로 걷기</button><button id="tiers" hidden>메모리 계층</button><button id="pinbtn">번호 핀</button>
 </div>
 <div class="grid">
   <div class="panel"><h2 id="lvtitle"></h2><p class="src" id="lvsub"></p><ul class="parts" id="parts"></ul></div>
@@ -339,6 +344,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 const P = __PARTS__;
 const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
@@ -380,6 +386,33 @@ function themeColors(){
   dirty = true;
 }
 let hovered = null;
+const pinRenderer = new CSS2DRenderer();
+pinRenderer.domElement.className = 'pins';
+canvas.parentElement.appendChild(pinRenderer.domElement);
+let pinsOn = !SMALL, pinObjs = [];
+function partIds(){ return [...new Set(items.map(m => m.userData.id))]; }
+function buildPins(){
+  for (const o of pinObjs) scene.remove(o);
+  pinObjs = [];
+  pinRenderer.domElement.classList.toggle('off', !pinsOn);
+  if (!pinsOn || !group) return;
+  partIds().forEach((id, i) => {
+    const b = new THREE.Box3();
+    for (const m of items) if (m.userData.id === id) b.expandByObject(m);
+    if (b.isEmpty()) return;
+    const el = document.createElement('div');
+    el.className = 'pin';
+    el.textContent = String(i + 1);
+    el.title = P[id].name;
+    el.setAttribute('aria-pressed', id === selected);
+    el.addEventListener('pointerdown', ev => { ev.stopPropagation(); select(id); });
+    const o = new CSS2DObject(el);
+    const c = b.getCenter(new THREE.Vector3());
+    o.position.set(c.x, b.max.y, c.z);
+    scene.add(o); pinObjs.push(o);
+  });
+  dirty = true;
+}
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
 const KINDMAT = {swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
@@ -663,6 +696,7 @@ function layout(){
     k = k * k * (3 - 2 * k);
     m.position.set(a.x + e.x*k, a.y + e.y*k, a.z + e.z*k);
   }
+  if (typeof buildPins === 'function' && pinObjs.length) buildPins();
   dirty = true;
 }
 
@@ -673,6 +707,7 @@ function paint(){
     if (on) m.material.color.lerp(new THREE.Color(css('--sel')), 0.35);
     m.material.emissive = new THREE.Color(0x000000);
   }
+  for (const o of pinObjs) o.element.setAttribute('aria-pressed', P[selected] && o.element.title === P[selected].name);
   outline.selectedObjects = items.filter(m => m.userData.id === selected || (hovered && m.userData.id === hovered));
   dirty = true;
 }
@@ -694,10 +729,10 @@ function load(lv, keepCam){
   const ul = document.getElementById('parts'); ul.innerHTML = '';
   for (const id of ids){
     const li = document.createElement('li'), b = document.createElement('button');
-    b.innerHTML = `<span>${P[id].name}</span><small>${P[id].count}</small>`;
+    b.innerHTML = `<span>${ids.indexOf(id) + 1}. ${P[id].name}</span><small>${P[id].count}</small>`;
     b.onclick = () => select(id); b.dataset.id = id; li.appendChild(b); ul.appendChild(li);
   }
-  crumb(); jump();
+  crumb(); jump(); buildPins();
   walkBtn.hidden = lv !== 'hall'; walkBtn.textContent = '통로 걷기';
   tiersBtn.hidden = lv !== 'tray'; tiersBtn.textContent = '메모리 계층';
   document.getElementById('info').innerHTML = '<h2>부품을 누르세요</h2><p class="src">화면의 부품이나 왼쪽 목록을 누르면 여기에 설명이 뜹니다.</p>';
@@ -782,7 +817,7 @@ function resize(){
   if (canvas.width !== Math.floor(w*renderer.getPixelRatio()) || canvas.height !== Math.floor(h*renderer.getPixelRatio())){
     const first = canvas.width === 300 && canvas.height === 150;
     renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); dirty = true;
-    composer.setSize(w, h); composer.setPixelRatio(renderer.getPixelRatio());
+    composer.setSize(w, h); composer.setPixelRatio(renderer.getPixelRatio()); pinRenderer.setSize(w, h);
     if (gtao) gtao.setSize(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
     if (!first && group && !walk) { clearTimeout(resize.t); resize.t = setTimeout(refit, 200); }
   }
@@ -933,6 +968,9 @@ function setWalk(on){
   dirty = true;
 }
 walkBtn.onclick = () => setWalk(!walk);
+const pinBtn = document.getElementById('pinbtn');
+pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀';
+pinBtn.onclick = () => { pinsOn = !pinsOn; pinBtn.textContent = pinsOn ? '번호 핀 끄기' : '번호 핀'; buildPins(); dirty = true; };
 addEventListener('keydown', ev => {
   if (!walk) return;
   const k = {KeyW:'f', ArrowUp:'f', KeyS:'b', ArrowDown:'b', KeyA:'l', ArrowLeft:'l', KeyD:'r', ArrowRight:'r'}[ev.code];
@@ -978,7 +1016,7 @@ function loop(t){
     for (const tx of flowTex) tx.offset.x -= tx.userData.dir * dt * 0.6;
     dirty = true;
   }
-  if (dirty) { composer.render(); dirty = false; }
+  if (dirty) { composer.render(); if (pinsOn) pinRenderer.render(scene, camera); dirty = false; }
   requestAnimationFrame(loop);
 }
 const start = (location.hash || '').slice(1);
