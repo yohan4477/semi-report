@@ -271,16 +271,42 @@ function order(){
   items.forEach((m, i) => { m.userData.o = mags[i] / mx; });
 }
 
+const RACK_SLOTS = ['shelf','shelf'].concat(Array(9).fill('tray'), Array(9).fill('switchtray'), Array(9).fill('tray'), ['shelf','shelf']);
+let frontTex = null;
+function rackFront(){
+  if (frontTex) return frontTex;
+  const cv = document.createElement('canvas'); cv.width = 256; cv.height = 954;   // 600 × 2,236 비율
+  const g = cv.getContext('2d');
+  g.fillStyle = '#2b2b2b'; g.fillRect(0, 0, cv.width, cv.height);
+  const slotH = 5.2 / 223.6 * cv.height, top = (cv.height - RACK_SLOTS.length * slotH) / 2;
+  RACK_SLOTS.forEach((k, i) => {
+    const y = top + i * slotH;
+    g.fillStyle = k === 'tray' ? '#5d5d5b' : (k === 'switchtray' ? '#8a8986' : '#b9b8b3');
+    g.fillRect(10, y + 1.5, cv.width - 20, slotH - 3);
+    if (k === 'tray') {           // 트레이 앞 좌우 Orchid 트랜시버 케이지 자리 — 개수는 Orchid 당 2(원문), 좌우 두 줄은 도식
+      g.fillStyle = '#1f1f1f';
+      for (const x of [22, 52, cv.width - 82, cv.width - 52]) g.fillRect(x, y + slotH * 0.28, 26, slotH * 0.44);
+    }
+  });
+  frontTex = new THREE.CanvasTexture(cv); frontTex.colorSpace = THREE.SRGBColorSpace; frontTex.anisotropy = 8;
+  return frontTex;
+}
+
 const BUILD = {
   hall(){
     // 42대 = 10MW ÷ 3.3kW ÷ 72 (셈한 값). 7대씩 6줄로 세운 배치는 도식
     const W = 60, D = 120, H = 223.6, per = 7, rows = 6, gapX = 8, aisle = 140;
     let n = 0;
     for (let r = 0; r < rows; r++) {
-      const z = (r - (rows - 1) / 2) * (D + aisle / 2) + (r % 2 ? aisle / 4 : -aisle / 4);
+      const z = (r - (rows - 1) / 2) * (D + aisle / 2) + (r % 2 ? -aisle / 4 : aisle / 4);
       for (let c = 0; c < per; c++, n++) {
         const x = (c - (per - 1) / 2) * (W + gapX);
-        box('rackunit', [W, H, D], [x, H / 2, z], [(c - (per - 1) / 2) * 14, 0, (r - (rows - 1) / 2) * 26], (r + c) % 2 ? 2 : 3);
+        const rk = box('rackunit', [W, H, D], [x, H / 2, z], [(c - (per - 1) / 2) * 14, 0, (r - (rows - 1) / 2) * 26], 3);
+        const face = new THREE.Mesh(new THREE.PlaneGeometry(W - 2, H - 2),
+          new THREE.MeshStandardMaterial({map: rackFront(), roughness: .55, metalness: .3}));
+        face.position.z = (r % 2 ? 1 : -1) * (D / 2 + 0.3);
+        if (!(r % 2)) face.rotation.y = Math.PI;
+        rk.add(face);
       }
     }
     box('aisle', [per * (W + gapX) + 120, 2, rows * (D + aisle / 2) + 120], [0, -1, 0], [0, 0, 0], 0);
