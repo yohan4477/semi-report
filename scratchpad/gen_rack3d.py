@@ -60,6 +60,13 @@ P = {
     'orchid': dict(name='Orchid 모듈', count='트레이당 4개', kind='src',
                    spec='ConnectX-9 NIC 2개 · 800G 트랜시버 케이지 2개 · E1.S SSD 슬롯 1개. 전면 좌우에 2개씩 쌓인다',
                    cite=R + ' L241'),
+    'cx9': dict(name='ConnectX-9 NIC', count='Orchid 당 2개', kind='src',
+                spec='800G, PCIe6 스위치 48레인. InfiniBand 와 800G 이더넷. 미드플레인에서 PCIe6 신호를 받는다',
+                cite=R + ' L157·L241'),
+    'cage': dict(name='800G 트랜시버 케이지', count='Orchid 당 2개', kind='src',
+                 spec='NIC 를 전면으로 옮겨 200G 이더넷 신호가 케이블 없이 케이지 바로 옆에서 끝난다', cite=R + ' L241·L313'),
+    'e1s': dict(name='E1.S SSD 슬롯', count='Orchid 당 1개', kind='src',
+                spec='로컬 NVMe 저장장치. Orchid 모듈의 ConnectX-9 가 관리한다', cite=R + ' L241·L277'),
     'bf4': dict(name='BlueField-4 모듈', count='1개', kind='src',
                 spec='전면 중앙 DPU. 온보드 LPDDR5x 128GB · SSD 512GB · AST2600 BMC. KV 캐시 전용 3번째 네트워크(ICMS/CMX)의 핵심 실리콘',
                 cite=R + ' L222·L243'),
@@ -193,6 +200,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const P = __PARTS__;
 const LEVELS = __LEVELS__;
 const SOURCES = __SOURCES__;
@@ -200,13 +209,29 @@ const KIND = {src:'원문 값', calc:'셈한 값', schema:'도식'};
 
 const canvas = document.getElementById('view');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, preserveDrawingBuffer:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, matchMedia('(max-width: 760px)').matches ? 1.5 : 2));
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 5000);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 1.1));
-const sun = new THREE.DirectionalLight(0xffffff, 1.2); sun.position.set(80, 140, 120); scene.add(sun);
+const SMALL = matchMedia('(max-width: 760px)').matches;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = !SMALL; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x3a3a3a, 0.35));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.bias = -0.0004; scene.add(sun); scene.add(sun.target);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMaterial({opacity: .18}));
+ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
+let dirty = true;
+const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
+const KINDMAT = {rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+  switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
+  pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
+  interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
+  cx9:'die', cage:'metal', e1s:'plastic'};
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 function tone(i){ return new THREE.Color(css(['--mesh0','--mesh1','--mesh2','--mesh3'][i])); }
@@ -215,14 +240,27 @@ let group = null, items = [], level = 'rack', selected = null, explode = +docume
 
 // 부품 하나 = 상자. a 는 조립 위치, e 는 분해 방향(분해 1.0 일 때 더해지는 벡터)
 function box(id, size, a, e, t, opts={}){
-  const g = new THREE.BoxGeometry(...size);
-  const m = new THREE.MeshStandardMaterial({color: tone(t), roughness:.75, metalness:.1, transparent: !!opts.op, opacity: opts.op || 1, depthWrite: !opts.op});
+  const r = Math.min(Math.min(...size) * 0.22, 1.2);
+  const g = r > 0.05 ? new RoundedBoxGeometry(size[0], size[1], size[2], 2, r) : new THREE.BoxGeometry(...size);
+  const [metal, rough] = MAT[opts.mat || KINDMAT[id] || 'plastic'];
+  const m = new THREE.MeshStandardMaterial({color: tone(t), roughness: rough, metalness: metal, envMapIntensity: .9,
+    transparent: !!opts.op, opacity: opts.op || 1, depthWrite: !opts.op});
   const mesh = new THREE.Mesh(g, m);
-  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(g), new THREE.LineBasicMaterial({color: tone(3), transparent:true, opacity:.55}));
-  mesh.add(edges);
-  mesh.userData = {id, a:new THREE.Vector3(...a), e:new THREE.Vector3(...e), t};
+  mesh.castShadow = !opts.op; mesh.receiveShadow = true;
+  if (opts.op) {
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(...size)),
+      new THREE.LineBasicMaterial({color: tone(3), transparent:true, opacity:.5}));
+    mesh.add(edges);
+  }
+  mesh.userData = {id, a:new THREE.Vector3(...a), e:new THREE.Vector3(...e), t, o: 0};
   group.add(mesh); items.push(mesh);
   return mesh;
+}
+
+// 분해 순서: 멀리 가는 부품일수록 늦게 출발한다. 0~1 로 매긴다
+function order(){
+  const mags = items.map(m => m.userData.e.length()), mx = Math.max(1e-6, ...mags);
+  items.forEach((m, i) => { m.userData.o = mags[i] / mx; });
 }
 
 const BUILD = {
@@ -256,8 +294,13 @@ const BUILD = {
     box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
     box('strata', [27, 1.2, 38], [14.5, 0, -24], [10, 0, -40], 1);
     box('midplane', [58, 4, 1.2], [0, 1.4, 0], [0, 12, 0], 2);
-    for (const sx of [-1, 1]) for (const k of [0, 1])
-      box('orchid', [16, 1.6, 30], [sx*20, -0.4 + k*2.2, 19], [sx*12, k*8, 36], 1);
+    for (const sx of [-1, 1]) for (const k of [0, 1]) {
+      const ay = -0.4 + k*2.2, ex = [sx*12, k*8, 36];
+      box('orchid', [16, 1.0, 30], [sx*20, ay, 19], ex, 1);
+      for (const q of [-1, 1]) box('cx9', [4, 0.6, 4], [sx*20 + q*3.8, ay + 0.8, 12], ex, 3);
+      for (const q of [-1, 1]) box('cage', [5.6, 1.4, 5], [sx*20 + q*3.8, ay + 1.1, 31], ex, 2);
+      box('e1s', [3.2, 0.5, 11], [sx*20, ay + 0.75, 22], ex, 0);
+    }
     box('pwr', [18, 1.2, 8], [0, 1.6, 7], [0, 6, 18], 0);
     box('bf4', [18, 1.2, 12], [0, 1.6, 19], [0, 12, 36], 2);
     box('mgmt', [18, 1.2, 6], [0, 1.6, 30], [0, 6, 54], 0);
@@ -285,6 +328,8 @@ const BUILD = {
       box('hbm', [1.6, 1.2, 2.0], [side*5.0, 1.4, -3.3 + k*2.2], [side*4, 3 + k*0.4, (k-1.5)*1.2], 2);
     }
     box('lid', [15, 0.5, 13], [0, 2.4, 0], [0, 10, 0], 0, {op:.45});
+    for (const [w, d, x, z] of [[16, .8, 0, -6.9], [16, .8, 0, 6.9], [.8, 13, -7.6, 0], [.8, 13, 7.6, 0]])
+      box('lid', [w, 1.2, d], [x, 1.5, z], [0, 8, 0], 1);
     return {pos:[18, 16, 20], target:[0,0.8,0]};
   },
   hbm(){
@@ -303,21 +348,32 @@ function fit(dirv){
   const d = new THREE.Vector3(...dirv).normalize();
   camera.position.copy(c).addScaledVector(d, dist); camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
   controls.target.copy(c); controls.update();
+  const span = Math.max(sz.x, sz.y, sz.z);
+  ground.scale.set(span * 6, span * 6, 1); ground.position.set(c.x, b.min.y - span * 0.02, c.z);
+  sun.position.set(c.x + span * 0.8, c.y + span * 1.6, c.z + span * 1.1); sun.target.position.copy(c);
+  const sc = sun.shadow.camera; sc.left = sc.bottom = -span * 1.2; sc.right = sc.top = span * 1.2;
+  sc.near = span * 0.1; sc.far = span * 5; sc.updateProjectionMatrix();
+  dirty = true;
 }
 
+const SPREAD = 0.55;
 function layout(){
   for (const m of items){
-    const {a, e} = m.userData;
-    m.position.set(a.x + e.x*explode, a.y + e.y*explode, a.z + e.z*explode);
+    const {a, e, o} = m.userData;
+    let k = Math.min(1, Math.max(0, explode * (1 + SPREAD) - o * SPREAD));
+    k = k * k * (3 - 2 * k);
+    m.position.set(a.x + e.x*k, a.y + e.y*k, a.z + e.z*k);
   }
+  dirty = true;
 }
 
 function paint(){
   for (const m of items){
     const on = selected && m.userData.id === selected;
     m.material.color = on ? new THREE.Color(css('--sel')) : tone(m.userData.t);
-    m.material.emissive = new THREE.Color(0x000000); m.material.opacity = selected && !on ? Math.min(m.material.opacity, 1) : m.material.opacity;
+    m.material.emissive = new THREE.Color(on ? 0x1a1a1a : 0x000000);
   }
+  dirty = true;
 }
 
 function load(lv, keepCam){
@@ -325,7 +381,7 @@ function load(lv, keepCam){
   group = new THREE.Group(); items = []; scene.add(group);
   level = lv; selected = null;
   const cam = BUILD[lv]();
-  layout(); paint();
+  order(); layout(); paint();
   if (!keepCam) fit(cam.pos);
   const L = LEVELS.find(x=>x[0]===lv);
   document.getElementById('lvtitle').textContent = L[1] + ' — 부품';
@@ -401,11 +457,12 @@ for (const [label, path] of SOURCES){ const li = document.createElement('li'); l
 function resize(){
   const w = canvas.clientWidth, h = canvas.clientHeight;
   if (canvas.width !== Math.floor(w*renderer.getPixelRatio()) || canvas.height !== Math.floor(h*renderer.getPixelRatio())){
-    renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false); camera.aspect = w/h; camera.updateProjectionMatrix(); dirty = true;
   }
 }
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paint);
-function loop(t){ resize(); if (anim) anim(t); controls.update(); renderer.render(scene, camera); requestAnimationFrame(loop); }
+controls.addEventListener('change', () => { dirty = true; });
+function loop(t){ resize(); if (anim) anim(t); controls.update(); if (dirty) { renderer.render(scene, camera); dirty = false; } requestAnimationFrame(loop); }
 const start = (location.hash || '').slice(1);
 load(LEVELS.some(x=>x[0]===start) ? start : 'rack');
 requestAnimationFrame(loop);
