@@ -49,7 +49,14 @@ P = {
                  cite=NVB + ' · ' + R + ' L166·L220', child='tray'),
     'switchtray': dict(name='NVLink 스위치 트레이', count='9개', kind='src',
                        spec='트레이 9개에 NVLink 6 스위치 ASIC 36개. 트레이당 4개는 36 ÷ 9 로 셈한 값',
-                       cite=NVB + ' · ' + R + ' L166'),
+                       cite=NVB + ' · ' + R + ' L166', child='swtray'),
+    'swchassis': dict(name='스위치 트레이 섀시', count='1', kind='schema', spec='트레이 판. 모양과 크기는 원문에 없어 도식', cite='—'),
+    'swasic': dict(name='NVLink 6 스위치 ASIC', count='트레이당 4개 (셈한 값)', kind='calc',
+                   spec='칩 하나 대역폭 28.8T 로 NVLink 5 와 같고, 포트 수를 절반으로 줄이는 대신 400G 양방향 SerDes 로 속도를 두 배로 올려 단일 다이를 유지했다. 트레이당 4개는 랙 36개 ÷ 트레이 9개',
+                   cite=R + ' L156·L166 · ' + NVB),
+    'swconn': dict(name='스파인 쪽 커넥터', count='원문에 없음', kind='schema',
+                   spec='트레이 뒤에서 NVLink 스파인(구리 케이블 카트리지 4개, 케이블 5,000가닥)으로 이어진다. 커넥터 수와 모양은 도식',
+                   cite=NVB),
     'switch': dict(name='NVLink 6 스위치 ASIC', count='36개 (트레이당 4개, 셈한 값)', kind='src',
                    spec='랙당 칩 수 36개로 두 배, 칩 하나 대역폭 28.8T 는 NVLink 5 와 같다',
                    cite=R + ' L156·L166'),
@@ -168,6 +175,7 @@ LEVELS = [
     ('strata', 'Strata', 'Rubin GPU 2 + Vera CPU 1 + SOCAMM 8, 콜드플레이트 한 판'),
     ('rubin', 'Rubin 패키지', '연산 다이 2 + HBM4 스택 8'),
     ('hbm', 'HBM4 스택', 'DRAM 코어 다이 12단 + 로직 베이스 다이'),
+    ('swtray', 'NVLink 스위치 트레이', 'NVLink 6 스위치 ASIC 4개(36 ÷ 9) · 뒤쪽으로 스파인 카트리지에 이어진다'),
     ('bf4', 'BlueField-4', 'Grace CPU 다이 + ConnectX-9 다이 한 패키지 · 온보드 메모리 128GB · SSD 512GB · BMC'),
 ]
 
@@ -258,7 +266,7 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 <div class="wrap">
 <p class="back"><a href="../모델링 대시보드.html">← 모델링 대시보드</a></p>
 <h1>베라 루빈 NVL72 — 10MW 홀에서 HBM4 다이까지 분해도</h1>
-<p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 컴퓨트 트레이에서는 BlueField-4 모듈 안으로도 갈라집니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
+<p class="lede">10MW 홀 → 랙 → 컴퓨트 트레이 → Strata → Rubin 패키지 → HBM4 스택 여섯 단을 눌러 들어갑니다. 랙에서는 NVLink 스위치 트레이로, 컴퓨트 트레이에서는 BlueField-4 모듈로도 갈라져 들어갑니다. 슬라이더로 조립과 분해를 오가고, 부품을 누르면 개수·규격·출처가 뜹니다. 개수는 원문에 적힌 수대로 그렸고, 원문에서 셈한 개수와 원문에 없는 배치는 부품마다 따로 표시했습니다. 크기 비율은 실제와 다릅니다.</p>
 <div class="crumb" id="crumb"></div>
 <div class="stage"><canvas id="view"></canvas><div class="tip" id="tip"></div><div class="hint" id="hint">끌어서 돌리기 · 휠로 확대 · 부품 누르기</div>
 <div class="pad" id="pad" hidden><button data-k="f" aria-label="앞으로">▲</button><button data-k="l" aria-label="왼쪽">◀</button><button data-k="b" aria-label="뒤로">▼</button><button data-k="r" aria-label="오른쪽">▶</button></div></div>
@@ -304,7 +312,7 @@ const ground = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.ShadowMat
 ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
 let dirty = true;
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -503,6 +511,15 @@ const BUILD = {
     for (const [w, d, x, z] of [[16, .8, 0, -6.9], [16, .8, 0, 6.9], [.8, 13, -7.6, 0], [.8, 13, 7.6, 0]])
       box('lid', [w, 1.2, d], [x, 1.5, z], [0, 8, 0], 1);
     return {pos:[18, 16, 20], target:[0,0.8,0]};
+  },
+  swtray(){
+    box('swchassis', [60, 0.8, 90], [0, 0, 0], [0, -10, 0], 0);
+    for (let i = 0; i < 4; i++) {
+      const x = -21 + i * 14;
+      box('swasic', [9, 1.2, 9], [x, 1.0, -6], [(i - 1.5) * 5, 10, -4], 3);
+    }
+    for (let i = 0; i < 4; i++) box('swconn', [10, 2.6, 2], [-21 + i * 14, 1.7, -44], [(i - 1.5) * 4, 4, -18], 2);
+    return {pos:[70, 70, 90], target:[0,0,0]};
   },
   bf4(){
     box('bfboard', [30, 0.8, 22], [0, 0, 0], [0, -8, 0], 0);
