@@ -203,7 +203,34 @@ P = {
                 cite='[250812] HBM 로드맵 L702'),
 }
 
-TAGS = {'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
+TAGS = {'kyrack': '90도 돌린 랙', 'kycan': '블레이드 18장', 'kyblade': 'GPU 2 · Vera 2', 'kygpu': 'HBM4E 16스택 1,024GB', 'kyvera': 'LPDDR 1.5TB', 'kybp': '케이블 백플레인 대체', 'kysw': 'NVSwitch 7세대', 'kypwr': '랙 밖으로', 'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
+
+P.update({
+    'kyrack': dict(name='Kyber 랙 프레임', count='1', kind='schema',
+                   spec='컴퓨트 트레이를 90도 돌려 블레이드 꼴로 세운 랙. 바깥 치수는 원문에 없어 도식으로 둔다.',
+                   cite=GTC + ' L125·L133'),
+    'kycan': dict(name='캐니스터', count='랙당 4개', kind='src',
+                  spec='캐니스터 하나에 컴퓨트 블레이드 18장. 캐니스터끼리를 하나의 NVLink 도메인으로 어떻게 잇는지는 원문도 아직 모른다고 적는다(DAC·ACC·AEC 후보).',
+                  cite=GTC + ' L135·L149', child='kyblade'),
+    'kyblade': dict(name='컴퓨트 블레이드', count='캐니스터당 18장 (랙 72장, 셈한 값)', kind='src',
+                    spec='컴퓨트 트레이를 90도 돌린 꼴. 블레이드 한 장에 Rubin Ultra GPU 2개와 Vera CPU 2개.',
+                    cite=GTC + ' L133·L135·L137'),
+    'kygpu': dict(name='Rubin Ultra GPU 패키지', count='블레이드당 2개 (캐니스터 36개·랙 144개, 셈한 값)', kind='src',
+                  spec='레티클 크기 GPU 4개와 I/O 칩렛 2개가 한 패키지. HBM4E 16스택 1,024GB.',
+                  cite=GTC + ' L108·L137·L139'),
+    'kyvera': dict(name='Vera CPU', count='블레이드당 2개 (캐니스터 36개, 셈한 값)', kind='src',
+                   spec='CPU 하나에 LPDDR 1.5TB. 랙 144개를 더해 218TB.',
+                   cite=GTC + ' L117·L137·L139'),
+    'kybp': dict(name='PCB 백플레인', count='캐니스터당 1개', kind='src',
+                 spec='구리 케이블 백플레인을 대신해 GPU 와 NVSwitch 를 잇는다. 좁아진 바닥면에 케이블이 안 들어가서 바뀌었다.',
+                 cite=GTC + ' L143·L145'),
+    'kysw': dict(name='NVSwitch 블레이드', count='랙 뒤쪽', kind='src',
+                 spec='백플레인 뒷면으로 컴퓨트 블레이드와 이어진다. NVSwitch 7세대가 576 다이를 한 도메인으로 묶는다.',
+                 cite=GTC + ' L147·L166'),
+    'kypwr': dict(name='별도 전력·냉각·스위치 랙', count='원문에 없음', kind='schema',
+                  spec='블레이드가 랙을 다 차지해 전원·배터리·스위치가 밖으로 나간다. 옆에 세운 자리와 개수는 도식이다.',
+                  cite=GTC + ' L153·L155'),
+})
 
 LEVELS = [
     ('hall', '10MW 홀', '루빈 랙 42대 — GPU 3,030장 × 3.3kW ≈ 10MW, 한 대를 누르면 랙 안으로 들어간다'),
@@ -214,6 +241,7 @@ LEVELS = [
     ('hbm', 'HBM4 스택', 'DRAM 코어 다이 12단 + 로직 베이스 다이'),
     ('swtray', 'NVLink 스위치 트레이', 'NVLink 6 스위치 ASIC 4개(36 ÷ 9) · 뒤쪽으로 스파인 카트리지에 이어진다'),
     ('compare', 'GB200·GB300 과 비교', '왼쪽 GB200 · 가운데 GB300 · 오른쪽 루빈 컴퓨트 트레이. 두 블랙웰 트레이는 원문이 이름을 댄 부품만 세웠고 배치는 도식이다'),
+    ('kyber', 'Kyber 랙 (루빈 울트라)', '랙을 90도 돌려 블레이드로 세운다 — 캐니스터 4 × 컴퓨트 블레이드 18, GPU 패키지 144개(다이 576개). 2027년 루빈 울트라용'),
     ('bf4', 'BlueField-4', 'Grace CPU 다이 + ConnectX-9 다이 한 패키지 · 온보드 메모리 128GB · SSD 512GB · BMC'),
 ]
 
@@ -261,6 +289,10 @@ TOUR = [
          title='BlueField-4 — KV 캐시 네트워크',
          text='Grace CPU 다이와 ConnectX-9 다이를 한 패키지로 묶은 800G DPU 다. 온보드 메모리 128GB 와 SSD 512GB 를 싣고 NVMe-oF·RDMA 로 KV 캐시를 옮긴다.',
          cite=R + ' L158·L243·L250'),
+    dict(level='kyber', ex=0.5, sel='kyblade', dir=[0.5, 0.7, 1.0],
+         title='다음 랙은 눕지 않고 선다',
+         text='루빈 울트라용 Kyber 랙은 컴퓨트 트레이를 90도 돌려 블레이드로 세운다. 캐니스터 넷에 블레이드 열여덟씩, GPU 패키지 144개로 다이 576개가 한 NVLink 도메인에 든다. 구리 케이블 백플레인은 PCB 백플레인이 대신하고, 전원·배터리·스위치는 랙 밖 별도 랙으로 나간다.',
+         cite=GTC + ' L133·L135·L141·L143·L153'),
     dict(level='compare', ex=0.35, sel=None, dir=[0.15, 1.1, 1.0],
          title='블랙웰 두 세대와 무엇이 바뀌었나',
          text='GB200 은 GPU 가 Grace 를 거쳐 PCIe5 로 NIC 에 붙었고, GB300 은 ConnectX-8 에 직접 붙였다. 둘 다 NIC 와 케이지를 케이블로 이어 조립의 가장 큰 고장 지점이었고 15% 는 공랭이었다. 루빈은 미드플레인으로 케이블을 걷고 100% 액체로 냉각한다.',
@@ -645,7 +677,8 @@ function buildPins(){
   dirty = true;
 }
 const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal', g2bf3:'pcb', g2pdb:'pcb', g2fan:'plastic', g2tray:'metal', gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
+const KINDMAT = {kyrack:'glass', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'metal',
+  g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal', g2bf3:'pcb', g2pdb:'pcb', g2fan:'plastic', g2tray:'metal', gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
   interposer:'silicon', substrate:'pcb', lid:'metal', dram:'silicon', base:'silicon', tsv:'glass',
@@ -792,6 +825,31 @@ const BUILD = {
     box('manifold', [2.2, total, 2.2], [-W/2 + 2, 0, -D/2 + 1], [-22, 0, -20], 2);
     box('manifold', [2.2, total, 2.2], [W/2 - 2, 0, -D/2 + 1], [22, 0, -20], 2);
     return {pos:[170, 60, 190], target:[0,0,0]};
+  },
+  kyber(){
+    // 캐니스터 4개를 세로로 쌓고, 캐니스터마다 블레이드 18장을 세운다(원문 값).
+    // 블레이드 치수와 랙 바깥 치수는 원문에 없어 도식이다
+    const W = 70, D = 110, CH = 48, gap = 4;
+    const bw = 1.9, bh = CH * 0.78, bd = D * 0.62;   // 판 사이가 보이게 얇게
+    for (let c = 0; c < 4; c++) {
+      const cy = (1.5 - c) * (CH + gap);
+      box('kycan', [W - 4, CH, D - 6], [0, cy, 0], [0, (1.5 - c) * 26, 0], 0, {op: .1});
+      for (let i = 0; i < 18; i++) {
+        const x = (i - 8.5) * (W - 12) / 18;
+        const e = [(i - 8.5) * 1.5, (1.5 - c) * 26, 34];
+        box('kyblade', [bw, bh, bd], [x, cy, 8], e, 1);
+        // GPU 와 CPU 는 판 옆면에 얹어 밖에서 보이게 둔다(자리는 도식)
+        for (const k of [0, 1])            // 블레이드 한 장에 GPU 2 · Vera 2
+          box('kygpu', [bw * 1.6, 4.2, 4.2], [x, cy + 7 - k * 15, 8 - bd / 2 + 10], e, 3);
+        for (const k of [0, 1])
+          box('kyvera', [bw * 1.6, 2.6, 2.6], [x, cy + 2 - k * 15, 8 + bd / 2 - 12], e, 2);
+      }
+      box('kybp', [W - 10, CH * 0.8, 1.4], [0, cy, -D / 2 + 16], [0, (1.5 - c) * 26, -26], 2);
+      box('kysw', [W - 16, CH * 0.62, 2.4], [0, cy, -D / 2 + 8], [0, (1.5 - c) * 26, -48], 1);
+    }
+    box('kyrack', [W, 4 * (CH + gap), D], [0, 0, 0], [0, 0, 0], 0, {op: .07});
+    box('kypwr', [26, 4 * (CH + gap), D], [W / 2 + 18, 0, 0], [40, 0, 0], 0, {op: .12});
+    return {pos: [180, 120, 210], target: [0, 0, 0]};
   },
   tray(){
     box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
@@ -1057,7 +1115,7 @@ function jump(){
     el.appendChild(b);
   }
 }
-const PARENT = {compare:'tray', rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
+const PARENT = {kycan:'kyber', compare:'tray', rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
 function crumb(){
   const el = document.getElementById('crumb'); if (!el) return; el.innerHTML = '';
   const path = []; for (let k = level; k; k = PARENT[k]) path.unshift(k);
