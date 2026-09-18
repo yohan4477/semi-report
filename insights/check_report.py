@@ -49,6 +49,11 @@ PAGES = [
     # 알리바이가 된다
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-pkg',
      os.path.join(ROOT, 'content', 'newsletter')),
+    # XPU 층(2026-09-18). 재료가 뉴스레터 일곱 편 + 영문 클리핑 둘 + Semi Doped 세 회차다.
+    # 뉴스레터 밖의 다섯만 파일로 XPU_EXTRA 에 올린다 — 폴더째 넣으면 이 층과 무관한
+    # 회차의 값이 알리바이가 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-xpu',
+     os.path.join(ROOT, 'content', 'newsletter')),
     # 금리·물가 층(2026-09-05). 재료가 회계사·미국주식 사관학교·류상철·김상훈·박소연에
     # 흩어져 있어 공통 폴더가 content/understanding 인데 그것을 통째로 넣으면 540편이
     # 알리바이가 된다. 그래서 폴더 없이 RATE_EXTRA 에 파일을 하나씩 적는다
@@ -310,6 +315,15 @@ MODEL_EXTRA = [
     os.path.join(ROOT, 'scratchpad', 'agentx_spec_facts.md'),
 ]
 
+# XPU 층(2026-09-18)의 뉴스레터 밖 재료 다섯 — 영문 클리핑 둘과 Semi Doped 세 회차
+XPU_EXTRA = [
+    os.path.join(_CLIP, 'Cerebras — Faster Tokens Please.md'),
+    os.path.join(_CLIP, "Cerebras's Next Generation CS-4 Fast Just Got Faster.md"),
+    os.path.join(ROOT, 'insights', 'semidoped', '2026-08-27-openai-jalapeno-strategy.md'),
+    os.path.join(ROOT, 'insights', 'semidoped', '2026-05-15-cerebras-ipo-strategy.md'),
+    os.path.join(ROOT, 'insights', 'semidoped', '2026-06-29-qualcomm-hbc-strategy.md'),
+]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -327,7 +341,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          # 다리 층(2026-09-10)의 재료 — 밖에서 받은 하향 모델과 그 엑셀 전사
          os.path.join(ROOT, 'insights', 'frames', '2026-09-10-dc-capex-topdown.md'),
          os.path.join(ROOT, 'scratchpad', 'capex_frame_xlsx.md'),
-         os.path.join(ROOT, 'scratchpad', 'capex_frame_scn.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'capex_frame_scn.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA + XPU_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',

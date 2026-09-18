@@ -17,6 +17,8 @@ import _cpo_part1  # noqa: E402
 import _cpo_fig  # noqa: E402
 import _pkg_part1  # noqa: E402
 import _pkg_fig  # noqa: E402
+import _xpu_part1  # noqa: E402
+import _xpu_fig  # noqa: E402
 import _rep_toc  # noqa: E402
 import _rate_part1  # noqa: E402
 import _rate_fig  # noqa: E402
@@ -258,6 +260,21 @@ def report_pkg_html(head=True):
     return ''.join(h)
 
 
+def report_xpu_html(head=True):
+    """XPU 총정리 — 한 편. 본문은 insights/reports/xpu-2026-09-18.md 원본에서 읽는다."""
+    h = [_xpu_part1.HEAD_XPU] if head else []
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="xpu-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _xpu_part1.report_xpu(sec, p, fig)
+    return ''.join(h)
+
+
 def report_rate_html(head=True):
     """금리·물가 총정리 — 한 편. 본문은 insights/reports/rate-2026-09-05.md 원본에서 읽는다."""
     h = [_rate_part1.HEAD_RATE] if head else []
@@ -490,7 +507,8 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _trump_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _circ_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _model_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _model_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _xpu_part1.CAPTION.values()])
 
 
 # ── 층 일곱을 카드로 세운다 ─────────────────────────────────────────────
@@ -503,6 +521,11 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
 # 카드 하나에 섹션 하나라 태그 줄과 목록이 1:1 이다. 층이 열을 넘어가면 그때 갈래로
 # 묶는다 — 지금 묶으면 check_report 의 재료 칸이 한 덩어리가 된다.
 LAYERS = [
+    ('sec-xpu', 'XPU', '2026-09-18',
+     'XPU 총정리 — 워크로드가 바뀌면 칩 순위도 바뀌나',
+     'SemiAnalysis 7편 · 영문 클리핑 2편 · Semi Doped 3회차',
+     '같은 두 칩의 앞뒤가 체감 속도·정밀도·묶음 크기·메모리·시점마다 다르게 선다',
+     report_xpu_html),
     # 모델링 층 열하나는 2026-09-10 에 이 장에서 떼어 냈다. 장이 따로 섰고
     # (`scratchpad/gen_model_dashboard.py` → 대시보드/모델링 대시보드.html) 층 HTML 을
     # 내는 함수는 여기 그대로 둔다 — 두 장이 같은 함수를 쓰면 한쪽만 고쳐지지 않는다.
