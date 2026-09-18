@@ -352,14 +352,18 @@ if __name__ == '__main__':
               % (len(used), len(ts), len(posts), len(ts), len(nodes), len(edges)))
 
     fl_html = mfw.body_html() + mfw.TAIL
-    rt_html, n_rt = mrt.body_html()
+    fw_html, n_fw = mrt.flows_html()
+    rt_html, n_rt = mrt.log_html()
     dc.render(cards, '메르 인사이트', HEADER, FOOTER, OUT,
               page_slug='mer',
-              tops=[('sec-flow', '한도가 값을 따라간다',
+              tops=[('sec-rateflow', '금리와 물가 — 메르의 열여덟 달',
+                     '인하를 기다리다 인상을 맞기까지 — 축 여섯이 어디서 어디로 옮겨 갔나',
+                     n_fw, fw_html),
+                    ('sec-flow', '한도가 값을 따라간다',
                      '메르 627편을 줄기 하나로 — 값이 선을 넘으면 선이 옮겨진다. '
                      '국민연금은 상한 19.9%를 넘긴 뒤 상한을 28.8%로 넓혔다', 1, fl_html),
-                    ('sec-rates', '금리와 물가 — 메르의 열여덟 달',
-                     '인하를 기다리다 인상을 맞기까지, 날짜순으로 — 예고가 어디서 맞고 빗나갔나',
+                    ('sec-rates', '금리와 물가 기록',
+                     '날짜마다 무슨 말을 했나 — 예고가 어디서 맞고 빗나갔나',
                      n_rt, rt_html),
                     ('sec-axes', '이 여섯 달의 구조',
                      '사슬 열셋이 실제로는 축 셋이다', n_ax, ax_html),

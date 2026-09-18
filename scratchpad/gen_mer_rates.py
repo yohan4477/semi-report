@@ -7,8 +7,8 @@
 꼴은 이선엽 시황 장의 「시간순 기록」을 따른다(gen_leesunyeop_dashboard.py). 흐름 띠 그림과
 LOG_CSS 를 그쪽에서 받아 쓴다 — 두 장의 흐름 층이 같은 꼴이어야 견줘 읽힌다.
 
-  ① 축마다 흐름 띠 하나(FLOWS) — 그 축에서 그의 판단이 어디서 어디로 옮겨 갔나
-  ② 날짜별 기록(LOG) — 표시는 넷: 예고 · 적중 · 빗나감 · 고침(스스로 선을 옮긴 날)
+  ① 흐름 띠(FLOWS) — 페이지 맨 위 층. 축 여섯이 어디서 어디로 옮겨 갔나
+  ② 날짜별 기록(LOG) — 그 아래 층. 표시는 넷: 예고 · 적중 · 빗나감 · 고침(스스로 선을 옮긴 날)
 
 재료는 scratchpad/merrate_facts_[ABCD].md(글 185편에서 sonnet 이 뽑은 사실표, 원문 구절 대조는
 scratchpad/merrate_verify.py). 줄마다 글번호를 달아 날짜를 원문 글로 건다. 적중·빗나감은
@@ -192,24 +192,36 @@ def counts():
     return len(rows), len({r[2] for r in rows}), tags
 
 
-def body_html():
-    n, posts, tags = counts()
+def flows_html():
+    """흐름 띠만 따로 — 페이지 맨 위에 서는 층이다.
+
+    날짜별 기록과 한 층에 두면 띠가 기록의 머리말처럼 읽힌다. 축 여섯이 어디서 어디로
+    갔는지를 먼저 보이고, 기록은 그 아래 층에서 날짜로 받는다."""
+    n, posts, _tags = counts()
     h = ['<p class="ins-lede">메르가 2025년 3월부터 2026년 9월 17일까지 금리와 물가를 다룬 글 '
-         '<b>%d편</b>을 날짜순으로 꿴 층입니다. 열여덟 달 동안 그의 판단은 인하를 기다리는 쪽에서 '
-         '인상을 맞는 쪽으로 돌았습니다. 2025년에는 연준이 9월부터 내리고 10월에 QT를 멈출 것을 '
-         '맞혔고, 2026년 6월 점도표가 인상 쪽으로 돈 뒤로는 물가와 국채 공급을 봤습니다. '
-         '미국 10년물에 그은 선은 4.6%%에서 4.2%%대로 내렸다가 5%%로 올라갔고, 9월 15일 5.01%%가 '
-         '찍혔습니다.</p>' % posts]
+         '<b>%d편</b>에서 축 여섯을 뽑았습니다. 열여덟 달 동안 그의 판단은 인하를 기다리는 쪽에서 '
+         '인상을 맞는 쪽으로 돌았습니다. 2025년에는 연준이 9월부터 내리고 10월에 QT(연준이 보유 '
+         '국채를 줄여 시중 돈을 거두는 일)를 멈출 것을 맞혔고, 2026년 6월 점도표가 인상 쪽으로 돈 '
+         '뒤로는 물가와 국채 공급을 봤습니다. 미국 10년물에 그은 선은 4.6%%에서 4.2%%대로 내렸다가 '
+         '5%%로 올라갔고, 9월 15일 5.01%%가 찍혔습니다. 날짜마다 무슨 말을 했는지는 아래 '
+         '<b>금리와 물가 기록</b> 층에 있습니다.</p>' % posts]
     h.append('<div class="mr-flows">')
     for title, stops in FLOWS:
         cap = '%s에서 %s까지. 마지막 점이 지금 자리다.' % (stops[0][0], stops[-1][0])
         h.append(fig_html((title, lsy.flow_svg(stops), cap)))
     h.append('</div>')
-    h.append('<p class="ins-lede">아래는 날짜별 기록입니다. <b>위로 갈수록 최신</b>입니다. '
-             '표시는 넷입니다. 예고 %d · 적중 %d · 빗나감 %d · 고침 %d. 적중과 빗나감은 나중 글에 '
-             '결과가 실린 것만 달았고, 결과가 아직 없는 예고는 그대로 두었습니다. 날짜를 누르면 '
-             '그 글이 열립니다.</p>'
-             % (tags.get('예고', 0), tags.get('적중', 0), tags.get('빗나감', 0), tags.get('고침', 0)))
+    return ''.join(h), len(FLOWS)
+
+
+def log_html():
+    """날짜별 기록 — 위로 갈수록 최신이다."""
+    n, posts, tags = counts()
+    h = ['<p class="ins-lede">금리와 물가를 다룬 글 <b>%d편</b>을 날짜순으로 훑는 층입니다. '
+         '<b>위로 갈수록 최신</b>입니다. 표시는 넷입니다. 예고 %d · 적중 %d · 빗나감 %d · 고침 %d. '
+         '적중과 빗나감은 나중 글에 결과가 실린 것만 달았고, 결과가 아직 없는 예고는 그대로 '
+         '두었습니다. 날짜를 누르면 그 글이 열립니다.</p>'
+         % (posts, tags.get('예고', 0), tags.get('적중', 0), tags.get('빗나감', 0),
+            tags.get('고침', 0))]
     h.append('<div class="tlog">')
     for month, rows in reversed(LOG):
         rows = list(reversed(rows))
@@ -227,6 +239,5 @@ def body_html():
 
 
 if __name__ == '__main__':
-    html, n = body_html()
     print(counts())
-    print(len(html))
+    print(len(flows_html()[0]), len(log_html()[0]))
