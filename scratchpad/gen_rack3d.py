@@ -205,7 +205,7 @@ P = {
                 cite='[250812] HBM 로드맵 L702'),
 }
 
-TAGS = {'bdgpu': '금빛 뚜껑 · 냉각판 한 장씩', 'bdvera': 'LPDDR 1.5TB', 'bdcold': '구리 · 100% 액체',
+TAGS = {'bdfins': '트랜시버·SSD 식히기', 'bdtube': '매니폴드에서 냉각판으로', 'bdgpu': '금빛 뚜껑 · 냉각판 한 장씩', 'bdvera': 'LPDDR 1.5TB', 'bdcold': '구리 · 100% 액체',
         'bdcoldc': 'Vera 둘', 'bdmani': '냉각판마다 분배', 'bdsocamm': '보드 면적을 먹는다',
         'bdnic': '작은 포트 4 + 큰 것 1', 'bdosfp': '1.6Tb/s 인피니밴드', 'bdqsfp': '800G 슈퍼NIC',
         'bdssd': 'E3.S', 'bdconn': '핀 152 · 19행 4열', 'bdbezel': '손잡이 구멍 둘', 'kybezel': '섀시 테두리', 'kyface': '양극산화 전면판', 'kyrack': '90도 돌린 랙', 'kycan': '블레이드 18장', 'kyblade': 'GPU 2 · Vera 2', 'kygpu': 'HBM4E 16스택 1,024GB', 'kyvera': 'LPDDR 1.5TB', 'kybp': '케이블 백플레인 대체', 'kysw': 'NVSwitch 7세대', 'kypwr': '랙 밖으로', 'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
@@ -253,6 +253,12 @@ P.update({
     'bdcoldc': dict(name='CPU 냉각판', count='2개', kind='src',
                     spec='Vera 둘에 한 장씩. GPU 냉각판 줄 앞에 놓인다.',
                     cite=KLW),
+    'bdfins': dict(name='히트파이프 핀', count='원문에 없음', kind='schema',
+                   spec='전시 블레이드의 앞쪽 절반은 트랜시버와 SSD 를 식히는 구리 히트파이프와 핀이 빽빽하다. 원문이 장수를 세지 않아 핀 수는 도식이다.',
+                   cite=KLW),
+    'bdtube': dict(name='냉각수 관', count='원문에 없음', kind='schema',
+                   spec='매니폴드에서 냉각판으로 굽어 들어가는 구리관. 굽는 자리와 관 수는 도식이다.',
+                   cite=KLW),
     'bdmani': dict(name='냉각수 매니폴드', count='1개', kind='schema',
                    spec='보드 옆에서 냉각판마다 냉각수를 나눈다. 굽은 구리관 자리는 도식이다.',
                    cite=KLW),
@@ -735,9 +741,9 @@ function buildPins(){
   dirty = true;
 }
 const MAT = {copper:[.9,.3], frame:[.4,.55], gold:[.75,.28], glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {bdboard:'pcb', bdgpu:'gold', bdvera:'die', bdcold:'copper', bdcoldc:'copper', bdmani:'copper',
+const KINDMAT = {bdfins:'copper', bdtube:'copper', bdboard:'pcb', bdgpu:'gold', bdvera:'die', bdcold:'copper', bdcoldc:'copper', bdmani:'copper',
   bdsocamm:'pcb', bdnic:'die', bdosfp:'metal', bdqsfp:'metal', bdssd:'plastic', bdconn:'gold', bdbezel:'gold',
-  kybezel:'frame', kyface:'gold', kyrack:'frame', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'metal',
+  kybezel:'frame', kyface:'gold', kyrack:'frame', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'frame',
   g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal', g2bf3:'pcb', g2pdb:'pcb', g2fan:'plastic', g2tray:'metal', gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
@@ -828,6 +834,28 @@ function kyberMid(){
   }
   kyMidTex = new THREE.CanvasTexture(cv); kyMidTex.colorSpace = THREE.SRGBColorSpace; kyMidTex.anisotropy = 8;
   return kyMidTex;
+}
+let kyFaceTex = null;
+function kyberFace(){
+  // 전시 실물 전면판은 금빛 판에 위·가운데·아래 세 띠(슈퍼NIC·트랜시버·SSD)와 세로 손잡이 홈이 있다
+  if (kyFaceTex) return kyFaceTex;
+  const cv = document.createElement('canvas'); cv.width = 96; cv.height = 512;
+  const g = cv.getContext('2d');
+  const grd = g.createLinearGradient(0, 0, cv.width, 0);
+  grd.addColorStop(0, '#8c7442'); grd.addColorStop(.35, '#d9bc86'); grd.addColorStop(.7, '#b79a63'); grd.addColorStop(1, '#7d673b');
+  g.fillStyle = grd; g.fillRect(0, 0, cv.width, cv.height);
+  const band = (y, h, n) => {
+    g.fillStyle = '#20211f'; g.fillRect(12, y, cv.width - 24, h);
+    g.fillStyle = '#4a4d4a';
+    for (let i = 0; i < n; i++) g.fillRect(18, y + 6 + i * ((h - 12) / n), cv.width - 36, (h - 12) / n - 5);
+  };
+  band(46, 96, 2);        // 위 — 슈퍼NIC
+  band(190, 120, 4);      // 가운데 — 트랜시버 케이지
+  band(346, 110, 4);      // 아래 — NVMe
+  g.strokeStyle = '#6d5a34'; g.lineWidth = 3;
+  g.beginPath(); g.moveTo(cv.width / 2, 18); g.lineTo(cv.width / 2, 34); g.stroke();   // 손잡이 홈
+  kyFaceTex = new THREE.CanvasTexture(cv); kyFaceTex.colorSpace = THREE.SRGBColorSpace; kyFaceTex.anisotropy = 8;
+  return kyFaceTex;
 }
 function rackFront(){
   if (frontTex) return frontTex;
@@ -927,7 +955,10 @@ const BUILD = {
         const e = [(i - 8.5) * 1.6, ey, 40];
         const bz0 = D / 2 - 4 - bd / 2 - 1.6;          // 전면판이 베젤 면에 맞게 뒤로 물린 자리
         box('kyblade', [bw, bh, bd], [x, cy, bz0], e, 1);
-        box('kyface', [pitch * 0.9, bh * 1.04, 1.8], [x, cy, bz0 + bd / 2 + 0.9], e, 3);   // 금빛 전면판
+        const fc = box('kyface', [pitch * 0.9, bh * 1.04, 1.8], [x, cy, bz0 + bd / 2 + 0.9], e, 3);   // 금빛 전면판
+        const fp = new THREE.Mesh(new THREE.PlaneGeometry(pitch * 0.86, bh),
+          new THREE.MeshStandardMaterial({map: kyberFace(), roughness: .38, metalness: .6}));
+        fp.position.z = 0.95; fc.add(fp);
         for (const k of [0, 1])              // 블레이드 한 장에 GPU 2 · Vera 2
           box('kygpu', [bw * 1.5, 4.0, 4.0], [x, cy + 7 - k * 14, bz0 - bd / 2 + 11], e, 3);
         for (const k of [0, 1])
@@ -988,6 +1019,17 @@ const BUILD = {
       box('bdqsfp', [3.6, 2.2, 4.2], [BW / 2 - 5 - i * 5, 1.7, BD / 2 - 5], [8, 0, 12], 2);
     for (let i = 0; i < 4; i++)                          // NVMe 슬롯 넷
       box('bdssd', [4.2, 2.0, 5.6], [-BW / 2 + 4 + i * 5.2, 1.6, BD / 2 - 5], [-8, 0, 12], 0);
+    // 앞쪽 절반을 덮는 히트파이프 핀 다발(핀 수는 도식)
+    for (let b2 = 0; b2 < 2; b2++) {
+      const x0 = b2 ? 6 : -BW / 2 + 5;
+      for (let f = 0; f < 16; f++)
+        box('bdfins', [0.5, 3.0, 10], [x0 + f * 1.05, 2.3, BD / 2 - 14], [b2 ? 9 : -9, 7, 4], 2);
+    }
+    // 매니폴드에서 냉각판으로 굽어 드는 관 — 자리는 도식
+    for (let i = 0; i < 3; i++) {
+      const z = -BD / 2 + 10 + i * 8;
+      pipe('bdtube', BW * 0.55, 0.7, [-6, 2.6, z], [-9, 8, 0], '#8a5a2c', '#d9a05c', 1);
+    }
     box('bdbezel', [BW, 4.6, 2.0], [0, 1.6, BD / 2 + 1], [0, 0, 20], 3);
     for (const sx of [-1, 1])                            // 손잡이 구멍 둘
       box('bdbezel', [9.0, 1.6, 1.0], [sx * 9, 1.6, BD / 2 + 2.2], [0, 0, 22], 0);
