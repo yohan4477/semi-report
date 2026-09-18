@@ -25,6 +25,7 @@ NVB = 'NVIDIA 기술 블로그 — Vera Rubin POD (2026)'
 TSV_ = 'Transurfing Volatility — Vera Rubin Decoded Pt.4'
 SE = 'Schneider Electric NetShelter MGX 랙(NVL72 용) 제품 사양'
 STH = 'ServeTheHome — GTC 2025 전시 Kyber NVL576 실물 사진'
+KLW = 'Glenn K. Lockwood — NVIDIA Kyber 정리(GTC 2025·2026 전시 사진)'
 
 # 부품 사전. kind: src(원문 값) · calc(원문에서 셈한 값) · schema(원문에 없는 배치를 도식으로)
 P = {
@@ -204,7 +205,10 @@ P = {
                 cite='[250812] HBM 로드맵 L702'),
 }
 
-TAGS = {'kybezel': '섀시 테두리', 'kyface': '양극산화 전면판', 'kyrack': '90도 돌린 랙', 'kycan': '블레이드 18장', 'kyblade': 'GPU 2 · Vera 2', 'kygpu': 'HBM4E 16스택 1,024GB', 'kyvera': 'LPDDR 1.5TB', 'kybp': '케이블 백플레인 대체', 'kysw': 'NVSwitch 7세대', 'kypwr': '랙 밖으로', 'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
+TAGS = {'bdgpu': '금빛 뚜껑 · 냉각판 한 장씩', 'bdvera': 'LPDDR 1.5TB', 'bdcold': '구리 · 100% 액체',
+        'bdcoldc': 'Vera 둘', 'bdmani': '냉각판마다 분배', 'bdsocamm': '보드 면적을 먹는다',
+        'bdnic': '작은 포트 4 + 큰 것 1', 'bdosfp': '1.6Tb/s 인피니밴드', 'bdqsfp': '800G 슈퍼NIC',
+        'bdssd': 'E3.S', 'bdconn': '핀 152 · 19행 4열', 'bdbezel': '손잡이 구멍 둘', 'kybezel': '섀시 테두리', 'kyface': '양극산화 전면판', 'kyrack': '90도 돌린 랙', 'kycan': '블레이드 18장', 'kyblade': 'GPU 2 · Vera 2', 'kygpu': 'HBM4E 16스택 1,024GB', 'kyvera': 'LPDDR 1.5TB', 'kybp': '케이블 백플레인 대체', 'kysw': 'NVSwitch 7세대', 'kypwr': '랙 밖으로', 'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
 
 P.update({
     'kyrack': dict(name='Kyber 랙 프레임', count='1', kind='schema',
@@ -214,8 +218,8 @@ P.update({
                   spec='캐니스터 하나에 컴퓨트 블레이드 18장. 캐니스터끼리를 하나의 NVLink 도메인으로 어떻게 잇는지는 원문도 아직 모른다고 적는다(DAC·ACC·AEC 후보).',
                   cite=GTC + ' L135·L149', child='kyblade'),
     'kyblade': dict(name='컴퓨트 블레이드', count='캐니스터당 18장 (랙 72장, 셈한 값)', kind='src',
-                    spec='컴퓨트 트레이를 90도 돌린 꼴. 블레이드 한 장에 Rubin Ultra GPU 2개와 Vera CPU 2개.',
-                    cite=GTC + ' L133·L135·L137'),
+                    spec='컴퓨트 트레이를 90도 돌린 꼴. 블레이드 한 장에 Rubin Ultra GPU 2개와 Vera CPU 2개(원문). 2026 전시 실물은 금빛 패키지 넷이 보인다 — 누르면 안쪽으로 들어간다.',
+                    cite=GTC + ' L133·L135·L137', child='blade'),
     'kygpu': dict(name='Rubin Ultra GPU 패키지', count='블레이드당 2개 (캐니스터 36개·랙 144개, 셈한 값)', kind='src',
                   spec='레티클 크기 GPU 4개와 I/O 칩렛 2개가 한 패키지. HBM4E 16스택 1,024GB.',
                   cite=GTC + ' L108·L137·L139'),
@@ -234,6 +238,45 @@ P.update({
     'kyface': dict(name='블레이드 전면판', count='블레이드당 1장', kind='schema',
                    spec='양극산화 알루미늄 전면판. 전시 실물의 금빛 마감과 세로 손잡이 홈을 따랐고, 판 두께와 무늬는 도식이다.',
                    cite=STH),
+    'bdboard': dict(name='블레이드 보드', count='1장', kind='schema',
+                    spec='한 장에 GPU·CPU·메모리·NIC·SSD 가 다 올라간다. 보드 치수는 원문에 없어 도식이다.',
+                    cite=KLW),
+    'bdgpu': dict(name='Rubin Ultra GPU 패키지', count='4개 (2026 전시 실물)', kind='src',
+                  spec='금빛 뚜껑 넷이 보드 한쪽 끝에 한 줄로 선다. 2025년 시제 블레이드는 패키지 2개(GPU 다이 8개)였고, SemiAnalysis 원문도 블레이드당 2개로 적는다 — 전시 실물이 나중 것이라 넷으로 세우고 앞 것을 함께 적는다.',
+                  cite=KLW + ' · ' + GTC + ' L137'),
+    'bdvera': dict(name='Vera CPU', count='2개', kind='src',
+                   spec='GPU 줄 앞에 은빛 뚜껑 둘. CPU 하나에 LPDDR 1.5TB.',
+                   cite=KLW + ' · ' + GTC + ' L117'),
+    'bdcold': dict(name='GPU 냉각판', count='4개', kind='src',
+                   spec='구리 냉각판이 GPU 패키지마다 한 장. 블레이드는 100% 액체 냉각이라 팬이 없다.',
+                   cite=KLW),
+    'bdcoldc': dict(name='CPU 냉각판', count='2개', kind='src',
+                    spec='Vera 둘에 한 장씩. GPU 냉각판 줄 앞에 놓인다.',
+                    cite=KLW),
+    'bdmani': dict(name='냉각수 매니폴드', count='1개', kind='schema',
+                   spec='보드 옆에서 냉각판마다 냉각수를 나눈다. 굽은 구리관 자리는 도식이다.',
+                   cite=KLW),
+    'bdsocamm': dict(name='SOCAMM 메모리·전원 모듈', count='원문에 없음', kind='schema',
+                     spec='Vera 의 SOCAMM 메모리와 전압 조절 모듈(VRM)이 보드 면적을 크게 먹는다. 원문이 개수를 세지 않아 줄 수와 칸 수는 도식이다.',
+                     cite=KLW),
+    'bdnic': dict(name='NIC ASIC', count='4개 + 큰 것 1개', kind='src',
+                  spec='작은 전면 포트에 붙는 NIC ASIC 넷과, 큰 OSFP 포트 둘을 맡는 큰 ASIC 하나.',
+                  cite=KLW),
+    'bdosfp': dict(name='OSFP 케이지', count='4개', kind='src',
+                   spec='1.6Tb/s 인피니밴드 링크용으로 보이는 OSFP-XD. 전면판 가운데 줄.',
+                   cite=KLW),
+    'bdqsfp': dict(name='QSFP-DD 포트', count='2개', kind='src',
+                   spec='800G BlueField-4 슈퍼NIC 쪽으로 보이는 포트 둘.',
+                   cite=KLW),
+    'bdssd': dict(name='NVMe 슬롯', count='4개', kind='src',
+                  spec='E3.S 로 보이는 슬롯 넷. 전면판 아래 줄.',
+                  cite=KLW),
+    'bdconn': dict(name='미드플레인 커넥터 하우징', count='핀 152개 (19행 × 4열 × 자리마다 2핀)', kind='src',
+                   spec='블레이드 뒤쪽에서 미드플레인에 꽂힌다. NVLink 와 냉각수 분배가 이 뒷면에서 만난다.',
+                   cite=KLW),
+    'bdbezel': dict(name='전면판·손잡이', count='손잡이 2개', kind='src',
+                    spec='금빛 전면판에 길쭉한 손잡이 구멍 둘. 전면판 위에 슈퍼NIC, 가운데에 트랜시버, 아래에 SSD 가 선다.',
+                    cite=KLW),
     'kypwr': dict(name='별도 전력·냉각·스위치 랙', count='원문에 없음', kind='schema',
                   spec='블레이드가 랙을 다 차지해 전원·배터리·스위치가 밖으로 나간다. 옆에 세운 자리와 개수는 도식이다.',
                   cite=GTC + ' L153·L155'),
@@ -249,6 +292,7 @@ LEVELS = [
     ('swtray', 'NVLink 스위치 트레이', 'NVLink 6 스위치 ASIC 4개(36 ÷ 9) · 뒤쪽으로 스파인 카트리지에 이어진다'),
     ('compare', 'GB200·GB300 과 비교', '왼쪽 GB200 · 가운데 GB300 · 오른쪽 루빈 컴퓨트 트레이. 두 블랙웰 트레이는 원문이 이름을 댄 부품만 세웠고 배치는 도식이다'),
     ('kyber', 'Kyber 랙 (루빈 울트라)', '랙을 90도 돌려 블레이드로 세운다 — 캐니스터 4 × 컴퓨트 블레이드 18, GPU 패키지 144개(다이 576개). 2027년 루빈 울트라용'),
+    ('blade', '컴퓨트 블레이드 안', '보드 한 장 — GPU 냉각판 4 · CPU 냉각판 2 · SOCAMM·VRM · NIC ASIC 5 · OSFP 4 · QSFP-DD 2 · NVMe 4, 뒤쪽은 핀 152개 미드플레인 커넥터'),
     ('bf4', 'BlueField-4', 'Grace CPU 다이 + ConnectX-9 다이 한 패키지 · 온보드 메모리 128GB · SSD 512GB · BMC'),
 ]
 
@@ -300,6 +344,10 @@ TOUR = [
          title='다음 랙은 눕지 않고 선다',
          text='루빈 울트라용 Kyber 랙은 컴퓨트 트레이를 90도 돌려 블레이드로 세운다. 캐니스터 넷에 블레이드 열여덟씩, GPU 패키지 144개로 다이 576개가 한 NVLink 도메인에 든다. 구리 케이블 백플레인은 PCB 백플레인이 대신하고, 전원·배터리·스위치는 랙 밖 별도 랙으로 나간다.',
          cite=GTC + ' L133·L135·L141·L143·L153'),
+    dict(level='blade', ex=0.5, sel='bdcold', dir=[0.3, 1.0, 0.8],
+         title='블레이드 안은 구리로 덮인다',
+         text='전시 블레이드는 팬이 없다. 금빛 GPU 패키지마다 구리 냉각판이 한 장씩 얹히고 Vera 둘에 두 장이 더 붙어, 냉각수는 보드 옆 매니폴드가 나눈다. 앞쪽 전면판에는 OSFP 넷과 QSFP-DD 둘, NVMe 넷이 서고, 뒤쪽 커넥터 하우징의 핀 152개가 미드플레인에 꽂힌다.',
+         cite=KLW),
     dict(level='compare', ex=0.35, sel=None, dir=[0.15, 1.1, 1.0],
          title='블랙웰 두 세대와 무엇이 바뀌었나',
          text='GB200 은 GPU 가 Grace 를 거쳐 PCIe5 로 NIC 에 붙었고, GB300 은 ConnectX-8 에 직접 붙였다. 둘 다 NIC 와 케이지를 케이블로 이어 조립의 가장 큰 고장 지점이었고 15% 는 공랭이었다. 루빈은 미드플레인으로 케이블을 걷고 100% 액체로 냉각한다.',
@@ -335,6 +383,7 @@ SOURCES = [
     (TSV_, 'https://transurfing-volatility.com/vera-rubin-decoded-pt4/'),
     (SE, 'https://www.se.com/us/en/product/SEORNVL72X3000/'),
     (STH, 'https://www.servethehome.com/the-nvidia-rubin-nvl576-kyber-midplane-is-huge/'),
+    (KLW, 'https://www.glennklockwood.com/garden/kyber'),
 ]
 
 PAGE = r'''<!doctype html>
@@ -397,7 +446,8 @@ h1{font-size:22px;line-height:1.4;margin:6px 0 4px}
 .parts li{border-bottom:1px solid var(--line)}
 .parts li button{width:100%;text-align:left;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;padding:7px 2px;cursor:pointer;display:flex;gap:8px;align-items:baseline}
 .parts .no{flex:0 0 22px;height:22px;border-radius:50%;border:1px solid var(--ink3);text-align:center;font-size:12px;line-height:20px}
-.parts .nm{flex:1}
+.parts .nm{flex:1 1 auto;min-width:0;word-break:keep-all}
+.parts small{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .parts small{color:var(--ink3);white-space:nowrap;font-size:12px}
 .parts li button[aria-pressed="true"]{font-weight:700}
 .parts li button[aria-pressed="true"] .no{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -684,8 +734,10 @@ function buildPins(){
   });
   dirty = true;
 }
-const MAT = {frame:[.4,.55], gold:[.75,.28], glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {kybezel:'frame', kyface:'gold', kyrack:'frame', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'metal',
+const MAT = {copper:[.9,.3], frame:[.4,.55], gold:[.75,.28], glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
+const KINDMAT = {bdboard:'pcb', bdgpu:'gold', bdvera:'die', bdcold:'copper', bdcoldc:'copper', bdmani:'copper',
+  bdsocamm:'pcb', bdnic:'die', bdosfp:'metal', bdqsfp:'metal', bdssd:'plastic', bdconn:'gold', bdbezel:'gold',
+  kybezel:'frame', kyface:'gold', kyrack:'frame', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'metal',
   g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal', g2bf3:'pcb', g2pdb:'pcb', g2fan:'plastic', g2tray:'metal', gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
@@ -695,8 +747,8 @@ const KINDMAT = {kybezel:'frame', kyface:'gold', kyrack:'frame', kycan:'metal', 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 // 재질마다 색 — 무엇으로 만든 부품인지가 눈에 들어오게. 밝기는 tone 이, 색만 여기서 섞는다
 const MATCOL = {frame: '#2b2f33', gold: '#c8a561', pcb: '#2a7a4f', die: '#3b6bb5', silicon: '#7d7fb8', metal: '#9aa3ad',
-                glass: '#4f97a8', plastic: '#b5a189', copper: '#c07440'};
-const MATNAME = {frame: '도장 강판', gold: '양극산화 알루미늄', pcb: '기판', die: '다이·패키지', silicon: '실리콘', metal: '금속',
+                glass: '#4f97a8', plastic: '#b5a189', copper: '#d28b4e'};
+const MATNAME = {copper: '구리', frame: '도장 강판', gold: '양극산화 알루미늄', pcb: '기판', die: '다이·패키지', silicon: '실리콘', metal: '금속',
                  glass: '프레임·유전체', plastic: '수지·케이블', copper: '구리'};
 function tone(i, id){
   const c = new THREE.Color(css(['--mesh0','--mesh1','--mesh2','--mesh3'][i]));
@@ -902,6 +954,44 @@ const BUILD = {
     }
     box('kypwr', [24, 4 * (CH + gap), D], [W / 2 + 20, 0, 0], [42, 0, 0], 0, {op: .12});
     return {pos: [150, 90, 235], target: [0, 0, 0]};
+  },
+  blade(){
+    // GTC 2025·2026 전시 블레이드 사진을 따른다. 보드를 눕혀 놓고 본다 —
+    // 뒤쪽(-z) 끝에 미드플레인 커넥터, 그 앞에 GPU 패키지 넷과 냉각판, 가운데 Vera 둘,
+    // 왼쪽에 냉각수 매니폴드, 앞쪽(+z) 전면판에 OSFP·QSFP-DD·NVMe.
+    // 개수는 원문 값(GPU 4 · CPU 2 · 냉각판 4+2 · NIC 4+1 · OSFP 4 · QSFP-DD 2 · NVMe 4)만 그 수대로 둔다
+    const BW = 48, BD = 44;
+    box('bdboard', [BW, 1.2, BD], [0, 0, 0], [0, 0, 0], 1);
+    box('bdconn', [BW * 0.82, 3.2, 2.2], [0, 1.6, -BD / 2 + 1.4], [0, 0, -16], 3);
+    for (let i = 0; i < 4; i++) {                       // GPU 패키지 넷과 그 위 냉각판
+      const x = (i - 1.5) * 10.4;
+      box('bdgpu', [8.6, 1.8, 8.6], [x, 1.5, -BD / 2 + 8], [0, 0, 0], 3);
+      box('bdcold', [9.0, 2.4, 9.0], [x, 3.6, -BD / 2 + 8], [0, 11, -2], 2);
+    }
+    for (let i = 0; i < 2; i++) {                       // Vera 둘과 그 냉각판
+      const x = (i - 0.5) * 20;
+      box('bdvera', [6.4, 1.6, 6.4], [x, 1.4, -BD / 2 + 19], [0, 0, 0], 2);
+      box('bdcoldc', [6.8, 2.2, 6.8], [x, 3.3, -BD / 2 + 19], [0, 9, 0], 2);
+    }
+    // 매니폴드 — 굽은 관 자리는 도식
+    box('bdmani', [3.4, 2.6, BD * 0.62], [-BW / 2 + 3, 2.0, -3], [-13, 4, 0], 3);
+    box('bdmani', [BW * 0.5, 2.0, 3.0], [-4, 2.0, -BD / 2 + 26], [-13, 4, 0], 3);
+    // SOCAMM·VRM — 줄 수와 칸 수는 도식
+    for (let r = 0; r < 2; r++) for (let c = 0; c < 9; c++)
+      box('bdsocamm', [3.0, 1.6, 1.4], [(c - 4) * 3.6, 1.3, -1 + r * 3.4], [0, 5, 3], 2);
+    for (let i = 0; i < 4; i++)                          // 작은 NIC ASIC 넷
+      box('bdnic', [3.4, 1.2, 3.4], [(i - 1.5) * 7.2, 1.2, BD / 2 - 12], [0, 6, 6], 3);
+    box('bdnic', [5.4, 1.4, 5.4], [BW / 2 - 7, 1.3, BD / 2 - 12], [8, 6, 6], 3);   // 큰 것 하나
+    for (let i = 0; i < 4; i++)                          // OSFP 케이지 넷
+      box('bdosfp', [4.6, 2.6, 5.0], [(i - 1.5) * 6.0, 1.9, BD / 2 - 5], [0, 0, 12], 2);
+    for (let i = 0; i < 2; i++)                          // QSFP-DD 둘
+      box('bdqsfp', [3.6, 2.2, 4.2], [BW / 2 - 5 - i * 5, 1.7, BD / 2 - 5], [8, 0, 12], 2);
+    for (let i = 0; i < 4; i++)                          // NVMe 슬롯 넷
+      box('bdssd', [4.2, 2.0, 5.6], [-BW / 2 + 4 + i * 5.2, 1.6, BD / 2 - 5], [-8, 0, 12], 0);
+    box('bdbezel', [BW, 4.6, 2.0], [0, 1.6, BD / 2 + 1], [0, 0, 20], 3);
+    for (const sx of [-1, 1])                            // 손잡이 구멍 둘
+      box('bdbezel', [9.0, 1.6, 1.0], [sx * 9, 1.6, BD / 2 + 2.2], [0, 0, 22], 0);
+    return {pos: [46, 52, 70], target: [0, 0, 0]};
   },
   tray(){
     box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
@@ -1153,7 +1243,7 @@ function load(lv, keepCam){
   location.hash = lv;
 }
 
-const JUMP = [['hall', 1], ['rack', 2], ['tray', 3], ['strata', 4], ['rubin', 5], ['hbm', 6], ['bf4', 4], ['swtray', 3], ['compare', 4]];
+const JUMP = [['hall', 1], ['rack', 2], ['tray', 3], ['strata', 4], ['rubin', 5], ['hbm', 6], ['bf4', 4], ['swtray', 3], ['compare', 4], ['kyber', 2], ['blade', 3]];
 function jump(){
   const el = document.getElementById('jump'); el.innerHTML = '';
   for (const [k, depth] of JUMP) {
@@ -1167,7 +1257,7 @@ function jump(){
     el.appendChild(b);
   }
 }
-const PARENT = {kycan:'kyber', compare:'tray', rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
+const PARENT = {blade:'kyber', kycan:'kyber', compare:'tray', rack:'hall', tray:'rack', strata:'tray', rubin:'strata', hbm:'rubin', bf4:'tray', swtray:'rack'};
 function crumb(){
   const el = document.getElementById('crumb'); if (!el) return; el.innerHTML = '';
   const path = []; for (let k = level; k; k = PARENT[k]) path.unshift(k);
