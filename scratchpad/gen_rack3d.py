@@ -835,6 +835,90 @@ function kyberMid(){
   kyMidTex = new THREE.CanvasTexture(cv); kyMidTex.colorSpace = THREE.SRGBColorSpace; kyMidTex.anisotropy = 8;
   return kyMidTex;
 }
+// ── 잔 형상 무늬. 상자 윗면에 얇은 판을 얹어 쓴다. 무늬는 실물 사진의 생김새를 옮긴 것이고
+// 나사·배선·이빨의 개수는 값이 아니라 표면 무늬라 도식으로 둔다
+const texCache = {};
+function mkTex(key, w, h, draw){
+  if (texCache[key]) return texCache[key];
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+  draw(cv.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  texCache[key] = t; return t;
+}
+function pcbTex(){
+  return mkTex('pcb', 512, 512, (g, w, h) => {
+    g.fillStyle = '#163a26'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = '#1d5236'; g.lineWidth = 2;                 // 배선
+    for (let i = 0; i < 90; i++) {
+      const x = Math.random() * w, y = Math.random() * h, len = 30 + Math.random() * 120;
+      g.beginPath(); g.moveTo(x, y);
+      if (Math.random() < .5) { g.lineTo(x + len, y); g.lineTo(x + len + 18, y + 18); }
+      else { g.lineTo(x, y + len); g.lineTo(x + 18, y + len + 18); }
+      g.stroke();
+    }
+    g.fillStyle = '#c9b071';                                    // 패드
+    for (let i = 0; i < 260; i++) g.fillRect(Math.random() * w, Math.random() * h, 3, 6);
+    g.fillStyle = 'rgba(226,226,220,.55)';                      // 실크스크린
+    for (let i = 0; i < 40; i++) { const x = Math.random() * w, y = Math.random() * h; g.fillRect(x, y, 16, 2); g.fillRect(x, y, 2, 10); }
+  });
+}
+function lidTex(gold){
+  return mkTex('lid' + (gold ? 'g' : 's'), 256, 256, (g, w, h) => {
+    g.fillStyle = gold ? '#c6a463' : '#b9bcc0'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = gold ? '#8a7038' : '#7e8288'; g.lineWidth = 6;
+    g.strokeRect(12, 12, w - 24, h - 24);                       // 뚜껑 턱
+    g.fillStyle = gold ? '#a98c4d' : '#9ea1a6';
+    g.fillRect(24, 24, w - 48, 26);                             // 각인 띠
+    g.fillStyle = gold ? '#7c6431' : '#6f7378';
+    for (let i = 0; i < 7; i++) g.fillRect(34 + i * 22, 32, 14, 10);
+    for (const [x, y] of [[18, 18], [w - 26, 18], [18, h - 26], [w - 26, h - 26]]) {
+      g.fillStyle = '#5c5c58'; g.beginPath(); g.arc(x + 4, y + 4, 5, 0, 7); g.fill();   // 모서리 나사
+    }
+  });
+}
+function coldTex(){
+  return mkTex('cold', 256, 256, (g, w, h) => {
+    g.fillStyle = '#b5713a'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = '#8e5527'; g.lineWidth = 3;                 // 냉각수 채널
+    for (let i = 0; i < 9; i++) { g.beginPath(); g.moveTo(22, 26 + i * 25); g.lineTo(w - 22, 26 + i * 25); g.stroke(); }
+    g.fillStyle = '#d7a26a';
+    for (let i = 0; i < 9; i++) g.fillRect(22, 20 + i * 25, w - 44, 4);
+    g.fillStyle = '#4f4f4c';                                    // 조임 나사
+    for (const [x, y] of [[14, 14], [w - 22, 14], [14, h - 22], [w - 22, h - 22], [w / 2 - 4, 10], [w / 2 - 4, h - 18]])
+      { g.beginPath(); g.arc(x + 4, y + 4, 6, 0, 7); g.fill(); }
+  });
+}
+function connTex(rows, cols){
+  return mkTex('conn' + rows + 'x' + cols, 512, 128, (g, w, h) => {
+    g.fillStyle = '#1b1c1a'; g.fillRect(0, 0, w, h);
+    const cw = w / rows, ch = h / cols;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      g.fillStyle = '#2c2e2b'; g.fillRect(r * cw + 1, c * ch + 2, cw - 2, ch - 4);
+      g.fillStyle = '#d8b871';                                   // 이빨 두 개씩
+      g.fillRect(r * cw + cw * 0.22, c * ch + ch * 0.22, cw * 0.18, ch * 0.56);
+      g.fillRect(r * cw + cw * 0.58, c * ch + ch * 0.22, cw * 0.18, ch * 0.56);
+    }
+  });
+}
+function cageTex(n){
+  return mkTex('cage' + n, 256, 128, (g, w, h) => {
+    g.fillStyle = '#3c3f3e'; g.fillRect(0, 0, w, h);
+    g.fillStyle = '#131413';
+    for (let i = 0; i < n; i++) g.fillRect(14, 12 + i * (h - 24) / n, w - 28, (h - 24) / n - 6);
+    g.fillStyle = '#7f8280';
+    for (let i = 0; i < n; i++) g.fillRect(14, 12 + i * (h - 24) / n, w - 28, 2);
+  });
+}
+// 상자 윗면에 무늬 판을 얹는다
+function topFace(mesh, sx, sz, tex, rough, metal, y){
+  const g = new THREE.PlaneGeometry(sx, sz);
+  g.rotateX(-Math.PI / 2);
+  const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({map: tex, roughness: rough === undefined ? .45 : rough,
+    metalness: metal === undefined ? .45 : metal}));
+  m.position.y = y;
+  mesh.add(m);
+  return m;
+}
 let kyFaceTex = null;
 function kyberFace(){
   // 전시 실물 전면판은 금빛 판에 위·가운데·아래 세 띠(슈퍼NIC·트랜시버·SSD)와 세로 손잡이 홈이 있다
@@ -992,17 +1076,23 @@ const BUILD = {
     // 왼쪽에 냉각수 매니폴드, 앞쪽(+z) 전면판에 OSFP·QSFP-DD·NVMe.
     // 개수는 원문 값(GPU 4 · CPU 2 · 냉각판 4+2 · NIC 4+1 · OSFP 4 · QSFP-DD 2 · NVMe 4)만 그 수대로 둔다
     const BW = 48, BD = 44;
-    box('bdboard', [BW, 1.2, BD], [0, 0, 0], [0, 0, 0], 1);
-    box('bdconn', [BW * 0.82, 3.2, 2.2], [0, 1.6, -BD / 2 + 1.4], [0, 0, -16], 3);
+    const bdb = box('bdboard', [BW, 1.2, BD], [0, 0, 0], [0, 0, 0], 1);
+    topFace(bdb, BW, BD, pcbTex(), .8, .05, 0.65);
+    const bdc = box('bdconn', [BW * 0.82, 3.2, 2.2], [0, 1.6, -BD / 2 + 1.4], [0, 0, -16], 3);
+    {  // 커넥터 이빨 — 19행 4열, 자리마다 2핀(원문 값)
+      const g = new THREE.PlaneGeometry(BW * 0.78, 2.9);
+      const m = new THREE.Mesh(g, new THREE.MeshStandardMaterial({map: connTex(19, 4), roughness: .4, metalness: .6}));
+      m.position.z = -1.2; m.rotation.y = Math.PI; bdc.add(m);
+    }
     for (let i = 0; i < 4; i++) {                       // GPU 패키지 넷과 그 위 냉각판
       const x = (i - 1.5) * 10.4;
-      box('bdgpu', [8.6, 1.8, 8.6], [x, 1.5, -BD / 2 + 8], [0, 0, 0], 3);
-      box('bdcold', [9.0, 2.4, 9.0], [x, 3.6, -BD / 2 + 8], [0, 11, -2], 2);
+      topFace(box('bdgpu', [8.6, 1.8, 8.6], [x, 1.5, -BD / 2 + 8], [0, 0, 0], 3), 8.2, 8.2, lidTex(true), .35, .7, 0.93);
+      topFace(box('bdcold', [9.0, 2.4, 9.0], [x, 3.6, -BD / 2 + 8], [0, 11, -2], 2), 8.6, 8.6, coldTex(), .4, .8, 1.23);
     }
     for (let i = 0; i < 2; i++) {                       // Vera 둘과 그 냉각판
       const x = (i - 0.5) * 20;
-      box('bdvera', [6.4, 1.6, 6.4], [x, 1.4, -BD / 2 + 19], [0, 0, 0], 2);
-      box('bdcoldc', [6.8, 2.2, 6.8], [x, 3.3, -BD / 2 + 19], [0, 9, 0], 2);
+      topFace(box('bdvera', [6.4, 1.6, 6.4], [x, 1.4, -BD / 2 + 19], [0, 0, 0], 2), 6.1, 6.1, lidTex(false), .35, .7, 0.83);
+      topFace(box('bdcoldc', [6.8, 2.2, 6.8], [x, 3.3, -BD / 2 + 19], [0, 9, 0], 2), 6.5, 6.5, coldTex(), .4, .8, 1.13);
     }
     // 매니폴드 — 굽은 관 자리는 도식
     box('bdmani', [3.4, 2.6, BD * 0.62], [-BW / 2 + 3, 2.0, -3], [-13, 4, 0], 3);
@@ -1014,11 +1104,11 @@ const BUILD = {
       box('bdnic', [3.4, 1.2, 3.4], [(i - 1.5) * 7.2, 1.2, BD / 2 - 12], [0, 6, 6], 3);
     box('bdnic', [5.4, 1.4, 5.4], [BW / 2 - 7, 1.3, BD / 2 - 12], [8, 6, 6], 3);   // 큰 것 하나
     for (let i = 0; i < 4; i++)                          // OSFP 케이지 넷
-      box('bdosfp', [4.6, 2.6, 5.0], [(i - 1.5) * 6.0, 1.9, BD / 2 - 5], [0, 0, 12], 2);
+      topFace(box('bdosfp', [4.6, 2.6, 5.0], [(i - 1.5) * 6.0, 1.9, BD / 2 - 5], [0, 0, 12], 2), 4.3, 4.7, cageTex(2), .5, .5, 1.33);
     for (let i = 0; i < 2; i++)                          // QSFP-DD 둘
       box('bdqsfp', [3.6, 2.2, 4.2], [BW / 2 - 5 - i * 5, 1.7, BD / 2 - 5], [8, 0, 12], 2);
     for (let i = 0; i < 4; i++)                          // NVMe 슬롯 넷
-      box('bdssd', [4.2, 2.0, 5.6], [-BW / 2 + 4 + i * 5.2, 1.6, BD / 2 - 5], [-8, 0, 12], 0);
+      topFace(box('bdssd', [4.2, 2.0, 5.6], [-BW / 2 + 4 + i * 5.2, 1.6, BD / 2 - 5], [-8, 0, 12], 0), 3.9, 5.2, cageTex(1), .6, .2, 1.03);
     // 앞쪽 절반을 덮는 히트파이프 핀 다발(핀 수는 도식)
     for (let b2 = 0; b2 < 2; b2++) {
       const x0 = b2 ? 6 : -BW / 2 + 5;
@@ -1036,23 +1126,30 @@ const BUILD = {
     return {pos: [46, 52, 70], target: [0, 0, 0]};
   },
   tray(){
-    box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
-    box('strata', [27, 1.2, 38], [14.5, 0, -24], [10, 0, -40], 1);
+    for (const sx of [-1, 1])
+      topFace(box('strata', [27, 1.2, 38], [sx * 14.5, 0, -24], [sx * 10, 0, -40], 1), 26, 37, pcbTex(), .8, .05, 0.64);
     box('midplane', [58, 4, 1.2], [0, 1.4, 0], [0, 12, 0], 2);
     for (const sx of [-1, 1]) for (const k of [0, 1]) {
       const ay = -0.4 + k*2.2, ex = [sx*12, k*8, 36];
-      box('orchid', [16, 1.0, 30], [sx*20, ay, 19], ex, 1);
-      for (const q of [-1, 1]) box('cx9', [4, 0.6, 4], [sx*20 + q*3.8, ay + 0.8, 12], ex, 3);
-      for (const q of [-1, 1]) box('cage', [5.6, 1.4, 5], [sx*20 + q*3.8, ay + 1.1, 31], ex, 2);
-      box('e1s', [3.2, 0.5, 11], [sx*20, ay + 0.75, 22], ex, 0);
+      topFace(box('orchid', [16, 1.0, 30], [sx*20, ay, 19], ex, 1), 15.2, 29, pcbTex(), .8, .05, 0.54);
+      for (const q of [-1, 1])
+        topFace(box('cx9', [4, 0.6, 4], [sx*20 + q*3.8, ay + 0.8, 12], ex, 3), 3.7, 3.7, lidTex(false), .35, .7, 0.34);
+      for (const q of [-1, 1])
+        topFace(box('cage', [5.6, 1.4, 5], [sx*20 + q*3.8, ay + 1.1, 31], ex, 2), 5.2, 4.6, cageTex(2), .5, .5, 0.74);
+      topFace(box('e1s', [3.2, 0.5, 11], [sx*20, ay + 0.75, 22], ex, 0), 3.0, 10.4, cageTex(1), .6, .2, 0.29);
     }
-    box('pwr', [18, 1.2, 8], [0, 1.6, 7], [0, 6, 18], 0);
-    box('bf4', [18, 1.2, 12], [0, 1.6, 19], [0, 12, 36], 2);
+    topFace(box('pwr', [18, 1.2, 8], [0, 1.6, 7], [0, 6, 18], 0), 17.2, 7.6, pcbTex(), .8, .05, 0.64);
+    topFace(box('bf4', [18, 1.2, 12], [0, 1.6, 19], [0, 12, 36], 2), 17.2, 11.4, pcbTex(), .8, .05, 0.64);
     box('mgmt', [18, 1.2, 6], [0, 1.6, 30], [0, 6, 54], 0);
     // 섀시 판(도식) — 모듈 아래로 내려간다
     box('chassis', [62, 0.6, 90], [0, -1.6, 0], [0, -14, 0], 0);
     // 미드플레인 앞뒤 커넥터 띠(도식) — 미드플레인과 같이 움직인다
-    for (const z of [-1.4, 1.4]) box('paladin', [52, 1.4, 1.0], [0, 0.4, z], [0, 12, z * 3], 3);
+    for (const z of [-1.4, 1.4]) {
+      const pd = box('paladin', [52, 1.4, 1.0], [0, 0.4, z], [0, 12, z * 3], 3);
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(50, 1.2),
+        new THREE.MeshStandardMaterial({map: connTex(26, 2), roughness: .4, metalness: .6}));
+      m.position.z = z > 0 ? 0.56 : -0.56; if (z < 0) m.rotation.y = Math.PI; pd.add(m);
+    }
     // 후면 UQD 2 · 버스바 클립 · 내부 매니폴드
     for (const sx of [-1, 1]) box('uqd', [3.2, 3.2, 4], [sx * 27, 0.6, -45], [sx * 6, 0, -22], 2);
     box('clip', [8, 3.4, 3], [0, 0.6, -45.5], [0, 0, -26], 3);
@@ -1060,6 +1157,7 @@ const BUILD = {
     return {pos:[70, 70, 90], target:[0,0,0]};
   },
   strata(){
+    /* 보드·뚜껑 무늬는 블레이드 단과 같은 것을 쓴다 */
     box('coldplate', [26, 1.2, 36], [0, 3.2, 0], [0, 26, 0], 0, {op:.3});
     // 콜드플레이트 밑면의 채널 무늬(도식) — GPU 두 자리 위에만, 판과 같이 움직인다
     for (const x of [-6.5, 6.5]) {
@@ -1072,18 +1170,18 @@ const BUILD = {
     }
     // MQD 입출구 둘(도식)
     for (const x of [-10, 10]) box('mqd', [2.2, 2.2, 2.2], [x, 4.6, 17], [0, 28, 3], 3);
-    box('rubin', [9, 1.6, 9], [-6.5, 1.2, -10], [-6, 12, -8], 3);
-    box('rubin', [9, 1.6, 9], [6.5, 1.2, -10], [6, 12, -8], 3);
-    box('vera', [7, 1.4, 7], [0, 1.1, 4], [0, 10, 2], 2);
+    for (const sx of [-1, 1])
+      topFace(box('rubin', [9, 1.6, 9], [sx * 6.5, 1.2, -10], [sx * 6, 12, -8], 3), 8.6, 8.6, lidTex(true), .35, .7, 0.83);
+    topFace(box('vera', [7, 1.4, 7], [0, 1.1, 4], [0, 10, 2], 2), 6.6, 6.6, lidTex(false), .35, .7, 0.73);
     for (let i=0;i<8;i++){
       const row = i < 4 ? 0 : 1, c = i % 4;
       box('socamm', [1.6, 0.8, 10], [-7.5 + c*5 , 0.8, 12 + row*5], [(c-1.5)*3, 6 + row*2, 8 + row*4], 1);
     }
-    box('strataboard', [26, 0.6, 36], [0, 0, 0], [0, -6, 0], 0);
+    topFace(box('strataboard', [26, 0.6, 36], [0, 0, 0], [0, -6, 0], 0), 25.2, 35, pcbTex(), .8, .05, 0.34);
     return {pos:[40, 38, 44], target:[0,0,0]};
   },
   rubin(){
-    box('substrate', [16, 0.8, 14], [0, 0, 0], [0, -6, 0], 0);
+    topFace(box('substrate', [16, 0.8, 14], [0, 0, 0], [0, -6, 0], 0), 15.4, 13.4, pcbTex(), .8, .05, 0.44);
     box('interposer', [12, 0.4, 10], [0, 0.6, 0], [0, -2, 0], 1);
     box('die', [3.2, 0.5, 4.6], [-1.9, 1.05, 0], [-2, 2, 0], 3);
     box('die', [3.2, 0.5, 4.6], [1.9, 1.05, 0], [2, 2, 0], 3);
@@ -1104,9 +1202,14 @@ const BUILD = {
     box('swchassis', [60, 0.8, 90], [0, 0, 0], [0, -10, 0], 0);
     for (let i = 0; i < 4; i++) {
       const x = -21 + i * 14;
-      box('swasic', [9, 1.2, 9], [x, 1.0, -6], [(i - 1.5) * 5, 10, -4], 3);
+      topFace(box('swasic', [9, 1.2, 9], [x, 1.0, -6], [(i - 1.5) * 5, 10, -4], 3), 8.6, 8.6, lidTex(false), .35, .7, 0.64);
     }
-    for (let i = 0; i < 4; i++) box('swconn', [10, 2.6, 2], [-21 + i * 14, 1.7, -44], [(i - 1.5) * 4, 4, -18], 2);
+    for (let i = 0; i < 4; i++) {
+      const sc = box('swconn', [10, 2.6, 2], [-21 + i * 14, 1.7, -44], [(i - 1.5) * 4, 4, -18], 2);
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(9.4, 2.3),
+        new THREE.MeshStandardMaterial({map: connTex(12, 2), roughness: .4, metalness: .6}));
+      m.position.z = -1.06; m.rotation.y = Math.PI; sc.add(m);
+    }
     return {pos:[70, 70, 90], target:[0,0,0]};
   },
   compare(){
