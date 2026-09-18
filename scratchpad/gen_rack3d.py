@@ -24,6 +24,7 @@ KOR = '[260901] 한국의 조 단위 주권 AI 투자'
 NVB = 'NVIDIA 기술 블로그 — Vera Rubin POD (2026)'
 TSV_ = 'Transurfing Volatility — Vera Rubin Decoded Pt.4'
 SE = 'Schneider Electric NetShelter MGX 랙(NVL72 용) 제품 사양'
+STH = 'ServeTheHome — GTC 2025 전시 Kyber NVL576 실물 사진'
 
 # 부품 사전. kind: src(원문 값) · calc(원문에서 셈한 값) · schema(원문에 없는 배치를 도식으로)
 P = {
@@ -203,7 +204,7 @@ P = {
                 cite='[250812] HBM 로드맵 L702'),
 }
 
-TAGS = {'kyrack': '90도 돌린 랙', 'kycan': '블레이드 18장', 'kyblade': 'GPU 2 · Vera 2', 'kygpu': 'HBM4E 16스택 1,024GB', 'kyvera': 'LPDDR 1.5TB', 'kybp': '케이블 백플레인 대체', 'kysw': 'NVSwitch 7세대', 'kypwr': '랙 밖으로', 'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
+TAGS = {'kybezel': '섀시 테두리', 'kyface': '양극산화 전면판', 'kyrack': '90도 돌린 랙', 'kycan': '블레이드 18장', 'kyblade': 'GPU 2 · Vera 2', 'kygpu': 'HBM4E 16스택 1,024GB', 'kyvera': 'LPDDR 1.5TB', 'kybp': '케이블 백플레인 대체', 'kysw': 'NVSwitch 7세대', 'kypwr': '랙 밖으로', 'tray': 'GPU 4 · Vera 2', 'switchtray': 'ASIC 4', 'shelf': '110kW', 'busbar': '50VDC', 'spine': '케이블 5,000', 'strata': 'Rubin 2 + Vera 1', 'midplane': 'PCIe 신호 다리', 'orchid': 'CX-9 2 · 케이지 2 · E1.S 1', 'bf4': 'KV 캐시 네트워크', 'pwr': '50V→12V', 'mgmt': 'SMM·TPM', 'cx9': '800G · PCIe6', 'cage': '800G', 'e1s': 'NVMe', 'uqd': '냉각수 입출구', 'clip': '50VDC', 'paladin': '보드-투-보드', 'manifoldi': '모듈마다 분배', 'chassis': '블라인드 메이트', 'rubin': 'FP4 35 PFLOPS · 2,300W', 'vera': '88코어 · C2C 1.8TB/s', 'socamm': 'LPDDR5X 최대 1.5TB', 'coldplate': 'MCCP 100㎛', 'mqd': '매니폴드 연결', 'channels': '채널 100㎛', 'strataboard': '케이블 없음', 'die': '3nm 레티클 크기', 'hbm': 'HBM4 288GB · 22TB/s', 'iochip': 'I/O 분리', 'interposer': '2.5D', 'substrate': '기판', 'lid': '금도금 TIM2', 'dram': '12단 · 층당 24Gb', 'base': '로직 공정 N12·SF4', 'tsv': '수직 전극', 'bfpkg': 'Grace + CX-9 다이', 'gracedie': '재사용', 'cx9die': '800G', 'bfmem': '128GB', 'bfssd': '512GB', 'bmc': 'AST2600', 'swasic': '28.8T · 400G SerDes', 'swconn': '스파인으로', 'rackunit': 'GPU 72 · 3.3kW/장'}
 
 P.update({
     'kyrack': dict(name='Kyber 랙 프레임', count='1', kind='schema',
@@ -227,6 +228,12 @@ P.update({
     'kysw': dict(name='NVSwitch 블레이드', count='랙 뒤쪽', kind='src',
                  spec='백플레인 뒷면으로 컴퓨트 블레이드와 이어진다. NVSwitch 7세대가 576 다이를 한 도메인으로 묶는다.',
                  cite=GTC + ' L147·L166'),
+    'kybezel': dict(name='컴퓨트 섀시 베젤', count='캐니스터당 1개', kind='schema',
+                    spec='블레이드 열여덟 장을 감싸는 검은 섀시 테두리. 모서리를 둥글린 꼴은 전시 실물을 따랐고 치수는 도식이다.',
+                    cite=STH),
+    'kyface': dict(name='블레이드 전면판', count='블레이드당 1장', kind='schema',
+                   spec='양극산화 알루미늄 전면판. 전시 실물의 금빛 마감과 세로 손잡이 홈을 따랐고, 판 두께와 무늬는 도식이다.',
+                   cite=STH),
     'kypwr': dict(name='별도 전력·냉각·스위치 랙', count='원문에 없음', kind='schema',
                   spec='블레이드가 랙을 다 차지해 전원·배터리·스위치가 밖으로 나간다. 옆에 세운 자리와 개수는 도식이다.',
                   cite=GTC + ' L153·L155'),
@@ -327,6 +334,7 @@ SOURCES = [
     (NVB, 'https://developer.nvidia.com/blog/nvidia-vera-rubin-pod-seven-chips-five-rack-scale-systems-one-ai-supercomputer/'),
     (TSV_, 'https://transurfing-volatility.com/vera-rubin-decoded-pt4/'),
     (SE, 'https://www.se.com/us/en/product/SEORNVL72X3000/'),
+    (STH, 'https://www.servethehome.com/the-nvidia-rubin-nvl576-kyber-midplane-is-huge/'),
 ]
 
 PAGE = r'''<!doctype html>
@@ -676,8 +684,8 @@ function buildPins(){
   });
   dirty = true;
 }
-const MAT = {glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
-const KINDMAT = {kyrack:'glass', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'metal',
+const MAT = {frame:[.4,.55], gold:[.75,.28], glass:[.05,.1], metal:[.85,.32], pcb:[.05,.72], die:[.35,.22], silicon:[.55,.28], plastic:[0,.6]};
+const KINDMAT = {kybezel:'frame', kyface:'gold', kyrack:'frame', kycan:'metal', kyblade:'pcb', kygpu:'die', kyvera:'die', kybp:'pcb', kysw:'pcb', kypwr:'metal',
   g2bianca:'pcb', g2nic:'die', g2cable:'plastic', g2cage:'metal', g2bf3:'pcb', g2pdb:'pcb', g2fan:'plastic', g2tray:'metal', gbbianca:'pcb', gbnic:'die', gbcable:'plastic', gbcage:'metal', gbbf3:'pcb', gbpdb:'pcb', gbfan:'plastic', gbtray:'metal', swchassis:'metal', swasic:'die', swconn:'plastic', bfboard:'pcb', bfpkg:'pcb', gracedie:'die', cx9die:'die', bfmem:'die', bfssd:'plastic', bmc:'die', mqd:'metal', channels:'metal', iochip:'die', coolant:'metal', busway:'metal', uqd:'metal', clip:'metal', paladin:'plastic', chassis:'metal', manifoldi:'metal', rackunit:'metal', aisle:'plastic', rackframe:'glass', busbar:'metal', manifold:'metal', spine:'metal', shelf:'metal', tray:'metal',
   switchtray:'metal', switch:'die', strata:'pcb', strataboard:'pcb', midplane:'pcb', orchid:'pcb', bf4:'pcb',
   pwr:'metal', mgmt:'pcb', coldplate:'metal', rubin:'die', vera:'die', socamm:'pcb', die:'die', hbm:'die',
@@ -686,9 +694,9 @@ const KINDMAT = {kyrack:'glass', kycan:'metal', kyblade:'pcb', kygpu:'die', kyve
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 // 재질마다 색 — 무엇으로 만든 부품인지가 눈에 들어오게. 밝기는 tone 이, 색만 여기서 섞는다
-const MATCOL = {pcb: '#2a7a4f', die: '#3b6bb5', silicon: '#7d7fb8', metal: '#9aa3ad',
+const MATCOL = {frame: '#2b2f33', gold: '#c8a561', pcb: '#2a7a4f', die: '#3b6bb5', silicon: '#7d7fb8', metal: '#9aa3ad',
                 glass: '#4f97a8', plastic: '#b5a189', copper: '#c07440'};
-const MATNAME = {pcb: '기판', die: '다이·패키지', silicon: '실리콘', metal: '금속',
+const MATNAME = {frame: '도장 강판', gold: '양극산화 알루미늄', pcb: '기판', die: '다이·패키지', silicon: '실리콘', metal: '금속',
                  glass: '프레임·유전체', plastic: '수지·케이블', copper: '구리'};
 function tone(i, id){
   const c = new THREE.Color(css(['--mesh0','--mesh1','--mesh2','--mesh3'][i]));
@@ -750,6 +758,25 @@ function pipe(id, len, radius, pos, e, dark, light, dir){
 
 const RACK_SLOTS = ['shelf','shelf'].concat(Array(9).fill('tray'), Array(9).fill('switchtray'), Array(9).fill('tray'), ['shelf','shelf']);
 let frontTex = null;
+let kyMidTex = null;
+function kyberMid(){
+  // 전시 실물의 미드플레인은 커넥터가 18열 4행으로 박혀 있다. 열·행 수는 그 사진에서 센 값이다
+  if (kyMidTex) return kyMidTex;
+  const cv = document.createElement('canvas'); cv.width = 720; cv.height = 560;
+  const g = cv.getContext('2d');
+  g.fillStyle = '#121a14'; g.fillRect(0, 0, cv.width, cv.height);
+  const cols = 18, rows = 4, mx = 26, my = 22;
+  const cw = (cv.width - mx * 2) / cols, ch = (cv.height - my * 2) / rows;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const x = mx + c * cw, y = my + r * ch;
+    g.fillStyle = '#2b3630'; g.fillRect(x + 2, y + 3, cw - 6, ch - 8);
+    g.fillStyle = '#d8b871'; g.fillRect(x + cw * 0.28, y + ch * 0.12, cw * 0.36, ch * 0.7);
+    g.fillStyle = '#8f7a45';
+    for (let k = 0; k < 9; k++) g.fillRect(x + cw * 0.3, y + ch * 0.14 + k * ch * 0.075, cw * 0.32, 1.6);
+  }
+  kyMidTex = new THREE.CanvasTexture(cv); kyMidTex.colorSpace = THREE.SRGBColorSpace; kyMidTex.anisotropy = 8;
+  return kyMidTex;
+}
 function rackFront(){
   if (frontTex) return frontTex;
   const cv = document.createElement('canvas'); cv.width = 256; cv.height = 954;   // 600 × 2,236 비율
@@ -827,29 +854,54 @@ const BUILD = {
     return {pos:[170, 60, 190], target:[0,0,0]};
   },
   kyber(){
-    // 캐니스터 4개를 세로로 쌓고, 캐니스터마다 블레이드 18장을 세운다(원문 값).
-    // 블레이드 치수와 랙 바깥 치수는 원문에 없어 도식이다
-    const W = 70, D = 110, CH = 48, gap = 4;
-    const bw = 1.9, bh = CH * 0.78, bd = D * 0.62;   // 판 사이가 보이게 얇게
+    // 전시 실물(ServeTheHome 사진)의 꼴을 따른다 — 검은 섀시 안에 금빛 전면판 블레이드 열여덟 장이
+    // 세로로 서고, 뒤에 커넥터 18열 4행 미드플레인, 그 뒤에 NVLink 스위치 블레이드가 붙는다.
+    // 블레이드 열여덟·캐니스터 넷·블레이드당 GPU 2·Vera 2 만 원문 값이고 치수는 도식이다
+    const W = 78, D = 108, CH = 46, gap = 5;
+    const pitch = (W - 10) / 18, bw = pitch * 0.72;
+    const bh = CH * 0.74, bd = D * 0.52;
     for (let c = 0; c < 4; c++) {
       const cy = (1.5 - c) * (CH + gap);
-      box('kycan', [W - 4, CH, D - 6], [0, cy, 0], [0, (1.5 - c) * 26, 0], 0, {op: .1});
+      const ey = (1.5 - c) * 24;
+      box('kycan', [W - 2, CH, D - 4], [0, cy, 0], [0, ey, 0], 0, {op: .08});
+      // 베젤은 판이 아니라 테두리 — 위·아래·좌·우 네 대만 두고 가운데는 비운다
+      const bz = 2.6, fz = D / 2 - 3;
+      box('kybezel', [W - 4, bz, 3.2], [0, cy + CH * 0.47 - bz / 2, fz], [0, ey, 26], 3);
+      box('kybezel', [W - 4, bz, 3.2], [0, cy - CH * 0.47 + bz / 2, fz], [0, ey, 26], 3);
+      box('kybezel', [bz, CH * 0.94, 3.2], [-(W - 4) / 2 + bz / 2, cy, fz], [0, ey, 26], 3);
+      box('kybezel', [bz, CH * 0.94, 3.2], [(W - 4) / 2 - bz / 2, cy, fz], [0, ey, 26], 3);
       for (let i = 0; i < 18; i++) {
-        const x = (i - 8.5) * (W - 12) / 18;
-        const e = [(i - 8.5) * 1.5, (1.5 - c) * 26, 34];
-        box('kyblade', [bw, bh, bd], [x, cy, 8], e, 1);
-        // GPU 와 CPU 는 판 옆면에 얹어 밖에서 보이게 둔다(자리는 도식)
-        for (const k of [0, 1])            // 블레이드 한 장에 GPU 2 · Vera 2
-          box('kygpu', [bw * 1.6, 4.2, 4.2], [x, cy + 7 - k * 15, 8 - bd / 2 + 10], e, 3);
+        const x = (i - 8.5) * pitch;
+        const e = [(i - 8.5) * 1.6, ey, 40];
+        const bz0 = D / 2 - 4 - bd / 2 - 1.6;          // 전면판이 베젤 면에 맞게 뒤로 물린 자리
+        box('kyblade', [bw, bh, bd], [x, cy, bz0], e, 1);
+        box('kyface', [pitch * 0.9, bh * 1.04, 1.8], [x, cy, bz0 + bd / 2 + 0.9], e, 3);   // 금빛 전면판
+        for (const k of [0, 1])              // 블레이드 한 장에 GPU 2 · Vera 2
+          box('kygpu', [bw * 1.5, 4.0, 4.0], [x, cy + 7 - k * 14, bz0 - bd / 2 + 11], e, 3);
         for (const k of [0, 1])
-          box('kyvera', [bw * 1.6, 2.6, 2.6], [x, cy + 2 - k * 15, 8 + bd / 2 - 12], e, 2);
+          box('kyvera', [bw * 1.5, 2.4, 2.4], [x, cy + 2 - k * 14, bz0 + bd / 2 - 13], e, 2);
       }
-      box('kybp', [W - 10, CH * 0.8, 1.4], [0, cy, -D / 2 + 16], [0, (1.5 - c) * 26, -26], 2);
-      box('kysw', [W - 16, CH * 0.62, 2.4], [0, cy, -D / 2 + 8], [0, (1.5 - c) * 26, -48], 1);
+      // 미드플레인 — 커넥터 18열 4행을 무늬로 얹는다
+      const mp = box('kybp', [W - 8, CH * 0.82, 1.6], [0, cy, -D / 2 + 20], [0, ey, -30], 2);
+      const face = new THREE.Mesh(new THREE.PlaneGeometry((W - 8) * 0.96, CH * 0.78),
+        new THREE.MeshStandardMaterial({map: kyberMid(), roughness: .5, metalness: .35}));
+      face.position.z = 0.9; mp.add(face);
+      // 스위치 블레이드 — 실물은 폭이 다른 판이 여럿 붙어 있다. 개수와 폭은 도식
+      for (let j = 0; j < 8; j++) {
+        const sw = (W - 20) / 8;
+        box('kysw', [sw * 0.78, CH * 0.6, 2.6], [(j - 3.5) * sw, cy, -D / 2 + 10], [(j - 3.5) * 3, ey, -52], 1);
+      }
     }
-    box('kyrack', [W, 4 * (CH + gap), D], [0, 0, 0], [0, 0, 0], 0, {op: .07});
-    box('kypwr', [26, 4 * (CH + gap), D], [W / 2 + 18, 0, 0], [40, 0, 0], 0, {op: .12});
-    return {pos: [180, 120, 210], target: [0, 0, 0]};
+    // 랙 프레임 — 실물은 검은 기둥이 앞뒤로 서고 그 안에 섀시가 든다
+    const RH = 4 * (CH + gap) + 8, RW = W + 8, RD = D + 6;
+    for (const sx of [-1, 1]) for (const sz of [-1, 1])
+      box('kyrack', [4, RH, 4], [sx * (RW / 2 - 2), 0, sz * (RD / 2 - 2)], [0, 0, 0], 3);
+    for (const sy of [-1, 1]) {
+      box('kyrack', [RW, 4, 4], [0, sy * (RH / 2 - 2), RD / 2 - 2], [0, sy * 6, 0], 3);
+      box('kyrack', [RW, 4, 4], [0, sy * (RH / 2 - 2), -RD / 2 + 2], [0, sy * 6, 0], 3);
+    }
+    box('kypwr', [24, 4 * (CH + gap), D], [W / 2 + 20, 0, 0], [42, 0, 0], 0, {op: .12});
+    return {pos: [150, 90, 235], target: [0, 0, 0]};
   },
   tray(){
     box('strata', [27, 1.2, 38], [-14.5, 0, -24], [-10, 0, -40], 1);
