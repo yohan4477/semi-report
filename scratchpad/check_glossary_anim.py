@@ -12,7 +12,7 @@ from playwright.sync_api import sync_playwright
 PAGE = os.path.abspath(os.path.join('대시보드', '용어사전.html'))
 CARD = os.path.abspath(os.path.join('대시보드', 'glossary'))
 OUT = os.path.join('scratchpad', 'anim_shots')
-MARKS = [1.5, 5.5, 9.5, 14.5, 19.5]
+MARKS = [2.0, 8.0, 15.0, 22.0, 29.0, 34.0]
 
 
 def run(pg, url, tag, fails, sid='attn-scene'):
@@ -66,7 +66,7 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     fails = []
     names = os.listdir(CARD) if os.path.isdir(CARD) else []
-    cards = [(f, 'attn-scene') for f in names if '어텐션' in f]         + [(f, 'ffn-scene') for f in names if 'FFN' in f]
+    cards = [(f, 'layer-scene') for f in names if '어텐션과-FFN' in f or '한-층' in f]
     with sync_playwright() as pw:
         b = pw.chromium.launch()
         pg = b.new_page(viewport={'width': 1280, 'height': 900})

@@ -1,0 +1,329 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>애니메이션 — 트랜스포머 한 층</title><style>
+:root{--ink-1:#1c1c1c;--ink-3:#8d8d8d;--bg-1:#fbfbfa;--bg-2:#efefee;--bg-3:#e0e0de;
+  --hot:#1f7a5c;--hot-soft:#d9ede5}
+@media (prefers-color-scheme:dark){:root{--ink-1:#ededec;--ink-3:#8f8f8f;
+  --bg-1:#121212;--bg-2:#1e1e1e;--bg-3:#2c2c2c;--hot:#4fc39b;--hot-soft:#1b3a31}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg-1);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:14px}
+svg{width:100%;height:100%}
+text{fill:var(--ink-1);font-size:15px}
+.tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+.kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.kc .kk{font-size:13px}
+.kc .kv{font-size:11px;fill:var(--ink-3)}
+.bar{fill:var(--bg-3)}
+.bar.hot{fill:var(--hot)}
+.bv{font-size:12px;fill:var(--ink-3)}
+.vc rect{fill:var(--hot)}
+.vc text{font-size:13px}
+.hand rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+.hand text{font-size:13px}
+.flow{fill:var(--hot)}
+.inc,.outc{fill:var(--hot);stroke:none}
+.wc{fill:var(--hot)}
+.funnel{fill:var(--hot);fill-opacity:.07;stroke:var(--bg-3)}
+.lbl,.val{font-size:12px;fill:var(--ink-3)}
+.cap{font-size:17px;letter-spacing:-.01em}
+#src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3)}
+</style></head><body>
+<div id="wrap"><svg id="layer" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet" role="img" aria-label="트랜스포머 한 층이 어텐션에서 FFN 으로 이어지는 장면">
+<defs><linearGradient id="beam-layer" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
+<g class="tok" opacity="0"><rect x="6.5" y="52" width="74" height="36" rx="7"/><text x="43.5" y="76" text-anchor="middle">회사</text></g>
+<g class="tok" opacity="0"><rect x="89.5" y="52" width="74" height="36" rx="7"/><text x="126.5" y="76" text-anchor="middle">가</text></g>
+<g class="tok" opacity="0"><rect x="172.5" y="52" width="74" height="36" rx="7"/><text x="209.5" y="76" text-anchor="middle">공</text></g>
+<g class="tok" opacity="0"><rect x="255.5" y="52" width="74" height="36" rx="7"/><text x="292.5" y="76" text-anchor="middle">장을</text></g>
+<g class="tok" opacity="0"><rect x="338.5" y="52" width="74" height="36" rx="7"/><text x="375.5" y="76" text-anchor="middle">지</text></g>
+<g class="tok" opacity="0"><rect x="421.5" y="52" width="74" height="36" rx="7"/><text x="458.5" y="76" text-anchor="middle">었다</text></g>
+<g class="tok" opacity="0"><rect x="504.5" y="52" width="74" height="36" rx="7"/><text x="541.5" y="76" text-anchor="middle">.</text></g>
+<g class="tok tokq" opacity="0"><rect x="587.5" y="52" width="74" height="36" rx="7"/><text x="624.5" y="76" text-anchor="middle">그것은</text></g>
+<g class="tok" opacity="0"><rect x="670.5" y="52" width="74" height="36" rx="7"/><text x="707.5" y="76" text-anchor="middle">부</text></g>
+<g class="tok" opacity="0"><rect x="753.5" y="52" width="74" height="36" rx="7"/><text x="790.5" y="76" text-anchor="middle">산</text></g>
+<g class="tok" opacity="0"><rect x="836.5" y="52" width="74" height="36" rx="7"/><text x="873.5" y="76" text-anchor="middle">에</text></g>
+<g class="tok" opacity="0"><rect x="919.5" y="52" width="74" height="36" rx="7"/><text x="956.5" y="76" text-anchor="middle">있다</text></g>
+<g class="act1">
+<line class="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam-layer)" stroke-width="3" stroke-linecap="round" opacity="0"/>
+<g class="kc" opacity="0"><rect x="172.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="209.5" y="269" text-anchor="middle">K</text><text class="kv" x="209.5" y="284" text-anchor="middle">-0.01</text></g>
+<g class="kc" opacity="0"><rect x="255.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="292.5" y="269" text-anchor="middle">K</text><text class="kv" x="292.5" y="284" text-anchor="middle">0.27</text></g>
+<g class="kc" opacity="0"><rect x="338.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="375.5" y="269" text-anchor="middle">K</text><text class="kv" x="375.5" y="284" text-anchor="middle">-0.41</text></g>
+<g class="kc" opacity="0"><rect x="421.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="458.5" y="269" text-anchor="middle">K</text><text class="kv" x="458.5" y="284" text-anchor="middle">-0.58</text></g>
+<g class="kc" opacity="0"><rect x="504.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="541.5" y="269" text-anchor="middle">K</text><text class="kv" x="541.5" y="284" text-anchor="middle">-0.66</text></g>
+<g class="kc" opacity="0"><rect x="587.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="624.5" y="269" text-anchor="middle">K</text><text class="kv" x="624.5" y="284" text-anchor="middle">0.46</text></g>
+<g class="kc" opacity="0"><rect x="670.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="707.5" y="269" text-anchor="middle">K</text><text class="kv" x="707.5" y="284" text-anchor="middle">-0.10</text></g>
+<g class="kc" opacity="0"><rect x="753.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="790.5" y="269" text-anchor="middle">K</text><text class="kv" x="790.5" y="284" text-anchor="middle">0.23</text></g>
+<rect class="bar" data-show="3" x="183.5" y="430" width="52" height="0" rx="4" data-raw="100" data-soft="77"/>
+<text class="bv" x="209.5" y="451" text-anchor="middle" opacity="0">0.22</text>
+<rect class="bar" data-show="3" x="266.5" y="430" width="52" height="0" rx="4" data-raw="58" data-soft="30"/>
+<text class="bv" x="292.5" y="451" text-anchor="middle" opacity="0">0.07</text>
+<rect class="bar" data-show="3" x="349.5" y="430" width="52" height="0" rx="4" data-raw="8" data-soft="13"/>
+<text class="bv" x="375.5" y="451" text-anchor="middle" opacity="0">0.02</text>
+<rect class="bar" data-show="3" data-top="1" x="432.5" y="430" width="52" height="0" rx="4" data-raw="116" data-soft="116"/>
+<text class="bv" x="458.5" y="451" text-anchor="middle" opacity="0">0.33</text>
+<rect class="bar" data-show="3" x="515.5" y="430" width="52" height="0" rx="4" data-raw="33" data-soft="19"/>
+<text class="bv" x="541.5" y="451" text-anchor="middle" opacity="0">0.03</text>
+<rect class="bar" data-show="3" x="598.5" y="430" width="52" height="0" rx="4" data-raw="82" data-soft="50"/>
+<text class="bv" x="624.5" y="451" text-anchor="middle" opacity="0">0.13</text>
+<rect class="bar" data-show="3" x="681.5" y="430" width="52" height="0" rx="4" data-raw="70" data-soft="39"/>
+<text class="bv" x="707.5" y="451" text-anchor="middle" opacity="0">0.10</text>
+<rect class="bar" data-show="3" x="764.5" y="430" width="52" height="0" rx="4" data-raw="71" data-soft="39"/>
+<text class="bv" x="790.5" y="451" text-anchor="middle" opacity="0">0.10</text>
+<g class="vc" opacity="0"><rect x="172.5" y="462" width="74" height="34" rx="7"/><text x="209.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="255.5" y="462" width="74" height="34" rx="7"/><text x="292.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="338.5" y="462" width="74" height="34" rx="7"/><text x="375.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="421.5" y="462" width="74" height="34" rx="7"/><text x="458.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="504.5" y="462" width="74" height="34" rx="7"/><text x="541.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="587.5" y="462" width="74" height="34" rx="7"/><text x="624.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="670.5" y="462" width="74" height="34" rx="7"/><text x="707.5" y="485" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="753.5" y="462" width="74" height="34" rx="7"/><text x="790.5" y="485" text-anchor="middle">V</text></g>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+</g>
+<g class="hand" opacity="0" transform="translate(0,0)"><rect x="857.5" y="462" width="150" height="34" rx="8"/><text x="932.5" y="485" text-anchor="middle">어텐션 출력 0.53</text></g>
+<g class="act2">
+<path class="funnel fan-in" opacity="0" d="M262.0 198 L738.0 198 L947.0 300 L53.0 300 Z"/>
+<path class="funnel fan-out" opacity="0" d="M53.0 346 L947.0 346 L738.0 438 L262.0 438 Z"/>
+<rect class="inc" x="262.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="292.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="322.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="352.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="382.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="412.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="442.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="472.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="502.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="532.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="562.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="592.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="622.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="652.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="682.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="712.0" y="168" width="26" height="30" rx="4" opacity="0"/>
+<text class="lbl lbl-in" x="262.0" y="216" opacity="0">입력 896칸 중 16칸</text>
+<rect class="wc" data-a="0.0068" x="53.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0218" x="67.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0160" x="81.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0818" x="95.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0018" x="109.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0511" x="123.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0249" x="137.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0304" x="151.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0613" x="165.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0101" x="179.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0005" x="193.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0405" x="207.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0004" x="221.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1932" x="235.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0034" x="249.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0057" x="263.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0261" x="277.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0037" x="291.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1996" x="305.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0489" x="319.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0020" x="333.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0481" x="347.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0136" x="361.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0360" x="375.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0116" x="389.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0123" x="403.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0050" x="417.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0100" x="431.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0093" x="445.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0117" x="459.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0254" x="473.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0226" x="487.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0119" x="501.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0601" x="515.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0164" x="529.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0263" x="543.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0082" x="557.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1449" x="571.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0171" x="585.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0006" x="599.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0196" x="613.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0189" x="627.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0063" x="641.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0048" x="655.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0308" x="669.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0352" x="683.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0137" x="697.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0611" x="711.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0324" x="725.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0069" x="739.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0038" x="753.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0072" x="767.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0270" x="781.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0299" x="795.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0003" x="809.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0188" x="823.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0016" x="837.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0540" x="851.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0452" x="865.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0308" x="879.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0244" x="893.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0122" x="907.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0361" x="921.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0160" x="935.0" y="300" width="12" height="46" rx="3" opacity="0"/>
+<text class="lbl lbl-wide" x="53.0" y="288" opacity="0">넓힌 4864칸 중 64칸</text>
+<rect class="outc" x="262.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="292.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="322.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="352.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="382.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="412.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="442.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="472.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="502.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="532.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="562.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="592.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="622.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="652.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="682.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="712.0" y="438" width="26" height="30" rx="4" opacity="0"/>
+<text class="lbl lbl-out" x="262.0" y="488" opacity="0">다시 896칸</text>
+<text class="val val-out" x="738.0" y="488" text-anchor="end" opacity="0">-0.09</text>
+</g>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">「그것은」이 무엇을 가리키는지 찾는 중이다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">앞선 토큰마다 K 가 이미 남아 있다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">Q 를 K 하나하나에 대 본다 — 닮은 만큼 점수가 선다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">점수를 합이 1 인 비율로 바꾼다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">그 비율을 가중치로 V 를 가중평균한다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">여기까지가 어텐션이다 — 앞선 토큰들을 섞어 하나로 모았다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">그 결과가 그대로 FFN 의 입력이 된다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">먼저 넓힌다 — 896 칸이 4,864 칸으로</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">게이트가 대부분을 눌러 4,864 칸 중 97.7% 가 잠잠해진다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">살아남은 자리만 모아 다시 896 칸으로 접는다</text>
+<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">섞고 다듬었다 — 여기까지가 한 층이고, 이것이 층마다 되풀이된다</text>
+</svg></div>
+<p id="src">Qwen/Qwen2.5-0.5B-Instruct · 15층 9번 헤드 — 「그것은」 자리에서 잰 실제 값이다</p>
+<script>
+(function(){
+var D={"uid": "layer", "m": 8, "xs": [172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5], "cw": 74, "qi": 7, "qx": 753.5, "toky": 52, "qy": 150, "ky": 252, "barbase": 430, "vy": 462, "hx0": 857.5, "hx": 932.5, "inx": 425.0, "iny": 110, "qv": "0.18", "bars": [{"raw": 100.0, "soft": 77.7, "w": 0.21569174082574483, "top": false}, {"raw": 58.6, "soft": 30.3, "w": 0.0690490189851718, "top": false}, {"raw": 8.0, "soft": 13.6, "w": 0.017203629850026922, "top": false}, {"raw": 116.0, "soft": 116.0, "w": 0.3343870801740588, "top": true}, {"raw": 33.6, "soft": 19.2, "w": 0.034796593533291356, "top": false}, {"raw": 82.4, "soft": 51.0, "w": 0.1329811875848302, "top": false}, {"raw": 71.0, "soft": 39.4, "w": 0.09710801118017787, "top": false}, {"raw": 71.6, "soft": 39.9, "w": 0.09878273786669818, "top": false}], "t": {"tok": 2.2, "q": 4.2, "scan": 6.0, "step": 0.8, "soft": 13.0, "v": 15.4, "mix": 17.6, "aout": 19.6, "hand": 21.8, "wide": 24.2, "gate": 27.2, "fold": 30.4, "fout": 32.8, "end": 36.199999999999996}};
+var st=document.getElementById(D.uid);
+var q=function(s){return [].slice.call(st.querySelectorAll(s));};
+var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
+var beam=q('.beam')[0],hand=q('.hand')[0],act1=q('.act1')[0];
+var inc=q('.inc'),wc=q('.wc'),outc=q('.outc'),caps=q('.cap');
+var fin=q('.fan-in')[0],fout=q('.fan-out')[0];
+var lin=q('.lbl-in')[0],lw=q('.lbl-wide')[0],lo=q('.lbl-out')[0],vout=q('.val-out')[0];
+var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
+var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function cl(v,a,b){return v<a?a:(v>b?b:v);}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+function set(e,k,v){if(e)e.setAttribute(k,v);}
+
+var qbox=document.createElementNS('http://www.w3.org/2000/svg','g');
+qbox.setAttribute('opacity','0');
+qbox.innerHTML='<rect width="'+cw+'" height="40" rx="7" fill="var(--hot-soft)" '+
+  'stroke="var(--hot)" stroke-width="2"/>'+
+  '<text x="'+(cw/2)+'" y="17" text-anchor="middle" font-size="13">Q</text>'+
+  '<text x="'+(cw/2)+'" y="32" text-anchor="middle" font-size="11" fill="var(--ink-3)">'+
+  D.qv+'</text>';
+act1.appendChild(qbox);
+
+function capAt(t){
+  if(t<T.tok)return 0; if(t<T.q-.6)return 1; if(t<T.scan)return 2;
+  if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.mix)return 5;
+  if(t<T.hand)return 6; if(t<T.wide)return 7; if(t<T.gate)return 8;
+  if(t<T.fold)return 9; if(t<T.fout)return 10; return 11;
+}
+
+function frame(t){
+  // 문장 — 두 막 내내 서 있다. 2막에서는 그 토큰만 남는다(FFN 은 옆을 안 본다)
+  var per=T.tok/toks.length;
+  var solo=ease(seg(t,T.hand,T.hand+1.0));
+  for(var i=0;i<toks.length;i++){
+    var u=ease(seg(t,i*per,i*per+.6));
+    var o=(i===D.qi)?u:u*(1-solo*.82);
+    set(toks[i],'opacity',o.toFixed(3));
+  }
+  // 1막 전체 — 넘겨준 뒤 물러난다
+  set(act1,'opacity',(1-ease(seg(t,T.aout+.8,T.hand))).toFixed(3));
+
+  var uq=ease(seg(t,T.tok,T.q));
+  var qx=D.qx,qy=D.toky+(D.qy-D.toky)*uq;
+  var scanning=t>=T.scan&&t<T.soft;
+  if(scanning){
+    var k=cl(Math.floor((t-T.scan)/T.step),0,m-1);
+    var fr=cl((t-T.scan)/T.step-k,0,1);
+    qx=xs[k]+(xs[cl(k+1,0,m-1)]-xs[k])*ease(fr);
+    qy=D.qy;
+    set(beam,'opacity',(1-Math.abs(fr-.5)*1.5).toFixed(2));
+    set(beam,'x1',(qx+cw/2).toFixed(1));set(beam,'y1',D.qy+40);
+    set(beam,'x2',(xs[k]+cw/2).toFixed(1));set(beam,'y2',D.ky);
+  }else{
+    set(beam,'opacity',0);
+    if(t>=T.soft){qx=xs[m-1];qy=D.qy;}
+  }
+  set(qbox,'opacity',uq.toFixed(3));
+  set(qbox,'transform','translate('+qx.toFixed(1)+','+qy.toFixed(1)+')');
+  for(var j=0;j<kcs.length;j++)
+    set(kcs[j],'opacity',ease(seg(t,T.q-1.0+j*.09,T.q-.3+j*.09)).toFixed(3));
+  for(var j=0;j<m;j++){
+    var b=D.bars[j],h=0;
+    if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.6));
+    else if(t>=T.soft)h=b.raw+(b.soft-b.raw)*ease(seg(t,T.soft,T.soft+1.4));
+    set(bars[j],'height',h.toFixed(1));set(bars[j],'y',(D.barbase-h).toFixed(1));
+    if(t>=T.soft&&b.top)bars[j].classList.add('hot');else bars[j].classList.remove('hot');
+    set(bvs[j],'opacity',ease(seg(t,T.soft+.6,T.soft+1.5)).toFixed(3));
+    var uv=ease(seg(t,T.v+j*.08,T.v+j*.08+.7));
+    set(vcs[j],'opacity',uv.toFixed(3));
+    vcs[j].querySelector('rect').setAttribute(
+      'fill-opacity',((.12+.88*D.bars[j].w/topw)*uv).toFixed(3));
+    var uf=seg(t,T.mix-.8+j*.08,T.mix+1.2);
+    set(flows[j],'opacity',(uf>0&&uf<1?(.3+.7*D.bars[j].w/topw):0).toFixed(3));
+    set(flows[j],'cx',(xs[j]+cw/2+(D.hx-xs[j]-cw/2)*ease(uf)).toFixed(1));
+    set(flows[j],'cy',(D.vy+17).toFixed(1));
+  }
+  // 넘겨주기 — 어텐션 출력 상자가 그대로 위로 올라가 FFN 입력 자리에 선다
+  var uh=ease(seg(t,T.aout,T.aout+1.0));
+  var mv=ease(seg(t,T.aout+1.0,T.hand));
+  set(hand,'opacity',(uh*(1-ease(seg(t,T.wide-.6,T.wide)))).toFixed(3));
+  set(hand,'transform','translate('+((D.inx-D.hx0)*mv).toFixed(1)+','
+    +((D.iny-D.vy)*mv).toFixed(1)+')');
+  // 2막
+  for(var i=0;i<inc.length;i++)
+    set(inc[i],'opacity',ease(seg(t,T.hand+.2+i*.03,T.hand+.8+i*.03)).toFixed(3));
+  set(lin,'opacity',ease(seg(t,T.hand+.4,T.wide-.4)).toFixed(3));
+  set(fin,'opacity',ease(seg(t,T.hand+.8,T.wide-.2)).toFixed(3));
+  var born=ease(seg(t,T.wide-.6,T.wide+.8));
+  var gate=ease(seg(t,T.gate,T.gate+1.8));
+  for(var i=0;i<wc.length;i++){
+    var a=+wc[i].getAttribute('data-a');
+    var lvl=.55*(1-gate)+(0.04+0.96*a)*gate;
+    set(wc[i],'opacity',(born*(.15+.85*lvl)).toFixed(3));
+  }
+  set(lw,'opacity',born.toFixed(3));
+  set(fout,'opacity',ease(seg(t,T.fold,T.fold+1.0)).toFixed(3));
+  for(var i=0;i<outc.length;i++)
+    set(outc[i],'opacity',ease(seg(t,T.fout-.6+i*.04,T.fout+.3+i*.04)).toFixed(3));
+  set(lo,'opacity',ease(seg(t,T.fout,T.fout+.8)).toFixed(3));
+  set(vout,'opacity',ease(seg(t,T.fout,T.fout+.8)).toFixed(3));
+  var ci=capAt(t);
+  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
+}
+
+if(still){frame(T.fout+1.2);return;}
+var t0=null;
+function loop(ts){
+  if(t0===null)t0=ts;
+  var t=(ts-t0)/1000;
+  if(t>T.end){t0=ts;t=0;}
+  frame(t);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
+</script></body></html>
