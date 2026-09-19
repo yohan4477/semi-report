@@ -653,78 +653,73 @@
 
 <div class="wrap">
 <a class="pback" href="../용어사전.html#sec-model">← 용어사전</a>
-<div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic compute">모델 구조</span><h2 id="card-어텐션과-FFN-트랜스포머-한-층이-하는-두-걸음">어텐션과 FFN — 트랜스포머 한 층이 하는 두 걸음</h2><p class="uc-gain">모델이 글자를 이어 붙일 때 한 층에서 무슨 일이 벌어지는지. 「그것은」이 문장 앞의 무엇을 가리키는지 정하는 대목과, 그 결과를 다듬는 대목을 한 장면으로 잇는다.</p><div class="uc-meta"><span>용어 풀이</span><span>정리 2026-09-20</span><span>모델 구조</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">트랜스포머 한 층은 두 걸음이다. 먼저 어텐션이 지금 토큰과 앞선 토큰들을 섞고, 그다음 FFN 이 그 결과를 토큰 하나하나에 따로 먹여 다듬는다. 섞는 걸음은 토큰끼리 서로 보고, 다듬는 걸음은 옆을 안 본다. 이 두 걸음이 층마다 되풀이된다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>어텐션 — Q 는 한 자리 것 하나, K·V 는 앞선 토큰 전부다.</b> Q 는 지금 토큰이 무엇을 찾는지라 그 스텝에서 쓰고 버린다. K·V 는 한 번 만들면 그 토큰이 대화에 남아 있는 한 계속 다시 쓰여서 캐시에 쌓인다 — 「KV 캐시」가 커진다는 말이 이 뜻이다.</li></ul><figure class="uc-fig"><p class="fig-title">트랜스포머 한 층 — 36초짜리 한 바퀴</p><style>
-#layer-scene{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
+<div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic compute">모델 구조</span><h2 id="card-어텐션과-FFN-트랜스포머-한-층이-하는-두-걸음">어텐션과 FFN — 트랜스포머 한 층이 하는 두 걸음</h2><p class="uc-gain">모델이 글자를 이어 붙일 때 한 층에서 무슨 일이 벌어지는지. 「그것은」이 문장 앞의 무엇을 가리키는지 정하는 걸음과, 그 결과를 다듬는 걸음을 나눠 본다.</p><div class="uc-meta"><span>용어 풀이</span><span>정리 2026-09-20</span><span>모델 구조</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">트랜스포머 한 층은 두 걸음이다. 먼저 어텐션이 지금 토큰과 앞선 토큰들을 섞고, 그다음 FFN 이 그 결과를 토큰 하나하나에 따로 먹여 다듬는다. 섞는 걸음은 토큰끼리 서로 보고, 다듬는 걸음은 옆을 안 본다. 이 두 걸음이 층마다 되풀이된다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>어텐션 — Q 는 한 자리 것 하나, K·V 는 앞선 토큰 전부다.</b> Q 는 지금 토큰이 무엇을 찾는지라 그 스텝에서 쓰고 버린다. K·V 는 한 번 만들면 그 토큰이 대화에 남아 있는 한 계속 다시 쓰여서 캐시에 쌓인다 — 「KV 캐시」가 커진다는 말이 이 뜻이다.</li></ul><figure class="uc-fig"><p class="fig-title">1막 — 어텐션 (23초짜리 한 바퀴)</p><style>
+#attn-scene{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
   --bg-2:var(--card,#f4f4f3);--bg-3:var(--line,#e0e0de);
   --ink-1:var(--ink,#1c1c1c);--ink-3:var(--ink-3,#8d8d8d)}
-#layer-scene text{fill:var(--ink-1);font-size:15px}
-#layer-scene .tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
-#layer-scene .tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
-#layer-scene .kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
-#layer-scene .kc .kk{font-size:13px}
-#layer-scene .kc .kv{font-size:11px;fill:var(--ink-3)}
-#layer-scene .bar{fill:var(--bg-3)}
-#layer-scene .bar.hot{fill:var(--hot)}
-#layer-scene .bv{font-size:12px;fill:var(--ink-3)}
-#layer-scene .vc rect{fill:var(--hot)}
-#layer-scene .vc text{font-size:13px}
-#layer-scene .hand rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
-#layer-scene .hand text{font-size:13px}
-#layer-scene .flow{fill:var(--hot)}
-#layer-scene .inc,#layer-scene .outc{fill:var(--hot);stroke:none}
-#layer-scene .wc{fill:var(--hot)}
-#layer-scene .funnel{fill:var(--hot);fill-opacity:.07;stroke:var(--bg-3)}
-#layer-scene .lbl,#layer-scene .val{font-size:12px;fill:var(--ink-3)}
-#layer-scene .cap{font-size:17px;letter-spacing:-.01em}
+#attn-scene text{fill:var(--ink-1);font-size:15px}
+#attn-scene .tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+#attn-scene .tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+#attn-scene .kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
+#attn-scene .kc .kk{font-size:13px}
+#attn-scene .kc .kv{font-size:11px;fill:var(--ink-3)}
+#attn-scene .bar{fill:var(--bg-3)}
+#attn-scene .bar.hot{fill:var(--hot)}
+#attn-scene .bv{font-size:12px;fill:var(--ink-3)}
+#attn-scene .vc rect{fill:var(--hot)}
+#attn-scene .vc text{font-size:13px}
+#attn-scene .outb rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+#attn-scene .outb text{font-size:14px}
+#attn-scene .flow{fill:var(--hot)}
+#attn-scene .cap{font-size:17px;letter-spacing:-.01em}
 </style>
-<svg id="layer-scene" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet" style="max-width:900px" role="img" aria-label="트랜스포머 한 층이 어텐션에서 FFN 으로 이어지는 장면">
-<defs><linearGradient id="beam-layer-scene" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
-<g class="tok" opacity="0"><rect x="6.5" y="52" width="74" height="36" rx="7"/><text x="43.5" y="76" text-anchor="middle">회사</text></g>
-<g class="tok" opacity="0"><rect x="89.5" y="52" width="74" height="36" rx="7"/><text x="126.5" y="76" text-anchor="middle">가</text></g>
-<g class="tok" opacity="0"><rect x="172.5" y="52" width="74" height="36" rx="7"/><text x="209.5" y="76" text-anchor="middle">공</text></g>
-<g class="tok" opacity="0"><rect x="255.5" y="52" width="74" height="36" rx="7"/><text x="292.5" y="76" text-anchor="middle">장을</text></g>
-<g class="tok" opacity="0"><rect x="338.5" y="52" width="74" height="36" rx="7"/><text x="375.5" y="76" text-anchor="middle">지</text></g>
-<g class="tok" opacity="0"><rect x="421.5" y="52" width="74" height="36" rx="7"/><text x="458.5" y="76" text-anchor="middle">었다</text></g>
-<g class="tok" opacity="0"><rect x="504.5" y="52" width="74" height="36" rx="7"/><text x="541.5" y="76" text-anchor="middle">.</text></g>
-<g class="tok tokq" opacity="0"><rect x="587.5" y="52" width="74" height="36" rx="7"/><text x="624.5" y="76" text-anchor="middle">그것은</text></g>
-<g class="tok" opacity="0"><rect x="670.5" y="52" width="74" height="36" rx="7"/><text x="707.5" y="76" text-anchor="middle">부</text></g>
-<g class="tok" opacity="0"><rect x="753.5" y="52" width="74" height="36" rx="7"/><text x="790.5" y="76" text-anchor="middle">산</text></g>
-<g class="tok" opacity="0"><rect x="836.5" y="52" width="74" height="36" rx="7"/><text x="873.5" y="76" text-anchor="middle">에</text></g>
-<g class="tok" opacity="0"><rect x="919.5" y="52" width="74" height="36" rx="7"/><text x="956.5" y="76" text-anchor="middle">있다</text></g>
-<g class="act1">
-<line class="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam-layer-scene)" stroke-width="3" stroke-linecap="round" opacity="0"/>
-<g class="kc" opacity="0"><rect x="172.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="209.5" y="269" text-anchor="middle">K</text><text class="kv" x="209.5" y="284" text-anchor="middle">-0.01</text></g>
-<g class="kc" opacity="0"><rect x="255.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="292.5" y="269" text-anchor="middle">K</text><text class="kv" x="292.5" y="284" text-anchor="middle">0.27</text></g>
-<g class="kc" opacity="0"><rect x="338.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="375.5" y="269" text-anchor="middle">K</text><text class="kv" x="375.5" y="284" text-anchor="middle">-0.41</text></g>
-<g class="kc" opacity="0"><rect x="421.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="458.5" y="269" text-anchor="middle">K</text><text class="kv" x="458.5" y="284" text-anchor="middle">-0.58</text></g>
-<g class="kc" opacity="0"><rect x="504.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="541.5" y="269" text-anchor="middle">K</text><text class="kv" x="541.5" y="284" text-anchor="middle">-0.66</text></g>
-<g class="kc" opacity="0"><rect x="587.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="624.5" y="269" text-anchor="middle">K</text><text class="kv" x="624.5" y="284" text-anchor="middle">0.46</text></g>
-<g class="kc" opacity="0"><rect x="670.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="707.5" y="269" text-anchor="middle">K</text><text class="kv" x="707.5" y="284" text-anchor="middle">-0.10</text></g>
-<g class="kc" opacity="0"><rect x="753.5" y="252" width="74" height="40" rx="7"/><text class="kk" x="790.5" y="269" text-anchor="middle">K</text><text class="kv" x="790.5" y="284" text-anchor="middle">0.23</text></g>
-<rect class="bar" data-show="3" x="183.5" y="430" width="52" height="0" rx="4" data-raw="100" data-soft="77"/>
-<text class="bv" x="209.5" y="451" text-anchor="middle" opacity="0">0.22</text>
-<rect class="bar" data-show="3" x="266.5" y="430" width="52" height="0" rx="4" data-raw="58" data-soft="30"/>
-<text class="bv" x="292.5" y="451" text-anchor="middle" opacity="0">0.07</text>
-<rect class="bar" data-show="3" x="349.5" y="430" width="52" height="0" rx="4" data-raw="8" data-soft="13"/>
-<text class="bv" x="375.5" y="451" text-anchor="middle" opacity="0">0.02</text>
-<rect class="bar" data-show="3" data-top="1" x="432.5" y="430" width="52" height="0" rx="4" data-raw="116" data-soft="116"/>
-<text class="bv" x="458.5" y="451" text-anchor="middle" opacity="0">0.33</text>
-<rect class="bar" data-show="3" x="515.5" y="430" width="52" height="0" rx="4" data-raw="33" data-soft="19"/>
-<text class="bv" x="541.5" y="451" text-anchor="middle" opacity="0">0.03</text>
-<rect class="bar" data-show="3" x="598.5" y="430" width="52" height="0" rx="4" data-raw="82" data-soft="50"/>
-<text class="bv" x="624.5" y="451" text-anchor="middle" opacity="0">0.13</text>
-<rect class="bar" data-show="3" x="681.5" y="430" width="52" height="0" rx="4" data-raw="70" data-soft="39"/>
-<text class="bv" x="707.5" y="451" text-anchor="middle" opacity="0">0.10</text>
-<rect class="bar" data-show="3" x="764.5" y="430" width="52" height="0" rx="4" data-raw="71" data-soft="39"/>
-<text class="bv" x="790.5" y="451" text-anchor="middle" opacity="0">0.10</text>
-<g class="vc" opacity="0"><rect x="172.5" y="462" width="74" height="34" rx="7"/><text x="209.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="255.5" y="462" width="74" height="34" rx="7"/><text x="292.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="338.5" y="462" width="74" height="34" rx="7"/><text x="375.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="421.5" y="462" width="74" height="34" rx="7"/><text x="458.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="504.5" y="462" width="74" height="34" rx="7"/><text x="541.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="587.5" y="462" width="74" height="34" rx="7"/><text x="624.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="670.5" y="462" width="74" height="34" rx="7"/><text x="707.5" y="485" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="753.5" y="462" width="74" height="34" rx="7"/><text x="790.5" y="485" text-anchor="middle">V</text></g>
+<svg id="attn-scene" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" style="max-width:900px" role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">
+<defs><linearGradient id="beam-attn-scene" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
+<g class="tok" opacity="0"><rect x="6.5" y="64" width="74" height="38" rx="7"/><text x="43.5" y="89" text-anchor="middle">회사</text></g>
+<g class="tok" opacity="0"><rect x="89.5" y="64" width="74" height="38" rx="7"/><text x="126.5" y="89" text-anchor="middle">가</text></g>
+<g class="tok" opacity="0"><rect x="172.5" y="64" width="74" height="38" rx="7"/><text x="209.5" y="89" text-anchor="middle">공</text></g>
+<g class="tok" opacity="0"><rect x="255.5" y="64" width="74" height="38" rx="7"/><text x="292.5" y="89" text-anchor="middle">장을</text></g>
+<g class="tok" opacity="0"><rect x="338.5" y="64" width="74" height="38" rx="7"/><text x="375.5" y="89" text-anchor="middle">지</text></g>
+<g class="tok" opacity="0"><rect x="421.5" y="64" width="74" height="38" rx="7"/><text x="458.5" y="89" text-anchor="middle">었다</text></g>
+<g class="tok" opacity="0"><rect x="504.5" y="64" width="74" height="38" rx="7"/><text x="541.5" y="89" text-anchor="middle">.</text></g>
+<g class="tok tokq" opacity="0"><rect x="587.5" y="64" width="74" height="38" rx="7"/><text x="624.5" y="89" text-anchor="middle">그것은</text></g>
+<g class="tok" opacity="0"><rect x="670.5" y="64" width="74" height="38" rx="7"/><text x="707.5" y="89" text-anchor="middle">부</text></g>
+<g class="tok" opacity="0"><rect x="753.5" y="64" width="74" height="38" rx="7"/><text x="790.5" y="89" text-anchor="middle">산</text></g>
+<g class="tok" opacity="0"><rect x="836.5" y="64" width="74" height="38" rx="7"/><text x="873.5" y="89" text-anchor="middle">에</text></g>
+<g class="tok" opacity="0"><rect x="919.5" y="64" width="74" height="38" rx="7"/><text x="956.5" y="89" text-anchor="middle">있다</text></g>
+<line class="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam-attn-scene)" stroke-width="3" stroke-linecap="round" opacity="0"/>
+<g class="kc" opacity="0"><rect x="6.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="43.5" y="293" text-anchor="middle">K</text><text class="kv" x="43.5" y="308" text-anchor="middle">-0.01</text></g>
+<g class="kc" opacity="0"><rect x="89.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="126.5" y="293" text-anchor="middle">K</text><text class="kv" x="126.5" y="308" text-anchor="middle">0.27</text></g>
+<g class="kc" opacity="0"><rect x="172.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="209.5" y="293" text-anchor="middle">K</text><text class="kv" x="209.5" y="308" text-anchor="middle">-0.41</text></g>
+<g class="kc" opacity="0"><rect x="255.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="292.5" y="293" text-anchor="middle">K</text><text class="kv" x="292.5" y="308" text-anchor="middle">-0.58</text></g>
+<g class="kc" opacity="0"><rect x="338.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="375.5" y="293" text-anchor="middle">K</text><text class="kv" x="375.5" y="308" text-anchor="middle">-0.66</text></g>
+<g class="kc" opacity="0"><rect x="421.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="458.5" y="293" text-anchor="middle">K</text><text class="kv" x="458.5" y="308" text-anchor="middle">0.46</text></g>
+<g class="kc" opacity="0"><rect x="504.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="541.5" y="293" text-anchor="middle">K</text><text class="kv" x="541.5" y="308" text-anchor="middle">-0.10</text></g>
+<g class="kc" opacity="0"><rect x="587.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="624.5" y="293" text-anchor="middle">K</text><text class="kv" x="624.5" y="308" text-anchor="middle">0.23</text></g>
+<rect class="bar" x="17.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="43.5" y="491" text-anchor="middle" opacity="0">0.22</text>
+<rect class="bar" x="100.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="126.5" y="491" text-anchor="middle" opacity="0">0.07</text>
+<rect class="bar" x="183.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="209.5" y="491" text-anchor="middle" opacity="0">0.02</text>
+<rect class="bar" x="266.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="292.5" y="491" text-anchor="middle" opacity="0">0.33</text>
+<rect class="bar" x="349.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="375.5" y="491" text-anchor="middle" opacity="0">0.03</text>
+<rect class="bar" x="432.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="458.5" y="491" text-anchor="middle" opacity="0">0.13</text>
+<rect class="bar" x="515.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="541.5" y="491" text-anchor="middle" opacity="0">0.10</text>
+<rect class="bar" x="598.5" y="470" width="52" height="0" rx="4"/>
+<text class="bv" x="624.5" y="491" text-anchor="middle" opacity="0">0.10</text>
+<g class="vc" opacity="0"><rect x="6.5" y="506" width="74" height="34" rx="7"/><text x="43.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="89.5" y="506" width="74" height="34" rx="7"/><text x="126.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="172.5" y="506" width="74" height="34" rx="7"/><text x="209.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="255.5" y="506" width="74" height="34" rx="7"/><text x="292.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="338.5" y="506" width="74" height="34" rx="7"/><text x="375.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="421.5" y="506" width="74" height="34" rx="7"/><text x="458.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="504.5" y="506" width="74" height="34" rx="7"/><text x="541.5" y="529" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="587.5" y="506" width="74" height="34" rx="7"/><text x="624.5" y="529" text-anchor="middle">V</text></g>
 <circle class="flow" r="4" opacity="0"/>
 <circle class="flow" r="4" opacity="0"/>
 <circle class="flow" r="4" opacity="0"/>
@@ -733,142 +728,29 @@
 <circle class="flow" r="4" opacity="0"/>
 <circle class="flow" r="4" opacity="0"/>
 <circle class="flow" r="4" opacity="0"/>
-</g>
-<g class="hand" opacity="0" transform="translate(0,0)"><rect x="857.5" y="462" width="150" height="34" rx="8"/><text x="932.5" y="485" text-anchor="middle">어텐션 출력 0.53</text></g>
-<g class="act2">
-<path class="funnel fan-in" opacity="0" d="M262.0 198 L738.0 198 L947.0 300 L53.0 300 Z"/>
-<path class="funnel fan-out" opacity="0" d="M53.0 346 L947.0 346 L738.0 438 L262.0 438 Z"/>
-<rect class="inc" x="262.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="292.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="322.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="352.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="382.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="412.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="442.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="472.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="502.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="532.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="562.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="592.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="622.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="652.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="682.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="712.0" y="168" width="26" height="30" rx="4" opacity="0"/>
-<text class="lbl lbl-in" x="262.0" y="216" opacity="0">입력 896칸 중 16칸</text>
-<rect class="wc" data-a="0.0068" x="53.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0218" x="67.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0160" x="81.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0818" x="95.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0018" x="109.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0511" x="123.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0249" x="137.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0304" x="151.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0613" x="165.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0101" x="179.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0005" x="193.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0405" x="207.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0004" x="221.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.1932" x="235.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0034" x="249.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0057" x="263.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0261" x="277.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0037" x="291.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.1996" x="305.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0489" x="319.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0020" x="333.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0481" x="347.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0136" x="361.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0360" x="375.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0116" x="389.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0123" x="403.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0050" x="417.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0100" x="431.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0093" x="445.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0117" x="459.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0254" x="473.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0226" x="487.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0119" x="501.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0601" x="515.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0164" x="529.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0263" x="543.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0082" x="557.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.1449" x="571.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0171" x="585.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0006" x="599.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0196" x="613.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0189" x="627.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0063" x="641.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0048" x="655.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0308" x="669.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0352" x="683.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0137" x="697.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0611" x="711.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0324" x="725.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0069" x="739.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0038" x="753.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0072" x="767.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0270" x="781.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0299" x="795.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0003" x="809.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0188" x="823.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0016" x="837.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0540" x="851.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0452" x="865.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0308" x="879.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0244" x="893.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0122" x="907.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0361" x="921.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0160" x="935.0" y="300" width="12" height="46" rx="3" opacity="0"/>
-<text class="lbl lbl-wide" x="53.0" y="288" opacity="0">넓힌 4864칸 중 64칸</text>
-<rect class="outc" x="262.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="292.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="322.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="352.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="382.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="412.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="442.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="472.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="502.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="532.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="562.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="592.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="622.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="652.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="682.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="712.0" y="438" width="26" height="30" rx="4" opacity="0"/>
-<text class="lbl lbl-out" x="262.0" y="488" opacity="0">다시 896칸</text>
-<text class="val val-out" x="738.0" y="488" text-anchor="end" opacity="0">-0.09</text>
-</g>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">「그것은」이 무엇을 가리키는지 찾는 중이다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">앞선 토큰마다 K 가 이미 남아 있다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">Q 를 K 하나하나에 대 본다 — 닮은 만큼 점수가 선다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">점수를 합이 1 인 비율로 바꾼다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">그 비율을 가중치로 V 를 가중평균한다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">여기까지가 어텐션이다 — 앞선 토큰들을 섞어 하나로 모았다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">그 결과가 그대로 FFN 의 입력이 된다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">먼저 넓힌다 — 896 칸이 4,864 칸으로</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">게이트가 대부분을 눌러 4,864 칸 중 97.7% 가 잠잠해진다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">살아남은 자리만 모아 다시 896 칸으로 접는다</text>
-<text class="cap" x="500" y="596" text-anchor="middle" opacity="0">섞고 다듬었다 — 여기까지가 한 층이고, 이것이 층마다 되풀이된다</text>
+<g class="outb" opacity="0"><rect x="701.5" y="506" width="140" height="34" rx="8"/><text x="771.5" y="529" text-anchor="middle">출력 0.53</text></g>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">「그것은」이 무엇을 가리키는지 찾는 중이다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">앞선 토큰마다 K 가 이미 남아 있다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">Q 를 K 하나하나에 대 본다 — 닮은 만큼 점수가 선다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">점수를 합이 1 인 비율로 바꾼다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">그 비율을 가중치로 V 를 가중평균한다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">가중평균으로 나온 하나 — 이 자리의 어텐션 출력이다</text>
 </svg>
 <script>
 (function(){
-var D={"uid": "layer-scene", "m": 8, "xs": [172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5], "cw": 74, "qi": 7, "qx": 753.5, "toky": 52, "qy": 150, "ky": 252, "barbase": 430, "vy": 462, "hx0": 857.5, "hx": 932.5, "inx": 425.0, "iny": 110, "qv": "0.18", "bars": [{"raw": 100.0, "soft": 77.7, "w": 0.21569174082574483, "top": false}, {"raw": 58.6, "soft": 30.3, "w": 0.0690490189851718, "top": false}, {"raw": 8.0, "soft": 13.6, "w": 0.017203629850026922, "top": false}, {"raw": 116.0, "soft": 116.0, "w": 0.3343870801740588, "top": true}, {"raw": 33.6, "soft": 19.2, "w": 0.034796593533291356, "top": false}, {"raw": 82.4, "soft": 51.0, "w": 0.1329811875848302, "top": false}, {"raw": 71.0, "soft": 39.4, "w": 0.09710801118017787, "top": false}, {"raw": 71.6, "soft": 39.9, "w": 0.09878273786669818, "top": false}], "t": {"tok": 2.2, "q": 4.2, "scan": 6.0, "step": 0.8, "soft": 13.0, "v": 15.4, "mix": 17.6, "aout": 19.6, "hand": 21.8, "wide": 24.2, "gate": 27.2, "fold": 30.4, "fout": 32.8, "end": 36.199999999999996}};
+var D={"uid": "attn-scene", "m": 8, "xs": [6.5, 89.5, 172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5, 836.5, 919.5], "cw": 74, "qx": 587.5, "toky": 64, "qy": 180, "ky": 276, "barbase": 470, "vy": 506, "ox": 701.5, "qv": "0.18", "bars": [{"raw": 112.3, "soft": 87.4, "w": 0.21569174082574483, "top": false}, {"raw": 66.2, "soft": 34.8, "w": 0.0690490189851718, "top": false}, {"raw": 10.0, "soft": 16.2, "w": 0.017203629850026922, "top": false}, {"raw": 130.0, "soft": 130.0, "w": 0.3343870801740588, "top": true}, {"raw": 38.5, "soft": 22.5, "w": 0.034796593533291356, "top": false}, {"raw": 92.7, "soft": 57.7, "w": 0.1329811875848302, "top": false}, {"raw": 80.0, "soft": 44.8, "w": 0.09710801118017787, "top": false}, {"raw": 80.7, "soft": 45.4, "w": 0.09878273786669818, "top": false}], "t": {"tok": 2.4, "q": 4.4, "scan": 6.2, "step": 0.85, "soft": 13.6, "v": 16.2, "out": 18.599999999999998, "end": 22.799999999999997}};
 var st=document.getElementById(D.uid);
 var q=function(s){return [].slice.call(st.querySelectorAll(s));};
 var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
-var beam=q('.beam')[0],hand=q('.hand')[0],act1=q('.act1')[0];
-var inc=q('.inc'),wc=q('.wc'),outc=q('.outc'),caps=q('.cap');
-var fin=q('.fan-in')[0],fout=q('.fan-out')[0];
-var lin=q('.lbl-in')[0],lw=q('.lbl-wide')[0],lo=q('.lbl-out')[0],vout=q('.val-out')[0];
+var beam=q('.beam')[0],out=q('.outb')[0],caps=q('.cap');
 var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
 var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
 var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 function cl(v,a,b){return v<a?a:(v>b?b:v);}
 function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
 function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
-function set(e,k,v){if(e)e.setAttribute(k,v);}
+function set(e,k,v){e.setAttribute(k,v);}
 
 var qbox=document.createElementNS('http://www.w3.org/2000/svg','g');
 qbox.setAttribute('opacity','0');
@@ -877,27 +759,21 @@ qbox.innerHTML='<rect width="'+cw+'" height="40" rx="7" fill="var(--hot-soft)" '
   '<text x="'+(cw/2)+'" y="17" text-anchor="middle" font-size="13">Q</text>'+
   '<text x="'+(cw/2)+'" y="32" text-anchor="middle" font-size="11" fill="var(--ink-3)">'+
   D.qv+'</text>';
-act1.appendChild(qbox);
+st.appendChild(qbox);
 
 function capAt(t){
+  // 자막이 뜨는 구간은 그 장면이 실제로 도는 구간과 맞춘다. 예전에는 둘이 1초도 안
+  // 떠 있어 읽기 전에 넘어갔다.
   if(t<T.tok)return 0; if(t<T.q-.6)return 1; if(t<T.scan)return 2;
-  if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.mix)return 5;
-  if(t<T.hand)return 6; if(t<T.wide)return 7; if(t<T.gate)return 8;
-  if(t<T.fold)return 9; if(t<T.fout)return 10; return 11;
+  if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.out)return 5; return 6;
 }
 
 function frame(t){
-  // 문장 — 두 막 내내 서 있다. 2막에서는 그 토큰만 남는다(FFN 은 옆을 안 본다)
   var per=T.tok/toks.length;
-  var solo=ease(seg(t,T.hand,T.hand+1.0));
   for(var i=0;i<toks.length;i++){
     var u=ease(seg(t,i*per,i*per+.6));
-    var o=(i===D.qi)?u:u*(1-solo*.82);
-    set(toks[i],'opacity',o.toFixed(3));
+    set(toks[i],'opacity',u.toFixed(3));
   }
-  // 1막 전체 — 넘겨준 뒤 물러난다
-  set(act1,'opacity',(1-ease(seg(t,T.aout+.8,T.hand))).toFixed(3));
-
   var uq=ease(seg(t,T.tok,T.q));
   var qx=D.qx,qy=D.toky+(D.qy-D.toky)*uq;
   var scanning=t>=T.scan&&t<T.soft;
@@ -915,8 +791,7 @@ function frame(t){
   }
   set(qbox,'opacity',uq.toFixed(3));
   set(qbox,'transform','translate('+qx.toFixed(1)+','+qy.toFixed(1)+')');
-  for(var j=0;j<kcs.length;j++)
-    set(kcs[j],'opacity',ease(seg(t,T.q-1.0+j*.09,T.q-.3+j*.09)).toFixed(3));
+  for(var j=0;j<kcs.length;j++)set(kcs[j],'opacity',ease(seg(t,T.q-1.0+j*.09,T.q-.3+j*.09)).toFixed(3));
   for(var j=0;j<m;j++){
     var b=D.bars[j],h=0;
     if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.6));
@@ -924,44 +799,23 @@ function frame(t){
     set(bars[j],'height',h.toFixed(1));set(bars[j],'y',(D.barbase-h).toFixed(1));
     if(t>=T.soft&&b.top)bars[j].classList.add('hot');else bars[j].classList.remove('hot');
     set(bvs[j],'opacity',ease(seg(t,T.soft+.6,T.soft+1.5)).toFixed(3));
+  }
+  for(var j=0;j<m;j++){
     var uv=ease(seg(t,T.v+j*.08,T.v+j*.08+.7));
     set(vcs[j],'opacity',uv.toFixed(3));
     vcs[j].querySelector('rect').setAttribute(
       'fill-opacity',((.12+.88*D.bars[j].w/topw)*uv).toFixed(3));
-    var uf=seg(t,T.mix-.8+j*.08,T.mix+1.2);
+    var uf=seg(t,T.out-.8+j*.08,T.out+1.2);
     set(flows[j],'opacity',(uf>0&&uf<1?(.3+.7*D.bars[j].w/topw):0).toFixed(3));
-    set(flows[j],'cx',(xs[j]+cw/2+(D.hx-xs[j]-cw/2)*ease(uf)).toFixed(1));
+    set(flows[j],'cx',(xs[j]+cw/2+(D.ox+70-xs[j]-cw/2)*ease(uf)).toFixed(1));
     set(flows[j],'cy',(D.vy+17).toFixed(1));
   }
-  // 넘겨주기 — 어텐션 출력 상자가 그대로 위로 올라가 FFN 입력 자리에 선다
-  var uh=ease(seg(t,T.aout,T.aout+1.0));
-  var mv=ease(seg(t,T.aout+1.0,T.hand));
-  set(hand,'opacity',(uh*(1-ease(seg(t,T.wide-.6,T.wide)))).toFixed(3));
-  set(hand,'transform','translate('+((D.inx-D.hx0)*mv).toFixed(1)+','
-    +((D.iny-D.vy)*mv).toFixed(1)+')');
-  // 2막
-  for(var i=0;i<inc.length;i++)
-    set(inc[i],'opacity',ease(seg(t,T.hand+.2+i*.03,T.hand+.8+i*.03)).toFixed(3));
-  set(lin,'opacity',ease(seg(t,T.hand+.4,T.wide-.4)).toFixed(3));
-  set(fin,'opacity',ease(seg(t,T.hand+.8,T.wide-.2)).toFixed(3));
-  var born=ease(seg(t,T.wide-.6,T.wide+.8));
-  var gate=ease(seg(t,T.gate,T.gate+1.8));
-  for(var i=0;i<wc.length;i++){
-    var a=+wc[i].getAttribute('data-a');
-    var lvl=.55*(1-gate)+(0.04+0.96*a)*gate;
-    set(wc[i],'opacity',(born*(.15+.85*lvl)).toFixed(3));
-  }
-  set(lw,'opacity',born.toFixed(3));
-  set(fout,'opacity',ease(seg(t,T.fold,T.fold+1.0)).toFixed(3));
-  for(var i=0;i<outc.length;i++)
-    set(outc[i],'opacity',ease(seg(t,T.fout-.6+i*.04,T.fout+.3+i*.04)).toFixed(3));
-  set(lo,'opacity',ease(seg(t,T.fout,T.fout+.8)).toFixed(3));
-  set(vout,'opacity',ease(seg(t,T.fout,T.fout+.8)).toFixed(3));
+  set(out,'opacity',ease(seg(t,T.out+.7,T.out+1.5)).toFixed(3));
   var ci=capAt(t);
   for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
 }
 
-if(still){frame(T.fout+1.2);return;}
+if(still){frame(T.out+1.6);return;}
 var t0=null;
 function loop(ts){
   if(t0===null)t0=ts;
@@ -971,7 +825,209 @@ function loop(ts){
 }
 requestAnimationFrame(loop);
 })();
-</script><figcaption>실제로 Qwen2.5-0.5B 를 한 번 돌려 뽑은 수치다. 1막에서 「그것은」 자리의 Q 가 앞선 토큰들의 K 를 훑어 점수를 내고, 그 점수가 비율이 되어 V 를 가중평균한다. 그렇게 맺힌 상자가 그대로 올라가 2막의 입력이 된다 — 넓은 층으로 펼쳐졌다가 게이트에 눌려 일부만 남고, 다시 원래 폭으로 접힌다. 저절로 다시 돈다.</figcaption></figure><ul class="uc-points"><li><b>점수를 비율로 바꾼 뒤 가중평균한다.</b> Q 와 K 를 곱하면(내적) 그 수가 클수록 그 토큰을 많이 본다. 크기가 제각각이라 소프트맥스로 합이 1 이 되게 눌러 「어느 토큰을 몇 퍼센트 볼까」로 만들고, 비율 × V 를 토큰마다 구해 전부 더한다.</li><li><b>FFN — 넓혔다 접는다.</b> 이 모델에서는 896 칸이 4,864 칸으로 펼쳐졌다가 다시 896 칸으로 접힌다. 펼치는 가중치와 접는 가중치가 따로 있어서 모델 무게의 큰 몫이 이 층에 들어간다.</li><li><b>넓힌 자리 대부분은 잠잠하다.</b> 4,864 칸 중 97.7% 가 가장 센 자리의 10% 에도 못 미쳤다. 게이트가 문맥에 안 맞는 자리를 눌러 끄기 때문이고, 그래서 한 토큰이 실제로 쓰는 자리는 몇 십 개다.</li><li><b>두 걸음의 성격이 다르다.</b> 어텐션은 토큰이 늘수록 볼 것이 늘어 계산과 캐시가 같이 커지지만, FFN 은 토큰마다 독립이라 서로 얽히지 않는다. 긴 문맥이 비싸지는 쪽은 어텐션이다.</li><li><b>MoE 와 엔그램은 FFN 자리를 바꾼 것이다.</b> MoE 는 FFN 한 벌 대신 여러 벌(전문가)을 두고 토큰마다 일부만 골라 돌린다. 엔그램(N-gram 임베딩)은 아예 곱셈 없이 표에서 행을 읽어 온다. 셋을 섞는 비율이 요즘 모델 설계의 다툼거리다.</li></ul><div class="side-note">Q·K·V 옆과 FFN 입력·출력 옆에 적힌 숫자는 벡터의 첫 성분 하나다 — 실제로는 어텐션 헤드가 64 개, FFN 입출력이 896 개짜리 벡터다. 넓힌 칸 64 개도 4,864 칸에서 고르게 뽑아 보인 것이고 전부가 아니다. 그 수치를 굽는 자리는 <code>scratchpad/attn_trace.py</code> 와 <code>scratchpad/ffn_trace.py</code> 이고, 거기서 직접 계산한 결과가 모델이 낸 것과 같은지를 굽는 단계에서 검사한다.</div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy">링크 복사</button></div></div></div>
+</script><figcaption>실제로 Qwen2.5-0.5B 를 한 번 돌려 뽑은 수치다. 「그것은」 자리의 Q 가 앞선 토큰들의 K 를 왼쪽부터 훑어 점수를 내고, 그 점수가 합 1 의 비율로 다시 선 뒤, 그 비율을 가중치로 V 를 가중평균해 출력 하나가 남는다.</figcaption></figure><ul class="uc-points"><li><b>점수를 비율로 바꾼 뒤 가중평균한다.</b> Q 와 K 를 곱하면(내적) 그 수가 클수록 그 토큰을 많이 본다. 크기가 제각각이라 소프트맥스로 합이 1 이 되게 눌러 「어느 토큰을 몇 퍼센트 볼까」로 만들고, 비율 × V 를 토큰마다 구해 전부 더한다.</li><li><b>FFN 의 「넓힌다」는 숫자 개수를 늘린다는 뜻이다.</b> 들어온 벡터에는 숫자가 896 개 있는데 896 × 4,864 짜리 행렬을 곱하면 4,864 개가 나온다. 정보가 늘어난 것이 아니라 같은 내용을 더 넓은 자리에 펼쳐 놓은 것이다.</li><li><b>펼친 칸 하나가 질문 하나다.</b> 넓히는 행렬의 열 하나가 학습된 방향 하나이고, 그 열과 입력을 곱한 수가 「이 입력이 그 방향과 얼마나 닮았나」다. 넓힌다는 것은 4,864 개의 질문을 동시에 던지는 일이고, 무엇을 묻는지는 학습이 정했다.</li><li><b>넓히는 이유는 비선형이 일할 자리를 만들기 위해서다.</b> 곱셈만 이으면 아무리 층을 쌓아도 한 번의 곱셈으로 접힌다 — 선형에 선형을 이으면 선형이다. 「A 이면서 B 는 아닐 때만」 같은 조건을 익히려면 중간에 껐다 켜는 장치(게이트)가 있어야 하는데, 좁은 자리에 서는 끄고 켤 것이 몇 개 없다. 넓혀 놓아야 검출기를 많이 두고 맞는 것만 살릴 수 있다.</li></ul><figure class="uc-fig"><p class="fig-title">2막 — FFN (21초짜리 한 바퀴)</p><style>
+#ffn-scene{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
+  --bg-2:var(--card,#f4f4f3);--bg-3:var(--line,#e0e0de);
+  --ink-1:var(--ink,#1c1c1c);--ink-3:var(--ink-3,#8d8d8d)}
+#ffn-scene text{fill:var(--ink-1);font-size:15px}
+#ffn-scene .tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+#ffn-scene .tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+#ffn-scene .inc,#ffn-scene .outc{fill:var(--hot);stroke:none}
+#ffn-scene .wc{fill:var(--hot)}
+#ffn-scene .funnel{fill:var(--hot);fill-opacity:.07;stroke:var(--bg-3)}
+#ffn-scene .lbl,#ffn-scene .val{font-size:12px;fill:var(--ink-3)}
+#ffn-scene .cap{font-size:17px;letter-spacing:-.01em}
+</style>
+<svg id="ffn-scene" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" style="max-width:900px" role="img" aria-label="FFN 이 한 토큰을 넓혔다 접는 장면">
+<g class="tok" opacity="0"><rect x="6.5" y="56" width="74" height="36" rx="7"/><text x="43.5" y="80" text-anchor="middle">회사</text></g>
+<g class="tok" opacity="0"><rect x="89.5" y="56" width="74" height="36" rx="7"/><text x="126.5" y="80" text-anchor="middle">가</text></g>
+<g class="tok" opacity="0"><rect x="172.5" y="56" width="74" height="36" rx="7"/><text x="209.5" y="80" text-anchor="middle">공</text></g>
+<g class="tok" opacity="0"><rect x="255.5" y="56" width="74" height="36" rx="7"/><text x="292.5" y="80" text-anchor="middle">장을</text></g>
+<g class="tok" opacity="0"><rect x="338.5" y="56" width="74" height="36" rx="7"/><text x="375.5" y="80" text-anchor="middle">지</text></g>
+<g class="tok" opacity="0"><rect x="421.5" y="56" width="74" height="36" rx="7"/><text x="458.5" y="80" text-anchor="middle">었다</text></g>
+<g class="tok" opacity="0"><rect x="504.5" y="56" width="74" height="36" rx="7"/><text x="541.5" y="80" text-anchor="middle">.</text></g>
+<g class="tok tokq" opacity="0"><rect x="587.5" y="56" width="74" height="36" rx="7"/><text x="624.5" y="80" text-anchor="middle">그것은</text></g>
+<g class="tok" opacity="0"><rect x="670.5" y="56" width="74" height="36" rx="7"/><text x="707.5" y="80" text-anchor="middle">부</text></g>
+<g class="tok" opacity="0"><rect x="753.5" y="56" width="74" height="36" rx="7"/><text x="790.5" y="80" text-anchor="middle">산</text></g>
+<g class="tok" opacity="0"><rect x="836.5" y="56" width="74" height="36" rx="7"/><text x="873.5" y="80" text-anchor="middle">에</text></g>
+<g class="tok" opacity="0"><rect x="919.5" y="56" width="74" height="36" rx="7"/><text x="956.5" y="80" text-anchor="middle">있다</text></g>
+<path class="funnel fan-in" opacity="0" d="M262.0 216 L738.0 216 L947.0 312 L53.0 312 Z"/>
+<path class="funnel fan-out" opacity="0" d="M53.0 358 L947.0 358 L738.0 440 L262.0 440 Z"/>
+<rect class="inc" x="262.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="292.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="322.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="352.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="382.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="412.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="442.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="472.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="502.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="532.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="562.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="592.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="622.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="652.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="682.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="712.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<text class="lbl lbl-in" x="262.0" y="176" opacity="0">입력 896칸 중 16칸</text>
+<text class="val val-in" x="738.0" y="176" text-anchor="end" opacity="0">-0.88</text>
+<rect class="wc" data-a="0.0068" x="53.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0218" x="67.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0160" x="81.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0818" x="95.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0018" x="109.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0511" x="123.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0249" x="137.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0304" x="151.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0613" x="165.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0101" x="179.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0005" x="193.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0405" x="207.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0004" x="221.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1932" x="235.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0034" x="249.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0057" x="263.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0261" x="277.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0037" x="291.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1996" x="305.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0489" x="319.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0020" x="333.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0481" x="347.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0136" x="361.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0360" x="375.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0116" x="389.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0123" x="403.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0050" x="417.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0100" x="431.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0093" x="445.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0117" x="459.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0254" x="473.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0226" x="487.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0119" x="501.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0601" x="515.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0164" x="529.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0263" x="543.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0082" x="557.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1449" x="571.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0171" x="585.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0006" x="599.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0196" x="613.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0189" x="627.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0063" x="641.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0048" x="655.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0308" x="669.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0352" x="683.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0137" x="697.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0611" x="711.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0324" x="725.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0069" x="739.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0038" x="753.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0072" x="767.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0270" x="781.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0299" x="795.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0003" x="809.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0188" x="823.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0016" x="837.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0540" x="851.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0452" x="865.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0308" x="879.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0244" x="893.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0122" x="907.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0361" x="921.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0160" x="935.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<text class="lbl lbl-wide" x="53.0" y="300" opacity="0">넓힌 4864칸 중 64칸</text>
+<rect class="outc" x="262.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="292.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="322.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="352.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="382.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="412.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="442.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="472.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="502.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="532.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="562.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="592.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="622.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="652.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="682.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="712.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<text class="lbl lbl-out" x="262.0" y="490" opacity="0">다시 896칸</text>
+<text class="val val-out" x="738.0" y="490" text-anchor="end" opacity="0">-0.09</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">FFN 은 토큰마다 따로 돈다 — 어텐션과 달리 옆 토큰을 안 본다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">어텐션이 낸 결과가 이 층의 입력이다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">먼저 넓힌다 — 896 칸이 4,864 칸으로</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">게이트가 대부분을 눌러 4,864 칸 중 97.7% 가 잠잠해진다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">살아남은 자리만 모아 다시 896 칸으로 접는다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">접혀 나온 하나 — 이 토큰의 FFN 출력이다</text>
+</svg>
+<script>
+(function(){
+var D={"uid": "ffn-scene", "qi": 7, "t": {"tok": 2.2, "in": 4.6, "wide": 7.0, "gate": 10.4, "fold": 14.0, "out": 17.0, "end": 21.5}};
+var st=document.getElementById(D.uid);
+var q=function(s){return [].slice.call(st.querySelectorAll(s));};
+var toks=q('.tok'),inc=q('.inc'),wc=q('.wc'),outc=q('.outc'),caps=q('.cap');
+var fin=q('.fan-in')[0],fout=q('.fan-out')[0];
+var lin=q('.lbl-in')[0],lw=q('.lbl-wide')[0],lo=q('.lbl-out')[0];
+var vin=q('.val-in')[0],vout=q('.val-out')[0];
+var T=D.t;
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function cl(v,a,b){return v<a?a:(v>b?b:v);}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+function set(e,k,v){if(e)e.setAttribute(k,v);}
+
+function capAt(t){
+  if(t<T.in)return 0; if(t<T.wide)return 1; if(t<T.gate)return 2;
+  if(t<T.fold)return 3; if(t<T.out)return 4; return 5;
+}
+
+function frame(t){
+  // 문장 — 다 떴다가 그 토큰만 남는다. FFN 이 옆을 안 본다는 말을 그림이 먼저 한다
+  var per=T.tok/toks.length;
+  for(var i=0;i<toks.length;i++){
+    var u=ease(seg(t,i*per,i*per+.5));
+    var dim=ease(seg(t,T.tok,T.tok+.9));
+    var o=(i===D.qi)?u:u*(1-dim*.82);
+    set(toks[i],'opacity',o.toFixed(3));
+  }
+  // 입력 칸
+  for(var i=0;i<inc.length;i++)
+    set(inc[i],'opacity',ease(seg(t,T.tok+.3+i*.03,T.tok+.9+i*.03)).toFixed(3));
+  set(lin,'opacity',ease(seg(t,T.tok+.6,T.in)).toFixed(3));
+  set(vin,'opacity',ease(seg(t,T.tok+.6,T.in)).toFixed(3));
+  // 펼치는 면
+  set(fin,'opacity',ease(seg(t,T.in,T.wide-.4)).toFixed(3));
+  // 넓힌 칸 — 처음엔 다 고르게 뜨고, 게이트가 오면 값대로 갈린다
+  var born=ease(seg(t,T.wide-.6,T.wide+.8));
+  var gate=ease(seg(t,T.gate,T.gate+1.6));
+  for(var i=0;i<wc.length;i++){
+    var a=+wc[i].getAttribute('data-a');
+    var lvl=.55*(1-gate)+ (0.04+0.96*a)*gate;      // 고르게 → 값대로
+    set(wc[i],'opacity',(born*(.15+.85*lvl)).toFixed(3));
+  }
+  set(lw,'opacity',born.toFixed(3));
+  // 접는 면과 출력
+  set(fout,'opacity',ease(seg(t,T.fold,T.fold+1.0)).toFixed(3));
+  for(var i=0;i<outc.length;i++)
+    set(outc[i],'opacity',ease(seg(t,T.out-.6+i*.04,T.out+.3+i*.04)).toFixed(3));
+  set(lo,'opacity',ease(seg(t,T.out,T.out+.8)).toFixed(3));
+  set(vout,'opacity',ease(seg(t,T.out,T.out+.8)).toFixed(3));
+  var ci=capAt(t);
+  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
+}
+
+if(still){frame(T.out+1.2);return;}
+var t0=null;
+function loop(ts){
+  if(t0===null)t0=ts;
+  var t=(ts-t0)/1000;
+  if(t>T.end){t0=ts;t=0;}
+  frame(t);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
+</script><figcaption>위 1막이 낸 출력이 이 막의 입력이다. 같은 층·같은 자리에서 잰 수치다. 문장이 떴다가 「그것은」만 남는 것은 FFN 이 옆 토큰을 안 보기 때문이다. 칸 밝기가 그 자리에 남은 신호 크기다.</figcaption></figure><ul class="uc-points"><li><b>그래서 대부분은 꺼진다.</b> 넓힌 4,864 칸 중 97.7% 가 가장 센 자리의 10% 에도 못 미쳤다. 게이트가 문맥에 안 맞는 질문을 눌러 끄기 때문이고, 한 토큰이 실제로 쓰는 자리는 몇 십 개다.</li><li><b>다시 접는 이유도 분명하다.</b> 살아남은 질문들의 답을 조합해 원래 폭으로 되돌려야 다음 층이 받는다. 층들이 같은 폭을 주고받아야 쌓을 수 있고, 잔차 연결로 들어온 벡터에 더할 수도 있다. 「넓혔다 접는다」가 한 세트인 이유다.</li><li><b>넓히는 대가가 크다.</b> 이 모델 한 층에서 FFN 이 쓰는 가중치가 13,074,432 개인데 어텐션은 1,835,008 개다 — 층 안 가중치의 88% 가 FFN 에 있다. MoE 가 굳이 이 자리를 여러 벌로 쪼개 토큰마다 일부만 돌리는 이유가 여기다. 엔그램(N-gram 임베딩)은 아예 곱셈 없이 표에서 행을 읽어 와 이 비용을 피한다.</li><li><b>두 걸음의 성격이 다르다.</b> 어텐션은 토큰이 늘수록 볼 것이 늘어 계산과 캐시가 같이 커지지만, FFN 은 토큰마다 독립이라 서로 얽히지 않는다. 긴 문맥이 비싸지는 쪽은 어텐션이다.</li></ul><div class="side-note">Q·K·V 옆과 FFN 입력·출력 옆에 적힌 숫자는 벡터의 첫 성분 하나다. 넓힌 칸 64 개도 4,864 칸에서 고르게 뽑아 보인 것이고 전부가 아니다. 그 수치를 굽는 자리는 <code>scratchpad/attn_trace.py</code> 와 <code>scratchpad/ffn_trace.py</code> 이고, 거기서 직접 계산한 결과가 모델이 낸 것과 같은지를 굽는 단계에서 검사한다. 가중치 개수는 모델 설정에서 바로 센 것이다.</div><div class="uc-links" style="margin-top:16px;"><button type="button" class="uc-copy">링크 복사</button></div></div></div>
 
   <footer><p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸는 장입니다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지를 그림으로 같이 답니다. 맨 앞 타일에는 그 말들이 한 판에서 어떻게 맞물리는지를 이은 보고서가 한 편 서 있습니다.</p>    <div class="meta-row">
       <span>정리일 <b>2026-08-24</b></span>

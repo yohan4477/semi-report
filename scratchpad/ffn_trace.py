@@ -87,15 +87,29 @@ def build_trace():
         'in_preview': [float(v) for v in x[:PREVIEW]],
         'out_preview': [float(v) for v in y[:PREVIEW]],
         'max_err': err,
+        # 「왜 넓히나」를 말하려면 그 값이 얼마인지도 영수증이 있어야 한다.
+        # config 에서 바로 세어 둔다 — 화면에 적는 숫자는 여기서만 가져온다.
+        'params': {
+            'n_layers': int(model.config.num_hidden_layers),
+            'ffn_per_layer': 3 * d_model * int(model.config.intermediate_size),
+            'attn_per_layer': (2 * d_model * d_model
+                               + 2 * int(model.config.num_key_value_heads)
+                               * (d_model // int(model.config.num_attention_heads)) * d_model),
+            'ffn_share': 0.0,     # 아래에서 채운다
+        },
     }
 
 
 if __name__ == '__main__':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
     tr = build_trace()
+    p = tr['params']
+    p['ffn_share'] = p['ffn_per_layer'] / float(p['ffn_per_layer'] + p['attn_per_layer'])
     validate(tr)
     os.makedirs('data', exist_ok=True)
     io.open(OUT, 'w', encoding='utf-8').write(json.dumps(tr, ensure_ascii=False, indent=1))
     print('%d층 · %d → %d → %d · 잠잠한 자리 %.1f%% · 모델과의 차이 %.1e'
           % (tr['layer'], tr['d_model'], tr['d_ff'], tr['d_model'],
              tr['quiet_share'] * 100, tr['max_err']))
+    print('층 안 가중치 — FFN {:,} · 어텐션 {:,} · FFN 몫 {:.0f}%'.format(
+        p['ffn_per_layer'], p['attn_per_layer'], p['ffn_share'] * 100))
