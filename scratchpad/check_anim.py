@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""어텐션 애니메이션 — 스텝 일곱을 실제로 눌러 보고 배치를 잰다.
+"""어텐션 애니메이션 — 흐르는 동안 화면을 찍어 본다.
 
-눈으로 보고 「안 겹친다」고 보고하지 않는다(CLAUDE.md). 스텝마다 화면을 찍고 판 SVG 를
-check_fig 에 먹인다. 모바일 폭에서 가로로 넘치는지도 같은 자리에서 본다.
+눈으로 보고 「안 겹친다」고 보고하지 않는다(CLAUDE.md). 한 바퀴를 도는 동안 여러 시점을
+찍고, 그때마다 자막이 하나만 떠 있는지·막대가 자라는지·가로로 안 넘치는지를 센다.
 """
 import io, os, sys
 sys.path.insert(0, 'scratchpad')
@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 
 PAGE = os.path.abspath(os.path.join('대시보드', '애니메이션 — 어텐션.html'))
 OUT = os.path.join('scratchpad', 'anim_shots')
-N_STEPS = 7
+MARKS = [0.8, 2.6, 3.8, 5.4, 7.0, 9.2, 11.0, 13.2]
 
 
 def main():
@@ -20,46 +20,46 @@ def main():
     url = 'file:///' + PAGE.replace(os.sep, '/')
     with sync_playwright() as pw:
         b = pw.chromium.launch()
-        pg = b.new_page(viewport={'width': 1100, 'height': 780})
+        pg = b.new_page(viewport={'width': 1200, 'height': 760})
         pg.goto(url)
-        pg.evaluate("document.getElementById('btn-pause').click()")
-        pg.evaluate("document.getElementById('btn-reset').click()")
-        for i in range(N_STEPS):
-            if i:
-                pg.evaluate("document.getElementById('btn-next').click()")
-            pg.wait_for_timeout(3600 if i == 3 else 700)
-            pg.screenshot(path=os.path.join(OUT, 'step%d.png' % i))
-            shown = pg.eval_on_selector_all(
-                '.stepdesc',
-                'els=>els.filter(e=>getComputedStyle(e).display!=="none").length')
+        prev = 0.0
+        seen_caps = set()
+        for t in MARKS:
+            pg.wait_for_timeout(int((t - prev) * 1000))
+            prev = t
+            pg.screenshot(path=os.path.join(OUT, 't%04d.png' % int(t * 100)))
+            caps = pg.eval_on_selector_all(
+                '.cap', 'els=>els.map(e=>+e.getAttribute("opacity")).filter(v=>v>0.5).length')
             bars = pg.eval_on_selector_all(
                 '.bar', 'els=>els.filter(x=>+x.getAttribute("height")>0).length')
-            step = pg.get_attribute('#stage', 'data-step')
-            print('step%d  설명줄 %d · 선 막대 %d · data-step %s' % (i, shown, bars, step))
-            if shown != 1:
-                fails.append('스텝 %d: 보이는 설명 줄이 %d개다' % (i, shown))
-            if step != str(i):
-                fails.append('스텝 %d: data-step 이 %s 다' % (i, step))
+            which = pg.eval_on_selector_all(
+                '.cap', 'els=>els.findIndex(e=>+e.getAttribute("opacity")>0.5)')
+            seen_caps.add(which)
+            print('t=%4.1f초  자막 %d개(%d번) · 선 막대 %d' % (t, caps, which, bars))
+            if caps != 1:
+                fails.append('t=%.1f: 보이는 자막이 %d개다' % (t, caps))
+        if len(seen_caps) < 5:
+            fails.append('한 바퀴에서 자막이 %d개만 바뀐다 — 장면이 안 넘어간다' % len(seen_caps))
         over = pg.evaluate('document.documentElement.scrollWidth - '
                            'document.documentElement.clientWidth')
         if over > 0:
-            fails.append('폭 1100: 가로로 %dpx 넘친다' % over)
-        pg.set_viewport_size({'width': 360, 'height': 780})
-        pg.wait_for_timeout(400)
+            fails.append('폭 1200: 가로로 %dpx 넘친다' % over)
+        pg.set_viewport_size({'width': 390, 'height': 780})
+        pg.wait_for_timeout(600)
         over_m = pg.evaluate('document.documentElement.scrollWidth - '
                              'document.documentElement.clientWidth')
         pg.screenshot(path=os.path.join(OUT, 'mobile.png'))
         if over_m > 0:
-            fails.append('폭 360: 가로로 %dpx 넘친다' % over_m)
-        print('가로 넘침 — 1100: %d · 360: %d' % (over, over_m))
+            fails.append('폭 390: 가로로 %dpx 넘친다' % over_m)
+        print('가로 넘침 — 1200: %d · 390: %d' % (over, over_m))
         b.close()
     page = io.open(PAGE, encoding='utf-8').read()
-    svg = page[page.find('<svg'):page.find('</svg>') + 6]
-    for h in (check_fig.hits(svg) or []):
+    scene = page[page.find('<svg'):page.find('</svg>') + 6]
+    for h in (check_fig.hits(scene) or []):
         fails.append('배치: ' + h)
     for f in fails:
         print('FAIL', f)
-    print('요약: 스텝 %d개 · 화면 2벌 / FAIL %d' % (N_STEPS, len(fails)))
+    print('요약: 시점 %d개 / FAIL %d' % (len(MARKS), len(fails)))
     return len(fails)
 
 

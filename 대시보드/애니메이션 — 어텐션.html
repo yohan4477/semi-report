@@ -1,168 +1,181 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>애니메이션 — 어텐션</title><style>
-:root{--ink-1:#222;--ink-3:#8a8a8a;--bg-1:#fafafa;--bg-2:#f4f4f4;--bg-3:#e6e6e6;--hot:#2f8f6b}
-@media (prefers-color-scheme:dark){:root{--ink-1:#e8e8e8;--ink-3:#9a9a9a;
-  --bg-1:#181818;--bg-2:#202020;--bg-3:#2a2a2a}}
+:root{--ink-1:#1c1c1c;--ink-3:#8d8d8d;--bg-1:#fbfbfa;--bg-2:#efefee;--bg-3:#e0e0de;
+  --hot:#1f7a5c;--hot-soft:#d9ede5}
+@media (prefers-color-scheme:dark){:root{--ink-1:#ededec;--ink-3:#8f8f8f;
+  --bg-1:#121212;--bg-2:#1e1e1e;--bg-3:#2c2c2c;--hot:#4fc39b;--hot-soft:#1b3a31}}
 *{box-sizing:border-box}
-html,body{margin:0;overflow-x:hidden;background:var(--bg-1);color:var(--ink-1);
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg-1);
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:22px 16px 48px}
-h1{font-size:19px;margin:0 0 6px;letter-spacing:-.01em}
-.meta{font-size:12px;color:var(--ink-3);margin:0 0 16px;line-height:1.6}
-.sent{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 14px}
-.tk{padding:5px 9px;border:1px solid var(--ink-3);border-radius:6px;font-size:13px;
-  background:var(--bg-2);transition:border-color .25s ease,background .25s ease}
-.tk.q{border-color:var(--hot);border-width:2px;background:var(--bg-3);font-weight:700}
-svg{width:100%;height:auto;display:block}
-.stepdesc{display:none;font-size:14px;line-height:1.7;margin:0}
-.bar{transition:height .35s ease,y .35s ease,fill .3s ease}
-.fade{opacity:0;transition:opacity .35s ease}
-.desc{min-height:52px;margin-top:10px;padding:12px 14px;background:var(--bg-2);
-  border-radius:8px;border:1px solid var(--bg-3)}
-.ctl{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
-button{font:inherit;font-size:13px;padding:7px 13px;border:1px solid var(--ink-3);
-  border-radius:6px;background:var(--bg-2);color:var(--ink-1);cursor:pointer}
-button:hover{background:var(--bg-3)}
-.dots{display:flex;gap:5px;margin-top:12px}
-.dot{width:22px;height:4px;border-radius:2px;background:var(--bg-3);transition:background .25s}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:14px}
+svg{width:100%;height:100%}
+text{fill:var(--ink-1);font-size:15px}
+.tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+.kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.kc .kk{font-size:13px}
+.kc .kv{font-size:11px;fill:var(--ink-3)}
+.bar{fill:var(--bg-3)}
+.bar.hot{fill:var(--hot)}
+.bv{font-size:12px;fill:var(--ink-3)}
+.vc rect{fill:var(--hot)}
+.vc text{font-size:13px}
+#out rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+#out text{font-size:14px}
+.flow{fill:var(--hot)}
+.cap{font-size:17px;letter-spacing:-.01em}
+#src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3)}
+</style></head><body>
+<div id="wrap"><svg id="stage" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">
+<defs><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
+<g class="tok" opacity="0"><rect x="6.5" y="64" width="74" height="38" rx="7"/><text x="43.5" y="89" text-anchor="middle">회사</text></g>
+<g class="tok" opacity="0"><rect x="89.5" y="64" width="74" height="38" rx="7"/><text x="126.5" y="89" text-anchor="middle">가</text></g>
+<g class="tok" opacity="0"><rect x="172.5" y="64" width="74" height="38" rx="7"/><text x="209.5" y="89" text-anchor="middle">공</text></g>
+<g class="tok" opacity="0"><rect x="255.5" y="64" width="74" height="38" rx="7"/><text x="292.5" y="89" text-anchor="middle">장을</text></g>
+<g class="tok" opacity="0"><rect x="338.5" y="64" width="74" height="38" rx="7"/><text x="375.5" y="89" text-anchor="middle">지</text></g>
+<g class="tok" opacity="0"><rect x="421.5" y="64" width="74" height="38" rx="7"/><text x="458.5" y="89" text-anchor="middle">었다</text></g>
+<g class="tok" opacity="0"><rect x="504.5" y="64" width="74" height="38" rx="7"/><text x="541.5" y="89" text-anchor="middle">.</text></g>
+<g class="tok tokq" opacity="0"><rect x="587.5" y="64" width="74" height="38" rx="7"/><text x="624.5" y="89" text-anchor="middle">그것은</text></g>
+<g class="tok" opacity="0"><rect x="670.5" y="64" width="74" height="38" rx="7"/><text x="707.5" y="89" text-anchor="middle">부</text></g>
+<g class="tok" opacity="0"><rect x="753.5" y="64" width="74" height="38" rx="7"/><text x="790.5" y="89" text-anchor="middle">산</text></g>
+<g class="tok" opacity="0"><rect x="836.5" y="64" width="74" height="38" rx="7"/><text x="873.5" y="89" text-anchor="middle">에</text></g>
+<g class="tok" opacity="0"><rect x="919.5" y="64" width="74" height="38" rx="7"/><text x="956.5" y="89" text-anchor="middle">있다</text></g>
+<line id="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam)" stroke-width="3" stroke-linecap="round" opacity="0"/>
+<g class="kc" opacity="0"><rect x="6.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="43.5" y="309" text-anchor="middle">K</text><text class="kv" x="43.5" y="324" text-anchor="middle">-0.01</text></g>
+<g class="kc" opacity="0"><rect x="89.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="126.5" y="309" text-anchor="middle">K</text><text class="kv" x="126.5" y="324" text-anchor="middle">0.27</text></g>
+<g class="kc" opacity="0"><rect x="172.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="209.5" y="309" text-anchor="middle">K</text><text class="kv" x="209.5" y="324" text-anchor="middle">-0.41</text></g>
+<g class="kc" opacity="0"><rect x="255.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="292.5" y="309" text-anchor="middle">K</text><text class="kv" x="292.5" y="324" text-anchor="middle">-0.58</text></g>
+<g class="kc" opacity="0"><rect x="338.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="375.5" y="309" text-anchor="middle">K</text><text class="kv" x="375.5" y="324" text-anchor="middle">-0.66</text></g>
+<g class="kc" opacity="0"><rect x="421.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="458.5" y="309" text-anchor="middle">K</text><text class="kv" x="458.5" y="324" text-anchor="middle">0.46</text></g>
+<g class="kc" opacity="0"><rect x="504.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="541.5" y="309" text-anchor="middle">K</text><text class="kv" x="541.5" y="324" text-anchor="middle">-0.10</text></g>
+<g class="kc" opacity="0"><rect x="587.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="624.5" y="309" text-anchor="middle">K</text><text class="kv" x="624.5" y="324" text-anchor="middle">0.23</text></g>
+<rect class="bar" x="17.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="43.5" y="469" text-anchor="middle" opacity="0">0.22</text>
+<rect class="bar" x="100.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="126.5" y="469" text-anchor="middle" opacity="0">0.07</text>
+<rect class="bar" x="183.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="209.5" y="469" text-anchor="middle" opacity="0">0.02</text>
+<rect class="bar" x="266.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="292.5" y="469" text-anchor="middle" opacity="0">0.33</text>
+<rect class="bar" x="349.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="375.5" y="469" text-anchor="middle" opacity="0">0.03</text>
+<rect class="bar" x="432.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="458.5" y="469" text-anchor="middle" opacity="0">0.13</text>
+<rect class="bar" x="515.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="541.5" y="469" text-anchor="middle" opacity="0">0.10</text>
+<rect class="bar" x="598.5" y="452" width="52" height="0" rx="4"/>
+<text class="bv" x="624.5" y="469" text-anchor="middle" opacity="0">0.10</text>
+<g class="vc" opacity="0"><rect x="6.5" y="486" width="74" height="34" rx="7"/><text x="43.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="89.5" y="486" width="74" height="34" rx="7"/><text x="126.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="172.5" y="486" width="74" height="34" rx="7"/><text x="209.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="255.5" y="486" width="74" height="34" rx="7"/><text x="292.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="338.5" y="486" width="74" height="34" rx="7"/><text x="375.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="421.5" y="486" width="74" height="34" rx="7"/><text x="458.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="504.5" y="486" width="74" height="34" rx="7"/><text x="541.5" y="509" text-anchor="middle">V</text></g>
+<g class="vc" opacity="0"><rect x="587.5" y="486" width="74" height="34" rx="7"/><text x="624.5" y="509" text-anchor="middle">V</text></g>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<circle class="flow" r="4" opacity="0"/>
+<g id="out" opacity="0"><rect x="701.5" y="486" width="140" height="34" rx="8"/><text x="771.5" y="509" text-anchor="middle">출력 0.53</text></g>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">「그것은」이 무엇을 가리키는지 찾는 중이다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">앞선 토큰마다 K 가 이미 남아 있다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">Q 를 K 하나하나에 대 본다 — 닮은 만큼 점수가 선다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">점수를 합이 1 인 비율로 바꾼다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">그 비율만큼 V 를 섞는다</text>
+<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">섞여 나온 하나 — 이 자리의 어텐션 출력이다</text>
+</svg></div>
+<p id="src">Qwen/Qwen2.5-0.5B-Instruct · 15층 9번 헤드 — 「그것은」 자리에서 잰 실제 값이다</p>
+<script>
+(function(){
+var D={"m": 8, "xs": [6.5, 89.5, 172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5, 836.5, 919.5], "cw": 74, "qx": 587.5, "toky": 64, "qy": 180, "ky": 292, "barbase": 452, "vy": 486, "ox": 701.5, "qv": "0.18", "bars": [{"raw": 110.6, "soft": 86.1, "w": 0.21569174082574483, "top": false}, {"raw": 65.3, "soft": 34.4, "w": 0.0690490189851718, "top": false}, {"raw": 10.0, "soft": 16.1, "w": 0.017203629850026922, "top": false}, {"raw": 128.0, "soft": 128.0, "w": 0.3343870801740588, "top": true}, {"raw": 38.0, "soft": 22.3, "w": 0.034796593533291356, "top": false}, {"raw": 91.3, "soft": 56.9, "w": 0.1329811875848302, "top": false}, {"raw": 78.8, "soft": 44.3, "w": 0.09710801118017787, "top": false}, {"raw": 79.5, "soft": 44.9, "w": 0.09878273786669818, "top": false}], "t": {"tok": 1.5, "q": 2.7, "scan": 4.1, "step": 0.46, "soft": 8.129999999999999, "v": 9.829999999999998, "out": 11.429999999999998, "end": 14.429999999999998}};
+var st=document.getElementById('stage');
+var q=function(s){return [].slice.call(st.querySelectorAll(s));};
+var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
+var beam=document.getElementById('beam'),out=document.getElementById('out'),caps=q('.cap');
+var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
+var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function cl(v,a,b){return v<a?a:(v>b?b:v);}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+function set(e,k,v){e.setAttribute(k,v);}
 
-[data-step="0"] .stepdesc[data-i="0"]{display:block}
-[data-step="1"] .stepdesc[data-i="1"]{display:block}
-[data-step="2"] .stepdesc[data-i="2"]{display:block}
-[data-step="3"] .stepdesc[data-i="3"]{display:block}
-[data-step="4"] .stepdesc[data-i="4"]{display:block}
-[data-step="5"] .stepdesc[data-i="5"]{display:block}
-[data-step="6"] .stepdesc[data-i="6"]{display:block}
-[data-step="0"] [data-show="0"]{opacity:1}
-[data-step="1"] [data-show="0"]{opacity:1}
-[data-step="1"] [data-show="1"]{opacity:1}
-[data-step="2"] [data-show="0"]{opacity:1}
-[data-step="2"] [data-show="1"]{opacity:1}
-[data-step="2"] [data-show="2"]{opacity:1}
-[data-step="3"] [data-show="0"]{opacity:1}
-[data-step="3"] [data-show="1"]{opacity:1}
-[data-step="3"] [data-show="2"]{opacity:1}
-[data-step="3"] [data-show="3"]{opacity:1}
-[data-step="4"] [data-show="0"]{opacity:1}
-[data-step="4"] [data-show="1"]{opacity:1}
-[data-step="4"] [data-show="2"]{opacity:1}
-[data-step="4"] [data-show="3"]{opacity:1}
-[data-step="4"] [data-show="4"]{opacity:1}
-[data-step="5"] [data-show="0"]{opacity:1}
-[data-step="5"] [data-show="1"]{opacity:1}
-[data-step="5"] [data-show="2"]{opacity:1}
-[data-step="5"] [data-show="3"]{opacity:1}
-[data-step="5"] [data-show="4"]{opacity:1}
-[data-step="5"] [data-show="5"]{opacity:1}
-[data-step="6"] [data-show="0"]{opacity:1}
-[data-step="6"] [data-show="1"]{opacity:1}
-[data-step="6"] [data-show="2"]{opacity:1}
-[data-step="6"] [data-show="3"]{opacity:1}
-[data-step="6"] [data-show="4"]{opacity:1}
-[data-step="6"] [data-show="5"]{opacity:1}
-[data-step="6"] [data-show="6"]{opacity:1}
-[data-step="0"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="1"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="1"] .dot[data-i="1"]{background:var(--hot)}
-[data-step="2"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="2"] .dot[data-i="1"]{background:var(--hot)}
-[data-step="2"] .dot[data-i="2"]{background:var(--hot)}
-[data-step="3"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="3"] .dot[data-i="1"]{background:var(--hot)}
-[data-step="3"] .dot[data-i="2"]{background:var(--hot)}
-[data-step="3"] .dot[data-i="3"]{background:var(--hot)}
-[data-step="4"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="4"] .dot[data-i="1"]{background:var(--hot)}
-[data-step="4"] .dot[data-i="2"]{background:var(--hot)}
-[data-step="4"] .dot[data-i="3"]{background:var(--hot)}
-[data-step="4"] .dot[data-i="4"]{background:var(--hot)}
-[data-step="5"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="5"] .dot[data-i="1"]{background:var(--hot)}
-[data-step="5"] .dot[data-i="2"]{background:var(--hot)}
-[data-step="5"] .dot[data-i="3"]{background:var(--hot)}
-[data-step="5"] .dot[data-i="4"]{background:var(--hot)}
-[data-step="5"] .dot[data-i="5"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="0"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="1"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="2"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="3"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="4"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="5"]{background:var(--hot)}
-[data-step="6"] .dot[data-i="6"]{background:var(--hot)}</style></head><body><div class="wrap" id="stage" data-step="0">
-<h1>어텐션 계산 한 번을 일곱 걸음으로</h1>
-<p class="meta">Qwen/Qwen2.5-0.5B-Instruct · 15층 9번 헤드 — 「그것은」 자리가 앞 명사를 가장 세게 되짚는 헤드로 골랐다.<br>
-화면에 뜨는 값은 그 모델을 실제로 돌려 뽑은 것이다.</p>
-<div class="sent"><span class="tk">회사</span><span class="tk">가</span><span class="tk">공</span><span class="tk">장을</span><span class="tk">지</span><span class="tk">었다</span><span class="tk">.</span><span class="tk q">그것은</span><span class="tk">부</span><span class="tk">산</span><span class="tk">에</span><span class="tk">있다</span></div>
-<svg viewBox="0 0 796 400" role="img" aria-label="어텐션 계산 한 번">
-<g class="fade" data-show="1"><rect x="574" y="44" width="62" height="42" rx="6" fill="var(--bg-3)" stroke="var(--hot)" stroke-width="2"/><text x="605" y="63" font-size="13" text-anchor="middle" fill="var(--ink-1)">Q</text><text x="605" y="78" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.18</text></g>
-<g class="kcell fade" data-show="2"><rect x="70" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="101" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="101" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">-0.01</text></g>
-<text x="101" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">회사</text>
-<g class="kcell fade" data-show="2"><rect x="142" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="173" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="173" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.27</text></g>
-<text x="173" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">가</text>
-<g class="kcell fade" data-show="2"><rect x="214" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="245" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="245" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">-0.41</text></g>
-<text x="245" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">공</text>
-<g class="kcell fade" data-show="2"><rect x="286" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="317" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="317" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">-0.58</text></g>
-<text x="317" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">장을</text>
-<g class="kcell fade" data-show="2"><rect x="358" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="389" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="389" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">-0.66</text></g>
-<text x="389" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">지</text>
-<g class="kcell fade" data-show="2"><rect x="430" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="461" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="461" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.46</text></g>
-<text x="461" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">었다</text>
-<g class="kcell fade" data-show="2"><rect x="502" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="533" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="533" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">-0.10</text></g>
-<text x="533" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">.</text>
-<g class="kcell fade" data-show="2"><rect x="574" y="150" width="62" height="40" rx="5" fill="var(--bg-2)" stroke="var(--ink-3)"/><text x="605" y="167" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text><text x="605" y="182" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.23</text></g>
-<text x="605" y="206" font-size="11" text-anchor="middle" fill="var(--ink-3)">그것은</text>
-<rect class="bar" data-show="3" x="78" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="72" data-soft="56"/>
-<text class="softval fade" data-show="4" x="101" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.22</text>
-<rect class="bar" data-show="3" x="150" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="42" data-soft="22"/>
-<text class="softval fade" data-show="4" x="173" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.07</text>
-<rect class="bar" data-show="3" x="222" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="6" data-soft="10"/>
-<text class="softval fade" data-show="4" x="245" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.02</text>
-<rect class="bar" data-show="3" data-top="1" x="294" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="84" data-soft="84"/>
-<text class="softval fade" data-show="4" x="317" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.33</text>
-<rect class="bar" data-show="3" x="366" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="24" data-soft="14"/>
-<text class="softval fade" data-show="4" x="389" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.03</text>
-<rect class="bar" data-show="3" x="438" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="59" data-soft="37"/>
-<text class="softval fade" data-show="4" x="461" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.13</text>
-<rect class="bar" data-show="3" x="510" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="51" data-soft="28"/>
-<text class="softval fade" data-show="4" x="533" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.10</text>
-<rect class="bar" data-show="3" x="582" y="300" width="46" height="0" rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="51" data-soft="29"/>
-<text class="softval fade" data-show="4" x="605" y="315" font-size="10" text-anchor="middle" fill="var(--ink-3)">0.10</text>
-<g class="vcell fade" data-show="5"><rect x="70" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.688" stroke="var(--ink-3)"/><text x="101" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="142" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.302" stroke="var(--ink-3)"/><text x="173" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="214" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.165" stroke="var(--ink-3)"/><text x="245" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="286" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="1.000" stroke="var(--ink-3)"/><text x="317" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="358" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.212" stroke="var(--ink-3)"/><text x="389" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="430" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.470" stroke="var(--ink-3)"/><text x="461" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="502" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.376" stroke="var(--ink-3)"/><text x="533" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g class="vcell fade" data-show="5"><rect x="574" y="330" width="62" height="34" rx="5" fill="var(--hot)" fill-opacity="0.380" stroke="var(--ink-3)"/><text x="605" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text></g>
-<g id="out-box" class="fade" data-show="6"><rect x="662" y="330" width="118" height="34" rx="6" fill="var(--bg-3)" stroke="var(--hot)" stroke-width="2"/><text x="721" y="352" font-size="11" text-anchor="middle" fill="var(--ink-1)">출력 0.53</text></g>
-</svg>
-<div class="desc"><p class="stepdesc" data-i="0">이 자리에서 다음 토큰을 만든다 — 그러려면 앞선 토큰들을 얼마나 볼지 정해야 한다</p><p class="stepdesc" data-i="1">지금 토큰이 무엇을 찾는지가 Q다 — 이 자리 것 하나뿐이다</p><p class="stepdesc" data-i="2">앞선 토큰마다 K가 이미 캐시에 있다 — 새로 만들지 않는다</p><p class="stepdesc" data-i="3">Q와 K를 왼쪽부터 하나씩 곱해 점수를 낸다 — 막대가 그 점수다</p><p class="stepdesc" data-i="4">점수를 합 1의 비율로 바꾼다 — 이제 막대는 어느 토큰을 얼마나 볼지의 몫이다</p><p class="stepdesc" data-i="5">그 비율대로 V를 섞는다 — 많이 보기로 한 토큰의 V가 많이 들어간다</p><p class="stepdesc" data-i="6">섞인 결과 하나가 이 자리의 어텐션 출력이다</p></div>
-<div class="dots"><span class="dot" data-i="0"></span><span class="dot" data-i="1"></span><span class="dot" data-i="2"></span><span class="dot" data-i="3"></span><span class="dot" data-i="4"></span><span class="dot" data-i="5"></span><span class="dot" data-i="6"></span></div>
-<div class="ctl">
-<button type="button" id="btn-prev">이전</button>
-<button type="button" id="btn-next">다음</button>
-<button type="button" id="btn-pause">자동재생 멈춤</button>
-<button type="button" id="btn-reset">처음부터</button></div>
-</div><script>
-(function(){var st=document.getElementById('stage'),n=7,i=0,t=null,sweep=null;
-function setBar(r,v,hot){r.setAttribute('height',v);r.setAttribute('y',300-v);
-  r.setAttribute('fill',hot?'var(--hot)':'var(--bg-3)');}
-function go(k){i=Math.max(0,Math.min(n-1,k));st.setAttribute('data-step',i);
-  if(sweep){clearTimeout(sweep);sweep=null;}
-  var bars=st.querySelectorAll('.bar');
-  if(i<3){for(var a=0;a<bars.length;a++)setBar(bars[a],0,false);return;}
-  if(i===3){var j=0;(function next(){if(j>=bars.length){sweep=null;return;}
-    setBar(bars[j],+bars[j].getAttribute('data-raw'),false);j++;
-    sweep=setTimeout(next,350);})();return;}
-  for(var b=0;b<bars.length;b++){var r=bars[b];
-    setBar(r,+r.getAttribute('data-soft'),!!r.getAttribute('data-top'));}}
-function stop(){if(t){clearInterval(t);t=null;}}
-document.getElementById('btn-next').onclick=function(){stop();go(i+1)};
-document.getElementById('btn-prev').onclick=function(){stop();go(i-1)};
-document.getElementById('btn-reset').onclick=function(){stop();go(0)};
-document.getElementById('btn-pause').onclick=stop;
-go(0);
-t=setInterval(function(){if(i>=n-1){stop();}else{go(i+1);}},2200);})();
+var qbox=document.createElementNS('http://www.w3.org/2000/svg','g');
+qbox.setAttribute('opacity','0');
+qbox.innerHTML='<rect width="'+cw+'" height="40" rx="7" fill="var(--hot-soft)" '+
+  'stroke="var(--hot)" stroke-width="2"/>'+
+  '<text x="'+(cw/2)+'" y="17" text-anchor="middle" font-size="13">Q</text>'+
+  '<text x="'+(cw/2)+'" y="32" text-anchor="middle" font-size="11" fill="var(--ink-3)">'+
+  D.qv+'</text>';
+st.appendChild(qbox);
+
+function capAt(t){
+  if(t<T.q)return 0; if(t<T.q+1.0)return 1; if(t<T.scan)return 2;
+  if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.out)return 5; return 6;
+}
+
+function frame(t){
+  var per=T.tok/toks.length;
+  for(var i=0;i<toks.length;i++){
+    var u=ease(seg(t,i*per,i*per+.42));
+    set(toks[i],'opacity',u.toFixed(3));
+  }
+  var uq=ease(seg(t,T.tok,T.q));
+  var qx=D.qx,qy=D.toky+(D.qy-D.toky)*uq;
+  var scanning=t>=T.scan&&t<T.soft;
+  if(scanning){
+    var k=cl(Math.floor((t-T.scan)/T.step),0,m-1);
+    var fr=cl((t-T.scan)/T.step-k,0,1);
+    qx=xs[k]+(xs[cl(k+1,0,m-1)]-xs[k])*ease(fr);
+    qy=D.qy;
+    set(beam,'opacity',(1-Math.abs(fr-.5)*1.5).toFixed(2));
+    set(beam,'x1',(qx+cw/2).toFixed(1));set(beam,'y1',D.qy+40);
+    set(beam,'x2',(xs[k]+cw/2).toFixed(1));set(beam,'y2',D.ky);
+  }else{
+    set(beam,'opacity',0);
+    if(t>=T.soft){qx=xs[m-1];qy=D.qy;}
+  }
+  set(qbox,'opacity',uq.toFixed(3));
+  set(qbox,'transform','translate('+qx.toFixed(1)+','+qy.toFixed(1)+')');
+  for(var j=0;j<kcs.length;j++)set(kcs[j],'opacity',ease(seg(t,T.q-.6+j*.05,T.q-.2+j*.05)).toFixed(3));
+  for(var j=0;j<m;j++){
+    var b=D.bars[j],h=0;
+    if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.34));
+    else if(t>=T.soft)h=b.raw+(b.soft-b.raw)*ease(seg(t,T.soft,T.soft+.9));
+    set(bars[j],'height',h.toFixed(1));set(bars[j],'y',(D.barbase-h).toFixed(1));
+    if(t>=T.soft&&b.top)bars[j].classList.add('hot');else bars[j].classList.remove('hot');
+    set(bvs[j],'opacity',ease(seg(t,T.soft+.35,T.soft+1.0)).toFixed(3));
+  }
+  for(var j=0;j<m;j++){
+    var uv=ease(seg(t,T.v+j*.04,T.v+j*.04+.45));
+    set(vcs[j],'opacity',uv.toFixed(3));
+    vcs[j].querySelector('rect').setAttribute(
+      'fill-opacity',((.12+.88*D.bars[j].w/topw)*uv).toFixed(3));
+    var uf=seg(t,T.out-.5+j*.05,T.out+.8);
+    set(flows[j],'opacity',(uf>0&&uf<1?(.3+.7*D.bars[j].w/topw):0).toFixed(3));
+    set(flows[j],'cx',(xs[j]+cw/2+(D.ox+70-xs[j]-cw/2)*ease(uf)).toFixed(1));
+    set(flows[j],'cy',(D.vy+17).toFixed(1));
+  }
+  set(out,'opacity',ease(seg(t,T.out+.4,T.out+1.0)).toFixed(3));
+  var ci=capAt(t);
+  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
+}
+
+if(still){frame(T.out+1.6);return;}
+var t0=null;
+function loop(ts){
+  if(t0===null)t0=ts;
+  var t=(ts-t0)/1000;
+  if(t>T.end){t0=ts;t=0;}
+  frame(t);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
 </script></body></html>

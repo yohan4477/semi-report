@@ -1,31 +1,46 @@
 # -*- coding: utf-8 -*-
-"""어텐션 애니메이션 장 생성기. 아카이브 부품(dash_common)을 안 쓴다.
+"""어텐션 애니메이션 장 생성기. 대시보드 부품을 아무것도 안 쓴다.
 
-왜 따로 짰나. 아카이브는 카드가 쌓이는 장의 부품이고 이 장은 카드가 없다 — 한 계산을
-일곱 단계로 늦춰 보이는 것이 전부다. 접힘·타일·목록이 그 사이를 막는다.
+왜 틀을 걷었나. 처음에는 버튼·설명 상자·진행 점을 붙인 「단계 넘기는 화면」으로 만들었는데
+그건 애니메이션이 아니라 슬라이드였다. 어텐션은 한 번에 흐르는 계산이라 걸음을 사람이
+끊어 넘기면 흐름이 안 보인다. 머리말·토큰 칩·설명 상자·버튼·진행 점을 전부 걷고 시계
+하나로 도는 한 장면으로 다시 세웠다.
 
-규약은 check_ui() 가 생성 때 검사한다. 화면에 뜨는 숫자는 전부 data/attn_trace.json 에
-있어야 한다 — 그리는 쪽이 값을 지어내지 못하게 막는 자리다.
+남은 규약은 다섯이고 check_ui() 가 생성 때 본다. 지어낸 숫자가 못 샌다 · 자막이 장면마다
+하나다 · 안 움직이게 설정한 사람에게는 정지 화면을 준다 · 틀(버튼·머리말·설명 상자·진행
+점)을 안 세운다 · 칸 수가 구운 값과 맞는다.
 """
 import io, os, re, sys, json
 
 TRACE = os.path.join('data', 'attn_trace.json')
 OUT = os.path.join('대시보드', '애니메이션 — 어텐션.html')
 
-STEPS = [
-    ('sentence', '이 자리에서 다음 토큰을 만든다 — 그러려면 앞선 토큰들을 얼마나 볼지 정해야 한다'),
-    ('query',    '지금 토큰이 무엇을 찾는지가 Q다 — 이 자리 것 하나뿐이다'),
-    ('keys',     '앞선 토큰마다 K가 이미 캐시에 있다 — 새로 만들지 않는다'),
-    ('score',    'Q와 K를 왼쪽부터 하나씩 곱해 점수를 낸다 — 막대가 그 점수다'),
-    ('softmax',  '점수를 합 1의 비율로 바꾼다 — 이제 막대는 어느 토큰을 얼마나 볼지의 몫이다'),
-    ('mix',      '그 비율대로 V를 섞는다 — 많이 보기로 한 토큰의 V가 많이 들어간다'),
-    ('out',      '섞인 결과 하나가 이 자리의 어텐션 출력이다'),
-]
+# ── 판 좌표 ─────────────────────────────────────────────────
+W, H = 1000, 620
+TOKY = 64            # 문장 줄
+QY = 180             # Q 칩이 내려와 머무는 높이
+KY = 292             # K 칸
+BARBASE = 452        # 막대 바닥
+BARMAX = 118         # 막대 최대 높이
+VY = 486             # V 칸
+CAPY = 578           # 자막
+CW, CGAP = 74, 9     # 칸 폭 · 사이
 
-BW, BG, BX = 62, 10, 70      # K 칸 폭 · 사이 · 왼쪽 시작
-QY, KY = 44, 150             # Q 상자 윗변 · K 칸 윗변
-BASE, MAXH = 300, 78         # 막대 바닥 · 최대 높이
-VY = 330                     # V 칸 윗변
+# ── 시계 (초) ───────────────────────────────────────────────
+T_TOK = 1.5
+T_Q = 2.7
+T_SCAN = 4.1
+SCAN_STEP = 0.46
+
+CAPS = [
+    '「그것은」이 무엇을 가리키는지 찾는 중이다',
+    '지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다',
+    '앞선 토큰마다 K 가 이미 남아 있다',
+    'Q 를 K 하나하나에 대 본다 — 닮은 만큼 점수가 선다',
+    '점수를 합이 1 인 비율로 바꾼다',
+    '그 비율만큼 V 를 섞는다',
+    '섞여 나온 하나 — 이 자리의 어텐션 출력이다',
+]
 
 
 def load_trace(path=TRACE):
@@ -33,198 +48,241 @@ def load_trace(path=TRACE):
 
 
 def _screen_numbers(html):
-    """화면에 뜬 숫자를 전부 긁는다.
-
-    사람이 읽는 글자만 본다 — 태그 속성(data-raw 같은 것)도, style·script 안 숫자
-    (line-height:1.6 같은 것)도 화면 글자가 아니다.
-    """
+    """사람이 읽는 글자 속 숫자만. style·script 안과 태그 속성은 화면 글자가 아니다."""
     body = re.sub('<style[^>]*>.*?</style>', ' ', html, flags=re.S)
     body = re.sub('<script[^>]*>.*?</script>', ' ', body, flags=re.S)
     return set(re.findall(r'-?\d+\.\d+', re.sub(r'<[^>]+>', ' ', body)))
 
 
-def svg_board(tr):
-    m = tr['query_pos'] + 1
-    soft, raw = tr['scores_softmax'], tr['scores_raw']
-    top = max(soft)
-    lo, hi = min(raw), max(raw)
-    span = (hi - lo) or 1.0
-    w = BX + m * (BW + BG) + 150
-    p = ['<svg viewBox="0 0 %d 400" role="img" aria-label="어텐션 계산 한 번">' % w]
+def layout(tr):
+    n = len(tr['tokens'])
+    total = n * CW + (n - 1) * CGAP
+    x0 = (W - total) / 2.0
+    return tr['query_pos'] + 1, n, [x0 + i * (CW + CGAP) for i in range(n)]
 
-    # ② Q — 지금 토큰 것 하나
-    qx = BX + tr['query_pos'] * (BW + BG)
-    p.append('<g class="fade" data-show="1">'
-             '<rect x="%d" y="%d" width="%d" height="42" rx="6" fill="var(--bg-3)" '
-             'stroke="var(--hot)" stroke-width="2"/>'
-             '<text x="%d" y="%d" font-size="13" text-anchor="middle" fill="var(--ink-1)">Q</text>'
-             '<text x="%d" y="%d" font-size="10" text-anchor="middle" fill="var(--ink-3)">%.2f</text>'
-             '</g>' % (qx, QY, BW, qx + BW // 2, QY + 19, qx + BW // 2, QY + 34,
-                       tr['q_preview'][0]))
 
-    # ③ K — 앞선 토큰마다 하나
+def timings(m):
+    t_soft = T_SCAN + m * SCAN_STEP + 0.35
+    t_v = t_soft + 1.7
+    t_out = t_v + 1.6
+    return {'tok': T_TOK, 'q': T_Q, 'scan': T_SCAN, 'step': SCAN_STEP,
+            'soft': t_soft, 'v': t_v, 'out': t_out, 'end': t_out + 3.0}
+
+
+def svg_scene(tr):
+    m, n, xs = layout(tr)
+    p = ['<svg id="stage" viewBox="0 0 %d %d" preserveAspectRatio="xMidYMid meet" '
+         'role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">' % (W, H)]
+    p.append('<defs><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">'
+             '<stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/>'
+             '<stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/>'
+             '</linearGradient></defs>')
+    for i, t in enumerate(tr['tokens']):
+        cls = 'tok' + (' tokq' if i == tr['query_pos'] else '')
+        p.append('<g class="%s" opacity="0">'
+                 '<rect x="%.1f" y="%d" width="%d" height="38" rx="7"/>'
+                 '<text x="%.1f" y="%d" text-anchor="middle">%s</text></g>'
+                 % (cls, xs[i], TOKY, CW, xs[i] + CW / 2, TOKY + 25, t.strip() or '·'))
+    p.append('<line id="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam)" '
+             'stroke-width="3" stroke-linecap="round" opacity="0"/>')
     for j in range(m):
-        x = BX + j * (BW + BG)
-        p.append('<g class="kcell fade" data-show="2">'
-                 '<rect x="%d" y="%d" width="%d" height="40" rx="5" fill="var(--bg-2)" '
-                 'stroke="var(--ink-3)"/>'
-                 '<text x="%d" y="%d" font-size="12" text-anchor="middle" fill="var(--ink-1)">K</text>'
-                 '<text x="%d" y="%d" font-size="10" text-anchor="middle" fill="var(--ink-3)">%.2f</text>'
-                 '</g>' % (x, KY, BW, x + BW // 2, KY + 17, x + BW // 2, KY + 32,
-                           tr['k_preview'][j][0]))
-        p.append('<text x="%d" y="%d" font-size="11" text-anchor="middle" fill="var(--ink-3)">%s</text>'
-                 % (x + BW // 2, KY + 56, (tr['tokens'][j].strip() or '_')[:4]))
-
-    # ④⑤ 점수 막대 — 스텝 3 은 원점수, 스텝 4 부터 비율
+        p.append('<g class="kc" opacity="0">'
+                 '<rect x="%.1f" y="%d" width="%d" height="40" rx="7"/>'
+                 '<text class="kk" x="%.1f" y="%d" text-anchor="middle">K</text>'
+                 '<text class="kv" x="%.1f" y="%d" text-anchor="middle">%.2f</text></g>'
+                 % (xs[j], KY, CW, xs[j] + CW / 2, KY + 17,
+                    xs[j] + CW / 2, KY + 32, tr['k_preview'][j][0]))
     for j in range(m):
-        x = BX + j * (BW + BG)
-        h_raw = int(6 + MAXH * (raw[j] - lo) / span)
-        h_soft = int(6 + MAXH * soft[j] / top)
-        hot = ' data-top="1"' if soft[j] == top else ''
-        p.append('<rect class="bar" data-show="3"%s x="%d" y="%d" width="%d" height="0" '
-                 'rx="3" fill="var(--bg-3)" stroke="var(--ink-3)" data-raw="%d" data-soft="%d"/>'
-                 % (hot, x + 8, BASE, BW - 16, h_raw, h_soft))
-        p.append('<text class="softval fade" data-show="4" x="%d" y="%d" font-size="10" '
-                 'text-anchor="middle" fill="var(--ink-3)">%.2f</text>'
-                 % (x + BW // 2, BASE + 15, soft[j]))
-
-    # ⑥ V — 비율만큼 진하게
+        p.append('<rect class="bar" x="%.1f" y="%d" width="%d" height="0" rx="4"/>'
+                 % (xs[j] + 11, BARBASE, CW - 22))
+        p.append('<text class="bv" x="%.1f" y="%d" text-anchor="middle" opacity="0">%.2f</text>'
+                 % (xs[j] + CW / 2, BARBASE + 17, tr['scores_softmax'][j]))
     for j in range(m):
-        x = BX + j * (BW + BG)
-        op = 0.12 + 0.88 * soft[j] / top
-        p.append('<g class="vcell fade" data-show="5">'
-                 '<rect x="%d" y="%d" width="%d" height="34" rx="5" fill="var(--hot)" '
-                 'fill-opacity="%.3f" stroke="var(--ink-3)"/>'
-                 '<text x="%d" y="%d" font-size="11" text-anchor="middle" fill="var(--ink-1)">V</text>'
-                 '</g>' % (x, VY, BW, op, x + BW // 2, VY + 22))
-
-    # ⑦ 출력 — 섞인 결과 하나
-    ox = BX + m * (BW + BG) + 16
-    p.append('<g id="out-box" class="fade" data-show="6">'
-             '<rect x="%d" y="%d" width="%d" height="34" rx="6" fill="var(--bg-3)" '
-             'stroke="var(--hot)" stroke-width="2"/>'
-             '<text x="%d" y="%d" font-size="11" text-anchor="middle" fill="var(--ink-1)">출력 %.2f</text>'
-             '</g>' % (ox, VY, BW + 56, ox + (BW + 56) // 2, VY + 22, tr['out_preview'][0]))
+        p.append('<g class="vc" opacity="0">'
+                 '<rect x="%.1f" y="%d" width="%d" height="34" rx="7"/>'
+                 '<text x="%.1f" y="%d" text-anchor="middle">V</text></g>'
+                 % (xs[j], VY, CW, xs[j] + CW / 2, VY + 23))
+    for _j in range(m):
+        p.append('<circle class="flow" r="4" opacity="0"/>')
+    ox = xs[m - 1] + CW + 40
+    p.append('<g id="out" opacity="0">'
+             '<rect x="%.1f" y="%d" width="140" height="34" rx="8"/>'
+             '<text x="%.1f" y="%d" text-anchor="middle">출력 %.2f</text></g>'
+             % (ox, VY, ox + 70, VY + 23, tr['out_preview'][0]))
+    for txt in CAPS:
+        p.append('<text class="cap" x="%d" y="%d" text-anchor="middle" opacity="0">%s</text>'
+                 % (W // 2, CAPY, txt))
     p.append('</svg>')
-    return '\n'.join(p)
+    return '\n'.join(p), ox
 
 
 CSS = '''
-:root{--ink-1:#222;--ink-3:#8a8a8a;--bg-1:#fafafa;--bg-2:#f4f4f4;--bg-3:#e6e6e6;--hot:#2f8f6b}
-@media (prefers-color-scheme:dark){:root{--ink-1:#e8e8e8;--ink-3:#9a9a9a;
-  --bg-1:#181818;--bg-2:#202020;--bg-3:#2a2a2a}}
+:root{--ink-1:#1c1c1c;--ink-3:#8d8d8d;--bg-1:#fbfbfa;--bg-2:#efefee;--bg-3:#e0e0de;
+  --hot:#1f7a5c;--hot-soft:#d9ede5}
+@media (prefers-color-scheme:dark){:root{--ink-1:#ededec;--ink-3:#8f8f8f;
+  --bg-1:#121212;--bg-2:#1e1e1e;--bg-3:#2c2c2c;--hot:#4fc39b;--hot-soft:#1b3a31}}
 *{box-sizing:border-box}
-html,body{margin:0;overflow-x:hidden;background:var(--bg-1);color:var(--ink-1);
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg-1);
   font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-.wrap{max-width:900px;margin:0 auto;padding:22px 16px 48px}
-h1{font-size:19px;margin:0 0 6px;letter-spacing:-.01em}
-.meta{font-size:12px;color:var(--ink-3);margin:0 0 16px;line-height:1.6}
-.sent{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 14px}
-.tk{padding:5px 9px;border:1px solid var(--ink-3);border-radius:6px;font-size:13px;
-  background:var(--bg-2);transition:border-color .25s ease,background .25s ease}
-.tk.q{border-color:var(--hot);border-width:2px;background:var(--bg-3);font-weight:700}
-svg{width:100%;height:auto;display:block}
-.stepdesc{display:none;font-size:14px;line-height:1.7;margin:0}
-.bar{transition:height .35s ease,y .35s ease,fill .3s ease}
-.fade{opacity:0;transition:opacity .35s ease}
-.desc{min-height:52px;margin-top:10px;padding:12px 14px;background:var(--bg-2);
-  border-radius:8px;border:1px solid var(--bg-3)}
-.ctl{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}
-button{font:inherit;font-size:13px;padding:7px 13px;border:1px solid var(--ink-3);
-  border-radius:6px;background:var(--bg-2);color:var(--ink-1);cursor:pointer}
-button:hover{background:var(--bg-3)}
-.dots{display:flex;gap:5px;margin-top:12px}
-.dot{width:22px;height:4px;border-radius:2px;background:var(--bg-3);transition:background .25s}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:14px}
+svg{width:100%;height:100%}
+text{fill:var(--ink-1);font-size:15px}
+.tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+.kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.kc .kk{font-size:13px}
+.kc .kv{font-size:11px;fill:var(--ink-3)}
+.bar{fill:var(--bg-3)}
+.bar.hot{fill:var(--hot)}
+.bv{font-size:12px;fill:var(--ink-3)}
+.vc rect{fill:var(--hot)}
+.vc text{font-size:13px}
+#out rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+#out text{font-size:14px}
+.flow{fill:var(--hot)}
+.cap{font-size:17px;letter-spacing:-.01em}
+#src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3)}
 '''
 
-STEP_CSS = '\n'.join(
-    '[data-step="%d"] .stepdesc[data-i="%d"]{display:block}' % (i, i)
-    for i in range(len(STEPS))) + '\n' + '\n'.join(
-    '[data-step="%d"] [data-show="%d"]{opacity:1}' % (i, s)
-    for i in range(len(STEPS)) for s in range(0, i + 1)) + '\n' + '\n'.join(
-    '[data-step="%d"] .dot[data-i="%d"]{background:var(--hot)}' % (i, d)
-    for i in range(len(STEPS)) for d in range(0, i + 1))
+JS = r'''
+(function(){
+var D=__DATA__;
+var st=document.getElementById('stage');
+var q=function(s){return [].slice.call(st.querySelectorAll(s));};
+var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
+var beam=document.getElementById('beam'),out=document.getElementById('out'),caps=q('.cap');
+var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
+var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function cl(v,a,b){return v<a?a:(v>b?b:v);}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+function set(e,k,v){e.setAttribute(k,v);}
 
-JS = '''
-(function(){var st=document.getElementById('stage'),n=%d,i=0,t=null,sweep=null;
-function setBar(r,v,hot){r.setAttribute('height',v);r.setAttribute('y',%d-v);
-  r.setAttribute('fill',hot?'var(--hot)':'var(--bg-3)');}
-function go(k){i=Math.max(0,Math.min(n-1,k));st.setAttribute('data-step',i);
-  if(sweep){clearTimeout(sweep);sweep=null;}
-  var bars=st.querySelectorAll('.bar');
-  if(i<3){for(var a=0;a<bars.length;a++)setBar(bars[a],0,false);return;}
-  if(i===3){var j=0;(function next(){if(j>=bars.length){sweep=null;return;}
-    setBar(bars[j],+bars[j].getAttribute('data-raw'),false);j++;
-    sweep=setTimeout(next,350);})();return;}
-  for(var b=0;b<bars.length;b++){var r=bars[b];
-    setBar(r,+r.getAttribute('data-soft'),!!r.getAttribute('data-top'));}}
-function stop(){if(t){clearInterval(t);t=null;}}
-document.getElementById('btn-next').onclick=function(){stop();go(i+1)};
-document.getElementById('btn-prev').onclick=function(){stop();go(i-1)};
-document.getElementById('btn-reset').onclick=function(){stop();go(0)};
-document.getElementById('btn-pause').onclick=stop;
-go(0);
-t=setInterval(function(){if(i>=n-1){stop();}else{go(i+1);}},2200);})();
+var qbox=document.createElementNS('http://www.w3.org/2000/svg','g');
+qbox.setAttribute('opacity','0');
+qbox.innerHTML='<rect width="'+cw+'" height="40" rx="7" fill="var(--hot-soft)" '+
+  'stroke="var(--hot)" stroke-width="2"/>'+
+  '<text x="'+(cw/2)+'" y="17" text-anchor="middle" font-size="13">Q</text>'+
+  '<text x="'+(cw/2)+'" y="32" text-anchor="middle" font-size="11" fill="var(--ink-3)">'+
+  D.qv+'</text>';
+st.appendChild(qbox);
+
+function capAt(t){
+  if(t<T.q)return 0; if(t<T.q+1.0)return 1; if(t<T.scan)return 2;
+  if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.out)return 5; return 6;
+}
+
+function frame(t){
+  var per=T.tok/toks.length;
+  for(var i=0;i<toks.length;i++){
+    var u=ease(seg(t,i*per,i*per+.42));
+    set(toks[i],'opacity',u.toFixed(3));
+  }
+  var uq=ease(seg(t,T.tok,T.q));
+  var qx=D.qx,qy=D.toky+(D.qy-D.toky)*uq;
+  var scanning=t>=T.scan&&t<T.soft;
+  if(scanning){
+    var k=cl(Math.floor((t-T.scan)/T.step),0,m-1);
+    var fr=cl((t-T.scan)/T.step-k,0,1);
+    qx=xs[k]+(xs[cl(k+1,0,m-1)]-xs[k])*ease(fr);
+    qy=D.qy;
+    set(beam,'opacity',(1-Math.abs(fr-.5)*1.5).toFixed(2));
+    set(beam,'x1',(qx+cw/2).toFixed(1));set(beam,'y1',D.qy+40);
+    set(beam,'x2',(xs[k]+cw/2).toFixed(1));set(beam,'y2',D.ky);
+  }else{
+    set(beam,'opacity',0);
+    if(t>=T.soft){qx=xs[m-1];qy=D.qy;}
+  }
+  set(qbox,'opacity',uq.toFixed(3));
+  set(qbox,'transform','translate('+qx.toFixed(1)+','+qy.toFixed(1)+')');
+  for(var j=0;j<kcs.length;j++)set(kcs[j],'opacity',ease(seg(t,T.q-.6+j*.05,T.q-.2+j*.05)).toFixed(3));
+  for(var j=0;j<m;j++){
+    var b=D.bars[j],h=0;
+    if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.34));
+    else if(t>=T.soft)h=b.raw+(b.soft-b.raw)*ease(seg(t,T.soft,T.soft+.9));
+    set(bars[j],'height',h.toFixed(1));set(bars[j],'y',(D.barbase-h).toFixed(1));
+    if(t>=T.soft&&b.top)bars[j].classList.add('hot');else bars[j].classList.remove('hot');
+    set(bvs[j],'opacity',ease(seg(t,T.soft+.35,T.soft+1.0)).toFixed(3));
+  }
+  for(var j=0;j<m;j++){
+    var uv=ease(seg(t,T.v+j*.04,T.v+j*.04+.45));
+    set(vcs[j],'opacity',uv.toFixed(3));
+    vcs[j].querySelector('rect').setAttribute(
+      'fill-opacity',((.12+.88*D.bars[j].w/topw)*uv).toFixed(3));
+    var uf=seg(t,T.out-.5+j*.05,T.out+.8);
+    set(flows[j],'opacity',(uf>0&&uf<1?(.3+.7*D.bars[j].w/topw):0).toFixed(3));
+    set(flows[j],'cx',(xs[j]+cw/2+(D.ox+70-xs[j]-cw/2)*ease(uf)).toFixed(1));
+    set(flows[j],'cy',(D.vy+17).toFixed(1));
+  }
+  set(out,'opacity',ease(seg(t,T.out+.4,T.out+1.0)).toFixed(3));
+  var ci=capAt(t);
+  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
+}
+
+if(still){frame(T.out+1.6);return;}
+var t0=null;
+function loop(ts){
+  if(t0===null)t0=ts;
+  var t=(ts-t0)/1000;
+  if(t>T.end){t0=ts;t=0;}
+  frame(t);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
 '''
 
 
 def render(tr):
-    tks = ''.join(
-        '<span class="tk%s">%s</span>' % (' q' if i == tr['query_pos'] else '',
-                                          t.strip() or '_')
-        for i, t in enumerate(tr['tokens']))
-    descs = ''.join('<p class="stepdesc" data-i="%d">%s</p>' % (i, d)
-                    for i, (_k, d) in enumerate(STEPS))
-    dots = ''.join('<span class="dot" data-i="%d"></span>' % i for i in range(len(STEPS)))
+    scene, ox = svg_scene(tr)
+    m, n, xs = layout(tr)
+    t = timings(m)
+    soft, raw = tr['scores_softmax'], tr['scores_raw']
+    top = max(soft)
+    lo, hi = min(raw), max(raw)
+    span = (hi - lo) or 1.0
+    data = {
+        'm': m, 'xs': xs, 'cw': CW, 'qx': xs[tr['query_pos']],
+        'toky': TOKY, 'qy': QY, 'ky': KY, 'barbase': BARBASE, 'vy': VY, 'ox': ox,
+        'qv': '%.2f' % tr['q_preview'][0],
+        'bars': [{'raw': round(10 + BARMAX * (raw[j] - lo) / span, 1),
+                  'soft': round(10 + BARMAX * soft[j] / top, 1),
+                  'w': soft[j], 'top': soft[j] == top} for j in range(m)],
+        't': t,
+    }
+    js = JS.replace('__DATA__', json.dumps(data, ensure_ascii=False))
     return '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>애니메이션 — 어텐션</title><style>%s
-%s</style></head><body><div class="wrap" id="stage" data-step="0">
-<h1>어텐션 계산 한 번을 일곱 걸음으로</h1>
-<p class="meta">%s · %d층 %d번 헤드 — 「%s」 자리가 앞 명사를 가장 세게 되짚는 헤드로 골랐다.<br>
-화면에 뜨는 값은 그 모델을 실제로 돌려 뽑은 것이다.</p>
-<div class="sent">%s</div>
-%s
-<div class="desc">%s</div>
-<div class="dots">%s</div>
-<div class="ctl">
-<button type="button" id="btn-prev">이전</button>
-<button type="button" id="btn-next">다음</button>
-<button type="button" id="btn-pause">자동재생 멈춤</button>
-<button type="button" id="btn-reset">처음부터</button></div>
-</div><script>%s</script></body></html>''' % (
-        CSS, STEP_CSS, tr['model'], tr['layer'], tr['head'],
-        tr['tokens'][tr['query_pos']].strip(), tks, svg_board(tr), descs, dots,
-        JS % (len(STEPS), BASE))
+<title>애니메이션 — 어텐션</title><style>%s</style></head><body>
+<div id="wrap">%s</div>
+<p id="src">%s · %d층 %d번 헤드 — 「%s」 자리에서 잰 실제 값이다</p>
+<script>%s</script></body></html>''' % (
+        CSS, scene, tr['model'], tr['layer'], tr['head'],
+        tr['tokens'][tr['query_pos']].strip(), js)
 
 
 def check_ui(html, tr):
     m = tr['query_pos'] + 1
-    n_desc = html.count('class="stepdesc"')
-    assert n_desc == len(STEPS), '규약 위반: 설명 줄이 %d개, 스텝은 %d개다' % (n_desc, len(STEPS))
-    for i, (key, _d) in enumerate(STEPS):
-        assert '[data-step="%d"]' % i in html, \
-            '규약 위반: 스텝 %d(%s)에 대응하는 상태가 없다' % (i, key)
     known = set()
     vals = (tr['scores_raw'] + tr['scores_softmax'] + tr['q_preview'] + tr['out_preview']
             + [v for row in tr['k_preview'] + tr['v_preview'] for v in row])
     for v in vals:
         known.add('%.2f' % v)
         known.add('%.3f' % v)
-    # 모델 이름(Qwen2.5-0.5B)에 든 숫자는 값이 아니라 이름의 일부다
     stray = _screen_numbers(html.replace(tr['model'], '(model)')) - known
     assert not stray, '규약 위반: 구운 값에 없는 숫자가 화면에 있다 — %s' % sorted(stray)[:5]
-    assert 'id="btn-pause"' in html, '규약 위반: 자동재생을 멈출 버튼이 없다'
-    flat = html.replace(' ', '')
-    assert 'overflow-x:hidden' in flat, '규약 위반: 가로 스크롤을 막는 선언이 없다'
-    assert 'width:100%' in flat and 'viewBox' in html, '규약 위반: 판이 폭에 맞춰 안 줄어든다'
-    assert html.count('class="kcell') == m, '규약 위반: K 칸이 %d개다 (기대 %d)' % (
-        html.count('class="kcell'), m)
-    assert html.count('class="bar"') == m, '규약 위반: 막대가 %d개다 (기대 %d)' % (
-        html.count('class="bar"'), m)
-    assert html.count('class="vcell') == m, '규약 위반: V 칸이 %d개다 (기대 %d)' % (
-        html.count('class="vcell'), m)
-    assert 'id="out-box"' in html, '규약 위반: 어텐션 출력 상자가 없다'
+    assert html.count('class="cap"') == len(CAPS), \
+        '규약 위반: 자막이 %d개, 장면은 %d개다' % (html.count('class="cap"'), len(CAPS))
+    assert 'function capAt' in html, '규약 위반: 어느 자막을 띄울지 정하는 자리가 없다'
+    assert 'prefers-reduced-motion' in html, '규약 위반: 애니메이션을 줄이라는 설정을 안 본다'
+    assert 'if(still){frame(' in html.replace(' ', ''), \
+        '규약 위반: 줄이라고 한 사람에게 정지 화면을 안 준다'
+    for banned, why in [('<button', '버튼'), ('class="stepdesc"', '설명 상자'),
+                        ('class="dot"', '진행 점'), ('<h1', '머리말')]:
+        assert banned not in html, '규약 위반: %s 을 두지 않는다 — 이 장은 한 장면이다' % why
+    for cls, name in [('kc', 'K'), ('bar', '막대'), ('vc', 'V'), ('flow', '알갱이')]:
+        got = html.count('class="%s"' % cls)
+        assert got == m, '규약 위반: %s 칸이 %d개다 (기대 %d)' % (name, got, m)
 
 
 def selftest():
@@ -232,15 +290,15 @@ def selftest():
     good = render(tr)
     check_ui(good, tr)
     cases = [
-        ('설명 줄 빼기', good.replace('class="stepdesc"', 'class="x"', 1)),
-        ('스텝 상태 빼기', good.replace('[data-step="3"]', '[data-step="99"]')),
         ('없는 숫자 넣기', good.replace('</body>', '<p>9.87</p></body>', 1)),
-        ('멈춤 버튼 빼기', good.replace('id="btn-pause"', 'id="x"', 1)),
-        ('가로 스크롤 허용', good.replace('overflow-x:hidden', 'overflow-x:auto', 1)),
-        ('K 칸 빼기', good.replace('class="kcell', 'class="x', 1)),
-        ('막대 빼기', good.replace('class="bar"', 'class="x"', 1)),
-        ('V 칸 빼기', good.replace('class="vcell', 'class="x', 1)),
-        ('출력 상자 빼기', good.replace('id="out-box"', 'id="x"', 1)),
+        ('자막 하나 빼기', good.replace('class="cap"', 'class="x"', 1)),
+        ('자막 고르는 자리 빼기', good.replace('function capAt', 'function xAt')),
+        ('모션 설정 무시', good.replace('prefers-reduced-motion', 'xx')),
+        ('정지 화면 빼기', good.replace('if(still){frame(', 'if(0){frame(')),
+        ('버튼 두기', good.replace('</body>', '<button>다음</button></body>', 1)),
+        ('머리말 두기', good.replace('<div id="wrap">', '<h1>어텐션</h1><div id="wrap">', 1)),
+        ('K 칸 빼기', good.replace('class="kc"', 'class="x"', 1)),
+        ('알갱이 빼기', good.replace('class="flow"', 'class="x"', 1)),
     ]
     bites = 0
     for name, broken in cases:
@@ -263,5 +321,5 @@ if __name__ == '__main__':
         html = render(tr)
         check_ui(html, tr)
         io.open(OUT, 'w', encoding='utf-8').write(html)
-        print('%s — 스텝 %d개 · 토큰 %d개 · 막대 %d개'
-              % (OUT, len(STEPS), len(tr['tokens']), tr['query_pos'] + 1))
+        m = tr['query_pos'] + 1
+        print('%s — 한 바퀴 %.1f초 · 칸 %d개' % (OUT, timings(m)['end'], m))
