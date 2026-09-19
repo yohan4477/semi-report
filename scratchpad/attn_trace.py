@@ -32,6 +32,13 @@ def validate(tr):
         '고른 헤드의 근거 값이 소프트맥스 최댓값과 달라선 안 된다'
     bad = [t for t in tr['tokens'] if '�' in t]
     assert not bad, '토큰에 깨진 조각이 있다 — 화면에 그대로 뜬다: %r' % bad
+    import math as _m
+    ex = [_m.exp(v - max(tr['scores_raw'])) for v in tr['scores_raw']]
+    recomputed = [e / sum(ex) for e in ex]
+    gap = max(abs(a - b) for a, b in zip(recomputed, tr['scores_softmax']))
+    assert gap < 1e-4, \
+        'scores_raw 를 소프트맥스해도 scores_softmax 가 안 나온다 (최대 %.2e) — ' \
+        '회전이나 스케일링이 빠졌다' % gap
     return True
 
 
@@ -54,6 +61,7 @@ def pick_head(attns, query_pos, noun_pos):
 def build_trace():
     import torch
     from transformers import AutoTokenizer, AutoModelForCausalLM
+    from transformers.models.qwen2.modeling_qwen2 import apply_rotary_pos_emb
     tok = AutoTokenizer.from_pretrained(MODEL_ID)
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID, torch_dtype=torch.float32, attn_implementation='eager')
@@ -71,27 +79,39 @@ def build_trace():
 
     with torch.no_grad():
         out = model(**enc, output_attentions=True, output_hidden_states=True)
-    layer, head, picked = pick_head(out.attentions, query_pos, noun_pos)
+        layer, head, picked = pick_head(out.attentions, query_pos, noun_pos)
 
-    # 그 층·헤드의 Q·K·V 를 직접 다시 만든다. 어텐션 가중치만으로는 Q·K 를 못 보인다.
-    hs = out.hidden_states[layer][0]               # (seq, hidden)
-    attn = model.model.layers[layer].self_attn
-    ln = model.model.layers[layer].input_layernorm
-    x = ln(hs)
-    n_heads = model.config.num_attention_heads
-    n_kv = getattr(model.config, 'num_key_value_heads', n_heads)
-    dim = model.config.hidden_size // n_heads
-    kv_head = head // (n_heads // n_kv)            # GQA — 여러 Q 헤드가 K·V 하나를 나눠 쓴다
+        # 그 층·헤드의 Q·K·V 를 직접 다시 만든다. 어텐션 가중치만으로는 Q·K 를 못 보인다.
+        # Qwen2 는 RoPE 모델이라 q_proj·k_proj 직후 회전을 먹여야 모델이 실제로 쓰는 점수와
+        # 맞는다(Qwen2Attention.forward — apply_rotary_pos_emb). V 는 회전을 안 먹인다.
+        hs = out.hidden_states[layer]                    # (1, seq, hidden)
+        attn = model.model.layers[layer].self_attn
+        ln = model.model.layers[layer].input_layernorm
+        x = ln(hs)                                        # (1, seq, hidden)
+        n_heads = model.config.num_attention_heads
+        n_kv = getattr(model.config, 'num_key_value_heads', n_heads)
+        dim = model.config.hidden_size // n_heads
+        kv_head = head // (n_heads // n_kv)              # GQA — 여러 Q 헤드가 K·V 하나를 나눠 쓴다
+        seq = x.shape[1]
 
-    q = attn.q_proj(x).view(-1, n_heads, dim)[:, head, :]
-    k = attn.k_proj(x).view(-1, n_kv, dim)[:, kv_head, :]
-    v = attn.v_proj(x).view(-1, n_kv, dim)[:, kv_head, :]
+        q_full = attn.q_proj(x).view(1, seq, n_heads, dim).transpose(1, 2)  # (1, n_heads, seq, dim)
+        k_full = attn.k_proj(x).view(1, seq, n_kv, dim).transpose(1, 2)    # (1, n_kv, seq, dim)
+        v_full = attn.v_proj(x).view(1, seq, n_kv, dim).transpose(1, 2)    # (1, n_kv, seq, dim) — 회전 없음
 
-    m = query_pos + 1
-    raw = [float(torch.dot(q[query_pos], k[j]) / math.sqrt(dim)) for j in range(m)]
-    soft = [float(w) for w in out.attentions[layer][0, head, query_pos, :m]]
-    soft = [w / sum(soft) for w in soft]           # 잘라 썼으니 합을 다시 1로
-    outv = [sum(soft[j] * float(v[j][d]) for j in range(m)) for d in range(PREVIEW)]
+        position_ids = torch.arange(seq).unsqueeze(0)
+        cos, sin = model.model.rotary_emb(x, position_ids)
+        q_full, k_full = apply_rotary_pos_emb(q_full, k_full, cos, sin)  # 헤드를 자르기 전에 회전
+
+        q = q_full[0, head]        # (seq, dim) — 회전 먹은 뒤
+        k = k_full[0, kv_head]     # (seq, dim) — 회전 먹은 뒤
+        v = v_full[0, kv_head]     # (seq, dim) — 회전 없음
+
+        m = query_pos + 1
+        raw = [float(torch.dot(q[query_pos], k[j]) / math.sqrt(dim)) for j in range(m)]
+        soft = [float(w) for w in out.attentions[layer][0, head, query_pos, :m]]
+        soft = [w / sum(soft) for w in soft]  # causal mask 라 query_pos 뒤는 이미 0 — 잘라 버리는 질량은
+        # 없고, 이 나눗셈은 부동소수점 오차로 합이 1에서 살짝 벗어난 것만 바로잡는 안전장치다
+        outv = [sum(soft[j] * float(v[j][d]) for j in range(m)) for d in range(PREVIEW)]
 
     return {
         'model': MODEL_ID,
