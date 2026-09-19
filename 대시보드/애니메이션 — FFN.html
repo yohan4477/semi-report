@@ -1,0 +1,214 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>애니메이션 — FFN</title><style>
+:root{--ink-1:#1c1c1c;--ink-3:#8d8d8d;--bg-1:#fbfbfa;--bg-2:#efefee;--bg-3:#e0e0de;
+  --hot:#1f7a5c;--hot-soft:#d9ede5}
+@media (prefers-color-scheme:dark){:root{--ink-1:#ededec;--ink-3:#8f8f8f;
+  --bg-1:#121212;--bg-2:#1e1e1e;--bg-3:#2c2c2c;--hot:#4fc39b;--hot-soft:#1b3a31}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg-1);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:14px}
+svg{width:100%;height:100%}
+text{fill:var(--ink-1);font-size:15px}
+.tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+.tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+.inc,.outc{fill:var(--hot);stroke:none}
+.wc{fill:var(--hot)}
+.funnel{fill:var(--hot);fill-opacity:.07;stroke:var(--bg-3)}
+.lbl{font-size:12px;fill:var(--ink-3)}
+.val{font-size:12px;fill:var(--ink-3)}
+.cap{font-size:17px;letter-spacing:-.01em}
+#src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3)}
+</style></head><body>
+<div id="wrap"><svg id="ffn" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" role="img" aria-label="FFN 이 한 토큰을 넓혔다 접는 장면">
+<g class="tok" opacity="0"><rect x="6.5" y="56" width="74" height="36" rx="7"/><text x="43.5" y="80" text-anchor="middle">회사</text></g>
+<g class="tok" opacity="0"><rect x="89.5" y="56" width="74" height="36" rx="7"/><text x="126.5" y="80" text-anchor="middle">가</text></g>
+<g class="tok" opacity="0"><rect x="172.5" y="56" width="74" height="36" rx="7"/><text x="209.5" y="80" text-anchor="middle">공</text></g>
+<g class="tok" opacity="0"><rect x="255.5" y="56" width="74" height="36" rx="7"/><text x="292.5" y="80" text-anchor="middle">장을</text></g>
+<g class="tok" opacity="0"><rect x="338.5" y="56" width="74" height="36" rx="7"/><text x="375.5" y="80" text-anchor="middle">지</text></g>
+<g class="tok" opacity="0"><rect x="421.5" y="56" width="74" height="36" rx="7"/><text x="458.5" y="80" text-anchor="middle">었다</text></g>
+<g class="tok" opacity="0"><rect x="504.5" y="56" width="74" height="36" rx="7"/><text x="541.5" y="80" text-anchor="middle">.</text></g>
+<g class="tok tokq" opacity="0"><rect x="587.5" y="56" width="74" height="36" rx="7"/><text x="624.5" y="80" text-anchor="middle">그것은</text></g>
+<g class="tok" opacity="0"><rect x="670.5" y="56" width="74" height="36" rx="7"/><text x="707.5" y="80" text-anchor="middle">부</text></g>
+<g class="tok" opacity="0"><rect x="753.5" y="56" width="74" height="36" rx="7"/><text x="790.5" y="80" text-anchor="middle">산</text></g>
+<g class="tok" opacity="0"><rect x="836.5" y="56" width="74" height="36" rx="7"/><text x="873.5" y="80" text-anchor="middle">에</text></g>
+<g class="tok" opacity="0"><rect x="919.5" y="56" width="74" height="36" rx="7"/><text x="956.5" y="80" text-anchor="middle">있다</text></g>
+<path class="funnel fan-in" opacity="0" d="M262.0 216 L738.0 216 L947.0 312 L53.0 312 Z"/>
+<path class="funnel fan-out" opacity="0" d="M53.0 358 L947.0 358 L738.0 440 L262.0 440 Z"/>
+<rect class="inc" x="262.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="292.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="322.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="352.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="382.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="412.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="442.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="472.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="502.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="532.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="562.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="592.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="622.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="652.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="682.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<rect class="inc" x="712.0" y="186" width="26" height="30" rx="4" opacity="0"/>
+<text class="lbl lbl-in" x="262.0" y="176" opacity="0">입력 896칸 중 16칸</text>
+<text class="val val-in" x="738.0" y="176" text-anchor="end" opacity="0">-0.88</text>
+<rect class="wc" data-a="0.0068" x="53.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0218" x="67.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0160" x="81.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0818" x="95.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0018" x="109.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0511" x="123.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0249" x="137.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0304" x="151.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0613" x="165.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0101" x="179.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0005" x="193.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0405" x="207.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0004" x="221.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1932" x="235.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0034" x="249.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0057" x="263.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0261" x="277.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0037" x="291.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1996" x="305.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0489" x="319.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0020" x="333.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0481" x="347.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0136" x="361.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0360" x="375.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0116" x="389.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0123" x="403.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0050" x="417.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0100" x="431.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0093" x="445.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0117" x="459.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0254" x="473.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0226" x="487.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0119" x="501.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0601" x="515.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0164" x="529.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0263" x="543.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0082" x="557.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.1449" x="571.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0171" x="585.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0006" x="599.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0196" x="613.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0189" x="627.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0063" x="641.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0048" x="655.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0308" x="669.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0352" x="683.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0137" x="697.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0611" x="711.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0324" x="725.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0069" x="739.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0038" x="753.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0072" x="767.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0270" x="781.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0299" x="795.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0003" x="809.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0188" x="823.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0016" x="837.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0540" x="851.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0452" x="865.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0308" x="879.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0244" x="893.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0122" x="907.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0361" x="921.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<rect class="wc" data-a="0.0160" x="935.0" y="312" width="12" height="46" rx="3" opacity="0"/>
+<text class="lbl lbl-wide" x="53.0" y="300" opacity="0">넓힌 4864칸 중 64칸</text>
+<rect class="outc" x="262.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="292.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="322.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="352.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="382.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="412.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="442.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="472.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="502.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="532.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="562.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="592.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="622.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="652.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="682.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<rect class="outc" x="712.0" y="440" width="26" height="30" rx="4" opacity="0"/>
+<text class="lbl lbl-out" x="262.0" y="490" opacity="0">다시 896칸</text>
+<text class="val val-out" x="738.0" y="490" text-anchor="end" opacity="0">-0.09</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">FFN 은 토큰마다 따로 돈다 — 어텐션과 달리 옆 토큰을 안 본다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">어텐션이 낸 결과가 이 층의 입력이다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">먼저 넓힌다 — 896 칸이 4,864 칸으로</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">게이트가 대부분을 눌러 4,864 칸 중 97.7% 가 잠잠해진다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">살아남은 자리만 모아 다시 896 칸으로 접는다</text>
+<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">접혀 나온 하나 — 이 토큰의 FFN 출력이다</text>
+</svg></div>
+<p id="src">Qwen/Qwen2.5-0.5B-Instruct · 15층 — 「그것은」 자리에서 잰 실제 값이다</p>
+<script>
+(function(){
+var D={"uid": "ffn", "qi": 7, "t": {"tok": 2.2, "in": 4.6, "wide": 7.0, "gate": 10.4, "fold": 14.0, "out": 17.0, "end": 21.5}};
+var st=document.getElementById(D.uid);
+var q=function(s){return [].slice.call(st.querySelectorAll(s));};
+var toks=q('.tok'),inc=q('.inc'),wc=q('.wc'),outc=q('.outc'),caps=q('.cap');
+var fin=q('.fan-in')[0],fout=q('.fan-out')[0];
+var lin=q('.lbl-in')[0],lw=q('.lbl-wide')[0],lo=q('.lbl-out')[0];
+var vin=q('.val-in')[0],vout=q('.val-out')[0];
+var T=D.t;
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function cl(v,a,b){return v<a?a:(v>b?b:v);}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+function set(e,k,v){if(e)e.setAttribute(k,v);}
+
+function capAt(t){
+  if(t<T.in)return 0; if(t<T.wide)return 1; if(t<T.gate)return 2;
+  if(t<T.fold)return 3; if(t<T.out)return 4; return 5;
+}
+
+function frame(t){
+  // 문장 — 다 떴다가 그 토큰만 남는다. FFN 이 옆을 안 본다는 말을 그림이 먼저 한다
+  var per=T.tok/toks.length;
+  for(var i=0;i<toks.length;i++){
+    var u=ease(seg(t,i*per,i*per+.5));
+    var dim=ease(seg(t,T.tok,T.tok+.9));
+    var o=(i===D.qi)?u:u*(1-dim*.82);
+    set(toks[i],'opacity',o.toFixed(3));
+  }
+  // 입력 칸
+  for(var i=0;i<inc.length;i++)
+    set(inc[i],'opacity',ease(seg(t,T.tok+.3+i*.03,T.tok+.9+i*.03)).toFixed(3));
+  set(lin,'opacity',ease(seg(t,T.tok+.6,T.in)).toFixed(3));
+  set(vin,'opacity',ease(seg(t,T.tok+.6,T.in)).toFixed(3));
+  // 펼치는 면
+  set(fin,'opacity',ease(seg(t,T.in,T.wide-.4)).toFixed(3));
+  // 넓힌 칸 — 처음엔 다 고르게 뜨고, 게이트가 오면 값대로 갈린다
+  var born=ease(seg(t,T.wide-.6,T.wide+.8));
+  var gate=ease(seg(t,T.gate,T.gate+1.6));
+  for(var i=0;i<wc.length;i++){
+    var a=+wc[i].getAttribute('data-a');
+    var lvl=.55*(1-gate)+ (0.04+0.96*a)*gate;      // 고르게 → 값대로
+    set(wc[i],'opacity',(born*(.15+.85*lvl)).toFixed(3));
+  }
+  set(lw,'opacity',born.toFixed(3));
+  // 접는 면과 출력
+  set(fout,'opacity',ease(seg(t,T.fold,T.fold+1.0)).toFixed(3));
+  for(var i=0;i<outc.length;i++)
+    set(outc[i],'opacity',ease(seg(t,T.out-.6+i*.04,T.out+.3+i*.04)).toFixed(3));
+  set(lo,'opacity',ease(seg(t,T.out,T.out+.8)).toFixed(3));
+  set(vout,'opacity',ease(seg(t,T.out,T.out+.8)).toFixed(3));
+  var ci=capAt(t);
+  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
+}
+
+if(still){frame(T.out+1.2);return;}
+var t0=null;
+function loop(ts){
+  if(t0===null)t0=ts;
+  var t=(ts-t0)/1000;
+  if(t>T.end){t0=ts;t=0;}
+  frame(t);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
+</script></body></html>
