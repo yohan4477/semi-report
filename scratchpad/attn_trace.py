@@ -9,7 +9,7 @@ import io, os, sys, json, math
 
 OUT = os.path.join('data', 'attn_trace.json')
 MODEL_ID = 'Qwen/Qwen2.5-0.5B-Instruct'
-SENTENCE = '사료를 열었는데 그것이 눅눅했다'
+SENTENCE = '회사가 공장을 지었다. 그것은 부산에 있다'
 MAX_TOKENS = 12
 PREVIEW = 8
 
@@ -30,6 +30,8 @@ def validate(tr):
     assert len(tr['out_preview']) == PREVIEW, '출력 미리보기가 %d개여야 한다' % PREVIEW
     assert tr['picked_weight'] == max(tr['scores_softmax']), \
         '고른 헤드의 근거 값이 소프트맥스 최댓값과 달라선 안 된다'
+    bad = [t for t in tr['tokens'] if '�' in t]
+    assert not bad, '토큰에 깨진 조각이 있다 — 화면에 그대로 뜬다: %r' % bad
     return True
 
 
@@ -65,7 +67,7 @@ def build_trace():
 
     # 보는 자리와 되짚을 앞 명사. 문장을 바꾸면 이 두 줄을 같이 고친다.
     query_pos = max(i for i, t in enumerate(tokens) if '그것' in t)
-    noun_pos = max(i for i, t in enumerate(tokens[:query_pos]) if '료' in t or '사' in t)
+    noun_pos = max(i for i, t in enumerate(tokens[:query_pos]) if '장' in t or '공' in t)
 
     with torch.no_grad():
         out = model(**enc, output_attentions=True, output_hidden_states=True)
