@@ -50,8 +50,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 32 |
-| ai-infra/memory | 12 |
+| ai-infra/compute | 33 |
+| ai-infra/memory | 13 |
 | ai-infra/networking | 14 |
 | ai-infra/business | 25 |
 | ai-infra/power | 13 |
@@ -60,7 +60,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 | ai-infra/security | 1 |
 | ai-models/rl | 4 |
 | ai-models/agents | 4 |
-| ai-models | 3 |
+| ai-models | 4 |
 | robotics | 2 |
 | semiconductors | 4 |
 | semiconductors/process | 1 |
@@ -102,6 +102,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 ## 버전 히스토리
 
+- (2026-09-19) [260918] Engrams Embedding Entendre(Engram 임베딩과 DRAM·SSD 오프로딩 공동설계) 신규 변환 완료 — ai-infra/memory 12→13, ai-infra/compute 32→33, ai-models 3→4. Engram(토큰 임베딩에 다중 토큰 조회 표를 더한 아키텍처)이 반복 패턴을 임베딩 행에서 직접 꺼내 HBM 밖(호스트 DRAM)에서도 서빙 가능하다는 원리를 DeepSeek-V4.1-Flash(표 약 189GiB)로 실증, fineweb-edu 재현 실험의 U자형 스케일링·초반 층 표현 성숙 효과(memory·ai-models), 게이트 스캔으로 본 기억 내용(이름·코드·상투 문구)이 오프로딩 캐시 힌트로는 못 쓰인다는 진단, 원 논문 추론시점 제거 실험(사실지식 29\~44%·독해 81\~93% 유지)과 CRUXEval 재라우팅 실험(0.2848→0.3093→0.3375 bits/token)으로 본 Engram-전문가선택 결합 구조(ai-models)까지가 모델 아키텍처 축. InferenceX로 DeepSeek-V4.1-Flash를 엔비디아 6종 SKU와 AMD MI355X에서 실측(AMD Day 0 미출시, 이후에도 B200 대비 2\~4배 열세), Engram을 DRAM으로 오프로드해 TP4→TP2로 줄여 파레토 곡선 최대 1.6배 개선, SSD 오프로딩은 아직 DRAM 대비 손해(달러당 토큰 수 DRAM 1억 2,100만 vs SSD 5,200만)라는 정량 벤치마크는 compute·memory 축. DeepSeek·LongCat·Qwen 세 모델의 서로 다른 구현(층 배치·파라미터 배분 상한·해시 개수) 비교까지 전체 7개 섹션 완료. 메모리·컴퓨트 통합 리포트 문서별 요약에 추가(신규 시계열 승격은 보류 — [260913]과 같은 "모델·서빙 설계가 HBM 수요를 낮추는" 인접 축으로 참고 정보 유지), AI 모델 통합 리포트는 ai-models/agents·rl 하위카테고리만 대상이라 이 문서(상위 ai-models)는 대상 아님
 - (2026-09-16) [260915] Everyone Says Datacenter Moratoriums Are Killing the US Buildout. We disagree(데이터센터 유예가 미국 건설을 막는다는 통념을 반박한다) 신규 변환 완료 — ai-infra/power 12→13, ai-infra/business 24→25. 300건 이상의 지방 유예와 뉴욕·텍사스·펜실베이니아·오리건 4개 주 조치를 필지·프로젝트 단위로 전수 분석해, 명목 노출(지방 20GW+뉴욕 1.4GW)이 실제 지연(지방 1,525MW+뉴욕 0.8GW, 합쳐 약 2.3GW)으로 좁혀지는 아홉 가지 AND 조건 필터와 노스포인트(PA)·NY EO 62·ERCOT 배치제로 감사 사례 분석이 핵심축이라 power, 두 주지사 모두 11월 재선을 앞둔 정치적 제스처라는 해석과 BTM 자가발전·발전 장비 공급사·기존 인허가 보유 부지가 이 규제 물결의 수혜자라는 투자 함의는 business로 이중 분류. 2027년 미국 신규 IT 용량 38GW(2026년의 2배 이상) 전망까지 전체 9개 섹션 완료. 전력 통합 리포트 §1.1(수요 가속)·§1.3(BTM 확산) 갱신, ai-infra/business 통합 리포트는 아직 없어 갱신 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용)
 - (2026-09-16) [260911] Nvidia's Backstop Universe – Heads I Win, Tails Who Loses?(엔비디아의 백스톱 우주 - 앞면이면 내가 이기고 뒷면이면 누가 지는가) 신규 변환 완료 — ai-infra/business 23→24. 2Q F1/27 10-Q에서 대차대조표 밖 총보증 의무가 1,840억→5,300억 달러로 급증한 배경(공급약정·LPS보증 급증, AI클라우드계약·재양도임대 신규 등장)에서 출발해, 앞면이면 GPU 마진+하한선 위 배당 이중수익 뒷면이면 네오클라우드는 파산만 면하는 백스톱 메커니즘, AICP(GB300 시간당 2.35달러 하한)·자본파트너십 잔존가치보증(TPU SPV 이중백스톱과 대조, GW당 94억 달러로 최대 효율)·클라우드서비스계약(자체 CI/CD용)·재양도 임대(Hut 8 Beacon Point 신용대체 구조)·미착수 자체사용 임대·LPS보증과 PORTS-Pike 딜(오픈AI 8GW 캠퍼스, 1단계 4.25GW 1,050억 달러)까지 6개 대차대조표 밖 항목을 항목별로 추적. 전체 보증 6.5GW가 2030년까지 세계 AI IT 증설분 240GW의 3% 미만이라는 규모 대조, 순부채/EBITDA·안정순자산 대비 의무 비율 4단계 레버리지 스트레스 테스트, 오픈AI 집중도 97%·경쟁 칩 시나리오 리스크까지 전체 10개 섹션 완료. ai-infra/business 통합 리포트가 아직 없어 리포트 갱신은 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용)
 - (2026-09-16) [260913] Long Live the Short King: Why 4-hi HBM Wins(짧은 왕 만세 - 4-hi HBM이 이기는 이유) 신규 변환 완료 — ai-infra/memory 11→12, ai-infra/compute 31→32. 세대마다 커지던 GPU당 HBM 용량 추세가 루빈 울트라(192GB, 기존 288GB 대비 33%↓)에서 처음 꺾인 원인을 웨이퍼 부족·비용 급등·아키텍처 변화 세 갈래로 짚고, 스택 높이(4-hi/8-hi/12-hi)를 낮춰도 큐브 1개의 대역폭은 그대로라는 원리(2,048개 I/O 통로가 다이 수만큼 나뉠 뿐)부터 사전학습·후속학습·추론 세 갈래 중 추론 디코드가 대역폭에 압도적으로 민감해졌다는 워크로드 구조 변화, 토큰당 대역폭÷큐브 용량 비율로 좌초 용량을 정량화하는 루프라인 분석(루빈 울트라 NVL576·Kimi K3 모델링에서 12-hi는 4-hi 대비 처리량 최대 +10%인데 BOM은 +26.3%로 손해)까지 전개. KV캐시를 DDR D램으로 내보내는 오프로딩 실측(GB300 16장, HBM 8%만 줄여도 동시 요청 70개까지는 처리량 유지), 미래 모델이 3배 커지는 반론 시나리오(가중치 대신 강화학습·추론 시간으로 스케일링하는 방향 전환으로 위험 제한적), 토큰/HBM 웨이퍼 최적화(4-hi가 웨이퍼당 대역폭 산출량을 8-hi 대비 2배·12-hi 대비 3배로 확대), 마이크론만 4-hi에 응하고 삼성전자·SK하이닉스는 거부 중인 공급사 동향(Gb당 약 10% 프리미엄 가격 모델)까지 전체 8개 섹션 완료. GPU 쪽 메모리 구성 결정이 중심이라 ai-infra/memory 주 카테고리, 루빈 울트라 NVL576 처리량·BOM 정량 분석이 상당 분량이라 ai-infra/compute 이중 분류. 메모리·컴퓨트 통합 리포트 문서별 요약에 추가(기존 시계열과는 다른 축이라 신규 시계열 승격은 보류)
