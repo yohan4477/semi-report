@@ -69,22 +69,24 @@ def timings(m):
             'soft': t_soft, 'v': t_v, 'out': t_out, 'end': t_out + 3.0}
 
 
-def svg_scene(tr):
+def svg_scene(tr, uid='stage', style=''):
+    """장면 SVG 한 덩이. uid 를 갈라 주면 한 페이지에 여럿 세울 수 있다."""
     m, n, xs = layout(tr)
-    p = ['<svg id="stage" viewBox="0 0 %d %d" preserveAspectRatio="xMidYMid meet" '
-         'role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">' % (W, H)]
-    p.append('<defs><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">'
-             '<stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/>'
-             '<stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/>'
-             '</linearGradient></defs>')
+    p = ['<svg id="%s" viewBox="0 0 %d %d" preserveAspectRatio="xMidYMid meet"%s '
+         'role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">'
+         % (uid, W, H, (' style="%s"' % style) if style else '')]
+    p.append(('<defs><linearGradient id="beam-%s" x1="0" y1="0" x2="0" y2="1">'
+              '<stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/>'
+              '<stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/>'
+              '</linearGradient></defs>') % uid)
     for i, t in enumerate(tr['tokens']):
         cls = 'tok' + (' tokq' if i == tr['query_pos'] else '')
         p.append('<g class="%s" opacity="0">'
                  '<rect x="%.1f" y="%d" width="%d" height="38" rx="7"/>'
                  '<text x="%.1f" y="%d" text-anchor="middle">%s</text></g>'
                  % (cls, xs[i], TOKY, CW, xs[i] + CW / 2, TOKY + 25, t.strip() or '·'))
-    p.append('<line id="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam)" '
-             'stroke-width="3" stroke-linecap="round" opacity="0"/>')
+    p.append('<line class="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam-%s)" '
+             'stroke-width="3" stroke-linecap="round" opacity="0"/>' % uid)
     for j in range(m):
         p.append('<g class="kc" opacity="0">'
                  '<rect x="%.1f" y="%d" width="%d" height="40" rx="7"/>'
@@ -105,7 +107,7 @@ def svg_scene(tr):
     for _j in range(m):
         p.append('<circle class="flow" r="4" opacity="0"/>')
     ox = xs[m - 1] + CW + 40
-    p.append('<g id="out" opacity="0">'
+    p.append('<g class="outb" opacity="0">'
              '<rect x="%.1f" y="%d" width="140" height="34" rx="8"/>'
              '<text x="%.1f" y="%d" text-anchor="middle">출력 %.2f</text></g>'
              % (ox, VY, ox + 70, VY + 23, tr['out_preview'][0]))
@@ -137,8 +139,8 @@ text{fill:var(--ink-1);font-size:15px}
 .bv{font-size:12px;fill:var(--ink-3)}
 .vc rect{fill:var(--hot)}
 .vc text{font-size:13px}
-#out rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
-#out text{font-size:14px}
+.outb rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+.outb text{font-size:14px}
 .flow{fill:var(--hot)}
 .cap{font-size:17px;letter-spacing:-.01em}
 #src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3)}
@@ -147,10 +149,10 @@ text{fill:var(--ink-1);font-size:15px}
 JS = r'''
 (function(){
 var D=__DATA__;
-var st=document.getElementById('stage');
+var st=document.getElementById(D.uid);
 var q=function(s){return [].slice.call(st.querySelectorAll(s));};
 var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
-var beam=document.getElementById('beam'),out=document.getElementById('out'),caps=q('.cap');
+var beam=q('.beam')[0],out=q('.outb')[0],caps=q('.cap');
 var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
 var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
 var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -233,24 +235,60 @@ requestAnimationFrame(loop);
 '''
 
 
-def render(tr):
-    scene, ox = svg_scene(tr)
+def scene_js(tr, uid, ox):
+    """그 장면을 돌리는 시계. uid 로 자기 SVG 만 잡으니 한 페이지에 여럿 서도 안 섞인다."""
     m, n, xs = layout(tr)
-    t = timings(m)
     soft, raw = tr['scores_softmax'], tr['scores_raw']
     top = max(soft)
     lo, hi = min(raw), max(raw)
     span = (hi - lo) or 1.0
     data = {
+        'uid': uid,
         'm': m, 'xs': xs, 'cw': CW, 'qx': xs[tr['query_pos']],
         'toky': TOKY, 'qy': QY, 'ky': KY, 'barbase': BARBASE, 'vy': VY, 'ox': ox,
         'qv': '%.2f' % tr['q_preview'][0],
         'bars': [{'raw': round(10 + BARMAX * (raw[j] - lo) / span, 1),
                   'soft': round(10 + BARMAX * soft[j] / top, 1),
                   'w': soft[j], 'top': soft[j] == top} for j in range(m)],
-        't': t,
+        't': timings(m),
     }
-    js = JS.replace('__DATA__', json.dumps(data, ensure_ascii=False))
+    return JS.replace('__DATA__', json.dumps(data, ensure_ascii=False))
+
+
+# 카드 안에 넣을 때 쓰는 붓. 전면 화면용 CSS 는 :root 를 건드리므로 그대로 못 쓴다 —
+# 이쪽은 그 SVG 안으로만 범위를 좁히고 색은 대시보드 변수에서 받는다.
+EMBED_CSS = '''
+#%(u)s{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
+  --bg-2:var(--card,#f4f4f3);--bg-3:var(--line,#e0e0de);
+  --ink-1:var(--ink,#1c1c1c);--ink-3:var(--ink-3,#8d8d8d)}
+#%(u)s text{fill:var(--ink-1);font-size:15px}
+#%(u)s .tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
+#%(u)s .tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
+#%(u)s .kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
+#%(u)s .kc .kk{font-size:13px}
+#%(u)s .kc .kv{font-size:11px;fill:var(--ink-3)}
+#%(u)s .bar{fill:var(--bg-3)}
+#%(u)s .bar.hot{fill:var(--hot)}
+#%(u)s .bv{font-size:12px;fill:var(--ink-3)}
+#%(u)s .vc rect{fill:var(--hot)}
+#%(u)s .vc text{font-size:13px}
+#%(u)s .outb rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+#%(u)s .outb text{font-size:14px}
+#%(u)s .flow{fill:var(--hot)}
+#%(u)s .cap{font-size:17px;letter-spacing:-.01em}
+'''
+
+
+def embed(tr, uid='attn-scene', maxw=900):
+    """카드 그림 자리에 그대로 넣는 한 덩이 — 스타일·장면·시계가 같이 간다."""
+    scene, ox = svg_scene(tr, uid, style='max-width:%dpx' % maxw)
+    return ('<style>%s</style>\n%s\n<script>%s</script>'
+            % (EMBED_CSS % {'u': uid}, scene, scene_js(tr, uid, ox)))
+
+
+def render(tr):
+    scene, ox = svg_scene(tr)
+    js = scene_js(tr, 'stage', ox)
     return '''<!doctype html><html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>애니메이션 — 어텐션</title><style>%s</style></head><body>

@@ -21,14 +21,14 @@ text{fill:var(--ink-1);font-size:15px}
 .bv{font-size:12px;fill:var(--ink-3)}
 .vc rect{fill:var(--hot)}
 .vc text{font-size:13px}
-#out rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
-#out text{font-size:14px}
+.outb rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
+.outb text{font-size:14px}
 .flow{fill:var(--hot)}
 .cap{font-size:17px;letter-spacing:-.01em}
 #src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3)}
 </style></head><body>
 <div id="wrap"><svg id="stage" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">
-<defs><linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
+<defs><linearGradient id="beam-stage" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
 <g class="tok" opacity="0"><rect x="6.5" y="64" width="74" height="38" rx="7"/><text x="43.5" y="89" text-anchor="middle">회사</text></g>
 <g class="tok" opacity="0"><rect x="89.5" y="64" width="74" height="38" rx="7"/><text x="126.5" y="89" text-anchor="middle">가</text></g>
 <g class="tok" opacity="0"><rect x="172.5" y="64" width="74" height="38" rx="7"/><text x="209.5" y="89" text-anchor="middle">공</text></g>
@@ -41,7 +41,7 @@ text{fill:var(--ink-1);font-size:15px}
 <g class="tok" opacity="0"><rect x="753.5" y="64" width="74" height="38" rx="7"/><text x="790.5" y="89" text-anchor="middle">산</text></g>
 <g class="tok" opacity="0"><rect x="836.5" y="64" width="74" height="38" rx="7"/><text x="873.5" y="89" text-anchor="middle">에</text></g>
 <g class="tok" opacity="0"><rect x="919.5" y="64" width="74" height="38" rx="7"/><text x="956.5" y="89" text-anchor="middle">있다</text></g>
-<line id="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam)" stroke-width="3" stroke-linecap="round" opacity="0"/>
+<line class="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam-stage)" stroke-width="3" stroke-linecap="round" opacity="0"/>
 <g class="kc" opacity="0"><rect x="6.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="43.5" y="309" text-anchor="middle">K</text><text class="kv" x="43.5" y="324" text-anchor="middle">-0.01</text></g>
 <g class="kc" opacity="0"><rect x="89.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="126.5" y="309" text-anchor="middle">K</text><text class="kv" x="126.5" y="324" text-anchor="middle">0.27</text></g>
 <g class="kc" opacity="0"><rect x="172.5" y="292" width="74" height="40" rx="7"/><text class="kk" x="209.5" y="309" text-anchor="middle">K</text><text class="kv" x="209.5" y="324" text-anchor="middle">-0.41</text></g>
@@ -82,7 +82,7 @@ text{fill:var(--ink-1);font-size:15px}
 <circle class="flow" r="4" opacity="0"/>
 <circle class="flow" r="4" opacity="0"/>
 <circle class="flow" r="4" opacity="0"/>
-<g id="out" opacity="0"><rect x="701.5" y="486" width="140" height="34" rx="8"/><text x="771.5" y="509" text-anchor="middle">출력 0.53</text></g>
+<g class="outb" opacity="0"><rect x="701.5" y="486" width="140" height="34" rx="8"/><text x="771.5" y="509" text-anchor="middle">출력 0.53</text></g>
 <text class="cap" x="500" y="578" text-anchor="middle" opacity="0">「그것은」이 무엇을 가리키는지 찾는 중이다</text>
 <text class="cap" x="500" y="578" text-anchor="middle" opacity="0">지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다</text>
 <text class="cap" x="500" y="578" text-anchor="middle" opacity="0">앞선 토큰마다 K 가 이미 남아 있다</text>
@@ -94,11 +94,11 @@ text{fill:var(--ink-1);font-size:15px}
 <p id="src">Qwen/Qwen2.5-0.5B-Instruct · 15층 9번 헤드 — 「그것은」 자리에서 잰 실제 값이다</p>
 <script>
 (function(){
-var D={"m": 8, "xs": [6.5, 89.5, 172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5, 836.5, 919.5], "cw": 74, "qx": 587.5, "toky": 64, "qy": 180, "ky": 292, "barbase": 452, "vy": 486, "ox": 701.5, "qv": "0.18", "bars": [{"raw": 110.6, "soft": 86.1, "w": 0.21569174082574483, "top": false}, {"raw": 65.3, "soft": 34.4, "w": 0.0690490189851718, "top": false}, {"raw": 10.0, "soft": 16.1, "w": 0.017203629850026922, "top": false}, {"raw": 128.0, "soft": 128.0, "w": 0.3343870801740588, "top": true}, {"raw": 38.0, "soft": 22.3, "w": 0.034796593533291356, "top": false}, {"raw": 91.3, "soft": 56.9, "w": 0.1329811875848302, "top": false}, {"raw": 78.8, "soft": 44.3, "w": 0.09710801118017787, "top": false}, {"raw": 79.5, "soft": 44.9, "w": 0.09878273786669818, "top": false}], "t": {"tok": 1.5, "q": 2.7, "scan": 4.1, "step": 0.46, "soft": 8.129999999999999, "v": 9.829999999999998, "out": 11.429999999999998, "end": 14.429999999999998}};
-var st=document.getElementById('stage');
+var D={"uid": "stage", "m": 8, "xs": [6.5, 89.5, 172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5, 836.5, 919.5], "cw": 74, "qx": 587.5, "toky": 64, "qy": 180, "ky": 292, "barbase": 452, "vy": 486, "ox": 701.5, "qv": "0.18", "bars": [{"raw": 110.6, "soft": 86.1, "w": 0.21569174082574483, "top": false}, {"raw": 65.3, "soft": 34.4, "w": 0.0690490189851718, "top": false}, {"raw": 10.0, "soft": 16.1, "w": 0.017203629850026922, "top": false}, {"raw": 128.0, "soft": 128.0, "w": 0.3343870801740588, "top": true}, {"raw": 38.0, "soft": 22.3, "w": 0.034796593533291356, "top": false}, {"raw": 91.3, "soft": 56.9, "w": 0.1329811875848302, "top": false}, {"raw": 78.8, "soft": 44.3, "w": 0.09710801118017787, "top": false}, {"raw": 79.5, "soft": 44.9, "w": 0.09878273786669818, "top": false}], "t": {"tok": 1.5, "q": 2.7, "scan": 4.1, "step": 0.46, "soft": 8.129999999999999, "v": 9.829999999999998, "out": 11.429999999999998, "end": 14.429999999999998}};
+var st=document.getElementById(D.uid);
 var q=function(s){return [].slice.call(st.querySelectorAll(s));};
 var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
-var beam=document.getElementById('beam'),out=document.getElementById('out'),caps=q('.cap');
+var beam=q('.beam')[0],out=q('.outb')[0],caps=q('.cap');
 var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
 var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
 var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
