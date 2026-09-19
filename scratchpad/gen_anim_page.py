@@ -27,10 +27,10 @@ CAPY = 578           # 자막
 CW, CGAP = 74, 9     # 칸 폭 · 사이
 
 # ── 시계 (초) ───────────────────────────────────────────────
-T_TOK = 1.5
-T_Q = 2.7
-T_SCAN = 4.1
-SCAN_STEP = 0.46
+T_TOK = 2.4
+T_Q = 4.4
+T_SCAN = 6.2
+SCAN_STEP = 0.85
 
 CAPS = [
     '「그것은」이 무엇을 가리키는지 찾는 중이다',
@@ -62,11 +62,11 @@ def layout(tr):
 
 
 def timings(m):
-    t_soft = T_SCAN + m * SCAN_STEP + 0.35
-    t_v = t_soft + 1.7
-    t_out = t_v + 1.6
+    t_soft = T_SCAN + m * SCAN_STEP + 0.6
+    t_v = t_soft + 2.6
+    t_out = t_v + 2.4
     return {'tok': T_TOK, 'q': T_Q, 'scan': T_SCAN, 'step': SCAN_STEP,
-            'soft': t_soft, 'v': t_v, 'out': t_out, 'end': t_out + 3.0}
+            'soft': t_soft, 'v': t_v, 'out': t_out, 'end': t_out + 4.2}
 
 
 def svg_scene(tr, uid='stage', style=''):
@@ -171,14 +171,16 @@ qbox.innerHTML='<rect width="'+cw+'" height="40" rx="7" fill="var(--hot-soft)" '
 st.appendChild(qbox);
 
 function capAt(t){
-  if(t<T.q)return 0; if(t<T.q+1.0)return 1; if(t<T.scan)return 2;
+  // 자막이 뜨는 구간은 그 장면이 실제로 도는 구간과 맞춘다. 예전에는 둘이 1초도 안
+  // 떠 있어 읽기 전에 넘어갔다.
+  if(t<T.tok)return 0; if(t<T.q-.6)return 1; if(t<T.scan)return 2;
   if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.out)return 5; return 6;
 }
 
 function frame(t){
   var per=T.tok/toks.length;
   for(var i=0;i<toks.length;i++){
-    var u=ease(seg(t,i*per,i*per+.42));
+    var u=ease(seg(t,i*per,i*per+.6));
     set(toks[i],'opacity',u.toFixed(3));
   }
   var uq=ease(seg(t,T.tok,T.q));
@@ -198,26 +200,26 @@ function frame(t){
   }
   set(qbox,'opacity',uq.toFixed(3));
   set(qbox,'transform','translate('+qx.toFixed(1)+','+qy.toFixed(1)+')');
-  for(var j=0;j<kcs.length;j++)set(kcs[j],'opacity',ease(seg(t,T.q-.6+j*.05,T.q-.2+j*.05)).toFixed(3));
+  for(var j=0;j<kcs.length;j++)set(kcs[j],'opacity',ease(seg(t,T.q-1.0+j*.09,T.q-.3+j*.09)).toFixed(3));
   for(var j=0;j<m;j++){
     var b=D.bars[j],h=0;
-    if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.34));
-    else if(t>=T.soft)h=b.raw+(b.soft-b.raw)*ease(seg(t,T.soft,T.soft+.9));
+    if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.6));
+    else if(t>=T.soft)h=b.raw+(b.soft-b.raw)*ease(seg(t,T.soft,T.soft+1.4));
     set(bars[j],'height',h.toFixed(1));set(bars[j],'y',(D.barbase-h).toFixed(1));
     if(t>=T.soft&&b.top)bars[j].classList.add('hot');else bars[j].classList.remove('hot');
-    set(bvs[j],'opacity',ease(seg(t,T.soft+.35,T.soft+1.0)).toFixed(3));
+    set(bvs[j],'opacity',ease(seg(t,T.soft+.6,T.soft+1.5)).toFixed(3));
   }
   for(var j=0;j<m;j++){
-    var uv=ease(seg(t,T.v+j*.04,T.v+j*.04+.45));
+    var uv=ease(seg(t,T.v+j*.08,T.v+j*.08+.7));
     set(vcs[j],'opacity',uv.toFixed(3));
     vcs[j].querySelector('rect').setAttribute(
       'fill-opacity',((.12+.88*D.bars[j].w/topw)*uv).toFixed(3));
-    var uf=seg(t,T.out-.5+j*.05,T.out+.8);
+    var uf=seg(t,T.out-.8+j*.08,T.out+1.2);
     set(flows[j],'opacity',(uf>0&&uf<1?(.3+.7*D.bars[j].w/topw):0).toFixed(3));
     set(flows[j],'cx',(xs[j]+cw/2+(D.ox+70-xs[j]-cw/2)*ease(uf)).toFixed(1));
     set(flows[j],'cy',(D.vy+17).toFixed(1));
   }
-  set(out,'opacity',ease(seg(t,T.out+.4,T.out+1.0)).toFixed(3));
+  set(out,'opacity',ease(seg(t,T.out+.7,T.out+1.5)).toFixed(3));
   var ci=capAt(t);
   for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
 }

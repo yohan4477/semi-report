@@ -11,7 +11,7 @@ from playwright.sync_api import sync_playwright
 
 PAGE = os.path.abspath(os.path.join('대시보드', '애니메이션 — 어텐션.html'))
 OUT = os.path.join('scratchpad', 'anim_shots')
-MARKS = [0.8, 2.6, 3.8, 5.4, 7.0, 9.2, 11.0, 13.2]
+MARKS = [1.2, 3.6, 5.6, 8.0, 11.0, 14.0, 17.0, 20.5]
 
 
 def main():

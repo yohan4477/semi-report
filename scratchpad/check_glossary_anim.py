@@ -12,7 +12,7 @@ from playwright.sync_api import sync_playwright
 PAGE = os.path.abspath(os.path.join('대시보드', '용어사전.html'))
 CARD = os.path.abspath(os.path.join('대시보드', 'glossary'))
 OUT = os.path.join('scratchpad', 'anim_shots')
-MARKS = [1.0, 4.0, 6.5, 9.5, 12.5]
+MARKS = [1.5, 5.5, 9.5, 14.5, 19.5]
 
 
 def run(pg, url, tag, fails):
