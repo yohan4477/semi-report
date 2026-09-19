@@ -16,13 +16,16 @@ TRACE = os.path.join('data', 'attn_trace.json')
 OUT = os.path.join('대시보드', '애니메이션 — 어텐션.html')
 
 # ── 판 좌표 ─────────────────────────────────────────────────
+# 줄 사이는 가장 높이 선 막대를 기준으로 잡는다. 막대는 BARBASE 에서 위로 자라
+# 최대 10+BARMAX 만큼 올라가므로 그 꼭대기(BARBASE-10-BARMAX)가 K 칸 아래보다
+# 낮아야 한다. 처음에는 이 계산을 안 해서 막대가 K 칸을 8px 파고들었다.
 W, H = 1000, 620
 TOKY = 64            # 문장 줄
 QY = 180             # Q 칩이 내려와 머무는 높이
-KY = 292             # K 칸
-BARBASE = 452        # 막대 바닥
-BARMAX = 118         # 막대 최대 높이
-VY = 486             # V 칸
+KY = 276             # K 칸
+BARBASE = 470        # 막대 바닥
+BARMAX = 120         # 막대 최대 높이
+VY = 506             # V 칸
 CAPY = 578           # 자막
 CW, CGAP = 74, 9     # 칸 폭 · 사이
 
@@ -98,7 +101,7 @@ def svg_scene(tr, uid='stage', style=''):
         p.append('<rect class="bar" x="%.1f" y="%d" width="%d" height="0" rx="4"/>'
                  % (xs[j] + 11, BARBASE, CW - 22))
         p.append('<text class="bv" x="%.1f" y="%d" text-anchor="middle" opacity="0">%.2f</text>'
-                 % (xs[j] + CW / 2, BARBASE + 17, tr['scores_softmax'][j]))
+                 % (xs[j] + CW / 2, BARBASE + 21, tr['scores_softmax'][j]))
     for j in range(m):
         p.append('<g class="vc" opacity="0">'
                  '<rect x="%.1f" y="%d" width="%d" height="34" rx="7"/>'
