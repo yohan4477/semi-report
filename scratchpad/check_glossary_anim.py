@@ -66,8 +66,10 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     fails = []
     names = os.listdir(CARD) if os.path.isdir(CARD) else []
-    card = [f for f in names if '어텐션과-FFN' in f]
-    cards = [(f, sid) for f in card for sid in ('attn-scene', 'ffn-scene')]
+    layer = [f for f in names if '어텐션과-FFN' in f]
+    ng = [f for f in names if '엔그램' in f]
+    cards = ([(f, sid) for f in layer for sid in ('attn-scene', 'ffn-scene')]
+             + [(f, 'ngram-scene') for f in ng])
     with sync_playwright() as pw:
         b = pw.chromium.launch()
         pg = b.new_page(viewport={'width': 1280, 'height': 900})

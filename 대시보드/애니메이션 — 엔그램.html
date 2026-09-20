@@ -1,0 +1,190 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>애니메이션 — 엔그램과 FFN</title><style>
+:root{--ink-1:#1c1c1c;--ink-3:#8d8d8d;--bg-1:#fbfbfa;--bg-2:#efefee;--bg-3:#e0e0de;
+  --hot:#1f7a5c;--hot-soft:#d9ede5;--cool:#8d8d8d}
+@media (prefers-color-scheme:dark){:root{--ink-1:#ededec;--ink-3:#8f8f8f;
+  --bg-1:#121212;--bg-2:#1e1e1e;--bg-3:#2c2c2c;--hot:#4fc39b;--hot-soft:#1b3a31}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg-1);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:14px}
+svg{width:100%;height:100%}
+text{fill:var(--ink-1);font-size:15px}
+.divider{stroke:var(--bg-3);stroke-width:1.5;stroke-dasharray:5 5}
+.head{font-size:19px;font-weight:800;letter-spacing:-.01em}
+.whyb rect{fill:var(--bg-2);stroke:var(--ink-3)}
+.keyc{fill:var(--hot);stroke:var(--ink-3)}
+.klbl{font-size:12px;fill:var(--ink-3)}
+.whyb.R rect{stroke:var(--hot);stroke-width:2}
+.inb text{font-size:13px}
+.whyb text{font-size:14px}
+.way,.readn{font-size:13px;fill:var(--ink-3)}
+.lc,.rc{fill:var(--bg-3)}
+.lc.lhit,.rc.rhit{fill:var(--hot)}
+.scan{fill:var(--hot);opacity:.35}
+.lbl{font-size:12px;fill:var(--ink-3)}
+.cap{font-size:17px;letter-spacing:-.01em}
+#src{position:fixed;left:14px;bottom:10px;margin:0;font-size:11px;color:var(--ink-3);
+  line-height:1.6;max-width:72%}
+</style></head><body>
+<div id="wrap"><svg id="ngram" viewBox="0 0 1040 620" preserveAspectRatio="xMidYMid meet" role="img" aria-label="FFN 과 엔그램이 표에서 꺼내는 방식을 나란히 견준 장면">
+<line class="divider" x1="520.0" y1="36" x2="520.0" y2="480" opacity="0"/>
+<text class="head L" x="274.0" y="54" text-anchor="middle" opacity="0">FFN</text>
+<g class="inb L" opacity="0">
+<rect class="keyc" x="145.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="164.0" y="134" text-anchor="middle">-0.9</text>
+<rect class="keyc" x="189.0" y="112" width="38" height="34" rx="5" fill-opacity="0.898"/>
+<text x="208.0" y="134" text-anchor="middle">-0.8</text>
+<rect class="keyc" x="233.0" y="112" width="38" height="34" rx="5" fill-opacity="0.711"/>
+<text x="252.0" y="134" text-anchor="middle">-0.5</text>
+<rect class="keyc" x="277.0" y="112" width="38" height="34" rx="5" fill-opacity="0.813"/>
+<text x="296.0" y="134" text-anchor="middle">0.7</text>
+<rect class="keyc" x="321.0" y="112" width="38" height="34" rx="5" fill-opacity="0.659"/>
+<text x="340.0" y="134" text-anchor="middle">-0.5</text>
+<rect class="keyc" x="365.0" y="112" width="38" height="34" rx="5" fill-opacity="0.989"/>
+<text x="384.0" y="134" text-anchor="middle">0.9</text>
+<text class="klbl" x="274.0" y="164" text-anchor="middle">벡터 896칸 중 6칸 — 값이 이어진다</text></g>
+<text class="way L" x="274.0" y="196" text-anchor="middle" opacity="0">표 전체와 하나씩 대 본다</text>
+<text class="readn L" x="274.0" y="344" text-anchor="middle" opacity="0">표 전체를 읽는다 — 한 층 가중치 13,074,432개</text>
+<g class="whyb L" opacity="0"><rect x="74.0" y="410" width="400" height="44" rx="8"/><text x="274.0" y="438" text-anchor="middle">HBM 에 있어야 한다</text></g>
+<text class="head R" x="766.0" y="54" text-anchor="middle" opacity="0">엔그램</text>
+<g class="inb R" opacity="0">
+<rect class="keyc" x="703.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="722.0" y="134" text-anchor="middle">125761</text>
+<rect class="keyc" x="747.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="766.0" y="134" text-anchor="middle">13</text>
+<rect class="keyc" x="791.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="810.0" y="134" text-anchor="middle">136742</text>
+<text class="klbl" x="766.0" y="164" text-anchor="middle">토큰 ID 3개 — 번호가 딱 떨어진다</text></g>
+<text class="way R" x="766.0" y="196" text-anchor="middle" opacity="0">해시로 행 번호를 낸다</text>
+<text class="readn R" x="766.0" y="344" text-anchor="middle" opacity="0">짚은 행만 읽는다 — 토큰 자리 하나당 12.4 KiB</text>
+<g class="whyb R" opacity="0"><rect x="566.0" y="410" width="400" height="44" rx="8"/><text x="766.0" y="438" text-anchor="middle">DRAM 으로 나갈 수 있다</text></g>
+<rect class="lc" x="44.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="536.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="61.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="553.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="79.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="571.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="97.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="589.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="115.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="607.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="133.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc rhit" x="625.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="151.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="643.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="169.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="661.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc lhit" x="187.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="679.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="205.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc rhit" x="697.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="223.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="715.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="241.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="733.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc lhit" x="259.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="751.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="277.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="769.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc lhit" x="294.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="786.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="312.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="804.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="330.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="822.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="348.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="840.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="366.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="858.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="384.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="876.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="402.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="894.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="420.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="912.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="438.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="930.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="456.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc rhit" x="948.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="474.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="966.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="492.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="984.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="scan" x="44.0" y="246" width="16" height="66" rx="3" opacity="0"/>
+<text class="lbl lbl-l" x="274.0" y="238" text-anchor="middle" opacity="0">표 — 어디가 걸릴지는 다 대 봐야 안다</text>
+<text class="lbl lbl-r" x="766.0" y="238" text-anchor="middle" opacity="0">표 — 읽을 자리가 먼저 정해진다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">같은 일을 하는 둘이다 — 표에서 꺼내 잔차 스트림에 더한다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">열쇠로 드는 것이 다르다 — 이어지는 값이냐, 딱 떨어지는 번호냐</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">찾는 법이 다르다. FFN 은 전부와 대 보고, 엔그램은 번지수를 계산한다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">FFN 은 어디가 걸릴지 알려면 표를 끝까지 훑어야 한다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">둘 다 결국 몇 칸만 쓴다 — 다른 것은 그 몇 칸을 언제 아느냐다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">읽어야 하는 양이 갈린다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">그래서 하나는 HBM 에 있어야 하고 하나는 DRAM 으로 나갈 수 있다</text>
+</svg></div>
+<p id="src">FFN 가중치 개수는 Qwen/Qwen2.5-0.5B-Instruct 를 돌려 이 저장소에서 계산한 값이다.<br>
+엔그램 수치는 SemiAnalysis 뉴스레터 변환본에서 가져왔다 — DeepSeek-V4.1-Flash 기준 표 196.6B
+(188.8 GiB)를 층마다 24행씩 읽어 토큰 자리 하나당 12.4 KiB, GPU 4장에 나누면 한 장당 3.1 KiB.</p>
+<script>
+(function(){
+var D={"uid": "ngram", "lx": 44.0, "colw": 460, "t": {"head": 1.8, "in": 3.6, "way": 6.0, "scan": 8.4, "hit": 12.0, "read": 14.6, "why": 17.2, "end": 21.4}};
+var st=document.getElementById(D.uid);
+var q=function(s){return [].slice.call(st.querySelectorAll(s));};
+var heads=q('.head'),inb=q('.inb'),ways=q('.way'),readn=q('.readn'),whyb=q('.whyb');
+var lc=q('.lc'),rc=q('.rc'),scan=q('.scan')[0],caps=q('.cap');
+var divider=q('.divider')[0],lbll=q('.lbl-l')[0],lblr=q('.lbl-r')[0];
+var T=D.t;
+var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function cl(v,a,b){return v<a?a:(v>b?b:v);}
+function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
+function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
+function set(e,k,v){if(e)e.setAttribute(k,v);}
+function setAll(a,k,v){for(var i=0;i<a.length;i++)set(a[i],k,v);}
+
+function capAt(t){
+  if(t<T.in)return 0; if(t<T.way)return 1; if(t<T.scan)return 2;
+  if(t<T.hit)return 3; if(t<T.read)return 4; if(t<T.why)return 5; return 6;
+}
+
+function frame(t){
+  set(divider,'opacity',ease(seg(t,T.head,T.head+.8)).toFixed(3));
+  setAll(heads,'opacity',ease(seg(t,0,T.head)).toFixed(3));
+  setAll(inb,'opacity',ease(seg(t,T.in-.8,T.in)).toFixed(3));
+  setAll(ways,'opacity',ease(seg(t,T.way-.8,T.way)).toFixed(3));
+  var born=ease(seg(t,T.way,T.way+.8));
+  set(lbll,'opacity',born.toFixed(3));set(lblr,'opacity',born.toFixed(3));
+  // 왼쪽 — 훑는 빛이 표 전체를 지난다. 다 지난 뒤에야 걸린 칸이 드러난다
+  var sc=seg(t,T.scan,T.hit);
+  set(scan,'opacity',(sc>0&&sc<1?.35:0).toFixed(3));
+  set(scan,'x',(D.lx+(D.colw-16)*sc).toFixed(1));
+  var lhit=ease(seg(t,T.hit,T.hit+1.0));
+  for(var i=0;i<lc.length;i++){
+    var on=lc[i].classList.contains('lhit');
+    var touched=sc>0?(i/(lc.length-1)<=sc?1:0):0;
+    var base=born*(.25+.35*touched);
+    set(lc[i],'opacity',(on?Math.max(base,lhit):base*(1-lhit*.6)).toFixed(3));
+  }
+  // 오른쪽 — 짚은 칸이 바로 켜진다. 훑는 일이 없다
+  var rhit=ease(seg(t,T.way+.6,T.way+1.6));
+  for(var i=0;i<rc.length;i++){
+    var on=rc[i].classList.contains('rhit');
+    set(rc[i],'opacity',(born*(on?Math.max(.25,rhit):.25)).toFixed(3));
+  }
+  setAll(readn,'opacity',ease(seg(t,T.read,T.read+.9)).toFixed(3));
+  setAll(whyb,'opacity',ease(seg(t,T.why,T.why+.9)).toFixed(3));
+  var ci=capAt(t);
+  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
+}
+
+if(still){frame(T.why+1.2);return;}
+var t0=null;
+function loop(ts){
+  if(t0===null)t0=ts;
+  var t=(ts-t0)/1000;
+  if(t>T.end){t0=ts;t=0;}
+  frame(t);requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
+</script></body></html>

@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>어텐션과 FFN — 트랜스포머 한 층이 하는 두 걸음 · 용어사전</title>
+<title>엔그램(N-gram 임베딩) — 곱셈 없이 표에서 꺼내는 기억 · 용어사전</title>
 <style>
 
   /* ============ 측정된 지식 저널 — 딥 파인 · 샌드 · 데이터 스트립 ============ */
@@ -653,371 +653,173 @@
 
 <div class="wrap">
 <a class="pback" href="../용어사전.html#sec-model">← 용어사전</a>
-<div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic compute">모델 구조</span><h2 id="card-어텐션과-FFN-트랜스포머-한-층이-하는-두-걸음">어텐션과 FFN — 트랜스포머 한 층이 하는 두 걸음</h2><p class="uc-gain">모델이 글자를 이어 붙일 때 한 층에서 무슨 일이 벌어지는지. 「그것은」이 문장 앞의 무엇을 가리키는지 정하는 걸음과, 그 결과를 다듬는 걸음을 나눠 본다.</p><div class="uc-meta"><span>용어 풀이</span><span>정리 2026-09-20</span><span>모델 구조</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">트랜스포머 한 층은 두 걸음이다. 먼저 어텐션이 지금 토큰과 앞선 토큰들을 섞고, 그다음 FFN 이 그 결과를 토큰 하나하나에 따로 먹여 다듬는다. 섞는 걸음은 토큰끼리 서로 보고, 다듬는 걸음은 옆을 안 본다. 이 두 걸음이 층마다 되풀이된다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>Q·K·V 는 같은 토큰에서 뽑은 세 벡터다.</b> 같은 임베딩에 서로 다른 가중치를 곱해 만든다. Q(쿼리 — 내가 무엇을 찾는가)는 그 스텝에서 쓰고 버리고, K(키 — 나는 무엇을 들고 있는가)와 V(밸류 — 골라졌을 때 내줄 내용)는 한 번 만들면 그 토큰이 대화에 남아 있는 한 계속 다시 쓰여 캐시에 쌓인다 — 「KV 캐시」가 커진다는 말이 이 뜻이다. 그리고 얼마나 볼지를 정하는 것은 Q 와 K 인데 그 비율로 섞이는 것은 V 라, 어디를 많이 보느냐와 결과를 많이 정하느냐가 같지 않다.</li></ul><figure class="uc-fig"><p class="fig-title">1막 — 어텐션 (23초짜리 한 바퀴)</p><style>
-#attn-scene{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
+<div class="ucard is-open"><div class="uc-head" role="button" tabindex="0" aria-expanded="true"><span class="uc-topic memory">모델 구조</span><h2 id="card-엔그램-N-gram-임베딩-곱셈-없이-표에서-꺼내는-기억">엔그램(N-gram 임베딩) — 곱셈 없이 표에서 꺼내는 기억</h2><p class="uc-gain">「표를 HBM 밖으로 내보낸다」는 말이 왜 FFN 에는 안 되고 엔그램에는 되는지. 최근 모델들이 메모리 벽을 우회하는 방식이다.</p><div class="uc-meta"><span>용어 풀이</span><span>정리 2026-09-20</span><span>모델 구조</span></div><span class="uc-caret" aria-hidden="true">▾</span></div><div class="uc-body"><p class="uc-oneliner">엔그램은 최근 토큰 몇 개를 해시해 큰 표에서 행을 꺼내 쓰는 층이다. FFN 과 같이 「표에서 꺼내 잔차 스트림에 더한다」인데 꺼내는 방식이 다르다 — FFN 은 입력을 key 전부와 대 봐야 어디가 걸리는지 알고, 엔그램은 토큰 ID 만으로 읽을 행이 먼저 정해진다. 그 차이가 표를 어느 메모리에 둘 수 있느냐까지 끌고 간다.</p><p class="uc-label">핵심 포인트</p><ul class="uc-points"><li><b>키가 벡터가 아니라 토큰 ID 다.</b> 지금 토큰과 그 앞 한두 개를 이어 붙여 해시하면 행 번호가 나온다. 모델을 돌리지 않고 산수로만 나오는 값이라, 앞 층이 계산하는 동안 그 행을 미리 당겨 올 수 있다.</li><li><b>그래서 표가 HBM 밖으로 나간다.</b> 뉴스레터가 잰 DeepSeek-V4.1-Flash 기준으로 표는 196.6B(188.8 GiB)인데, 토큰 자리 하나가 실제로 읽는 양은 두 층에서 24행씩, 모두 합쳐 12.4 KiB 다. GPU 4 장에 나누면 한 장당 3.1 KiB. 크지만 가끔 조금씩 읽는 표라 DRAM 이나 NVMe 에 둬도 버틴다.</li></ul><figure class="uc-fig"><p class="fig-title">FFN 과 엔그램 — 21초짜리 한 바퀴</p><style>
+#ngram-scene{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
   --bg-2:var(--card,#f4f4f3);--bg-3:var(--line,#e0e0de);
   --ink-1:var(--ink,#1c1c1c);--ink-3:var(--ink-3,#8d8d8d)}
-#attn-scene text{fill:var(--ink-1);font-size:15px}
-#attn-scene .tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
-#attn-scene .tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
-#attn-scene .kc rect{fill:var(--bg-2);stroke:var(--bg-3)}
-#attn-scene .kc .kk{font-size:13px}
-#attn-scene .kc .kv{font-size:11px;fill:var(--ink-3)}
-#attn-scene .bar{fill:var(--bg-3)}
-#attn-scene .bar.hot{fill:var(--hot)}
-#attn-scene .bv{font-size:12px;fill:var(--ink-3)}
-#attn-scene .vc rect{fill:var(--hot)}
-#attn-scene .vc text{font-size:13px}
-#attn-scene .outb rect{fill:var(--bg-2);stroke:var(--hot);stroke-width:2}
-#attn-scene .outb text{font-size:14px}
-#attn-scene .flow{fill:var(--hot)}
-#attn-scene .cap{font-size:17px;letter-spacing:-.01em}
+#ngram-scene text{fill:var(--ink-1);font-size:15px}
+#ngram-scene .divider{stroke:var(--bg-3);stroke-width:1.5;stroke-dasharray:5 5}
+#ngram-scene .head{font-size:19px;font-weight:800}
+#ngram-scene .whyb rect{fill:var(--bg-2);stroke:var(--ink-3)}
+#ngram-scene .keyc{fill:var(--hot);stroke:var(--ink-3)}
+#ngram-scene .klbl{font-size:12px;fill:var(--ink-3)}
+#ngram-scene .whyb.R rect{stroke:var(--hot);stroke-width:2}
+#ngram-scene .inb text{font-size:13px}
+#ngram-scene .whyb text{font-size:14px}
+#ngram-scene .way,#ngram-scene .readn{font-size:13px;fill:var(--ink-3)}
+#ngram-scene .lc,#ngram-scene .rc{fill:var(--bg-3)}
+#ngram-scene .lc.lhit,#ngram-scene .rc.rhit{fill:var(--hot)}
+#ngram-scene .scan{fill:var(--hot);opacity:.35}
+#ngram-scene .lbl{font-size:12px;fill:var(--ink-3)}
+#ngram-scene .cap{font-size:17px;letter-spacing:-.01em}
 </style>
-<svg id="attn-scene" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" style="max-width:900px" role="img" aria-label="어텐션 계산 한 번이 흐르는 장면">
-<defs><linearGradient id="beam-attn-scene" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--hot)" stop-opacity=".1"/><stop offset="1" stop-color="var(--hot)" stop-opacity=".95"/></linearGradient></defs>
-<g class="tok" opacity="0"><rect x="6.5" y="64" width="74" height="38" rx="7"/><text x="43.5" y="89" text-anchor="middle">회사</text></g>
-<g class="tok" opacity="0"><rect x="89.5" y="64" width="74" height="38" rx="7"/><text x="126.5" y="89" text-anchor="middle">가</text></g>
-<g class="tok" opacity="0"><rect x="172.5" y="64" width="74" height="38" rx="7"/><text x="209.5" y="89" text-anchor="middle">공</text></g>
-<g class="tok" opacity="0"><rect x="255.5" y="64" width="74" height="38" rx="7"/><text x="292.5" y="89" text-anchor="middle">장을</text></g>
-<g class="tok" opacity="0"><rect x="338.5" y="64" width="74" height="38" rx="7"/><text x="375.5" y="89" text-anchor="middle">지</text></g>
-<g class="tok" opacity="0"><rect x="421.5" y="64" width="74" height="38" rx="7"/><text x="458.5" y="89" text-anchor="middle">었다</text></g>
-<g class="tok" opacity="0"><rect x="504.5" y="64" width="74" height="38" rx="7"/><text x="541.5" y="89" text-anchor="middle">.</text></g>
-<g class="tok tokq" opacity="0"><rect x="587.5" y="64" width="74" height="38" rx="7"/><text x="624.5" y="89" text-anchor="middle">그것은</text></g>
-<g class="tok" opacity="0"><rect x="670.5" y="64" width="74" height="38" rx="7"/><text x="707.5" y="89" text-anchor="middle">부</text></g>
-<g class="tok" opacity="0"><rect x="753.5" y="64" width="74" height="38" rx="7"/><text x="790.5" y="89" text-anchor="middle">산</text></g>
-<g class="tok" opacity="0"><rect x="836.5" y="64" width="74" height="38" rx="7"/><text x="873.5" y="89" text-anchor="middle">에</text></g>
-<g class="tok" opacity="0"><rect x="919.5" y="64" width="74" height="38" rx="7"/><text x="956.5" y="89" text-anchor="middle">있다</text></g>
-<line class="beam" x1="0" y1="0" x2="0" y2="0" stroke="url(#beam-attn-scene)" stroke-width="3" stroke-linecap="round" opacity="0"/>
-<g class="kc" opacity="0"><rect x="6.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="43.5" y="293" text-anchor="middle">K</text><text class="kv" x="43.5" y="308" text-anchor="middle">-0.01</text></g>
-<g class="kc" opacity="0"><rect x="89.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="126.5" y="293" text-anchor="middle">K</text><text class="kv" x="126.5" y="308" text-anchor="middle">0.27</text></g>
-<g class="kc" opacity="0"><rect x="172.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="209.5" y="293" text-anchor="middle">K</text><text class="kv" x="209.5" y="308" text-anchor="middle">-0.41</text></g>
-<g class="kc" opacity="0"><rect x="255.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="292.5" y="293" text-anchor="middle">K</text><text class="kv" x="292.5" y="308" text-anchor="middle">-0.58</text></g>
-<g class="kc" opacity="0"><rect x="338.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="375.5" y="293" text-anchor="middle">K</text><text class="kv" x="375.5" y="308" text-anchor="middle">-0.66</text></g>
-<g class="kc" opacity="0"><rect x="421.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="458.5" y="293" text-anchor="middle">K</text><text class="kv" x="458.5" y="308" text-anchor="middle">0.46</text></g>
-<g class="kc" opacity="0"><rect x="504.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="541.5" y="293" text-anchor="middle">K</text><text class="kv" x="541.5" y="308" text-anchor="middle">-0.10</text></g>
-<g class="kc" opacity="0"><rect x="587.5" y="276" width="74" height="40" rx="7"/><text class="kk" x="624.5" y="293" text-anchor="middle">K</text><text class="kv" x="624.5" y="308" text-anchor="middle">0.23</text></g>
-<rect class="bar" x="17.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="43.5" y="491" text-anchor="middle" opacity="0">0.22</text>
-<rect class="bar" x="100.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="126.5" y="491" text-anchor="middle" opacity="0">0.07</text>
-<rect class="bar" x="183.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="209.5" y="491" text-anchor="middle" opacity="0">0.02</text>
-<rect class="bar" x="266.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="292.5" y="491" text-anchor="middle" opacity="0">0.33</text>
-<rect class="bar" x="349.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="375.5" y="491" text-anchor="middle" opacity="0">0.03</text>
-<rect class="bar" x="432.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="458.5" y="491" text-anchor="middle" opacity="0">0.13</text>
-<rect class="bar" x="515.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="541.5" y="491" text-anchor="middle" opacity="0">0.10</text>
-<rect class="bar" x="598.5" y="470" width="52" height="0" rx="4"/>
-<text class="bv" x="624.5" y="491" text-anchor="middle" opacity="0">0.10</text>
-<g class="vc" opacity="0"><rect x="6.5" y="506" width="74" height="34" rx="7"/><text x="43.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="89.5" y="506" width="74" height="34" rx="7"/><text x="126.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="172.5" y="506" width="74" height="34" rx="7"/><text x="209.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="255.5" y="506" width="74" height="34" rx="7"/><text x="292.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="338.5" y="506" width="74" height="34" rx="7"/><text x="375.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="421.5" y="506" width="74" height="34" rx="7"/><text x="458.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="504.5" y="506" width="74" height="34" rx="7"/><text x="541.5" y="529" text-anchor="middle">V</text></g>
-<g class="vc" opacity="0"><rect x="587.5" y="506" width="74" height="34" rx="7"/><text x="624.5" y="529" text-anchor="middle">V</text></g>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<circle class="flow" r="4" opacity="0"/>
-<g class="outb" opacity="0"><rect x="701.5" y="506" width="140" height="34" rx="8"/><text x="771.5" y="529" text-anchor="middle">출력 0.53</text></g>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">「그것은」이 무엇을 가리키는지 찾는 중이다</text>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">지금 이 자리가 무엇을 찾는가 — 그것이 Q 하나다</text>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">앞선 토큰마다 K 가 이미 남아 있다</text>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">Q 를 K 하나하나에 대 본다 — 닮은 만큼 점수가 선다</text>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">점수를 합이 1 인 비율로 바꾼다</text>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">그 비율을 가중치로 V 를 가중평균한다</text>
-<text class="cap" x="500" y="578" text-anchor="middle" opacity="0">가중평균으로 나온 하나 — 이 자리의 어텐션 출력이다</text>
+<svg id="ngram-scene" viewBox="0 0 1040 620" preserveAspectRatio="xMidYMid meet" style="max-width:920px" role="img" aria-label="FFN 과 엔그램이 표에서 꺼내는 방식을 나란히 견준 장면">
+<line class="divider" x1="520.0" y1="36" x2="520.0" y2="480" opacity="0"/>
+<text class="head L" x="274.0" y="54" text-anchor="middle" opacity="0">FFN</text>
+<g class="inb L" opacity="0">
+<rect class="keyc" x="145.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="164.0" y="134" text-anchor="middle">-0.9</text>
+<rect class="keyc" x="189.0" y="112" width="38" height="34" rx="5" fill-opacity="0.898"/>
+<text x="208.0" y="134" text-anchor="middle">-0.8</text>
+<rect class="keyc" x="233.0" y="112" width="38" height="34" rx="5" fill-opacity="0.711"/>
+<text x="252.0" y="134" text-anchor="middle">-0.5</text>
+<rect class="keyc" x="277.0" y="112" width="38" height="34" rx="5" fill-opacity="0.813"/>
+<text x="296.0" y="134" text-anchor="middle">0.7</text>
+<rect class="keyc" x="321.0" y="112" width="38" height="34" rx="5" fill-opacity="0.659"/>
+<text x="340.0" y="134" text-anchor="middle">-0.5</text>
+<rect class="keyc" x="365.0" y="112" width="38" height="34" rx="5" fill-opacity="0.989"/>
+<text x="384.0" y="134" text-anchor="middle">0.9</text>
+<text class="klbl" x="274.0" y="164" text-anchor="middle">벡터 896칸 중 6칸 — 값이 이어진다</text></g>
+<text class="way L" x="274.0" y="196" text-anchor="middle" opacity="0">표 전체와 하나씩 대 본다</text>
+<text class="readn L" x="274.0" y="344" text-anchor="middle" opacity="0">표 전체를 읽는다 — 한 층 가중치 13,074,432개</text>
+<g class="whyb L" opacity="0"><rect x="74.0" y="410" width="400" height="44" rx="8"/><text x="274.0" y="438" text-anchor="middle">HBM 에 있어야 한다</text></g>
+<text class="head R" x="766.0" y="54" text-anchor="middle" opacity="0">엔그램</text>
+<g class="inb R" opacity="0">
+<rect class="keyc" x="703.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="722.0" y="134" text-anchor="middle">125761</text>
+<rect class="keyc" x="747.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="766.0" y="134" text-anchor="middle">13</text>
+<rect class="keyc" x="791.0" y="112" width="38" height="34" rx="5" fill-opacity="1.000"/>
+<text x="810.0" y="134" text-anchor="middle">136742</text>
+<text class="klbl" x="766.0" y="164" text-anchor="middle">토큰 ID 3개 — 번호가 딱 떨어진다</text></g>
+<text class="way R" x="766.0" y="196" text-anchor="middle" opacity="0">해시로 행 번호를 낸다</text>
+<text class="readn R" x="766.0" y="344" text-anchor="middle" opacity="0">짚은 행만 읽는다 — 토큰 자리 하나당 12.4 KiB</text>
+<g class="whyb R" opacity="0"><rect x="566.0" y="410" width="400" height="44" rx="8"/><text x="766.0" y="438" text-anchor="middle">DRAM 으로 나갈 수 있다</text></g>
+<rect class="lc" x="44.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="536.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="61.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="553.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="79.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="571.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="97.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="589.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="115.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="607.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="133.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc rhit" x="625.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="151.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="643.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="169.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="661.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc lhit" x="187.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="679.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="205.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc rhit" x="697.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="223.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="715.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="241.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="733.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc lhit" x="259.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="751.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="277.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="769.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc lhit" x="294.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="786.9" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="312.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="804.8" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="330.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="822.7" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="348.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="840.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="366.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="858.6" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="384.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="876.5" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="402.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="894.4" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="420.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="912.3" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="438.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="930.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="456.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc rhit" x="948.2" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="474.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="966.1" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="lc" x="492.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="rc" x="984.0" y="250" width="12" height="58" rx="3" opacity="0"/>
+<rect class="scan" x="44.0" y="246" width="16" height="66" rx="3" opacity="0"/>
+<text class="lbl lbl-l" x="274.0" y="238" text-anchor="middle" opacity="0">표 — 어디가 걸릴지는 다 대 봐야 안다</text>
+<text class="lbl lbl-r" x="766.0" y="238" text-anchor="middle" opacity="0">표 — 읽을 자리가 먼저 정해진다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">같은 일을 하는 둘이다 — 표에서 꺼내 잔차 스트림에 더한다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">열쇠로 드는 것이 다르다 — 이어지는 값이냐, 딱 떨어지는 번호냐</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">찾는 법이 다르다. FFN 은 전부와 대 보고, 엔그램은 번지수를 계산한다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">FFN 은 어디가 걸릴지 알려면 표를 끝까지 훑어야 한다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">둘 다 결국 몇 칸만 쓴다 — 다른 것은 그 몇 칸을 언제 아느냐다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">읽어야 하는 양이 갈린다</text>
+<text class="cap" x="520.0" y="566" text-anchor="middle" opacity="0">그래서 하나는 HBM 에 있어야 하고 하나는 DRAM 으로 나갈 수 있다</text>
 </svg>
 <script>
 (function(){
-var D={"uid": "attn-scene", "m": 8, "xs": [6.5, 89.5, 172.5, 255.5, 338.5, 421.5, 504.5, 587.5, 670.5, 753.5, 836.5, 919.5], "cw": 74, "qx": 587.5, "toky": 64, "qy": 180, "ky": 276, "barbase": 470, "vy": 506, "ox": 701.5, "qv": "0.18", "bars": [{"raw": 112.3, "soft": 87.4, "w": 0.21569174082574483, "top": false}, {"raw": 66.2, "soft": 34.8, "w": 0.0690490189851718, "top": false}, {"raw": 10.0, "soft": 16.2, "w": 0.017203629850026922, "top": false}, {"raw": 130.0, "soft": 130.0, "w": 0.3343870801740588, "top": true}, {"raw": 38.5, "soft": 22.5, "w": 0.034796593533291356, "top": false}, {"raw": 92.7, "soft": 57.7, "w": 0.1329811875848302, "top": false}, {"raw": 80.0, "soft": 44.8, "w": 0.09710801118017787, "top": false}, {"raw": 80.7, "soft": 45.4, "w": 0.09878273786669818, "top": false}], "t": {"tok": 2.4, "q": 4.4, "scan": 6.2, "step": 0.85, "soft": 13.6, "v": 16.2, "out": 18.599999999999998, "end": 22.799999999999997}};
+var D={"uid": "ngram-scene", "lx": 44.0, "colw": 460, "t": {"head": 1.8, "in": 3.6, "way": 6.0, "scan": 8.4, "hit": 12.0, "read": 14.6, "why": 17.2, "end": 21.4}};
 var st=document.getElementById(D.uid);
 var q=function(s){return [].slice.call(st.querySelectorAll(s));};
-var toks=q('.tok'),kcs=q('.kc'),bars=q('.bar'),bvs=q('.bv'),vcs=q('.vc'),flows=q('.flow');
-var beam=q('.beam')[0],out=q('.outb')[0],caps=q('.cap');
-var T=D.t,m=D.m,xs=D.xs,cw=D.cw;
-var topw=Math.max.apply(null,D.bars.map(function(b){return b.w;}));
-var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-function cl(v,a,b){return v<a?a:(v>b?b:v);}
-function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
-function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
-function set(e,k,v){e.setAttribute(k,v);}
-
-var qbox=document.createElementNS('http://www.w3.org/2000/svg','g');
-qbox.setAttribute('opacity','0');
-qbox.innerHTML='<rect width="'+cw+'" height="40" rx="7" fill="var(--hot-soft)" '+
-  'stroke="var(--hot)" stroke-width="2"/>'+
-  '<text x="'+(cw/2)+'" y="17" text-anchor="middle" font-size="13">Q</text>'+
-  '<text x="'+(cw/2)+'" y="32" text-anchor="middle" font-size="11" fill="var(--ink-3)">'+
-  D.qv+'</text>';
-st.appendChild(qbox);
-
-function capAt(t){
-  // 자막이 뜨는 구간은 그 장면이 실제로 도는 구간과 맞춘다. 예전에는 둘이 1초도 안
-  // 떠 있어 읽기 전에 넘어갔다.
-  if(t<T.tok)return 0; if(t<T.q-.6)return 1; if(t<T.scan)return 2;
-  if(t<T.soft)return 3; if(t<T.v)return 4; if(t<T.out)return 5; return 6;
-}
-
-function frame(t){
-  var per=T.tok/toks.length;
-  for(var i=0;i<toks.length;i++){
-    var u=ease(seg(t,i*per,i*per+.6));
-    set(toks[i],'opacity',u.toFixed(3));
-  }
-  var uq=ease(seg(t,T.tok,T.q));
-  var qx=D.qx,qy=D.toky+(D.qy-D.toky)*uq;
-  var scanning=t>=T.scan&&t<T.soft;
-  if(scanning){
-    var k=cl(Math.floor((t-T.scan)/T.step),0,m-1);
-    var fr=cl((t-T.scan)/T.step-k,0,1);
-    qx=xs[k]+(xs[cl(k+1,0,m-1)]-xs[k])*ease(fr);
-    qy=D.qy;
-    set(beam,'opacity',(1-Math.abs(fr-.5)*1.5).toFixed(2));
-    set(beam,'x1',(qx+cw/2).toFixed(1));set(beam,'y1',D.qy+40);
-    set(beam,'x2',(xs[k]+cw/2).toFixed(1));set(beam,'y2',D.ky);
-  }else{
-    set(beam,'opacity',0);
-    if(t>=T.soft){qx=xs[m-1];qy=D.qy;}
-  }
-  set(qbox,'opacity',uq.toFixed(3));
-  set(qbox,'transform','translate('+qx.toFixed(1)+','+qy.toFixed(1)+')');
-  for(var j=0;j<kcs.length;j++)set(kcs[j],'opacity',ease(seg(t,T.q-1.0+j*.09,T.q-.3+j*.09)).toFixed(3));
-  for(var j=0;j<m;j++){
-    var b=D.bars[j],h=0;
-    if(t>=T.scan&&t<T.soft)h=b.raw*ease(seg(t,T.scan+j*T.step,T.scan+j*T.step+.6));
-    else if(t>=T.soft)h=b.raw+(b.soft-b.raw)*ease(seg(t,T.soft,T.soft+1.4));
-    set(bars[j],'height',h.toFixed(1));set(bars[j],'y',(D.barbase-h).toFixed(1));
-    if(t>=T.soft&&b.top)bars[j].classList.add('hot');else bars[j].classList.remove('hot');
-    set(bvs[j],'opacity',ease(seg(t,T.soft+.6,T.soft+1.5)).toFixed(3));
-  }
-  for(var j=0;j<m;j++){
-    var uv=ease(seg(t,T.v+j*.08,T.v+j*.08+.7));
-    set(vcs[j],'opacity',uv.toFixed(3));
-    vcs[j].querySelector('rect').setAttribute(
-      'fill-opacity',((.12+.88*D.bars[j].w/topw)*uv).toFixed(3));
-    var uf=seg(t,T.out-.8+j*.08,T.out+1.2);
-    set(flows[j],'opacity',(uf>0&&uf<1?(.3+.7*D.bars[j].w/topw):0).toFixed(3));
-    set(flows[j],'cx',(xs[j]+cw/2+(D.ox+70-xs[j]-cw/2)*ease(uf)).toFixed(1));
-    set(flows[j],'cy',(D.vy+17).toFixed(1));
-  }
-  set(out,'opacity',ease(seg(t,T.out+.7,T.out+1.5)).toFixed(3));
-  var ci=capAt(t);
-  for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
-}
-
-if(still){frame(T.out+1.6);return;}
-var t0=null;
-function loop(ts){
-  if(t0===null)t0=ts;
-  var t=(ts-t0)/1000;
-  if(t>T.end){t0=ts;t=0;}
-  frame(t);requestAnimationFrame(loop);
-}
-requestAnimationFrame(loop);
-})();
-</script><figcaption>실제로 Qwen2.5-0.5B 를 한 번 돌려 뽑은 수치다. 「그것은」 자리의 Q 가 앞선 토큰들의 K 를 왼쪽부터 훑어 점수를 내고, 그 점수가 합 1 의 비율로 다시 선 뒤, 그 비율을 가중치로 V 를 가중평균해 출력 하나가 남는다.</figcaption></figure><ul class="uc-points"><li><b>점수를 비율로 바꾼 뒤 가중평균한다.</b> Q 와 K 를 곱하면(내적) 그 수가 클수록 그 토큰을 많이 본다. 크기가 제각각이라 소프트맥스로 합이 1 이 되게 눌러 「어느 토큰을 몇 퍼센트 볼까」로 만들고, 비율 × V 를 토큰마다 구해 전부 더한다.</li><li><b>정보는 가중치에 들어 있다.</b> 넓히는 행렬 자체가 그 정보다. 896 × 4,864 행렬은 896 칸짜리 벡터를 4,864 개 세워 둔 것이고, 그 열 하나하나가 학습 때 익힌 패턴 하나다 — 이것을 key(키 — 이 패턴이 들어왔나를 재는 자)라 부른다. 접는 행렬의 행 하나가 그 key 에 딸린 value(밸류 — 걸렸을 때 내놓을 내용)다. 게바 등이 2021 년에 보인 것이 이 짝이고, 지금 통용되는 설명이다.</li><li><b>곱셈은 넓히는 일이 아니라 대조하는 일이다.</b> 입력 벡터에 그 행렬을 곱하면 입력을 4,864 개 key 각각과 내적한다. 나온 결과의 j 번째 숫자는 「입력이 j 번 key 와 얼마나 닮았나」 하나다. 그러니 칸이 4,864 개가 된 것은 정보가 늘어서가 아니라 4,864 번 대조한 점수표이기 때문이다.</li><li><b>사전 찾기 세 동작이라고 보면 맞는다.</b> ① 표제어 4,864 개짜리 사전(넓히는 행렬)에 입력을 들고 가 전부와 대조해 점수표를 만든다 ② 문턱이 낮은 점수를 0 으로 눌러 실제로 걸린 표제어만 남긴다 — 이 모델에서 97.7% 가 여기서 꺼진다 ③ 표제어마다 딸린 뜻풀이(접는 행렬)를 점수만큼 가중합해 원래 896 칸으로 되돌린다.</li></ul><figure class="uc-fig"><p class="fig-title">2막 — FFN (21초짜리 한 바퀴)</p><style>
-#ffn-scene{--hot:var(--accent,#1f7a5c);--hot-soft:var(--accent-soft,#d9ede5);
-  --bg-2:var(--card,#f4f4f3);--bg-3:var(--line,#e0e0de);
-  --ink-1:var(--ink,#1c1c1c);--ink-3:var(--ink-3,#8d8d8d)}
-#ffn-scene text{fill:var(--ink-1);font-size:15px}
-#ffn-scene .tok rect{fill:var(--bg-2);stroke:var(--bg-3)}
-#ffn-scene .tokq rect{fill:var(--hot-soft);stroke:var(--hot);stroke-width:2}
-#ffn-scene .inc,#ffn-scene .outc{fill:var(--hot);stroke:none}
-#ffn-scene .wc{fill:var(--hot)}
-#ffn-scene .funnel{fill:var(--hot);fill-opacity:.07;stroke:var(--bg-3)}
-#ffn-scene .lbl,#ffn-scene .val{font-size:12px;fill:var(--ink-3)}
-#ffn-scene .cap{font-size:17px;letter-spacing:-.01em}
-</style>
-<svg id="ffn-scene" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" style="max-width:900px" role="img" aria-label="FFN 이 한 토큰을 넓혔다 접는 장면">
-<g class="tok" opacity="0"><rect x="6.5" y="56" width="74" height="36" rx="7"/><text x="43.5" y="80" text-anchor="middle">회사</text></g>
-<g class="tok" opacity="0"><rect x="89.5" y="56" width="74" height="36" rx="7"/><text x="126.5" y="80" text-anchor="middle">가</text></g>
-<g class="tok" opacity="0"><rect x="172.5" y="56" width="74" height="36" rx="7"/><text x="209.5" y="80" text-anchor="middle">공</text></g>
-<g class="tok" opacity="0"><rect x="255.5" y="56" width="74" height="36" rx="7"/><text x="292.5" y="80" text-anchor="middle">장을</text></g>
-<g class="tok" opacity="0"><rect x="338.5" y="56" width="74" height="36" rx="7"/><text x="375.5" y="80" text-anchor="middle">지</text></g>
-<g class="tok" opacity="0"><rect x="421.5" y="56" width="74" height="36" rx="7"/><text x="458.5" y="80" text-anchor="middle">었다</text></g>
-<g class="tok" opacity="0"><rect x="504.5" y="56" width="74" height="36" rx="7"/><text x="541.5" y="80" text-anchor="middle">.</text></g>
-<g class="tok tokq" opacity="0"><rect x="587.5" y="56" width="74" height="36" rx="7"/><text x="624.5" y="80" text-anchor="middle">그것은</text></g>
-<g class="tok" opacity="0"><rect x="670.5" y="56" width="74" height="36" rx="7"/><text x="707.5" y="80" text-anchor="middle">부</text></g>
-<g class="tok" opacity="0"><rect x="753.5" y="56" width="74" height="36" rx="7"/><text x="790.5" y="80" text-anchor="middle">산</text></g>
-<g class="tok" opacity="0"><rect x="836.5" y="56" width="74" height="36" rx="7"/><text x="873.5" y="80" text-anchor="middle">에</text></g>
-<g class="tok" opacity="0"><rect x="919.5" y="56" width="74" height="36" rx="7"/><text x="956.5" y="80" text-anchor="middle">있다</text></g>
-<path class="funnel fan-in" opacity="0" d="M262.0 216 L738.0 216 L947.0 312 L53.0 312 Z"/>
-<path class="funnel fan-out" opacity="0" d="M53.0 358 L947.0 358 L738.0 440 L262.0 440 Z"/>
-<rect class="inc" x="262.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="292.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="322.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="352.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="382.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="412.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="442.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="472.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="502.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="532.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="562.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="592.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="622.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="652.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="682.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<rect class="inc" x="712.0" y="186" width="26" height="30" rx="4" opacity="0"/>
-<text class="lbl lbl-in" x="262.0" y="176" opacity="0">입력 896칸 중 16칸</text>
-<text class="val val-in" x="738.0" y="176" text-anchor="end" opacity="0">-0.88</text>
-<rect class="wc" data-a="0.0068" x="53.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0218" x="67.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0160" x="81.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0818" x="95.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0018" x="109.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0511" x="123.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0249" x="137.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0304" x="151.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0613" x="165.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0101" x="179.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0005" x="193.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0405" x="207.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0004" x="221.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.1932" x="235.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0034" x="249.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0057" x="263.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0261" x="277.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0037" x="291.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.1996" x="305.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0489" x="319.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0020" x="333.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0481" x="347.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0136" x="361.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0360" x="375.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0116" x="389.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0123" x="403.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0050" x="417.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0100" x="431.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0093" x="445.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0117" x="459.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0254" x="473.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0226" x="487.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0119" x="501.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0601" x="515.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0164" x="529.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0263" x="543.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0082" x="557.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.1449" x="571.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0171" x="585.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0006" x="599.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0196" x="613.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0189" x="627.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0063" x="641.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0048" x="655.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0308" x="669.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0352" x="683.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0137" x="697.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0611" x="711.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0324" x="725.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0069" x="739.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0038" x="753.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0072" x="767.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0270" x="781.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0299" x="795.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0003" x="809.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0188" x="823.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0016" x="837.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0540" x="851.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0452" x="865.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0308" x="879.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0244" x="893.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0122" x="907.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0361" x="921.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<rect class="wc" data-a="0.0160" x="935.0" y="312" width="12" height="46" rx="3" opacity="0"/>
-<text class="lbl lbl-wide" x="53.0" y="300" opacity="0">넓힌 4864칸 중 64칸</text>
-<rect class="outc" x="262.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="292.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="322.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="352.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="382.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="412.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="442.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="472.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="502.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="532.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="562.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="592.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="622.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="652.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="682.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<rect class="outc" x="712.0" y="440" width="26" height="30" rx="4" opacity="0"/>
-<text class="lbl lbl-out" x="262.0" y="490" opacity="0">다시 896칸</text>
-<text class="val val-out" x="738.0" y="490" text-anchor="end" opacity="0">-0.09</text>
-<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">FFN 은 토큰마다 따로 돈다 — 어텐션과 달리 옆 토큰을 안 본다</text>
-<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">어텐션이 낸 결과가 이 층의 입력이다</text>
-<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">먼저 넓힌다 — 896 칸이 4,864 칸으로</text>
-<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">게이트가 대부분을 눌러 4,864 칸 중 97.7% 가 잠잠해진다</text>
-<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">살아남은 자리만 모아 다시 896 칸으로 접는다</text>
-<text class="cap" x="500" y="566" text-anchor="middle" opacity="0">접혀 나온 하나 — 이 토큰의 FFN 출력이다</text>
-</svg>
-<script>
-(function(){
-var D={"uid": "ffn-scene", "qi": 7, "t": {"tok": 2.2, "in": 4.6, "wide": 7.0, "gate": 10.4, "fold": 14.0, "out": 17.0, "end": 21.5}};
-var st=document.getElementById(D.uid);
-var q=function(s){return [].slice.call(st.querySelectorAll(s));};
-var toks=q('.tok'),inc=q('.inc'),wc=q('.wc'),outc=q('.outc'),caps=q('.cap');
-var fin=q('.fan-in')[0],fout=q('.fan-out')[0];
-var lin=q('.lbl-in')[0],lw=q('.lbl-wide')[0],lo=q('.lbl-out')[0];
-var vin=q('.val-in')[0],vout=q('.val-out')[0];
+var heads=q('.head'),inb=q('.inb'),ways=q('.way'),readn=q('.readn'),whyb=q('.whyb');
+var lc=q('.lc'),rc=q('.rc'),scan=q('.scan')[0],caps=q('.cap');
+var divider=q('.divider')[0],lbll=q('.lbl-l')[0],lblr=q('.lbl-r')[0];
 var T=D.t;
 var still=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 function cl(v,a,b){return v<a?a:(v>b?b:v);}
 function seg(t,a,b){return cl((t-a)/(b-a),0,1);}
 function ease(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;}
 function set(e,k,v){if(e)e.setAttribute(k,v);}
+function setAll(a,k,v){for(var i=0;i<a.length;i++)set(a[i],k,v);}
 
 function capAt(t){
-  if(t<T.in)return 0; if(t<T.wide)return 1; if(t<T.gate)return 2;
-  if(t<T.fold)return 3; if(t<T.out)return 4; return 5;
+  if(t<T.in)return 0; if(t<T.way)return 1; if(t<T.scan)return 2;
+  if(t<T.hit)return 3; if(t<T.read)return 4; if(t<T.why)return 5; return 6;
 }
 
 function frame(t){
-  // 문장 — 다 떴다가 그 토큰만 남는다. FFN 이 옆을 안 본다는 말을 그림이 먼저 한다
-  var per=T.tok/toks.length;
-  for(var i=0;i<toks.length;i++){
-    var u=ease(seg(t,i*per,i*per+.5));
-    var dim=ease(seg(t,T.tok,T.tok+.9));
-    var o=(i===D.qi)?u:u*(1-dim*.82);
-    set(toks[i],'opacity',o.toFixed(3));
+  set(divider,'opacity',ease(seg(t,T.head,T.head+.8)).toFixed(3));
+  setAll(heads,'opacity',ease(seg(t,0,T.head)).toFixed(3));
+  setAll(inb,'opacity',ease(seg(t,T.in-.8,T.in)).toFixed(3));
+  setAll(ways,'opacity',ease(seg(t,T.way-.8,T.way)).toFixed(3));
+  var born=ease(seg(t,T.way,T.way+.8));
+  set(lbll,'opacity',born.toFixed(3));set(lblr,'opacity',born.toFixed(3));
+  // 왼쪽 — 훑는 빛이 표 전체를 지난다. 다 지난 뒤에야 걸린 칸이 드러난다
+  var sc=seg(t,T.scan,T.hit);
+  set(scan,'opacity',(sc>0&&sc<1?.35:0).toFixed(3));
+  set(scan,'x',(D.lx+(D.colw-16)*sc).toFixed(1));
+  var lhit=ease(seg(t,T.hit,T.hit+1.0));
+  for(var i=0;i<lc.length;i++){
+    var on=lc[i].classList.contains('lhit');
+    var touched=sc>0?(i/(lc.length-1)<=sc?1:0):0;
+    var base=born*(.25+.35*touched);
+    set(lc[i],'opacity',(on?Math.max(base,lhit):base*(1-lhit*.6)).toFixed(3));
   }
-  // 입력 칸
-  for(var i=0;i<inc.length;i++)
-    set(inc[i],'opacity',ease(seg(t,T.tok+.3+i*.03,T.tok+.9+i*.03)).toFixed(3));
-  set(lin,'opacity',ease(seg(t,T.tok+.6,T.in)).toFixed(3));
-  set(vin,'opacity',ease(seg(t,T.tok+.6,T.in)).toFixed(3));
-  // 펼치는 면
-  set(fin,'opacity',ease(seg(t,T.in,T.wide-.4)).toFixed(3));
-  // 넓힌 칸 — 처음엔 다 고르게 뜨고, 게이트가 오면 값대로 갈린다
-  var born=ease(seg(t,T.wide-.6,T.wide+.8));
-  var gate=ease(seg(t,T.gate,T.gate+1.6));
-  for(var i=0;i<wc.length;i++){
-    var a=+wc[i].getAttribute('data-a');
-    var lvl=.55*(1-gate)+ (0.04+0.96*a)*gate;      // 고르게 → 값대로
-    set(wc[i],'opacity',(born*(.15+.85*lvl)).toFixed(3));
+  // 오른쪽 — 짚은 칸이 바로 켜진다. 훑는 일이 없다
+  var rhit=ease(seg(t,T.way+.6,T.way+1.6));
+  for(var i=0;i<rc.length;i++){
+    var on=rc[i].classList.contains('rhit');
+    set(rc[i],'opacity',(born*(on?Math.max(.25,rhit):.25)).toFixed(3));
   }
-  set(lw,'opacity',born.toFixed(3));
-  // 접는 면과 출력
-  set(fout,'opacity',ease(seg(t,T.fold,T.fold+1.0)).toFixed(3));
-  for(var i=0;i<outc.length;i++)
-    set(outc[i],'opacity',ease(seg(t,T.out-.6+i*.04,T.out+.3+i*.04)).toFixed(3));
-  set(lo,'opacity',ease(seg(t,T.out,T.out+.8)).toFixed(3));
-  set(vout,'opacity',ease(seg(t,T.out,T.out+.8)).toFixed(3));
+  setAll(readn,'opacity',ease(seg(t,T.read,T.read+.9)).toFixed(3));
+  setAll(whyb,'opacity',ease(seg(t,T.why,T.why+.9)).toFixed(3));
   var ci=capAt(t);
   for(var c=0;c<caps.length;c++)set(caps[c],'opacity',c===ci?1:0);
 }
 
-if(still){frame(T.out+1.2);return;}
+if(still){frame(T.why+1.2);return;}
 var t0=null;
 function loop(ts){
   if(t0===null)t0=ts;
@@ -1027,7 +829,7 @@ function loop(ts){
 }
 requestAnimationFrame(loop);
 })();
-</script><figcaption>위 1막이 낸 출력이 이 막의 입력이다. 같은 층·같은 자리에서 잰 수치다. 문장이 떴다가 「그것은」만 남는 것은 FFN 이 옆 토큰을 안 보기 때문이다. 넓힌 줄의 칸 하나가 key·value 짝 하나이고, 칸 밝기가 지금 문맥에 그 key 가 얼마나 걸렸는지다.</figcaption></figure><ul class="uc-points"><li><b>그 표제어는 낱말이 아니다.</b> key 하나는 896 칸짜리 방향 하나이고, 그 방향과 닮은 입력이 오면 켜진다. 게바 논문이 사람에게 시켜 분류해 보니 아래쪽 층의 key 는 표면에 가까운 패턴(어떤 낱말로 끝나는 문장 꼴 같은)에, 위쪽 층은 주제나 뜻에 가까운 패턴에 걸렸다. value 도 「이 토큰을 내놓아라」가 아니라 다음 토큰 확률을 어느 쪽으로 밀지 정하는 방향이다.</li><li><b>낱말 사전은 따로 있다.</b> 토큰 ID 를 받아 벡터를 내주는 임베딩 표가 모델 맨 앞에, 어휘로 되돌리는 표가 맨 뒤에 있다. 그쪽은 「350 번 토큰 → 이 벡터」처럼 번지수로 정확히 찾는다. FFN 의 key 에는 번지수가 없어 입력을 전부와 대 보고 닮은 정도로 걸린다 — 그래서 어느 key 가 걸릴지 미리 못 알고, 가중치 전체를 매번 읽어야 해서 HBM 에 둬야 한다. 엔그램(N-gram 임베딩) 표가 DRAM 으로 나갈 수 있는 것은 반대로 토큰 ID 만으로 읽을 행이 정해지기 때문이다.</li><li><b>사실 지식이 여기 들어 있다.</b> 멍 등이 2022 년에 보인 causal tracing 은 「파리는 프랑스의 수도」 같은 사실을 모델이 꺼낼 때 결정적인 자리가 중간 층들의 이 FFN 이라는 것을 짚었고, 그 자리만 고쳐 사실을 바꿔 넣는 것도 됐다. 어텐션이 문맥을 옮겨 오는 길이라면 FFN 은 모델이 이미 외워 둔 것을 꺼내 오는 자리다.</li><li><b>넓힐수록 표제어가 는다.</b> key·value 짝 하나가 기억 한 칸이라 칸 수가 곧 그 층이 담을 수 있는 패턴의 수다. 아래쪽 층의 key 는 얕은 패턴(글자 꼴·어구)에, 위쪽 층은 뜻에 가까운 패턴에 걸린다고 같은 연구가 짚었다.</li><li><b>문턱이 없으면 이 조회가 성립하지 않는다.</b> 곱셈과 덧셈은 들어온 수에 늘 같은 규칙을 먹여서 「이 key 가 걸렸을 때만 그 value 를 쓴다」가 안 나온다. 들어온 수에서 5 를 뺀 뒤 음수면 0 으로 만드는 식의 문턱이 있어야 걸린 것과 안 걸린 것이 나뉜다. 문턱이 없으면 층을 아무리 쌓아도 한 층으로 접힌다 — 2 를 곱하고 3 을 더한 뒤 5 를 곱하고 1 을 더하면 10 을 곱하고 16 을 더한 것과 같다.</li><li><b>접어야 다음 층이 받는다.</b> 걸린 key 들의 value 를 모아 원래 폭으로 되돌린다. 층들이 같은 폭을 주고받아야 쌓을 수 있고, 잔차 연결로 들어온 벡터에 더할 수도 있다. 「넓혔다 접는다」가 한 세트인 이유다.</li><li><b>넓히는 대가가 크다.</b> 이 모델 한 층에서 FFN 이 쓰는 가중치가 13,074,432 개인데 어텐션은 1,835,008 개다 — 층 안 가중치의 88% 가 FFN 에 있다. MoE 가 굳이 이 자리를 여러 벌로 쪼개 토큰마다 일부만 돌리는 이유가 여기다. 엔그램(N-gram 임베딩)은 아예 곱셈 없이 표에서 행을 읽어 와 이 비용을 피한다.</li><li><b>어텐션은 한 번으로 안 끝난다.</b> 이 계산이 층마다, 그리고 층 안에서도 헤드 여럿으로 동시에 돈다. 헤드마다 보는 데가 달라서 어떤 헤드는 지시대명사가 가리키는 명사를, 어떤 헤드는 바로 앞 낱말을 본다. 위 1막은 그중 「그것은」이 앞 명사를 가장 세게 되짚는 헤드 하나를 골라 그린 것이고, 그 고른 기준을 화면에 적어 뒀다.</li><li><b>두 걸음의 성격이 다르다.</b> 어텐션은 토큰이 늘수록 볼 것이 늘어 계산과 캐시가 같이 커지지만, FFN 은 토큰마다 독립이라 서로 얽히지 않는다. 긴 문맥이 비싸지는 쪽은 어텐션이다.</li></ul><div class="side-note">Q·K·V 옆과 FFN 입력·출력 옆에 적힌 숫자는 벡터의 첫 성분 하나다. 넓힌 칸 64 개도 4,864 칸에서 고르게 뽑아 보인 것이고 전부가 아니다. 그 수치를 굽는 자리는 <code>scratchpad/attn_trace.py</code> 와 <code>scratchpad/ffn_trace.py</code> 이고, 거기서 직접 계산한 결과가 모델이 낸 것과 같은지를 굽는 단계에서 검사한다. 가중치 개수는 모델 설정에서 바로 센 것이다.</div><div class="uc-links" style="margin-top:16px;"><a href="https://arxiv.org/abs/2012.14913" target="_blank" rel="noopener">FFN 은 key·value 기억 장치다 (Geva et al., EMNLP 2021)</a><a href="https://arxiv.org/abs/2202.05262" target="_blank" rel="noopener">사실 지식이 중간 층 FFN 에 있다 (Meng et al., NeurIPS 2022)</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>
+</script><figcaption>같은 일(표에서 꺼내 잔차 스트림에 더한다)을 하는 둘을 나란히 놓았다. 왼쪽은 표를 끝까지 훑어야 어디가 걸리는지 알고, 오른쪽은 토큰 ID 로 행 번호를 먼저 낸다. FFN 쪽 가중치 개수는 Qwen2.5-0.5B 에서 세었고, 엔그램 쪽 수치는 SemiAnalysis 뉴스레터 변환본에서 가져왔다.</figcaption></figure><ul class="uc-points"><li><b>FFN 은 같은 일을 못 한다.</b> 어느 key 가 걸릴지는 입력을 전부와 대 봐야 알기 때문에 가중치 전체를 매번 읽어야 한다. 한 층에 13,074,432 개다. 그래서 HBM 에 있어야 하고, 이 자리를 줄이려고 나온 것이 MoE(여러 벌 중 일부만 돌린다)와 엔그램(아예 안 돌리고 읽는다)이다.</li><li><b>해시라서 충돌이 난다.</b> 토큰 조합은 표 크기보다 훨씬 많아서 다른 조합이 같은 행에 떨어진다. 그래서 꺼낸 것을 그대로 쓰지 않고, 지금 문맥과 얼마나 맞는지를 재서 게이트로 누른 뒤 더한다. 롱캣은 그 충돌을 줄이려고 표 크기를 어휘 크기의 정수배로 잡지 말라고 권한다.</li><li><b>무엇을 외우는지는 사람 직관과 다르다.</b> 게이트 점수를 훑어 보니 이름·코드 조각· 관계 표현과 함께 라이선스 문구나 API 뼈대 같은 상투 문구가 많이 걸렸다. 「중요한 사실」을 고르는 것이 아니라 다음 토큰 예측을 쉽게 만드는 것이 자리를 차지한다.</li><li><b>떼어 낼 수 있는 사전이 아니다.</b> 추론에서 엔그램을 빼면 이후 층의 표현과 전문가 선택 자체가 달라진다. 원 논문의 제거 실험에서 사실지식 벤치마크가 원래의 29~44% 로 떨어졌고, 모델이 스스로 전문가를 다시 고르게 놔두는 편이 손실을 일부 메웠다.</li></ul><div class="side-note">행 번호는 이 저장소에서 실제 토크나이저로 문장을 자른 뒤 원문이 적은 방식(곱셈 해싱 + XOR 섞기)으로 계산한 값이다 — 그 모델이 쓰는 해시 그대로는 아니고, 「토큰 ID 만으로 읽을 자리가 정해진다」를 보이려고 같은 꼴로 구현했다. 표 크기·읽는 양은 뉴스레터 변환본에서 가져왔다. 굽는 자리는 <code>scratchpad/ngram_trace.py</code>.</div><div class="uc-links" style="margin-top:16px;"><a href="https://newsletter.semianalysis.com/p/engrams-embedding-entendre-codesign" target="_blank" rel="noopener">Engrams Embedding Entendre — SemiAnalysis (2026-09-18)</a><button type="button" class="uc-copy">링크 복사</button></div></div></div>
 
   <footer><p class="lede">이 저장소의 글에 나오는 말을 하나씩 푸는 장입니다. 뜻만 적지 않고 그 말이 가리키는 물건이 실제로 어떻게 도는지를 그림으로 같이 답니다. 맨 앞 타일에는 그 말들이 한 판에서 어떻게 맞물리는지를 이은 보고서가 한 편 서 있습니다.</p>    <div class="meta-row">
       <span>정리일 <b>2026-08-24</b></span>
