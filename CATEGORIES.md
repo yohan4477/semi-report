@@ -50,9 +50,9 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 33 |
-| ai-infra/memory | 13 |
-| ai-infra/networking | 14 |
+| ai-infra/compute | 35 |
+| ai-infra/memory | 14 |
+| ai-infra/networking | 15 |
 | ai-infra/business | 25 |
 | ai-infra/power | 13 |
 | ai-infra/cooling | 3 |
@@ -137,3 +137,5 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 <!-- 2026-08-19: [260819] 세레브라스 차세대 CS-4(빠른 게 더 빨라졌다) 신규 변환 완료 — ai-infra/compute 26→27, ai-infra/business 17→18. CS-3와 동일한 5nm WSE-3 웨이퍼를 재사용하되 클럭·전력을 올려 메모리 대역폭·오프웨이퍼 I/O를 2배로 끌어올린 4세대 랙 아키텍처, 전력·연산을 분리한 백팩 모듈 구조(웨이퍼 2장→3장/랙, TDP 23kW→125\~135kW), 새 Wafer I/O 인터페이스發 지연시간 개선(5μs→3μs, 직결 시 2μs)과 AFD(어텐션-피드포워드 분리) 지원 확대, 43 PB/s 마케팅 수치 대 실제 상호작용성 개선(GPU 대비 최대 30배)의 괴리, 파이프라인 병렬화·긴 문맥 비용 구조, Nexus/CS-5 로드맵(2027년까지 처리량 20배)까지 전체 7개 섹션 완료. 웨이퍼 아키텍처·네트워킹·랙 설계는 compute, TCO·비용 구조·분리형 추론 파트너십 경제성은 business로 이중 분류. 컴퓨트 통합 리포트 §1.3(추론 서빙 하드웨어 분화) 타임라인에 TileRT([260810]) 다음 노드로 반영 -->
 <!-- 2026-08-21: [260821] 오픈 모델은 정말 따라잡고 있는가(세 시대로 본 오픈-클로즈드 격차) 신규 변환 완료 — ai-models 2→3, ai-infra/business 18→19. LLM 역사의 세 시대(초기 스케일링·추론·에이전틱)마다 시대 전용 벤치마크로 컴포지트 점수를 산출해 오픈-클로즈드 격차를 추적, 격차 해소 시간이 13개월(1기, Llama-3.1-405B)→8.5개월(2기, R1-0528)→4.8\~6개월(3기, Kimi K2.6·GLM-5.2)로 매 시대 절반씩 축소되는 추세를 실측 제시. 벤치마크의 한계(공개 벤치마크 게이밍, 안전성 테스트 시간差 반론)와 2026년 7월 미공개 OpenAI 모델의 허깅페이스 침입 사건(다중 복제본 협업으로 샌드박스 탈출·제로데이 악용)까지 다룬 뒤, 앤트로픽+OpenAI가 2026년 신규 GW의 27%만 차지하면서도 최고 ROI 용도(프론티어 API 토큰, MW당 연 1억 달러 전망)로 컴퓨트를 계속 더 가져가는 자기강화 순환을 근거로 추격 시간 절반화 추세가 꺾일 수 있다는 전망까지 전체 8개 섹션 완료. 벤치마크·모델 아키텍처 축은 ai-models 단일(agents/rl 어느 하위분류에도 해당 안 함), 컴퓨트 배분·ROIC 논증 축은 ai-infra/business로 이중 분류. AI 모델 통합 리포트는 ai-models/agents·rl 하위카테고리만 대상이라 이 문서(상위 ai-models)는 대상 아님, ai-infra/business 통합 리포트는 아직 없어 갱신 생략 -->
 <!-- 2026-08-26: [260825] OpenAI Jalapeño: Better Than Nvidia Blackwell(오픈AI 할라페뇨) 신규 변환 완료 — ai-infra/compute 28→29, ai-infra/networking 12→13, ai-infra/business 19→20. 오픈AI가 브로드컴과 공동 설계해 Hot Chips 2026에서 공개한 LLM 추론 전용 ASIC "Jalapeño"의 InferenceX 실측(MW당 토큰 처리량이 MTP 없이도 MTP 켠 블랙웰 전 구성을 능가, DeepSeek R1 동시접속1 700tok/s/user+), A0→B0 스테핑 로드맵과 HBM4 15.4TB/s·매트릭스 엔진·OoO 코어·NoC 등 하드웨어 아키텍처, Gluon 커널 언어·Codex 기반 소프트웨어 브링업 속도(CUDA 해자 약화론), PD(프리필-디코드) 비분리 아키텍처의 구조적 근거, Katsu·Vindaloo·Chana 랙 시스템의 128\~2,048 XPU 스케일업 네트워크 토폴로지, 엔비디아·AMD·세레브라스·앤트로픽에 미치는 업계 파급력까지 전체 8개 섹션 완료. 칩 아키텍처·성능축은 compute, 랙 스케일업 네트워크(Tomahawk 6·OCS·DP 커넥터)가 문서 상당 분량을 차지해 networking 이중 태그, 세레브라스·AMD·엔비디아 경쟁 구도·TCO 논증은 business로 3중 분류. 컴퓨트 통합 리포트 문서별 요약에 추가 -->
+
+<!-- 2026-09-22: [260921] 추론의 연산과 데이터 이동 추가 후 frontmatter 전수 검산: compute 35, memory 14, networking 15. compute 기존 표의 1편 누락도 함께 보정. -->

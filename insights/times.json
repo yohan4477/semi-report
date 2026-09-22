@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-09-19",
-"index_fingerprint": "1fb01c6dc42727a8d92cb3e2938b921eedcb55d8",
-"lines": 4714
+"built": "2026-09-22",
+"index_fingerprint": "db5f588c67aa3740abc45fd6538a33567c820c54",
+"lines": 4717
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -621,6 +621,21 @@
 "tense": "전망"
 },
 "content/linkedin/[2609] 링크드인 게시물.md#L179": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/linkedin/[2609] 링크드인 게시물.md#L355": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"content/linkedin/[2609] 링크드인 게시물.md#L507": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/linkedin/[2609] 링크드인 게시물.md#L515": {
 "how": "명시",
 "t": "2027",
 "tense": "전망"

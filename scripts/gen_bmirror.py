@@ -4,6 +4,7 @@
 # 사용: python scripts/gen_bmirror.py [일수(기본 14)]
 # linkedin-update로 히스토리 갱신 후 이 스크립트를 돌리면 ①이 자동 동기됨.
 import io, sys, re, os, glob, json, datetime, urllib.parse
+from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 HIST = r"대시보드\소셜 신호 히스토리.html"
 DASH = r"대시보드\SemiAnalysis 대시보드.html"
@@ -278,6 +279,14 @@ assert nl_anchor != -1 and nl_start != -1 and nl_end != -1, (nl_anchor, nl_start
 ds = ds[:nl_start] + newnl + ds[nl_end:]
 ds = re.sub(r"(③ 뉴스레터 — 발행일순 \(최근 )\d+(편\))", r"\g<1>" + str(len(nlitems)) + r"\2", ds)
 
+# Keep the visible refresh stamp aligned with the generated archive.
+newsletter_count = sum(1 for p in Path('content/newsletter').rglob('*.md')
+                       if re.match(r'^\[\d{6}\]', p.name))
+report_count = len(list(Path('통합 리포트/카테고리별 통합 리포트').glob('*.md')))
+stamp = ('%s 기준 · 변환 %d편 · 통합 리포트 %d건 집약 · 뉴스레터 + LinkedIn + YouTube'
+         % (datetime.date.today().isoformat(), newsletter_count, report_count))
+ds = re.sub(r'(<div class="stamp">).*?(</div>)',
+            lambda m: m.group(1) + stamp + m.group(2), ds, count=1)
 open(DASH, "w", encoding="utf-8").write(ds)
 print("② days:", len(days), "| sig rows:", out.count('class="sig"'),
       "| ③ newsletters:", len(nlitems), "(" + ", ".join(i["date"] for i in nlitems) + ")",

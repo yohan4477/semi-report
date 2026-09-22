@@ -1328,5 +1328,60 @@
     "urn": "urn:li:activity:7444620830145323008",
     "time_label": "3개월 •",
     "text": "피드 게시물 번호 329\nSemiAnalysis\n팔로워 44,121명\n3개월 • \n \nGreat job to EmbeddedLLM & engineers on Emad Barsoum & Anush E. team for continuing to shift ROCm from a second vLLM fork to getting closer to an first class experience! In January 2026, AMD moved vLLM stable releases to be directly in the upstream repo. Last week, AMD has moved nightly to directly in the upstream repo too! Still lots of work to be done to achieve CI parity with CUDA as tracked in vLLM issue 34994 but the AMD software team is burning the midnight oil & working hard & smart.\n…더보기\n번역 표시\n이미지를 크게 보려면 사용하세요.\n이미지를 크게 보려면 사용하세요.\n134\n댓글 3\n퍼감 13\n추천\n댓글\n퍼가기\n보내기"
+  },
+  {
+    "urn": "urn:li:activity:7507931812564791296",
+    "time_label": "2026-09-22 07:40 KST",
+    "text": "Is EMIB really chipping away at CoWoS?\n\nCoWoS has owned advanced packaging for years. TSMC keeps adding capacity aggressively but it still isn't enough to satisfy customer demand.\n\nIntel stepped in with a compelling alternative with EMIB — and customers are responding.\n\nChipBook August data caught a +467% YoY jump in HBM exports from Korea to Malaysia, ~$3B in just two months.\n\nWe attribute this primarily to Intel's advanced packaging capacity in Penang, with LinkedIn showing ~50 back-end job openings in Malaysia. Not an insignificant number.\n\nExports to Taiwan slowed in return. Trade flows and job openings are starting to confirm customer shift.\n\nThese are the types of datasets we track in ChipBook to see where the goods actually show up before the announcements are out. Check it out here:\nhttps://lnkd.in/gBNzDxQW"
+  },
+  {
+    "urn": "urn:li:activity:7507889867884822528",
+    "time_label": "2026-09-22 04:53 KST",
+    "text": "\"The talent does not exist.\" \n\nThat was Dylan Patel's answer when asked, how realistic it is for every AI cloud to build its own software stack.\n\nSemiAnalysis tracks more than 200 of them. Nearly all of them start the same way: we'll hire a team and build the whole thing ourselves. \n\nDylan's read on why that plan breaks: \n\nThe hyperscalers already absorbed the talent. So did the largest AI clouds. What's left is not enough to staff a full infrastructure org. It takes far more people than anyone budgets for. Not just to build it, but to stress test it, prove it's reliable, and prove it has no security holes. \n\nAnd right now the security bar is low enough that it hides the problem. \n\nHis words: it's the Wild West. But that ends. Once enterprise and sovereign buyers start testing what they're renting, a stack nobody hardened becomes a stack nobody buys. \n\nHere's the part worth sitting with. Even if you could hire that 30 person team, you're months out at best. In this market that's the whole window. \n\nThe teams pulling ahead are making a different call: buy the layer that's getting commoditized, and spend your headcount on inference optimization, where the revenue per GPU actually lives.\n\nDylan landed it better than we could. If there aren't enough people to go around, he said, then there deserves to be a company that provides this software.\n\nLukas Gentele, CEO of vCluster Labs, sat down with Dylan at AI Infra Summit. Full video in the comments."
+  },
+  {
+    "urn": "urn:li:activity:7507868230372298752",
+    "time_label": "2026-09-22 03:27 KST",
+    "text": "Computation and Data Movement for Inference\nMapping MoE models onto inference hardware: structure, flow, and efficient serving \nhttps://lnkd.in/eHW4GykY"
+  },
+  {
+    "urn": "urn:li:activity:7507816038806224897",
+    "time_label": "2026-09-22 00:00 KST",
+    "text": "Experiments have shown that offloading Engram to DRAM results in up to 50% better performance on H200, B200, B300, and even GB300 NVL72. Our technical team has collaborated with 10x engineers from Emad Barsoum & Anush Elangovan to upstream support for vLLM Project ROCm Engram DRAM offloading too, and we are already seeing up to 50% better perf too in PR 57491. As such, in PRs 985, 1002, 1005, 1006 NVIDIA, AMD and SemiAnalysis are updating the default recommended recipes to use Engram offloading."
+  },
+  {
+    "urn": "urn:li:activity:7507596287739854848",
+    "time_label": "2026-09-21 09:27 KST",
+    "text": "Neocloud is now an entire industry. The word was coined by a SemiAnalysis researcher. Some of the companies using it still have no idea.\n\n\"Nobody believes me when I say that. I'll tell people externally, yeah, we're the ones who invented the word, and they're like, No, you didn't. I'm like, Yeah, great.\"\n\n\"This guy didn't know us at all. He was like, Cool man, what do you guys do? I'm like, What the f**k? We invented your entire industry.\""
+  },
+  {
+    "urn": "urn:li:activity:7507523716885524481",
+    "time_label": "2026-09-21 04:38 KST",
+    "text": "We took the silicon out of the silicon. Quick turn from SemiAnalysis STEEL Teardown Lab: iPhone 18 Pro Max, A20 silicon on TSMC N2. more to follow..."
+  },
+  {
+    "urn": "urn:li:activity:7507469117516374016",
+    "time_label": "2026-09-21 01:01 KST",
+    "text": "Ever since NVIDIA acquired HuggingFace, we have been looking into migrating some of our work off of HuggingFace and to alternative solutions like ModelScope. Even though NVIDIA's announcement claims they will continue allowing HuggingFace to be accelerator-agnostic, NVIDIA does not have a good track record of developing hardware-agnostic software. We love HuggingFace and hope we are wrong, but at the same time, we are also finding the UX of ModelScope to be great!"
+  },
+  {
+    "urn": "urn:li:activity:7507242247130791936",
+    "time_label": "2026-09-20 10:00 KST",
+    "text": "[영상 게시물: 본문 텍스트 없음]"
+  },
+  {
+    "urn": "urn:li:activity:7507182181421809665",
+    "time_label": "2026-09-20 06:01 KST",
+    "text": "More than 300 US local governments have voted to pause datacenters in the past 18 months, and the pace picked up sharply this summer. Most of them are buying time.\n\n\"A datacenter moratorium is a temporary legal pause, usually enacted by a local government. It halts approval, permitting, and construction of new datacenters. It doesn't affect existing datacenters.\"\n\n\"These can last anywhere from months to a year, and can often be revoked, replaced by new regulation, or extended.\"\n\n\"Many zoning codes were written before anyone was considering those huge 100-plus megawatt to multiple gigawatt facilities, so a pause buys time to write datacenter-specific rules and assess infrastructure needs. It's also a low-cost way for elected officials to answer local opposition.\""
+  },
+  {
+    "urn": "urn:li:activity:7507121703580340224",
+    "time_label": "2026-09-20 02:01 KST",
+    "text": "Many Google TPU customers are already asking Google for SemiAnalysis AgentX performance results, as customers are saying that it is a representative workload of their agentic inference traffic.\n\nWe are excited to announce that we are working on AgentX TPU benchmarking too in the coming months! Stay tuned! Super proud of the Google, RadixArk, Red Hat, and Inferact teams for bringing TPU inferencing to the rest of the world!"
+  },
+  {
+    "urn": "urn:li:activity:7506910049710039040",
+    "time_label": "2026-09-19 12:00 KST",
+    "text": "Single points of failure are not limited to obscure image libraries. We see plenty of bad designs on Neoclouds. \nhttps://lnkd.in/e8NbwRyu\n\nWe define bad designs as anything where a single mistake (such as a publicly described CVE being present, or a provider-side misconfiguration) can lead to an immediate cross-tenant exposure of data, be it metadata, escalation to root privilege, or RCE. Proper designs have layers of security built in. \n\nIt’s like this, but with a single auth token.\n\nHere are some common examples of bad designs:\n\n🟠 Containers on shared hardware as the only level of isolation between tenants\n\n🟠 VMs on shared hardware as the only level of isolation between tenants (less serious than containers, but still risky)\n\n🟠 Lack of VXLANs or improper configuration, and no concept of a per-tenant VPC on the frontend network, relying on firewalls\n\n🟠 Multi-tenant Kubernetes control planes, where components such as kube-apiserver, the scheduler, helm charts controlling cluster-wide services such as a shared GPUOperator or NetworkOperator, and etcd are shared across tenants\n\n🟠 No hardware, firmware, and OS provisioning automation, leading to a practice where machines are recycled between tenants instead of provisioning things from scratch\n\n🟠 Backend storage on a shared network with no isolation (the VPC comment again)\n\n🟠 Giving any tenant access to the BMC network (IPMI, Redfish) or to any management port on Bluefield DPUs or any SmartNICs\n\n🟠 Leaving Bluefield DPUs in their default host-trusted mode, where anyone with root on the host can reach the DPU’s Arm cores over RShim\n\n🟠 Giving any tenant access to login to backend or frontend switches on a shared network\n\n🟠 Incorrect configuration of InfiniBand security keys such as PKey, MKey and SAKey\n\n🟠 Multi-tenant dashboards where infrastructure is shared between internal-facing logs and customer-facing logs\n\n🟠 Controls where provider employees can receive privileged access to tenant logs and monitoring dashboards without tenant permission. \n\nFor more details, and stories like how we got root access to the Grafana monitoring dashboard for an intelligence service of a country with a top 10 global GDP, read the full article here👇️ \nhttps://lnkd.in/e5uivEjy"
   }
 ]
