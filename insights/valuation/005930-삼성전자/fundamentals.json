@@ -1,6 +1,6 @@
 {
   "ticker": "005930",
-  "fetched_at": "2026-09-23T21:57:12.059275+09:00",
+  "fetched_at": "2026-09-24T21:51:07.251608+09:00",
   "sources": [
     "https://m.stock.naver.com/api/stock/005930/finance/quarter",
     "https://m.stock.naver.com/api/stock/005930/finance/annual"
@@ -51,9 +51,9 @@
       "key": "202609",
       "label": "2026.09",
       "consensus": true,
-      "revenue_100m": 2049522,
-      "operating_profit_100m": 1118176,
-      "net_income_100m": 962798
+      "revenue_100m": 2045704,
+      "operating_profit_100m": 1105736,
+      "net_income_100m": 900132
     }
   ],
   "annuals": [
@@ -85,9 +85,9 @@
       "key": "202612",
       "label": "2026.12",
       "consensus": true,
-      "revenue_100m": 7378172,
-      "operating_profit_100m": 3900897,
-      "net_income_100m": 3262847
+      "revenue_100m": 7370706,
+      "operating_profit_100m": 3876962,
+      "net_income_100m": 3235209
     }
   ]
 }
