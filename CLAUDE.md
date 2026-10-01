@@ -5,7 +5,7 @@
 반도체·AI 인프라(SemiAnalysis)와 제3자 해설(언더스탠딩·미주사·부동산)을 한국어로 옮기고, 문서를 가로질러 나온 판단을 대시보드로 내보낸다. 산출물은 코드가 아니라 **글**이다.
 
 ```
-① 원문   content/newsletter/**  content/understanding/**  content/epoch/**  input/clippings/**
+① 원문   content/newsletter/**  content/understanding/**  content/epoch/**  input/clippings/**  (주소는 이 꼴이 열쇠. 실제 파일은 저장소 밖 C:/Users/y/clippings/{semianalysis,mer,linkedin} — insights/paths.py locate())
 ② 노트   insights/notes/*.md              화면에 안 나온다. 교차 작업용 중간물
 ③ 포스트 insights/synth/cross-*.md        교차 인사이트
           insights/briefs/*-지금-상태.md   현황 브리핑

@@ -22,7 +22,8 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CLIP = os.path.join(ROOT, 'input', 'clippings', 'mer', '%s.json')
+import sys as _s; _s.path.insert(0, os.path.join(ROOT, 'insights')); import paths  # noqa: E402  클리핑은 저장소 밖(2026-10-01)
+CLIP = os.path.join(str(paths.CLIP_MER), '%s.json')
 CITE = re.compile(r'\(메르-(\d+)\s+(T\d+(?:\s*,\s*T\d+)*)\)')
 WRITE = '--write' in sys.argv
 

@@ -15,7 +15,9 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "input" / "clippings"
+sys.path.insert(0, str(ROOT / "insights"))
+import paths  # noqa: E402  클리핑 원문은 저장소 밖(2026-10-01)
+SRC = paths.CLIP_SEMI
 DST = ROOT / "input" / "clip-images"
 
 IMG_RE = re.compile(r"!\[[^\]]*\]\((https://substackcdn\.com/[^)]+)\)")

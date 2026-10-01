@@ -26,3 +26,46 @@ LOOP = os.path.join(HERE, 'loop')
 ANGLES = os.path.join(HERE, 'angles')
 
 DEBATE = os.path.join(HERE, 'debate')
+
+# 클리핑 원문은 저장소 밖에 있다(2026-10-01). 노트·색인·인용이 쓰는 주소는 옛 꼴
+# `input/clippings/...` 그대로 두는 열쇠이고, 디스크를 열 때만 아래로 바꾼다.
+#   input/clippings/mer/*       -> CLIP_ROOT/mer/*
+#   input/clippings/*           -> CLIP_ROOT/semianalysis/*
+#   input/linkedin/한주성/*     -> CLIP_ROOT/linkedin/한주성/*
+from pathlib import Path
+
+CLIP_ROOT = Path(r"C:\Users\y\clippings")
+CLIP_SEMI = CLIP_ROOT / "semianalysis"
+CLIP_MER = CLIP_ROOT / "mer"
+CLIP_LINKEDIN = CLIP_ROOT / "linkedin"
+
+_VIRTUAL = (
+    ('input/clippings/mer', CLIP_MER),
+    ('input/clippings', CLIP_SEMI),
+    ('input/linkedin', CLIP_LINKEDIN),
+)
+
+
+def _is_repo(root):
+    return os.path.normcase(os.path.abspath(str(root))) == os.path.normcase(ROOT)
+
+
+def locate(root, rel):
+    """열쇠 주소(rel, 슬래시)를 디스크 경로로. 저장소 루트가 아닌 root(테스트의 tmp)는 그대로 붙인다."""
+    r = rel.replace(os.sep, '/')
+    if _is_repo(root):
+        for pre, real in _VIRTUAL:
+            if r == pre or r.startswith(pre + '/'):
+                return os.path.join(str(real), *r[len(pre):].strip('/').split('/')) if r != pre else str(real)
+    return os.path.join(str(root), r.replace('/', os.sep))
+
+
+def virtual(root, path):
+    """locate 의 거꾸로. 디스크 경로 -> 열쇠 주소(슬래시)."""
+    p = os.path.abspath(str(path))
+    if _is_repo(root):
+        for pre, real in _VIRTUAL:
+            base = os.path.normcase(os.path.abspath(str(real)))
+            if os.path.normcase(p).startswith(base + os.sep):
+                return pre + '/' + p[len(base) + 1:].replace(os.sep, '/')
+    return os.path.relpath(p, str(root)).replace(os.sep, '/')

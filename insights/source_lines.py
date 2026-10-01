@@ -16,6 +16,8 @@ import io
 import json
 import os
 
+import paths
+
 MARKDOWN = '.md'
 CLIPPING = '.json'
 
@@ -25,7 +27,7 @@ def known(rel):
 
 
 def _full(root, rel):
-    return os.path.join(root, rel.replace('/', os.sep))
+    return paths.locate(root, rel)
 
 
 def lines(root, rel):

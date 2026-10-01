@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """M&A 카드 원고 ↔ 원문 대조.
 
-`content/understanding/한주성/*.md` 한 편마다 `input/linkedin/한주성/` 의 같은 aid 클리핑을 열어 본다.
+`content/understanding/한주성/*.md` 한 편마다 `C:/Users/y/clippings/linkedin/한주성/` 의 같은 aid 클리핑을 열어 본다.
 
   FAIL  frontmatter 필수 키 없음 · 모르는 섹션 · 절 없음
         인용(`> `)이 원문에 없다(공백·따옴표를 지운 뒤 유사도 0.85 미만)

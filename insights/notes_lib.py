@@ -82,7 +82,7 @@ def line_hash(abs_path, n):
 
 
 def abspath(rel):
-    return os.path.join(paths.ROOT, rel.replace('/', os.sep))
+    return paths.locate(paths.ROOT, rel)
 
 
 BLOB = 'https://github.com/yohan4477/semi-report/blob/main/'

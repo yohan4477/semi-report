@@ -27,7 +27,8 @@ kind는 그 마디가 사실인지 판단인지다 — event/bg는 event, 나머
 import json, io, os, re, glob, difflib
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'input', 'clippings', 'mer')
+import sys as _s; _s.path.insert(0, os.path.join(ROOT, 'insights')); import paths  # noqa: E402  클리핑은 저장소 밖(2026-10-01)
+SRC = str(paths.CLIP_MER)
 FLOW = os.path.join(ROOT, 'insights', 'flows', 'mer')
 
 LANES = [

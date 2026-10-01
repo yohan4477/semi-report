@@ -16,7 +16,9 @@ import io, os, re, sys, json, html, datetime, collections
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HIST = os.path.join(ROOT, '대시보드', '소셜 신호 히스토리.html')
-CLIPS = os.path.join(ROOT, 'input', 'clippings')
+sys.path.insert(0, os.path.join(ROOT, 'insights'))
+import paths  # noqa: E402
+CLIPS = str(paths.CLIP_SEMI)
 OUT = os.path.join(ROOT, 'insights', 'views', 'li_signals.json')
 LAG_MAX = 15   # 이 날짜를 넘겨 올린 뉴스레터 홍보는 새 정보로 세지 않는다
 

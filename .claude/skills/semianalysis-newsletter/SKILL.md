@@ -1,6 +1,6 @@
 ---
 name: semianalysis-newsletter
-description: Fetch a SemiAnalysis newsletter article past the paywall via the authenticated CDP Chrome session (the chrome-semianalysis profile is a paid subscriber), save it as an Obsidian-clipper markdown file under input/clippings/, then hand it to the semianalysis-transformer agent. Use whenever the user says something like "새 뉴스레터 나왔어 / 분석해줘 / 이 SemiAnalysis 글 변환해줘", or when a WebFetch of a newsletter.semianalysis.com article returns only the free ~30% preview ("This post is for paid subscribers").
+description: Fetch a SemiAnalysis newsletter article past the paywall via the authenticated CDP Chrome session (the chrome-semianalysis profile is a paid subscriber), save it as an Obsidian-clipper markdown file under C:/Users/y/clippings/semianalysis/ (outside the repo), then hand it to the semianalysis-transformer agent. Use whenever the user says something like "새 뉴스레터 나왔어 / 분석해줘 / 이 SemiAnalysis 글 변환해줘", or when a WebFetch of a newsletter.semianalysis.com article returns only the free ~30% preview ("This post is for paid subscribers").
 ---
 
 # SemiAnalysis Newsletter Skill
@@ -41,7 +41,7 @@ assert not d["paywalled"] and d["text_len"] > 6000, "subscriber session expired 
 
 ## 4. Save the clipping
 
-Write the Obsidian-clipper markdown to `input/clippings/<sanitized title>.md` using the same frontmatter block `clip_articles.py` builds (`title`, `source`, `author` as `[[..]]`, `published`, `created`, `description`, `tags: [clippings]`) followed by the `html2text`-converted body. This matches the 60+ existing clippings so the transformer finds it the same way. (You can just run `clip_articles.py` after adding the slug to `scratchpad/clipping_gap.md`, or call its functions directly for a one-off.)
+Write the Obsidian-clipper markdown to `C:/Users/y/clippings/semianalysis/<sanitized title>.md` using the same frontmatter block `clip_articles.py` builds (`title`, `source`, `author` as `[[..]]`, `published`, `created`, `description`, `tags: [clippings]`) followed by the `html2text`-converted body. This matches the 60+ existing clippings so the transformer finds it the same way. (You can just run `clip_articles.py` after adding the slug to `scratchpad/clipping_gap.md`, or call its functions directly for a one-off.)
 
 ## 5. Hand off to the transformer
 
@@ -56,4 +56,4 @@ After transformation, the new Korean doc under `content/newsletter/` can be surf
 - **Session expiry is the #1 failure.** The symptom is a small `text_len` / `paywalled:true`. Never transform a partial preview — the transformer will (correctly) refuse and you waste a round trip. Verify `text_len` first.
 - **`suppress_origin=True` is mandatory** on the websocket, same as the LinkedIn skill.
 - Substack lazy-loads images and some embeds; the `.available-content` innerText is complete for text even if a few figures are `[image]` placeholders. That's fine — the transform is text-driven.
-- Do not commit the raw clipping under `input/clippings/` unless the repo already tracks them (check `git status`); the transformed output under `content/newsletter/` is the tracked deliverable.
+- The raw clipping lives outside the repo (`C:/Users/y/clippings/semianalysis/`) and is never committed; note/index citations keep the old key form `input/clippings/<title>.md`, which `insights/paths.py` `locate()` maps to the real folder; the transformed output under `content/newsletter/` is the tracked deliverable.

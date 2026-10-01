@@ -108,8 +108,8 @@ PYTHONIOENCODING=utf-8 python insights/check_index.py
 
 ```
 content/**/*.md              478편   변환본·요약본·팟캐스트·링크드인
-input/clippings/*.md          75편   SemiAnalysis 영문 원본
-input/clippings/mer/*.json   364편   메르 클리핑
+input/clippings/*.md          75편   SemiAnalysis 영문 원본 (실제 위치 C:/Users/y/clippings/semianalysis, 주소는 옛 꼴 유지)
+input/clippings/mer/*.json   364편   메르 클리핑 (실제 위치 C:/Users/y/clippings/mer)
                             ─────
                              917편 · 162,992줄
 ```

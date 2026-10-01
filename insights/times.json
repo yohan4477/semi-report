@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-09-22",
-"index_fingerprint": "db5f588c67aa3740abc45fd6538a33567c820c54",
-"lines": 4717
+"built": "2026-10-01",
+"index_fingerprint": "81fe32b98da70a3ae1839564b48fbdfbde2ebea3",
+"lines": 4767
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -1946,6 +1946,228 @@
 "t": "2028",
 "tense": "전망"
 },
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L116": {
+"how": "명시",
+"span": [
+"2015",
+"2021"
+],
+"t": "2021",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L117": {
+"how": "명시",
+"span": [
+"2021",
+"2023"
+],
+"t": "2023",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L118": {
+"how": "명시",
+"span": [
+"2024",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L127": {
+"how": "명시",
+"span": [
+"2009",
+"2013"
+],
+"t": "2013",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L129": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L131": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L196": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L235": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L274": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L297": {
+"how": "명시",
+"t": "2010",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L312": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L313": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L318": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L333": {
+"how": "명시",
+"span": [
+"2023",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L378": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L397": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L425": {
+"how": "명시",
+"span": [
+"2019",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L432": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L447": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L451": {
+"how": "명시",
+"t": "2021",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L462": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L472": {
+"how": "명시",
+"span": [
+"2026",
+"2029"
+],
+"t": "2029",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L474": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L479": {
+"how": "명시",
+"span": [
+"2023",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L480": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L492": {
+"how": "명시",
+"span": [
+"2019",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L493": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L499": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L508": {
+"how": "명시",
+"span": [
+"2023",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L514": {
+"how": "명시",
+"span": [
+"2023",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L53": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L80": {
+"how": "명시",
+"t": "2014",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L84": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md#L91": {
+"how": "명시",
+"t": "2032",
+"tense": "전망"
+},
 "content/newsletter/ai_infra/compute/[250613] AMD Advancing AI - MI350X와 MI400 UALoE72, MI500 UAL256.md#L174": {
 "how": "명시",
 "t": "2025",
@@ -2955,6 +3177,71 @@
 "t": "2029",
 "tense": "전망"
 },
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L365": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L555": {
+"how": "명시",
+"span": [
+"2025",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L574": {
+"how": "명시",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L681": {
+"how": "계산",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L857": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L894": {
+"how": "명시",
+"span": [
+"2022",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L976": {
+"how": "명시",
+"span": [
+"2027",
+"2028"
+],
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L983": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md#L984": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
 "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L125": {
 "how": "명시",
 "span": [
@@ -3704,6 +3991,15 @@
 "how": "계산",
 "t": "2027",
 "tense": "전망"
+},
+"content/newsletter/ai_infra/memory/[260928] GLM-5.3 희소 어텐션이 HBM 메모리 사용에 미치는 영향.md#L181": {
+"how": "명시",
+"span": [
+"2019",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
 },
 "content/newsletter/ai_infra/networking/[260101] 코패키지드 옵틱스(CPO) - 빛으로 확장하는 차세대 인터커넥트.md#L295": {
 "how": "명시",
@@ -5450,6 +5746,11 @@
 "t": "2026",
 "tense": "현재"
 },
+"content/newsletter/robotics/[260914] 너무 커서 들고 다닐 수 없는 로봇의 뇌 - 온디바이스 대 데이터센터 추론.md#L146": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
 "content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md#L130": {
 "how": "명시",
 "t": "2022",
@@ -6789,6 +7090,31 @@
 "2023"
 ],
 "t": "2023",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/process/[260926] 인텔 팬더레이크 해부 - 18A의 RibbonFET과 PowerVia.md#L103": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/process/[260926] 인텔 팬더레이크 해부 - 18A의 RibbonFET과 PowerVia.md#L243": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/newsletter/semiconductors/process/[260926] 인텔 팬더레이크 해부 - 18A의 RibbonFET과 PowerVia.md#L279": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/semiconductors/process/[260926] 인텔 팬더레이크 해부 - 18A의 RibbonFET과 PowerVia.md#L612": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/semiconductors/process/[260926] 인텔 팬더레이크 해부 - 18A의 RibbonFET과 PowerVia.md#L638": {
+"how": "명시",
+"t": "2019",
 "tense": "회고"
 },
 "content/podcast/semianalysis/[260817] Ep.25 딜런 패텔 - 사내 AI 지출이 평평해진 이유와 보상 해킹 사고.md#L46": {

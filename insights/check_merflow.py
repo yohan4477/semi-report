@@ -28,7 +28,9 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FLOWS = os.path.join(ROOT, 'insights', 'mer_flows')
-CLIP = os.path.join(ROOT, 'input', 'clippings', 'mer')
+sys.path.insert(0, os.path.join(ROOT, 'insights'))
+import paths  # noqa: E402
+CLIP = str(paths.CLIP_MER)
 
 sys.path.insert(0, os.path.join(ROOT, 'insights'))
 from check_liflow import normalize  # noqa: E402  정규화는 한 곳에만 둔다

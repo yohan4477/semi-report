@@ -4,7 +4,7 @@
 import json, time, re, sys, os, datetime, urllib.request
 from websocket import create_connection
 
-VAULT = r"C:\Users\y\semi_docs\Clippings\회계사"
+VAULT = r"C:\Users\y\clippings\회계사"
 
 
 def get_tab():

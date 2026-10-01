@@ -12,7 +12,7 @@ description: 노트가 쌓인 뒤 교차 인사이트를 점검하거나 새로 
 ## 체계 3층
 
 ```
-① 원문   content/newsletter/**/*.md · content/understanding/**/*.md · input/clippings/*.md
+① 원문   content/newsletter/**/*.md · content/understanding/**/*.md · input/clippings/*.md (저장소 밖 C:/Users/y/clippings/semianalysis, 주소는 옛 꼴)
               │  문서 1편 = 노트 1장, 논지를 보존한 채 줄인다 (insight-note 스킬)
 ② 노트   insights/notes/<yymmdd>-<슬러그>.md          ← 전부 한 콜에 들어간다
               │  교차 작업은 전부 여기서 한다

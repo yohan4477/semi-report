@@ -40,7 +40,7 @@ SemiAnalysis 뉴스레터·LinkedIn·YouTube 신호를 한글로 변환·종합�
 - `대장/` — 크로스 도메인 숫자 대장
 - `대시보드/` — 대시보드 HTML 소스 (GitHub Pages로 서빙). `관리자 대시보드.html`은 허브에 없다 — 세 갈래(통합 인사이트 · 주제 대시보드 · SemiAnalysis)가 데이터를 어떻게 처리하는지 모은 룰 색인이고, 공개 사이트에서는 `/admin`으로 잠겨 나간다(`scripts/gen_admin.py`)
 - `scripts/` — `gen_bmirror.py`(SemiAnalysis 대시보드 ① 미러 재생성), `gen_conceptmap_docs.py`, `gen_site.py`(공개 사이트 빌드)
-- `input/clippings/` — 변환 대기 원문 클리핑
+- `input/clippings/` — 변환 대기 원문 클리핑(2026-10-01부터 저장소 밖 `C:/Users/y/clippings/semianalysis`. 인용 주소는 옛 꼴 유지, `insights/paths.py`가 실제 폴더로 바꾼다)
 
 ## 원문 기반 노트 (2026-08-14 이행 완료)
 

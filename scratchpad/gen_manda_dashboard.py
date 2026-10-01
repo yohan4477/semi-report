@@ -23,7 +23,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import dash_common as dc  # noqa: E402
 
 SRC_DIR = os.path.join(dc.ROOT, 'content', 'understanding', '한주성')
-RAW_DIR = os.path.join(dc.ROOT, 'input', 'linkedin', '한주성')
+sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
+import paths  # noqa: E402  클리핑은 저장소 밖(2026-10-01)
+RAW_DIR = os.path.join(str(paths.CLIP_LINKEDIN), '한주성')
 OUT = os.path.join(dc.ROOT, '대시보드', 'M&A 대시보드.html')
 PERMALINK = 'https://www.linkedin.com/feed/update/urn:li:activity:%s/'
 AUTHOR = 'https://www.linkedin.com/in/%ED%95%9C%EC%A3%BC%EC%84%B1-jason-han-7b875a58/'

@@ -24,7 +24,9 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPORTS = os.path.join(ROOT, 'insights', 'reports', '*.md')
-CLIPS = os.path.join(ROOT, 'input', 'clippings', 'mer', '*.json')
+sys.path.insert(0, os.path.join(ROOT, 'insights'))
+import paths  # noqa: E402  클리핑 원문은 저장소 밖(2026-10-01)
+CLIPS = os.path.join(str(paths.CLIP_MER), '*.json')
 
 docs = {}
 for p in glob.glob(CLIPS):

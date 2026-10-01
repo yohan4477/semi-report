@@ -33,7 +33,9 @@ import dash_common as dc  # noqa: E402
 from card_lib import fig_html  # noqa: E402
 
 SRC = os.path.join(dc.ROOT, 'insights', 'mer_flows', '2026-09-07-한도가-값을-따라간다.md')
-CLIP = os.path.join(dc.ROOT, 'input', 'clippings', 'mer', '*.json')
+sys.path.insert(0, os.path.join(dc.ROOT, 'insights'))
+import paths  # noqa: E402  클리핑은 저장소 밖(2026-10-01)
+CLIP = os.path.join(str(paths.CLIP_MER), '*.json')
 STAMP = '2026-09-07'
 
 GROUPS = [('안에서 옮긴 선', 1, 4),

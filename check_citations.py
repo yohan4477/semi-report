@@ -11,10 +11,10 @@ from pathlib import Path
 
 # 파일 매핑
 FILE_MAP = {
-    'GTC25': 'input/clippings/NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md',
-    '관세': 'input/clippings/Tariff Armageddon  GPU Loopholes, Mexico Supply Chain Shift, Wafer Fab Equipment Vulnerabilities, Optical Module Pricing Surge, Datacenter Equipment.md',
+    'GTC25': 'C:/Users/y/clippings/semianalysis/NVIDIA GTC 2025 - Built For Reasoning, Vera Rubin, Kyber, CPO, Dynamo Inference, Jensen Math, Feynman.md',
+    '관세': 'C:/Users/y/clippings/semianalysis/Tariff Armageddon  GPU Loopholes, Mexico Supply Chain Shift, Wafer Fab Equipment Vulnerabilities, Optical Module Pricing Surge, Datacenter Equipment.md',
     'TPU': 'content/newsletter/ai_infra/compute/[251128] TPUv7 - 구글, AI 반도체 왕좌에 도전장을 내밀다.md',
-    '화웨이': 'input/clippings/Huawei AI CloudMatrix 384 – China\'s Answer to Nvidia GB200 NVL72.md',
+    '화웨이': 'C:/Users/y/clippings/semianalysis/Huawei AI CloudMatrix 384 – China\'s Answer to Nvidia GB200 NVL72.md',
     'SD-0612': 'content/semi_doped/2026-06-12-computex-optics-power.md',
     'SD-0716': 'content/semi_doped/2026-07-16-picojool-yuen.md',
     'SD-0725': 'content/semi_doped/2026-07-25-datacenter-interconnects.md',

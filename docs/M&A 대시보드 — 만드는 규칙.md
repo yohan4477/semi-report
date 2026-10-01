@@ -1,7 +1,7 @@
 # M&A 대시보드 — 만드는 규칙
 
 한주성(PwC Korea, 링크드인)의 글을 카드로 옮기는 장이다. 글 한 편이 카드 한 장이다.
-원문은 `input/linkedin/한주성/*.md`(클리핑 원본), 카드 원고는 `content/understanding/한주성/*.md`,
+원문은 `C:/Users/y/clippings/linkedin/한주성/*.md`(클리핑 원본), 카드 원고는 `content/understanding/한주성/*.md`,
 화면은 `scratchpad/gen_manda_dashboard.py` 가 만든다. 카드 원고를 검사하는 것은
 `scratchpad/check_manda.py` — 숫자와 인용이 원문에 있는지, 필수 절이 다 섰는지 본다.
 

@@ -6,7 +6,7 @@ import urllib.request
 import html2text
 
 GAP_FILE = "scratchpad/clipping_gap.md"
-OUT_DIR = "input/clippings"
+OUT_DIR = "C:/Users/y/clippings/semianalysis"  # 저장소 밖(2026-10-01). insights/paths.py CLIP_SEMI 와 같다
 STATE = "scratchpad/clip_state.json"
 BASE = "https://newsletter.semianalysis.com/p/"
 

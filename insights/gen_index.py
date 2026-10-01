@@ -42,8 +42,9 @@ CORPUS = (
 def corpus_files(root):
     out = set()
     for parts in CORPUS:
-        for p in glob.glob(os.path.join(root, *parts), recursive=True):
-            rel = os.path.relpath(p, root).replace(os.sep, '/')
+        base = paths.locate(root, '/'.join(parts[:-1]))
+        for p in glob.glob(os.path.join(base, parts[-1]), recursive=True):
+            rel = paths.virtual(root, p)
             if sl.known(rel):
                 out.add(rel)
     return sorted(out)
@@ -52,7 +53,7 @@ def corpus_files(root):
 def file_hashes(root, files):
     out = {}
     for rel in files:
-        with io.open(os.path.join(root, rel.replace('/', os.sep)), 'rb') as f:
+        with io.open(paths.locate(root, rel), 'rb') as f:
             out[rel] = hashlib.sha1(f.read()).hexdigest()
     return out
 

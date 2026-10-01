@@ -49,7 +49,7 @@ def check(root, rows, idx, actors, tmap=None, meta=None):
             continue
         for addr in addrs:
             rel, _, num = addr.rpartition('#L')
-            full = os.path.join(root, rel.replace('/', os.sep))
+            full = paths.locate(root, rel)
             if not os.path.isfile(full):
                 out.append(('FAIL', 'X3', '%s 가 없는 파일을 가리킨다: %s' % (name, addr)))
                 continue
@@ -99,10 +99,11 @@ def check(root, rows, idx, actors, tmap=None, meta=None):
         # 무늬의 끝(*.md)을 *로 바꿔 그 자리의 파일을 전부 본다. 확장자 무늬
         # 그대로 훑으면 못 읽는 갈래는 애초에 안 걸려 검사가 아무것도 못 잡는다
         wild = tuple(parts[:-1]) + ('*',)
-        for q in glob.glob(os.path.join(root, *wild), recursive=True):
+        base = paths.locate(root, '/'.join(wild[:-1]))
+        for q in glob.glob(os.path.join(base, wild[-1]), recursive=True):
             if not os.path.isfile(q):
                 continue
-            rel = os.path.relpath(q, root).replace(os.sep, '/')
+            rel = paths.virtual(root, q)
             if not sl.known(rel):
                 unread.add(rel)
     for rel in sorted(unread):

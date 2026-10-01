@@ -11,7 +11,7 @@ for k in 'ABCD':
         n += 1
         q = c[5].strip('「」"\'“”')
         try:
-            t = json.load(io.open('input/clippings/mer/%s.json' % c[1], encoding='utf-8'))['text']
+            t = json.load(io.open('C:/Users/y/clippings/mer/%s.json' % c[1], encoding='utf-8'))['text']
         except Exception:
             print('NOFILE', k, c[0], c[1]); bad += 1; continue
         norm = lambda s: re.sub(r'\s+', '', s)

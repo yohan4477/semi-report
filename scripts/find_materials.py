@@ -38,6 +38,8 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, 'insights'))
+import paths  # noqa: E402  클리핑 원문은 저장소 밖(2026-10-01)
 
 # 보고서 층이 재료로 삼는 자리. content/understanding 은 제3자 해설이라 기본에서 뺀다
 # 글로브는 전부 재귀로 둔다. 한 겹만 보다가 input/clippings/mer/ 430편을 통째로
@@ -46,7 +48,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SETS = {
     '뉴스레터': ['content/newsletter/**/*.md'],
     'SemiDoped': ['insights/semidoped/**/*.md'],
-    '클리핑': ['input/clippings/**/*.md'],
+    '클리핑': ['input/clippings/**/*.md'],  # 열쇠 주소 — paths.locate 가 실제 폴더로 바꾼다
     '팟캐스트': ['content/podcast/**/*.md'],
     '해설': ['content/understanding/**/*.md'],
     '메르': ['input/clippings/mer/**/*.json'],
@@ -62,7 +64,7 @@ def files(sets):
     out = []
     for name in sets:
         for pat in SETS[name]:
-            for p in glob.glob(os.path.join(ROOT, pat), recursive=True):
+            for p in glob.glob(paths.locate(ROOT, pat), recursive=True):
                 out.append((name, p))
     return sorted(set(out))
 
@@ -176,7 +178,7 @@ def main():
 
     print('\n경로 (위임문에 붙일 것):')
     for _d, _n, _k, _t, _i, _name, _g, p in shown:
-        print('  ' + os.path.relpath(p, ROOT).replace('\\', '/'))
+        print('  ' + paths.virtual(ROOT, p))
     print('\n이 목록은 후보다. 재료는 사람이 자른다 — 넘치는 것은 자르면 되고 놓친 것은 안 보인다.')
     return 0
 

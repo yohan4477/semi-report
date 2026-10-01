@@ -19,6 +19,8 @@ import sys
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, 'insights'))
+import paths  # noqa: E402  클리핑 원문은 저장소 밖 — 열쇠 주소를 paths.locate 로 바꾼다
 
 # (페이지, 층 id, 재료 폴더) — 한 페이지에 성격이 다른 리포트 층이 여럿이면 층마다 재료가 다르다.
 PAGES = [
@@ -90,7 +92,7 @@ PAGES = [
 ]
 
 _SD = os.path.join(ROOT, 'content', 'semi_doped')
-_CLIP = os.path.join(ROOT, 'input', 'clippings')
+_CLIP = str(paths.CLIP_SEMI)
 _LI = os.path.join(ROOT, 'content', 'linkedin')
 CPO_EXTRA = [os.path.join(_SD, f + '.md') for f in
              ('2026-06-12-computex-optics-power', '2026-07-16-picojool-yuen',
@@ -114,7 +116,7 @@ PKG_EXTRA = [os.path.join(ROOT, 'insights', 'semidoped', '2026-06-19-advanced-pa
 # 금리·물가 층의 재료 마흔. 폴더째 넣지 않고 파일을 하나씩 적는다 — content/understanding 은
 # 540편이라 통째로 넣으면 이 층과 무관한 편이 알리바이가 된다. EXTRA 는 확장자를 안 가려
 # 읽으므로 메르 클리핑과 사슬(json)도 그대로 대조 대상이 된다
-RATE_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+RATE_EXTRA = [paths.locate(ROOT, p) for p in (
     'input/clippings/mer/223873166379.json',
     'input/clippings/mer/223887755561.json',
     'input/clippings/mer/223931247450.json',
@@ -166,7 +168,7 @@ RATE_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
     'content/understanding/회계사/[260822] 바이백을 두 배로 늘렸지만 효과는 하루였다, 30년물은 5.28%로 되돌아왔다 - 미국 국채 - 엘곰.md',
 )]
 
-MEM_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+MEM_EXTRA = [paths.locate(ROOT, p) for p in (
     'content/linkedin/[2607] 링크드인 게시물.md',
     'content/linkedin/[2608] 링크드인 게시물.md',
     'content/linkedin/[2609] 링크드인 게시물.md',
@@ -189,7 +191,7 @@ MEM_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
 # 대조 대상에 넣는다 — 여기에도 없는 값이면 어디서 왔는지 사람이 대야 한다.
 # 트럼프 층(2026-09-06). 재료가 메르 클리핑 마흔일곱 편뿐인데, mer 폴더를 통째로 넣으면
 # 697편이 알리바이가 된다. 금리 층과 같은 이유로 파일을 하나씩 적는다
-TRUMP_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+TRUMP_EXTRA = [paths.locate(ROOT, p) for p in (
 'input/clippings/mer/223838109591.json',
 'input/clippings/mer/223936689668.json',
 'input/clippings/mer/223979290690.json',
@@ -272,7 +274,7 @@ POWER_EXTRA = [os.path.join(ROOT, 'content', 'podcast', 'semianalysis',
                             '2026-05-08-power-wall-strategy.md')]
 
 # 순환금융 층의 뉴스레터 밖 재료 여섯 — 메르 클리핑
-CIRC_EXTRA = [os.path.join(ROOT, *p.split('/')) for p in (
+CIRC_EXTRA = [paths.locate(ROOT, p) for p in (
     'input/clippings/mer/224088297516.json',
     'input/clippings/mer/224171369464.json',
     'input/clippings/mer/224193608780.json',

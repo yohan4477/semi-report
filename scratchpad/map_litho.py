@@ -7,12 +7,13 @@
 import io, json, os, re, collections
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import sys as _s; _s.path.insert(0, os.path.join(ROOT, 'insights')); import paths  # noqa: E402  클리핑은 저장소 밖(2026-10-01)
 
 # 이 공정 장의 이름표 — 생성기가 이것만 보고 페이지를 짓는다
 KEY = 'litho'
 LABEL = '리소그래피'
 
-DIRS = [os.path.join(ROOT, 'content'), os.path.join(ROOT, 'input', 'clippings')]
+DIRS = [os.path.join(ROOT, 'content'), str(paths.CLIP_SEMI)]
 
 # 이름 -> 정규식. 별칭과 영문 표기를 함께 문다.
 NAMES = {
@@ -200,7 +201,7 @@ def count(names, signal, threshold, files=None):
     comp = [(n, re.compile(rx, re.I)) for n, rx in names.items()]
     hits = collections.defaultdict(lambda: {'n': 0, 'docs': []})
     for p, t in docs:
-        rel = os.path.relpath(p, ROOT).replace(os.sep, '/')
+        rel = paths.virtual(ROOT, p)
         lines = t.split('\n')
         # 문서가 그 공정을 말해도 문장은 딴 얘기일 수 있다(리소 문서 안의 패키징 수율).
         # 그래서 줄 단위로도 본다 — 그 줄이나 앞뒤 두 줄에 신호가 있어야 센다.
