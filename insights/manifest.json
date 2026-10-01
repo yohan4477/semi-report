@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-10",
+ "generated": "2026-10-01",
  "sources": [
   {
    "id": "li:root:2602-링크드인-게시물",
@@ -87,7 +87,7 @@
    ],
    "date": "2026-09-01",
    "path": "content/linkedin/[2609] 링크드인 게시물.md",
-   "hash": "c33f8149fd89"
+   "hash": "c9ff8244096f"
   },
   {
    "id": "pod:semianalysis:Ep25-딜런-패텔-사내-AI-지출이-평평해진-이유와-보상-해킹-사고",
@@ -313,6 +313,17 @@
    "hash": "2acaf6100cd9"
   },
   {
+   "id": "semi:business:엔비디아의-백스톱-우주-앞면이면-내가-이기고-뒷면이면-누가-지는가",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business"
+   ],
+   "date": "2026-09-11",
+   "path": "content/newsletter/ai_infra/business/[260911] 엔비디아의 백스톱 우주 - 앞면이면 내가 이기고 뒷면이면 누가 지는가.md",
+   "hash": "a9df15658c1a"
+  },
+  {
    "id": "semi:business:우주로-담대하게-우주-데이터센터의-경제성",
    "corpus": "semianalysis",
    "folder": "business",
@@ -346,6 +357,19 @@
    "date": "2026-08-07",
    "path": "content/newsletter/ai_infra/business/[260807] 제미나이는 끝났어도 GCP는 잘나간다 - 딥마인드 리더십 붕괴와 구글 클라우드의 반사이익.md",
    "hash": "bbdf3af67342"
+  },
+  {
+   "id": "semi:business:중국-AI-인프라-붐-SemiAnalysis-중국-데이터센터-모델-공개",
+   "corpus": "semianalysis",
+   "folder": "business",
+   "categories": [
+    "ai-infra/business",
+    "ai-infra/construction",
+    "ai-infra/power"
+   ],
+   "date": "2026-09-25",
+   "path": "content/newsletter/ai_infra/business/[260925] 중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개.md",
+   "hash": "9abdbe6d4e60"
   },
   {
    "id": "semi:business:토큰-버짓팅-기업들과-나눈-토큰-지출-실태",
@@ -454,6 +478,18 @@
    "date": "2026-02-09",
    "path": "content/newsletter/ai_infra/compute/[260209] CPU가 돌아왔다 - 2026년 데이터센터 CPU 판도.md",
    "hash": "c991269a568a"
+  },
+  {
+   "id": "semi:compute:ClusterMAX-30-GPU-클라우드-업계-표준-등급제의-귀환",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/business"
+   ],
+   "date": "2026-09-23",
+   "path": "content/newsletter/ai_infra/compute/[260923] ClusterMAX 3.0 - GPU 클라우드 업계 표준 등급제의 귀환.md",
+   "hash": "ad5a0763d42f"
   },
   {
    "id": "semi:compute:DeepSeek-V4-16T-Day-0부터-Day-43까지-성능-변화-Huawei-GB300-NVL72-MI",
@@ -584,6 +620,18 @@
    "hash": "b49769e9d255"
   },
   {
+   "id": "semi:compute:베라-루빈-NVL72-에이전틱-추론-달러당-성능-67배",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/business"
+   ],
+   "date": "2026-09-14",
+   "path": "content/newsletter/ai_infra/compute/[260914] 베라 루빈 NVL72 에이전틱 추론 - 달러당 성능 67배.md",
+   "hash": "46bdcce2a49c"
+  },
+  {
    "id": "semi:compute:베라-루빈-익스트림-코디자인-그레이스-블랙웰-오베론에서의-진화",
    "corpus": "semianalysis",
    "folder": "compute",
@@ -644,6 +692,19 @@
    "hash": "4a6d30fed78f"
   },
   {
+   "id": "semi:compute:추론의-연산과-데이터-이동",
+   "corpus": "semianalysis",
+   "folder": "compute",
+   "categories": [
+    "ai-infra/compute",
+    "ai-infra/memory",
+    "ai-infra/networking"
+   ],
+   "date": "2026-09-21",
+   "path": "content/newsletter/ai_infra/compute/[260921] 추론의 연산과 데이터 이동.md",
+   "hash": "56d52d14bfb5"
+  },
+  {
    "id": "semi:construction:레고-데이터센터의-무법지대-모듈러-건설-벤더-지형도와-경제성-분석",
    "corpus": "semianalysis",
    "folder": "construction",
@@ -689,6 +750,32 @@
    "date": "2026-07-02",
    "path": "content/newsletter/ai_infra/memory/[260702] ECTC 2026 총정리 - EMIB-T 로드맵, 커스텀 HBM, 마이크로플루이딕 냉각, 광학 인터커넥트.md",
    "hash": "9ca7408f1846"
+  },
+  {
+   "id": "semi:memory:Engram-임베딩과-DRAMSSD-오프로딩-공동설계",
+   "corpus": "semianalysis",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory",
+    "ai-infra/compute",
+    "ai-models"
+   ],
+   "date": "2026-09-18",
+   "path": "content/newsletter/ai_infra/memory/[260918] Engram 임베딩과 DRAM·SSD 오프로딩 공동설계.md",
+   "hash": "d4675cf80259"
+  },
+  {
+   "id": "semi:memory:GLM-53-희소-어텐션이-HBM-메모리-사용에-미치는-영향",
+   "corpus": "semianalysis",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory",
+    "ai-infra/compute",
+    "ai-models/rl"
+   ],
+   "date": "2026-09-28",
+   "path": "content/newsletter/ai_infra/memory/[260928] GLM-5.3 희소 어텐션이 HBM 메모리 사용에 미치는 영향.md",
+   "hash": "245c0ae9acf9"
   },
   {
    "id": "semi:memory:HBM-로드맵-메모리-벽을-넘는-HBM의-부상과-미래",
@@ -746,6 +833,18 @@
    "date": "2026-06-23",
    "path": "content/newsletter/ai_infra/memory/[260623] 중국 CXMT, DRAM 강자들에 도전장을 내밀다.md",
    "hash": "49ee54d76851"
+  },
+  {
+   "id": "semi:memory:짧은-왕-만세-4-hi-HBM이-이기는-이유",
+   "corpus": "semianalysis",
+   "folder": "memory",
+   "categories": [
+    "ai-infra/memory",
+    "ai-infra/compute"
+   ],
+   "date": "2026-09-13",
+   "path": "content/newsletter/ai_infra/memory/[260913] 짧은 왕 만세 - 4-hi HBM이 이기는 이유.md",
+   "hash": "32232e04b091"
   },
   {
    "id": "semi:networking:코패키지드-옵틱스CPO-빛으로-확장하는-차세대-인터커넥트",
@@ -826,6 +925,31 @@
    "hash": "5187d804c602"
   },
   {
+   "id": "semi:power:데이터센터-유예가-미국-건설을-막는다는-통념을-반박한다",
+   "corpus": "semianalysis",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power",
+    "ai-infra/business"
+   ],
+   "date": "2026-09-15",
+   "path": "content/newsletter/ai_infra/power/[260915] 데이터센터 유예가 미국 건설을 막는다는 통념을 반박한다.md",
+   "hash": "387ffe575159"
+  },
+  {
+   "id": "semi:power:데이터센터-자가발전BTM은-왜-이렇게-어려운가-Part-1",
+   "corpus": "semianalysis",
+   "folder": "power",
+   "categories": [
+    "ai-infra/power",
+    "ai-infra/business",
+    "ai-infra/construction"
+   ],
+   "date": "2026-09-10",
+   "path": "content/newsletter/ai_infra/power/[260910] 데이터센터 자가발전(BTM)은 왜 이렇게 어려운가 - Part 1.md",
+   "hash": "3c84e1d86017"
+  },
+  {
    "id": "semi:power:데이터센터-해부학-Part-1-전기-시스템",
    "corpus": "semianalysis",
    "folder": "power",
@@ -868,6 +992,17 @@
    "date": "2026-06-14",
    "path": "content/newsletter/semiconductors/process/[260614] SMIC N+3 금속 배선 간격, 인텔 18A보다 좁을까 - 화웨이 기린 9030 해부.md",
    "hash": "9da64fa7a321"
+  },
+  {
+   "id": "semi:process:인텔-팬더레이크-해부-18A의-RibbonFET과-PowerVia",
+   "corpus": "semianalysis",
+   "folder": "process",
+   "categories": [
+    "semiconductors/process"
+   ],
+   "date": "2026-09-26",
+   "path": "content/newsletter/semiconductors/process/[260926] 인텔 팬더레이크 해부 - 18A의 RibbonFET과 PowerVia.md",
+   "hash": "a745b3dea87b"
   },
   {
    "id": "semi:rl:RL-시스템-틈새를-조심하라-학습기와-생성기-처리량-맞추기",
@@ -914,6 +1049,20 @@
    "hash": "6ab738197abb"
   },
   {
+   "id": "semi:robotics:너무-커서-들고-다닐-수-없는-로봇의-뇌-온디바이스-대-데이터센터-추론",
+   "corpus": "semianalysis",
+   "folder": "robotics",
+   "categories": [
+    "robotics",
+    "ai-infra/compute",
+    "ai-infra/memory",
+    "ai-infra/networking"
+   ],
+   "date": "2026-09-14",
+   "path": "content/newsletter/robotics/[260914] 너무 커서 들고 다닐 수 없는 로봇의 뇌 - 온디바이스 대 데이터센터 추론.md",
+   "hash": "ae17f9e7d696"
+  },
+  {
    "id": "semi:robotics:로봇은-어디서-생각하는가-온디바이스-대-데이터센터-추론",
    "corpus": "semianalysis",
    "folder": "robotics",
@@ -924,7 +1073,7 @@
    ],
    "date": "2026-09-09",
    "path": "content/newsletter/robotics/[260910] 로봇은 어디서 생각하는가 - 온디바이스 대 데이터센터 추론.md",
-   "hash": "005bd11395f8"
+   "hash": "94d9ef44753b"
   },
   {
    "id": "semi:security:네오클라우드-대다수는-보안이-엉망이다",
@@ -970,6 +1119,17 @@
    "date": "2026-01-08",
    "path": "content/newsletter/semiconductors/[260108] 애플-TSMC - 현대 반도체를 만든 파트너십.md",
    "hash": "f1a35db0480b"
+  },
+  {
+   "id": "semi:semiconductors:팹-두더지잡기-중국-기업의-대미-제재-회피",
+   "corpus": "semianalysis",
+   "folder": "semiconductors",
+   "categories": [
+    "semiconductors"
+   ],
+   "date": "2024-10-28",
+   "path": "content/newsletter/semiconductors/[241028] 팹 두더지잡기 - 중국 기업의 대미 제재 회피.md",
+   "hash": "123c20a17fe7"
   },
   {
    "id": "und:raw:2024-05-02-dea-reit",
@@ -2257,6 +2417,17 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/raw/2026-09-06-pharma-bottleneck.md",
    "hash": "a284af23ccdc"
+  },
+  {
+   "id": "und:raw:2026-09-13-pharma-cro",
+   "corpus": "understanding",
+   "folder": "raw",
+   "categories": [
+    "raw"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/raw/2026-09-13-pharma-cro.md",
+   "hash": "16e87003b91d"
   },
   {
    "id": "und:root:대기-목록",
@@ -4567,6 +4738,17 @@
    "date": null,
    "path": "content/understanding/채널 씨모어/2026-09-06-pharma-bottleneck.md",
    "hash": "d3c94770ae3d"
+  },
+  {
+   "id": "und:채널 씨모어:2026-09-13-pharma-cro",
+   "corpus": "understanding",
+   "folder": "채널 씨모어",
+   "categories": [
+    "채널 씨모어"
+   ],
+   "date": null,
+   "path": "content/understanding/채널 씨모어/2026-09-13-pharma-cro.md",
+   "hash": "de71dfa0091c"
   },
   {
    "id": "und:피지컬AI:2026년-예측-와글와글",

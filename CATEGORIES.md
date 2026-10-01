@@ -50,20 +50,20 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 35 |
-| ai-infra/memory | 14 |
-| ai-infra/networking | 15 |
-| ai-infra/business | 25 |
-| ai-infra/power | 13 |
+| ai-infra/compute | 38 |
+| ai-infra/memory | 16 |
+| ai-infra/networking | 16 |
+| ai-infra/business | 27 |
+| ai-infra/power | 14 |
 | ai-infra/cooling | 3 |
-| ai-infra/construction | 4 |
+| ai-infra/construction | 5 |
 | ai-infra/security | 1 |
-| ai-models/rl | 4 |
+| ai-models/rl | 5 |
 | ai-models/agents | 4 |
 | ai-models | 4 |
-| robotics | 2 |
+| robotics | 3 |
 | semiconductors | 4 |
-| semiconductors/process | 1 |
+| semiconductors/process | 2 |
 | ai-economy | 1 |
 
 <!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준. [260214] 보조금 전쟁 축약본은 원문이 Drive에 없어 사용자 지시로 전체 삭제(대장·리포트 파생분 포함) — 원문 확보 시 신규 변환으로 재작성 -->
@@ -101,6 +101,12 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 <!-- 2026-08-17: [260810] 엔비디아 GPU의 초고속 상호작용성(TileRT InferenceX) 신규 변환 완료 — ai-infra/compute 25→26. GPU HBM 대역폭 루프라인(64TB/s)과 실제 상호작용성 사이 격차가 대역폭이 아니라 커널 실행 지연시간에서 온다는 진단, TileRT의 지속형 엔진 커널(모델 전체를 정적 컴파일해 GPU에 상주시키는 방식)이 CUDA 그래프와 다른 이유, 타일·워프·GPU 단위 특화(GLM-5.1 희소 인덱서 전담 GPU 사례), vLLM과의 PD 분리형 결합(MultiConnector API·Mooncake/NIXL), InferenceX 실측(8k/1k 340 tok/s/user·GB300 NVL72 대비 1.9배, 1k/1k 494.2 tok/s/user), 세레브라스·Groq·SambaNova 데이터플로우 칩과의 비교(하드웨어 데이터플로우 vs 소프트웨어 데이터플로우, PD 비율 유동성이라는 GPU 함대의 구조적 강점), 정적 AoT 컴파일이 낳는 좁은 모델 카탈로그·TileOPs 완화 노력, AgentX 에이전틱 벤치마크·배치 크기 확장 계획, 백만 출력 토큰당 비용 분석(FP8 동일정밀도 비교 61% 저렴+3.1배 빠름)까지 전체 12개 섹션 완료. InferenceX v2·InferenceMAX와 자매 문서로 상호작용성·처리량·분리형 서빙 용어를 동일하게 사용, 컴퓨트 통합 리포트 문서별 요약에 추가 -->
 
 ## 버전 히스토리
+
+- (2026-10-01) [260914] A Brain Too Big to Carry — On-Device vs Datacenter Inference(너무 커서 들고 다닐 수 없는 로봇의 뇌) 신규 변환 완료 — robotics 2→3, ai-infra/compute 35→36, ai-infra/memory 14→15, ai-infra/networking 15→16. [260910] 로봇은 어디서 생각하는가의 후속 개정판으로, 같은 로봇 함대에 대한 B300·RTX 6000 Pro 오프로드 대 젯슨 토르 온디바이스 TCO(96대 기준, 이용률 반영 시 오프로드 약 46%·가정 약 12%)와 웨이퍼·D램 교차점(로봇 약 7대·5대당 GPU 1대), 보스턴 다이내믹스·애질리티·번·선데이·위브의 배치 현황, 로봇 오프로드의 네트워크 벽(상향 링크·지터·접속점 요건·한 시계 동기)까지 전체 10개 섹션 완료. 로봇 수요처 축은 robotics, 가속기 TCO·실리콘 효율은 compute, 로봇용 LPDDR 경쟁은 memory, 무선 네트워크 벽은 networking으로 4중 분류. 컴퓨트·메모리 통합 리포트 문서별 요약에 추가(신규 시계열 승격은 보류)
+- (2026-10-01) [260925] The Chinese AI Infrastructure Boom(중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개) 신규 변환 완료 — ai-infra/business 25→26, ai-infra/construction 4→5, ai-infra/power 13→14. 중국 24GW+ 가동 용량, 소매 중심 4시대 역사, EDWC 에너지 쿼터 전달 경로, 5대 하이퍼스케일러 임차·자체 구축·BOT 전략과 해외 약 4GW 확장이 중심이라 business 주 분류. 100MW 12개월 인도·프리팹 공법·모듈러 비채택 이유는 construction, 에너지 소비 심사 쿼터와 내몽골 전력 가격은 power로 3중 분류. 전력 통합 리포트 갱신
+- (2026-10-01) [260923] ClusterMAX 3.0 신규 변환 — ai-infra/compute +1, ai-infra/business +1. GPU 클라우드 등급제 복귀.
+- (2026-10-01) [260928] GLM-5.3 희소 어텐션과 HBM 신규 변환 — ai-infra/memory +1, ai-infra/compute +1, ai-models/rl +1.
+- (2026-10-01) [260926] 인텔 팬더레이크 해부 신규 변환 — semiconductors/process +1.
 
 - (2026-09-19) [260918] Engrams Embedding Entendre(Engram 임베딩과 DRAM·SSD 오프로딩 공동설계) 신규 변환 완료 — ai-infra/memory 12→13, ai-infra/compute 32→33, ai-models 3→4. Engram(토큰 임베딩에 다중 토큰 조회 표를 더한 아키텍처)이 반복 패턴을 임베딩 행에서 직접 꺼내 HBM 밖(호스트 DRAM)에서도 서빙 가능하다는 원리를 DeepSeek-V4.1-Flash(표 약 189GiB)로 실증, fineweb-edu 재현 실험의 U자형 스케일링·초반 층 표현 성숙 효과(memory·ai-models), 게이트 스캔으로 본 기억 내용(이름·코드·상투 문구)이 오프로딩 캐시 힌트로는 못 쓰인다는 진단, 원 논문 추론시점 제거 실험(사실지식 29\~44%·독해 81\~93% 유지)과 CRUXEval 재라우팅 실험(0.2848→0.3093→0.3375 bits/token)으로 본 Engram-전문가선택 결합 구조(ai-models)까지가 모델 아키텍처 축. InferenceX로 DeepSeek-V4.1-Flash를 엔비디아 6종 SKU와 AMD MI355X에서 실측(AMD Day 0 미출시, 이후에도 B200 대비 2\~4배 열세), Engram을 DRAM으로 오프로드해 TP4→TP2로 줄여 파레토 곡선 최대 1.6배 개선, SSD 오프로딩은 아직 DRAM 대비 손해(달러당 토큰 수 DRAM 1억 2,100만 vs SSD 5,200만)라는 정량 벤치마크는 compute·memory 축. DeepSeek·LongCat·Qwen 세 모델의 서로 다른 구현(층 배치·파라미터 배분 상한·해시 개수) 비교까지 전체 7개 섹션 완료. 메모리·컴퓨트 통합 리포트 문서별 요약에 추가(신규 시계열 승격은 보류 — [260913]과 같은 "모델·서빙 설계가 HBM 수요를 낮추는" 인접 축으로 참고 정보 유지), AI 모델 통합 리포트는 ai-models/agents·rl 하위카테고리만 대상이라 이 문서(상위 ai-models)는 대상 아님
 - (2026-09-16) [260915] Everyone Says Datacenter Moratoriums Are Killing the US Buildout. We disagree(데이터센터 유예가 미국 건설을 막는다는 통념을 반박한다) 신규 변환 완료 — ai-infra/power 12→13, ai-infra/business 24→25. 300건 이상의 지방 유예와 뉴욕·텍사스·펜실베이니아·오리건 4개 주 조치를 필지·프로젝트 단위로 전수 분석해, 명목 노출(지방 20GW+뉴욕 1.4GW)이 실제 지연(지방 1,525MW+뉴욕 0.8GW, 합쳐 약 2.3GW)으로 좁혀지는 아홉 가지 AND 조건 필터와 노스포인트(PA)·NY EO 62·ERCOT 배치제로 감사 사례 분석이 핵심축이라 power, 두 주지사 모두 11월 재선을 앞둔 정치적 제스처라는 해석과 BTM 자가발전·발전 장비 공급사·기존 인허가 보유 부지가 이 규제 물결의 수혜자라는 투자 함의는 business로 이중 분류. 2027년 미국 신규 IT 용량 38GW(2026년의 2배 이상) 전망까지 전체 9개 섹션 완료. 전력 통합 리포트 §1.1(수요 가속)·§1.3(BTM 확산) 갱신, ai-infra/business 통합 리포트는 아직 없어 갱신 생략(REPORT_RULES.md 트리거 2는 기존 리포트가 있을 때만 적용)
