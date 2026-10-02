@@ -27,6 +27,18 @@ ws = websocket.create_connection(li_tab['webSocketDebuggerUrl'], timeout=20)
 ```
 Use `Runtime.enable` then `Runtime.evaluate` (with `returnByValue: True`) as the JSON-RPC pattern for everything below — see any `scratchpad/li_*.py` from prior sessions for the full send/recv boilerplate.
 
+## 1.2. 기본 경로 — `scripts/li_fetch.py` 한 줄 (2026-10-02 신설). 새 스크립트를 짜지 않는다
+
+```bash
+PYTHONIOENCODING=utf-8 python scripts/li_fetch.py company semianalysis --since <지난 실행 날짜>
+```
+
+회사 피드가 스스로 부르는 `voyagerFeedDashOrganizationalPageUpdates` JSON 을 CDP Network 로 엿듣는다. 우리가 따로 부르는 API 가 없어 계정 위험은 손 스크롤과 같다. JSON 에 본문 전문(「더보기」 불필요 — 10-01 DOM 스캔과 24편 글자 수 일치), 재공유 원글, 링크(lnkd.in·뉴스레터 주소), 이미지 원본 최대 폭 주소가 다 있다. 한 일: 최근순 전환 → 스크롤 → 히스토리+`li_excluded.json` 대조 → 새 글 중 영상 글만 permalink 를 열어 댓글의 유튜브 링크 → 이미지 원본 다운로드.
+
+산출은 `C:/Users/y/clippings/linkedin/_runs/<slug>/<날짜>/posts.json` 과 `img/<id>_<n>.jpg`. 화면에는 새 글만 한 줄씩(시각·ID·글자 수·I이미지 수·V영상·R:재공유 원저자·YT). **요약을 쓸 때는 posts.json 의 새 글만 열고, 그림은 `img/` 원본을 그 글 것만 Read 한다.** 원본이 대개 1280~1536px 라 읽을 때 축소되지 않는다. 아래 §1.5·§2·§4 의 화면 긁기·전체 스크린샷은 이 도구가 깨졌을 때의 예비 경로다.
+
+인물(People & Sources Index 의 개인 계정): `python scripts/li_fetch.py person <slug> --since <날짜> --known "C:/Users/y/clippings/linkedin/<이름>"`. 인물 활동 페이지는 SDUI 라 JSON 이 없어서, 본문은 화면 카드(`main [role=listitem]` 중 「피드 게시물」로 시작하는 것), ID 는 문서·다음 쪽 응답의 `updateUrnActivityUrn` 순서에서 가져와 짝짓고 상대 시각 라벨(「2일」「1주」)로 짝마다 검증한다. Wei Li 49편 시험에서 ID 가 붙은 42편이 기존 클리핑과 본문 일치. 이 페이지는 안쪽 컨테이너가 스크롤하므로 `window.scrollBy` 가 안 먹는다 — 도구가 마지막 카드에 `scrollIntoView` 를 건다. 클리핑 md 를 쓰는 일은 아직 도구 밖이다.
+
 ## 1.5. Force the feed to "최근" (recent) sort — DO THIS BEFORE SCROLLING
 
 The company `/posts/` page defaults to **"인기순" (Top/popularity) sort**, which interleaves old high-engagement posts and can starve the scroll of the genuinely newest items. Switch it to **"최근"** first. Verify current state via the sort toggle button (text `정렬 기준: 인기순` vs `정렬 기준: 최근`).
@@ -86,6 +98,8 @@ dt_utc = datetime.datetime.utcfromtimestamp(ts_ms / 1000)
 Verified accurate against two independently-known dates (matched to the day) on 2026-07-16 — trust this over the visible label for any post older than ~a week.
 
 ## 4. Check images + reshared-post text for EVERY new post (user requirement, 2026-07-22)
+
+**li_fetch 로 받았으면 이 절의 permalink 순회·전체 화면 스크린샷은 하지 않는다.** 본문 전문·재공유 원글·이미지 원본이 이미 posts.json 과 img/ 에 있다. 전체 화면(1000×2400)을 찍으면 읽을 때 약 650×1568 로 줄어 차트 숫자가 오히려 뭉개지고, 장당 1.3~1.5k 토큰이 든다. 해상도는 낮추지 않는다(사용자 지시 2026-10-02) — 그림은 원본 파일로 읽는다. 문서 캐러셀(D 표시)만 아래 방식으로 화면을 연다.
 
 Text-only extraction misses meme/chart/screenshot posts, cuts long text at the feed-card boundary, and drops the embedded original when a post is a reshare. For **each new post** (not just short/empty ones), open its permalink, click 더보기, and capture both structured info and a screenshot:
 ```python
