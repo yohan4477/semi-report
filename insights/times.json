@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-10-01",
-"index_fingerprint": "81fe32b98da70a3ae1839564b48fbdfbde2ebea3",
-"lines": 4767
+"built": "2026-10-02",
+"index_fingerprint": "2e7dee7c49fd969590c0f0f745932efa165bde30",
+"lines": 4828
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -15063,6 +15063,26 @@
 "t": "2025",
 "tense": "현재"
 },
+"input/clippings/RL Environments and RL for Science Data Foundries and Multi-Agent Architectures.md#L17": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/RL Environments and RL for Science Data Foundries and Multi-Agent Architectures.md#L199": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/RL Environments and RL for Science Data Foundries and Multi-Agent Architectures.md#L223": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/RL Environments and RL for Science Data Foundries and Multi-Agent Architectures.md#L55": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
 "input/clippings/TPU Inference Externalization Full Steam Ahead - InferenceX.md#L22": {
 "how": "명시",
 "t": "2025",
@@ -27066,5 +27086,314 @@
 "how": "명시",
 "t": "2026",
 "tense": "현재"
+},
+"input/clippings/mer/224415028844.json#L117": {
+"how": "명시",
+"t": "2017",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L119": {
+"how": "명시",
+"span": [
+"2017",
+"2025"
+],
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L23": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L33": {
+"how": "명시",
+"t": "2014",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L41": {
+"how": "명시",
+"t": "2019",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L5": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L53": {
+"how": "명시",
+"t": "2023",
+"tense": "회고"
+},
+"input/clippings/mer/224415028844.json#L7": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224415028844.json#L79": {
+"how": "명시",
+"span": [
+"1952",
+"1969"
+],
+"t": "1969",
+"tense": "회고"
+},
+"input/clippings/mer/224415552295.json#L113": {
+"how": "계산",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224415552295.json#L117": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224415552295.json#L119": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224415552295.json#L39": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224415552295.json#L53": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224415552295.json#L61": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224416028201.json#L103": {
+"how": "계산",
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224416028201.json#L69": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"input/clippings/mer/224416028201.json#L99": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224416673104.json#L7": {
+"how": "명시",
+"t": "2007",
+"tense": "회고"
+},
+"input/clippings/mer/224416753658.json#L19": {
+"how": "명시",
+"t": "1965",
+"tense": "회고"
+},
+"input/clippings/mer/224416965441.json#L1": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224416965441.json#L16": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224416965441.json#L22": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224417669671.json#L25": {
+"how": "명시",
+"t": "2000",
+"tense": "회고"
+},
+"input/clippings/mer/224418658099.json#L53": {
+"how": "명시",
+"t": "2016",
+"tense": "회고"
+},
+"input/clippings/mer/224420101361.json#L21": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224420101361.json#L23": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224420101361.json#L25": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224420101361.json#L5": {
+"how": "계산",
+"t": "2023",
+"tense": "회고"
+},
+"input/clippings/mer/224420531706.json#L10": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224420531706.json#L127": {
+"how": "계산",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"input/clippings/mer/224420531706.json#L131": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224420531706.json#L18": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224420531706.json#L58": {
+"how": "명시",
+"t": "2017",
+"tense": "회고"
+},
+"input/clippings/mer/224421039479.json#L3": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224421039479.json#L33": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224421039479.json#L41": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224421943293.json#L3": {
+"how": "명시",
+"t": "1959",
+"tense": "회고"
+},
+"input/clippings/mer/224423584111.json#L29": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224423696087.json#L103": {
+"how": "명시",
+"t": "1988",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L109": {
+"how": "명시",
+"span": [
+"1992",
+"1993"
+],
+"t": "1993",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L113": {
+"how": "명시",
+"t": "2012",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L17": {
+"how": "명시",
+"span": [
+"1968",
+"1969"
+],
+"t": "1969",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L19": {
+"how": "명시",
+"t": "1983",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L7": {
+"how": "명시",
+"t": "1960",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L71": {
+"how": "명시",
+"t": "1985",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L73": {
+"how": "명시",
+"t": "1986",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L79": {
+"how": "명시",
+"t": "1986",
+"tense": "회고"
+},
+"input/clippings/mer/224423696087.json#L9": {
+"how": "명시",
+"t": "1965",
+"tense": "회고"
+},
+"input/clippings/mer/224424601089.json#L11": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224426600100.json#L11": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224426600100.json#L13": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"input/clippings/mer/224426600100.json#L7": {
+"how": "명시",
+"t": "1963",
+"tense": "회고"
+},
+"input/clippings/mer/224426600100.json#L9": {
+"how": "명시",
+"t": "1964",
+"tense": "회고"
+},
+"input/clippings/mer/224426633945.json#L25": {
+"how": "명시",
+"t": "1980",
+"tense": "회고"
+},
+"input/clippings/mer/224428298482.json#L117": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"input/clippings/mer/224428298482.json#L161": {
+"how": "계산",
+"t": "2025",
+"tense": "회고"
 }
 }
