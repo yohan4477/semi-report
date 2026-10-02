@@ -328,16 +328,18 @@ def guard(tab):
 
 def index_ids(body):
     """본문 속 활동 ID 위치를 한 번만 색인한다 — 카드마다 다시 훑지 않으려고."""
+    # 글에 따라 ID 가 activity·ugcPost·share 셋 중 하나로만 나온다(Damodaran 은 ugcPost) — 셋 다 색인한다
     pos, ids = [], []
-    for m in re.finditer(r'activity:(\d{19})', body):
+    for m in re.finditer(r'(activity|ugcPost|share):(\d{19})', body):
         pos.append(m.start())
-        ids.append(m.group(1))
+        ids.append(m.group(1) + ':' + m.group(2))
     return pos, ids
 
 
-def id_for_key(bodies, key, W=3000):
+def id_for_key(bodies, key, label='', now_ms=0, W=3000):
     """카드 고유 키(update-card-focus<키>FeedType_…)가 나오는 모든 자리 앞뒤 W자 안에서 가장 많이 나오는 활동 ID.
-    Bob Elliott 시험: 제 ID 2,228회, 다음 후보 107회. 앞 40자리만 세면 이웃 글과 차이가 안 벌어진다."""
+    Bob Elliott 시험: 제 ID 2,228회, 다음 후보 107회. 앞 40자리만 세면 이웃 글과 차이가 안 벌어진다.
+    블로그 링크가 붙은 긴 글(Damodaran)은 이웃 ID 가 비슷하게 섞인다 — 카드 라벨 시각에 맞는 후보만 남겨 고른다."""
     if not key:
         return None
     cnt = {}
@@ -347,10 +349,12 @@ def id_for_key(bodies, key, W=3000):
             hi = bisect.bisect_right(pos, m.start() + W)
             for a in ids[lo:hi]:
                 cnt[a] = cnt.get(a, 0) + 1
+    if now_ms and label:
+        cnt = {a: c for a, c in cnt.items() if rel_ok(label, a.split(':')[1], now_ms)}
     if not cnt:
         return None
     top = sorted(cnt.items(), key=lambda x: -x[1])
-    if len(top) > 1 and top[0][1] < 3 * top[1][1]:
+    if len(top) > 1 and top[0][1] < 2 * top[1][1]:
         return None
     return top[0][0]
 
@@ -397,14 +401,15 @@ def collect_person(tab, since_ms, max_rounds):
         # 이 페이지는 안쪽 컨테이너가 스크롤한다 — window.scrollBy 는 안 먹는다. 마지막 카드를 화면에 들인다
         tab.ev("var l=[...document.querySelectorAll('main [role=listitem]')].filter(x=>/^피드 게시물/.test(x.innerText.trim()));if(l.length)l[l.length-1].scrollIntoView();1")
         tab.pump(4.0)
-    tab.pump(4.0)
+    tab.pump(8.0)   # 마지막 쪽 응답이 다 오기 전에 끝나면 그 쪽 카드가 통째로 못 붙는다(Peccatiello 카드 50 · 순서 40)
     harvest()
     now_ms = int(time.time() * 1000)
     posts = {}
     lost = 0
     for k, it in enumerate(cards):
         repost, author, label, text, card, hdr = parse_item(it['t'])
-        aid = id_for_key(bodies, it.get('key'))
+        urn = id_for_key(bodies, it.get('key'), label, now_ms)
+        kind, aid = urn.split(':') if urn else (None, None)
         if not aid or not rel_ok(label, aid, now_ms):
             lost += 1
             if os.environ.get('LI_DEBUG'):
@@ -419,7 +424,7 @@ def collect_person(tab, since_ms, max_rounds):
                       'kinds': ['repost'] if repost else [], 'links': sorted(set(it['links'])),
                       'article': ' / '.join(card[:3]), 'doc': {'urls': []} if it['doc'] else None,
                       'video': bool(it['vid']), 'reshare': {'actor': author, 'text': '', 'id': None} if repost else None,
-                      'yt': [], 'label': label, 'hdr': hdr}
+                      'yt': [], 'label': label, 'hdr': hdr, 'urn_kind': kind}
     print('순서 목록 %d · 화면 카드 %d · 짝 %d · 못 붙임 %d' % (len(order), len(cards), len(posts), lost))
     return posts
 
@@ -436,7 +441,7 @@ def known_dir(d):
     # 파일 이름의 [끝 4자리]로는 판별하지 않는다 — 2026-10-02 시험에서 49편 중 5편이 남의 파일에 걸렸다
     ids = set()
     for f in glob.glob(os.path.join(d, '*.md')):
-        ids |= set(re.findall(r'activity:(\d{19})', open(f, encoding='utf-8').read()))
+        ids |= set(re.findall(r'(?:activity|ugcPost|share):(\d{19})', open(f, encoding='utf-8').read()))
     return ids
 
 
@@ -462,9 +467,14 @@ def safe(s):
 def write_clips(posts, d, author, corpus):
     """인물 클리핑 md 를 Wei Li 폴더 꼴로 쓴다(frontmatter + 본문 + 그림 링크). 이미 있는 ID 는 건너뛴다."""
     have = known_dir(d)
+    # 같은 글이 activity ID 와 ugcPost ID 로 두 번 잡힐 수 있다 — 날짜+제목이 같은 파일이 있으면 건너뛴다
+    seen = {os.path.basename(f)[:10] + os.path.basename(f)[11:51] for f in glob.glob(os.path.join(d, '20*.md'))}
     n = 0
     for p in posts:
         if p['id'] in have:
+            continue
+        first0 = next((l.strip() for l in p['text'].split('\n') if l.strip()), '(본문 없음)')
+        if p['kst'][:10] + safe(first0[:40]) in seen:
             continue
         repost = bool(p.get('reshare'))
         media = ['_img/' + os.path.basename(i['file']) for i in p['images'] if i.get('file')]
@@ -482,7 +492,7 @@ def write_clips(posts, d, author, corpus):
         date = p['kst'][:10]
         who = ((p['reshare'] or {}).get('actor') or author) if repost else author
         fm = ['---', 'title: "%s"' % first[:60].replace('"', "'"),
-              'source: "https://www.linkedin.com/feed/update/urn:li:activity:%s/"' % p['id'],
+              'source: "https://www.linkedin.com/feed/update/urn:li:%s:%s/"' % (p.get('urn_kind') or 'activity', p['id']),
               'author: "%s"' % who.replace('"', "'")]
         if repost:
             fm.append('reposted_by: "%s"' % author)
