@@ -15,7 +15,7 @@ person:  인물 활동 페이지는 2026-10 기준 SDUI(서버 렌더 RSC)라 JS
 화면에는 새 글만 한 줄씩 찍는다. 전문은 posts.json 에서 필요한 것만 연다.
 새 글 판별 — company: 소셜 신호 히스토리 + data/li_excluded.json, person: --known 폴더 안 activity ID.
 """
-import argparse, base64, datetime, glob, io, json, os, re, sys, time, urllib.parse, urllib.request
+import argparse, base64, bisect, datetime, glob, io, json, os, re, sys, time, urllib.parse, urllib.request
 from websocket import create_connection
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -238,7 +238,8 @@ def youtube_links(tab, aid):
 JS_ITEMS = r"""(async()=>{
 for(const b of document.querySelectorAll('main [role=listitem] button')){const t=(b.innerText||'').trim();if(/^…/.test(t)&&/더보기/.test(t))b.click();}
 await new Promise(r=>setTimeout(r,1200));
-return JSON.stringify([...document.querySelectorAll('main [role=listitem]')].filter(li=>/^피드 게시물/.test(li.innerText.trim())).map(li=>({t:li.innerText,vid:li.querySelectorAll('video').length,
+return JSON.stringify([...document.querySelectorAll('main [role=listitem]')].filter(li=>/^피드 게시물/.test(li.innerText.trim())).map(li=>({t:li.innerText,
+ key:(((li.getAttribute('componentkey')||'').match(/^update-card-focus(.+?)FeedType_/)||[])[1]||''),vid:li.querySelectorAll('video').length,
  doc:!!li.querySelector('iframe[src*="native-document"]'),
  imgs:[...li.querySelectorAll('img')].map(i=>{let best=i.currentSrc||i.src,bw=0;(i.srcset||'').split(',').forEach(p=>{const m=p.trim().match(/^(\S+)\s+(\d+)w$/);if(m&&+m[2]>bw){bw=+m[2];best=m[1]}});
   return [i.naturalWidth,i.naturalHeight,i.alt||'',best]}),
@@ -261,8 +262,9 @@ def rel_ok(label, aid, now_ms):
         return True
     n, u = int(m.group(1)), m.group(2)
     age = (now_ms - (int(aid) >> 22)) / 86400000
-    lo, hi = {'분': (0, 1.1), '시간': (0, 1.1), '일': (n - 1.1, n + 1.1), '주': (7 * n - 7.5, 7 * n + 7.5),
-              '개월': (30 * n - 31, 30 * n + 31), '년': (365 * n - 200, 365 * n + 200)}[u]
+    # 링크드인은 내림으로 적는다 — 211일 전 글이 「6개월」(2026-10-02 Peccatiello 에서 걸렸다)
+    lo, hi = {'분': (0, 1.1), '시간': (0, 1.1), '일': (n - 0.6, n + 1.6), '주': (7 * n - 1, 7 * n + 8),
+              '개월': (30 * n - 3, 31 * (n + 1) + 3), '년': (365 * n - 15, 365 * (n + 1) + 15)}[u]
     return lo <= age <= hi
 
 
@@ -298,7 +300,9 @@ def parse_item(t):
             if s and s not in card:
                 card.append(s)
     text = re.sub(r'\n?\s*…\s*더보기\s*$', '', '\n'.join(body)).strip()
-    return repost, author, label, text, card
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    hdr = ' / '.join(l.strip() for l in lines[:ti or 0] if l.strip())[:200]
+    return repost, author, label, text, card, hdr
 
 
 def good_img(w, h, alt, src):
@@ -309,9 +313,52 @@ def good_img(w, h, alt, src):
     return min(w, h) >= 200 and max(w, h) >= 400
 
 
+class Blocked(Exception):
+    pass
+
+
+def guard(tab):
+    """로그인 벽·요청 과다 화면이면 멈춘다 — 여러 사람을 이어 돌릴 때 계정을 지키려고."""
+    href = tab.ev('location.href') or ''
+    if re.search(r'login|authwall|checkpoint|uas/', href):
+        raise Blocked(href)
+    if tab.ev("/요청이 너무 많|Too Many Requests|unusual activity|비정상적인 활동/i.test(document.body.innerText.slice(0,3000))"):
+        raise Blocked('rate limit/unusual activity page')
+
+
+def index_ids(body):
+    """본문 속 활동 ID 위치를 한 번만 색인한다 — 카드마다 다시 훑지 않으려고."""
+    pos, ids = [], []
+    for m in re.finditer(r'activity:(\d{19})', body):
+        pos.append(m.start())
+        ids.append(m.group(1))
+    return pos, ids
+
+
+def id_for_key(bodies, key, W=3000):
+    """카드 고유 키(update-card-focus<키>FeedType_…)가 나오는 모든 자리 앞뒤 W자 안에서 가장 많이 나오는 활동 ID.
+    Bob Elliott 시험: 제 ID 2,228회, 다음 후보 107회. 앞 40자리만 세면 이웃 글과 차이가 안 벌어진다."""
+    if not key:
+        return None
+    cnt = {}
+    for body, (pos, ids) in bodies:
+        for m in re.finditer(re.escape(key), body):
+            lo = bisect.bisect_left(pos, m.start() - W)
+            hi = bisect.bisect_right(pos, m.start() + W)
+            for a in ids[lo:hi]:
+                cnt[a] = cnt.get(a, 0) + 1
+    if not cnt:
+        return None
+    top = sorted(cnt.items(), key=lambda x: -x[1])
+    if len(top) > 1 and top[0][1] < 3 * top[1][1]:
+        return None
+    return top[0][0]
+
+
 def collect_person(tab, since_ms, max_rounds):
     order, cards = [], []          # 둘 다 피드 순서. order=활동 ID, cards=화면 카드(본문 앞 80자로 중복 제거)
     seen_cards = set()
+    bodies = []
 
     def harvest():
         for u, b in responses(tab, lambda url, t: '/recent-activity/' in url or 'pagers.profile.ActivityDetail' in url):
@@ -320,11 +367,13 @@ def collect_person(tab, since_ms, max_rounds):
                     b = base64.b64decode(b + '==').decode('utf-8', 'replace')
                 except Exception:
                     pass
+            bodies.append((b, index_ids(b)))
             for x in feed_order(b):
                 if x not in order:
                     order.append(x)
         for it in json.loads(tab.ev(JS_ITEMS) or '[]'):
-            key = re.sub(r'\s+', ' ', it['t'])[:160]
+            # 직함 줄이 긴 사람은 앞 160자가 카드마다 같다(Bob Elliott) — 고유 키로 가린다
+            key = it.get('key') or re.sub(r'\s+', ' ', it['t'])[:600]
             if key not in seen_cards:
                 seen_cards.add(key)
                 cards.append(it)
@@ -332,6 +381,7 @@ def collect_person(tab, since_ms, max_rounds):
     tab.send('Network.enable', {'maxResourceBufferSize': 80_000_000, 'maxTotalBufferSize': 300_000_000})
     tab.send('Page.reload')
     tab.pump(10)
+    guard(tab)
     stall, last = 0, -1
     for i in range(max_rounds):
         harvest()
@@ -339,6 +389,8 @@ def collect_person(tab, since_ms, max_rounds):
         if oldest and oldest < since_ms and i > 2:
             break
         stall = stall + 1 if (len(order), len(cards)) == last else 0
+        if stall >= 3:
+            break
         last = (len(order), len(cards))
         if stall >= 6:
             break
@@ -349,11 +401,15 @@ def collect_person(tab, since_ms, max_rounds):
     harvest()
     now_ms = int(time.time() * 1000)
     posts = {}
-    for k, (aid, it) in enumerate(zip(order, cards)):
-        repost, author, label, text, card = parse_item(it['t'])
-        if not rel_ok(label, aid, now_ms):
-            print('짝 어긋남 — %d번째 카드에서 멈춤: 라벨 %r, ID 시각 %s' % (k, label, kst(aid)))
-            break
+    lost = 0
+    for k, it in enumerate(cards):
+        repost, author, label, text, card, hdr = parse_item(it['t'])
+        aid = id_for_key(bodies, it.get('key'))
+        if not aid or not rel_ok(label, aid, now_ms):
+            lost += 1
+            if os.environ.get('LI_DEBUG'):
+                print('LOST', k, repr(label[:10]), 'key' if it.get('key') else 'nokey', aid and kst(aid), text[:40].replace('\n', ' '))
+            continue
         imgs, urls = [], set()
         for w, h, alt, src in it['imgs']:
             if good_img(w, h, alt, src) and src not in urls:
@@ -363,8 +419,8 @@ def collect_person(tab, since_ms, max_rounds):
                       'kinds': ['repost'] if repost else [], 'links': sorted(set(it['links'])),
                       'article': ' / '.join(card[:3]), 'doc': {'urls': []} if it['doc'] else None,
                       'video': bool(it['vid']), 'reshare': {'actor': author, 'text': '', 'id': None} if repost else None,
-                      'yt': [], 'label': label}
-    print('순서 목록 %d · 화면 카드 %d · 짝 %d' % (len(order), len(cards), len(posts)))
+                      'yt': [], 'label': label, 'hdr': hdr}
+    print('순서 목록 %d · 화면 카드 %d · 짝 %d · 못 붙임 %d' % (len(order), len(cards), len(posts), lost))
     return posts
 
 
@@ -384,19 +440,88 @@ def known_dir(d):
     return ids
 
 
-def download(posts, outdir):
-    os.makedirs(os.path.join(outdir, 'img'), exist_ok=True)
+def download(posts, imgdir, base=0):
+    os.makedirs(imgdir, exist_ok=True)
     for p in posts:
         for n, im in enumerate(p['images']):
             try:
                 req = urllib.request.Request(im['url'], headers={'User-Agent': 'Mozilla/5.0'})
                 r = urllib.request.urlopen(req, timeout=30)
                 ext = {'image/png': 'png', 'image/gif': 'gif', 'image/webp': 'webp'}.get(r.headers.get_content_type(), 'jpg')
-                fn = os.path.join(outdir, 'img', '%s_%d.%s' % (p['id'], n, ext))
+                fn = os.path.join(imgdir, '%s_%d.%s' % (p['id'], n + base, ext))
                 open(fn, 'wb').write(r.read())
                 im['file'] = fn
             except Exception as e:
                 im['err'] = str(e)[:80]
+
+
+def safe(s):
+    return re.sub(r'[\\/:*?"<>|\r\n\t\x00-\x1f]', '', s).strip().rstrip('.')
+
+
+def write_clips(posts, d, author, corpus):
+    """인물 클리핑 md 를 Wei Li 폴더 꼴로 쓴다(frontmatter + 본문 + 그림 링크). 이미 있는 ID 는 건너뛴다."""
+    have = known_dir(d)
+    n = 0
+    for p in posts:
+        if p['id'] in have:
+            continue
+        repost = bool(p.get('reshare'))
+        media = ['_img/' + os.path.basename(i['file']) for i in p['images'] if i.get('file')]
+        if p['video']:
+            media.append('video')
+        body = p['text']
+        if p.get('article'):
+            body += '\n\n> 링크 카드: ' + p['article']
+        if p.get('yt'):
+            body += '\n\n' + '\n'.join('유튜브: ' + u for u in p['yt'])
+        pics = [m for m in media if m != 'video']
+        if pics:
+            body += '\n\n' + '\n'.join('![](%s)' % m for m in pics)
+        first = next((l.strip() for l in p['text'].split('\n') if l.strip()), '(본문 없음)')
+        date = p['kst'][:10]
+        who = ((p['reshare'] or {}).get('actor') or author) if repost else author
+        fm = ['---', 'title: "%s"' % first[:60].replace('"', "'"),
+              'source: "https://www.linkedin.com/feed/update/urn:li:activity:%s/"' % p['id'],
+              'author: "%s"' % who.replace('"', "'")]
+        if repost:
+            fm.append('reposted_by: "%s"' % author)
+        fm += ['published: %s' % date, 'posted_kst: "%s"' % p['kst'], 'kind: %s' % ('repost' if repost else 'own'),
+               'corpus: %s' % corpus, 'media: ' + json.dumps(media, ensure_ascii=False), '---']
+        fn = os.path.join(d, '%s %s [%s].md' % (date, safe(first[:40]), p['id'][-4:]))
+        open(fn, 'w', encoding='utf-8').write('\n'.join(fm) + '\n\n' + body.strip() + '\n')
+        n += 1
+    return n
+
+
+def write_index(d, author, slug, corpus):
+    rows = []
+    for f in glob.glob(os.path.join(d, '*.md')):
+        b = os.path.basename(f)
+        if b.startswith('_'):
+            continue
+        t = open(f, encoding='utf-8').read()
+        head, body = t.split('\n---\n', 1)
+        g = lambda k: (re.search(r'^' + k + r': (.*)$', head, re.M) or [None, ''])[1].strip()
+        media = g('media')
+        m = []
+        if media.count('_img/'):
+            m.append('그림 %d' % media.count('_img/'))
+        if 'video' in media:
+            m.append('영상')
+        rows.append((g('posted_kst').strip('"'), g('kind'), g('title').strip('"'), len(body.strip()), ', '.join(m), b[:-3]))
+    rows.sort(reverse=True)
+    own = sum(1 for r in rows if r[1] == 'own')
+    out = ['---', 'title: "%s — 링크드인 게시물 색인"' % author,
+           'source: "https://www.linkedin.com/in/%s/recent-activity/all/"' % slug,
+           'count: %d' % len(rows), 'own: %d' % own, 'repost: %d' % (len(rows) - own),
+           'clipped: %s' % datetime.date.today().isoformat(), 'corpus: %s' % corpus, '---', '',
+           '<!-- scripts/li_fetch.py 가 쓴다. 게시 시각은 activity URN 에서 풀어낸 KST. -->', '',
+           '| 게시(KST) | 종류 | 제목 | 글자 | 매체 | 파일 |', '|---|---|---|---|---|---|']
+    for kst_, kind, title, n, m, fn in rows:
+        out.append('| %s | %s | %s | %d | %s | [[%s]] |' % (kst_, '본인' if kind == 'own' else '퍼온 글', title.replace('|', '/'), n, m, fn))
+    open(os.path.join(d, '_색인.md'), 'w', encoding='utf-8').write('\n'.join(out) + '\n')
+    return len(rows)
 
 
 def main():
@@ -408,7 +533,13 @@ def main():
     ap.add_argument('--all', action='store_true', help='이미 아는 글도 posts.json 에 남긴다')
     ap.add_argument('--no-img', action='store_true')
     ap.add_argument('--rounds', type=int, default=120)
+    ap.add_argument('--write', help='person: 클리핑 폴더. 새 글을 md 로 쓰고 그림은 <폴더>/_img, 색인을 다시 만든다(--known 기본값도 이 폴더)')
+    ap.add_argument('--author', help='--write 와 함께. 폴더 이름과 같은 표기')
+    ap.add_argument('--corpus', help='--write 와 함께. 예: li-peccatiello')
     a = ap.parse_args()
+    if a.write:
+        os.makedirs(a.write, exist_ok=True)
+        a.known = a.known or a.write
     since_ms = int((datetime.datetime.strptime(a.since, '%Y-%m-%d') - KST).replace(tzinfo=datetime.timezone.utc).timestamp() * 1000)
     if a.mode == 'company':
         url = 'https://www.linkedin.com/company/%s/posts/?feedView=all' % a.slug
@@ -436,9 +567,19 @@ def main():
     os.makedirs(outdir, exist_ok=True)
     keep = rows if a.all else new
     if not a.no_img:
-        download(keep, outdir)
+        if a.write:
+            download(new, os.path.join(a.write, '_img'), base=1)
+        else:
+            download(keep, os.path.join(outdir, 'img'))
+    if a.write:
+        w = write_clips(new, a.write, a.author or a.slug, a.corpus or 'li-' + a.slug)
+        total = write_index(a.write, a.author or a.slug, a.slug, a.corpus or 'li-' + a.slug)
+        print('wrote %d md, index %d -> %s' % (w, total, a.write))
     json.dump(keep, open(os.path.join(outdir, 'posts.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print('seen %d (since %s), new %d -> %s' % (len(rows), a.since, len(new), os.path.join(outdir, 'posts.json')))
+    hdrs = [p.get('hdr') for p in rows if p.get('hdr') and not p.get('reshare')]
+    if hdrs:
+        print('HDR', max(set(hdrs), key=hdrs.count))
     for p in new:
         flags = ''.join(['I%d' % len(p['images']) if p['images'] else '', ' V' if p['video'] else '',
                          ' D' if p.get('doc') else '', ' R:' + (p['reshare'] or {}).get('actor', '')[:20] if p['reshare'] else '',
