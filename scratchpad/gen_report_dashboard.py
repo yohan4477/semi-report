@@ -30,6 +30,7 @@ import _trump_part1  # noqa: E402
 import _harness_part1  # noqa: E402
 import _harness_fig  # noqa: E402
 import _model_part1  # noqa: E402
+import _aimodel_part1  # noqa: E402
 import dash_common as dc
 from card_lib import fig_html
 
@@ -226,7 +227,7 @@ REPORT_CSS = TABLE_CSS + """
   @media (prefers-color-scheme:dark){:root{--rate-amber:#e0a84a}}
   [data-theme="dark"]{--rate-amber:#e0a84a}
   [data-theme="light"]{--rate-amber:#b8860b}
-""" + _rep_toc.CSS + """
+""" + _rep_toc.CSS + _aimodel_part1.CSS + """
 """
 
 
@@ -272,6 +273,21 @@ def report_xpu_html(head=True):
     p = lambda t: h.append('<p class="ins-lede">%s</p>' % t)
     fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
     _xpu_part1.report_xpu(sec, p, fig)
+    return ''.join(h)
+
+
+def report_aimodel_html(head=True):
+    """AI 모델 기술 문서 — 한 편. 본문은 insights/reports/aimodel-2026-10-02.md 원본에서 읽는다."""
+    h = [_aimodel_part1.HEAD_AIMODEL] if head else []
+    n = [0]
+
+    def sec(title):
+        n[0] += 1
+        h.append('<h3 id="aimodel-%d">%s</h3>' % (n[0], title))
+
+    p = lambda t: h.append(t if t.startswith(('<h4', '<ul', '<pre', '<div', '<p ')) else '<p class="ins-lede">%s</p>' % t)
+    fig = lambda *items: h.append(''.join(fig_html(f) for f in items))
+    _aimodel_part1.report_aimodel(sec, p, fig)
     return ''.join(h)
 
 
@@ -508,7 +524,8 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _harness_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _circ_part1.CAPTION.values()]
                + [(0, t, svg, '') for t, svg, _c in _model_part1.CAPTION.values()]
-               + [(0, t, svg, '') for t, svg, _c in _xpu_part1.CAPTION.values()])
+               + [(0, t, svg, '') for t, svg, _c in _xpu_part1.CAPTION.values()]
+               + [(0, t, svg, '') for t, svg, _c in _aimodel_part1.CAPTION.values()])
 
 
 # ── 층 일곱을 카드로 세운다 ─────────────────────────────────────────────
@@ -521,6 +538,11 @@ REPORT_FIGS = ([(0, t, svg, '') for t, svg, _c in _cpo_part1.CAPTION.values()]
 # 카드 하나에 섹션 하나라 태그 줄과 목록이 1:1 이다. 층이 열을 넘어가면 그때 갈래로
 # 묶는다 — 지금 묶으면 check_report 의 재료 칸이 한 덩어리가 된다.
 LAYERS = [
+    ('sec-aimodel', 'AI 모델', '2026-10-02',
+     'AI 모델 기술 문서 — 구조 · 학습 · 추론 · 경쟁',
+     'SemiAnalysis 영문 원문 21편',
+     '전문가 혼합 · 어텐션 · 강화학습 시스템 · 추론 단계를 사양표와 유도식으로 정리했다',
+     report_aimodel_html),
     ('sec-xpu', 'XPU', '2026-09-18',
      'XPU 총정리 — 워크로드가 바뀌면 칩 순위도 바뀌나',
      'SemiAnalysis 7편 · 영문 클리핑 2편 · Semi Doped 3회차',

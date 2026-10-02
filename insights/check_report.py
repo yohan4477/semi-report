@@ -54,6 +54,9 @@ PAGES = [
     # XPU 층(2026-09-18). 재료가 뉴스레터 일곱 편 + 영문 클리핑 둘 + Semi Doped 세 회차다.
     # 뉴스레터 밖의 다섯만 파일로 XPU_EXTRA 에 올린다 — 폴더째 넣으면 이 층과 무관한
     # 회차의 값이 알리바이가 된다
+    # AI 모델 층(2026-10-02). 재료가 SemiAnalysis 영문 클리핑 스물한 편뿐이다. 뉴스레터 폴더(한국어
+    # 변환본)를 넣지 않는다 — 이 층은 영문 원문만 근거로 썼고, 변환본이 알리바이가 되면 안 된다
+    (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-aimodel', None),
     (os.path.join(ROOT, '대시보드', '통합 보고서.html'), 'sec-xpu',
      os.path.join(ROOT, 'content', 'newsletter')),
     # 금리·물가 층(2026-09-05). 재료가 회계사·미국주식 사관학교·류상철·김상훈·박소연에
@@ -326,6 +329,30 @@ XPU_EXTRA = [
     os.path.join(ROOT, 'insights', 'semidoped', '2026-06-29-qualcomm-hbc-strategy.md'),
 ]
 
+# AI 모델 층(2026-10-02)의 재료 스물한 편 — 영문 클리핑만. 목록의 정본은 scratchpad/aimodel_materials.tsv
+AIMODEL_EXTRA = [os.path.join(_CLIP, f + '.md') for f in (
+    'DeepSeek Debates Chinese Leadership On Cost, True Training Cost, Closed Model Margin Impacts',
+    'DeepSeek Debrief 128 Days Later',
+    'DeepSeekV4 1.6T Day 0 to Day 43 Performance Over Time - Huawei, GB300 NVL72, MI355X, B200',
+    'Kimi K3, The Manos, The Mythos, The Legendos',
+    'How GLM5.3 Sparse Attention Affects HBM Memory Usage',
+    'Engrams Embedding Entendre Codesign for Efficient DRAMSSD Offloading',
+    'Computation and Data Movement for Inference',
+    'Scaling Reinforcement Learning Environments, Reward Hacking, Agents, Scaling Data',
+    'RL Environments and RL for Science Data Foundries and Multi-Agent Architectures',
+    'RL Systems Mind the Gap Matching Trainer and Generator Throughput',
+    "xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise",
+    'H100 vs GB200 NVL72 Training Benchmarks - Power, TCO, and Reliability Analysis, Software Improvement Over Time',
+    'AI Training Load Fluctuations at Gigawatt-scale - Risk of Power Grid Blackout',
+    'Are Open Models Catching Up',
+    'GPT-5 Set the Stage for Ad Monetization and the SuperApp',
+    'AI Value Capture - The Shift To Model Labs',
+    'Gemini is Cooked but GCP is Cooking',
+    'Meta Superintelligence - Leadership Compute, Talent, and Data',
+    'The Future of Meta Superintelligence A 1 Year Progress Update',
+    'Anthropic 3Q26 Profit Over $1B The Anthropic IPO Financials Sneak Peak',
+    'The Coding Assistant Breakdown More Tokens Please')]
+
 EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          os.path.join(ROOT, 'scratchpad', 'company_facts_B.md'),
          # SemiAnalysis 로봇 보고서의 재료 — 원문은 영어 클리핑이라 사실표로 대조한다
@@ -343,7 +370,7 @@ EXTRA = [os.path.join(ROOT, 'scratchpad', 'company_facts_A.md'),
          # 다리 층(2026-09-10)의 재료 — 밖에서 받은 하향 모델과 그 엑셀 전사
          os.path.join(ROOT, 'insights', 'frames', '2026-09-10-dc-capex-topdown.md'),
          os.path.join(ROOT, 'scratchpad', 'capex_frame_xlsx.md'),
-         os.path.join(ROOT, 'scratchpad', 'capex_frame_scn.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA + XPU_EXTRA
+         os.path.join(ROOT, 'scratchpad', 'capex_frame_scn.md')] + MODEL_EXTRA + CPO_EXTRA + PKG_EXTRA + RATE_EXTRA + MEM_EXTRA + TRUMP_EXTRA + HARNESS_EXTRA + POWER_EXTRA + CIRC_EXTRA + XPU_EXTRA + AIMODEL_EXTRA
 
 # 숫자로 읽히지만 대조할 값이 아닌 것들 — 연·월·일, 절 번호, 흔한 서수
 SKIP = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
