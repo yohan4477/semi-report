@@ -61,7 +61,7 @@ import _figs_kicpa_0908 as figs_k0908
 OUT = os.path.join(dc.ROOT, '대시보드', '회계사 대시보드.html')
 blob = dc.blob
 
-STAMP = '2026-08-16'
+STAMP = '2026-10-08'
 SUM = 'content/understanding/회계사/'
 
 # 섹션은 이제 하나다. 회사별로 값을 매긴 글과 방법론·비교 글을 따로 가르던 사(SS·HY·
@@ -4508,6 +4508,18 @@ CARDS += _cards_0908.cards({'SS': SEC_SS, 'HY': SEC_HY, 'AI': SEC_AI, 'MKT': SEC
 # 섹션이 하나뿐이라 더는 섹션별로 갈라 세울 필요가 없다 — CARDS에 적힌 순서가 곧 화면 순서다.
 assert len(CARDS) == 135, '카드 수가 달라졌다'
 
+# 2026-10-08 새 카드 13장 — 카드 본문과 도해는 별도 모듈에 있다. 섹션 튜플은 값이 같은지 확인하고 이쪽 것으로 바꾼다.
+import _cards_kic_1008a, _cards_kic_1008b, _figs_kic_1008a, _figs_kic_1008b
+_SECS = {v[0]: v for v in list(globals().values()) if isinstance(v, tuple) and v and isinstance(v[0], str) and v[0].startswith('sec-')}
+for _m in (_cards_kic_1008a, _cards_kic_1008b):
+    for _c in _m.CARDS_NEW:
+        assert _SECS[_c['section'][0]] == _c['section'], _c['title']
+        _c['section'] = _SECS[_c['section'][0]]
+        if 'also' in _c:
+            _c['also'] = [_SECS[a[0]] for a in _c['also']]
+        CARDS.append(_c)
+assert len(CARDS) == 148, '카드 수가 달라졌다(새 카드 13장)'
+
 
 
 # 회사 카드에서 그 방법을 다룬 일반 포스트로 건너간다. 섹션이 회사별로 갈려 있어 방법을 설명한
@@ -5364,7 +5376,7 @@ if __name__ == '__main__':
     dc.render(CARDS, '20년차 회계사가 남긴 모든 것', HEADER, FOOTER, OUT,
               page_slug='accountant',
               newest_first=True,
-              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + figs_k0908.CSS + fig_rates.CSS + fig_dcf.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
+              extra_css=VALUATION_CSS + LOG_CSS + figs0825.FIG_CSS + figs_k0908.CSS + _figs_kic_1008a.CSS + _figs_kic_1008b.CSS + fig_rates.CSS + fig_dcf.CSS, sec_groups=SEC_GROUPS, sec_badges=SEC_BADGES,
               sec_fig={SEC_RATES[0]: '<div class="acc-figwrap">' + FIG_RATES
                                      + '</div>' + FIG_RATES_CAP},
               pick_top=_top5_html(),

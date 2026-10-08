@@ -670,8 +670,8 @@
 
   <footer><p class="lede">네이버 프리미엄 유료 채널 「미국주식 사관학교」(필자 카레라)의 텍스트를 요약해 정리합니다.
        원문 창작 없이 필자의 논지와 인용 수치만 재구성했습니다.</p>    <div class="meta-row">
-      <span>정리일 <b>2026-09-07</b></span>
-      <span>수록 <b>68건</b>(텍스트 68)</span>
+      <span>정리일 <b>2026-10-08</b></span>
+      <span>수록 <b>80건</b>(텍스트 80)</span>
       <span>채널 <b>미국주식 사관학교</b></span>
       <span>필자 <b>카레라</b></span>
     </div>
@@ -706,8 +706,13 @@
         var caret=card.querySelector('.uc-caret');
         if(caret && caret.getAttribute('role')==='button') caret.setAttribute('aria-expanded', 'true');
       }
-      // 카드를 지목했으면 카드로, 섹션을 지목했으면 섹션 머리로 간다
-      (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+      // 절 제목을 지목한 차례는 그 절로 간다. 카드 맨 위로 보내면 차례가 제자리에서 돈다.
+      if(/^H[1-6]$/.test(h.tagName)){
+        window.scrollTo({top: Math.max(0, h.getBoundingClientRect().top + window.scrollY - 22),
+                         behavior: smooth ? 'smooth' : 'auto'});
+      } else {
+        (card || h).scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'start'});
+      }
     }, 140);
   }
   function fromHash(smooth){
