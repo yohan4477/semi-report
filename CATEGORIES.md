@@ -53,7 +53,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 | ai-infra/compute | 38 |
 | ai-infra/memory | 16 |
 | ai-infra/networking | 16 |
-| ai-infra/business | 27 |
+| ai-infra/business | 28 |
 | ai-infra/power | 14 |
 | ai-infra/cooling | 3 |
 | ai-infra/construction | 5 |
