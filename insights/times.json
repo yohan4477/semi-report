@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-10-08",
-"index_fingerprint": "7a6bb650ccf4fa338babbc0932d04a2b9c85bad7",
-"lines": 4882
+"built": "2026-10-09",
+"index_fingerprint": "9ff61577c91700ef6d37ae83f7d582b631cd8f9d",
+"lines": 4892
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -11139,6 +11139,44 @@
 "t": "2026",
 "tense": "전망"
 },
+"content/understanding/채널 씨모어/2026-01-18-passive-findata-screening.md#L34": {
+"how": "계산",
+"span": [
+"2026",
+"2027"
+],
+"t": "2027",
+"tense": "전망"
+},
+"content/understanding/채널 씨모어/2026-01-25-sp-global.md#L22": {
+"how": "명시",
+"t": "1941",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-01-25-sp-global.md#L23": {
+"how": "명시",
+"t": "2000",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-01-25-sp-global.md#L25": {
+"how": "명시",
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-02-01-ice-cds-clearing-1.md#L16": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-02-01-ice-cds-clearing-1.md#L27": {
+"how": "명시",
+"span": [
+"2008",
+"2018"
+],
+"t": "2018",
+"tense": "회고"
+},
 "content/understanding/채널 씨모어/2026-03-08-news.md#L16": {
 "how": "계산",
 "t": "2025",
@@ -11227,6 +11265,26 @@
 "how": "계산",
 "t": "2025",
 "tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-06-21-spacex-ipo-allocation-en.md#L41": {
+"how": "명시",
+"t": "2010",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-06-21-spacex-ipo-allocation-en.md#L42": {
+"how": "명시",
+"t": "2008",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-06-21-spacex-ipo-allocation-en.md#L47": {
+"how": "명시",
+"t": "2000",
+"tense": "회고"
+},
+"content/understanding/채널 씨모어/2026-08-09-news-to-ideas-en.md#L23": {
+"how": "계산",
+"t": "2027",
+"tense": "전망"
 },
 "content/understanding/채널 씨모어/raw/2024-05-06-cannabis-legalization.md#L55": {
 "how": "명시",
