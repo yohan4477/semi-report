@@ -1,8 +1,8 @@
 {
 "_meta": {
-"built": "2026-10-09",
-"index_fingerprint": "9ff61577c91700ef6d37ae83f7d582b631cd8f9d",
-"lines": 4892
+"built": "2026-10-12",
+"index_fingerprint": "86a86e265b50ba631f0acab5d0d6aa506f9d7264",
+"lines": 4923
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -5360,6 +5360,152 @@
 "how": "명시",
 "t": "2026",
 "tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L146": {
+"how": "명시",
+"span": [
+"2021",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L166": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L177": {
+"how": "명시",
+"t": "2022",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L182": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L215": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L223": {
+"how": "명시",
+"span": [
+"2023",
+"2024"
+],
+"t": "2024",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L233": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L236": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L289": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L299": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L330": {
+"how": "명시",
+"span": [
+"2025",
+"2026"
+],
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L331": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L34": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L372": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L405": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L43": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L437": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L441": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L453": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L456": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L478": {
+"how": "계산",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L485": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L486": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L492": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L93": {
+"how": "명시",
+"span": [
+"2024",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_models/[261008] 베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제.md#L98": {
+"how": "명시",
+"t": "2025",
+"tense": "회고"
 },
 "content/newsletter/ai_models/agents/[260206] Claude Code, 에이전트 시대의 변곡점.md#L214": {
 "how": "명시",
@@ -15394,12 +15540,27 @@
 "t": "2024",
 "tense": "회고"
 },
+"input/clippings/How AI Labs Are Solving the Power Crisis The Onsite Gas Deep Dive.md#L18": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"input/clippings/ISSCC 2026 NVIDIA & Broadcom CPO, HBM4 & LPDDR6, TSMC Active LSI, Logic-Based SRAM, UCIe-S and More.md#L187": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
 "input/clippings/InferenceX v2 NVIDIA Blackwell Vs AMD vs Hopper - Formerly InferenceMAX.md#L291": {
 "how": "명시",
 "t": "2024",
 "tense": "회고"
 },
 "input/clippings/Intel 18A Details & Cost, Future of DRAM 4F2 vs 3D, Backside Power Adoption (or Not), China's FlipFET, Digital Twins from Atoms to Fabs, and More.md#L71": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"input/clippings/Memory Mania How a Once-in-Four-Decades Shortage Is Fueling a Memory Boom.md#L24": {
 "how": "명시",
 "t": "2024",
 "tense": "회고"
@@ -15512,6 +15673,16 @@
 "input/clippings/Unitree's Impossible Trajectory Is Still Overlooked.md#L46": {
 "how": "명시",
 "t": "2025",
+"tense": "회고"
+},
+"input/clippings/Vera Rubin – Extreme Co-Design An Evolution from Grace Blackwell Oberon.md#L415": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"input/clippings/Vera Rubin – Extreme Co-Design An Evolution from Grace Blackwell Oberon.md#L541": {
+"how": "명시",
+"t": "2024",
 "tense": "회고"
 },
 "input/clippings/mer/223457538479.json#L121": {
