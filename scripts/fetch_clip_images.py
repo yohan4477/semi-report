@@ -20,7 +20,8 @@ import paths  # noqa: E402  클리핑 원문은 저장소 밖(2026-10-01)
 SRC = paths.CLIP_SEMI
 DST = ROOT / "input" / "clip-images"
 
-IMG_RE = re.compile(r"!\[[^\]]*\]\((https://substackcdn\.com/[^)]+)\)")
+# 로컬로 바꾼 링크(localize_clip_images)는 CDN 주소가 제목 자리에 있다
+IMG_RE = re.compile(r'!\[[^\]]*\]\((?:<[^>]+> ")?(https://substackcdn\.com/[^)"\s]+)"?\)')
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/128.0 Safari/537.36"
 
 
