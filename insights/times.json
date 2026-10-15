@@ -1,8 +1,8 @@
 {
 "_meta": {
 "built": "2026-10-16",
-"index_fingerprint": "3a31b9f0ae8ae8a7ac2738e63f7ba265c0084d88",
-"lines": 4967
+"index_fingerprint": "2bc7f8c1f45b49896fa14864cd240fbaf16cce11",
+"lines": 4981
 },
 "content/aie/2025-08-26-그래프RAG로-컨텍스트-창-짜기.md#L19": {
 "how": "계산",
@@ -3241,6 +3241,92 @@
 "how": "명시",
 "t": "2027",
 "tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L118": {
+"how": "명시",
+"t": "2029",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L257": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L312": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L314": {
+"how": "명시",
+"span": [
+"2029",
+"2030"
+],
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L321": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L323": {
+"how": "명시",
+"t": "2028",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L324": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L342": {
+"how": "명시",
+"t": "2030",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L361": {
+"how": "명시",
+"t": "2027",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L41": {
+"how": "명시",
+"t": "2024",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L46": {
+"how": "명시",
+"span": [
+"2022",
+"2024"
+],
+"t": "2024",
+"tense": "회고"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L57": {
+"how": "명시",
+"span": [
+"2022",
+"2029"
+],
+"t": "2029",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L62": {
+"how": "명시",
+"span": [
+"2028",
+"2029"
+],
+"t": "2029",
+"tense": "전망"
+},
+"content/newsletter/ai_infra/compute/[261015] ASML이 하이브리드 본딩 장비를 만들고 있다.md#L96": {
+"how": "명시",
+"t": "2026",
+"tense": "현재"
 },
 "content/newsletter/ai_infra/construction/[260729] 레고 데이터센터의 무법지대 - 모듈러 건설 벤더 지형도와 경제성 분석.md#L125": {
 "how": "명시",

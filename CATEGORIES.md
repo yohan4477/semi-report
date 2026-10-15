@@ -50,8 +50,8 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 | 카테고리 | 문서 수 |
 |---|---|
-| ai-infra/compute | 38 |
-| ai-infra/memory | 16 |
+| ai-infra/compute | 39 |
+| ai-infra/memory | 17 |
 | ai-infra/networking | 16 |
 | ai-infra/business | 28 |
 | ai-infra/power | 14 |
@@ -63,7 +63,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 | ai-models | 5 |
 | robotics | 3 |
 | semiconductors | 4 |
-| semiconductors/process | 2 |
+| semiconductors/process | 3 |
 | ai-economy | 1 |
 
 <!-- 2026-07-06 재집계: frontmatter 전수 스캔 기준. [260214] 보조금 전쟁 축약본은 원문이 Drive에 없어 사용자 지시로 전체 삭제(대장·리포트 파생분 포함) — 원문 확보 시 신규 변환으로 재작성 -->
@@ -102,6 +102,7 @@ AI가 만드는 경제적 가치가 GDP·물가·고용 같은 거시경제 통�
 
 ## 버전 히스토리
 
+- (2026-10-16) [261015] ASML Is Building a Hybrid Bonding Tool!(ASML이 하이브리드 본딩 장비를 만들고 있다) 신규 변환 완료 — ai-infra/compute 38→39, ai-infra/memory 16→17, semiconductors/process 2→3. 특허 출원으로 본 트랙 기반 D2W 하이브리드 본더 설계, 정렬 정확도·파티클 관리 우위, 네 가지 과제, Besi 로직·HBM 사업 압박까지 6개 섹션. 패키징 장비라 compute 주 분류, HBM 하이브리드 본딩은 memory, 본딩 공정은 process로 3중 분류
 - (2026-10-12) [261008] Beijing Will Not Pace the Frontier(베이징은 프런티어 속도를 늦추지 않는다 - 중국의 속도 우선 AI 안전 체제) 신규 변환 완료 — ai-models 4→5. 중국 9개 랩 857개 출시 중 안전 결과 공개 31개(3.6%), 랩 리더 발언 65건, 전문가 102개 문서 코딩, 공급 측 기관(SAIL·CAICT·CnAISDA)의 무력함, 트럼프-시진핑 정상회담과 6개월 시험 일정까지 전체 10개 섹션. 정책·안전 거버넌스 중심이라 하위(agents/rl)에 해당하지 않아 ai-models 단일 분류, content/newsletter/ai_models/ 루트 배치. AI 모델 통합 리포트는 agents·rl만 대상이라 갱신 생략
 - (2026-10-01) [260914] A Brain Too Big to Carry — On-Device vs Datacenter Inference(너무 커서 들고 다닐 수 없는 로봇의 뇌) 신규 변환 완료 — robotics 2→3, ai-infra/compute 35→36, ai-infra/memory 14→15, ai-infra/networking 15→16. [260910] 로봇은 어디서 생각하는가의 후속 개정판으로, 같은 로봇 함대에 대한 B300·RTX 6000 Pro 오프로드 대 젯슨 토르 온디바이스 TCO(96대 기준, 이용률 반영 시 오프로드 약 46%·가정 약 12%)와 웨이퍼·D램 교차점(로봇 약 7대·5대당 GPU 1대), 보스턴 다이내믹스·애질리티·번·선데이·위브의 배치 현황, 로봇 오프로드의 네트워크 벽(상향 링크·지터·접속점 요건·한 시계 동기)까지 전체 10개 섹션 완료. 로봇 수요처 축은 robotics, 가속기 TCO·실리콘 효율은 compute, 로봇용 LPDDR 경쟁은 memory, 무선 네트워크 벽은 networking으로 4중 분류. 컴퓨트·메모리 통합 리포트 문서별 요약에 추가(신규 시계열 승격은 보류)
 - (2026-10-01) [260925] The Chinese AI Infrastructure Boom(중국 AI 인프라 붐 - SemiAnalysis 중국 데이터센터 모델 공개) 신규 변환 완료 — ai-infra/business 25→26, ai-infra/construction 4→5, ai-infra/power 13→14. 중국 24GW+ 가동 용량, 소매 중심 4시대 역사, EDWC 에너지 쿼터 전달 경로, 5대 하이퍼스케일러 임차·자체 구축·BOT 전략과 해외 약 4GW 확장이 중심이라 business 주 분류. 100MW 12개월 인도·프리팹 공법·모듈러 비채택 이유는 construction, 에너지 소비 심사 쿼터와 내몽골 전력 가격은 power로 3중 분류. 전력 통합 리포트 갱신
