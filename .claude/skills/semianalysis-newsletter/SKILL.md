@@ -43,6 +43,16 @@ assert not d["paywalled"] and d["text_len"] > 6000, "subscriber session expired 
 
 Write the Obsidian-clipper markdown to `C:/Users/y/clippings/semianalysis/<sanitized title>.md` using the same frontmatter block `clip_articles.py` builds (`title`, `source`, `author` as `[[..]]`, `published`, `created`, `description`, `tags: [clippings]`) followed by the `html2text`-converted body. This matches the 60+ existing clippings so the transformer finds it the same way. (You can just run `clip_articles.py` after adding the slug to `scratchpad/clipping_gap.md`, or call its functions directly for a one-off.)
 
+## 4-1. 그림 전부 내려받기 — 빠뜨리지 않는다 (사용자 지시 2026-10-16)
+
+`clip_one.py`·`clip_articles.py` 는 그림을 substackcdn 링크로만 남긴다. 클리핑을 저장한 직후 **반드시** 원본 그림을 받아 로컬 링크로 바꾼다:
+
+```bash
+PYTHONIOENCODING=utf-8 python scripts/localize_clip_images.py --only "<클리핑 제목 앞부분>"
+```
+
+그림은 `C:/Users/y/clippings/semianalysis/_img/<제목>/NNN_<원본>` 에 들어가고 md 의 링크가 `![](<_img/...> "<CDN 주소>")` 로 바뀐다. 출력의 `실패 0` 과, md 에 `](https://substackcdn` 꼴이 0개 남았는지 확인한다. 2026-10-16 ASML 글에서 이 단계를 빼먹어 11장이 링크로만 남았다.
+
 ## 5. Hand off to the transformer
 
 Once the full clipping exists on disk, spawn the **semianalysis-transformer** agent (delegate — the transform is long and token-heavy; keep it off the main context per [[feedback_delegate_to_protect_context]]). Point it at the saved `input/clippings/<title>.md` (a raw markdown file already on disk — its preferred input) and let it run the full incremental pipeline (read current `TRANSFORMATION_RULES.md`, write to `content/newsletter/`, commit+push as it goes). Model choice per [[feedback_model_selection_delegation]].
