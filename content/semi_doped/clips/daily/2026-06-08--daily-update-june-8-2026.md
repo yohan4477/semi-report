@@ -11,9 +11,7 @@ Austin and Vik are back from Computex 2026. Incredible show, but very tiring. Ch
 
 Lets get to it!
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -96,7 +94,7 @@ The company says it is working with Tier-1 hyperscalers through an Early Access 
 
 We love this chart. Notice how much of _both_ optics and copper are in there?
 
-[](https://substackcdn.com/image/fetch/$s_!gYjo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4faa3ff5-c329-4064-b97d-06b467e3ca0e_1079x410.jpeg)
+[![Image](<../_img/2026-06-08--daily-update-june-8-2026/001_4faa3ff5-c329-4064-b97d-06b467e3ca0e_1079x410.jpeg> "https://substackcdn.com/image/fetch/$s_!gYjo!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4faa3ff5-c329-4064-b97d-06b467e3ca0e_1079x410.jpeg")](https://substackcdn.com/image/fetch/$s_!gYjo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4faa3ff5-c329-4064-b97d-06b467e3ca0e_1079x410.jpeg)
 
 Thanks for reading! This post is public so feel free to share it.
 

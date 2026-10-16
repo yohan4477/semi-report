@@ -13,9 +13,7 @@ Google locked up 3.6 GW of nuclear power from Constellation, the largest corpora
 
 Let’s get into it. — _Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -37,7 +35,7 @@ $5 in free credits to try it. [Send your first request today →](https://semido
 
 ### Marvell Sees $70-90B in Revenue by 2031
 
-[Wall St Engine@wallstengineMarvell $MRVL now expects “approximately $20B” in total FY28 revenue, up from $18B previously, and sees $70B-$90B by FY31. CEO Matt Murphy also said Marvell now sees a ~$400B AI market by 2030, more than 4x its prior $94B opportunity estimate for 2028. 1:41 PM · Oct 6, 2026 · 55.3K Views
+[![X avatar for @wallstengine](<../_img/2026-10-06--daily-update-october-6th-2026/001_oZp5wB4r.jpg> "https://substackcdn.com/image/fetch/$s_!y3i6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1691846947857178624%2FoZp5wB4r.jpg")Wall St Engine@wallstengineMarvell $MRVL now expects “approximately $20B” in total FY28 revenue, up from $18B previously, and sees $70B-$90B by FY31. CEO Matt Murphy also said Marvell now sees a ~$400B AI market by 2030, more than 4x its prior $94B opportunity estimate for 2028. ![](<../_img/2026-10-06--daily-update-october-6th-2026/002_HT85YG6a0AAOFuk.jpg> "https://pbs.substack.com/media/HT85YG6a0AAOFuk.jpg")1:41 PM · Oct 6, 2026 · 55.3K Views
 
 * * *
 
@@ -59,7 +57,7 @@ TDK is weighing a sale of its hard-drive magnetic-head unit, with [Seagate and T
 
 ### Awesome AI Slop: Jensen as Michael Jackson
 
-[Not Jerome Powell@alifarhat79Who comes up with this shit lmao 2:56 PM · Oct 5, 2026 · 928K Views
+[![X avatar for @alifarhat79](<../_img/2026-10-06--daily-update-october-6th-2026/003_Iuv1R7sk.jpg> "https://substackcdn.com/image/fetch/$s_!lYRd!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1469441193209733127%2FIuv1R7sk.jpg")Not Jerome Powell@alifarhat79Who comes up with this shit lmao ![](<../_img/2026-10-06--daily-update-october-6th-2026/004___ss-rehost__tw-video-preview-13_2106898922635657216.jpg> "https://substackcdn.com/image/fetch/$s_!tkX4!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2106898922635657216.jpg")2:56 PM · Oct 5, 2026 · 928K Views
 
 * * *
 
@@ -140,7 +138,7 @@ TDK is weighing a sale of its hard-drive magnetic-head unit, with [Seagate and T
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-06--daily-update-october-6th-2026/005_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

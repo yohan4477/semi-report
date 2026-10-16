@@ -13,13 +13,11 @@ Anthropic CEO Dario Amodei called on AI labs to slow advanced model development,
 
 Let’s get into it. — _Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-14--daily-update-september-14th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 * * *
 
@@ -37,15 +35,15 @@ _Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped
 
 Anthropic CEO Dario Amodei [urged AI labs to slow their most advanced model development](https://darioamodei.com/post/we-must-pace-the-frontier), warning that competitive pressure is overriding safety. Global chip stocks slid on the news, with Nvidia and other chipmakers dragging U.S. markets toward a lower open, according to Reuters. Microsoft added weight to the chorus, publishing a code of conduct built around the principle that people matter more than AI. China flatly rejected the framing: state media called it a [“Cold War” tactic](https://www.reuters.com/world/china/china-state-newspaper-blasts-anthropics-calls-slow-ai-cold-war-tactic-2026-09-14/) designed to lock in America’s technological lead. Trump dismissed the safety concerns. BMO Capital Markets’ Jennifer Lee told Bloomberg the underlying CapEx cycle shows no structural reversal despite near-term sentiment pressure. Cohere CEO Aidan Gomez [pushed back](https://cohere.com/blog/who-gets-to-define-the-rules-for-ai), calling the antitrust-waiver proposal “a cartel by any other name” and arguing AI safety standards should come from an open, evidence-based process rather than a handful of dominant labs.
 
-[Dario Amodei@DarioAmodeiWe Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so. Anthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…2:01 PM · Sep 12, 2026 · 69.2M Views
+[![X avatar for @DarioAmodei](<../_img/2026-09-14--daily-update-september-14th-2026/002_uOwdzrEz.jpg> "https://substackcdn.com/image/fetch/$s_!hwoj!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2015835742577012736%2FuOwdzrEz.jpg")Dario Amodei@DarioAmodeiWe Must Pace the Frontier: I’ve written a new essay on why the AI industry should slow down, with a three-part plan for doing so. Anthropic is unilaterally committing to the first of these steps. We’ll provide third-party evaluators with permanent, employee-level access to our…2:01 PM · Sep 12, 2026 · 69.2M Views
 
 * * *
 
-9.66K Replies · 15.5K Reposts · 85.9K Likes](https://x.com/DarioAmodei/status/2098773920774074715)[Sam Altman@samaThe world deserves confidence that American companies developing increasingly capable AI will act responsibly, especially as the trajectory of progress has steepened. Every frontier lab must deliver on this, and there is no reason any of us should come to work if we cannot. We…4:05 AM · Sep 14, 2026 · 187K Views
+9.66K Replies · 15.5K Reposts · 85.9K Likes](https://x.com/DarioAmodei/status/2098773920774074715)[![X avatar for @sama](<../_img/2026-09-14--daily-update-september-14th-2026/003_r7BxVezs.jpg> "https://substackcdn.com/image/fetch/$s_!rDsj!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2046764873200394240%2Fr7BxVezs.jpg")Sam Altman@samaThe world deserves confidence that American companies developing increasingly capable AI will act responsibly, especially as the trajectory of progress has steepened. Every frontier lab must deliver on this, and there is no reason any of us should come to work if we cannot. We…4:05 AM · Sep 14, 2026 · 187K Views
 
 * * *
 
-574 Replies · 224 Reposts · 2.25K Likes](https://x.com/sama/status/2099348812305473766)[Aidan Gomez@aidangomezSome great ideas here from the cartel: \- you need to give us employee-level access to your entire operation \- if we don't think you're 'safe' enough, sorry we're shutting you down for 'safety' \- China won't comply, but everyone else has to! or no chips! Brilliant stuff.Sam Altman @samaI agree with Dario that we need to pace the frontier. This has been a primary topic of discussions we've had at OpenAI in recent weeks. Committing to having independent evaluators with employee-like access is a great idea, and we will do the same. We'll have more to share soon.5:36 PM · Sep 12, 2026 · 342K Views
+574 Replies · 224 Reposts · 2.25K Likes](https://x.com/sama/status/2099348812305473766)[![X avatar for @aidangomez](https://substackcdn.com/image/fetch/$s_!RMmU!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2092658916286930944%2FFQ3_VA0j.jpg)Aidan Gomez@aidangomezSome great ideas here from the cartel: \- you need to give us employee-level access to your entire operation \- if we don't think you're 'safe' enough, sorry we're shutting you down for 'safety' \- China won't comply, but everyone else has to! or no chips! Brilliant stuff.![X avatar for @sama](<../_img/2026-09-14--daily-update-september-14th-2026/005_r7BxVezs.jpg> "https://substackcdn.com/image/fetch/$s_!rDsj!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2046764873200394240%2Fr7BxVezs.jpg")Sam Altman @samaI agree with Dario that we need to pace the frontier. This has been a primary topic of discussions we've had at OpenAI in recent weeks. Committing to having independent evaluators with employee-like access is a great idea, and we will do the same. We'll have more to share soon.5:36 PM · Sep 12, 2026 · 342K Views
 
 * * *
 
@@ -53,7 +51,7 @@ Anthropic CEO Dario Amodei [urged AI labs to slow their most advanced model deve
 
 > **Vik:**_All this safety stuff is required, but declaring that we should all of a sudden ‘slowdown’ is just FUD. I wrote a free piece on my Substack explaining why the AI buildout will continue unabated._
 > 
-> [ Vik's NewsletterThe AI Buildout Will ContinueDario Amodei’s post — We Must Pace The Frontier — has been all the talk on AI this weekend. I suggest reading the whole article because the ideas are important to digest, and the implications of this essay are significant. We’ll just highlight the important points here…Read morea month ago · 37 likes · 4 comments · Vikram Sekar](https://www.viksnewsletter.com/p/the-ai-buildout-will-continue?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
+> [![](<../_img/2026-09-14--daily-update-september-14th-2026/006_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png") Vik's NewsletterThe AI Buildout Will ContinueDario Amodei’s post — We Must Pace The Frontier — has been all the talk on AI this weekend. I suggest reading the whole article because the ideas are important to digest, and the implications of this essay are significant. We’ll just highlight the important points here…Read morea month ago · 37 likes · 4 comments · Vikram Sekar](https://www.viksnewsletter.com/p/the-ai-buildout-will-continue?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
 > 
 > **Austin:**_Vik, we gotta cover this on the pod this week. I have thoughts!_
 
@@ -150,7 +148,7 @@ Ciena [launched Ciena Ventures](https://www.ciena.com/about/newsroom/press-relea
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-14--daily-update-september-14th-2026/007_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

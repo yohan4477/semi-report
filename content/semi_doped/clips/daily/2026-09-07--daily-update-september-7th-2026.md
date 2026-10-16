@@ -13,13 +13,11 @@ AMD used its IFA keynote to answer Nvidia’s DGX Station with the Threadripper 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-07--daily-update-september-7th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### AMD Answers Nvidia’s DGX Station With Threadripper Halo Station
 
@@ -138,7 +136,7 @@ Wafer AI posted a [curated GitHub repository of AI performance engineering resou
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-07--daily-update-september-7th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

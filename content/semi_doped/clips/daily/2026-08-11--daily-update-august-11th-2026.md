@@ -13,9 +13,7 @@ Intel priced an upsized 210M share offering at $95 apiece, raising $20 billion t
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -45,7 +43,7 @@ The credit markets are moving in parallel. Lambda Inc., an AI cloud provider [ba
 
 > _**Vik** : I’ll just drop Jensen’s X post here. Nothing more to say other than this investment cycle is getting out of hand. Make hay while the sun shines._
 > 
-> [Jensen Huang@JensenHuangThis is a big moment for computing and @nvidia. We’ve made the leap from building chips to creating a new investable asset class: AI factory infrastructure. Every company will be powered by it. Every country will build it. Thanks to Larry Fink of @BlackRock, Jon Gray of 12:42 AM · Aug 11, 2026 · 118K Views
+> [![X avatar for @JensenHuang](<../_img/2026-08-11--daily-update-august-11th-2026/001_OMXX4RJ3.jpg> "https://substackcdn.com/image/fetch/$s_!5gPc!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2080613261674962944%2FOMXX4RJ3.jpg")Jensen Huang@JensenHuangThis is a big moment for computing and @nvidia. We’ve made the leap from building chips to creating a new investable asset class: AI factory infrastructure. Every company will be powered by it. Every country will build it. Thanks to Larry Fink of @BlackRock, Jon Gray of ![](<../_img/2026-08-11--daily-update-august-11th-2026/002_HPZt-udbYAAEMHf.jpg> "https://pbs.substack.com/media/HPZt-udbYAAEMHf.jpg")12:42 AM · Aug 11, 2026 · 118K Views
 > 
 > * * *
 > 

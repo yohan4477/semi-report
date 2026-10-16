@@ -13,13 +13,11 @@ Nscale filed its S-1 targeting a $35 billion valuation on a $103 billion contrac
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-21--daily-update-september-21st-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Nscale Files NYSE IPO Targeting $35 Billion Valuation on $103 Billion Backlog
 
@@ -35,7 +33,7 @@ TechInsights cracked open the US iPhone 18 Pro Max and found a [Qualcomm X80 mod
 
 ### Anthropic Still Evading IPO
 
-[The Kobeissi Letter@KobeissiLetterBREAKING: Anthropic is planning to launch its IPO in November despite AI safety concerns, per WSJ. The company is expected to IPO at a $2 trillion valuation and raise up to $100 billion in the offering. Anthropic is expected to reach more than $110 billion in annualized revenue…9:35 PM · Sep 18, 2026 · 529K Views
+[![X avatar for @KobeissiLetter](<../_img/2026-09-21--daily-update-september-21st-2026/002_fwYCe67Y.jpg> "https://substackcdn.com/image/fetch/$s_!I3Dh!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1975243710846640128%2FfwYCe67Y.jpg")The Kobeissi Letter@KobeissiLetterBREAKING: Anthropic is planning to launch its IPO in November despite AI safety concerns, per WSJ. The company is expected to IPO at a $2 trillion valuation and raise up to $100 billion in the offering. Anthropic is expected to reach more than $110 billion in annualized revenue…9:35 PM · Sep 18, 2026 · 529K Views
 
 * * *
 
@@ -45,17 +43,17 @@ TechInsights cracked open the US iPhone 18 Pro Max and found a [Qualcomm X80 mod
 
 ### Cool CPU Supply Chain Plot
 
-[](https://x.com/LIWEI_TWCapital/status/2101832428134560237?s=20)
+[![Image](<../_img/2026-09-21--daily-update-september-21st-2026/003_b7dd2e18-58fb-4fb6-9d5e-56c2901d5b5b_680x481.jpeg> "https://substackcdn.com/image/fetch/$s_!wVwE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb7dd2e18-58fb-4fb6-9d5e-56c2901d5b5b_680x481.jpeg")](https://x.com/LIWEI_TWCapital/status/2101832428134560237?s=20)
 
 Nice chart by X-user: [LIWEI_TW_Capital](https://x.com/LIWEI_TWCapital/status/2101832428134560237?s=20)
 
 ## Open Model Tokens Dominate
 
-[](https://substackcdn.com/image/fetch/$s_!mGqP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F26beca0a-61dd-4567-ba94-1750ec60e02f_1756x1222.jpeg)
+[![Image](<../_img/2026-09-21--daily-update-september-21st-2026/004_26beca0a-61dd-4567-ba94-1750ec60e02f_1756x1222.jpeg> "https://substackcdn.com/image/fetch/$s_!mGqP!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F26beca0a-61dd-4567-ba94-1750ec60e02f_1756x1222.jpeg")](https://substackcdn.com/image/fetch/$s_!mGqP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F26beca0a-61dd-4567-ba94-1750ec60e02f_1756x1222.jpeg)
 
 DeepSeek V4.1 Flash is dominating tokens in September!
 
-[](https://substackcdn.com/image/fetch/$s_!NZWN!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22083fca-e65c-4d91-804d-bac63171339e_3000x1800.png)
+[![Image](<../_img/2026-09-21--daily-update-september-21st-2026/005_22083fca-e65c-4d91-804d-bac63171339e_3000x1800.png> "https://substackcdn.com/image/fetch/$s_!NZWN!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22083fca-e65c-4d91-804d-bac63171339e_3000x1800.png")](https://substackcdn.com/image/fetch/$s_!NZWN!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F22083fca-e65c-4d91-804d-bac63171339e_3000x1800.png)
 
 ### Sector Watch
 
@@ -143,7 +141,7 @@ DeepSeek V4.1 Flash is dominating tokens in September!
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-21--daily-update-september-21st-2026/006_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

@@ -19,7 +19,7 @@ Which company am I talking about?
 
 > Gamers call this three-letter company “Team Red.”
 
-[](https://substackcdn.com/image/fetch/$s_!w5gG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9034ece6-ddc3-449d-8e6b-239c24dfd198_4719x3045.jpeg)Company’s former headquarters in [Sunnyvale, California](https://en.wikipedia.org/wiki/Sunnyvale,_California) (demolished in 2019). By Coolcaesar - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=58400338
+[![](<../_img/2026-10-04--sunday-pub-quiz/001_9034ece6-ddc3-449d-8e6b-239c24dfd198_4719x3045.jpeg> "https://substackcdn.com/image/fetch/$s_!w5gG!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9034ece6-ddc3-449d-8e6b-239c24dfd198_4719x3045.jpeg")](https://substackcdn.com/image/fetch/$s_!w5gG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9034ece6-ddc3-449d-8e6b-239c24dfd198_4719x3045.jpeg)Company’s former headquarters in [Sunnyvale, California](https://en.wikipedia.org/wiki/Sunnyvale,_California) (demolished in 2019). By Coolcaesar - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=58400338
 
 ### SPOILER ALERT: ANSWER BELOW
 

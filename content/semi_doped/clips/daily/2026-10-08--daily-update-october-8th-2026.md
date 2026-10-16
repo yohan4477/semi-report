@@ -13,9 +13,7 @@ Samsung Electronics posted a record 107.4 trillion won in Q3 2026 operating prof
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -150,7 +148,7 @@ Applied Digital [reported fiscal first-quarter 2027 earnings](https://ir.applied
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-08--daily-update-october-8th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

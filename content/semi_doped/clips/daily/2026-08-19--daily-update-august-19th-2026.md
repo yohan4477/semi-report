@@ -13,9 +13,7 @@ Analog Devices posted a record $4.02 billion quarter on data center demand. SK H
 
 Let’s get into it. _—Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -53,7 +51,7 @@ Cerebras unveiled the CS-4, its [first multi-wafer inference rack](https://thene
 
 > **Austin:** _This is a thermal, power, and systems iteration, not an architectural improvement. The CS-3 rack had two wafer-scale engines, each with 44GB of SRAM and 900K harvested cores on TSMC 5nm. The CS-4 rack has three wafer-scale engines. Same 44GB of SRAM, same 900K cores, same TSMC 5nm. The extra wafer plus better cooling and power delivery allows higher clocks, so more tokens per second and a bit more compute density per square foot of datacenter. Still an improvement! Props on the system engineering eye-candy:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!RWLQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4ec3527-715e-415d-b1f8-319dbe96caca_1442x836.png)
+> [![](<../_img/2026-08-19--daily-update-august-19th-2026/001_c4ec3527-715e-415d-b1f8-319dbe96caca_1442x836.png> "https://substackcdn.com/image/fetch/$s_!RWLQ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4ec3527-715e-415d-b1f8-319dbe96caca_1442x836.png")](https://substackcdn.com/image/fetch/$s_!RWLQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4ec3527-715e-415d-b1f8-319dbe96caca_1442x836.png)
 > 
 > _**Vik** : I attended the event last minute since I happened to be in SF. These backpacks were cool, and the “engine block” has undergone significant redesign to allow three WFEs to fit in a rack as opposed to two. 50% higher SRAM density per rack. The messaging is more going to rack-scale solutions here; not really new chips._
 

@@ -13,13 +13,11 @@ China’s CXMT has begun small-batch HBM3E production with a 2027 mass-output ta
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-01--daily-update-september-1st-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### China’s CXMT Enters HBM3E Risk Production With 2027 Mass-Output Target
 
@@ -31,7 +29,7 @@ Chang Xin Memory Technologies has begun small-batch production of HBM3E chips, a
 
 Architect Labs has published a paper describing Redwood, an AI accelerator it says was designed, verified, and deployed end-to-end by an AI system from a high-level specification provided by two human architects. The system autonomously generated RTL, UVM environments, formal proofs, firmware, and compute kernels in under two weeks, with every block reaching 95% coverage. Redwood Nano, the FPGA variant running on an AMD Versal VPK180 at 250 MHz, ran Qwen3-0.6B inference and, when projected onto Samsung 8 nm, is claimed to deliver 1.75x the decode throughput at 1.9x lower power than a measured Nvidia Jetson Orin Nano baseline, a 3.4x performance-per-watt gain. The paper also notes that Qwen running on Redwood was used to help design the next-generation Redwood, which the team describes as an early step toward recursive self-improvement.
 
-[](https://substackcdn.com/image/fetch/$s_!yxE-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb57c42b1-f397-47d5-870b-36d41af9cdfa_922x924.png)
+[![](<../_img/2026-09-01--daily-update-september-1st-2026/002_b57c42b1-f397-47d5-870b-36d41af9cdfa_922x924.png> "https://substackcdn.com/image/fetch/$s_!yxE-!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb57c42b1-f397-47d5-870b-36d41af9cdfa_922x924.png")](https://substackcdn.com/image/fetch/$s_!yxE-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb57c42b1-f397-47d5-870b-36d41af9cdfa_922x924.png)
 
 **Sources:** [architectlabs.com](https://architectlabs.com/architect-labs-redwood.pdf)
 
@@ -125,7 +123,7 @@ Kioxia and SanDisk have [announced a joint $31 billion investment](https://www.e
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-01--daily-update-september-1st-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

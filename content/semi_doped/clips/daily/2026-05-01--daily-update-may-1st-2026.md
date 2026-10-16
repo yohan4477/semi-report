@@ -9,7 +9,6 @@ subtitle: Intel EMIB yields, Qualcomm teases hyperscaler custom silicon design w
 ---
 Competitors enter the fray. Intel’s EMIB is a legit alternative to CoWoS. Qualcomm throws it’s hat in the custom ASIC ring. _But which ring? Not sure exactly what custom ASIC means here…_ And SSDs in DeepSeek V4 are seriously driving down inference cost. Let’s get into it.
 
-Subscribe
 
 >  _**Vik:** I finished up at QCOM a week ago. Went on vacation this week. During the vacation, QCOM stock skyrocketed. Maybe I’m a market mover, but in the most embarrassing way. LOL._
 > 
@@ -34,7 +33,7 @@ EMIB ships in two flavors:
 
 Today EMIB scales to 8x reticle size. Intel’s roadmap targets 12x by 2028, matching what TSMC has guided for CoWoS. Google, NVIDIA, and Meta are all likely EMIB customers.
 
-[](https://substackcdn.com/image/fetch/$s_!m8DK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b37bbf7-b000-4278-97b2-d3cc230165d9_2560x1440.jpeg)
+[![A 3D illustration shows an 'EMIB-M Incorporates MIM Capacitors into the Silicon Bridge' with a caption explaining that MIM capacitors enhance power delivery and integrity by minimizing noise, and the Intel logo is visible.](<../_img/2026-05-01--daily-update-may-1st-2026/001_8b37bbf7-b000-4278-97b2-d3cc230165d9_2560x1440.jpeg> "https://substackcdn.com/image/fetch/$s_!m8DK!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b37bbf7-b000-4278-97b2-d3cc230165d9_2560x1440.jpeg")](https://substackcdn.com/image/fetch/$s_!m8DK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b37bbf7-b000-4278-97b2-d3cc230165d9_2560x1440.jpeg)
 
 > _**Austin:** EMIB isn’t new by any means. For example, here’s a [2016 EMIB paper](https://ieeexplore.ieee.org/abstract/document/7545486) from Intel. It’s long been in production inside Intel server CPUs, GPUs, FPGAs. _
 > 
@@ -54,7 +53,6 @@ What form that design win takes is anyone’s guess. Amon kept fairly mum, other
 > 
 > _**Austin:** Qualcomm CEO [Cristiano Amon is giving a Computex Keynote](https://events.computextaipei.com.tw/en/KeynoteDetail01.aspx) on June 1. Between that and the investor day on June 24, I expect we’ll learn a lot more about Qualcomm’s datacenter and custom ASIC aspirations._
 
-Subscribe
 
 ### Deepseek V4: KV cache compression and cost
 
@@ -70,7 +68,7 @@ From the [original post](https://open.substack.com/pub/viksnewsletter/p/context-
 
 DeepSeek V4 is proof. Cost of tokens with cache hits have now fallen dramatically.
 
-[](https://substackcdn.com/image/fetch/$s_!2gYp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F98e80262-ee1c-4796-8e5a-00e09753f69e_1106x1040.png)
+[![](<../_img/2026-05-01--daily-update-may-1st-2026/002_98e80262-ee1c-4796-8e5a-00e09753f69e_1106x1040.png> "https://substackcdn.com/image/fetch/$s_!2gYp!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F98e80262-ee1c-4796-8e5a-00e09753f69e_1106x1040.png")](https://substackcdn.com/image/fetch/$s_!2gYp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F98e80262-ee1c-4796-8e5a-00e09753f69e_1106x1040.png)
 
 > _**Austin:** Vik, dude, you could have taken more of a victory lap on this one. Regardless, great topic, we should keep digging into SSDs and the impact on tokenomics._
 

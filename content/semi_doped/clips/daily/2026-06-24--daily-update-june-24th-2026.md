@@ -11,9 +11,7 @@ Cerebras disappoints, token usage shock causes people to cut spending, SK hynix 
 
 Here are our quick briefing of the news _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast playe_
 
@@ -23,7 +21,7 @@ Cerebras projects 2026 revenue between $855 million and $865 million, exceeding 
 
 > _**Vik:** Investors have high expectations from semiconductors these days. Just exceeding analyst estimates seems to disappoint everybody. Nevertheless, there are issues with Cerebras at scale, and [I’ve written about it](https://open.substack.com/pub/viksnewsletter/p/cerebras-ipo-and-the-scaling-bottlenecks?r=89umme&utm_campaign=post-expanded-share&utm_medium=web). In any case, I think my tweet below sums up some of it._
 > 
-> [Vikram Sekar@vikramskrThe "grand irony" here is that $CRBS knew that you can put only 88GB of SRAM per rack with WSE, and is then surprised that they need lot of racks. 7:21 AM · Jun 24, 2026 · 2.05K Views
+> [![X avatar for @vikramskr](<../_img/2026-06-24--daily-update-june-24th-2026/001_Rf_mIEz0.jpg> "https://substackcdn.com/image/fetch/$s_!TWOG!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1864653638054105088%2FRf_mIEz0.jpg")Vikram Sekar@vikramskrThe "grand irony" here is that $CRBS knew that you can put only 88GB of SRAM per rack with WSE, and is then surprised that they need lot of racks. ![](<../_img/2026-06-24--daily-update-june-24th-2026/002_HLj80h3XoAATe7b.png> "https://pbs.substack.com/media/HLj80h3XoAATe7b.png")7:21 AM · Jun 24, 2026 · 2.05K Views
 > 
 > * * *
 > 
@@ -31,7 +29,7 @@ Cerebras projects 2026 revenue between $855 million and $865 million, exceeding 
 
 [Irrational Analysis](https://open.substack.com/users/135313705-irrational-analysis?utm_source=mentions) posts his observations from the earnings call transcript. 
 
-[Irrational AnalysisCerebras June 2026 EarningsIrrational Analysis is heavily invested in the semiconductor industry…Read more2 months ago · 29 likes · 6 comments · Irrational Analysis](https://irrationalanalysis.substack.com/p/cerebras-june-2026-earnings?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+[![](<../_img/2026-06-24--daily-update-june-24th-2026/003_ba1efe89-1235-4b7c-8017-ab2c1ecf5526_521x521.png> "https://substackcdn.com/image/fetch/$s_!hHWs!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fba1efe89-1235-4b7c-8017-ab2c1ecf5526_521x521.png")Irrational AnalysisCerebras June 2026 EarningsIrrational Analysis is heavily invested in the semiconductor industry…Read more4 months ago · 29 likes · 6 comments · Irrational Analysis](https://irrationalanalysis.substack.com/p/cerebras-june-2026-earnings?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 ### AI Customers Cut Bills, Shift to Cheaper Models
 
@@ -71,7 +69,7 @@ LG Chem plans to invest 15 trillion won (roughly $11 billion) in research and de
 
 A nice chart from TrendForce.
 
-[](https://substackcdn.com/image/fetch/$s_!cT7E!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F25a82c3d-7d74-46ed-9cce-3007d9acc12e_1080x1350.png)
+[![Image](<../_img/2026-06-24--daily-update-june-24th-2026/004_25a82c3d-7d74-46ed-9cce-3007d9acc12e_1080x1350.png> "https://substackcdn.com/image/fetch/$s_!cT7E!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F25a82c3d-7d74-46ed-9cce-3007d9acc12e_1080x1350.png")](https://substackcdn.com/image/fetch/$s_!cT7E!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F25a82c3d-7d74-46ed-9cce-3007d9acc12e_1080x1350.png)
 
 ## Quick Hits
 

@@ -13,13 +13,11 @@ In other news, Lattice Semiconductor grabs AMI for $1.65B to push deeper into da
 
 And finally, we’re tuning in to AMD earnings this Cinco de Mayo:
 
-[](https://substackcdn.com/image/fetch/$s_!SIWg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcdff3a73-f9bd-4fd0-94c4-656b5cc2b0c2_1440x720.jpeg)
+[![](<../_img/2026-05-05--daily-update-may-5th-2026/001_cdff3a73-f9bd-4fd0-94c4-656b5cc2b0c2_1440x720.jpeg> "https://substackcdn.com/image/fetch/$s_!SIWg!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcdff3a73-f9bd-4fd0-94c4-656b5cc2b0c2_1440x720.jpeg")](https://substackcdn.com/image/fetch/$s_!SIWg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcdff3a73-f9bd-4fd0-94c4-656b5cc2b0c2_1440x720.jpeg)
 
 > _**Austin:** I’m expecting EPYC CPU server sales, but my Instinct is that investors won’t hear as much datacenter accelerator news as they’d hope. Let’s see if Stacy Rasgon asks about it._
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 * * *
 
@@ -58,7 +56,7 @@ Fabrinet posted record numbers in their Q3-2026 earnings call: $1.21B in revenue
 
 Great time for semis as YoY revenue change hits 79.2% in March 2026.
 
-[](https://substackcdn.com/image/fetch/$s_!UXkr!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7dcb0e0a-d6a5-442f-a174-e729d0c1768b_680x519.png)
+[![Image](<../_img/2026-05-05--daily-update-may-5th-2026/002_7dcb0e0a-d6a5-442f-a174-e729d0c1768b_680x519.png> "https://substackcdn.com/image/fetch/$s_!UXkr!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7dcb0e0a-d6a5-442f-a174-e729d0c1768b_680x519.png")](https://substackcdn.com/image/fetch/$s_!UXkr!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7dcb0e0a-d6a5-442f-a174-e729d0c1768b_680x519.png)
 
 ### Earnings Watch This Week
 

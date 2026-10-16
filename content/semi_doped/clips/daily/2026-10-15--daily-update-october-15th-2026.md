@@ -119,7 +119,7 @@ CoreWeave’s bonds are [yielding above 15%](https://www.bloomberg.com/news/arti
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-15--daily-update-october-15th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

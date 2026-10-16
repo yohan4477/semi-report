@@ -13,13 +13,11 @@ OpenAI brought its first custom inference chip, the Jalapeño, to Hot Chips 2026
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-26--daily-update-august-26th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### OpenAI Jalapeño ASIC Claims Performance Edge Over Nvidia GB300
 
@@ -43,7 +41,7 @@ At Hot Chips 2026, SambaNova unveiled the SN50 with an architecture that [overla
 
 > _**Austin:**_****_Lots of hype for D-Matrix, catch up on them from Vik below. We should have them on the pod sometime, SambaNova too._
 > 
-> [ Vikram Sekar@vikramskr3D DRAM is a strong approach for inference architecture. I have covered d-Matrix in quite some detail on my Substack before... With all the heat from Hot Chips regarding the @dMatrix_AI talk, now might be a good time to read my earlier post. [open.substack.com/pub/viksnewsle…](https://open.substack.com/pub/viksnewsletter/p/d-matrix-in-memory-compute?r=222kot&utm_campaign=post-expanded-share&utm_medium=web)Gavin Baker @GavinSBakerEvery accelerator company, and I mean every accelerator company, is likely going to do some variant of 3D DRAM or the “zHBM” which were both discussed at HotChips today. The larger companies will probably run (are running) parallel programs, but these two memory variants4:46 AM · Aug 24, 2026 · 13.1K Views
+> [![X avatar for @vikramskr](<../_img/2026-08-26--daily-update-august-26th-2026/002_Rf_mIEz0.jpg> "https://substackcdn.com/image/fetch/$s_!TWOG!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1864653638054105088%2FRf_mIEz0.jpg") Vikram Sekar@vikramskr3D DRAM is a strong approach for inference architecture. I have covered d-Matrix in quite some detail on my Substack before... With all the heat from Hot Chips regarding the @dMatrix_AI talk, now might be a good time to read my earlier post. [open.substack.com/pub/viksnewsle…](https://open.substack.com/pub/viksnewsletter/p/d-matrix-in-memory-compute?r=222kot&utm_campaign=post-expanded-share&utm_medium=web)![X avatar for @GavinSBaker](<../_img/2026-08-26--daily-update-august-26th-2026/003_5L4n5L3O.jpg> "https://substackcdn.com/image/fetch/$s_!nmcM!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1396219525754937345%2F5L4n5L3O.jpg")Gavin Baker @GavinSBakerEvery accelerator company, and I mean every accelerator company, is likely going to do some variant of 3D DRAM or the “zHBM” which were both discussed at HotChips today. The larger companies will probably run (are running) parallel programs, but these two memory variants4:46 AM · Aug 24, 2026 · 13.1K Views
 > 
 > * * *
 > 
@@ -143,7 +141,7 @@ YMTC has [set an explicit goal to surpass Samsung and SK Hynix in global NAND ma
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-26--daily-update-august-26th-2026/004_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

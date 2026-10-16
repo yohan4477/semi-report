@@ -78,7 +78,7 @@ The stock is up 49% in the last month.
 
 Saw this tweet from a few days ago [@dnystedt](https://x.com/dnystedt/status/2048562606798241843): Taiwan’s China Airlines and Eva Air will run **~50 AI server air-cargo charter flights in May, up from a normal 20/month.** Hyperscalers are paying air-freight premiums to accelerate AI deployments. 
 
-[](https://substackcdn.com/image/fetch/$s_!l0Oo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea1678ee-e02b-4727-8dea-1b232cc43926_1204x1134.png)
+[![](<../_img/2026-04-29--hyperscaler-night-silicon-carbide/001_ea1678ee-e02b-4727-8dea-1b232cc43926_1204x1134.png> "https://substackcdn.com/image/fetch/$s_!l0Oo!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea1678ee-e02b-4727-8dea-1b232cc43926_1204x1134.png")](https://substackcdn.com/image/fetch/$s_!l0Oo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea1678ee-e02b-4727-8dea-1b232cc43926_1204x1134.png)
 
 * * *
 
@@ -87,5 +87,3 @@ Saw this tweet from a few days ago [@dnystedt](https://x.com/dnystedt/status/204
 More earnings tomorrow. **Apple** , **MediaTek** , **SanDisk** , and **Western Digital.** Austin is tuning in for **Rivian** and **Volkswagen,** too.
 
 _That’s it for today!_
-
-Subscribe

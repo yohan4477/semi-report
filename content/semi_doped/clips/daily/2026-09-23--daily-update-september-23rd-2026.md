@@ -13,13 +13,11 @@ TechInsights has confirmed Apple’s A20 Pro runs on TSMC’s N2 node, making it
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-23--daily-update-september-23rd-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### OpenAI and Anthropic Cut Model Costs as Infrastructure Ambitions Grow
 
@@ -129,7 +127,7 @@ Dragonwing is Qualcomm’s existing lineup targeting edge AI and robotics deploy
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-23--daily-update-september-23rd-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

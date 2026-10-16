@@ -13,13 +13,11 @@ DeepSeek open-sourced six programming tools for Huawei’s Ascend chips, taking 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-30--daily-update-september-30th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### DeepSeek Open-Sources Six Ascend Tools, Pressing on Nvidia’s CUDA Lock-In
 
@@ -140,7 +138,7 @@ NUVACORE took to X this week to outline its [“Core First” approach](https://
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-30--daily-update-september-30th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

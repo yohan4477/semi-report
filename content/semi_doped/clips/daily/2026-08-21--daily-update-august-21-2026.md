@@ -15,11 +15,10 @@ Let’s get into it. _— Austin & Vik_
 
  _High signal semi news. Free. In your inbox, daily_
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-21--daily-update-august-21-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### **Broadcom-Backed SPV Eyes $70 Billion in Debt for Anthropic Chips**
 

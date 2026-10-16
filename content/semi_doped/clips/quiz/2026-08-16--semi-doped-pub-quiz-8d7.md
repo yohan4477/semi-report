@@ -19,7 +19,7 @@ Thanks for reading! This post is public so feel free to share it.
 
 > In 1991, this same company was looking to diversify beyond wireless chips into software, and email looked like a smart bet on where the internet was headed.
 
-[](https://substackcdn.com/image/fetch/$s_!M2aU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F71f3cfe0-5dad-4854-8a12-a377e75e3163_1071x1600.jpeg)Image credit: jirapongb. If you know the name of these flowers are, it is a BIG clue. :)
+[![Pink Snapdragon Flowers](<../_img/2026-08-16--semi-doped-pub-quiz-8d7/001_71f3cfe0-5dad-4854-8a12-a377e75e3163_1071x1600.jpeg> "https://substackcdn.com/image/fetch/$s_!M2aU!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F71f3cfe0-5dad-4854-8a12-a377e75e3163_1071x1600.jpeg")](https://substackcdn.com/image/fetch/$s_!M2aU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F71f3cfe0-5dad-4854-8a12-a377e75e3163_1071x1600.jpeg)Image credit: jirapongb. If you know the name of these flowers are, it is a BIG clue. :)
 
 ## SPOILER ALERT: ANSWER BELOW
 
@@ -27,6 +27,5 @@ Thanks for reading! This post is public so feel free to share it.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 The flowers are snapdragons.

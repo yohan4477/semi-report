@@ -13,9 +13,7 @@ Lighter on takes today since Austin is on vacation (he still got a take in!) and
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -29,7 +27,7 @@ To push the pareto curve on many-trillion-parameter MoEs, long context, and agen
 > 
 > _**Austin:** A lot has been announced recently in the AI ASIC startup space. I’ll write about it soon, probably right after the 4th of July holiday._
 
-[](https://substackcdn.com/image/fetch/$s_!J3s_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff68db590-876d-4024-b710-adcec83aa18e_1735x2200.webp)Source: Etched
+[![Etched Server Rack](<../_img/2026-07-01--daily-update-july-1st-2026/001_f68db590-876d-4024-b710-adcec83aa18e_1735x2200.webp> "https://substackcdn.com/image/fetch/$s_!J3s_!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff68db590-876d-4024-b710-adcec83aa18e_1735x2200.webp")](https://substackcdn.com/image/fetch/$s_!J3s_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff68db590-876d-4024-b710-adcec83aa18e_1735x2200.webp)Source: Etched
 
 ### ASML’s $400M High-NA EUV Machine Achieves 8nm Resolution
 
@@ -45,7 +43,7 @@ Meta engineers developed steel-can battery technology with widths as narrow as 7
 
 > _**Vik:** Like a AAA battery but way smaller?_
 
-[](https://substackcdn.com/image/fetch/$s_!jQHz!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd2c7941e-2872-4150-8376-e2c77f85e1b1_1376x768.png)Source: Meta
+[![](<../_img/2026-07-01--daily-update-july-1st-2026/002_d2c7941e-2872-4150-8376-e2c77f85e1b1_1376x768.png> "https://substackcdn.com/image/fetch/$s_!jQHz!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd2c7941e-2872-4150-8376-e2c77f85e1b1_1376x768.png")](https://substackcdn.com/image/fetch/$s_!jQHz!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd2c7941e-2872-4150-8376-e2c77f85e1b1_1376x768.png)Source: Meta
 
 ### TSMC Accelerates CoPoS Optical Packaging Under Supply Chain Silence
 

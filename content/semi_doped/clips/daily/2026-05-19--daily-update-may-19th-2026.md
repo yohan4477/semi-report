@@ -9,9 +9,7 @@ subtitle: "Demand Is Going Parabolic, Utterly Parabolic" -Jensen
 ---
 Today’s menu: Big event in utilities driven by AI, some insane AI video, TPU adoption increases, Fintwit mania on 13F, and WTF is a forward deployed engineer. Huh? Learn something everyday!
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -21,7 +19,7 @@ Subscribe
 
 **NextEra Energy announced a $67B acquisition of Dominion Energy, the largest utility acquisition in US history.** Per [Bloomberg](https://www.bloomberg.com/news/articles/2026-05-18/nextera-dominion-deal-signals-new-era-of-ai-utility-mega-mergers), the combined enterprise value runs to roughly $118B. NextEra is already the largest US utility by market value and the largest renewable-energy developer, and Dominion is the dominant utility in Virginia, home to the largest data center market on earth.
 
-[](https://substackcdn.com/image/fetch/$s_!4Xnu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8194dc66-26cd-4dbf-901d-5a7deed706ad_1061x673.png)
+[![](<../_img/2026-05-19--daily-update-may-19th-2026/001_8194dc66-26cd-4dbf-901d-5a7deed706ad_1061x673.png> "https://substackcdn.com/image/fetch/$s_!4Xnu!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8194dc66-26cd-4dbf-901d-5a7deed706ad_1061x673.png")](https://substackcdn.com/image/fetch/$s_!4Xnu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8194dc66-26cd-4dbf-901d-5a7deed706ad_1061x673.png)
 
 **The household side is showing up in CPI.** Per [@KobeissiLetter](https://x.com/KobeissiLetter/status/2056091794383700303), US electricity prices rose 6.1% YoY in April, the eighth monthly print above 5% in the last ten. AI data center load is now visible in residential bills, which is the political dimension that shapes multi-year utility planning and FERC review.
 
@@ -83,7 +81,7 @@ Shares of Lumentum and Coherent fell after hedge fund manager Leopold Aschenbren
 
 Notice the funny y-axis just to fit in memory. Yeah, thats how insane it has been. 👀
 
-[](https://substackcdn.com/image/fetch/$s_!h8xd!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffe76443d-b9bd-4bb4-a309-38b26c8a32c4_976x856.png)Via TMT Breakout substack.
+[![](<../_img/2026-05-19--daily-update-may-19th-2026/002_fe76443d-b9bd-4bb4-a309-38b26c8a32c4_976x856.png> "https://substackcdn.com/image/fetch/$s_!h8xd!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffe76443d-b9bd-4bb4-a309-38b26c8a32c4_976x856.png")](https://substackcdn.com/image/fetch/$s_!h8xd!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffe76443d-b9bd-4bb4-a309-38b26c8a32c4_976x856.png)Via TMT Breakout substack.
 
 ### TIL: WTF is a Forward Deployed Engineer
 

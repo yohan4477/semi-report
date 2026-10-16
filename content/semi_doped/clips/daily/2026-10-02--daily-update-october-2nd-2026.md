@@ -13,9 +13,7 @@ Broadcom is assembling $60 billion in debt to finance chip leases for Anthropic,
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -43,7 +41,7 @@ Bloomberg reports that Broadcom has begun [assembling $60 billion in debt financ
 >   
 > I anticipated this cope a while ago on my Substack. Here's the whole thing:_
 > 
-> [Vik's NewsletterHow Custom Base Die Drives HBM Bandwidth, and Who Stands to BenefitA recent notable trend is that HBM performance is decoupling from stack height. Reports over the last month that Rubin Ultra drops HBM from 12-high to 8-high have been read as a supply/cost-driven downgrade, which is true. But the larger shift is that bandwidth, not capacity, is becoming the metric that matters in HBM. What sets HBM apart going forward is bandwidth performance via the custom base die, and value accrues to whoever designs it…Read morea month ago · 52 likes · Vikram Sekar](https://www.viksnewsletter.com/p/how-custom-base-die-drives-hbm-bandwidth?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
+> [![](<../_img/2026-10-02--daily-update-october-2nd-2026/001_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png")Vik's NewsletterHow Custom Base Die Drives HBM Bandwidth, and Who Stands to BenefitA recent notable trend is that HBM performance is decoupling from stack height. Reports over the last month that Rubin Ultra drops HBM from 12-high to 8-high have been read as a supply/cost-driven downgrade, which is true. But the larger shift is that bandwidth, not capacity, is becoming the metric that matters in HBM. What sets HBM apart going forward is bandwidth performance via the custom base die, and value accrues to whoever designs it…Read morea month ago · 52 likes · Vikram Sekar](https://www.viksnewsletter.com/p/how-custom-base-die-drives-hbm-bandwidth?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
 
 ### Qualcomm Snapdragon X2 Benchmarks Pressure Intel in Premium Laptops
 
@@ -69,7 +67,7 @@ Tavus has unveiled Griffin, a real-time video AI model the company is calling th
 
 > **Vik:**_See the AI talking in this tweet, it is quite believable actually._
 > 
-> [ Tavus@tavusIntroducing Griffin, the first model to pass the video Turing test. 48% of people who talked to it live thought it was a real human. Previous systems have had a pass rate <3%. It is #1 on NVIDIA's benchmark for full-duplex AI video. It’s the first Human Interaction Model (HIM). 4:59 PM · Oct 1, 2026 · 12.4M Views
+> [![X avatar for @tavus](<../_img/2026-10-02--daily-update-october-2nd-2026/002_ZFG0msxY.jpg> "https://substackcdn.com/image/fetch/$s_!sZ29!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1974200616399593472%2FZFG0msxY.jpg") Tavus@tavusIntroducing Griffin, the first model to pass the video Turing test. 48% of people who talked to it live thought it was a real human. Previous systems have had a pass rate <3%. It is #1 on NVIDIA's benchmark for full-duplex AI video. It’s the first Human Interaction Model (HIM). ![](<../_img/2026-10-02--daily-update-october-2nd-2026/003___ss-rehost__tw-video-preview-13_2105703934073683968.jpg> "https://substackcdn.com/image/fetch/$s_!AE1p!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2105703934073683968.jpg")4:59 PM · Oct 1, 2026 · 12.4M Views
 > 
 > * * *
 > 
@@ -117,7 +115,7 @@ Tavus has unveiled Griffin, a real-time video AI model the company is calling th
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-02--daily-update-october-2nd-2026/004_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

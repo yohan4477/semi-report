@@ -9,9 +9,7 @@ subtitle: Nvidia opens the rack to photons, crams a petaflop into a laptop, and 
 ---
 Big day for the photons. Nvidia cracks NVLink Fusion open to Lightmatter and Ayar Labs, optical names rip, and Jensen reminds everyone that copper still has a job for as long as we can imagine. Microsoft and Nvidia stuff a petaflop into a thin-and-light and call it RTX Spark. And Alphabet passes the hat for $80 billion with Berkshire chipping in. Plus: Chinese NAND closes the gap, CoreWeave taps the junk market, and Astera plants a bigger flag in Taiwan. Let’s dig in. 👇
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -77,7 +75,7 @@ Microsoft and Nvidia introduced RTX Spark, an Nvidia processor for thin-and-ligh
 
 Fourty minute video from TechInsights on 18A, per [Alex_Intel_](https://open.substack.com/users/264958805-alex_intel_?utm_source=mentions) on X.
 
-[](https://substackcdn.com/image/fetch/$s_!BPYF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe60c4760-2832-4280-871c-bfaf113cfd1d_1206x1174.png)[Source](https://x.com/alex_intel_/status/2062258748929061254?s=51)
+[![](<../_img/2026-06-03--daily-update-june-3rd-2026/001_e60c4760-2832-4280-871c-bfaf113cfd1d_1206x1174.png> "https://substackcdn.com/image/fetch/$s_!BPYF!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe60c4760-2832-4280-871c-bfaf113cfd1d_1206x1174.png")](https://substackcdn.com/image/fetch/$s_!BPYF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe60c4760-2832-4280-871c-bfaf113cfd1d_1206x1174.png)[Source](https://x.com/alex_intel_/status/2062258748929061254?s=51)
 
 That’s it for today. Austin’s on his way home from Computex; flight through Toyko was cancelled due to Typhoon Jangmi, hope our Japanese friends are all doing ok!
 

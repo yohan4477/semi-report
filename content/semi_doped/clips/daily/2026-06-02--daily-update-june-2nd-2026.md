@@ -9,9 +9,7 @@ subtitle: Marvell and Intel at Computex, and some Ayar labs in-rack optical scal
 ---
 Action packed day at Computex 2026. Very crowded, very tiring, very fun. Short update as usual for this week. 
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -21,7 +19,7 @@ Subscribe
 
 The whole talk was about how Marvell is at the forefront of optical connectivity. CEO Matt Murphy showed off their CPO switch, and spoke about how the copper wall is moving into the rack such that only very short interconnects are still in copper. In our opinion, this is overly optimistic and in-rack copper scale up is here to stay for the time being. Not to say optics is not important; both will coexist for at least a few more years. Marvell also announced their 102.4Tbps Teralynx switch. 
 
-[](https://substackcdn.com/image/fetch/$s_!wq_E!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19af6c7f-cee1-422c-8feb-33f5921b089b.heic)
+[![](<../_img/2026-06-02--daily-update-june-2nd-2026/001_19af6c7f-cee1-422c-8feb-33f5921b089b.heic> "https://substackcdn.com/image/fetch/$s_!wq_E!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19af6c7f-cee1-422c-8feb-33f5921b089b.heic")](https://substackcdn.com/image/fetch/$s_!wq_E!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F19af6c7f-cee1-422c-8feb-33f5921b089b.heic)
 
 Then Jensen showed up and called Marvell the next trillion dollar company. I guess that has stirred [MRVL 0.00%↑](https://substack.com/search/%24MRVL) stock? Hmm, whatever. Here’s a fun video of him running in. 
 
@@ -54,7 +52,7 @@ Arm said Tuesday at Computex that Oracle Cloud Infrastructure and ByteDance are 
 
 There was this really cool looking rack that shows what optical scale up looks like. All those plugs in blue are ELSFP laser modules, and all the yellow cables are optical fibers going into a switch. Beautiful 🤌🏽
 
-[](https://substackcdn.com/image/fetch/$s_!wjMs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fef08412b-9fba-4a3e-9734-be8dc4994035.heic)
+[![](<../_img/2026-06-02--daily-update-june-2nd-2026/002_ef08412b-9fba-4a3e-9734-be8dc4994035.heic> "https://substackcdn.com/image/fetch/$s_!wjMs!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fef08412b-9fba-4a3e-9734-be8dc4994035.heic")](https://substackcdn.com/image/fetch/$s_!wjMs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fef08412b-9fba-4a3e-9734-be8dc4994035.heic)
 
 Thanks for reading! This post is public so feel free to share it.
 

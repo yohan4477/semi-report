@@ -13,13 +13,11 @@ Huawei pulled the Ascend 960DT’s launch forward nine months to Q1 2027 and cla
 
 Let’s get into it. — _Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-17--daily-update-september-17th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 #### Presented by G2i
 
@@ -67,15 +65,15 @@ Georgia Tech researchers [released GT2N](https://github.com/azadnaeemi/GT2N), an
 
 > **Vik:**_I have a whole post on how you can play around with Open Source EDA Tools from last year!_
 > 
-> [ Vik's NewsletterHow to Learn Chip Design With Open-Source EDA ToolsHey Vikram here! 👋🏽 This newsletter now has lower price options for students and people in lower income regions to establish Purchasing Power Parity (PPP…Read morea year ago · 34 likes · 4 comments · Vikram Sekar](https://www.viksnewsletter.com/p/how-to-learn-chip-design-with-foss-eda?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
+> [![](<../_img/2026-09-17--daily-update-september-17th-2026/002_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png") Vik's NewsletterHow to Learn Chip Design With Open-Source EDA ToolsHey Vikram here! 👋🏽 This newsletter now has lower price options for students and people in lower income regions to establish Purchasing Power Parity (PPP…Read morea year ago · 34 likes · 4 comments · Vikram Sekar](https://www.viksnewsletter.com/p/how-to-learn-chip-design-with-foss-eda?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
 
-[phase interpolator@phasentrpolatorInsane work, open source GAA nanosheet 2nm PDK just dropped. github.comGitHub - azadnaeemi/GT2N: PDK for 2nm Technology Node10:22 PM · Sep 16, 2026 · 36.3K Views
+[![X avatar for @phasentrpolator](<../_img/2026-09-17--daily-update-september-17th-2026/003_xVSD2GYX.jpg> "https://substackcdn.com/image/fetch/$s_!FQDq!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2098469700204154889%2FxVSD2GYX.jpg")phase interpolator@phasentrpolatorInsane work, open source GAA nanosheet 2nm PDK just dropped. github.comGitHub - azadnaeemi/GT2N: PDK for 2nm Technology Node![](https://substackcdn.com/image/fetch/$s_!Rixe!,w_64,h_64,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fnews_img%2F2100349631607480320%2FR3hJ2jWt%3Fformat%3Djpg%26name%3Dorig)10:22 PM · Sep 16, 2026 · 36.3K Views
 
 * * *
 
 4 Replies · 29 Reposts · 178 Likes](https://x.com/phasentrpolator/status/2100349628445024576)
 
-[](https://substackcdn.com/image/fetch/$s_!MMoA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F57a7f832-a51e-4786-be12-ac570619fcc6_400x574.gif)
+[![GT2N virtual fabrication demo](<../_img/2026-09-17--daily-update-september-17th-2026/005_57a7f832-a51e-4786-be12-ac570619fcc6_400x574.gif> "https://substackcdn.com/image/fetch/$s_!MMoA!,w_1456,c_limit,f_auto,q_auto:good,fl_lossy/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F57a7f832-a51e-4786-be12-ac570619fcc6_400x574.gif")](https://substackcdn.com/image/fetch/$s_!MMoA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F57a7f832-a51e-4786-be12-ac570619fcc6_400x574.gif)
 
 ### Sector Watch
 
@@ -156,7 +154,7 @@ Georgia Tech researchers [released GT2N](https://github.com/azadnaeemi/GT2N), an
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-17--daily-update-september-17th-2026/006_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

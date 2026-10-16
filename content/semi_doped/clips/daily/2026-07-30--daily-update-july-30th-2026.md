@@ -13,9 +13,7 @@ Samsung’s chip profit surged more than 250-fold and SK Hynix posted record Q2 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -27,7 +25,7 @@ SK Hynix has signed long-term agreements with [more than 10 customers, including
 
 > **Vik** : _AI memory demand remains the same regardless of near term revenue misses by. SK Hynix. We covered this on the podcast._
 > 
-> #### [🎙️ Semi Doped: News Take: Hyperscaler CDS, SK Hynix Earnings, China's DUV[Semi Doped](https://substack.com/profile/500274950-semi-doped)·Jul 29[Watch now](https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi)](https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi)
+> [![🎙️ Semi Doped: News Take: Hyperscaler CDS, SK Hynix Earnings, China's DUV](<../_img/2026-07-30--daily-update-july-30th-2026/001_transcoded-1785351229.png> "https://substackcdn.com/image/fetch/$s_!oaey!,w_140,h_140,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-video.s3.amazonaws.com%2Fvideo_upload%2Fpost%2F209007662%2F5ab8e3da-f9c8-49f2-84ff-f224f1ee21d8%2Ftranscoded-1785351229.png")🎙️ Semi Doped: News Take: Hyperscaler CDS, SK Hynix Earnings, China's DUV[Semi Doped](https://substack.com/profile/500274950-semi-doped)·Jul 29[Watch now](https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi)](https://daily.semidoped.com/p/semi-doped-3-stories-behind-the-semi)
 
 ### Samsung Electro-Mechanics Raises MLCC Prices 30% as AI Server Demand Bites
 
@@ -58,7 +56,7 @@ UMC’s story is the most unexpected: the mature-node foundry lifted its [2026-2
 
 ### Mo’ AI, Mo’ Money
 
-[Financial Times@FTSituational Awareness, the $20bn hedge fund founded by former OpenAI employee Leopold Aschenbrenner, has sought to raise fresh capital from investors after suffering heavy losses during the recent rout in AI stocks [ft.trib.al/SwCjjE6](https://ft.trib.al/SwCjjE6) 9:05 AM · Jul 30, 2026 · 44.5K Views
+[![X avatar for @FT](<../_img/2026-07-30--daily-update-july-30th-2026/002_EqEMtLhM.jpg> "https://substackcdn.com/image/fetch/$s_!oSmR!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F931156393108885504%2FEqEMtLhM.jpg")Financial Times@FTSituational Awareness, the $20bn hedge fund founded by former OpenAI employee Leopold Aschenbrenner, has sought to raise fresh capital from investors after suffering heavy losses during the recent rout in AI stocks [ft.trib.al/SwCjjE6](https://ft.trib.al/SwCjjE6) ![Leopold Aschenbrenner speaks into a microphone during a video interview, seated indoors near a window and a leafy plant.](<../_img/2026-07-30--daily-update-july-30th-2026/003_HOduCxHXwAAAKUX.jpg> "https://pbs.substack.com/media/HOduCxHXwAAAKUX.jpg")9:05 AM · Jul 30, 2026 · 44.5K Views
 
 * * *
 

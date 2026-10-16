@@ -13,13 +13,11 @@ MediaTek’s new Dimensity 9600 Pro puts the company on TSMC’s 2nm before Qual
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-15--daily-update-september-15th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 #### Presented by G2i
 
@@ -76,7 +74,7 @@ Samsung Electro-Mechanics and Qualcomm are jointly developing an organic bridge 
 
 Global semiconductor revenue [surged a record 31.4% quarter-over-quarter to surpass $425 billion in Q2 2026](https://www.lightreading.com/semiconductors/global-semiconductor-revenue-surges-31-to-record-425b-in-q2-omdia), according to Omdia, beating the previous sequential growth record of 29.2% set just one quarter earlier in Q1 2026. That back-to-back record run pushed first-half 2026 revenue to $752 billion. AI demand and strong memory prices drove the headline number, but the breadth of gains across logic and analog segments gave the result extra weight. Omdia has not observed sequential growth of this magnitude in any quarter since it began tracking the market in Q1 2002. The research firm [forecasts Q3 revenue will surpass $500 billion](https://www.lightreading.com/semiconductors/global-semiconductor-revenue-surges-31-to-record-425b-in-q2-omdia), which would lift cumulative revenue for the first three quarters of 2026 above $1.25 trillion.
 
-[Wall St Engine@wallstengineGlobal semiconductor revenue hit a record $425B in Q2 2026, up 31.4% QoQ, according to Omdia. Memory chips accounted for more than half of total revenue, driven by AI demand and rising DRAM, NAND and NOR pricing. Even excluding memory, semiconductor revenue grew more than 10%…8:57 AM · Sep 14, 2026 · 22.5K Views
+[![X avatar for @wallstengine](<../_img/2026-09-15--daily-update-september-15th-2026/002_oZp5wB4r.jpg> "https://substackcdn.com/image/fetch/$s_!y3i6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1691846947857178624%2FoZp5wB4r.jpg")Wall St Engine@wallstengineGlobal semiconductor revenue hit a record $425B in Q2 2026, up 31.4% QoQ, according to Omdia. Memory chips accounted for more than half of total revenue, driven by AI demand and rising DRAM, NAND and NOR pricing. Even excluding memory, semiconductor revenue grew more than 10%…8:57 AM · Sep 14, 2026 · 22.5K Views
 
 * * *
 
@@ -150,7 +148,7 @@ Global semiconductor revenue [surged a record 31.4% quarter-over-quarter to surp
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-15--daily-update-september-15th-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

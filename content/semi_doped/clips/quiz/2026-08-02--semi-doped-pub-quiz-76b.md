@@ -17,7 +17,6 @@ Name it.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 Thanks for reading! This post is public so feel free to share it.
 
@@ -29,7 +28,7 @@ Thanks for reading! This post is public so feel free to share it.
 
 > The flagship product category is the smart retimer. The founders had run the high-speed interface and clocking business at their previous employer, so they were rebuilding the thing they already knew, for a customer set that did not yet exist.
 
-[](https://substackcdn.com/image/fetch/$s_!MXYA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa2f26135-63ed-47f4-86c4-2e9d5f9ef458_992x671.jpeg)
+[![Astera Labs PCIe PCB Signal Integrity](<../_img/2026-08-02--semi-doped-pub-quiz-76b/001_a2f26135-63ed-47f4-86c4-2e9d5f9ef458_992x671.jpeg> "https://substackcdn.com/image/fetch/$s_!MXYA!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa2f26135-63ed-47f4-86c4-2e9d5f9ef458_992x671.jpeg")](https://substackcdn.com/image/fetch/$s_!MXYA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa2f26135-63ed-47f4-86c4-2e9d5f9ef458_992x671.jpeg)
 
 > The name sits one letter away from the Greek word for star.
 
@@ -54,5 +53,3 @@ For more on Astera Labs, visit:
 
 
 Thanks for reading! Subscribe for free to receive new posts and support my work.
-
-Subscribe

@@ -13,9 +13,7 @@ Separately, Amazon launched a $25 billion bond offering, one of the largest corp
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -57,7 +55,7 @@ Samsung has begun mass production of NVMe storage drives designed for Nvidia’s
 
 > _**Vik:** Cute looking drive_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!72Mq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c910488-56cb-4746-a9ba-3643ba9f4115_2766x2074.webp)
+> [![Samsung Starts to Produce Storage Drive for Nvidia’s Vera Rubin](<../_img/2026-07-08--daily-update-july-8th-2026/001_4c910488-56cb-4746-a9ba-3643ba9f4115_2766x2074.webp> "https://substackcdn.com/image/fetch/$s_!72Mq!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c910488-56cb-4746-a9ba-3643ba9f4115_2766x2074.webp")](https://substackcdn.com/image/fetch/$s_!72Mq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c910488-56cb-4746-a9ba-3643ba9f4115_2766x2074.webp)
 > 
 >  _**Austin:** Samsung selling storage and memory into Vera Rubin. If only Samsung Foundry could participate in logic for Vera Rubin too, they’d be even richer._
 
@@ -69,7 +67,7 @@ Zhipu AI, the Chinese AI lab behind the GLM series of open-source AI models, is 
 > 
 > _**Austin:** The company formerly known as Zhipu AI, but now called z.ai but formally known as Knowledge Atlas Technology JSC Ltd?_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!SkLK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd765b082-e56d-4b0b-9298-b9c3c5b02575_1342x1062.png)
+> [![](<../_img/2026-07-08--daily-update-july-8th-2026/002_d765b082-e56d-4b0b-9298-b9c3c5b02575_1342x1062.png> "https://substackcdn.com/image/fetch/$s_!SkLK!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd765b082-e56d-4b0b-9298-b9c3c5b02575_1342x1062.png")](https://substackcdn.com/image/fetch/$s_!SkLK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd765b082-e56d-4b0b-9298-b9c3c5b02575_1342x1062.png)
 
 ### DeepSeek Develops Custom AI Chip to Cut Nvidia Dependence
 
@@ -99,7 +97,7 @@ Analog Devices (ADI) has completed its acquisition of Empower Semiconductor, a p
 > 
 > _**Austin:** Vertical power is a big deal. I wrote about it here:_
 > 
-> [ChipstratPower Moves Into the Package. Empower, PowerLattice, and the IVR SocketA 2.3 kW Vera Rubin pulls ~3,286 amps at the die. A Hopper H100 pulled ~1,000. Nearly 11x the conduction loss in three generations! Not good…Read more3 months ago · 21 likes · Austin Lyons](https://www.chipstrat.com/p/power-moves-into-the-package-empower?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+> [![](<../_img/2026-07-08--daily-update-july-8th-2026/003_27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png> "https://substackcdn.com/image/fetch/$s_!rCMl!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png")ChipstratPower Moves Into the Package. Empower, PowerLattice, and the IVR SocketA 2.3 kW Vera Rubin pulls ~3,286 amps at the die. A Hopper H100 pulled ~1,000. Nearly 11x the conduction loss in three generations! Not good…Read more5 months ago · 21 likes · Austin Lyons](https://www.chipstrat.com/p/power-moves-into-the-package-empower?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 ## Must Watch
 

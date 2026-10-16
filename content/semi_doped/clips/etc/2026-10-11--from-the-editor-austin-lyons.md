@@ -32,5 +32,3 @@ Neither is a business-model problem. Both are legal and execution risks, and Goo
 Will Google ship a default agent on Android before Meta gets one onto a device people carry all day?
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

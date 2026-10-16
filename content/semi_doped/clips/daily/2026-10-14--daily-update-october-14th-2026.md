@@ -57,7 +57,7 @@ SK Group Chairman Chey Tae-won has [sold a $406 million stake in the conglomerat
 
 > **Austin:** _Some context: SK Inc. said in an Oct 2 filing the sale funds the property division in Chey’s divorce case. So it’s a seller who needs cash, and it’s interesting that Michael Dell’s family office is the one taking the block. Michael Dell is awesome, if anyone should profit off memory, it’s that guy; he and his family will probably turn around it give a ton of it away too._
 > 
-> [ Michael Dell 🇺🇸@MichaelDellThis letter from Lance, a 3rd grader, made our day. 🥰 He loves LEGOs, coding, 3D printing, engineering camp, and experimenting with magnets. Lance, we’re the ones thanking you. We invested in your future. You’re already building it! 🚀🇺🇸 12:48 AM · Oct 14, 2026 · 63.7K Views
+> [![X avatar for @MichaelDell](<../_img/2026-10-14--daily-update-october-14th-2026/001_9i21pbY6.jpg> "https://substackcdn.com/image/fetch/$s_!Nq0K!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2109341421660413952%2F9i21pbY6.jpg") Michael Dell 🇺🇸@MichaelDellThis letter from Lance, a 3rd grader, made our day. 🥰 He loves LEGOs, coding, 3D printing, engineering camp, and experimenting with magnets. Lance, we’re the ones thanking you. We invested in your future. You’re already building it! 🚀🇺🇸 ![](<../_img/2026-10-14--daily-update-october-14th-2026/002_HUjVGjQWAAABaz7.jpg> "https://pbs.substack.com/media/HUjVGjQWAAABaz7.jpg")12:48 AM · Oct 14, 2026 · 63.7K Views
 > 
 > * * *
 > 
@@ -151,7 +151,7 @@ SK Group Chairman Chey Tae-won has [sold a $406 million stake in the conglomerat
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-14--daily-update-october-14th-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

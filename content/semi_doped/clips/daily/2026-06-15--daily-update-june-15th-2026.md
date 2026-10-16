@@ -13,9 +13,7 @@ Elsewhere, Korean suppliers continue to gain ground in Nvidia’s co-packaged op
 
 Let’s get into it. _—Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -67,11 +65,11 @@ World Labs co-founder Fei-Fei Li sits down with Bloomberg’s Emily Chang to exp
 
 If you want to learn why we need panel level packaging for the future of GPUs, this one picture explains everything.
 
-[](https://substackcdn.com/image/fetch/$s_!TXoD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8107d581-f126-4cf7-abd0-8f455a3dd2ad_1620x2025.png)
+[![Image](<../_img/2026-06-15--daily-update-june-15th-2026/001_8107d581-f126-4cf7-abd0-8f455a3dd2ad_1620x2025.png> "https://substackcdn.com/image/fetch/$s_!TXoD!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8107d581-f126-4cf7-abd0-8f455a3dd2ad_1620x2025.png")](https://substackcdn.com/image/fetch/$s_!TXoD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8107d581-f126-4cf7-abd0-8f455a3dd2ad_1620x2025.png)
 
 And here’s a supplier list for your perusal.
 
-[](https://substackcdn.com/image/fetch/$s_!PmVw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F97bda489-966f-4661-9d1a-910a051fc78f_960x1200.jpeg)
+[![Image](<../_img/2026-06-15--daily-update-june-15th-2026/002_97bda489-966f-4661-9d1a-910a051fc78f_960x1200.jpeg> "https://substackcdn.com/image/fetch/$s_!PmVw!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F97bda489-966f-4661-9d1a-910a051fc78f_960x1200.jpeg")](https://substackcdn.com/image/fetch/$s_!PmVw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F97bda489-966f-4661-9d1a-910a051fc78f_960x1200.jpeg)
 
 Thanks for reading! This post is public so feel free to share it.
 

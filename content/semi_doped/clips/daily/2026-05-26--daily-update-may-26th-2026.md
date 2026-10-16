@@ -9,9 +9,7 @@ subtitle: Cool hynix, Qualcomm XPUs, OpenRouter says tokens going vertical
 ---
 On today’s hit list: SK hynix sneaks a cooling block inside the HBM stack (and gives it the ICE acronym), Qualcomm lands ByteDance as its first big AI ASIC customer, and OpenRouter raises $113M at $1.3B as weekly tokens hit 25 trillion.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -21,7 +19,7 @@ Subscribe
 
 SK hynix introduced “iHBM,” a high-bandwidth memory design that embeds cooling elements directly inside the HBM package to manage heat in AI processors. The company said the structural approach lowers thermal resistance by 30% compared with conventional packaging. SK hynix described the integrated cooling as a way to address heat management at the package level rather than relying solely on external cooling systems. ([prnewswire](https://www.prnewswire.com/news-releases/sk-hynix-unveils-ihbm-thermal-solution-to-boost-ai-performance-302781354.html?utm_source=chatgpt.com))
 
-[](https://substackcdn.com/image/fetch/$s_!L3x5!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1567e196-6b23-4b6a-b50c-c8e394224ff1_500x281.jpeg)
+[![\(PRNewsfoto/SK hynix Inc.\)](<../_img/2026-05-26--daily-update-may-26th-2026/001_1567e196-6b23-4b6a-b50c-c8e394224ff1_500x281.jpeg> "https://substackcdn.com/image/fetch/$s_!L3x5!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1567e196-6b23-4b6a-b50c-c8e394224ff1_500x281.jpeg")](https://substackcdn.com/image/fetch/$s_!L3x5!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1567e196-6b23-4b6a-b50c-c8e394224ff1_500x281.jpeg)
 
 > _**Vik:** I can’t believe they called it an integrated cooling element (ICE) _😭 — _interestingly, the D2D PHY that does all the comms stuff between the HBM and SoC generates the most heat. Moving all those parallel lanes of data is no easy task. And this ICE block is kept on top of the PHY to cool it. Thermal resistance drops by 30%. Expect it in HBM5._
 > 
@@ -54,15 +52,15 @@ OpenRouter, the AI model marketplace founded three years ago, raised $113 millio
 
 ### Key Data
 
-[](https://substackcdn.com/image/fetch/$s_!iXBc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdefd931d-a9b1-4019-a6b2-40d4ab33e6df_2174x1142.jpeg)
+[![Image](<../_img/2026-05-26--daily-update-may-26th-2026/002_defd931d-a9b1-4019-a6b2-40d4ab33e6df_2174x1142.jpeg> "https://substackcdn.com/image/fetch/$s_!iXBc!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdefd931d-a9b1-4019-a6b2-40d4ab33e6df_2174x1142.jpeg")](https://substackcdn.com/image/fetch/$s_!iXBc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdefd931d-a9b1-4019-a6b2-40d4ab33e6df_2174x1142.jpeg)
 
-[](https://substackcdn.com/image/fetch/$s_!l0mK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0efec935-662b-4ca2-bc90-8e576810f610_2268x1210.jpeg)
+[![Image](<../_img/2026-05-26--daily-update-may-26th-2026/003_0efec935-662b-4ca2-bc90-8e576810f610_2268x1210.jpeg> "https://substackcdn.com/image/fetch/$s_!l0mK!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0efec935-662b-4ca2-bc90-8e576810f610_2268x1210.jpeg")](https://substackcdn.com/image/fetch/$s_!l0mK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0efec935-662b-4ca2-bc90-8e576810f610_2268x1210.jpeg)
 
 ### Intel EMIB Video
 
 Cool video to watch if you want to visualize what EMIB actually does.
 
-[Intel@intelIntel Foundry’s packaging technology continues to progress, with EMIB-T serving as the newest advancement this year. EMIB-T adds routing channels directly through tiny silicon bridges that connect different chips. By creating a more direct path for both energy and data, EMIB-T 3:00 PM · May 26, 2026 · 8K Views
+[![X avatar for @intel](<../_img/2026-05-26--daily-update-may-26th-2026/004_7dPeX1gK.png> "https://substackcdn.com/image/fetch/$s_!mlrg!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1301199561713541120%2F7dPeX1gK.png")Intel@intelIntel Foundry’s packaging technology continues to progress, with EMIB-T serving as the newest advancement this year. EMIB-T adds routing channels directly through tiny silicon bridges that connect different chips. By creating a more direct path for both energy and data, EMIB-T ![](<../_img/2026-05-26--daily-update-may-26th-2026/005_mi7fl8hvocs4kmwpliqh> "https://substackcdn.com/image/upload/w_1028,c_limit,q_auto:best/l_twitter_play_button_rvaygk,w_88/mi7fl8hvocs4kmwpliqh")3:00 PM · May 26, 2026 · 8K Views
 
 * * *
 

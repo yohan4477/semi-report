@@ -57,7 +57,7 @@ At the OCP Global Summit in San Jose, [Nvidia opened its Vera Rubin architecture
 
 > **Vik:**_The new pluggable form factor from Nvidia + Cisco is interesting: USFP. Here is a comparison to XPO I posted on X._
 > 
-> [ Vikram Sekar ✈️ OCP@vikramskrNVIDIA and Cisco’s USFP and Arista’s XPO are taking different routes to higher-density pluggable optics. USFP puts 16 electrical lanes at 400G into an OSFP-sized footprint using a new connector. That gets you 6.4T, with a path to 12.8T. XPO starts with 64 lanes at 200G for …4:24 PM · Oct 12, 2026 · 6.13K Views
+> [![X avatar for @vikramskr](<../_img/2026-10-13--daily-update-october-13th-2026/001_Rf_mIEz0.jpg> "https://substackcdn.com/image/fetch/$s_!TWOG!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1864653638054105088%2FRf_mIEz0.jpg") Vikram Sekar ✈️ OCP@vikramskrNVIDIA and Cisco’s USFP and Arista’s XPO are taking different routes to higher-density pluggable optics. USFP puts 16 electrical lanes at 400G into an OSFP-sized footprint using a new connector. That gets you 6.4T, with a path to 12.8T. XPO starts with 64 lanes at 200G for …![](<../_img/2026-10-13--daily-update-october-13th-2026/002_HUcYIBOaoAA1TVl.jpg> "https://pbs.substack.com/media/HUcYIBOaoAA1TVl.jpg")4:24 PM · Oct 12, 2026 · 6.13K Views
 > 
 > * * *
 > 
@@ -152,7 +152,7 @@ Credo Technology has simultaneously released its [1.6T ZeroFlap Active Light Cab
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_Story 1
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-13--daily-update-october-13th-2026/003_poll> "http://semidoped.com/poll")! ❤️_Story 1
 
 Thanks for reading! This post is public so feel free to share it.
 

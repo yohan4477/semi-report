@@ -19,9 +19,7 @@ Also today: Tower and Marvell crossed five million coherent photonic ICs shipped
 
 Let’s get into it. _—Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -39,7 +37,7 @@ Intel appointed Seok-Hee Lee as executive vice president of Intel Foundry, repor
 > 
 > _**Austin:** Apparently Lee also worked at Intel! Amazing. LBT can go around and also old “Team Blue” to come back and help save it._
 > 
-> [Lip-Bu Tan@LipBuTan1Super excited to welcome my close friend Seok-Hee Lee back to Intel! @seokhee4 is a highly regarded semiconductor process integration expert and successful CEO (SK Hynix). Early in his career, he spent over 10 years at @intel, contributing to several critical Intel process 2:27 AM · Jun 19, 2026 · 88.4K Views
+> [![X avatar for @LipBuTan1](<../_img/2026-06-19--daily-update-june-19th-2026/001_8aTzyFu4.jpg> "https://substackcdn.com/image/fetch/$s_!Y0e2!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1957589480254377984%2F8aTzyFu4.jpg")Lip-Bu Tan@LipBuTan1Super excited to welcome my close friend Seok-Hee Lee back to Intel! @seokhee4 is a highly regarded semiconductor process integration expert and successful CEO (SK Hynix). Early in his career, he spent over 10 years at @intel, contributing to several critical Intel process ![](<../_img/2026-06-19--daily-update-june-19th-2026/002_HLJJSPDaMAAvAjM.png> "https://pbs.substack.com/media/HLJJSPDaMAAvAjM.png")2:27 AM · Jun 19, 2026 · 88.4K Views
 > 
 > * * *
 > 
@@ -67,7 +65,7 @@ Samsung Electronics unveiled what it describes as the world’s smallest 3D stac
 
 Architect Labs, a semiconductor startup, raised $24 million in funding to compete with Broadcom and Marvell in the custom chip business, according to Reuters. The company is targeting the application-specific integrated circuit (ASIC) market, where Broadcom and Marvell currently design custom silicon for hyperscale cloud providers and other large customers. ([Reuters](https://news.google.com/rss/articles/CBMi0gFBVV95cUxNLU5CbGtVaEcyNHFuR253WGxMcTRQMkdPTU9NZ3JGZ0NCTzlWaUdLWjIxcVE3bkdXUjltLV9QUzJzTVJHTkhKWlZIQzhvclFVZmt0SkZ1RURiWTJoaDZQNVdKNTZTOWM1RzB3VTVVVEZsUUtGZjFJTExyeDhrYTg2S2dfUGprS0NUWFMwVjdCOUUwMTk2ZWxDNFRJb0NLNnFnZ3RuZmZ5YVg5VTlsVFBpc2NEVU5lejF2aEhvbnpGVE5sX1VKbnhXTVo2cjcwUkRWWHc?oc=5))
 
-[](https://substackcdn.com/image/fetch/$s_!KTxB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa001d091-9f3f-4f32-a9bf-ff48936b5af7_1562x1266.png)[Architect Labs](https://architectlabs.com/about)
+[![](<../_img/2026-06-19--daily-update-june-19th-2026/003_a001d091-9f3f-4f32-a9bf-ff48936b5af7_1562x1266.png> "https://substackcdn.com/image/fetch/$s_!KTxB!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa001d091-9f3f-4f32-a9bf-ff48936b5af7_1562x1266.png")](https://substackcdn.com/image/fetch/$s_!KTxB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa001d091-9f3f-4f32-a9bf-ff48936b5af7_1562x1266.png)[Architect Labs](https://architectlabs.com/about)
 
 >  _**Vik:** Hock Tan’s main stake in the ground was “no one knows how to design chips like we do.” But Architect Labs is looking to change that. From the article:_
 > 

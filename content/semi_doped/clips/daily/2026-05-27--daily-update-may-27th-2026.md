@@ -13,9 +13,7 @@ Let’s get into it!
 
 * * *
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -29,13 +27,13 @@ Micron Technology and SK Hynix each surpassed $1 trillion in market capitalizati
 > 
 > _**Austin:** Micron employee RSUs. ‘Nuff said._
 
-[](https://x.com/brewmarkets/status/2059384285606408201?s=20)via @brewmarkets on X
+[![Image](<../_img/2026-05-27--daily-update-may-27th-2026/001_54f5dcd5-9703-43e8-bf72-33c72ffee821_603x680.jpeg> "https://substackcdn.com/image/fetch/$s_!agx4!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F54f5dcd5-9703-43e8-bf72-33c72ffee821_603x680.jpeg")](https://x.com/brewmarkets/status/2059384285606408201?s=20)via @brewmarkets on X
 
 ### **Infineon raises power semiconductor prices**
 
 Infineon issued a second round of price increases for its power semiconductor products, sending the notice on May 26 with the new prices taking effect July 1. The move follows an earlier hike announced in February that took effect April 1. The increases cover Infineon’s power chip lineup, a segment used in applications ranging from automotive to data center power delivery. The back-to-back adjustments come amid reports of rising demand across the power semiconductor sector.
 
-[每日快讯@dmjk001【兴证电子】英飞凌开启第二轮调价，AI需求旺盛，建议关注功率板块 #更新：英飞凌5月26号发布第二轮涨价函，上轮调价是二月发布涨价函，4.1落地，本轮5.26发布涨价函，7.1落地，两轮涨价表示功率行业需求旺盛，行业上行周期已至。 4:02 AM · May 27, 2026 · 174K Views
+[![X avatar for @dmjk001](https://substackcdn.com/image/fetch/$s_!1iRg!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2041500023947726848%2F4wsrBf6D.jpg)每日快讯@dmjk001【兴证电子】英飞凌开启第二轮调价，AI需求旺盛，建议关注功率板块 #更新：英飞凌5月26号发布第二轮涨价函，上轮调价是二月发布涨价函，4.1落地，本轮5.26发布涨价函，7.1落地，两轮涨价表示功率行业需求旺盛，行业上行周期已至。 ![](<../_img/2026-05-27--daily-update-may-27th-2026/003_HJTC8mjbgAAJyvc.jpg> "https://pbs.substack.com/media/HJTC8mjbgAAJyvc.jpg")4:02 AM · May 27, 2026 · 174K Views
 
 * * *
 
@@ -55,7 +53,7 @@ Semtech [SMTC 0.00%↑](https://substack.com/search/%24SMTC) reported a fiscal-q
 
 > _**Vik:** I looked into Semtech’s CopperEdge in quite some depth, and they are way ahead on ACCs. They cofounded the MSA, have named hyperscaler wins at Meta with cable partners, and another unknown CSP whose orders are flowing in. I have a deep dive published this week with all the nitty gritty details about the entire ACC industry, including Semtech. Check it out!_
 
-[Vik's NewsletterHow Rack Power Density Is Opening a New Market for Active CopperThe discussion around interconnects, whether copper or optical, usually revolves around two factors and the trade offs around them: reach and data rate. As data rates rise, reach gets shorter and vice versa. As a result, networking is crudely divided into scale-up and scale-out domains restricting the former to within a single rack, and the latter to between racks…Read more3 months ago · 49 likes · Vikram Sekar](https://www.viksnewsletter.com/p/how-rack-power-density-is-opening-acc-market?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+[![](<../_img/2026-05-27--daily-update-may-27th-2026/004_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png")Vik's NewsletterHow Rack Power Density Is Opening a New Market for Active CopperThe discussion around interconnects, whether copper or optical, usually revolves around two factors and the trade offs around them: reach and data rate. As data rates rise, reach gets shorter and vice versa. As a result, networking is crudely divided into scale-up and scale-out domains restricting the former to within a single rack, and the latter to between racks…Read more5 months ago · 49 likes · Vikram Sekar](https://www.viksnewsletter.com/p/how-rack-power-density-is-opening-acc-market?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 ### Quick Hits
 
@@ -74,7 +72,7 @@ Semtech [SMTC 0.00%↑](https://substack.com/search/%24SMTC) reported a fiscal-q
 
 ### Key Data
 
-[](https://substackcdn.com/image/fetch/$s_!hckX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F947a70dc-5f2e-4ed4-aac6-991c770c89bd_583x419.png)
+[![](<../_img/2026-05-27--daily-update-may-27th-2026/005_947a70dc-5f2e-4ed4-aac6-991c770c89bd_583x419.png> "https://substackcdn.com/image/fetch/$s_!hckX!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F947a70dc-5f2e-4ed4-aac6-991c770c89bd_583x419.png")](https://substackcdn.com/image/fetch/$s_!hckX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F947a70dc-5f2e-4ed4-aac6-991c770c89bd_583x419.png)
 
 But optical comms have sent [NOK 0.00%↑](https://substack.com/search/%24NOK) soaring 150% this year. 
 
@@ -82,7 +80,7 @@ But optical comms have sent [NOK 0.00%↑](https://substack.com/search/%24NOK) s
 
 LOL. Jensen dragging down my S&P index fund investments. Get on it dude.
 
-[The AI Investor@The_AI_InvestorJensen on other semi stocks' performance 😂Heisenberg @Mr_Derivatives$NVDA just made a fresh 28 month low today relative to the $SMH. This is fascinating and potentially significant actually as Nvidia is the top component holding a massive weight in the etf at 16.2%. Weird.10:10 PM · May 26, 2026 · 52.7K Views
+[![X avatar for @The_AI_Investor](<../_img/2026-05-27--daily-update-may-27th-2026/006_J_zDSQue.jpg> "https://substackcdn.com/image/fetch/$s_!JK_t!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1750065689636036608%2FJ_zDSQue.jpg")The AI Investor@The_AI_InvestorJensen on other semi stocks' performance 😂![](<../_img/2026-05-27--daily-update-may-27th-2026/007_HJRyamea8AEYtct.png> "https://pbs.substack.com/media/HJRyamea8AEYtct.png")![X avatar for @Mr_Derivatives](<../_img/2026-05-27--daily-update-may-27th-2026/008_OtGyTOWY.jpg> "https://substackcdn.com/image/fetch/$s_!LN8R!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1648535580870078465%2FOtGyTOWY.jpg")Heisenberg @Mr_Derivatives$NVDA just made a fresh 28 month low today relative to the $SMH. This is fascinating and potentially significant actually as Nvidia is the top component holding a massive weight in the etf at 16.2%. Weird.10:10 PM · May 26, 2026 · 52.7K Views
 
 * * *
 
@@ -90,7 +88,7 @@ LOL. Jensen dragging down my S&P index fund investments. Get on it dude.
 
 >  _**Austin:** Just wait for physical AI my dudes. Nvidia set to ride that S-curve. See my recent interview with Nvidia’s Deepu Talla: _
 > 
-> [Chipstrat An Interview with Nvidia's Deepu Talla About Physical AI and RoboticsThe industrial business of the future runs on fleets of agents. Some are digital (LLMs), some are embodied (robots), some are humans, and all need orchestration. Most people understand physical AI is here and coming, but most aren’t experiencing it yet and don’t yet have a feel for what makes it work or where it actually runs. So I sat down with Deepu Talla, VP and GM of Robotics and Edge AI at Nvidia, on what’s actually changed at the edge, what hasn’t, and what the path looks like from here… Listen now3 months ago · 16 likes · Austin Lyons](https://www.chipstrat.com/p/an-interview-with-nvidias-deepu-talla?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+> [![](<../_img/2026-05-27--daily-update-may-27th-2026/009_27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png> "https://substackcdn.com/image/fetch/$s_!rCMl!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png")Chipstrat An Interview with Nvidia's Deepu Talla About Physical AI and RoboticsThe industrial business of the future runs on fleets of agents. Some are digital (LLMs), some are embodied (robots), some are humans, and all need orchestration. Most people understand physical AI is here and coming, but most aren’t experiencing it yet and don’t yet have a feel for what makes it work or where it actually runs. So I sat down with Deepu Talla, VP and GM of Robotics and Edge AI at Nvidia, on what’s actually changed at the edge, what hasn’t, and what the path looks like from here… Listen now5 months ago · 16 likes · Austin Lyons](https://www.chipstrat.com/p/an-interview-with-nvidias-deepu-talla?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 Thanks for reading! This post is public so feel free to share it.
 

@@ -11,9 +11,7 @@ A few of this week's biggest stories all point the same direction: everyone is b
 
 Time to dive in.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -66,7 +64,7 @@ CEO Scott Wu said the new funding lets the company stay independent and keep ope
 
   * **Ayar Labs** detailed a production-ready optically connected rack design for AI scale-up, targeting rack-scale systems like Nvidia and AMD’s 72-GPU configurations. ([Ayar Labs](http://ayarlabs.com/blog/building-a-production-ready-optically-connected-rack-for-ai-scale-up/))
 
-[](https://substackcdn.com/image/fetch/$s_!TLQo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2e646151-882e-4856-ae28-8259b048ba30_752x660.png)
+[![](<../_img/2026-05-28--daily-update-may-28th-2026/001_2e646151-882e-4856-ae28-8259b048ba30_752x660.png> "https://substackcdn.com/image/fetch/$s_!TLQo!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2e646151-882e-4856-ae28-8259b048ba30_752x660.png")](https://substackcdn.com/image/fetch/$s_!TLQo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2e646151-882e-4856-ae28-8259b048ba30_752x660.png)
 
   * Epiwafer and substrate maker **IQE** of Cardiff, Wales, UK has completed its fundraising, yielding total subscription proceeds of £81m. ([semiconductor-today](https://www.semiconductor-today.com/news_items/2026/may/iqe-280526.shtml))
 
@@ -79,7 +77,7 @@ CEO Scott Wu said the new funding lets the company stay independent and keep ope
 
 We have a full episode coming up on the Semi Doped podcast this week about Huawei’s Tau Scaling and LogicFolding where we discuss thermal issues. Turns out Huawei is putting a micropump in Kirin fir cooling. Insane!
 
-[](https://substackcdn.com/image/fetch/$s_!Cwsc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd03f08ea-03be-4125-9451-50248702cfa4_1280x711.jpeg)via zephyr_z9 on X.
+[![Image](<../_img/2026-05-28--daily-update-may-28th-2026/002_d03f08ea-03be-4125-9451-50248702cfa4_1280x711.jpeg> "https://substackcdn.com/image/fetch/$s_!Cwsc!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd03f08ea-03be-4125-9451-50248702cfa4_1280x711.jpeg")](https://substackcdn.com/image/fetch/$s_!Cwsc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd03f08ea-03be-4125-9451-50248702cfa4_1280x711.jpeg)via zephyr_z9 on X.
 
 ### Google’s Coral Board
 

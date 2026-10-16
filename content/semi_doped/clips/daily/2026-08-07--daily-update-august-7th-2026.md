@@ -13,9 +13,7 @@ AMD is acquiring Toronto-based AI inference chip startup Taalas, a deal that bri
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -33,7 +31,7 @@ SK Hynix announced it will invest [54 trillion won across two South Korean fabri
 
 The dual-fab commitment stands as the largest single memory CapEx announcement of the current cycle.
 
-[](https://substackcdn.com/image/fetch/$s_!-D4X!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd35f0f9c-e191-47d7-b10d-f9d5975bcb96_1600x1128.jpeg)
+[![](<../_img/2026-08-07--daily-update-august-7th-2026/001_d35f0f9c-e191-47d7-b10d-f9d5975bcb96_1600x1128.jpeg> "https://substackcdn.com/image/fetch/$s_!-D4X!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd35f0f9c-e191-47d7-b10d-f9d5975bcb96_1600x1128.jpeg")](https://substackcdn.com/image/fetch/$s_!-D4X!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd35f0f9c-e191-47d7-b10d-f9d5975bcb96_1600x1128.jpeg)
 
 > _**Vik** : SK hynix’s fab expansions are a high-stakes bet on sustained AI memory growth. For this kind of capacity expansion to make sense, sustained demand for memory needs to continue through to 2028 or 2029, which is an eternity if you consider the current pace of AI. There is a nonzero possibility that some new memory technique or tier emerges between now and then, rendering this fab capacity or less in-demand than it is today_
 

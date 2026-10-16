@@ -11,9 +11,7 @@ The much awaited Cerebras IPO is here, and is priced at $185/share. Trading begi
 
 Plus, **a special story dedicated to Trilogy Systems** — who wanted to be where Cerebras is today, but were hit by the curse of the Pharoahs.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -41,9 +39,9 @@ OpenAI [published](https://www.opencompute.org/documents/ocp-mrc-1-0-pdf) the de
 
 MRC sprays a single transfer across hundreds of paths (”packet spraying”) instead of pinning flows to one route, pairs with multi-plane Clos topologies for 100K+ GPU scaling, and replaces dynamic routing with static source routing via SRv6 — the transport layer owns resilience instead of the fabric. MRC is already in production across OpenAI’s largest Microsoft training clusters and is the networking foundation for the Stargate cluster in Abilene, Texas, on Oracle Cloud Infrastructure.
 
-[](https://substackcdn.com/image/fetch/$s_!QXK4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd87caa9e-06fe-4844-aa38-337acb738968_802x435.svg)
+[![""](<../_img/2026-05-14--daily-update-may-14th-2026/001_d87caa9e-06fe-4844-aa38-337acb738968_802x435.svg> "https://substackcdn.com/image/fetch/$s_!QXK4!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd87caa9e-06fe-4844-aa38-337acb738968_802x435.svg")](https://substackcdn.com/image/fetch/$s_!QXK4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd87caa9e-06fe-4844-aa38-337acb738968_802x435.svg)
 
-[](https://substackcdn.com/image/fetch/$s_!ML8l!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7325514-9bee-4c13-ba64-a6482abcc50e_808x393.svg)
+[![""](<../_img/2026-05-14--daily-update-may-14th-2026/002_e7325514-9bee-4c13-ba64-a6482abcc50e_808x393.svg> "https://substackcdn.com/image/fetch/$s_!ML8l!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7325514-9bee-4c13-ba64-a6482abcc50e_808x393.svg")](https://substackcdn.com/image/fetch/$s_!ML8l!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7325514-9bee-4c13-ba64-a6482abcc50e_808x393.svg)
 
 > _**Austin:**_****_The[MRC paper](https://cdn.openai.com/pdf/resilient-ai-supercomputer-networking-using-mrc-and-srv6.pdf) mentions that the NIC/DPUs are the star of the show:  
 >   
@@ -69,7 +67,7 @@ Following positive investor signals regarding its silicon carbide (SiC) strategy
 > 
 > _**Austin:** I can’t find a pulse…. oh wait…. its alive!_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!8qJJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe302b719-6996-43c2-87f6-f7fba5ccd1b3_1134x934.png)
+> [![](<../_img/2026-05-14--daily-update-may-14th-2026/003_e302b719-6996-43c2-87f6-f7fba5ccd1b3_1134x934.png> "https://substackcdn.com/image/fetch/$s_!8qJJ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe302b719-6996-43c2-87f6-f7fba5ccd1b3_1134x934.png")](https://substackcdn.com/image/fetch/$s_!8qJJ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe302b719-6996-43c2-87f6-f7fba5ccd1b3_1134x934.png)
 
 ### Quick Hits
 

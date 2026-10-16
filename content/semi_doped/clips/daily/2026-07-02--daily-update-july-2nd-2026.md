@@ -11,9 +11,7 @@ Meta planning to sell AI compute has triggered a market selloff in neoclouds, an
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player_
 
@@ -31,7 +29,7 @@ Micron recently became the most-traded stock in the US, reaching $70 billion in 
 > 
 > _For what it’s worth, I think Andrew is referring to**Core Automation** , an openAI spinoff that is rethinking how AI works._
 > 
-> [Andrew Curran@AndrewCurran_I'm posting this prediction now so I can quote it later. There has been a significant breakthrough in architecture - specifically around memory efficiency - not by one of the big labs, but by a team that was spun out of OpenAI (not SSI). They will probably announce it soon.9:56 PM · Jun 30, 2026 · 1.9M Views
+> [![X avatar for @AndrewCurran_](<../_img/2026-07-02--daily-update-july-2nd-2026/001__X3LT7fb.jpg> "https://substackcdn.com/image/fetch/$s_!aHzF!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1596945208058744833%2F_X3LT7fb.jpg")Andrew Curran@AndrewCurran_I'm posting this prediction now so I can quote it later. There has been a significant breakthrough in architecture - specifically around memory efficiency - not by one of the big labs, but by a team that was spun out of OpenAI (not SSI). They will probably announce it soon.9:56 PM · Jun 30, 2026 · 1.9M Views
 > 
 > * * *
 > 
@@ -41,7 +39,7 @@ Micron recently became the most-traded stock in the US, reaching $70 billion in 
 
 From [weaverobotics](https://x.com/weaverobotics/status/2072362538671706314):
 
-[Weave Robotics@weaveroboticsToday, we’re launching our home robot Isaac 1. Isaac 1 deliveries will begin this fall. Order yours below. 4:51 PM · Jul 1, 2026 · 11.3M Views
+[![X avatar for @weaverobotics](<../_img/2026-07-02--daily-update-july-2nd-2026/002_M_CvyR1v.jpg> "https://substackcdn.com/image/fetch/$s_!VlUx!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2061847282321108992%2FM_CvyR1v.jpg")Weave Robotics@weaveroboticsToday, we’re launching our home robot Isaac 1. Isaac 1 deliveries will begin this fall. Order yours below. ![](<../_img/2026-07-02--daily-update-july-2nd-2026/003___ss-rehost__tw-video-preview-13_2072362479729172480.jpg> "https://substackcdn.com/image/fetch/$s_!bVpI!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2072362479729172480.jpg")4:51 PM · Jul 1, 2026 · 11.3M Views
 
 * * *
 
@@ -61,7 +59,7 @@ Nvidia and an unspecified group of domestic partners announced commitments to bu
 
 > _**Vik:** Here is Nvidia’s “made in America” map. **Montana, South Dakota, Louisiana, West Virginia, and Vermont have no hope**. No NVIDIA green for you!_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!5oOX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b78c0cd-be26-4610-a222-46a2825fdbb2_2048x1152.jpeg)
+> [![NVIDIA United States Map](<../_img/2026-07-02--daily-update-july-2nd-2026/004_8b78c0cd-be26-4610-a222-46a2825fdbb2_2048x1152.jpeg> "https://substackcdn.com/image/fetch/$s_!5oOX!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b78c0cd-be26-4610-a222-46a2825fdbb2_2048x1152.jpeg")](https://substackcdn.com/image/fetch/$s_!5oOX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b78c0cd-be26-4610-a222-46a2825fdbb2_2048x1152.jpeg)
 
 ### Oracle Questions Returns on AI Data Center Spending
 
@@ -69,7 +67,7 @@ Oracle warned that its investment in AI data centers may not pay off, raising co
 
 > _**Vik:** Oracle has a $300B Stargate contract with OpenAI and the Oracle’s company filing lists nonpayment as one of the risks. Stock has been dropping pretty steadily this month too._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!1_N4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3b0b3ae4-d3d9-415a-a176-c741baa92282_567x523.png)
+> [![](<../_img/2026-07-02--daily-update-july-2nd-2026/005_3b0b3ae4-d3d9-415a-a176-c741baa92282_567x523.png> "https://substackcdn.com/image/fetch/$s_!1_N4!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3b0b3ae4-d3d9-415a-a176-c741baa92282_567x523.png")](https://substackcdn.com/image/fetch/$s_!1_N4!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3b0b3ae4-d3d9-415a-a176-c741baa92282_567x523.png)
 
 ### Oxmiq Raises $35M Series A, Expands to Data Center Design
 
@@ -95,7 +93,7 @@ Chinese AI firm DeepSeek has raised $7.4 billion to develop models competitive w
 
 Amazon is shifting away from externally sourcing silicon for its products, and instead plans to adopt a customer owned tooling (CoT) approach with Alchip to develop its own chips for kindle, fire TV, Alexa, etc. Expected to begin in 2027. Annual shipments expected around 40M units.
 
-[郭明錤｜Ming-Chi Kuo@mingchikuoMy latest industry checks indicate that Amazon’s processor procurement strategy for its own consumer electronics is set to undergo its first major shift in 20 years: moving away from externally sourced processors and adopting a COT (customer-owned tooling) model, with Alchip as4:00 AM · Jul 2, 2026 · 171K Views
+[![X avatar for @mingchikuo](<../_img/2026-07-02--daily-update-july-2nd-2026/006_cLKEoPBG.jpg> "https://substackcdn.com/image/fetch/$s_!rmbe!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1899476262839779328%2FcLKEoPBG.jpg")郭明錤｜Ming-Chi Kuo@mingchikuoMy latest industry checks indicate that Amazon’s processor procurement strategy for its own consumer electronics is set to undergo its first major shift in 20 years: moving away from externally sourced processors and adopting a COT (customer-owned tooling) model, with Alchip as4:00 AM · Jul 2, 2026 · 171K Views
 
 * * *
 

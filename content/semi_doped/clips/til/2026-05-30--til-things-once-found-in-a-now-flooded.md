@@ -15,13 +15,13 @@ Thanks for reading! This post is public so feel free to share it.
 
 There is this flooded pit on a small island outside Stockholm that used to be a quarry for quartz and feldspar - the dull stuff that glass and porcelain are made of. In 1787 a Swedish army lieutenant named [Carl Axel Arrhenius](https://en.wikipedia.org/wiki/Carl_Axel_Arrhenius), who collected rocks the way other officers collected debts, picked up a heavy black stone there and decided it was a new tungsten mineral. He was wrong. What he had actually found was a sampler plate from the bottom of the periodic table.
 
-[](https://substackcdn.com/image/fetch/$s_!KPeQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F53b26e5b-6b07-46dd-b3e0-eba4e27f606d_1000x675.png)
+[![](<../_img/2026-05-30--til-things-once-found-in-a-now-flooded/001_53b26e5b-6b07-46dd-b3e0-eba4e27f606d_1000x675.png> "https://substackcdn.com/image/fetch/$s_!KPeQ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F53b26e5b-6b07-46dd-b3e0-eba4e27f606d_1000x675.png")](https://substackcdn.com/image/fetch/$s_!KPeQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F53b26e5b-6b07-46dd-b3e0-eba4e27f606d_1000x675.png)
 
 Over the next century, chemists kept teasing new elements out of that one rock and its relatives. Four are named directly after the village: yttrium, terbium, erbium, and ytterbium. Several more, holmium, thulium, scandium, gadolinium, and the heavy metal tantalum, were first pulled from the same minerals. For two hundred years this was pure pub-quiz material for the chemistry nerds. Then silicon started running out of road, and the toolmakers went looking in the strange middle of the periodic table for help.
 
 Why these elements and not others? It comes down to where they keep their electrons. Ordinary silicon chemistry happens on the outside, with electrons shared politely between neighbours. Most of the Ytterby metals are lanthanides, and they tuck extra electrons into an inner shell - the 4f - that sits buried under the outer layers like a letter inside two envelopes. Shielded from the chemical traffic outside, those buried electrons keep very clean, very sharp magnetic and optical behaviour, which is exactly the sort of tidy quirk an engineer will travel a long way to use.
 
-[](https://substackcdn.com/image/fetch/$s_!77Z1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F450e2275-82b0-4857-8b3c-9f7a9ef20905_990x791.png)
+[![](<../_img/2026-05-30--til-things-once-found-in-a-now-flooded/002_450e2275-82b0-4857-8b3c-9f7a9ef20905_990x791.png> "https://substackcdn.com/image/fetch/$s_!77Z1!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F450e2275-82b0-4857-8b3c-9f7a9ef20905_990x791.png")](https://substackcdn.com/image/fetch/$s_!77Z1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F450e2275-82b0-4857-8b3c-9f7a9ef20905_990x791.png)
 
 The surprising part is that only a few of them earned a real job in a chip, and the jobs are oddly specific. 
 
@@ -57,8 +57,6 @@ China mines about 70 percent of rare earths and refines close to 90 percent. The
 
 So the last thing I learned today: in 2025 China put export controls on seven rare earths, and several of them, yttrium, scandium, terbium, dysprosium, gadolinium and lutetium, came straight off the Ytterby list. A 250-year-old quarry, found by a man who misidentified his own rock, is now a line item in a trade war.
 
-[](https://substackcdn.com/image/fetch/$s_!PiDD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4d8d286-4892-4963-8377-f60dcea58cf7_1200x942.png)
+[![](<../_img/2026-05-30--til-things-once-found-in-a-now-flooded/003_b4d8d286-4892-4963-8377-f60dcea58cf7_1200x942.png> "https://substackcdn.com/image/fetch/$s_!PiDD!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4d8d286-4892-4963-8377-f60dcea58cf7_1200x942.png")](https://substackcdn.com/image/fetch/$s_!PiDD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4d8d286-4892-4963-8377-f60dcea58cf7_1200x942.png)
 
 Thanks for reading! If you like learning fun stuff on the weekends, subscribe for free to receive new posts and support our work.
-
-Subscribe

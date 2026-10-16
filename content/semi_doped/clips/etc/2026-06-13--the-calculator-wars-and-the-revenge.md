@@ -13,7 +13,6 @@ In the early 1970s a thing called the “Calculator Wars” broke out, and it be
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 In 1972 a humble four-function calculator (add, subtract, multiply, divide; that was the entire feature list) cost about what a high-end smartphone costs today. Executives carried them into boardrooms the way they carried Swiss watches. By 1975 the same machines were sitting in drugstore bargain bins for the price of a decent dinner.
 
@@ -31,7 +30,7 @@ And here the story takes its best turn, because one of the assemblers TI gutted 
 
 Commodore’s boss, Jack Tramiel, a man whose credo was “business is war” and meant every word of it, was incandescent at being undercut by his own supplier. He drew the obvious lesson: never be a tenant again; own the building. In 1976 he bought MOS Technology, the chip outfit whose engineers (Chuck Peddle among them) had just designed a quiet little processor called the 6502. (MOS Technology, confusingly, is not the same company as Mostek; the 1970s were simply lousy with semiconductor firms whose names started with “MOS.”) Tramiel now had his own silicon, and a CPU that would go on to power the Apple II, the Atari, and the Nintendo.
 
-[](https://substackcdn.com/image/fetch/$s_!N2mP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb581664a-0dee-4528-9b54-84b7089c55ed_1160x1236.png)
+[![](<../_img/2026-06-13--the-calculator-wars-and-the-revenge/001_b581664a-0dee-4528-9b54-84b7089c55ed_1160x1236.png> "https://substackcdn.com/image/fetch/$s_!N2mP!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb581664a-0dee-4528-9b54-84b7089c55ed_1160x1236.png")](https://substackcdn.com/image/fetch/$s_!N2mP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb581664a-0dee-4528-9b54-84b7089c55ed_1160x1236.png)
 
 Then he waited.
 
@@ -42,5 +41,3 @@ All of this is worth keeping in mind while we watch the current scramble for AI 
 The cast is new, but the movie is very old, and somewhere out there is the next Tramiel.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

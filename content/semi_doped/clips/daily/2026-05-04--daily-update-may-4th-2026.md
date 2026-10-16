@@ -13,9 +13,7 @@ Plus Cerebras finally pulls the IPO trigger, Anthropic ARR keeps making numbers 
 
 Let’s get into it.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 * * *
 
@@ -27,7 +25,7 @@ The company is aiming for mass production in the second half of 2026, aligning w
 
 > _**Vik:** MXL is an interesting play that has seen +300% rise in stock price in the last month after Q1 ‘26 earnings (rev +43% YoY) with strong Q2 guidance. Their primary expertise is RF, analog, and mixed-signal chips but these recent optical TIAs are MXL’s AI optics infra play and the sentiment is red-hot bullish as is with everything in the world of optics these days._ _MXL is small optics player ($7B market cap) versus the MRVL and AVGO big-dogs._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!lpri!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe23f56b2-c038-4a3b-bbfd-6dd9ac4abc2f_667x372.png)
+> [![](<../_img/2026-05-04--daily-update-may-4th-2026/001_e23f56b2-c038-4a3b-bbfd-6dd9ac4abc2f_667x372.png> "https://substackcdn.com/image/fetch/$s_!lpri!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe23f56b2-c038-4a3b-bbfd-6dd9ac4abc2f_667x372.png")](https://substackcdn.com/image/fetch/$s_!lpri!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe23f56b2-c038-4a3b-bbfd-6dd9ac4abc2f_667x372.png)
 > 
 > _**Austin:** The optics supplier list just keeps getting longer. So many companies to track _😅
 
@@ -79,7 +77,7 @@ In the same release, Pushkar Ranade has been appointed full-time CTO (off the in
 
 Nvidia’s COGS is 90% reliant on Asian supply chains, significantly higher than previous years. (via [Bloomberg](https://www.bloomberg.com/news/articles/2026-05-03/asian-stocks-soar-as-nvidia-increases-supply-chain-reliance-to-90-in-asia?srnd=phx-technology))
 
-[](https://substackcdn.com/image/fetch/$s_!mxdL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e5f1e65-b6ff-4897-9863-d8082c52f001_639x442.png)
+[![](<../_img/2026-05-04--daily-update-may-4th-2026/002_5e5f1e65-b6ff-4897-9863-d8082c52f001_639x442.png> "https://substackcdn.com/image/fetch/$s_!mxdL!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e5f1e65-b6ff-4897-9863-d8082c52f001_639x442.png")](https://substackcdn.com/image/fetch/$s_!mxdL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e5f1e65-b6ff-4897-9863-d8082c52f001_639x442.png)
 
 ### Another Notable Exec Change
 

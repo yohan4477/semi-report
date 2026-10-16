@@ -9,13 +9,13 @@ subtitle: Julius Lilienfeld, copper sulfide, and the 1925 patent that still work
 ---
 In early 1948, [Bell Labs](https://en.wikipedia.org/wiki/Bell_Labs) had just invented the transistor, and its lawyers were doing what lawyers do before a world-changing patent filing: a routine search of prior art. Somewhere in the files they found a set of patents, filed in 1925 and 1928 by a professor who nobody in the building had heard of, describing the thing their Nobel-bound physicists were about to claim. The drawings were twenty years old. 
 
-[](https://substackcdn.com/image/fetch/$s_!qGbF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75632d1e-b0af-4891-b1b4-f288671763af_1124x838.png)
+[![](<../_img/2026-07-18--til-he-invented-the-transistor-then/001_75632d1e-b0af-4891-b1b4-f288671763af_1124x838.png> "https://substackcdn.com/image/fetch/$s_!qGbF!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75632d1e-b0af-4891-b1b4-f288671763af_1124x838.png")](https://substackcdn.com/image/fetch/$s_!qGbF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F75632d1e-b0af-4891-b1b4-f288671763af_1124x838.png)
 
 They were also, unmistakably, a field-effect transistor.
 
 The professor was [Julius Edgar Lilienfeld](https://en.wikipedia.org/wiki/Julius_Edgar_Lilienfeld), born in [Lemberg](https://en.wikipedia.org/wiki/Lviv) (today’s Lviv), doctorate under [Max Planck](https://en.wikipedia.org/wiki/Max_Planck), and the man who first characterized field electron emission as a distinct physical effect. He had spent the early 1920s irritated by the vacuum tube which was hot, fragile, and gluttonous. He wondered whether you could amplify a current inside a solid instead. His answer, filed first in Canada on 22 October 1925, was a three-electrode device using a thin copper sulfide film; apply a voltage to a middle electrode and you modulate the conductivity of the channel. 
 
-[](https://substackcdn.com/image/fetch/$s_!LlS1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c8dd4cd-18fd-4097-9d7a-292b4306cded_598x640.jpeg)By unknown, US government document - http://www.computerhistory.org/semiconductor/timeline/1926-field.html, Public Domain, https://commons.wikimedia.org/w/index.php?curid=16410577
+[![](<../_img/2026-07-18--til-he-invented-the-transistor-then/002_4c8dd4cd-18fd-4097-9d7a-292b4306cded_598x640.jpeg> "https://substackcdn.com/image/fetch/$s_!LlS1!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c8dd4cd-18fd-4097-9d7a-292b4306cded_598x640.jpeg")](https://substackcdn.com/image/fetch/$s_!LlS1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c8dd4cd-18fd-4097-9d7a-292b4306cded_598x640.jpeg)By unknown, US government document - http://www.computerhistory.org/semiconductor/timeline/1926-field.html, Public Domain, https://commons.wikimedia.org/w/index.php?curid=16410577
 
 A 1928 follow-up described what we would now call a [MOSFET](https://en.wikipedia.org/wiki/MOSFET). He had moved to America in 1921 to fight patent battles, patented the electrolytic capacitor in 1931 along the way, and watched the physics establishment shrug at his amplifier for most of his life.
 
@@ -30,5 +30,3 @@ The consolation story - that Lilienfeld was a mere theorist whose devices could 
 Lilienfeld spent his last decades on St. Thomas in the Virgin Islands, where he had moved in 1935 to escape, of all things, a wheat allergy. He died there on 28 August 1963, absent from most textbooks. 
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

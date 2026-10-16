@@ -15,13 +15,12 @@ He achieved this at his next employer, National Semiconductor, cashing out his s
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 **CLUES:**
 
 > In his early twenties he wrote the US Air Force's transistor training course, 457 pages across six sections, while teaching at Lowry Air Force Base.
 
-[](https://substackcdn.com/image/fetch/$s_!pxpW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F92a7d529-8a4c-4c06-a942-32f6eab79383_505x504.webp)
+[![Image of Heroes Of Hardware Revolution: Bob Widlar | Hackaday](<../_img/2026-09-13--semi-doped-pub-quiz-dd1/001_92a7d529-8a4c-4c06-a942-32f6eab79383_505x504.webp> "https://substackcdn.com/image/fetch/$s_!pxpW!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F92a7d529-8a4c-4c06-a942-32f6eab79383_505x504.webp")](https://substackcdn.com/image/fetch/$s_!pxpW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F92a7d529-8a4c-4c06-a942-32f6eab79383_505x504.webp)
 
 > A six-word dismissal — every idiot can count to one — was aimed at his own R&D chief, Gordon Moore, who was steering the company toward digital. 
 

@@ -13,13 +13,11 @@ Cerebras and d-Matrix both took the stage at Hot Chips 2026 to pitch purpose-bui
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-24--daily-update-august-24th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Cerebras CS-4 and d-Matrix Raptor Challenge GPU Clusters at Hot Chips 2026
 
@@ -39,9 +37,9 @@ Samsung Electronics’ board approved a [shareholder return plan of 90 trillion 
 
 > _**Austin:** Samsung’s zHBM is a hot topic too_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!hGrH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0c4ee497-06eb-43f7-a9c4-042f572a18dc_800x450.jpeg)
+> [![Samsung Phase #3: 3D Integration](<../_img/2026-08-24--daily-update-august-24th-2026/002_0c4ee497-06eb-43f7-a9c4-042f572a18dc_800x450.jpeg> "https://substackcdn.com/image/fetch/$s_!hGrH!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0c4ee497-06eb-43f7-a9c4-042f572a18dc_800x450.jpeg")](https://substackcdn.com/image/fetch/$s_!hGrH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0c4ee497-06eb-43f7-a9c4-042f572a18dc_800x450.jpeg)
 > 
-> [Gavin Baker@GavinSBakerEvery accelerator company, and I mean every accelerator company, is likely going to do some variant of 3D DRAM or the “zHBM” which were both discussed at HotChips today. The larger companies will probably run (are running) parallel programs, but these two memory variants8:08 PM · Aug 23, 2026 · 286K Views
+> [![X avatar for @GavinSBaker](<../_img/2026-08-24--daily-update-august-24th-2026/003_5L4n5L3O.jpg> "https://substackcdn.com/image/fetch/$s_!nmcM!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1396219525754937345%2F5L4n5L3O.jpg")Gavin Baker@GavinSBakerEvery accelerator company, and I mean every accelerator company, is likely going to do some variant of 3D DRAM or the “zHBM” which were both discussed at HotChips today. The larger companies will probably run (are running) parallel programs, but these two memory variants8:08 PM · Aug 23, 2026 · 286K Views
 > 
 > * * *
 > 

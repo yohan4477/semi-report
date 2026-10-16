@@ -11,9 +11,7 @@ Nvidia earnings is out and often serves as a weather forecast for AI semis. All 
 
 Also some nice tables and charts, and a great interview!
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -29,7 +27,7 @@ Nvidia reported first-quarter fiscal 2027 revenue of $82 billion, up 85% from a 
 
 ASML CEO Christophe Fouquet said the first chips made with the company’s High-NA EUV lithography machines, spanning both memory and logic, will enter production within the next few months. Each High-NA system carries a price of roughly US $400 million. TSMC has delayed adopting the technology, citing the high cost, while Intel and SK Hynix are among the chipmakers moving ahead with the tools.
 
-[](https://substackcdn.com/image/fetch/$s_!C1C7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffa813baa-2ba5-444f-8a57-967297cf7dbf_819x1024.jpeg)[Source](https://www.trendforce.com/news/2026/02/16/news-asmls-high-na-euv-for-2027-28-which-giants-are-betting-big-intel-samsung-sk-hynix-or-tsmc/)
+[![](<../_img/2026-05-21--daily-update-may-21st-2026/001_fa813baa-2ba5-444f-8a57-967297cf7dbf_819x1024.jpeg> "https://substackcdn.com/image/fetch/$s_!C1C7!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffa813baa-2ba5-444f-8a57-967297cf7dbf_819x1024.jpeg")](https://substackcdn.com/image/fetch/$s_!C1C7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffa813baa-2ba5-444f-8a57-967297cf7dbf_819x1024.jpeg)[Source](https://www.trendforce.com/news/2026/02/16/news-asmls-high-na-euv-for-2027-28-which-giants-are-betting-big-intel-samsung-sk-hynix-or-tsmc/)
 
 >  _**Austin:** I was surprised to see memory makers eager for expensive High-NA EUV, but it makes sense if High-NA can reduce exposures and make a denser DRAM cell. And presumably future HBM generations (ie HBM5) will have high enough ASPs to offset the increased tool price._
 > 
@@ -93,7 +91,7 @@ AMD has begun the production ramp of its 6th-generation EPYC server processor, c
 
   * **Intel** CEO Lip-Bu Tan imposed aggressive new chip-quality standards, warning that major validation errors can result in employee termination. ([X (@DanielNenni)](https://x.com/DanielNenni/status/2057276898556965029)) Screenshot via [techfund1 on X](https://x.com/techfund1/status/2057379207483724175?s=20).
 
-[](https://substackcdn.com/image/fetch/$s_!CaY2!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdf9598d6-bd78-4069-b48a-aa463d50864e_762x491.png)
+[![Image](<../_img/2026-05-21--daily-update-may-21st-2026/002_df9598d6-bd78-4069-b48a-aa463d50864e_762x491.png> "https://substackcdn.com/image/fetch/$s_!CaY2!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdf9598d6-bd78-4069-b48a-aa463d50864e_762x491.png")](https://substackcdn.com/image/fetch/$s_!CaY2!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdf9598d6-bd78-4069-b48a-aa463d50864e_762x491.png)
 
 
 
@@ -102,11 +100,11 @@ AMD has begun the production ramp of its 6th-generation EPYC server processor, c
 
 Morgan Stanley BoM analysis on NVIDIA Vera Rubin. Memory on VR200 is 25% of BoM. Via [@Aaronwei3n on X](https://x.com/Aaronwei3n/status/2057279855784546352?s=20).
 
-[](https://substackcdn.com/image/fetch/$s_!LREE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4ea6a94-2137-4f35-91ed-8af90e9727d6_709x408.png)
+[![Image](<../_img/2026-05-21--daily-update-may-21st-2026/003_b4ea6a94-2137-4f35-91ed-8af90e9727d6_709x408.png> "https://substackcdn.com/image/fetch/$s_!LREE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4ea6a94-2137-4f35-91ed-8af90e9727d6_709x408.png")](https://substackcdn.com/image/fetch/$s_!LREE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb4ea6a94-2137-4f35-91ed-8af90e9727d6_709x408.png)
 
 Another funny chart. Mentions of “CPU” on Nvidia conference calls. Via @jerkstore on [TMTB](https://www.tmtbreakout.com/) Slack.
 
-[](https://substackcdn.com/image/fetch/$s_!pDTT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F937d618d-f997-4efd-87d7-571c3d843a70_2048x1085.png)
+[![](<../_img/2026-05-21--daily-update-may-21st-2026/004_937d618d-f997-4efd-87d7-571c3d843a70_2048x1085.png> "https://substackcdn.com/image/fetch/$s_!pDTT!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F937d618d-f997-4efd-87d7-571c3d843a70_2048x1085.png")](https://substackcdn.com/image/fetch/$s_!pDTT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F937d618d-f997-4efd-87d7-571c3d843a70_2048x1085.png)
 
 ### Gavin Baker on Invest Like The Best
 

@@ -13,9 +13,7 @@ SK Hynix shares fell a record 19% even as the company posted ₩60.5 trillion in
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -61,7 +59,7 @@ Bloom [also logged strong profit and cash flow](https://www.stocktitan.net/sec-f
 
 Hyperscalers are investing every bit of cash into building more infrastructure, and this cash is going straight to the semiconductor companies. Amazing times we live in!
 
-[](https://substackcdn.com/image/fetch/$s_!T_CR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff82e07bd-9882-4815-bd51-4b4f51168ccf_1136x912.jpeg)
+[![Image](<../_img/2026-07-29--daily-update-july-29th-2026/001_f82e07bd-9882-4815-bd51-4b4f51168ccf_1136x912.jpeg> "https://substackcdn.com/image/fetch/$s_!T_CR!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff82e07bd-9882-4815-bd51-4b4f51168ccf_1136x912.jpeg")](https://substackcdn.com/image/fetch/$s_!T_CR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff82e07bd-9882-4815-bd51-4b4f51168ccf_1136x912.jpeg)
 
 ### Sector Watch
 

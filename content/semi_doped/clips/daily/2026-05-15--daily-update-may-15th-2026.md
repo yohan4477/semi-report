@@ -9,9 +9,7 @@ subtitle: CRBS IPO pops, Fractile gets funds, Rivian's Robotics play. Also, note
 ---
 Cerebras just made a lot of people a $#it ton of money. Inference accelerator builders like Fractile are raising money. Robotics is a growing theme in Rivian.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player! We have an upcoming episode entirely dedicated to Cerebras!_
 
@@ -23,7 +21,7 @@ Although the Cerebras IPO was priced at $185 per share, the trading day opened u
 
 This AI IPO is a big data point that sets precedent of what to expect in the future. Now the SRAM inference accelerator startup race is on, and we’re going to see a lot more of this. This is great news for anyone working on inference hardware. Congrats to Cerebras and everybody who bought at pre-IPO prices.
 
-[Morning Brew ☕️@MorningBrewCerebras, by the numbers: IPO: • Price: $185 • Shares: 30 million • Raise: $5.55 billion • Valuation: $56.4 billion At the open: • Price: $350 (+89%) • Valuation: $100+ billion It's the largest U.S. tech IPO since Uber in 2019 6:33 PM · May 14, 2026 · 39.6K Views
+[![X avatar for @MorningBrew](<../_img/2026-05-15--daily-update-may-15th-2026/001_jllY_hdv.png> "https://substackcdn.com/image/fetch/$s_!HDAL!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1848749881667522560%2FjllY_hdv.png")Morning Brew ☕️@MorningBrewCerebras, by the numbers: IPO: • Price: $185 • Shares: 30 million • Raise: $5.55 billion • Valuation: $56.4 billion At the open: • Price: $350 (+89%) • Valuation: $100+ billion It's the largest U.S. tech IPO since Uber in 2019 ![](<../_img/2026-05-15--daily-update-may-15th-2026/002_HITNTfaWQAAvoPo.jpg> "https://pbs.substack.com/media/HITNTfaWQAAvoPo.jpg")6:33 PM · May 14, 2026 · 39.6K Views
 
 * * *
 
@@ -78,7 +76,7 @@ The Wall Street Journal reported that UK chip startup Fractile, founded in 2022 
 
 A nice interview with [Irrational Analysis](https://open.substack.com/users/135313705-irrational-analysis?utm_source=mentions) — with thoughts on various aspects of the AI supply chain.
 
-[Chris Barber@chrisbarberhttps://t.co/Z5V4Li4QFE4:43 PM · May 14, 2026 · 292K Views
+[![X avatar for @chrisbarber](<../_img/2026-05-15--daily-update-may-15th-2026/003_FuZPHn-C.jpg> "https://substackcdn.com/image/fetch/$s_!MVQg!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2016529267836809217%2FFuZPHn-C.jpg")Chris Barber@chrisbarberhttps://t.co/Z5V4Li4QFE4:43 PM · May 14, 2026 · 292K Views
 
 * * *
 
@@ -98,7 +96,7 @@ Then, madness ensued. When Teal mentioned he had mimeographed copies of his rese
 
 While Bell Labs had shelved the tech as “commercially unattractive,” Teal rushed them to market for **$120 a pop** (about 50x the price of germanium) according to legend. That’s how you mic drop in physics.
 
-[](https://substackcdn.com/image/fetch/$s_!fL19!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F74791892-4a8b-4aae-8a87-242bc8ba79c4_197x255.png)Source: Bloomberg
+[![](<../_img/2026-05-15--daily-update-may-15th-2026/004_74791892-4a8b-4aae-8a87-242bc8ba79c4_197x255.png> "https://substackcdn.com/image/fetch/$s_!fL19!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F74791892-4a8b-4aae-8a87-242bc8ba79c4_197x255.png")](https://substackcdn.com/image/fetch/$s_!fL19!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F74791892-4a8b-4aae-8a87-242bc8ba79c4_197x255.png)Source: Bloomberg
 
 Thanks for reading! This post is public so feel free to share it.
 

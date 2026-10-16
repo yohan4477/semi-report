@@ -11,9 +11,7 @@ AI infrastructure demand seems strong. TSMC sees a clear line of sight to 2030. 
 
 Let’s get to it.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -93,7 +91,7 @@ The plan carries more weight than usual because SK Group Chairman Chey Tae-won p
 
 Watch the [full video about Intel 18A](https://library.techinsights.com/public/hg-content/2cd0aa9a-4818-4e23-9181-d7cba2242fd9?_gl=1*4s9wm3*_gcl_au*MTkxNzE4MDMxNy4xNzc5MzAzOTU2*_ga*MTQ1NDAwODAxMC4xNzc5MzAzOTU2*_ga_WYTJ8Y8DBZ*czE3ODA1MTU0OTAkbzIkZzAkdDE3ODA1MTU0OTAkajYwJGwwJGgw#moduleName=Public&reportCode=BRF-2512-801&subscriptionId=null&channelId=null&reportName=2026+Compute+%25E2%2580%2593+Process+Technology+Briefing+1+-+Video). 
 
-[](https://substackcdn.com/image/fetch/$s_!pKZh!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F25983a78-de28-4539-81fc-2d577a97ff7d_756x860.jpeg)
+[![Image](<../_img/2026-06-05--daily-update-june-5th-2026/001_25983a78-de28-4539-81fc-2d577a97ff7d_756x860.jpeg> "https://substackcdn.com/image/fetch/$s_!pKZh!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F25983a78-de28-4539-81fc-2d577a97ff7d_756x860.jpeg")](https://substackcdn.com/image/fetch/$s_!pKZh!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F25983a78-de28-4539-81fc-2d577a97ff7d_756x860.jpeg)
 
 Thanks for reading! This post is public so feel free to share it.
 

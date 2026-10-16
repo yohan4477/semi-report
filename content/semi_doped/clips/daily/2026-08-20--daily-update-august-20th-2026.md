@@ -13,13 +13,11 @@ SK Hynix published a co-packaged optics roadmap in Nature Electronics, mapping t
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-20--daily-update-august-20th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### SK Hynix Maps CPO Path From Memory Bandwidth to Optical Interconnect
 
@@ -27,7 +25,7 @@ SK Hynix published a co-packaged optics roadmap in Nature Electronics on Aug. 20
 
 > _**Austin:** The memory pooling is interesting. Why limit the amount of HBM to what can be physically packaged with your SOC? Why not just have a local memory pool you can connect to via optics? This gives XPU makers the ability to decide compute:memory ratios at design time. Or easily have a prefill chip with less pooled memory and a decode chip with more. _
 > 
-> [](https://substackcdn.com/image/fetch/$s_!6cLf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F53573463-7efa-420f-a439-5beb6ffae663_1600x900.jpeg)
+> [![](<../_img/2026-08-20--daily-update-august-20th-2026/002_53573463-7efa-420f-a439-5beb6ffae663_1600x900.jpeg> "https://substackcdn.com/image/fetch/$s_!6cLf!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F53573463-7efa-420f-a439-5beb6ffae663_1600x900.jpeg")](https://substackcdn.com/image/fetch/$s_!6cLf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F53573463-7efa-420f-a439-5beb6ffae663_1600x900.jpeg)
 > 
 > _Note that we’ve seen ideas like this_ _elsewhere, e.g.[Marvell/Celestial AI](https://www.marvell.com/blogs/photonic-fabric-technology-optical-connectivity-ai-infrastructure.html)._
 
@@ -37,7 +35,7 @@ Alphabet’s Waymo has [built a purpose-designed chip](https://www.bloomberg.com
 
 > _**Austin:**_ _Waymo had a bit to say, with more details at Hot Chips! The important value prop is the ability to co-design the end-to-end system and reduce “pixels-to-actuation” latency:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!62zb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff602a6a-c668-4280-91d9-03e32eb4c007_1914x1264.png)
+> [![](<../_img/2026-08-20--daily-update-august-20th-2026/003_ff602a6a-c668-4280-91d9-03e32eb4c007_1914x1264.png> "https://substackcdn.com/image/fetch/$s_!62zb!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff602a6a-c668-4280-91d9-03e32eb4c007_1914x1264.png")](https://substackcdn.com/image/fetch/$s_!62zb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff602a6a-c668-4280-91d9-03e32eb4c007_1914x1264.png)
 > 
 > _Relatedly, see my conversation with Rivian’s VP of ASIC Design about their custom silicon chip to learn more about custom silicon for autonomous vehicles:[An Interview with Rivian’s Mukund Chavan About RAP1](https://www.chipstrat.com/p/an-interview-with-rivians-mukund)_
 

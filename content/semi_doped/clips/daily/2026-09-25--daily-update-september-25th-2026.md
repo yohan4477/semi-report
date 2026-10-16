@@ -13,13 +13,11 @@ Oracle’s force majeure notice on its New Mexico data center campus is rattling
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-25--daily-update-september-25th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Oracle Force Majeure Notice on New Mexico Campus Rattles Power Equipment Suppliers
 
@@ -53,7 +51,7 @@ ASML’s European revenue share has dropped to zero, with the company saying it 
 
 Meta’s Muse AI assistant now provisions each user with a dedicated Secure VM running a full Ubuntu Linux image, giving users root-level visibility into the runtime cell filesystem. A Sentinel process running outside the runtime cell oversees sensitive actions, while passwords and other secrets are stored separately from the cell. Users can install software, compile code, browse the web, and download their personal agent data via Settings > Data controls > Download your agent data.
 
-[](https://substackcdn.com/image/fetch/$s_!SUqT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a3e5692-2ff8-4c24-adf8-fae0aa219a4b_679x505.jpeg)
+[![Image](<../_img/2026-09-25--daily-update-september-25th-2026/002_4a3e5692-2ff8-4c24-adf8-fae0aa219a4b_679x505.jpeg> "https://substackcdn.com/image/fetch/$s_!SUqT!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a3e5692-2ff8-4c24-adf8-fae0aa219a4b_679x505.jpeg")](https://substackcdn.com/image/fetch/$s_!SUqT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a3e5692-2ff8-4c24-adf8-fae0aa219a4b_679x505.jpeg)
 
 ### Sector Watch
 
@@ -134,7 +132,7 @@ Meta’s Muse AI assistant now provisions each user with a dedicated Secure VM r
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-25--daily-update-september-25th-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

@@ -21,7 +21,6 @@ Let’s get into it.
 
 — Austin & Vik
 
-Subscribe
 
 >  _**Austin** : Vik is back from vacation next week, so expect even better updates ahead! _
 
@@ -43,7 +42,7 @@ Hyperscalers are increasing CapEx, not just for more accelerators but to pay for
 > 
 > _$25B is more than MSFT spent per quarter in CapEx until recently!_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!vRUE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fefbabf90-eeb8-468f-a1ac-fd31d0ad3ebb_1688x810.png)
+> [![](<../_img/2026-04-30--daily-update-april-30th-2026/001_efbabf90-eeb8-468f-a1ac-fd31d0ad3ebb_1688x810.png> "https://substackcdn.com/image/fetch/$s_!vRUE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fefbabf90-eeb8-468f-a1ac-fd31d0ad3ebb_1688x810.png")](https://substackcdn.com/image/fetch/$s_!vRUE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fefbabf90-eeb8-468f-a1ac-fd31d0ad3ebb_1688x810.png)
 > 
 > _Also, I’m updating my priors on Amazon.[Read here.](https://www.chipstrat.com/p/rethinking-amazon-not-all-saas-is)_
 
@@ -71,7 +70,7 @@ Samsung is a beneficiary. The earnings release says we can expect more of the sa
 > 
 > _The talk is quite confident like they’re on a comeback. They have a lot of ground to try and recover._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!IHG1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5f2a1367-fe79-4454-82e6-f60cbafeba7c_600x346.png)_[Source](https://www.businesskorea.co.kr/news/articleView.html?idxno=259327)_
+> [![](<../_img/2026-04-30--daily-update-april-30th-2026/002_5f2a1367-fe79-4454-82e6-f60cbafeba7c_600x346.png> "https://substackcdn.com/image/fetch/$s_!IHG1!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5f2a1367-fe79-4454-82e6-f60cbafeba7c_600x346.png")](https://substackcdn.com/image/fetch/$s_!IHG1!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5f2a1367-fe79-4454-82e6-f60cbafeba7c_600x346.png)_[Source](https://www.businesskorea.co.kr/news/articleView.html?idxno=259327)_
 > 
 >  _But Micron’s not going to just sit by and give market share back…_
 
@@ -129,5 +128,3 @@ The fun doesn’t stop. Apple, MediaTek, Sandisk, Western Digital, and Rivian al
 Welp, see you tomorrow.
 
 _That’s it for today!_
-
-Subscribe

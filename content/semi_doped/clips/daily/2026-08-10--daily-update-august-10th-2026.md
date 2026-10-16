@@ -13,9 +13,7 @@ Apple is reportedly testing CXMT memory chips for iPhones and MacBooks, which wo
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -27,7 +25,7 @@ On the performance side, CXMT chips [hit DDR5-8800 MT/s on AMD’s AM5 platform]
 
 > _**Vik** : Regardless of whether they get to use Chinese memory supply or not, Apple 18 Pro models are estimated to have a higher selling price [according to TrendForce](https://www.trendforce.com/presscenter/news/20260810-13172.html)._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!tk7F!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa3213e91-794f-4c6b-9316-1fdd5ef693c9_1080x560.jpeg)
+> [![](<../_img/2026-08-10--daily-update-august-10th-2026/001_a3213e91-794f-4c6b-9316-1fdd5ef693c9_1080x560.jpeg> "https://substackcdn.com/image/fetch/$s_!tk7F!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa3213e91-794f-4c6b-9316-1fdd5ef693c9_1080x560.jpeg")](https://substackcdn.com/image/fetch/$s_!tk7F!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa3213e91-794f-4c6b-9316-1fdd5ef693c9_1080x560.jpeg)
 > 
 > _**Austin:** Bold move by CXMT to reportedly hold the line on pricing. At first blush it seems the wrong move; wouldn’t you want to make friends with Apple now by giving them a little discount when times are hard, and trust the good relationship would pay back over time? Except, that’s not how Apple works. I don’t think CXMT favors now would result in any extra business whatsoever from Apple in the future. And if you believe that, you might as well charge them a pretty penny for today’s dance._
 > 
@@ -51,13 +49,13 @@ The CoWoS advanced packaging hub at Longtan is [sold out globally](https://www.t
 
 > _**Austin:**_****_TSMC continues to be such an interesting company given the market dynamics right now. And just they released July’s monthly revenue, which is also one-of-a-kind. 5.6% MoM, 44.7% YoY._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!IygF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd970086c-5e1b-4d95-b485-8e298389a97c_682x159.jpeg)
+> ![TSMC July 2026 Revenue Report](<../_img/2026-08-10--daily-update-august-10th-2026/002_d970086c-5e1b-4d95-b485-8e298389a97c_682x159.jpeg> "https://substackcdn.com/image/fetch/$s_!IygF!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd970086c-5e1b-4d95-b485-8e298389a97c_682x159.jpeg")
 
 ### Key Data
 
 Nice chart from [Ben Bajarin](https://open.substack.com/users/21971657-ben-bajarin?utm_source=mentions) from Creative Strategies that shows why it’s different this time.
 
-[](https://substackcdn.com/image/fetch/$s_!G53P!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd8c8e704-dd97-4d75-b225-54882c8471e4_2630x1972.jpeg)
+[![Image](<../_img/2026-08-10--daily-update-august-10th-2026/003_d8c8e704-dd97-4d75-b225-54882c8471e4_2630x1972.jpeg> "https://substackcdn.com/image/fetch/$s_!G53P!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd8c8e704-dd97-4d75-b225-54882c8471e4_2630x1972.jpeg")](https://substackcdn.com/image/fetch/$s_!G53P!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd8c8e704-dd97-4d75-b225-54882c8471e4_2630x1972.jpeg)
 
 ### Sector Watch
 

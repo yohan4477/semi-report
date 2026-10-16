@@ -13,9 +13,7 @@ Let’s hit it.
 
 _Thanks for being one of our first fans! We’re up to 750!_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 * * *
 
@@ -25,9 +23,9 @@ Subscribe
 
 Most optical interconnects are “fast and narrow” and accelerated by power-hungry serializers and deserializers. It seems Osram is building the inverse: drop the SerDes, replace serial speed with parallel channels, and transmit light pulses at chip speed across an emitter array. CFO Rainer Irle said the initial focus is on shorter-distance scale-out interconnects (rack to rack), then scale-up within racks replacing copper over distances up to several tens of meters, and eventually chip-to-chip connections between GPUs and HBM.
 
-[](https://substackcdn.com/image/fetch/$s_!Be36!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F78dc74db-7003-4344-bd6d-2b77e74617ac_1344x738.png)
+[![](<../_img/2026-05-08--daily-update-may-8th-2026/001_78dc74db-7003-4344-bd6d-2b77e74617ac_1344x738.png> "https://substackcdn.com/image/fetch/$s_!Be36!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F78dc74db-7003-4344-bd6d-2b77e74617ac_1344x738.png")](https://substackcdn.com/image/fetch/$s_!Be36!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F78dc74db-7003-4344-bd6d-2b77e74617ac_1344x738.png)
 
-[](https://substackcdn.com/image/fetch/$s_!4Qe0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c8b1e1a-6caa-48fc-983e-74f6c54f2a49_1340x748.png)
+[![](<../_img/2026-05-08--daily-update-may-8th-2026/002_5c8b1e1a-6caa-48fc-983e-74f6c54f2a49_1340x748.png> "https://substackcdn.com/image/fetch/$s_!4Qe0!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c8b1e1a-6caa-48fc-983e-74f6c54f2a49_1340x748.png")](https://substackcdn.com/image/fetch/$s_!4Qe0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c8b1e1a-6caa-48fc-983e-74f6c54f2a49_1340x748.png)
 
 ams OSRAM gave specific power numbers for the alternatives. Today’s pluggable transceivers and active optical cables consume up to 30 picojoules per bit. Near-port optics gets to 5 to 10 pJ/bit. Co-packaged optics targets 1 to 5 pJ/bit. The slow-and-wide approach achieves low pJ/bit not by moving the engine closer to the ASIC but by removing the power-hungry SerDes entirely.
 
@@ -41,13 +39,13 @@ On revenue: Osram said the AI-datacenter opportunity is _“a EUR 3-digit millio
 > 
 > _But then I though maybe this based on VCSEL arrays? ams OSRAM’s VCSEL business runs back through the OSRAM Opto Semiconductors side, including Apple Face ID dot projector, smartphone proximity sensors, automotive LiDAR sources, and datacom transceiver lasers. Touched on this the other day at Chipstrat:_
 > 
-> [ ChipstratVCSELs + 200G Wall In AI Datacenters?Coherent has lately been talking about parallel-pathing the light source for 1.6T transceivers, developing solutions based on SiPh (silicon photonics), EMLs (electro-absorption-modulated lasers), and VCSELs (vertical-cavity surface-emitting lasers). From the recent earnings call…Read more4 months ago · 12 likes · Austin Lyons](https://www.chipstrat.com/p/vcsels-200g-wall-in-ai-datacenters?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+> [![](<../_img/2026-05-08--daily-update-may-8th-2026/003_27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png> "https://substackcdn.com/image/fetch/$s_!rCMl!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png") ChipstratVCSELs + 200G Wall In AI Datacenters?Coherent has lately been talking about parallel-pathing the light source for 1.6T transceivers, developing solutions based on SiPh (silicon photonics), EMLs (electro-absorption-modulated lasers), and VCSELs (vertical-cavity surface-emitting lasers). From the recent earnings call…Read more5 months ago · 12 likes · Austin Lyons](https://www.chipstrat.com/p/vcsels-200g-wall-in-ai-datacenters?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 > 
 >  _And ams OSRAM management used “microLED” elsewhere on the same call when describing smart-glasses displays, but deliberately switched to “micro-emitter array” for this AI program… so maybe VCSELs?_
 > 
 > _But then a friend looked at the image in the slides and said it looked like uLEDs:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!8FqF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb0058f-ff5c-4d87-91b0-adc14ed62b02_2118x1158.png)
+> [![](<../_img/2026-05-08--daily-update-may-8th-2026/004_8fb0058f-ff5c-4d87-91b0-adc14ed62b02_2118x1158.png> "https://substackcdn.com/image/fetch/$s_!8FqF!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb0058f-ff5c-4d87-91b0-adc14ed62b02_2118x1158.png")](https://substackcdn.com/image/fetch/$s_!8FqF!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8fb0058f-ff5c-4d87-91b0-adc14ed62b02_2118x1158.png)
 > 
 > _That’s surprising. ams OSRAM is already the[high-volume manufacturing partner for Avicena’s GaN MicroLEDs](https://avicena.tech/avicena-partners-with-ams-osram-to-enable-high-volume-future-production-of-ultra-low-energy-chip-to-chip-interconnects/). Does this have anything to do with Avicena, or is it a completely different thing, with the hyperscaler working directly with ams?_
 > 
@@ -75,15 +73,15 @@ Dozens of people, not hundreds!
 
 We covered the “memory tax” on a Semi Doped episode. This chart shows just how true it is.
 
-#### [🎧 CapEx is just Memory Tax Now, Deepseek V4 NAND impact[Semi Doped](https://substack.com/profile/500274950-semi-doped)·May 4[Read full story](https://www.semidoped.com/p/capex-is-just-memory-tax-now-deepseek)](https://www.semidoped.com/p/capex-is-just-memory-tax-now-deepseek)
+[![🎧 CapEx is just Memory Tax Now, Deepseek V4 NAND impact](<../_img/2026-05-08--daily-update-may-8th-2026/005_SbRsmWZytsw> "https://substackcdn.com/image/youtube/w_728,c_limit/SbRsmWZytsw")🎧 CapEx is just Memory Tax Now, Deepseek V4 NAND impact[Semi Doped](https://substack.com/profile/500274950-semi-doped)·May 4[Read full story](https://www.semidoped.com/p/capex-is-just-memory-tax-now-deepseek)](https://www.semidoped.com/p/capex-is-just-memory-tax-now-deepseek)
 
-[](https://substackcdn.com/image/fetch/$s_!oBDh!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1322070-66be-4ca9-87b4-45e786ded12d_1920x1240.png)
+[![Image](<../_img/2026-05-08--daily-update-may-8th-2026/006_c1322070-66be-4ca9-87b4-45e786ded12d_1920x1240.png> "https://substackcdn.com/image/fetch/$s_!oBDh!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1322070-66be-4ca9-87b4-45e786ded12d_1920x1240.png")](https://substackcdn.com/image/fetch/$s_!oBDh!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1322070-66be-4ca9-87b4-45e786ded12d_1920x1240.png)
 
 ### Eye Candy
 
 These things are beautiful to look at. See the honking black cables between racks? That’s scale out. Anyway, this is Meta Catalina from a year ago, Custom build based on GB200. It uses a 1:1 CPU:GPU ratio. 
 
-[](https://substackcdn.com/image/fetch/$s_!u11z!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18d6ca22-fccf-4b40-8a4e-e5874c0537f4_1783x1003.jpeg)Courtesy: Dr. Ian Cutress on X.
+[![Image](<../_img/2026-05-08--daily-update-may-8th-2026/007_18d6ca22-fccf-4b40-8a4e-e5874c0537f4_1783x1003.jpeg> "https://substackcdn.com/image/fetch/$s_!u11z!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18d6ca22-fccf-4b40-8a4e-e5874c0537f4_1783x1003.jpeg")](https://substackcdn.com/image/fetch/$s_!u11z!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18d6ca22-fccf-4b40-8a4e-e5874c0537f4_1783x1003.jpeg)Courtesy: Dr. Ian Cutress on X.
 
 For more images, see [here](https://x.com/IanCutress/status/2052363398029926726?s=20) and [here](https://x.com/IanCutress/status/2052363859428581603?s=20).
 
@@ -99,7 +97,7 @@ The results were so radical they were scary. His prototype brought the particle 
 
 Despite enabling a global industry now worth hundreds of billions, Whitfield never got rich. Because the U.S. government placed the patent in the public domain. He later helped NASA sterilize spacecrafts, but his true legacy is the “invisible infrastructure” of the modern world. From TSMC’s fabs to your phone’s OLED display, we are all living in a reality made possible by a five-minute sketch and a man who hated dust.
 
-[](https://substackcdn.com/image/fetch/$s_!Ha9I!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F60cf450f-4214-4720-848f-126890498bd0_2560x1700.jpeg)Willis Whitfield, aka, Mr. Clean. Source: Sandia Labs.
+[![](<../_img/2026-05-08--daily-update-may-8th-2026/008_60cf450f-4214-4720-848f-126890498bd0_2560x1700.jpeg> "https://substackcdn.com/image/fetch/$s_!Ha9I!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F60cf450f-4214-4720-848f-126890498bd0_2560x1700.jpeg")](https://substackcdn.com/image/fetch/$s_!Ha9I!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F60cf450f-4214-4720-848f-126890498bd0_2560x1700.jpeg)Willis Whitfield, aka, Mr. Clean. Source: Sandia Labs.
 
 Thanks for reading! This post is public so feel free to share it.
 

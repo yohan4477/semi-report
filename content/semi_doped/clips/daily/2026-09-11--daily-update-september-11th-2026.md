@@ -13,13 +13,11 @@ Investors put more than $1.5 billion behind the inference build-out in a single 
 
 Let’s get into it. _—Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-11--daily-update-september-11th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Oracle Cloud Infrastructure Revenue Doubles as Backlog Surges to $664 Billion
 
@@ -39,7 +37,7 @@ Positron AI [closed an $875 million round at a $5 billion valuation](https://www
 > 
 > _**Vik:** Wiwynn saw this Austin, they saw this filled with Ayar labs photonics._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!Wxy-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ae81d25-5ff6-4b96-85f0-89e0e575286d_2801x4201.jpeg)At computex 2026
+> [![Building a Production-Ready Optically Connected Rack for AI Scale-Up](<../_img/2026-09-11--daily-update-september-11th-2026/002_4ae81d25-5ff6-4b96-85f0-89e0e575286d_2801x4201.jpeg> "https://substackcdn.com/image/fetch/$s_!Wxy-!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ae81d25-5ff6-4b96-85f0-89e0e575286d_2801x4201.jpeg")](https://substackcdn.com/image/fetch/$s_!Wxy-!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ae81d25-5ff6-4b96-85f0-89e0e575286d_2801x4201.jpeg)At computex 2026
 
 ### Microsoft Targets 38 GW of Data Center Capacity Within Seven Years
 
@@ -140,7 +138,7 @@ OpenAI is in discussions to manufacture its next-generation custom AI processors
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-11--daily-update-september-11th-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

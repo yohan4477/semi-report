@@ -9,9 +9,7 @@ subtitle: It's all about the money. Quantum computing, Anthropic revenue, AMD in
 ---
 The US government is now a quantum computing shareholder. The Commerce Department is handing $2 billion to nine firms and taking a minority equity stake in each, with IBM ($1 billion) and GlobalFoundries ($375 million) drawing the biggest checks. Elsewhere, Anthropic told investors it expects $10.9 billion of Q2 revenue and a $559 million operating profit, its first, as a funding round lines up to value it above OpenAI. And AMD committed more than $10 billion across Taiwan’s packaging and AI ecosystem while ramping its 6th-gen Venice EPYC on TSMC’s N2. Let’s dive in.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -97,15 +95,15 @@ AMD announced more than $10 billion in investments across Taiwan’s ecosystem t
 
 Morgan Stanley’s table shows how value of power content per AI rack scales in the 800V high-voltage DC (HVDC) era that we are just about to enter. Bullish power.
 
-[](https://substackcdn.com/image/fetch/$s_!pKOs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff918545e-9d36-4edb-aa85-2bb50f86f20b_1019x390.jpeg)
+[![Image](<../_img/2026-05-22--daily-update-may-22nd-2026/001_f918545e-9d36-4edb-aa85-2bb50f86f20b_1019x390.jpeg> "https://substackcdn.com/image/fetch/$s_!pKOs!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff918545e-9d36-4edb-aa85-2bb50f86f20b_1019x390.jpeg")](https://substackcdn.com/image/fetch/$s_!pKOs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff918545e-9d36-4edb-aa85-2bb50f86f20b_1019x390.jpeg)
 
-[](https://substackcdn.com/image/fetch/$s_!YQ_V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F078b040b-34c9-4f65-a049-cf0617bf31fd_1080x560.jpeg)
+[![Image](<../_img/2026-05-22--daily-update-may-22nd-2026/002_078b040b-34c9-4f65-a049-cf0617bf31fd_1080x560.jpeg> "https://substackcdn.com/image/fetch/$s_!YQ_V!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F078b040b-34c9-4f65-a049-cf0617bf31fd_1080x560.jpeg")](https://substackcdn.com/image/fetch/$s_!YQ_V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F078b040b-34c9-4f65-a049-cf0617bf31fd_1080x560.jpeg)
 
 ### Useful Tool
 
 Genuinely useful tool that you can use to play around and to understand how different models consume kV cache → [kvcache.ai](https://kvcache.ai/)
 
-[](https://substackcdn.com/image/fetch/$s_!w1AE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F58bc1576-7eb0-4897-aff9-f523cda40e9a_1768x2475.jpeg)
+[![Image](<../_img/2026-05-22--daily-update-may-22nd-2026/003_58bc1576-7eb0-4897-aff9-f523cda40e9a_1768x2475.jpeg> "https://substackcdn.com/image/fetch/$s_!w1AE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F58bc1576-7eb0-4897-aff9-f523cda40e9a_1768x2475.jpeg")](https://substackcdn.com/image/fetch/$s_!w1AE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F58bc1576-7eb0-4897-aff9-f523cda40e9a_1768x2475.jpeg)
 
 Thanks for reading! This post is public so feel free to share it.
 

@@ -15,9 +15,7 @@ Plus: WEKA’s denser-storage answer to four-way scarcity, and Astera Labs ships
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -29,7 +27,7 @@ Nvidia is repositioning the Vera Rubin NVL72 around **tokens-per-watt economics*
 
   * [CoreWeave](https://wf.coreweave.com/blog/nvidia-vera-rubin-nvl72-on-coreweave-10x-more-tokens-per-megawatt-than-blackwell) published **first measured silicon results** for Vera Rubin NVL72, validating the **10x tokens-per-megawatt** claim; [techi.com](https://www.techi.com/nvidia-vera-rubin-coreweave-tokens-per-megawatt/) flags the benchmark methodology needs fuller disclosure.
 
-[](https://substackcdn.com/image/fetch/$s_!jSKD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5bc644a3-9e38-4022-918d-4a28c06fb3a9_3041x1743.png)
+[![Line chart comparing DeepSeek R1 inference throughput per GPU against interactivity for Vera Rubin NVL72 and GB200 NVL72. The Vera Rubin NVL72 curve stays above GB200 NVL72 throughout, with the gap peaking near 10 times in the middle of the range.](<../_img/2026-07-22--daily-update-july-22nd-2026/001_5bc644a3-9e38-4022-918d-4a28c06fb3a9_3041x1743.png> "https://substackcdn.com/image/fetch/$s_!jSKD!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5bc644a3-9e38-4022-918d-4a28c06fb3a9_3041x1743.png")](https://substackcdn.com/image/fetch/$s_!jSKD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5bc644a3-9e38-4022-918d-4a28c06fb3a9_3041x1743.png)
 
   * Fort Worth is **currently producing GB300 baseboards** ; expansion to Vera Rubin architecture is planned, per [DigiTimes](https://www.digitimes.com/news/a20260722PD216/wistron-texas-plant-capacity-jensen-huang.html).
 
@@ -50,13 +48,13 @@ Bloom Energy secured a **$1.7 billion** fuel cell contract with an undisclosed A
 
 Data centers are on a trajectory to consume **one-fifth of all U.S. electricity by 2035** , up from roughly 4% today, a scale of demand growth that is reshaping capital allocation across the energy sector. ([Bloomberg.com](https://www.bloomberg.com/news/articles/2026-07-21/data-centers-on-track-to-suck-up-a-fifth-of-us-power-use-by-2035))
 
-[](https://substackcdn.com/image/fetch/$s_!sZqI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2495dbc6-ed72-4340-a670-3bccadce633a_657x457.png)
+[![](<../_img/2026-07-22--daily-update-july-22nd-2026/002_2495dbc6-ed72-4340-a670-3bccadce633a_657x457.png> "https://substackcdn.com/image/fetch/$s_!sZqI!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2495dbc6-ed72-4340-a670-3bccadce633a_657x457.png")](https://substackcdn.com/image/fetch/$s_!sZqI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2495dbc6-ed72-4340-a670-3bccadce633a_657x457.png)
 
 Nuclear developers Oklo and X-Energy joined a Trump administration initiative to accelerate reactor licensing specifically for AI data center loads, with the program targeting a significant reduction in traditional approval timelines. ([Bloomberg.com](https://www.bloomberg.com/news/articles/2026-07-21/oklo-x-energy-join-trump-effort-to-speed-new-nuclear-reactors-for-ai)) Their participation reflects an emerging consensus that new dispatchable generation — not grid upgrades alone — is required to support AI infrastructure build-out at scale.
 
 > **Vik:** _I’ve always been pro small modular reactor (SMR) technology due to the ability to deliver 90%+ capacity factor, clean energy, and behind-the-meter power, which means that transmission losses are reduced and slow power grid buildouts are not necessary. In my article, “**AI Datacenters drink more water than you think** ,” I note that SMR technology companies are something of an inevitability — a long game for energy if you will — that will materialize post 2030. AI energy demands might pull that timeline in though._
 > 
-> [Vik's NewsletterAI Datacenters Drink More Water Than You ThinkYou can download this post as an epub/pdf for free using the button below. Paid subscribers get every deep-dive in downloadable digital formats. If you’d like to only purchase specific reports, you can see the growing digital asset collection here…Read more7 months ago · 30 likes · 2 comments · Vikram Sekar](https://www.viksnewsletter.com/p/ai-datacenters-drink-more-water-than-you-think?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
+> [![](<../_img/2026-07-22--daily-update-july-22nd-2026/003_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png")Vik's NewsletterAI Datacenters Drink More Water Than You ThinkYou can download this post as an epub/pdf for free using the button below. Paid subscribers get every deep-dive in downloadable digital formats. If you’d like to only purchase specific reports, you can see the growing digital asset collection here…Read more8 months ago · 30 likes · 2 comments · Vikram Sekar](https://www.viksnewsletter.com/p/ai-datacenters-drink-more-water-than-you-think?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
 
 ## WEKA Pitches Storage Density as Answer to Four-Way AI Scarcity
 
@@ -64,7 +62,7 @@ Scarcity has become the defining constraint of AI infrastructure in 2026, and WE
 
 The argument rests on a compounding logic: organizations that cannot expand capacity in any one dimension need to extract more from what they already have. **GPUs remain rationed** , NVMe lead times now stretch past typical planning horizons, and power contracts require years to negotiate — meaning a denser storage tier can relieve pressure across multiple bottlenecks at once.
 
-[](https://substackcdn.com/image/fetch/$s_!-OOQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ba2b9b4-8c64-4731-87b6-18233650266d_850x865.png)
+[![](<../_img/2026-07-22--daily-update-july-22nd-2026/004_4ba2b9b4-8c64-4731-87b6-18233650266d_850x865.png> "https://substackcdn.com/image/fetch/$s_!-OOQ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ba2b9b4-8c64-4731-87b6-18233650266d_850x865.png")](https://substackcdn.com/image/fetch/$s_!-OOQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ba2b9b4-8c64-4731-87b6-18233650266d_850x865.png)
 
 Read more: [WEKApod 3](https://www.weka.io/news/wekapod-3-densest-ai-storage-memory-system), [NeuralMesh 6](https://www.weka.io/news/neuralmesh-6-enterprise-agentic-ai), [Blog](https://www.weka.io/article/when-everything-is-scarce-density-is-the-only-lever-you-have)
 
@@ -74,7 +72,7 @@ Read more: [WEKApod 3](https://www.weka.io/news/wekapod-3-densest-ai-storage-mem
 
 Astera Labs has extended its Taurus interconnect family to **3.2T** with new Ethernet Smart Retimers and Smart Redrivers carrying **OCP-standard footprint compatibility** — the first devices in the industry to do so at this bandwidth tier.
 
-[](https://substackcdn.com/image/fetch/$s_!wKNR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8e5f735a-7bc9-47cc-9abe-a5f64c1b9866_1358x784.png)
+[![](<../_img/2026-07-22--daily-update-july-22nd-2026/005_8e5f735a-7bc9-47cc-9abe-a5f64c1b9866_1358x784.png> "https://substackcdn.com/image/fetch/$s_!wKNR!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8e5f735a-7bc9-47cc-9abe-a5f64c1b9866_1358x784.png")](https://substackcdn.com/image/fetch/$s_!wKNR!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8e5f735a-7bc9-47cc-9abe-a5f64c1b9866_1358x784.png)
 
 The new silicon integrates with the company’s unified **COSMOS software stack** , which provides real-time link observability and advanced diagnostic features aimed at reducing customer time to market. ([Astera Labs](https://www.asteralabs.com/news/astera-labs-expands-taurus-family-with-industrys-first-ocp-standard-footprint-compatible-3-2t-smart-retimers-and-smart-redrivers/))
 
@@ -97,7 +95,7 @@ The new silicon integrates with the company’s unified **COSMOS software stack*
 
 ## Eye Candy
 
-[](https://x.com/sonyatweetybird/status/2079700181998784972?s=20)
+[![Image](<../_img/2026-07-22--daily-update-july-22nd-2026/006_d6841d93-f976-493a-9c00-448b8a57c0a1_1622x1206.jpeg> "https://substackcdn.com/image/fetch/$s_!fMCi!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd6841d93-f976-493a-9c00-448b8a57c0a1_1622x1206.jpeg")](https://x.com/sonyatweetybird/status/2079700181998784972?s=20)
 
 via [sonyatweetybird on X](https://x.com/sonyatweetybird/status/2079700181998784972?s=20)
 

@@ -9,11 +9,9 @@ subtitle: Rubin NVL72, N1X, Keynotes, Computex update.
 ---
 Short updates this week as Austin and Vik are both attending Computex 2026 in Taipei. What we lose in length, we will try to make up for by posting updates directly from the event. Speed over depth this week to the best extent we can.
 
-[](https://substackcdn.com/image/fetch/$s_!x4vK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbdbc0064-6bc9-4d1c-a717-0a7c9e56364c.heic)
+[![](<../_img/2026-06-01--daily-update-jun-1st-2026/001_bdbc0064-6bc9-4d1c-a717-0a7c9e56364c.heic> "https://substackcdn.com/image/fetch/$s_!x4vK!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbdbc0064-6bc9-4d1c-a717-0a7c9e56364c.heic")](https://substackcdn.com/image/fetch/$s_!x4vK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbdbc0064-6bc9-4d1c-a717-0a7c9e56364c.heic)
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -23,7 +21,7 @@ Subscribe
 
 Dell Technologies and CoreWeave have completed the first deployment of NVIDIA’s Vera Rubin VR200 NVL72 rack-scale system, with Michael Dell announcing the milestone on May 30, 2026. The installation passed L11 diagnostics, a full rack-scale validation test covering all components in the integrated system. According to SemiAnalysis, CoreWeave and Dell are the first cloud provider to announce a Rubin NVL72 with fully passing L11 diags, with next steps including multi-rack burn-in and software-level bringup using frameworks such as sglang, vLLM, and Dynamo.
 
-[Michael Dell 🇺🇸@MichaelDellThe world’s first @nvidia Vera Rubin NVL72 server rack is here. We’re thrilled to deliver the first working, liquid-cooled @Dell PowerEdge XE9812 for @CoreWeave. Built for the next era of AI infrastructure. 🚀🤝 4:10 PM · May 31, 2026 · 645K Views
+[![X avatar for @MichaelDell](https://substackcdn.com/image/fetch/$s_!7KUX!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1915353180054900737%2Fw6r2nVbI.jpg)Michael Dell 🇺🇸@MichaelDellThe world’s first @nvidia Vera Rubin NVL72 server rack is here. We’re thrilled to deliver the first working, liquid-cooled @Dell PowerEdge XE9812 for @CoreWeave. Built for the next era of AI infrastructure. 🚀🤝 ![](<../_img/2026-06-01--daily-update-jun-1st-2026/003_HJqPpCgbsAEe7IJ.jpg> "https://pbs.substack.com/media/HJqPpCgbsAEe7IJ.jpg")4:10 PM · May 31, 2026 · 645K Views
 
 * * *
 
@@ -37,7 +35,7 @@ Nvidia and Microsoft are expected to unveil the first Windows PCs powered by Nvi
 
 > _**Vik:** Sick burn by Dylan Patel on X. 🤣_
 > 
-> [Dylan Patel@dylan522pWindows before Jensen revolutionized the PC were dark days Now we have NX1 and all problems will be solved 4:52 AM · Jun 1, 2026 · 44.4K Views
+> [![X avatar for @dylan522p](<../_img/2026-06-01--daily-update-jun-1st-2026/004_PTqeS09L.jpg> "https://substackcdn.com/image/fetch/$s_!iytn!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1903585505046093824%2FPTqeS09L.jpg")Dylan Patel@dylan522pWindows before Jensen revolutionized the PC were dark days Now we have NX1 and all problems will be solved ![](<../_img/2026-06-01--daily-update-jun-1st-2026/005_HJs-ZcQbkAAEtb1.jpg> "https://substackcdn.com/image/fetch/$s_!TfA6!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHJs-ZcQbkAAEtb1.jpg")![](<../_img/2026-06-01--daily-update-jun-1st-2026/006_HJs-Zc2bsAAPun6.jpg> "https://substackcdn.com/image/fetch/$s_!t6TR!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHJs-Zc2bsAAPun6.jpg")4:52 AM · Jun 1, 2026 · 44.4K Views
 > 
 > * * *
 > 
@@ -51,7 +49,7 @@ We heard from people who were in the keynote firsthand that the whole thing was 
 
 Just look at all these 800V power chips at Computex. Cool!
 
-[](https://substackcdn.com/image/fetch/$s_!LUBi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa64ca31e-7357-484c-b10e-e9c30c4bf506.heic)
+[![](<../_img/2026-06-01--daily-update-jun-1st-2026/007_a64ca31e-7357-484c-b10e-e9c30c4bf506.heic> "https://substackcdn.com/image/fetch/$s_!LUBi!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa64ca31e-7357-484c-b10e-e9c30c4bf506.heic")](https://substackcdn.com/image/fetch/$s_!LUBi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa64ca31e-7357-484c-b10e-e9c30c4bf506.heic)
 
 Thanks for reading! This post is public so feel free to share it.
 

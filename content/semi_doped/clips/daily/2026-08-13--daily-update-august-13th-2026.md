@@ -13,9 +13,7 @@ CoreWeave’s revenue backlog hit $104 billion before pulling in another $25 bil
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -31,7 +29,7 @@ Nebius reported [514 percent revenue growth year-over-year](https://www.bloomber
 
 YMTC captured [14% of global NAND shipments](https://www.tomshardware.com/tech-industry/ymtc-breaks-into-the-top-three-nand-makers-for-the-first-time) in Q2, according to Counterpoint Research, overtaking Kioxia, Micron, and SanDisk to break into the top three for the first time. Samsung and SK Hynix held the first and second positions, per reporting from Chosunbiz. The surge came as [AI servers consumed 48% of all flash shipments](https://counterpointresearch.com/en/insights/server-led-essds-hit-48-percent-of-nand-shipments) in the quarter, a demand wave that lifted enterprise SSD volumes and gave YMTC room to climb. Bloomberg reported that YMTC [edged out Japan’s Kioxia](https://www.bloomberg.com/news/articles/2026-08-13/ymtc-passes-kioxia-in-nand-shipments-for-first-time-report-says) specifically on shipments in the June quarter, a result the outlet tied to AI-driven supply tightness in the broader market.
 
-[](https://substackcdn.com/image/fetch/$s_!dlpX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18c7551c-c15d-4937-84e6-f499ab7124b6_4400x2475.png)
+[![](<../_img/2026-08-13--daily-update-august-13th-2026/001_18c7551c-c15d-4937-84e6-f499ab7124b6_4400x2475.png> "https://substackcdn.com/image/fetch/$s_!dlpX!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18c7551c-c15d-4937-84e6-f499ab7124b6_4400x2475.png")](https://substackcdn.com/image/fetch/$s_!dlpX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F18c7551c-c15d-4937-84e6-f499ab7124b6_4400x2475.png)
 
 CXMT is pressing a parallel attack on DRAM. Chosunbiz reports CXMT is also expanding into mobile DRAM, [intensifying its pursuit of Samsung and SK Hynix](https://biz.chosun.com/en/en-it/2026/08/13/NGL6CEYPZNBW5LC3X2UFREUXZI/) across another product tier. Two fronts at once is an uncomfortable position for the incumbents.
 

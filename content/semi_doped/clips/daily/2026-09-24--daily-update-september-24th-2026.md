@@ -15,13 +15,11 @@ TSMC has locked in 3-6% wafer price hikes for 2027 while pushing its A14 node to
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-24--daily-update-september-24th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### TSMC Locks 2027 Price Hikes as EDA Vendors Certify A14 Flows
 
@@ -53,7 +51,7 @@ DeepSeek is planning to train an [8-trillion-parameter model on Huawei chips](ht
 
   * **CXMT** gains standard DRAM market share as Samsung and SK hynix shift capacity toward HBM, per DigiTimes analysis. ([digitimes](https://www.digitimes.com/news/a20260924VL219/dram-cxmt-samsung-hbm-capacity.html?chid=10))
 
-[](https://substackcdn.com/image/fetch/$s_!3Nsn!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac61ae65-3159-40dd-9ced-74ada43e2b0b_1755x896.jpeg)
+[![](<../_img/2026-09-24--daily-update-september-24th-2026/002_ac61ae65-3159-40dd-9ced-74ada43e2b0b_1755x896.jpeg> "https://substackcdn.com/image/fetch/$s_!3Nsn!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac61ae65-3159-40dd-9ced-74ada43e2b0b_1755x896.jpeg")](https://substackcdn.com/image/fetch/$s_!3Nsn!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac61ae65-3159-40dd-9ced-74ada43e2b0b_1755x896.jpeg)
 
   * **CXMT and SMIC** power a 620% surge in China chip-industry profits as AI and cloud demand absorbs domestic supply, per Nikkei Asia. ([Nikkei Asia](https://asia.nikkei.com/business/tech/semiconductors/cxmt-smic-power-620-surge-in-profits-in-china-s-chip-industry))
 
@@ -133,7 +131,7 @@ DeepSeek is planning to train an [8-trillion-parameter model on Huawei chips](ht
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-24--daily-update-september-24th-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

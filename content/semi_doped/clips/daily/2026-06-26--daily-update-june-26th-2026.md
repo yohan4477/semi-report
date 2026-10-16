@@ -11,9 +11,7 @@ Marvell demos plasmonic modulators 300x smaller than SiPho. Anthropic joins RAIS
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player._
 
@@ -23,7 +21,7 @@ Subscribe
 
 Marvell is researching plasmonics to enhance optical networks for AI infrastructure. Plasmonic-based silicon photonic (SiPho) light engines could enable 3.2T modules and beyond, reducing space and power per bit compared to existing technologies. Marvell has developed plasmonic modulator prototypes that are approximately 10 microns in length, 300x to 500x shorter than existing SiPho devices, and operate at 1THz, over 10x faster. ([marvell.com](https://www.marvell.com/blogs/plasmonics-higher-bandwidth-optics-ai-era.html))
 
-[Marvell Technology@MarvellTechPlasmonics has a history stretching back to Roman glassmaking and has found applications in drug discovery and sensor technology. Marvell researchers are now applying its principles to one of the most demanding problems in AI infrastructure: scaling optical bandwidth beyond the 6:18 PM · Jun 25, 2026 · 9.56K Views
+[![X avatar for @MarvellTech](<../_img/2026-06-26--daily-update-june-26th-2026/001_7hGxr9sx.png> "https://substackcdn.com/image/fetch/$s_!3wiC!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1542862650744246272%2F7hGxr9sx.png")Marvell Technology@MarvellTechPlasmonics has a history stretching back to Roman glassmaking and has found applications in drug discovery and sensor technology. Marvell researchers are now applying its principles to one of the most demanding problems in AI infrastructure: scaling optical bandwidth beyond the ![](<../_img/2026-06-26--daily-update-june-26th-2026/002_HLrdEUIaYAAuQeI.jpg> "https://pbs.substack.com/media/HLrdEUIaYAAuQeI.jpg")6:18 PM · Jun 25, 2026 · 9.56K Views
 
 * * *
 
@@ -39,7 +37,7 @@ Marvell is researching plasmonics to enhance optical networks for AI infrastruct
 
 Anthropic joined RAISE US, a new nonprofit coalition, as a founding partner. RAISE US works to strengthen the American workforce through employer-led action, AI-enabled training, and policy innovation to support the transition to transformative AI. ([@AnthropicAI](https://x.com/AnthropicAI/status/2070183531612172697))
 
-[Anthropic@AnthropicAIWe're joining @raiseus_ai as a founding partner. RAISE US is a nonprofit coalition working to strengthen the American workforce through employer-led action, AI-enabled training, and policy innovation to support the transition to transformative AI.RAISE US @raiseus_aiToday, we're launching RAISE US. America has a technology strategy for AI. It doesn't have a people strategy yet. We're here to build one. RAISE US is co-chaired by @GinaRaimondo and Eric Holcomb. We're working with governors, employers, and educators to help workers train,4:33 PM · Jun 25, 2026 · 583K Views
+[![X avatar for @AnthropicAI](<../_img/2026-06-26--daily-update-june-26th-2026/003_XP8gyBaY.jpg> "https://substackcdn.com/image/fetch/$s_!yhOq!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1798110641414443008%2FXP8gyBaY.jpg")Anthropic@AnthropicAIWe're joining @raiseus_ai as a founding partner. RAISE US is a nonprofit coalition working to strengthen the American workforce through employer-led action, AI-enabled training, and policy innovation to support the transition to transformative AI.![X avatar for @raiseus_ai](<../_img/2026-06-26--daily-update-june-26th-2026/004_L_IdN5_p.jpg> "https://substackcdn.com/image/fetch/$s_!rlnC!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2069889701616496641%2FL_IdN5_p.jpg")RAISE US @raiseus_aiToday, we're launching RAISE US. America has a technology strategy for AI. It doesn't have a people strategy yet. We're here to build one. RAISE US is co-chaired by @GinaRaimondo and Eric Holcomb. We're working with governors, employers, and educators to help workers train,4:33 PM · Jun 25, 2026 · 583K Views
 
 * * *
 
@@ -58,7 +56,7 @@ Anthropic joined RAISE US, a new nonprofit coalition, as a founding partner. RAI
 
 The EU, Netherlands, Germany, and Greece joined Pax Silica, an American-led initiative to strengthen AI-related tech supply chains. Argentina, Chile, Costa Rica, Kazakhstan, and Panama are also joining this week, bringing the total to 24 countries. Jacob Helberg, Under-Secretary of State for Economic Affairs, stated Pax Silica aims to promote AI innovation and create a US alternative to initiatives emphasizing “digital sovereignty.” ([ft.com](https://www.ft.com/content/681c33a0-dcb4-4a82-9aa0-8a9172f7e5bc?syn-25a6b1a6=1), [state.gov](https://www.state.gov/pax-silica))
 
-[Under Secretary of State Jacob S. Helberg@UnderSecEToday, the Kingdom of the Netherlands joins the Pax Silica Initiative as our 16th partner. We are deciding who we trust to build our chips, power our AI, and secure the technologies that will define the future. The Netherlands is a global leader in advanced and emerging 7:42 PM · Jun 23, 2026 · 25.5K Views
+[![X avatar for @UnderSecE](https://substackcdn.com/image/fetch/$s_!Tct9!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1990827169480671233%2FyOhacVEC.jpg)Under Secretary of State Jacob S. Helberg@UnderSecEToday, the Kingdom of the Netherlands joins the Pax Silica Initiative as our 16th partner. We are deciding who we trust to build our chips, power our AI, and secure the technologies that will define the future. The Netherlands is a global leader in advanced and emerging ![](<../_img/2026-06-26--daily-update-june-26th-2026/006_HLhc0NrWkAEkgnv.jpg> "https://substackcdn.com/image/fetch/$s_!SfSf!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHLhc0NrWkAEkgnv.jpg")![](<../_img/2026-06-26--daily-update-june-26th-2026/007_HLhc0VFWsAAg9if.jpg> "https://substackcdn.com/image/fetch/$s_!hRSa!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHLhc0VFWsAAg9if.jpg")7:42 PM · Jun 23, 2026 · 25.5K Views
 
 * * *
 
@@ -102,7 +100,7 @@ Onsemi has agreed to acquire Synaptics in a deal that expands its addressable ma
 > 
 > _**Austin:** There was an M&A investor update. I need to listen to that. Seems maybe analog companies are thinking they need to acquire compute and software to have a foothold in robotics._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!7dST!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c30a1ea-3dc7-4f5f-b341-405131ddea3e_2118x1152.png)
+> [![](<../_img/2026-06-26--daily-update-june-26th-2026/008_6c30a1ea-3dc7-4f5f-b341-405131ddea3e_2118x1152.png> "https://substackcdn.com/image/fetch/$s_!7dST!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c30a1ea-3dc7-4f5f-b341-405131ddea3e_2118x1152.png")](https://substackcdn.com/image/fetch/$s_!7dST!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c30a1ea-3dc7-4f5f-b341-405131ddea3e_2118x1152.png)
 
 * * *
 
@@ -112,7 +110,7 @@ MKS Instruments (NASDAQ: MKSI) is investing $25 million to expand its Atotech eq
 
 > _**Vik:** This seemingly innocuous piece of news is actually a panel-level packaging play, for things like glass substrate based advanced packaging — think CoPoS. MKSI-Atotech have tech that can form high aspect ratio vias in glass in panel level formats._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!oA-M!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8958cd1a-125a-4247-b3fd-52ce7e2fbd20_1153x892.png)
+> [![](<../_img/2026-06-26--daily-update-june-26th-2026/009_8958cd1a-125a-4247-b3fd-52ce7e2fbd20_1153x892.png> "https://substackcdn.com/image/fetch/$s_!oA-M!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8958cd1a-125a-4247-b3fd-52ce7e2fbd20_1153x892.png")](https://substackcdn.com/image/fetch/$s_!oA-M!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8958cd1a-125a-4247-b3fd-52ce7e2fbd20_1153x892.png)
 
 * * *
 
@@ -120,7 +118,7 @@ MKS Instruments (NASDAQ: MKSI) is investing $25 million to expand its Atotech eq
 
 Newly released ChatGPT 5.6 Sol beats Claude Mythos 5. May not get banned though. Let’s see.
 
-[](https://substackcdn.com/image/fetch/$s_!ZglX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc11bc2cd-4015-413c-8bf5-d9a93a8e8f96_1522x1084.png)
+[![Image](<../_img/2026-06-26--daily-update-june-26th-2026/010_c11bc2cd-4015-413c-8bf5-d9a93a8e8f96_1522x1084.png> "https://substackcdn.com/image/fetch/$s_!ZglX!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc11bc2cd-4015-413c-8bf5-d9a93a8e8f96_1522x1084.png")](https://substackcdn.com/image/fetch/$s_!ZglX!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc11bc2cd-4015-413c-8bf5-d9a93a8e8f96_1522x1084.png)
 
 * * *
 

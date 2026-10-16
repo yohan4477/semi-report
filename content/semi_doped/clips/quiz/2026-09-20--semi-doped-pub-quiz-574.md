@@ -17,17 +17,16 @@ X is a plural noun. Read as a verb, it is what X does to these stories.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 ### CLUES
 
 > The Texan was Jack Kilby of Texas Instruments; the Californian was Robert Noyce of Fairchild. Kilby’s own 1976 account says Noyce won for being first to teach how to apply X so that it adhered to the oxide.
 
-[](https://substackcdn.com/image/fetch/$s_!JOdb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8ece87bc-7e01-4047-86b1-6b84f88996fc_2048x2650.webp)
+[![Jack kilby patent_3138743 | PDF](<../_img/2026-09-20--semi-doped-pub-quiz-574/001_8ece87bc-7e01-4047-86b1-6b84f88996fc_2048x2650.webp> "https://substackcdn.com/image/fetch/$s_!JOdb!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8ece87bc-7e01-4047-86b1-6b84f88996fc_2048x2650.webp")](https://substackcdn.com/image/fetch/$s_!JOdb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8ece87bc-7e01-4047-86b1-6b84f88996fc_2048x2650.webp)
 
 > The 2019 deal was Nvidia and Mellanox. Nvidia’s 2024 rack, the GB200 NVL72, holds about 5,000 copper cables of X totaling two miles, chosen over optics to save a stated 20 kilowatts.
 
-[](https://substackcdn.com/image/fetch/$s_!KmS7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7194a4f-aee3-4b9b-910b-e738578f707a_2048x2650.webp)
+[![Jack kilby patent_3138743 | PDF](<../_img/2026-09-20--semi-doped-pub-quiz-574/002_e7194a4f-aee3-4b9b-910b-e738578f707a_2048x2650.webp> "https://substackcdn.com/image/fetch/$s_!KmS7!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7194a4f-aee3-4b9b-910b-e738578f707a_2048x2650.webp")](https://substackcdn.com/image/fetch/$s_!KmS7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe7194a4f-aee3-4b9b-910b-e738578f707a_2048x2650.webp)
 
 > Thirteen letters. A Latin prefix meaning “between,” then a verb meaning “joins.” In a fab it means the metal layers stacked above the transistors; in a data center it means the copper and optical cables between chips.
 

@@ -13,13 +13,11 @@ Nvidia is putting $3.5 billion into MediaTek via convertible bonds, cementing an
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-31--daily-update-august-31st-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Nvidia Takes $3.5 Billion Convertible-Bond Stake in MediaTek
 
@@ -27,7 +25,7 @@ Nvidia is [investing $3.5 billion in MediaTek via convertible bonds](https://nvi
 
 > **Vik:**_This is NVIDIA embracing custom ASICs wholeheartedly after dissing them in 2025. The key idea is for MediaTek to use NVLink Fusion in custom accelerator IP, which provides the ability to plug into the NVIDIA ecosystem. Their collaboration with MediaTek spans**AI infra, local AI computing, and automotive**. _
 > 
-> [](https://substackcdn.com/image/fetch/$s_!wIfA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc7cdf1e3-ba47-4893-ba54-b0eb2bd1b8a4_529x500.png)
+> [![Lisan al Gaib on X: "WE ARE NOT A CAR" / X](<../_img/2026-08-31--daily-update-august-31st-2026/002_c7cdf1e3-ba47-4893-ba54-b0eb2bd1b8a4_529x500.png> "https://substackcdn.com/image/fetch/$s_!wIfA!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc7cdf1e3-ba47-4893-ba54-b0eb2bd1b8a4_529x500.png")](https://substackcdn.com/image/fetch/$s_!wIfA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc7cdf1e3-ba47-4893-ba54-b0eb2bd1b8a4_529x500.png)
 
 ### SK Hynix Eyes Intel Foundry for HBM4E Base Dies as Memory Expansion Accelerates
 
@@ -35,7 +33,7 @@ SK Hynix is weighing whether to [source HBM4E base dies from Intel Foundry](http
 
 > **Vik:**_Custom base dies are the future of HBM as hardware makers start to emphasize bandwidth over capacity in HBM. The base die IP will increasingly migrate towards logic designers given their cost relative to the memory stack, pushing memory back towards being a commodity. Here’s my X post with more thoughts._
 > 
-> [ Vikram Sekar@vikramskrIf the cost of the base die is 3-4X that of the stacked DRAM core die on a TSMC 12nm node, imagine what will happen to cost if it goes to 5nm node. The value of HBM entirely concentrates on the implementation of the base die and the functions on it. This is where NVHBM andJukan @jukan05[EXCLUSIVE] SK HYNIX CONSIDERS INTEL FOR NEXT-GENERATION HBM BASE DIES SK hynix is moving to diversify the foundry suppliers for the base dies used in high-bandwidth memory (HBM), which is built by vertically stacking multiple memory dies. The company is reportedly considering4:16 AM · Aug 31, 2026 · 17K Views
+> [![X avatar for @vikramskr](<../_img/2026-08-31--daily-update-august-31st-2026/003_Rf_mIEz0.jpg> "https://substackcdn.com/image/fetch/$s_!TWOG!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1864653638054105088%2FRf_mIEz0.jpg") Vikram Sekar@vikramskrIf the cost of the base die is 3-4X that of the stacked DRAM core die on a TSMC 12nm node, imagine what will happen to cost if it goes to 5nm node. The value of HBM entirely concentrates on the implementation of the base die and the functions on it. This is where NVHBM and![X avatar for @jukan05](https://substackcdn.com/image/fetch/$s_!griq!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2037840794992988160%2FtnSqJgqt.jpg)Jukan @jukan05[EXCLUSIVE] SK HYNIX CONSIDERS INTEL FOR NEXT-GENERATION HBM BASE DIES SK hynix is moving to diversify the foundry suppliers for the base dies used in high-bandwidth memory (HBM), which is built by vertically stacking multiple memory dies. The company is reportedly considering4:16 AM · Aug 31, 2026 · 17K Views
 > 
 > * * *
 > 
@@ -51,7 +49,7 @@ The author argues that Nvidia’s unified memory subsystem, independent asynchro
 
 > **Vik:**_This whole article is a heavy read but fantastic. The big takeaway is that there is a lot of lost token throughput due to architecture choices that folks like OpenAI are starting to overcome. As the post explains, tokens are not always hardware bandwidth limited. Sometimes accelerators sit around without any available data to work on. That needs to be fixed asap._
 
-[](https://substackcdn.com/image/fetch/$s_!JI0Q!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2bc31343-cea7-4a59-af54-30ffaf60870f_1240x848.svg)
+[![](<../_img/2026-08-31--daily-update-august-31st-2026/005_2bc31343-cea7-4a59-af54-30ffaf60870f_1240x848.svg> "https://substackcdn.com/image/fetch/$s_!JI0Q!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2bc31343-cea7-4a59-af54-30ffaf60870f_1240x848.svg")](https://substackcdn.com/image/fetch/$s_!JI0Q!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2bc31343-cea7-4a59-af54-30ffaf60870f_1240x848.svg)
 
 ### **Persistent-Sol Agents Built Secret Network, Hacked Hugging Face During OpenAI Eval**
 
@@ -61,7 +59,7 @@ Over three months beginning in May 2026, OpenAI trained a model called Persisten
 
 > **Vik:**_Seriously wtf is up with these models. The linked source article is by_[Dwarkesh Patel](https://open.substack.com/users/4281466-dwarkesh-patel?utm_source=mentions) _and I do plan on reading the whole thing. It seems too crazy to be true. Below is visual approximation of what is going on in agent land right now._
 
-[](https://substackcdn.com/image/fetch/$s_!UZLs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F30186662-5010-4c83-a672-e33c53deeaa3_1080x669.webp)
+[![](<../_img/2026-08-31--daily-update-august-31st-2026/006_30186662-5010-4c83-a672-e33c53deeaa3_1080x669.webp> "https://substackcdn.com/image/fetch/$s_!UZLs!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F30186662-5010-4c83-a672-e33c53deeaa3_1080x669.webp")](https://substackcdn.com/image/fetch/$s_!UZLs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F30186662-5010-4c83-a672-e33c53deeaa3_1080x669.webp)
 
 ### Unimicron Raided by Taiwan Prosecutors Over PCB Origin Fraud
 
@@ -156,7 +154,7 @@ SoftBank’s data center subsidiary SB Energy issued [OpenAI $5.5 billion in sto
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-31--daily-update-august-31st-2026/007_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

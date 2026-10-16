@@ -7,7 +7,7 @@ genre: quiz
 audience: everyone
 subtitle: Pausing the trivia to ask you a question
 ---
-[](https://substackcdn.com/image/fetch/$s_!eD08!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7bff7806-b4c9-43f4-847d-537994b4aa7c_1358x688.png)_Log book with computer bug, 1947. From the collection of the National Museum of American History, Smithsonian Institution._ Link: <https://americanhistory.si.edu/collections/object/nmah_334663>
+[![](<../_img/2026-09-27--a-no-quiz-sunday-and-a-question-for/001_7bff7806-b4c9-43f4-847d-537994b4aa7c_1358x688.png> "https://substackcdn.com/image/fetch/$s_!eD08!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7bff7806-b4c9-43f4-847d-537994b4aa7c_1358x688.png")](https://substackcdn.com/image/fetch/$s_!eD08!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7bff7806-b4c9-43f4-847d-537994b4aa7c_1358x688.png)_Log book with computer bug, 1947. From the collection of the National Museum of American History, Smithsonian Institution._ Link: <https://americanhistory.si.edu/collections/object/nmah_334663>
 
 Stalking the elusive computer bug? Seek no more. Welcome to the weekend’s entomological footnote.
 
@@ -29,7 +29,6 @@ Leave your ideas in the comments. We can’t promise to write about every one, b
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 And so we know who we’re writing for, a quick poll on your day job:
 

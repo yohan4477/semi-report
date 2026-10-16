@@ -9,7 +9,7 @@ subtitle: The story of Oleg Losev, LEDs, and a lost manuscript describing a new 
 ---
 There is a particular kind of tragedy reserved for people who are right too early. Oleg Losev was 18 years old, working as a technician at a Soviet radio lab in Nizhny Novgorod, when he built something in early 1922 that the rest of the world would take another 25 years to catch up to.
 
-[](https://substackcdn.com/image/fetch/$s_!RRGW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F01afa7ef-2526-4408-b86b-990d38012975_1315x1759.jpeg)Public Domain, https://commons.wikimedia.org/w/index.php?curid=1946116
+[![](<../_img/2026-06-06--til-the-man-who-invented-the-future/001_01afa7ef-2526-4408-b86b-990d38012975_1315x1759.jpeg> "https://substackcdn.com/image/fetch/$s_!RRGW!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F01afa7ef-2526-4408-b86b-990d38012975_1315x1759.jpeg")](https://substackcdn.com/image/fetch/$s_!RRGW!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F01afa7ef-2526-4408-b86b-990d38012975_1315x1759.jpeg)Public Domain, https://commons.wikimedia.org/w/index.php?curid=1946116
 
 He would never hold a position higher than technician, until a doctorate arrived in 1938 — four years before his death, too late to change anything. By every bureaucratic measure, he was nobody. And yet.
 
@@ -32,5 +32,3 @@ When the Siege of Leningrad began, Losev refused to leave his equipment. He died
 The semiconductor industry has always had this quality: the difference between a pioneer and a founder is often just access to materials, capital, and time. Losev had the ideas and none of the rest.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

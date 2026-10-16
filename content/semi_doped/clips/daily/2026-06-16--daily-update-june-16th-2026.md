@@ -11,9 +11,7 @@ Today’s edition a bit longer because there’s a lot to pay attention to all a
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -115,7 +113,7 @@ TSMC’s chip-on-wafer-on-substrate (CoWoS) advanced packaging supply-demand gap
 
 NVIDIA is still KING! From “The Information”.
 
-[](https://substackcdn.com/image/fetch/$s_!n5M0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c083773-849e-4535-ba24-af96edb4589f_1712x1136.jpeg)
+[![Image](<../_img/2026-06-16--daily-update-june-16th-2026/001_6c083773-849e-4535-ba24-af96edb4589f_1712x1136.jpeg> "https://substackcdn.com/image/fetch/$s_!n5M0!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c083773-849e-4535-ba24-af96edb4589f_1712x1136.jpeg")](https://substackcdn.com/image/fetch/$s_!n5M0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c083773-849e-4535-ba24-af96edb4589f_1712x1136.jpeg)
 
 Thanks for reading! This post is public so feel free to share it.
 

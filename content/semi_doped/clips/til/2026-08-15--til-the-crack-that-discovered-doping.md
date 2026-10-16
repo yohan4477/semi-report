@@ -13,7 +13,7 @@ His name was [Russell Ohl](https://en.wikipedia.org/wiki/Russell_Ohl), and his f
 
 In early 1940 (some accounts place it in late 1939), Bell Labs researcher Russell Ohl picked up a chunk of silicon with a visible crack down the middle and connected it to an ohmmeter. It should have been junk because the semiconductor world of the day was obsessed with purity; any variation in a crystal was a flaw to engineer away, and this slab was riddled with them.
 
-[](https://substackcdn.com/image/fetch/$s_!mzU2!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F081e4de6-6cf7-42ec-b3f8-fe06f9f8ab19_250x215.jpeg)
+![](<../_img/2026-08-15--til-the-crack-that-discovered-doping/001_081e4de6-6cf7-42ec-b3f8-fe06f9f8ab19_250x215.jpeg> "https://substackcdn.com/image/fetch/$s_!mzU2!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F081e4de6-6cf7-42ec-b3f8-fe06f9f8ab19_250x215.jpeg")
 
 Ohl had spent over a decade at Bell Labs by then, and most of it fighting for permission to keep doing what he was doing. He joined the company in 1927 after a stint building radio receivers, and by the 1930s he had become obsessed with an idea most of his colleagues thought was a dead end: that silicon and germanium crystals, notoriously flaky and inconsistent, might make better high-frequency radio detectors than vacuum tubes, if only someone could grow them pure enough. 
 
@@ -31,11 +31,13 @@ The cracked wafer turned out to be the lucky spot. When Ohl and his colleagues e
 
 What Ohl had walked into, almost by accident, was the p-n junction, the structure modern electronics still runs on. It is why a diode only lets current flow one direction, the switching mechanism at the heart of a transistor, and what lets a solar cell convert sunlight into usable electricity. He had proven, against the purity-obsessed culture of his field, that the future of semiconductors lay not in eliminating impurities but in controlling them; what the industry now calls doping.
 
-[](https://substackcdn.com/image/fetch/$s_!D38j!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4045e2e0-6949-43a6-ab8f-4e5e5b21acee.svg)By Raffamaiden - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=21285768
+![](<../_img/2026-08-15--til-the-crack-that-discovered-doping/002_4045e2e0-6949-43a6-ab8f-4e5e5b21acee.svg> "https://substackcdn.com/image/fetch/$s_!D38j!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4045e2e0-6949-43a6-ab8f-4e5e5b21acee.svg")
+
+By Raffamaiden - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=21285768
 
 Bell Labs leadership filed the patent on the discovery in 1941, calling it a “light-sensitive electric device,” essentially inventing the silicon solar cell thirteen years before they built a more efficient and practical version from the same principle. They treated the find as a curiosity, useful perhaps for radio detectors or solar cells, not the opening of a new era. It took years more work, and the invention of the transistor, before anyone grasped what door had been kicked open. History is notoriously fickle that way.
 
-[](https://substackcdn.com/image/fetch/$s_!Kqeo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F86b82962-f808-49e0-b291-f95cef4eaf84_800x800.jpeg)Figures 8 - 13 from Ohl patent filed in 1941, US Patent Office.
+[![](<../_img/2026-08-15--til-the-crack-that-discovered-doping/003_86b82962-f808-49e0-b291-f95cef4eaf84_800x800.jpeg> "https://substackcdn.com/image/fetch/$s_!Kqeo!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F86b82962-f808-49e0-b291-f95cef4eaf84_800x800.jpeg")](https://substackcdn.com/image/fetch/$s_!Kqeo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F86b82962-f808-49e0-b291-f95cef4eaf84_800x800.jpeg)Figures 8 - 13 from Ohl patent filed in 1941, US Patent Office.
 
 When [Walter Brattain](https://en.wikipedia.org/wiki/Walter_Brattain), [John Bardeen](https://en.wikipedia.org/wiki/John_Bardeen), and [William Shockley](https://en.wikipedia.org/wiki/William_Shockley) built a working transistor in December 1947, they were standing on Ohl’s junction, whether or not history remembers it that way.
 
@@ -43,7 +45,6 @@ Word of the demonstration reached research director [Mervin Kelly](https://en.wi
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 The ultimate irony of Ohl’s discovery is that he succeeded by ignoring the dogma of his era. While everyone else was killing themselves to remove impurities, Ohl found the secret to the future in the dirt, proving that semiconductors are not about absolute purity, but about the controlled introduction of atomic flaws.
 

@@ -13,9 +13,7 @@ CXMT makes its heroic STAR market appearance: price goes up 470%. Nomura estimat
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player_
 
@@ -29,12 +27,12 @@ The $9.8B IPO — Shanghai’s biggest ever — now funds a race to 600,000 wafe
 
   * Nomura projects a further 1,239% upside from IPO price on market-share gains [Bloomberg Tech](https://www.bloomberg.com/news/articles/2026-07-27/cxmt-can-rally-more-than-1-200-on-market-share-win-nomura-says)
 
-[](https://substackcdn.com/image/fetch/$s_!zlhE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7c4011c2-3aa5-48ed-ac6a-a05b1761d2ae_2820x1404.jpeg)Via [@jukan05 on X](https://x.com/jukan05/status/2081508685810209276?s=20)
+[![Image](<../_img/2026-07-27--daily-update-july-27th-2026/001_7c4011c2-3aa5-48ed-ac6a-a05b1761d2ae_2820x1404.jpeg> "https://substackcdn.com/image/fetch/$s_!zlhE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7c4011c2-3aa5-48ed-ac6a-a05b1761d2ae_2820x1404.jpeg")](https://substackcdn.com/image/fetch/$s_!zlhE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7c4011c2-3aa5-48ed-ac6a-a05b1761d2ae_2820x1404.jpeg)Via [@jukan05 on X](https://x.com/jukan05/status/2081508685810209276?s=20)
 
   
 Nomura projects DRAM revenue to hit $2T by 2030. Also look at the $/GB line to understand what pricing power looks like.
 
-[](https://substackcdn.com/image/fetch/$s_!N-1v!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9d9d2ac1-09e0-4eec-b192-fa131f59c6d5_2959x1051.jpeg)Source: Nomura via [@rickyho_1989 on X](https://x.com/rickyho_1989/status/2081595313815687568?s=20)
+[![Image](<../_img/2026-07-27--daily-update-july-27th-2026/002_9d9d2ac1-09e0-4eec-b192-fa131f59c6d5_2959x1051.jpeg> "https://substackcdn.com/image/fetch/$s_!N-1v!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9d9d2ac1-09e0-4eec-b192-fa131f59c6d5_2959x1051.jpeg")](https://substackcdn.com/image/fetch/$s_!N-1v!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9d9d2ac1-09e0-4eec-b192-fa131f59c6d5_2959x1051.jpeg)Source: Nomura via [@rickyho_1989 on X](https://x.com/rickyho_1989/status/2081595313815687568?s=20)
 
   * $8.6B in fresh capital targets capacity expansion, advanced process development, and accelerated new products
 
@@ -71,13 +69,13 @@ SK Hynix’s Hoshik Kim acknowledged at a public event that high bandwidth memor
 
 > **Vik:**_This whole thing is too funny, so I wrote a post about it today. There are a lot more valuable discussions in the whole talk rather than HBM=Ugly baby._
 > 
-> [ Vik's NewsletterHBM is the Ugly Baby: What Now?At the Raise Summit held in early July 2026, Pat Gelsinger called HBM a lousy memory and (“not to call it”) SK Hynix’s ugly baby, in the presence of Hoshik Kim (SVP and Fellow at SK Hynix) who was also on the panel. Kim then agreed with Gelsinger that perhaps HBM is not the end-game in memory technology, to which one of the panel members asked: “SK Hynix is actually admitting that HBM is a bad memory?” Awkwardness ensued…Read morea month ago · 11 likes · 1 comment · Vikram Sekar](https://www.viksnewsletter.com/p/hbm-is-the-ugly-baby-what-now?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
+> [![](<../_img/2026-07-27--daily-update-july-27th-2026/003_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png") Vik's NewsletterHBM is the Ugly Baby: What Now?At the Raise Summit held in early July 2026, Pat Gelsinger called HBM a lousy memory and (“not to call it”) SK Hynix’s ugly baby, in the presence of Hoshik Kim (SVP and Fellow at SK Hynix) who was also on the panel. Kim then agreed with Gelsinger that perhaps HBM is not the end-game in memory technology, to which one of the panel members asked: “SK Hynix is actually admitting that HBM is a bad memory?” Awkwardness ensued…Read more3 months ago · 11 likes · 1 comment · Vikram Sekar](https://www.viksnewsletter.com/p/hbm-is-the-ugly-baby-what-now?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
 
 ### Apple Smart Glasses at WWDC 2027
 
 Look at the Ray Ban branding.
 
-[MacRumors.com@MacRumorsApple Planning to Unveil Privacy-Focused Smart Glasses at WWDC 2027 [macrumors.com/2026/07/26/app…](https://www.macrumors.com/2026/07/26/apple-smart-glasses-wwdc-2027-report/) 4:26 PM · Jul 26, 2026 · 110K Views
+[![X avatar for @MacRumors](https://substackcdn.com/image/fetch/$s_!Lwxf!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1171574992821194752%2FrVrN8JVA.jpg)MacRumors.com@MacRumorsApple Planning to Unveil Privacy-Focused Smart Glasses at WWDC 2027 [macrumors.com/2026/07/26/app…](https://www.macrumors.com/2026/07/26/apple-smart-glasses-wwdc-2027-report/) ![](<../_img/2026-07-27--daily-update-july-27th-2026/005_HOKsx0-aoAAW997.jpg> "https://pbs.substack.com/media/HOKsx0-aoAAW997.jpg")4:26 PM · Jul 26, 2026 · 110K Views
 
 * * *
 
@@ -134,13 +132,13 @@ Look at the Ray Ban branding.
 
 A lot of these constraints exist even for NPO. Rapid expansions are always difficult.
 
-[](https://substackcdn.com/image/fetch/$s_!uQZg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea2abcad-4f85-4a9b-a3c6-8c898d6e4d0c_1080x560.jpeg)
+[![Image](<../_img/2026-07-27--daily-update-july-27th-2026/006_ea2abcad-4f85-4a9b-a3c6-8c898d6e4d0c_1080x560.jpeg> "https://substackcdn.com/image/fetch/$s_!uQZg!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea2abcad-4f85-4a9b-a3c6-8c898d6e4d0c_1080x560.jpeg")](https://substackcdn.com/image/fetch/$s_!uQZg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea2abcad-4f85-4a9b-a3c6-8c898d6e4d0c_1080x560.jpeg)
 
 ### Interesting Observation
 
 Anthropic’s GM has risen rapidly, which means that even if compute and memory are getting extraordinarily expensive, the process of selling tokens is even more profitable. As such, Anthropic will be more inclined to make more investments in compute because their return is outsized. 
 
-[Nick Dorsey@Midnight_CaptlThere’s something major happening with @OpenAI & @AnthropicAI’s businesses that has huge implications for the compute and memory complex >Both Anthropic and OpenAI have had explosive revenue growth this year, while at the same time, seeing significant gross margin expansion (see 7:01 PM · Jul 26, 2026 · 115K Views
+[![X avatar for @Midnight_Captl](<../_img/2026-07-27--daily-update-july-27th-2026/007_FSOMcYvf.jpg> "https://substackcdn.com/image/fetch/$s_!gAv1!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2075243967147327488%2FFSOMcYvf.jpg")Nick Dorsey@Midnight_CaptlThere’s something major happening with @OpenAI & @AnthropicAI’s businesses that has huge implications for the compute and memory complex >Both Anthropic and OpenAI have had explosive revenue growth this year, while at the same time, seeing significant gross margin expansion (see ![](<../_img/2026-07-27--daily-update-july-27th-2026/008_HOLQRuzaMAELNQg.jpg> "https://pbs.substack.com/media/HOLQRuzaMAELNQg.jpg")7:01 PM · Jul 26, 2026 · 115K Views
 
 * * *
 

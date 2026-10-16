@@ -11,9 +11,7 @@ It’s all about the CEREBRAS IPO this week, and we will definitely cover it on 
 
 Updates on OpenAI-Broadcom chip deal, AMD Instinct MI350, and Sony’s ‘fab-lite’ approach to image sensors. Let’s dive in!
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Follow the Semi Doped podcast on[YouTube](https://www.youtube.com/@semidoped), or any podcast streaming platform of your choice. Weekly discussions on semiconductor technology that will keep you sharp and informed!_
 
@@ -37,7 +35,7 @@ Subscribe
 
 AMD launched the [Instinct MI350P](https://www.amd.com/en/products/accelerators/instinct/mi350/mi350p.html), its first Instinct PCIe card since the 2022 MI210, bringing CDNA 4 to a 600W FHFL dual-slot board. 
 
-[](https://substackcdn.com/image/fetch/$s_!juUs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe5a6aa78-e54a-47c9-9754-4ed550027803_1200x675.jpeg)
+[![AMD Instinct MI350P PCIe Card](<../_img/2026-05-11--daily-update-may-11th-2026/001_e5a6aa78-e54a-47c9-9754-4ed550027803_1200x675.jpeg> "https://substackcdn.com/image/fetch/$s_!juUs!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe5a6aa78-e54a-47c9-9754-4ed550027803_1200x675.jpeg")](https://substackcdn.com/image/fetch/$s_!juUs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe5a6aa78-e54a-47c9-9754-4ed550027803_1200x675.jpeg)
 
 The chip is purpose-built rather than salvaged from MI350X silicon: a single I/O die with four XCDs (half the MI350X’s compute), 144GB HBM3E, 4TB/sec memory bandwidth, and 2.3 PFLOPS at MXFP8. AMD offers an optional 450W TBP mode for older racks that can’t handle the full PCIe CEM 600W. Up to eight cards fit in a single server tray. The biggest tradeoff versus the modular MI350X is that AMD does not expose Infinity Fabric on the card, so multi-card scale-up runs over PCIe Gen5 x16 only — per [ServeTheHome](https://www.servethehome.com/amd-intros-instinct-mi350p-accelerator-cdna-4-comes-to-pcie-cards/), “an 8-card setup is a better fit for running 8 models than it is for one large model spread over 8 GPUs.” AMD also published both peak and delivered performance figures, which ServeTheHome called “welcome” disclosure. Strategic context: NVIDIA has no current-gen PCIe server GPU and has signaled none is coming, leaving AMD as the sole vendor offering current-generation server-grade accelerators in PCIe form factor.
 
@@ -64,7 +62,7 @@ Per [Bloomberg](https://www.bloomberg.com/news/articles/2026-05-08/tsmc-and-sony
 
 ### Key Data
 
-[Wall St Engine@wallstengineCEREBRAS UPSIZES IPO TO $4.8B AFTER 20X DEMAND $CRBS filed to sell 30M shares at $150-$160 each, up from 28M shares at $115-$125. At the top of the new range, the AI chipmaker would raise roughly $4.8B, compared with $3.5B under the prior terms. Reuters says the IPO drew 12:26 PM · May 11, 2026 · 69.2K Views
+[![X avatar for @wallstengine](<../_img/2026-05-11--daily-update-may-11th-2026/002_oZp5wB4r.jpg> "https://substackcdn.com/image/fetch/$s_!y3i6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1691846947857178624%2FoZp5wB4r.jpg")Wall St Engine@wallstengineCEREBRAS UPSIZES IPO TO $4.8B AFTER 20X DEMAND $CRBS filed to sell 30M shares at $150-$160 each, up from 28M shares at $115-$125. At the top of the new range, the AI chipmaker would raise roughly $4.8B, compared with $3.5B under the prior terms. Reuters says the IPO drew ![](<../_img/2026-05-11--daily-update-may-11th-2026/003_HICc59rbUAAUjbq.png> "https://pbs.substack.com/media/HICc59rbUAAUjbq.png")12:26 PM · May 11, 2026 · 69.2K Views
 
 * * *
 

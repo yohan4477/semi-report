@@ -13,13 +13,11 @@ An OpenAI engineer’s deep dive on AI-written kernels has stirred up real debat
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-02--daily-update-september-2nd-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### OpenAI’s “Compilers 2.0”: AI as a stochastic optimizer for kernels
 
@@ -27,13 +25,13 @@ Chris Leary — who started Google’s XLA compiler and now works on OpenAI’s 
 
 The lineage runs back to 2013’s STOKE paper, which randomly tweaked programs in search of the optimal one; swap the random tweaks for LLM reasoning and the walk through program space gains human-like traction per unit time. Conceptually, the AI takes the place of the “emitter” in a compiler like XLA — it lowers a numpy-level spec into optimized code, and because output kernels are verified for semantic equivalence against that spec, nobody needs to read them line by line, any more than you read the assembly that C++ at -O3 produces. Start from something “not very far from the numpy,” wait 48 hours, and out comes an optimized kernel — often climbing past ones OpenAI’s human experts had considered well tuned.
 
-[@cdleary@cdleary"openai engineer explains /why/ he didn't need to understand the kernel line by line" 🙃 we're doing compilers 2.0 https://t.co/LAqjaXsnlk8:00 PM · Sep 1, 2026 · 91.9K Views
+[![X avatar for @cdleary](<../_img/2026-09-02--daily-update-september-2nd-2026/002_wCuR-T_U.jpg> "https://substackcdn.com/image/fetch/$s_!YAtC!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1272051724467892224%2FwCuR-T_U.jpg")@cdleary@cdleary"openai engineer explains /why/ he didn't need to understand the kernel line by line" 🙃 we're doing compilers 2.0 https://t.co/LAqjaXsnlk8:00 PM · Sep 1, 2026 · 91.9K Views
 
 * * *
 
 19 Replies · 62 Reposts · 512 Likes](https://x.com/cdleary/status/2094878051238887834)
 
-[](https://substackcdn.com/image/fetch/$s_!MHHk!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7329a2e7-0dc7-470d-b81c-5016b9d62e9d_1190x1418.png)
+[![](<../_img/2026-09-02--daily-update-september-2nd-2026/003_7329a2e7-0dc7-470d-b81c-5016b9d62e9d_1190x1418.png> "https://substackcdn.com/image/fetch/$s_!MHHk!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7329a2e7-0dc7-470d-b81c-5016b9d62e9d_1190x1418.png")](https://substackcdn.com/image/fetch/$s_!MHHk!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7329a2e7-0dc7-470d-b81c-5016b9d62e9d_1190x1418.png)
 
 > **Vik:**_Worth a read! The paradigms of software for hardware design are changing._
 
@@ -123,7 +121,7 @@ The [pivot to Intel packaging](https://biz.chosun.com/en/en-it/2026/09/02/VC6WHF
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-02--daily-update-september-2nd-2026/004_poll> "http://semidoped.com/poll")! ❤️_
 
 [Share](https://daily.semidoped.com/p/daily-update-september-2nd-2026?utm_source=substack&utm_medium=email&utm_content=share&action=share)
 

@@ -11,9 +11,7 @@ Cerebras IPO prices today, and trading will begin tomorrow May 14th, under ticke
 
 Let’s check it out.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -37,7 +35,7 @@ Q1 2026 revenue came in at $121.7M (slightly above Q1 2025) with gross margin ho
 
 > _**Austin:** Camtek’s stock is down 15% after the earnings call. Market not happy. Q2 guide of $129–131M is only ~7% sequential from Q1, which means H2 needs a 21%+ Q3 step to clear the “25%+ above H1” guidance._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!kODt!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe208544c-7b3c-457c-9f05-305e897e8b0a_1122x1118.png)
+> [![](<../_img/2026-05-13--daily-update-may-13th-2026/001_e208544c-7b3c-457c-9f05-305e897e8b0a_1122x1118.png> "https://substackcdn.com/image/fetch/$s_!kODt!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe208544c-7b3c-457c-9f05-305e897e8b0a_1122x1118.png")](https://substackcdn.com/image/fetch/$s_!kODt!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe208544c-7b3c-457c-9f05-305e897e8b0a_1122x1118.png)
 
 ### Infineon collaborates with d-Matrix on Power Optimization
 
@@ -45,7 +43,7 @@ d-Matrix’s current inference accelerator — Corsair — uses Infineon OptiMOS
 
 The VPD angle is the interesting part. Lateral power delivery breaks down once you push past roughly 1000A into a single package, because PCB trace resistance dominates and you waste too much in IR drop. Putting the VR module directly under the die solves that. Nvidia GB200/GB300 already does this with Vicor and MPS parts. Now d-Matrix is doing it with Infineon.
 
-> _**Vik**_ : _This is incremental evidence that Infineon is building a credible AI power franchise thesis. The more interesting investor question is whether Infineon's TDM family is winning enough sockets across the inference ASIC universe to threaten MPS's dominant position in datacenter voltage regulators._
+> _**Vik**_ : _This is incremental evidence that Infineon is building a credible AI power franchise thesis. The more interesting investor question is whether Infineon 's TDM family is winning enough sockets across the inference ASIC universe to threaten MPS's dominant position in datacenter voltage regulators._
 
 (via [Infineon](https://www.infineon.com/market-news/2026/infpss202605-087))
 
@@ -72,7 +70,7 @@ Austin sat down with [Gimlet Labs](https://gimletlabs.ai/) co-founder Natalie Se
 
 [Cignal AI predicts](https://cignal.ai/2026/05/elsfp-module-market-to-exceed-1-5-billion-by-2030/) that “this time feels different” when it comes to co-packaged optics (CPO). The projected demand for external laser sources for CPO (ELSFPs) from Nvidia indicates that either CPO has finally arrived, or there are going to be a lot of unused ELSFPs that you can hang from your keychains.
 
-[](https://substackcdn.com/image/fetch/$s_!N_Kg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45baf765-0072-42de-acd5-858576855d44_1280x720.jpeg)
+[![](<../_img/2026-05-13--daily-update-may-13th-2026/002_45baf765-0072-42de-acd5-858576855d44_1280x720.jpeg> "https://substackcdn.com/image/fetch/$s_!N_Kg!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45baf765-0072-42de-acd5-858576855d44_1280x720.jpeg")](https://substackcdn.com/image/fetch/$s_!N_Kg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45baf765-0072-42de-acd5-858576855d44_1280x720.jpeg)
 
 ### For Fun
 

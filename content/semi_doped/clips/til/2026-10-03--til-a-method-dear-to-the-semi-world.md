@@ -13,7 +13,7 @@ An estimated 90 percent of semiconductor devices are built with a method that ca
 
 [Jan Czochralski ](https://en.wikipedia.org/wiki/Jan_Czochralski)was born in 1885 in what was then [Exin](https://en.wikipedia.org/wiki/Kcynia) in the [Prussian](https://en.wikipedia.org/wiki/Prussia) [Province of Posen](https://en.wikipedia.org/wiki/Province_of_Posen), [German Empire](https://en.wikipedia.org/wiki/German_Empire) (now Kcynia, Poland). He was the eighth of ten children of a carpenter, and his father did not care for the boy’s chemistry experiments. At sixteen Jan left home for a job in a pharmacy. By one account he destroyed his school certificate because he didn’t like his grades.
 
-[](https://substackcdn.com/image/fetch/$s_!DCuE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd4d70b4b-9084-4ec2-ab0a-5fedb9b1fcb0_302x445.jpeg)By unknown-anonymous - „IKC” 1929 see also http://audiovis.nac.gov.pl/obraz/122700/184ab9fef72918a13e8cc4178d5a190a/, Public Domain, <https://commons.wikimedia.org/w/index.php?curid=38282268>
+[![](<../_img/2026-10-03--til-a-method-dear-to-the-semi-world/001_d4d70b4b-9084-4ec2-ab0a-5fedb9b1fcb0_302x445.jpeg> "https://substackcdn.com/image/fetch/$s_!DCuE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd4d70b4b-9084-4ec2-ab0a-5fedb9b1fcb0_302x445.jpeg")](https://substackcdn.com/image/fetch/$s_!DCuE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd4d70b4b-9084-4ec2-ab0a-5fedb9b1fcb0_302x445.jpeg)By unknown-anonymous - „IKC” 1929 see also http://audiovis.nac.gov.pl/obraz/122700/184ab9fef72918a13e8cc4178d5a190a/, Public Domain, <https://commons.wikimedia.org/w/index.php?curid=38282268>
 
 He would need that certificate.
 
@@ -23,7 +23,6 @@ Now, the pen.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 The story goes that one evening in 1916 he was writing up the day’s results beside a crucible of molten tin and dipped his pen into the tin instead of the inkwell. It came out trailing a thin thread of metal, and the thread was a single crystal. We could not find a primary source for it, and one Polish science magazine calls it a legend.
 

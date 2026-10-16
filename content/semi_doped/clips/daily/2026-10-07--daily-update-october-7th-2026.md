@@ -13,9 +13,7 @@ Elon Musk ruled out any operating role for TSMC at Terafab and Intel stays in th
 
 Let’s get into it. — _Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -31,7 +29,7 @@ $5 in free credits to try it. [Send your first request today →](https://semido
 
 Elon Musk has ruled out TSMC taking any operational role at Terafab, the Texas AI chip complex he is building, saying [his own companies will construct and run the facility](https://www.aninews.in/news/business/elon-musk-rules-out-wider-tsmc-role-in-texas-terafab-says-his-companies-will-build-and-run-facility20261007151640) while TSMC contributes process technology under license. The clarification came after Intel shares initially slid on fears Musk might hand TSMC a broader position, then rebounded once the structure became clearer. Bloomberg confirmed that Intel will keep working on the Terafab venture, preserving its place in a project that had briefly looked like it might sideline the company entirely. Terafab thus takes shape as a Musk-owned fab running TSMC process nodes with Intel in a [supporting capacity, according to Bloomberg](https://www.bloomberg.com/news/articles/2026-10-07/intel-to-keep-working-on-elon-musk-s-terafab-chipmaking-venture).
 
-[Elon Musk@elonmusk@herbertong @thejefflutz No, we will build and run the fab. Let there be ZERO doubt about that. Maybe TSMC subleases part of the Terafab if they want, but nothing more than that.6:33 AM · Oct 7, 2026 · 321K Views
+[![X avatar for @elonmusk](<../_img/2026-10-07--daily-update-october-7th-2026/001_aR-Kjpp4.jpg> "https://substackcdn.com/image/fetch/$s_!kae1!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2103567689515954176%2FaR-Kjpp4.jpg")Elon Musk@elonmusk@herbertong @thejefflutz No, we will build and run the fab. Let there be ZERO doubt about that. Maybe TSMC subleases part of the Terafab if they want, but nothing more than that.6:33 AM · Oct 7, 2026 · 321K Views
 
 * * *
 
@@ -39,7 +37,7 @@ Elon Musk has ruled out TSMC taking any operational role at Terafab, the Texas A
 
 > **Austin:**_Note to readers, this whole convo started recently with a scoop from Tim Culpan:_
 > 
-> [ Culpium, by Tim CulpanExclusive: TSMC Exploring Plans to Work With Elon Musk’s TerafabRead more9 days ago · 32 likes · 1 comment · Tim Culpan](https://www.culpium.com/p/exclusive-tsmc-exploring-plans-to?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
+> [![](<../_img/2026-10-07--daily-update-october-7th-2026/002_63c2f3e3-5600-465d-aa8e-b05fa0d892f4_1280x1280.png> "https://substackcdn.com/image/fetch/$s_!tnhr!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F63c2f3e3-5600-465d-aa8e-b05fa0d892f4_1280x1280.png") Culpium, by Tim CulpanExclusive: TSMC Exploring Plans to Work With Elon Musk’s TerafabRead more13 days ago · 32 likes · 1 comment · Tim Culpan](https://www.culpium.com/p/exclusive-tsmc-exploring-plans-to?utm_source=substack&utm_campaign=post_embed&utm_medium=web&embedding_publication_id=8781267)
 > 
 > **Vik:** _TSMC licensing its process for someone else to run? That seems like news in itself._
 
@@ -156,7 +154,7 @@ Hackers used a Chinese AI cybersecurity tool called Artex AI to breach at least 
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-07--daily-update-october-7th-2026/003_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

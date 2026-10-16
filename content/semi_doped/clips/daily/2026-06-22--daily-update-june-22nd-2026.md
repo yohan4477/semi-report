@@ -13,9 +13,7 @@ Also today: HBM test bottlenecks, floating datacenters, Hyundai absorbing Boston
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player._
 
@@ -51,13 +49,13 @@ Bold claim by MangoBoost: “**Outside of Nvidia, MangoBoost is the only company
 > 
 >  _While that definition discusses training, obviously there’s tons of money on the table if inference isn’t fully optimized either. DPUs play an underappreciated role in offloading networking tasks from host CPUs and enabling high-throughput data access for KV caches, for example in[Nvidia’s STX](https://www.nvidia.com/en-us/data-center/ai-storage/stx/) platform:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!b9yZ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fafa918a7-cc02-428b-9de6-a4687f6ac115_1580x1126.png)
+> [![](<../_img/2026-06-22--daily-update-june-22nd-2026/001_afa918a7-cc02-428b-9de6-a4687f6ac115_1580x1126.png> "https://substackcdn.com/image/fetch/$s_!b9yZ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fafa918a7-cc02-428b-9de6-a4687f6ac115_1580x1126.png")](https://substackcdn.com/image/fetch/$s_!b9yZ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fafa918a7-cc02-428b-9de6-a4687f6ac115_1580x1126.png)
 > 
 > _If MangoBoost is good at leveraging DPUs, they should be able squeeze more tokens out of the same hardware._
 > 
 > _I wonder what they can do with AMD’s[MI455X Helios](https://www.amd.com/en/blogs/2025/amd-helios-ai-rack-built-on-metas-2025-ocp-design.html) platform, which also has a Pensando DPU in it:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!taXU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdc8ef2c6-a7f0-4f9a-a714-e0495ee60d9b_960x538.jpeg)
+> [![Alongside the 12 Vulcano NICs, the Helios compute blade will also use Pensando's Silina 400 DPU](<../_img/2026-06-22--daily-update-june-22nd-2026/002_dc8ef2c6-a7f0-4f9a-a714-e0495ee60d9b_960x538.jpeg> "https://substackcdn.com/image/fetch/$s_!taXU!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdc8ef2c6-a7f0-4f9a-a714-e0495ee60d9b_960x538.jpeg")](https://substackcdn.com/image/fetch/$s_!taXU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fdc8ef2c6-a7f0-4f9a-a714-e0495ee60d9b_960x538.jpeg)
 > 
 > _If MangoBoost can squeeze more tokens out of Helios than AMD… well then, they ought to be a great acquisition target._
 
@@ -117,7 +115,7 @@ SK Hynix’s market capitalization reached $1.362 trillion, overtaking Samsung E
 
 A single AI training cluster now requires more optical and photonic components than the entire worldwide volume of such components in 2008. (via [jwt0625](https://x.com/jwt0625/status/2068729190011322775))
 
-[](https://substackcdn.com/image/fetch/$s_!nZLr!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9277300a-32ac-42f6-9b85-9532f38ed450_2258x2129.jpeg)
+[![Image](<../_img/2026-06-22--daily-update-june-22nd-2026/003_9277300a-32ac-42f6-9b85-9532f38ed450_2258x2129.jpeg> "https://substackcdn.com/image/fetch/$s_!nZLr!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9277300a-32ac-42f6-9b85-9532f38ed450_2258x2129.jpeg")](https://substackcdn.com/image/fetch/$s_!nZLr!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9277300a-32ac-42f6-9b85-9532f38ed450_2258x2129.jpeg)
 
 * * *
 
@@ -125,7 +123,7 @@ A single AI training cluster now requires more optical and photonic components t
 
 According to Goldman Sachs, here is the breakdown of the BoM of a CPO switch. (via [omercheema](https://x.com/omercheema/status/2067327524544094510))
 
-[](https://substackcdn.com/image/fetch/$s_!b1Ze!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2be81fa-ebde-4140-add8-8f922b7a6bc9_804x517.jpeg)
+[![Image](<../_img/2026-06-22--daily-update-june-22nd-2026/004_f2be81fa-ebde-4140-add8-8f922b7a6bc9_804x517.jpeg> "https://substackcdn.com/image/fetch/$s_!b1Ze!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2be81fa-ebde-4140-add8-8f922b7a6bc9_804x517.jpeg")](https://substackcdn.com/image/fetch/$s_!b1Ze!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff2be81fa-ebde-4140-add8-8f922b7a6bc9_804x517.jpeg)
 
 * * *
 
@@ -133,7 +131,7 @@ According to Goldman Sachs, here is the breakdown of the BoM of a CPO switch. (v
 
 So. Many. Companies.
 
-[Dan Nystedt@dnystedtStory includes list of suppliers to TSMC's CoPoS pilot line. Really outstanding article. (AI helped, company names confirmed): Breakdown of TSMC’s CoPoS Equipment List 1\. Lithography and Coating TSMC has introduced a highly comprehensive lineup for exposure and coating12:58 AM · Jun 22, 2026 · 8.86K Views
+[![X avatar for @dnystedt](<../_img/2026-06-22--daily-update-june-22nd-2026/005_4qn4a9oA.jpeg> "https://substackcdn.com/image/fetch/$s_!PNWc!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F534296422481289217%2F4qn4a9oA.jpeg")Dan Nystedt@dnystedtStory includes list of suppliers to TSMC's CoPoS pilot line. Really outstanding article. (AI helped, company names confirmed): Breakdown of TSMC’s CoPoS Equipment List 1\. Lithography and Coating TSMC has introduced a highly comprehensive lineup for exposure and coating12:58 AM · Jun 22, 2026 · 8.86K Views
 
 * * *
 
@@ -151,7 +149,7 @@ How AI interconnects are built — a nice video by Lightmatter.
 
 [FADU’s blog post](https://blogs.fadu.io/cmx-ssd-for-ai-inference/) on CMX using SSDs is highly informative. The table below explains how the needs for Agentic AI differs from traditional storage.
 
-[](https://substackcdn.com/image/fetch/$s_!dISo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F705a75f5-b516-4284-94f0-72a5616acac9_1576x824.png)
+[![](<../_img/2026-06-22--daily-update-june-22nd-2026/006_705a75f5-b516-4284-94f0-72a5616acac9_1576x824.png> "https://substackcdn.com/image/fetch/$s_!dISo!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F705a75f5-b516-4284-94f0-72a5616acac9_1576x824.png")](https://substackcdn.com/image/fetch/$s_!dISo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F705a75f5-b516-4284-94f0-72a5616acac9_1576x824.png)
 
 * * *
 

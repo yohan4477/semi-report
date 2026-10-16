@@ -13,9 +13,7 @@ Plus: why the Mythos shutdown is another data point for owning your models, not 
 
 Let’s get into it. _—Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -69,7 +67,7 @@ Aehr Test Systems received a follow-on production order for a fully automated FO
 
 Broadcom’s AI XPU volume could triple to 15GW by FY28, driving $250-300 billion in FY28 XPU revenue, if the Apollo/Blackstone XPV financing vehicle for Anthropic’s FY26 Broadcom purchases is fully funded. Wolfe Research stated that if full XPV financing comes together, FY27 guidance will no longer be a concern. Bullish views on [AVGO 0.00%↑](https://substack.com/search/%24AVGO) ([@ScroogeCap](https://x.com/ScroogeCap/status/2067220322349134122?s=20))
 
-[Scrooge McDuck@ScroogeCap$JPM has dug to the bottom of this $AVGO TPU debacle and are saying everything is hunky dory. See note below. There are no delays, and no cancellations. Wolfe is out positive too on AVGO today: We followed up with management to discuss the Apollo/Blackstone XPV financing 12:18 PM · Jun 17, 2026 · 10.2K Views
+[![X avatar for @ScroogeCap](<../_img/2026-06-18--daily-update-june-18th-2026/001_cB37nfpl.jpg> "https://substackcdn.com/image/fetch/$s_!Qayh!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1995797455804182528%2FcB37nfpl.jpg")Scrooge McDuck@ScroogeCap$JPM has dug to the bottom of this $AVGO TPU debacle and are saying everything is hunky dory. See note below. There are no delays, and no cancellations. Wolfe is out positive too on AVGO today: We followed up with management to discuss the Apollo/Blackstone XPV financing ![](<../_img/2026-06-18--daily-update-june-18th-2026/002_HLA9YX0XAAAE99z.jpg> "https://substackcdn.com/image/fetch/$s_!Mg3h!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHLA9YX0XAAAE99z.jpg")![](<../_img/2026-06-18--daily-update-june-18th-2026/003_HLA9aOZWUAANPKF.png> "https://substackcdn.com/image/fetch/$s_!8Di_!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHLA9aOZWUAANPKF.png")12:18 PM · Jun 17, 2026 · 10.2K Views
 
 * * *
 

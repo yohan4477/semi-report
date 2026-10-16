@@ -11,9 +11,7 @@ OpenAI is developing a custom Jalapeño AI chip with Broadcom, a move that could
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -23,7 +21,7 @@ Subscribe
 
 Qualcomm announced its re-entry into the datacenter market at its 2026 Investor Day, detailing a new CPU, AI accelerator, and custom silicon offerings. The company introduced the Qualcomm Dragonfly C1000 CPU, a chiplet design with over 250 cores, PCIe Gen7, CXL, and optional High Bandwidth Compute (HBC) attach. Qualcomm also acquired Modular to bolster its AI software stack and announced a multi-generational agreement with Meta for its processors. ([servethehome.com](https://www.servethehome.com/qualcomm-investor-day-2026-data-center-announcements-cpus-ai-accelerators-and-more/))
 
-[Austin Lyons@austinsemisQualcomm Investor Day 🤘🏻 @PatrickMoorhead @BenBajarin 5:07 PM · Jun 24, 2026 · 2.06K Views
+[![X avatar for @austinsemis](https://substackcdn.com/image/fetch/$s_!b_2v!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2036860603558748160%2F0k5mDu8M.jpg)Austin Lyons@austinsemisQualcomm Investor Day 🤘🏻 @PatrickMoorhead @BenBajarin ![](<../_img/2026-06-25--daily-update-june-25th-2026/002_HLmDKPMXEAAY3mO.jpg> "https://pbs.substack.com/media/HLmDKPMXEAAY3mO.jpg")5:07 PM · Jun 24, 2026 · 2.06K Views
 
 * * *
 
@@ -49,7 +47,7 @@ This essay traces the state of the art in AI driven design, examines where human
 
 ([@magicsilicon](https://x.com/magicsilicon/status/2069857272415809819))
 
-[Pushkar Ranade@magicsiliconhttps://t.co/vuhakriM666:56 PM · Jun 24, 2026 · 2.38K Views
+[![X avatar for @magicsilicon](<../_img/2026-06-25--daily-update-june-25th-2026/003_c2EqVX-X.jpg> "https://substackcdn.com/image/fetch/$s_!en24!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2035498470619144192%2Fc2EqVX-X.jpg")Pushkar Ranade@magicsiliconhttps://t.co/vuhakriM666:56 PM · Jun 24, 2026 · 2.38K Views
 
 * * *
 
@@ -69,7 +67,7 @@ XLight, a startup developing advanced lasers for semiconductor manufacturing, is
 > 
 > _**Austin:** xLight is a very interesting company with a pragmatic approach to an important problem. I wrote about it at Chipstrat, check it out if you haven’t: _
 > 
-> [ChipstratxLight. Photons as a Service.In January, I wrote about the worsening cost curve of EUV lithography and two startups trying to bend it…Read more6 months ago · 16 likes · Austin Lyons](https://www.chipstrat.com/p/photons-as-a-service?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+> [![](<../_img/2026-06-25--daily-update-june-25th-2026/004_27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png> "https://substackcdn.com/image/fetch/$s_!rCMl!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png")ChipstratxLight. Photons as a Service.In January, I wrote about the worsening cost curve of EUV lithography and two startups trying to bend it…Read more8 months ago · 16 likes · Austin Lyons](https://www.chipstrat.com/p/photons-as-a-service?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 * * *
 
@@ -85,7 +83,7 @@ Samsung Electronics’ Semiconductor Research Center presented a paper at the 20
 
 Unitree Robotics posted a short video clip on X teasing a new robot. The company stated that more details about the robot are coming soon. ([@unitreerobotics](https://x.com/unitreerobotics/status/2069751801096909214?s=46&t=e1Xfsq__q3Z5uU8psDOaeQ))
 
-[Unitree@UnitreeRoboticsUnitree R1 | Price from $4,900, Ready Stock 🥳 Your Smart Robot Companion 11:57 AM · Jun 24, 2026 · 702K Views
+[![X avatar for @UnitreeRobotics](<../_img/2026-06-25--daily-update-june-25th-2026/005_nIEbH8rV.jpg> "https://substackcdn.com/image/fetch/$s_!r18N!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1844926705389142016%2FnIEbH8rV.jpg")Unitree@UnitreeRoboticsUnitree R1 | Price from $4,900, Ready Stock 🥳 Your Smart Robot Companion ![](<../_img/2026-06-25--daily-update-june-25th-2026/006___ss-rehost__tw-video-preview-13_2069748518441598976.jpg> "https://substackcdn.com/image/fetch/$s_!R-ER!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2069748518441598976.jpg")11:57 AM · Jun 24, 2026 · 702K Views
 
 * * *
 
@@ -93,7 +91,7 @@ Unitree Robotics posted a short video clip on X teasing a new robot. The company
 
 >  _**Vik:** China is really quite ahead on robotics, but their marketing team needs work._
 > 
-> [Vikram Sekar@vikramskrAll these robotics companies have their marketing wrong. Nobody wants these stupid dance moves, it’s just engineers saying — look what I make scrap metal do. Show me a robot that … walks into an untidy living room filled with toys, mixed in with sticky Cheerios, laundryUnitree @UnitreeRoboticsUnitree R1 | Price from $4,900, Ready Stock 🥳 Your Smart Robot Companion4:57 PM · Jun 24, 2026 · 9.66K Views
+> [![X avatar for @vikramskr](<../_img/2026-06-25--daily-update-june-25th-2026/007_Rf_mIEz0.jpg> "https://substackcdn.com/image/fetch/$s_!TWOG!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1864653638054105088%2FRf_mIEz0.jpg")Vikram Sekar@vikramskrAll these robotics companies have their marketing wrong. Nobody wants these stupid dance moves, it’s just engineers saying — look what I make scrap metal do. Show me a robot that … walks into an untidy living room filled with toys, mixed in with sticky Cheerios, laundry![X avatar for @UnitreeRobotics](<../_img/2026-06-25--daily-update-june-25th-2026/008_nIEbH8rV.jpg> "https://substackcdn.com/image/fetch/$s_!r18N!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1844926705389142016%2FnIEbH8rV.jpg")Unitree @UnitreeRoboticsUnitree R1 | Price from $4,900, Ready Stock 🥳 Your Smart Robot Companion4:57 PM · Jun 24, 2026 · 9.66K Views
 > 
 > * * *
 > 
@@ -107,7 +105,7 @@ OpenAI has designed and built its first AI chip, “Jalapeño,” in collaborati
 
 **Sources:** [@openai](https://x.com/openai/status/2069770172802773292?s=46)
 
-[OpenAI@OpenAIWe’ve designed and built our first AI chip: Jalapeño. Designed from the ground up by OpenAI and brought to production with @Broadcom, Jalapeño is purpose-built for the LLM workloads powering ChatGPT, Codex, the API, and future agentic products. Chips are foundational to the AI 1:10 PM · Jun 24, 2026 · 877K Views
+[![X avatar for @OpenAI](<../_img/2026-06-25--daily-update-june-25th-2026/009_ztsaR0JW.jpg> "https://substackcdn.com/image/fetch/$s_!4uQ6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1885410181409820672%2FztsaR0JW.jpg")OpenAI@OpenAIWe’ve designed and built our first AI chip: Jalapeño. Designed from the ground up by OpenAI and brought to production with @Broadcom, Jalapeño is purpose-built for the LLM workloads powering ChatGPT, Codex, the API, and future agentic products. Chips are foundational to the AI ![](<../_img/2026-06-25--daily-update-june-25th-2026/010_HLlMzhyakAArWhk.jpg> "https://pbs.substack.com/media/HLlMzhyakAArWhk.jpg")1:10 PM · Jun 24, 2026 · 877K Views
 
 * * *
 
@@ -128,7 +126,7 @@ Qualcomm announced an agreement to acquire Modular Inc. to strengthen Qualcomm T
 
 **Sources:** [modular.com](https://www.modular.com/blog/qualcomm-to-acquire-modular?utm_source=x&utm_campaign=qualcomm)
 
-[Chris Lattner@clattner_llvmI'm excited to share that Qualcomm is acquiring Modular: this will accelerate our path to unifying accelerated compute with an open platform. This will also mark a new era in open software development for Qualcomm. 👇Qualcomm @QualcommHardware plus software defines leadership in the AI era. Today we announced an agreement to acquire @Modular, advancing our evolution as a developer-first AI solutions company delivering generative and agentic AI from edge to cloud. https://t.co/ubijk0zGWj1:06 PM · Jun 24, 2026 · 74.3K Views
+[![X avatar for @clattner_llvm](<../_img/2026-06-25--daily-update-june-25th-2026/011_1n6Viahb.jpg> "https://substackcdn.com/image/fetch/$s_!CIYj!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1484209565788897285%2F1n6Viahb.jpg")Chris Lattner@clattner_llvmI'm excited to share that Qualcomm is acquiring Modular: this will accelerate our path to unifying accelerated compute with an open platform. This will also mark a new era in open software development for Qualcomm. 👇![X avatar for @Qualcomm](<../_img/2026-06-25--daily-update-june-25th-2026/012_xxh_RaHK.png> "https://substackcdn.com/image/fetch/$s_!KC8X!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1763274811793461248%2Fxxh_RaHK.png")Qualcomm @QualcommHardware plus software defines leadership in the AI era. Today we announced an agreement to acquire @Modular, advancing our evolution as a developer-first AI solutions company delivering generative and agentic AI from edge to cloud. https://t.co/ubijk0zGWj1:06 PM · Jun 24, 2026 · 74.3K Views
 
 * * *
 
@@ -142,7 +140,7 @@ Qualcomm announced an agreement to acquire Modular Inc. to strengthen Qualcomm T
 
 Nice map of ASMPT CoWoW solutions. h/t to [SEMIVISION](https://open.substack.com/users/271602055-semivision?utm_source=mentions) on X.
 
-[](https://substackcdn.com/image/fetch/$s_!B1Rc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb412836e-a1c7-46aa-a8a2-cd0969b5a46e_1427x798.jpeg)
+[![Image](<../_img/2026-06-25--daily-update-june-25th-2026/013_b412836e-a1c7-46aa-a8a2-cd0969b5a46e_1427x798.jpeg> "https://substackcdn.com/image/fetch/$s_!B1Rc!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb412836e-a1c7-46aa-a8a2-cd0969b5a46e_1427x798.jpeg")](https://substackcdn.com/image/fetch/$s_!B1Rc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb412836e-a1c7-46aa-a8a2-cd0969b5a46e_1427x798.jpeg)
 
 * * *
 

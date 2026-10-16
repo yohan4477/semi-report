@@ -13,13 +13,11 @@ Qualcomm made headlines with a multi-generational custom AI chip deal with Amazo
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-08--daily-update-september-8th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Qualcomm Signs Multi-Generational Custom AI Chip Deal With Amazon
 
@@ -29,6 +27,8 @@ Qualcomm announced a [multi-generational collaboration with Amazon](https://www.
 > 
 > **Austin:**_Amazon gets QCOM warrants too:_
 > 
+> ![](<../_img/2026-09-08--daily-update-september-8th-2026/002_4570f352-e3bb-42a1-a3b1-8694182e9083_2358x480.png> "https://substackcdn.com/image/fetch/$s_!sK33!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4570f352-e3bb-42a1-a3b1-8694182e9083_2358x480.png")
+> 
 > You can learn more from the webcast at today’s [Goldman Sachs Communacopia + Technology Conference 2026](http://2026-2026-ajf-1laZGf/default.aspx) from CFO & COO Akash Palkhiwala.
 
 ### Arm Refreshes Entire Silicon Stack for Agentic AI Across Every Compute Tier
@@ -37,7 +37,7 @@ Arm unveiled its most sweeping platform refresh at once, releasing the [CSS for 
 
 > _**Austin:** Good thought leadership from Arm here too, e.g. putting out a robotics capability framework (conceptually analogous to vehicle ADAS/autonomy levels)_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!DF7t!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe0f13df3-c0cd-40e6-b7b6-2cec3f267397_1200x675.jpeg)
+> [![Infographic showing Arm’s Robotics Capability Framework, progressing from RL0 reactive systems to RL5 self-improving systems, with increasing levels of behavior, outcomes and capabilities.](<../_img/2026-09-08--daily-update-september-8th-2026/003_e0f13df3-c0cd-40e6-b7b6-2cec3f267397_1200x675.jpeg> "https://substackcdn.com/image/fetch/$s_!DF7t!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe0f13df3-c0cd-40e6-b7b6-2cec3f267397_1200x675.jpeg")](https://substackcdn.com/image/fetch/$s_!DF7t!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe0f13df3-c0cd-40e6-b7b6-2cec3f267397_1200x675.jpeg)
 
 ### Samsung Leads Mistral AI Round, Valuing French Lab at €21 Billion
 
@@ -55,7 +55,7 @@ OpenAI unveiled GPT-6 Astra on September 3, billing it as a major step toward au
 
 South Korean media have reported that [Samsung has begun co-developing an on-device chip with Arm](https://x.com/jukan05/status/2096967899537907945?s=46), with OpenAI believed to be the end customer for the resulting silicon. The project would mark a notable convergence of three companies whose individual ambitions in AI hardware have each been well-documented, now apparently funneled into a single design effort. On-device inference chips reduce reliance on cloud compute, and OpenAI has been openly searching for ways to control more of its hardware stack. Samsung brings advanced packaging and fabrication muscle; Arm contributes its architecture. No parties have confirmed the collaboration officially, and the sourcing remains attributed to unnamed South Korean press reports rather than any direct disclosure.
 
-[Jukan@jukan05South Korean media have reported that Samsung has begun co-developing an on-device chip with Arm, with OpenAI believed to be the end customer. greened.kr[단독] 삼성전자, Arm과 차세대 '온디바이스 AI 칩' 공동 개발 착수 - 녹색경제신문2:24 PM · Sep 7, 2026 · 64.4K Views
+[![X avatar for @jukan05](https://substackcdn.com/image/fetch/$s_!griq!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2037840794992988160%2FtnSqJgqt.jpg)Jukan@jukan05South Korean media have reported that Samsung has begun co-developing an on-device chip with Arm, with OpenAI believed to be the end customer. greened.kr[단독] 삼성전자, Arm과 차세대 '온디바이스 AI 칩' 공동 개발 착수 - 녹색경제신문![](https://substackcdn.com/image/fetch/$s_!y3fB!,w_64,h_64,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fnews_img%2F2096967907330916352%2FMT8c2Qql%3Fformat%3Djpg%26name%3Dorig)2:24 PM · Sep 7, 2026 · 64.4K Views
 
 * * *
 
@@ -67,7 +67,7 @@ SemiAnalysis published first third-party inference results for Google’s TPUv7 
 
 **Sources:** [open.substack.com](https://open.substack.com/pub/semianalysis/p/tpu-inferencex-full-steam?r=4swd4&utm_medium=ios)
 
-[](https://substackcdn.com/image/fetch/$s_!gIZi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4e9ae33e-1cec-4f87-91a1-8e18e5cc5fd9_1672x941.png)
+[![](<../_img/2026-09-08--daily-update-september-8th-2026/006_4e9ae33e-1cec-4f87-91a1-8e18e5cc5fd9_1672x941.png> "https://substackcdn.com/image/fetch/$s_!gIZi!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4e9ae33e-1cec-4f87-91a1-8e18e5cc5fd9_1672x941.png")](https://substackcdn.com/image/fetch/$s_!gIZi!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4e9ae33e-1cec-4f87-91a1-8e18e5cc5fd9_1672x941.png)
 
 ### **Anthropic Walks Away from $6 Billion Decart AI Acquisition**
 
@@ -158,7 +158,7 @@ Anthropic PBC has decided against acquiring AI startup Decart AI after completin
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-08--daily-update-september-8th-2026/007_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

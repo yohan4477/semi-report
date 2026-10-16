@@ -11,9 +11,7 @@ Not a day goes by in semis without something dramatic happening these days. Anth
 
 You’ll hear all about it below.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -84,7 +82,7 @@ Worth noting: these are indications of interest, not firm orders. Final allocati
 
 Our X feeds are filled with whether SemiAnalysis is correct about the delays in CPO and 800V deployment. Lots of takes for and against this. One thing that everyone seems to agree on the optics side is — it doesn’t matter if CPO is delayed, the demand for lasers does not go away. NPO/Pluggables/you-name-it, needs all optical components still. Rest easy, and this too shall pass!
 
-[Leroy Groffier@LeroyGroffierDC POWER UPGRADE FUD: Market weakness begets fear and shortens investor duration, hence tendency to question pie in the sky technology stories. Power transition to 800V seeing some negative press and power names e.g., DELTA $2308; ROHM $6963; $485A; passives in general -- 5:08 AM · Jun 10, 2026 · 29.7K Views
+[![X avatar for @LeroyGroffier](<../_img/2026-06-10--daily-update-june-10th-2026/001_tRYHxnt0.png> "https://substackcdn.com/image/fetch/$s_!bq3Q!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1145894211104825346%2FtRYHxnt0.png")Leroy Groffier@LeroyGroffierDC POWER UPGRADE FUD: Market weakness begets fear and shortens investor duration, hence tendency to question pie in the sky technology stories. Power transition to 800V seeing some negative press and power names e.g., DELTA $2308; ROHM $6963; $485A; passives in general -- ![](<../_img/2026-06-10--daily-update-june-10th-2026/002_HKbYMTpWMAErwW7.png> "https://pbs.substack.com/media/HKbYMTpWMAErwW7.png")5:08 AM · Jun 10, 2026 · 29.7K Views
 
 * * *
 

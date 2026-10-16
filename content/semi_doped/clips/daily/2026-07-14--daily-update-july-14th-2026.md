@@ -13,9 +13,7 @@ AI continues to make the economics of memory and power an interesting storyline.
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player._
 
@@ -42,7 +40,7 @@ AI is simultaneously rewarding a narrow set of suppliers: HBM tooling maker Hanm
 
 
 
-[](https://substackcdn.com/image/fetch/$s_!AOHT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1535691c-5886-4fd0-9f8d-6ed6955e1095_643x440.png)
+[![](<../_img/2026-07-14--daily-update-july-14th-2026/001_1535691c-5886-4fd0-9f8d-6ed6955e1095_643x440.png> "https://substackcdn.com/image/fetch/$s_!AOHT!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1535691c-5886-4fd0-9f8d-6ed6955e1095_643x440.png")](https://substackcdn.com/image/fetch/$s_!AOHT!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1535691c-5886-4fd0-9f8d-6ed6955e1095_643x440.png)
 
 > _**Vik:** If AI is hitting consumer memory hard, its no wonder that smartphone sales are slumping. Plus, they’re not as sexy anymore. Your phone works, and its mostly a solved problem save for some feature frills. AI is where the hot money is at. But as expected, Apple and Samsung can absorb DRAM costs and stay afloat in the premium tier more than low end phones can._
 > 
@@ -77,7 +75,7 @@ Apart from CXMT being on track to reach Micron-scale DRAM capacity, here are som
 
 Meta has expanded its Hyperion data center campus in Louisiana to 5GW of planned capacity, with total investment crossing $50 billion ([Reuters](https://www.reuters.com/business/meta-expands-louisiana-data-center-5-gigawatts-compute-capacity-2026-07-13/), [WSJ](https://www.wsj.com/tech/meta-lifts-cost-of-louisiana-data-center-to-50-billion-02b2eb25)) — a single-site commitment that crystallizes grid access, not chip supply, as the binding constraint on hyperscale AI infrastructure. Meta’s Hyperion build-out in Richland Parish draws on generous Louisiana tax incentives ([CNBC](https://www.cnbc.com/2026/07/13/meta-louisiana-data-center-investment-reaches-50-billion-amid-ai-push.html)). Bloomberg reported the campus total cost could surpass $250 billion when long-term operational expenditures are included ([Bloomberg.com](https://www.bloomberg.com/news/articles/2026-07-13/meta-s-louisiana-data-center-to-surpass-250-billion-price-tag)).
 
-[](https://substackcdn.com/image/fetch/$s_!4NgG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a2f7fa9-6699-41a8-b663-6301ab06df97_1858x1045.jpeg)Meta’s Hyperion data center under construction. Source: CNBC
+[![Meta's 5-gigawatt "Hyperion" data center under construction in Richland Parish, Louisiana, on January 9, 2026.](<../_img/2026-07-14--daily-update-july-14th-2026/002_3a2f7fa9-6699-41a8-b663-6301ab06df97_1858x1045.jpeg> "https://substackcdn.com/image/fetch/$s_!4NgG!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a2f7fa9-6699-41a8-b663-6301ab06df97_1858x1045.jpeg")](https://substackcdn.com/image/fetch/$s_!4NgG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a2f7fa9-6699-41a8-b663-6301ab06df97_1858x1045.jpeg)Meta’s Hyperion data center under construction. Source: CNBC
 
 The announcement lands as GE Vernova’s gas turbine order book is sold out through 2030 ([eciks.org](https://eciks.org/13489-69957-gev-vernova-turbines-sold-out-2030)), Nvidia-backed Nscale’s £2 billion UK data center is stuck in a grid connection queue ([Sifted](https://sifted.eu/articles/nscale-delays)), and the White House is preparing to convene utilities and data centers around a pledge on AI power costs ([Reuters](https://www.reuters.com/legal/litigation/white-house-rally-utilities-data-centers-over-ai-power-costs-2026-07-13/)).
 

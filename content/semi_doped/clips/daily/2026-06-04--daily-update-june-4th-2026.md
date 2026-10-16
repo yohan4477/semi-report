@@ -9,9 +9,7 @@ subtitle: Broadcom's AI forecast disappoints and Hock admits Google is drifting,
 ---
 Earnings day blues for Broadcom: revenue’s up 48%, the AI chip forecast isn’t, and Hock Tan cops to Google building its own design muscle. Meanwhile, TSMC’s C.C. Wei says the foundry still can’t make chips fast enough and won’t be slowing CapEx any time soon. And Stanford scales a 2D nanoribbon transistor to 15 nm with record on/off ratios, a peek at what comes after silicon runs out of room. Plus: LPDDR6 elbows into the data center, InchFab sells $10M mini fabs to Roche, and budget phone makers eye the exits. Let’s dig in. 👇
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -33,7 +31,7 @@ Researchers from Stanford, Chalmers University of Technology, HORIBA Scientific,
 
 > _**Austin:**_ _from Professor Pop on LinkedIn:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!MZ6k!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fca4df3c3-1771-4386-b3c2-648866a3927c_1094x912.png)
+> [![](<../_img/2026-06-04--daily-update-june-4th-2026/001_ca4df3c3-1771-4386-b3c2-648866a3927c_1094x912.png> "https://substackcdn.com/image/fetch/$s_!MZ6k!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fca4df3c3-1771-4386-b3c2-648866a3927c_1094x912.png")](https://substackcdn.com/image/fetch/$s_!MZ6k!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fca4df3c3-1771-4386-b3c2-648866a3927c_1094x912.png)
 
 ### **Quick Hits**
 

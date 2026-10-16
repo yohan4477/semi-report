@@ -13,13 +13,11 @@ SK Hynix is in talks with Intel about manufacturing memory chips on US soil for 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-16--daily-update-september-16th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 #### Presented by G2i
 
@@ -123,7 +121,7 @@ Samsung Electronics has [decided to outsource all incremental DDR5 commodity mod
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-16--daily-update-september-16th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

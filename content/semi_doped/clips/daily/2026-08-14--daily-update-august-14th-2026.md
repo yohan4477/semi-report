@@ -13,9 +13,7 @@ Applied Materials posted record quarterly revenue of $9.12 billion, up 25 percen
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -45,7 +43,7 @@ See the full investor day 98-slide presentation [here](https://investor.sandisk.
 
 > _**Vik:** Their BiCS 10 platform is the newest and is 332-layer 2Tb QLC NAND. What is really interesting is their **HBF roadmap**. I recommend you go look at like slide 83 onwards. There is some really interesting stuff there like this chart of potential use cases._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!wE08!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa9ed6f12-ae8a-472b-9a0f-99b7454a0c2c_2074x1124.png)
+> [![](<../_img/2026-08-14--daily-update-august-14th-2026/001_a9ed6f12-ae8a-472b-9a0f-99b7454a0c2c_2074x1124.png> "https://substackcdn.com/image/fetch/$s_!wE08!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa9ed6f12-ae8a-472b-9a0f-99b7454a0c2c_2074x1124.png")](https://substackcdn.com/image/fetch/$s_!wE08!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa9ed6f12-ae8a-472b-9a0f-99b7454a0c2c_2074x1124.png)
 
 ### Chinese Foundries and CXMT Post Records as Domestic Chip Stack Takes Shape
 

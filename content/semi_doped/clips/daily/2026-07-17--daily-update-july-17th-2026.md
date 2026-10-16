@@ -13,9 +13,7 @@ It’s all about Kimi K3 — the newest Chinese open-weight model from Moonshot 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 ### Kimi K3 Open-Weight Release Deepens Chip Selloff, Rattles Capex Case
 
@@ -31,7 +29,7 @@ The release, framed at Xi’s WAIC as a sovereign-AI push, [Bloomberg](https://w
 
   * K3’s **full weight release July 27** is the next hard checkpoint: if benchmark scores hold on independent evals, pressure on US proprietary-model and high-end chip valuations intensifies into Q3 earnings season.
 
-[David Sacks@DavidSacksThis is concerning. For the first time, a Chinese model Kimi K3 has taken #1 on the Frontend Code Arena and is scoring at or near the frontier on other benchmarks. Meanwhile America is tying itself in knots: politicians and bureaucrats are banning new data centers, piling onArena.ai @arenaBig news: Kimi-K3 by @Kimi_Moonshot is now #1 in the Frontend Code Arena with 1679 pts, surpassing Claude Fable 5. This is a 17-place jump from Kimi-k2.6 (#18 -> #1). In Frontend, Kimi-K3 ranked #1 in 6 of 7 domains: Brand & Marketing, Reference-Based Design, Data & Analytics, https://t.co/Oa6teaQnWp12:19 PM · Jul 17, 2026 · 30.5K Views
+[![X avatar for @DavidSacks](<../_img/2026-07-17--daily-update-july-17th-2026/001_GkBxdTd9.jpg> "https://substackcdn.com/image/fetch/$s_!jd1U!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1879600809693917185%2FGkBxdTd9.jpg")David Sacks@DavidSacksThis is concerning. For the first time, a Chinese model Kimi K3 has taken #1 on the Frontend Code Arena and is scoring at or near the frontier on other benchmarks. Meanwhile America is tying itself in knots: politicians and bureaucrats are banning new data centers, piling on![X avatar for @arena](<../_img/2026-07-17--daily-update-july-17th-2026/002_iNKfXZ_I.jpg> "https://substackcdn.com/image/fetch/$s_!0PyR!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2017015061454438400%2FiNKfXZ_I.jpg")Arena.ai @arenaBig news: Kimi-K3 by @Kimi_Moonshot is now #1 in the Frontend Code Arena with 1679 pts, surpassing Claude Fable 5. This is a 17-place jump from Kimi-k2.6 (#18 -> #1). In Frontend, Kimi-K3 ranked #1 in 6 of 7 domains: Brand & Marketing, Reference-Based Design, Data & Analytics, https://t.co/Oa6teaQnWp12:19 PM · Jul 17, 2026 · 30.5K Views
 
 * * *
 
@@ -86,7 +84,7 @@ With CXMT’s $8.6B IPO now priced, [Financial Times](https://www.ft.com/content
 
 Kimi K3 at #3.
 
-[](https://substackcdn.com/image/fetch/$s_!fuL6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F078deeae-9164-47b0-a06a-87be71d34d91_1160x642.jpeg)
+[![](<../_img/2026-07-17--daily-update-july-17th-2026/003_078deeae-9164-47b0-a06a-87be71d34d91_1160x642.jpeg> "https://substackcdn.com/image/fetch/$s_!fuL6!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F078deeae-9164-47b0-a06a-87be71d34d91_1160x642.jpeg")](https://substackcdn.com/image/fetch/$s_!fuL6!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F078deeae-9164-47b0-a06a-87be71d34d91_1160x642.jpeg)
 
 ### Two Days to Design a Chip — Kimi K3
 

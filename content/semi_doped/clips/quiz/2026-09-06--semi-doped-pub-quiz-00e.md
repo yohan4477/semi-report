@@ -17,11 +17,10 @@ In FY2026 that ceramics division earned ¥28.9 billion. Every toilet, faucet, an
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 ## CLUES
 
-[](https://substackcdn.com/image/fetch/$s_!fcVH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffb83b6a1-ded9-4416-bf66-a45ab484f6fb_1472x2048.webp)
+[![](<../_img/2026-09-06--semi-doped-pub-quiz-00e/001_fb83b6a1-ded9-4416-bf66-a45ab484f6fb_1472x2048.webp> "https://substackcdn.com/image/fetch/$s_!fcVH!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffb83b6a1-ded9-4416-bf66-a45ab484f6fb_1472x2048.webp")](https://substackcdn.com/image/fetch/$s_!fcVH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffb83b6a1-ded9-4416-bf66-a45ab484f6fb_1472x2048.webp)
 
 > Its most famous product is a heated seat launched in June 1980, sold as the Washlet.
 

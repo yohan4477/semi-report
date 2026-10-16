@@ -11,9 +11,7 @@ Huawei dresses up hybrid bonding as a brand-new scaling law. PC makers ring the 
 
 We’re here to take you beyond the spin. 
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -27,7 +25,7 @@ We think there is too much hype around this new “scaling law” and is essenti
 
 Zephyr_z9 on X calls out what the real news is here — hybrid bonding to stack logic chips.
 
-[Zephyr@zephyr_z9Huawei is pushing hybrid bonding to the extreme The success of their "tau scaling" depends on the HB contact acting as a damn good intra-circuit routing layer and not just package I/O. This is the biggest innovation here and what separates their tech from normal 3D stacking The 9:20 AM · May 25, 2026 · 12.7K Views
+[![X avatar for @zephyr_z9](<../_img/2026-05-25--daily-update-may-25th-2026/001_Jk4w7gjp.jpg> "https://substackcdn.com/image/fetch/$s_!X8j6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1837802996723597312%2FJk4w7gjp.jpg")Zephyr@zephyr_z9Huawei is pushing hybrid bonding to the extreme The success of their "tau scaling" depends on the HB contact acting as a damn good intra-circuit routing layer and not just package I/O. This is the biggest innovation here and what separates their tech from normal 3D stacking The ![](<../_img/2026-05-25--daily-update-may-25th-2026/002_HJJ2s1GaoAAa3u6.jpg> "https://pbs.substack.com/media/HJJ2s1GaoAAa3u6.jpg")9:20 AM · May 25, 2026 · 12.7K Views
 
 * * *
 
@@ -66,7 +64,7 @@ Micron will use TSMC to manufacture the base die for its HBM4E memory, marking t
 
 ### Key Data
 
-[](https://substackcdn.com/image/fetch/$s_!qXP9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F91481415-8947-4c11-9dfa-eb887187db9b_1456x1396.jpeg)
+[![Image](<../_img/2026-05-25--daily-update-may-25th-2026/003_91481415-8947-4c11-9dfa-eb887187db9b_1456x1396.jpeg> "https://substackcdn.com/image/fetch/$s_!qXP9!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F91481415-8947-4c11-9dfa-eb887187db9b_1456x1396.jpeg")](https://substackcdn.com/image/fetch/$s_!qXP9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F91481415-8947-4c11-9dfa-eb887187db9b_1456x1396.jpeg)
 
 >  _**Austin:** I see why frontier intelligence captures all the value. What happens if the next model doesn’t unlock such a massive jump in intelligence? I guess we are moving to a harness moat anyway?_
 
@@ -74,7 +72,7 @@ Micron will use TSMC to manufacture the base die for its HBM4E memory, marking t
 
 Jensen literally creating bathroom graffiti now. This. has. got. to. stop.
 
-[NVIDIA@nvidiaSome people leave reviews. Jensen leaves his signature. ✍️ 3:20 PM · May 24, 2026 · 102K Views
+[![X avatar for @nvidia](<../_img/2026-05-25--daily-update-may-25th-2026/004_SRvCZSfQ.jpg> "https://substackcdn.com/image/fetch/$s_!PNlN!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1828904711124078593%2FSRvCZSfQ.jpg")NVIDIA@nvidiaSome people leave reviews. Jensen leaves his signature. ✍️ ![](<../_img/2026-05-25--daily-update-may-25th-2026/005_pitmnfe1hhpcuzysdy3j> "https://substackcdn.com/image/upload/w_1028,c_limit,q_auto:best/l_twitter_play_button_rvaygk,w_88/pitmnfe1hhpcuzysdy3j")![](<../_img/2026-05-25--daily-update-may-25th-2026/006_b7fcaf80h5c9a7ftljmf> "https://substackcdn.com/image/upload/w_1028,c_limit,q_auto:best/l_twitter_play_button_rvaygk,w_88/b7fcaf80h5c9a7ftljmf")3:20 PM · May 24, 2026 · 102K Views
 
 * * *
 

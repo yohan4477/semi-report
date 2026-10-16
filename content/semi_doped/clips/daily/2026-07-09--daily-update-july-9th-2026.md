@@ -11,9 +11,7 @@ China cleared domestic AI firms to buy Nvidia H200 chips, and SK Hynix's $28 bil
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -41,9 +39,9 @@ Nvidia and inference chip startup d-Matrix are integrating their respective hard
 > 
 > _**Austin** : Heterogenous compute. Maybe they saw my interview with Gimlet Labs and what Gimlet showed is possible with d-Matrix + Nvidia GPUs._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!gPrf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0b4d0edd-ced9-46d0-8fee-7d160dd2b25a_1486x1048.png)
+> [![](<../_img/2026-07-09--daily-update-july-9th-2026/001_0b4d0edd-ced9-46d0-8fee-7d160dd2b25a_1486x1048.png> "https://substackcdn.com/image/fetch/$s_!gPrf!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0b4d0edd-ced9-46d0-8fee-7d160dd2b25a_1486x1048.png")](https://substackcdn.com/image/fetch/$s_!gPrf!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0b4d0edd-ced9-46d0-8fee-7d160dd2b25a_1486x1048.png)
 > 
-> [ChipstratAn Interview with the Gimlet Labs Team About Heterogeneous Inference for AI AgentsI’ve been writing for a while about the shift from a one-size-fits-all GPU to multi-vendor, multi-silicon environments, so I wanted to talk to Gimlet directly about how cross-vendor orchestration actually works — and why most neoclouds, locked into a single-silicon vendor by equity terms, can’t compete with this model by design…Read more4 months ago · 21 likes · Austin Lyons](https://www.chipstrat.com/p/an-interview-with-the-gimlet-labs?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+> [![](<../_img/2026-07-09--daily-update-july-9th-2026/002_27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png> "https://substackcdn.com/image/fetch/$s_!rCMl!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png")ChipstratAn Interview with the Gimlet Labs Team About Heterogeneous Inference for AI AgentsI’ve been writing for a while about the shift from a one-size-fits-all GPU to multi-vendor, multi-silicon environments, so I wanted to talk to Gimlet directly about how cross-vendor orchestration actually works — and why most neoclouds, locked into a single-silicon vendor by equity terms, can’t compete with this model by design…Read more5 months ago · 21 likes · Austin Lyons](https://www.chipstrat.com/p/an-interview-with-the-gimlet-labs?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 ### SambaNova Raises $1B Series F at $11B Valuation, Lands JPMorganChase as Customer
 
@@ -69,7 +67,7 @@ ZML, a French AI startup, released ZML/LLMD, an LLM inference server designed to
 > 
 > _**Austin:** I’ve been tracking ZML for quite some time. Interesting company. The recent Modular acquisition by Qualcomm was proof there’s something to the idea._
 > 
-> [ChipstratZML's Hardware-Agnostic Distributed InferenceI recently saw an interesting Linkedin post from French startup ZML demonstrating vendor-agnostic Llama 2 inference. The demo leveraged pipeline parallelism to distribute the inference across hardware from Nvidia, AMD, and Google. Each chip was housed in a separate location, and the inference results were streamed back to the Mac that kicked off the job. Check out the video on the…Read more2 years ago · 3 likes · Austin Lyons](https://www.chipstrat.com/p/zmls-hardware-agnostic-distributed?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+> [![](<../_img/2026-07-09--daily-update-july-9th-2026/003_27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png> "https://substackcdn.com/image/fetch/$s_!rCMl!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F27769444-42f3-4b43-9683-4fe7826c06b8_608x608.png")ChipstratZML's Hardware-Agnostic Distributed InferenceI recently saw an interesting Linkedin post from French startup ZML demonstrating vendor-agnostic Llama 2 inference. The demo leveraged pipeline parallelism to distribute the inference across hardware from Nvidia, AMD, and Google. Each chip was housed in a separate location, and the inference results were streamed back to the Mac that kicked off the job. Check out the video on the…Read more2 years ago · 3 likes · Austin Lyons](https://www.chipstrat.com/p/zmls-hardware-agnostic-distributed?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 ### Apple-Broadcom Chip Deal Tops $30 Billion
 
@@ -93,7 +91,7 @@ Oh yeah, and most of those datacenters aren’t actually stood up yet.
 
 So… take it all with a grain of salt:
 
-[Hunterbrook@hntrbrkmediaNEW: The CEO of an AI giant said again and again: "There is no China supply chain for us." Trade records, satellites, Chinese filings and even its own suppliers in China say otherwise. The truth raises an existential threat to Bloom Energy’s story. Our $BE investigation: 5:01 PM · Jul 8, 2026 · 636K Views
+[![X avatar for @hntrbrkmedia](<../_img/2026-07-09--daily-update-july-9th-2026/004_uPBoQjUj.jpg> "https://substackcdn.com/image/fetch/$s_!96_l!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1973484274704580608%2FuPBoQjUj.jpg")Hunterbrook@hntrbrkmediaNEW: The CEO of an AI giant said again and again: "There is no China supply chain for us." Trade records, satellites, Chinese filings and even its own suppliers in China say otherwise. The truth raises an existential threat to Bloom Energy’s story. Our $BE investigation: ![](<../_img/2026-07-09--daily-update-july-9th-2026/005___ss-rehost__tw-video-preview-13_2074900693677195264.jpg> "https://substackcdn.com/image/fetch/$s_!GSl-!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2074900693677195264.jpg")5:01 PM · Jul 8, 2026 · 636K Views
 
 * * *
 

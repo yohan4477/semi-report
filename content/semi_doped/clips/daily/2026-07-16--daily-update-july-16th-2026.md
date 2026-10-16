@@ -13,9 +13,7 @@ Let’s get into it.
 
 _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 ### TSMC Q2 Profit Jumps 77%, Commits $100 Billion More to US
 
@@ -35,7 +33,7 @@ Jensen Huang visited Japan to court suppliers and cement partnerships, while Nvi
 
 > _**Austin:** Nvidia’s Physical AI has a “three computer” business model; training computer, simulation computer, and edge robotics computer. Japan buying 27K Rubins for training is a very positive signal, and I would expect to see these companies buying Nvidia’s other computers in the future. Nvidia recently changed how it reports revenue, and presumably this purchase order will show up in Data Center, under ACIE:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!poiQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1304b3dd-6530-4e7b-bf0c-77844e6f844a_1598x382.png)
+> ![](<../_img/2026-07-16--daily-update-july-16th-2026/001_1304b3dd-6530-4e7b-bf0c-77844e6f844a_1598x382.png> "https://substackcdn.com/image/fetch/$s_!poiQ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1304b3dd-6530-4e7b-bf0c-77844e6f844a_1598x382.png")
 > 
 > _**Vik:** Japan is serious and Jensen just got a big PO in the mail for 27K Rubin GPUs. Now he just has to make them without delays. Chop Chop Nvidia. Japan’s industrial workforce hangs in the balance._
 
@@ -57,13 +55,13 @@ Nice to see a model release from thinking machines. Chart below shows how it per
 
 ([Thinking Machines](https://thinkingmachines.ai/news/introducing-inkling/))
 
-[](https://substackcdn.com/image/fetch/$s_!rWs0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F267a635f-5893-49d4-8bcd-7522b4acb285_1426x1320.png)
+[![](<../_img/2026-07-16--daily-update-july-16th-2026/002_267a635f-5893-49d4-8bcd-7522b4acb285_1426x1320.png> "https://substackcdn.com/image/fetch/$s_!rWs0!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F267a635f-5893-49d4-8bcd-7522b4acb285_1426x1320.png")](https://substackcdn.com/image/fetch/$s_!rWs0!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F267a635f-5893-49d4-8bcd-7522b4acb285_1426x1320.png)
 
 ### The Oracle Has Spoken
 
 Semi markets tanked, but Gavin is optimistic
 
-[Gavin Baker@GavinSBakerRisk/reward seems attractive again. Lots of cheap stocks with durable competitive advantages that are going to crush numbers for the next 6-12 quarters. Time will tell!3:00 PM · Jul 16, 2026 · 982 Views
+[![X avatar for @GavinSBaker](<../_img/2026-07-16--daily-update-july-16th-2026/003_5L4n5L3O.jpg> "https://substackcdn.com/image/fetch/$s_!nmcM!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1396219525754937345%2F5L4n5L3O.jpg")Gavin Baker@GavinSBakerRisk/reward seems attractive again. Lots of cheap stocks with durable competitive advantages that are going to crush numbers for the next 6-12 quarters. Time will tell!3:00 PM · Jul 16, 2026 · 982 Views
 
 * * *
 
@@ -73,7 +71,7 @@ Semi markets tanked, but Gavin is optimistic
 
 What is this thing? Its like a Streamdeck but for agentic coding? Also, $230 for like a dozen keys? How about a free annual ChatGPT sub?
 
-[](https://substackcdn.com/image/fetch/$s_!dxXA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87b1f94a-c064-49b4-aa9d-7e65b6be55f2_2542x1040.png)
+[![](<../_img/2026-07-16--daily-update-july-16th-2026/004_87b1f94a-c064-49b4-aa9d-7e65b6be55f2_2542x1040.png> "https://substackcdn.com/image/fetch/$s_!dxXA!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87b1f94a-c064-49b4-aa9d-7e65b6be55f2_2542x1040.png")](https://substackcdn.com/image/fetch/$s_!dxXA!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F87b1f94a-c064-49b4-aa9d-7e65b6be55f2_2542x1040.png)
 
 ([See it for yourself](https://openai.com/supply/co-lab/work-louder/))
 

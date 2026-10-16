@@ -19,13 +19,12 @@ Sanders wasn’t a chip designer, but he sold microchips better than anyone on t
 
 In fact, Sanders held the door open for [Bob Widlar](https://en.wikipedia.org/wiki/Bob_Widlar) at Fairchild - [the wildling who once brought a sheep to trim the lawns at National Semiconductor](https://daily.semidoped.com/p/til-bob-proved-it-was-impossible). Hollywood keeps churning out sterile corporate dramas, but someone needs to greenlight biopics about legendary lunatics like Sanders and Widlar.
 
-[](https://substackcdn.com/image/fetch/$s_!41er!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff947e1e-c409-4708-aab7-f7b480082d99_280x240.webp)
+![](<../_img/2026-08-01--til-the-story-of-jerry-sanders/001_ff947e1e-c409-4708-aab7-f7b480082d99_280x240.webp> "https://substackcdn.com/image/fetch/$s_!41er!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fff947e1e-c409-4708-aab7-f7b480082d99_280x240.webp")
 
 Then the roof fell in. In 1968, new management took over Fairchild and brought in a buttoned-up Motorola crew known as “[Hogan](https://en.wikipedia.org/wiki/Lester_Hogan)’s Heroes.” They took one look at the flamboyant salesman and fired him. Sanders summed it up with characteristic bluntness: he had spent his life treating people fairly, and this was not that.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 When tech legends [Robert Noyce](https://en.wikipedia.org/wiki/Robert_Noyce) and [Gordon Moore](https://en.wikipedia.org/wiki/Gordon_Moore) walked out of Fairchild to start Intel, investors lined up to shove money into their pockets. Sanders got no such red carpet. Nobody in the Valley wanted to bet on a salesman. He spent months sleeping on a friend’s couch and pounding the pavement before scraping together $1.5 million alongside $50,000 of the founders’ own cash.
 
@@ -39,7 +38,7 @@ When industry downturns hit in the 70s and 80s, rival firms laid off thousands. 
 
 In 1982, Sanders negotiated a critical licensing deal with Intel to manufacture x86 processors. The contract’s ambiguous language eventually ignited a decade-long legal war that collapsed AMD’s stock, but it also cemented AMD as the only true rival Intel would ever face.
 
-[](https://substackcdn.com/image/fetch/$s_!vhvS!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F86cb098b-95cb-42e0-8b4e-83d1e0606371_1200x803.jpeg)
+[![Image](<../_img/2026-08-01--til-the-story-of-jerry-sanders/002_86cb098b-95cb-42e0-8b4e-83d1e0606371_1200x803.jpeg> "https://substackcdn.com/image/fetch/$s_!vhvS!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F86cb098b-95cb-42e0-8b4e-83d1e0606371_1200x803.jpeg")](https://substackcdn.com/image/fetch/$s_!vhvS!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F86cb098b-95cb-42e0-8b4e-83d1e0606371_1200x803.jpeg)
 
 When new startups started outsourcing manufacturing in the 1990s, Sanders scoffed, declaring: _Real men have fabs._ When AMD beat Intel to the 1 GHz processor milestone in 2000, Sanders took his victory lap, declaring that David hadn’t just hit Goliath with a pebble — he had taken his head off.
 

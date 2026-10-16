@@ -13,9 +13,7 @@ Former Groq engineers are suing Nvidia over its $20 billion license-and-hire dea
 
 Let’s get into it. — _Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -57,7 +55,7 @@ Foxconn posted third-quarter revenue that beat market forecasts on surging AI se
 
 Alexandr Wang announced Muse Gadgets, releasing an [open-source ESP32 firmware and Linux SDK](https://x.com/alexandr_wang/status/2106113742266089526?s=46) so any developer can build hardware that connects to the Muse AI platform. Scale AI is also shipping its own first-party device under the initiative: Muse Home Link, designed to let Muse interact with consumer smart-home equipment including TVs. The move follows a pattern familiar from voice-assistant ecosystems, where a platform owner publishes a hardware abstraction layer and then seeds the market with a reference product. Releasing on ESP32, the low-cost Espressif microcontroller that already powers millions of IoT devices worldwide, keeps the barrier to entry low for independent makers.
 
-[](https://substackcdn.com/image/fetch/$s_!VtfD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c43ad81-a6b2-491b-91b4-2bf3efd176af_2366x724.png)
+[![](<../_img/2026-10-05--daily-update-october-5th-2026/001_5c43ad81-a6b2-491b-91b4-2bf3efd176af_2366x724.png> "https://substackcdn.com/image/fetch/$s_!VtfD!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c43ad81-a6b2-491b-91b4-2bf3efd176af_2366x724.png")](https://substackcdn.com/image/fetch/$s_!VtfD!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5c43ad81-a6b2-491b-91b4-2bf3efd176af_2366x724.png)
 
 > **Austin:**_Dude, agentic IoT? Amazing. This is huge. Qualcomm bought Arduino, they should jump on getting Muse on Arduino!_
 > 
@@ -148,7 +146,7 @@ Nathan Lambert, announcing via X, [unveiled Trillium Labs](https://x.com/), a ne
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-05--daily-update-october-5th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 [Share](https://daily.semidoped.com/p/daily-update-october-5th-2026?utm_source=substack&utm_medium=email&utm_content=share&action=share)
 

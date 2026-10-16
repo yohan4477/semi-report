@@ -13,9 +13,7 @@ SMIC beat Q2 earnings expectations and is eyeing capacity expansion as CEO Zhao 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player_
 

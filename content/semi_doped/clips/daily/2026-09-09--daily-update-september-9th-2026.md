@@ -13,13 +13,11 @@ ASML locked in formal High-NA EUV commitments from TSMC and Samsung, converting 
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-09--daily-update-september-9th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### ASML, TSMC, Samsung Commit to High-NA EUV and Larger Mask Format
 
@@ -41,7 +39,7 @@ OpenAI and Samsung have deepened their co-development agreement to build next-ge
 
 > **Vik:**_You can catch a lot more comments from Sarah Friar at_[TMT Breakout](https://open.substack.com/users/163841053-tmt-breakout?utm_source=mentions)‘s X post.
 > 
-> [TMT Breakout@TMTBreakoutNotes from @OpenAI CFO Sarah Friar at GS Communacopia: Not a ton new on the #s, but sounded bullish as expected... OpenAI CFO Sarah Friar used the session to put numbers on a business she said is now roughly half enterprise. The company entered 2026 at about 60/40 consumer to…5:39 PM · Sep 8, 2026 · 48.5K Views
+> [![X avatar for @TMTBreakout](<../_img/2026-09-09--daily-update-september-9th-2026/002_jgCfNt5R.jpg> "https://substackcdn.com/image/fetch/$s_!wOv9!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1967244452306755585%2FjgCfNt5R.jpg")TMT Breakout@TMTBreakoutNotes from @OpenAI CFO Sarah Friar at GS Communacopia: Not a ton new on the #s, but sounded bullish as expected... OpenAI CFO Sarah Friar used the session to put numbers on a business she said is now roughly half enterprise. The company entered 2026 at about 60/40 consumer to…5:39 PM · Sep 8, 2026 · 48.5K Views
 > 
 > * * *
 > 
@@ -55,7 +53,7 @@ Google is [investing at least €13 billion ($15.1 billion) in AI and data-cente
 
 CoreWeave arrived at its first earnings milestone having [scaled to $5B in revenue](https://wf.coreweave.com/blog/a-defining-year-for-the-essential-cloud-for-ai) while stacking up a notable run of technical firsts. Its GB300 NVL72 production instances, powered by Nvidia Blackwell Ultra GPUs, [deliver 6.5x DeepSeek R1 throughput gains](https://wf.coreweave.com/blog/coreweaves-nvidia-gb300-nvl72-production-ready-instances-for-enterprise-ai-featuring-nvidia-blackwell-ultra-gpus-deliver-more-than-6x-performance-gain-on-deepseek-r1) over prior configurations using tensor parallelism at TP4. The company also became the first cloud provider to earn Nvidia’s Exemplar Cloud designation on GB200 Grace Blackwell, surpassing Nvidia’s own training performance targets. It topped the inaugural MLPerf 0.7 Endpoints benchmark for per-GPU DeepSeek-R1 throughput on production GB200 NVL72 hardware. A new CoreWeave Interconnect, built with Google Cloud, adds cross-cloud training and inference via SUNK Anywhere and LOTA Cross-Cloud.
 
-[](https://substackcdn.com/image/fetch/$s_!W8-M!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F787ddf55-50e3-4308-bef8-7ce3703e53f3_1200x742.avif)Source: CoreWeave
+[![](<../_img/2026-09-09--daily-update-september-9th-2026/003_787ddf55-50e3-4308-bef8-7ce3703e53f3_1200x742.avif> "https://substackcdn.com/image/fetch/$s_!W8-M!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F787ddf55-50e3-4308-bef8-7ce3703e53f3_1200x742.avif")](https://substackcdn.com/image/fetch/$s_!W8-M!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F787ddf55-50e3-4308-bef8-7ce3703e53f3_1200x742.avif)Source: CoreWeave
 
 ### Analog Devices Buys Alif Semiconductor to Push AI Into Sensor Edge
 
@@ -141,7 +139,7 @@ Muse is a personal AI agent from Meta that runs on a persistent, isolated Linux 
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-09--daily-update-september-9th-2026/004_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

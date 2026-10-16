@@ -11,9 +11,7 @@ SO. MUCH. EARNINGS. Product announcements, too. We can’t get to it all. Here a
 
 AMD doubled its 2030 server CPU TAM and put EPYC growth at +70% YoY for Q2. Astera shipped a 320-lane fabric switch built for 2027 scale-up. Nvidia announced a Corning optical fiber partnership. Micron’s 6600 ION packs 245 TB onto a single drive. And Cerebras is running its IPO like an eBay auction.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 * * *
 
@@ -45,7 +43,7 @@ In more bullish optics news, NVIDIA is partnering with Corning [GLW 0.00%↑](ht
 
 Astera Labs unveiled the [Scorpio X-Series 320-lane fabric](https://ir.asteralabs.com/news-releases/news-release-details/astera-labs-extends-leadership-open-ai-scale-networking-new-320) switch alongside Q1 earnings. The new switch delivers 20 Tbps per device and connects up to 80 GPUs in a single hop. The previous-gen 144-lane part needed 4 to 6 switches and 3 hops to do the same 64+ GPU all-to-all. Initial volumes are shipping now, full ramp lands in H2 2026, and Astera disclosed expansion to two additional major hyperscalers by year-end. 
 
-[](https://substackcdn.com/image/fetch/$s_!DUmC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F950e3691-0c46-4a74-97e3-38e68fb83aa0_1908x1026.png)
+[![](<../_img/2026-05-06--daily-update-may-6th-2026/001_950e3691-0c46-4a74-97e3-38e68fb83aa0_1908x1026.png> "https://substackcdn.com/image/fetch/$s_!DUmC!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F950e3691-0c46-4a74-97e3-38e68fb83aa0_1908x1026.png")](https://substackcdn.com/image/fetch/$s_!DUmC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F950e3691-0c46-4a74-97e3-38e68fb83aa0_1908x1026.png)
 
 Q1 revenue was $308.4M (+93% YoY, +14% QoQ) with Q2 guide $355-365M. Silicon content per XPU has crossed $1,000 and is rising. PCIe Gen6 across the AI fabric plus signal conditioning is now more than one-third of total revenue. Astera also won a second custom KB-cache offload design (Leo CXL controller, ships 2027) and disclosed an NVLink Fusion engagement with NVIDIA at a hyperscaler.
 
@@ -53,7 +51,7 @@ Q1 revenue was $308.4M (+93% YoY, +14% QoQ) with Q2 guide $355-365M. Silicon con
 
 Micron announced [the 6600 ION](https://investors.micron.com/news-releases/news-release-details/industry-leading-245tb-micron-6600-ion-data-center-ssd-now) yesterday at 245TB per drive, the highest-capacity commercial SSD on the market. The drive uses Micron’s G9 QLC NAND and ships in U.2 and E3.L form factors. At rack scale, one rack of 245TB drives delivers 176.9 PB of raw capacity versus 31.7 PB for an HDD-based equivalent. That is roughly 5.6x more capacity in the same footprint, or 82% fewer racks for the same raw capacity.
 
-[](https://substackcdn.com/image/fetch/$s_!5xbc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1fb6eac-cbc7-4e49-8bf0-53543d604870_1348x470.png)
+[![](<../_img/2026-05-06--daily-update-may-6th-2026/002_c1fb6eac-cbc7-4e49-8bf0-53543d604870_1348x470.png> "https://substackcdn.com/image/fetch/$s_!5xbc!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1fb6eac-cbc7-4e49-8bf0-53543d604870_1348x470.png")](https://substackcdn.com/image/fetch/$s_!5xbc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc1fb6eac-cbc7-4e49-8bf0-53543d604870_1348x470.png)
 
 Dell is a named anchor customer. Travis Vigil, Dell SVP of ISG product management: _“AI workloads are pushing data center capacity to the limit, and when you can fit significantly more storage into every rack, the math changes: less power, less floor space, less operational overhead.”_ The 6600 ION will be in a 40-slot Dell PowerEdge demo at Dell Tech World May 18-21.
 
@@ -70,7 +68,7 @@ Dell is a named anchor customer. Travis Vigil, Dell SVP of ISG product managemen
 
 Nice tiered chart from Micron showing various memory and storage offerings to serve KV cache during inference.
 
-[](https://substackcdn.com/image/fetch/$s_!36uw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F88576e36-a4f0-4e23-8f7e-8f0a1481f82f_2892x1608.jpeg)
+[![Image](<../_img/2026-05-06--daily-update-may-6th-2026/003_88576e36-a4f0-4e23-8f7e-8f0a1481f82f_2892x1608.jpeg> "https://substackcdn.com/image/fetch/$s_!36uw!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F88576e36-a4f0-4e23-8f7e-8f0a1481f82f_2892x1608.jpeg")](https://substackcdn.com/image/fetch/$s_!36uw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F88576e36-a4f0-4e23-8f7e-8f0a1481f82f_2892x1608.jpeg)
 
 > _**Austin:** Micron did a great job here showing they aren’t just an HBM company, but should be thought of as both memory and storage competitor. _
 
@@ -99,7 +97,7 @@ Urban legend has it that a 1958 New York warehouse break-in ended with 4,000 TR-
 
 One product. A lot of quiet consequences.
 
-[](https://substackcdn.com/image/fetch/$s_!nw5t!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc516b658-0d05-4e16-95b5-c0d4ca42d5dc_421x545.png)
+[![](<../_img/2026-05-06--daily-update-may-6th-2026/004_c516b658-0d05-4e16-95b5-c0d4ca42d5dc_421x545.png> "https://substackcdn.com/image/fetch/$s_!nw5t!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc516b658-0d05-4e16-95b5-c0d4ca42d5dc_421x545.png")](https://substackcdn.com/image/fetch/$s_!nw5t!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc516b658-0d05-4e16-95b5-c0d4ca42d5dc_421x545.png)
 
 That’s it for today!
 

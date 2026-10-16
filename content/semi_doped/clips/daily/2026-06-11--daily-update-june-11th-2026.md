@@ -13,9 +13,7 @@ Plus a lot of little tidbits today that are interesting to look into. And a nice
 
 It’s time to get into it!
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -69,7 +67,7 @@ Oracle shares fell after the company said it plans to raise about $40 billion in
 
 > _**Vik:** It feels like, with capex, you just can’t win. Spend too much, investors ding you by questioning ROI. Spend too little, investors ding you for being a declining business. Regardless, its an overall positive for the industry when CapEx is still high because companies like Oracle are still spending on AI hardware, which flows downstream everywhere else._
 > 
-> _**Austin:**_ _Oracle is doing interesting things with its infra, I wouldn’t look past that. Hosting it’s software and infra WITHIN competitors clouds![See this](https://www.oracle.com/cloud/multicloud-database-aws-google-azure/). Hosting it’s software and infra within YOUR on-prem cloud, [see this](https://nvidianews.nvidia.com/news/oracle-nvidia-sovereign-ai). I think they start with customers and work backward and are willing to make interesting trade-offs to win share. It seems obvious — how else can you compete AWS, Azure, Google Cloud — but it takes guts._
+> _**Austin:**_ _Oracle is doing interesting things with its infra, I wouldn’t look past that. Hosting it’s software and infra WITHIN competitors clouds![See this](<../_img/2026-06-11--daily-update-june-11th-2026/001_> "https://www.oracle.com/cloud/multicloud-database-aws-google-azure/"). Hosting it’s software and infra within YOUR on-prem cloud, [see this](https://nvidianews.nvidia.com/news/oracle-nvidia-sovereign-ai). I think they start with customers and work backward and are willing to make interesting trade-offs to win share. It seems obvious — how else can you compete AWS, Azure, Google Cloud — but it takes guts._
 
 * * *
 
@@ -110,7 +108,7 @@ Oracle shares fell after the company said it plans to raise about $40 billion in
 
 ([Light Reading](https://www.lightreading.com/semiconductors/semiconductor-market-surpasses-300b-quarterly-revenue-in-1q26-omdia))
 
-[](https://substackcdn.com/image/fetch/$s_!SPpl!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F20cbe309-f259-4843-a38b-8eb84f389cfd_1052x606.png)
+[![Memory contribution to semiconductor market](<../_img/2026-06-11--daily-update-june-11th-2026/002_20cbe309-f259-4843-a38b-8eb84f389cfd_1052x606.png> "https://substackcdn.com/image/fetch/$s_!SPpl!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F20cbe309-f259-4843-a38b-8eb84f389cfd_1052x606.png")](https://substackcdn.com/image/fetch/$s_!SPpl!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F20cbe309-f259-4843-a38b-8eb84f389cfd_1052x606.png)
 
 Thanks for reading! This post is public so feel free to share it.
 

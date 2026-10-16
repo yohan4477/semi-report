@@ -69,5 +69,3 @@ Latest on Semi Doped: a [masterclass on Google’s TPU v8 networking](https://ww
 [Watch on YouTube](https://www.youtube.com/@SemiDoped) · [Subscribe on Spotify](https://open.spotify.com/show/0Uuu3s1Nw09f6Xmg24rCZm) · [Subscribe on Apple](https://podcasts.apple.com/us/podcast/semi-doped/id1866707196) · [Listen here](https://www.semidoped.fm/)
 
  _That’s it for today!_
-
-Subscribe

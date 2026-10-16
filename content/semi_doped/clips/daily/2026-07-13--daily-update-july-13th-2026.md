@@ -13,9 +13,7 @@ Today, we touch up on the memory supercycle, advanced packaging buildout, and wh
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -76,11 +74,11 @@ Supply constraints are easing, but demand is strong enough to hold pricing power
 
 zephyr_z9 on X has an excellent article that explains how there will be a 24% shortfall in DRAM supply even in 2030. He counts the various buildouts and how much capacity they are adding, and sizes that up against expected DRAM demand.
 
-[](https://substackcdn.com/image/fetch/$s_!zb6i!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F34f02661-a6aa-4024-a404-2e7c9a6d033a_1448x1086.jpeg)
+[![Image](<../_img/2026-07-13--daily-update-july-13th-2026/001_34f02661-a6aa-4024-a404-2e7c9a6d033a_1448x1086.jpeg> "https://substackcdn.com/image/fetch/$s_!zb6i!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F34f02661-a6aa-4024-a404-2e7c9a6d033a_1448x1086.jpeg")](https://substackcdn.com/image/fetch/$s_!zb6i!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F34f02661-a6aa-4024-a404-2e7c9a6d033a_1448x1086.jpeg)
 
 Read the whole post.
 
-[Zephyr@zephyr_z9https://t.co/dAoQkZrPBS12:57 PM · Jul 13, 2026 · 58.7K Views
+[![X avatar for @zephyr_z9](<../_img/2026-07-13--daily-update-july-13th-2026/002_Jk4w7gjp.jpg> "https://substackcdn.com/image/fetch/$s_!X8j6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1837802996723597312%2FJk4w7gjp.jpg")Zephyr@zephyr_z9https://t.co/dAoQkZrPBS12:57 PM · Jul 13, 2026 · 58.7K Views
 
 * * *
 

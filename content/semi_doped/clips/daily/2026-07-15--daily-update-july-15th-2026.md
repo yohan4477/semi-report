@@ -13,9 +13,7 @@ Meanwhile, Intel is getting its high-NA EUV reps in, running a $400 million ASML
 
 Plus: Nokia turns the radio tower into a surface for GPU inference.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -29,7 +27,7 @@ The largest U.S. power grid is missing supply targets amid AI-driven demand grow
 
 PJM, the largest U.S. grid, missed its power supply procurement target in a capacity auction, with AI demand cited as a key driver of tightening supply conditions ([Bloomberg.com](https://www.bloomberg.com/news/articles/2026-07-14/largest-us-grid-misses-power-supply-goal-amid-rampant-ai-surge))
 
-[Dylan Patel@dylan522pI would like to see them TRY STOP THISNBC News @NBCNewsNew York to impose the country’s first statewide moratorium on data centers. https://t.co/cDwq7JDYGs4:18 PM · Jul 14, 2026 · 263K Views
+[![X avatar for @dylan522p](<../_img/2026-07-15--daily-update-july-15th-2026/001_PTqeS09L.jpg> "https://substackcdn.com/image/fetch/$s_!iytn!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1903585505046093824%2FPTqeS09L.jpg")Dylan Patel@dylan522pI would like to see them TRY STOP THIS![](<../_img/2026-07-15--daily-update-july-15th-2026/002_HNM3xBHa4AAN_4x.jpg> "https://pbs.substack.com/media/HNM3xBHa4AAN_4x.jpg")![X avatar for @NBCNews](<../_img/2026-07-15--daily-update-july-15th-2026/003_bxKUxCUp.jpg> "https://substackcdn.com/image/fetch/$s_!Or3f!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1726675942938980352%2FbxKUxCUp.jpg")NBC News @NBCNewsNew York to impose the country’s first statewide moratorium on data centers. https://t.co/cDwq7JDYGs4:18 PM · Jul 14, 2026 · 263K Views
 
 * * *
 
@@ -49,7 +47,7 @@ PJM, the largest U.S. grid, missed its power supply procurement target in a capa
 
 ASML posted €9.3 billion in Q2 2026 sales and raised its full-year forecast for the second consecutive time this year, driven by AI-fueled demand for advanced lithography equipment ([CNBC](https://www.cnbc.com/2026/07/15/asml-2q-earnings-ai-chips-orders.html)). 
 
-[](https://substackcdn.com/image/fetch/$s_!5cTb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb7122140-cbfa-4e67-83ac-eb63e4f89afd_1120x659.png)Source: [SKundojjala](https://x.com/SKundojjala/status/2077274443479666713?s=20) on X; Semianalysis
+[![Image](<../_img/2026-07-15--daily-update-july-15th-2026/004_b7122140-cbfa-4e67-83ac-eb63e4f89afd_1120x659.png> "https://substackcdn.com/image/fetch/$s_!5cTb!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb7122140-cbfa-4e67-83ac-eb63e4f89afd_1120x659.png")](https://substackcdn.com/image/fetch/$s_!5cTb!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb7122140-cbfa-4e67-83ac-eb63e4f89afd_1120x659.png)Source: [SKundojjala](https://x.com/SKundojjala/status/2077274443479666713?s=20) on X; Semianalysis
 
 The company confirmed that its High-NA EUV technology has entered high-volume manufacturing at Intel, where it is producing chips on the Intel 18A process node for Panther Lake laptop processors ([Reuters](https://www.reuters.com/business/intel-turns-next-generation-asml-tool-help-make-its-laptop-chips-2026-07-15/)). The milestone is the first commercial deployment of High-NA EUV in volume production anywhere in the industry.
 
@@ -83,9 +81,9 @@ SK Telecom was simultaneously selected to lead a **two-year South Korean governm
 
 h/t to [dnystedt](https://x.com/dnystedt/status/2077287724403601426?s=20) on X. WFE 🚀
 
-[](https://x.com/dnystedt/status/2077287724403601426?s=20)
+[![Image](<../_img/2026-07-15--daily-update-july-15th-2026/005_3059f6c4-f3be-4397-8ac8-43e6e59a1be5_975x615.jpeg> "https://substackcdn.com/image/fetch/$s_!NY5B!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3059f6c4-f3be-4397-8ac8-43e6e59a1be5_975x615.jpeg")](https://x.com/dnystedt/status/2077287724403601426?s=20)
 
-[](https://substackcdn.com/image/fetch/$s_!UxQU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6972eebb-a454-4550-98f6-35289493e298_1011x592.webp)
+[![](<../_img/2026-07-15--daily-update-july-15th-2026/006_6972eebb-a454-4550-98f6-35289493e298_1011x592.webp> "https://substackcdn.com/image/fetch/$s_!UxQU!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6972eebb-a454-4550-98f6-35289493e298_1011x592.webp")](https://substackcdn.com/image/fetch/$s_!UxQU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6972eebb-a454-4550-98f6-35289493e298_1011x592.webp)
 
 Read more [here](https://www.semi.org/en/semi-press-release/global-semiconductor-equipment-sales-forecast-to-reach-a-record-229-billion-dollars-in-2028-semi-reports).
 
@@ -93,7 +91,7 @@ Read more [here](https://www.semi.org/en/semi-press-release/global-semiconductor
 
 Careful what you vibe code semiconductor friends!
 
-[Hunterbrook@hntrbrkmedia1) This weekend, we found something weird: $QCOM had hidden HMTL on its website describing a partnership with Anthropic. The problem: It's not real. 10:43 PM · Jul 14, 2026 · 245K Views
+[![X avatar for @hntrbrkmedia](<../_img/2026-07-15--daily-update-july-15th-2026/007_uPBoQjUj.jpg> "https://substackcdn.com/image/fetch/$s_!96_l!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1973484274704580608%2FuPBoQjUj.jpg")Hunterbrook@hntrbrkmedia1) This weekend, we found something weird: $QCOM had hidden HMTL on its website describing a partnership with Anthropic. The problem: It's not real. ![](<../_img/2026-07-15--daily-update-july-15th-2026/008_x9lztimy0uol9c3k762n.gif> "https://res.cloudinary.com/hhsslviub/video/upload/e_loop,vs_40/x9lztimy0uol9c3k762n.gif")10:43 PM · Jul 14, 2026 · 245K Views
 
 * * *
 

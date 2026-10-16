@@ -13,13 +13,11 @@ Anthropic’s S-1 is the big one today, with the AI lab reporting $4.6 billion i
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-### _Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+### _Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-29--daily-update-september-29th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Anthropic Files IPO Prospectus Revealing $518B in Non-Cancellable Compute Commitments
 
@@ -55,7 +53,7 @@ AT&T and Corning [signed a multi-year fiber supply agreement worth more than $3 
 
 Meta [announced Muse for Small Business](https://about.fb.com/news/2026/09/introducing-muse-small-business/) on September 29, 2026, expanding the AI assistant it has described as one of the most important products it has built for the era of personal superintelligence. The move extends Muse beyond its original consumer scope, giving small business owners access to the same underlying capabilities Meta has been developing for individual users. The company framed the expansion explicitly around accessibility, casting it as a step toward making advanced AI tools available beyond large enterprises with dedicated technology budgets. Specific pricing, availability regions, and feature limits were not detailed in the announcement excerpt provided.
 
-[](https://substackcdn.com/image/fetch/$s_!mata!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F059d8e6e-ef14-49f8-a25d-dba7e6e02fa8_1200x675.png)
+[![](<../_img/2026-09-29--daily-update-september-29th-2026/002_059d8e6e-ef14-49f8-a25d-dba7e6e02fa8_1200x675.png> "https://substackcdn.com/image/fetch/$s_!mata!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F059d8e6e-ef14-49f8-a25d-dba7e6e02fa8_1200x675.png")](https://substackcdn.com/image/fetch/$s_!mata!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F059d8e6e-ef14-49f8-a25d-dba7e6e02fa8_1200x675.png)
 
 ### OpenAI Teases Personal Agent “Dots” Ahead of Dev Day 2026
 
@@ -73,7 +71,7 @@ Gimlet Labs has announced a strategic partnership with Cerebras to bring wafer-s
 
 **Sources:** [gimletlabs.ai](https://gimletlabs.ai/blog/cerebras-announcement)
 
-[](https://substackcdn.com/image/fetch/$s_!SeQK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4d33ef2-1d61-4948-abd8-cdbf6652cb14_2400x1260.png)
+[![](<../_img/2026-09-29--daily-update-september-29th-2026/003_c4d33ef2-1d61-4948-abd8-cdbf6652cb14_2400x1260.png> "https://substackcdn.com/image/fetch/$s_!SeQK!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4d33ef2-1d61-4948-abd8-cdbf6652cb14_2400x1260.png")](https://substackcdn.com/image/fetch/$s_!SeQK!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc4d33ef2-1d61-4948-abd8-cdbf6652cb14_2400x1260.png)
 
 ### Sector Watch
 
@@ -150,7 +148,7 @@ Gimlet Labs has announced a strategic partnership with Cerebras to bring wafer-s
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_Story 1
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-29--daily-update-september-29th-2026/004_poll> "http://semidoped.com/poll")! ❤️_Story 1
 
 Thanks for reading! This post is public so feel free to share it.
 

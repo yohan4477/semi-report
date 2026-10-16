@@ -13,19 +13,17 @@ OpenAI dropped GPT-6 Astra this week, declaring “welcome to the AGI era” whi
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-04--daily-update-september-4th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### OpenAI Claims GPT-6 Astra Sets New State-of-the-Art Across Key Domains
 
 OpenAI announced GPT-6 Astra as [“the most intelligent and aligned model in the world,”](https://x.com/OpenAI/status/2095595742975197690?s=20) claiming state-of-the-art performance across computer use, browsing, software engineering, cybersecurity, science, and professional work. The announcement came via OpenAI’s official X account, with a linked release accompanying the post. The breadth of the capability claims is notable on its face: six distinct benchmark domains in a single launch. Aligned model development has been a recurring public commitment for OpenAI, and folding alignment into the top-line marketing claim puts it on equal footing with raw performance for the first time in the company’s model naming cycle.
 
-[OpenAI@OpenAIGPT-6 Astra is the most intelligent and aligned model in the world, and sets a new state of the art for computer use, browsing, software engineering, cybersecurity, science, and professional work. openai.comGPT-6 Astra: A new generation of intelligence7:32 PM · Sep 3, 2026 · 2.34M Views
+[![X avatar for @OpenAI](<../_img/2026-09-04--daily-update-september-4th-2026/002_ztsaR0JW.jpg> "https://substackcdn.com/image/fetch/$s_!4uQ6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1885410181409820672%2FztsaR0JW.jpg")OpenAI@OpenAIGPT-6 Astra is the most intelligent and aligned model in the world, and sets a new state of the art for computer use, browsing, software engineering, cybersecurity, science, and professional work. openai.comGPT-6 Astra: A new generation of intelligence![](https://substackcdn.com/image/fetch/$s_!Cpu5!,w_64,h_64,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fnews_img%2F2095611577554948096%2FvLilPl17%3Fformat%3Djpg%26name%3Dorig)7:32 PM · Sep 3, 2026 · 2.34M Views
 
 * * *
 
@@ -39,7 +37,7 @@ OpenAI announced GPT-6 Astra as [“the most intelligent and aligned model in th
 
 A South Korean court has found that CXMT’s so-called [Project Hefei lifted a 620-step manufacturing recipe](https://www.tomshardware.com/pc-components/dram/chinas-cmxt-had-an-actual-roadmap-for-its-alleged-industrial-espionage-from-samsung-south-korean-court-says-project-hefei-was-responsible-for-cxmts-current-position-as-major-dram-maker) from Samsung, with defendants allegedly using a written roadmap to systematically transfer process know-how to the Chinese firm. CXMT [reached 10% of global DRAM revenue in Q2 2026](https://counterpointresearch.com/en/insights/global-dram-and-hbm-market-share), crossing a threshold that took Samsung and SK hynix decades to build. The company has opened recruitment drives in Japan targeting DDR5 and LPDDR expertise. Seoul Economic Daily reports the US has separately warned Korean chipmakers to accelerate their pivot toward HBM4, where China’s technology gap remains wide.
 
-[](https://substackcdn.com/image/fetch/$s_!ifBs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F43767103-9f3b-4dad-8e60-dce88e025764_3987x2172.png)
+[![Global DRAM Market Share by Revenue, Q2 2025 – Q2 2026](<../_img/2026-09-04--daily-update-september-4th-2026/004_43767103-9f3b-4dad-8e60-dce88e025764_3987x2172.png> "https://substackcdn.com/image/fetch/$s_!ifBs!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F43767103-9f3b-4dad-8e60-dce88e025764_3987x2172.png")](https://substackcdn.com/image/fetch/$s_!ifBs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F43767103-9f3b-4dad-8e60-dce88e025764_3987x2172.png)
 
 > _**Vik:** The key thing to notice here is the CXMT’s market share gain has come at the expense of SK Hynix. This is mainly because SK Hynix has diverted more of their manufacturing towards HBM instead of DRAM. IMO, it does not say anything about SK Hynix’s product quality or China exposure even though it seems like it._
 
@@ -47,7 +45,7 @@ A South Korean court has found that CXMT’s so-called [Project Hefei lifted a 6
 
 Ciena posted [fiscal Q3 revenue of $1.67 billion, up 37% year-over-year, with EPS climbing 215%](https://www.communicationstoday.co.in/ciena-revenue-surges-37-in-q3-eps-climbs-215/), as surging demand for data-center interconnect and AI-driven network buildout drove one of the company’s strongest quarterly results on record. Supply constraints, not weak demand, are now the binding limit: Ciena expects its order backlog to exceed $10 billion by fiscal year-end as optical component capacity trails orders. CEO Gary Smith called out a [multi-year AI infrastructure investment cycle](https://rcrwireless.com/20260903/connectivity/ciena-ai-optical) as the structural force behind bookings growth, with hyperscalers and carriers competing for the same constrained capacity. Shares fell roughly 10% on the day, as investors fixated on in-line forward guidance rather than the beat itself.
 
-[](https://substackcdn.com/image/fetch/$s_!wCcC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6d7c0fe2-ec8b-4f5c-bef4-71277b04ca1f_2272x1280.png)
+[![](<../_img/2026-09-04--daily-update-september-4th-2026/005_6d7c0fe2-ec8b-4f5c-bef4-71277b04ca1f_2272x1280.png> "https://substackcdn.com/image/fetch/$s_!wCcC!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6d7c0fe2-ec8b-4f5c-bef4-71277b04ca1f_2272x1280.png")](https://substackcdn.com/image/fetch/$s_!wCcC!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6d7c0fe2-ec8b-4f5c-bef4-71277b04ca1f_2272x1280.png)
 
 > _**Vik:** Optical demand is still strong, even though there is a current market slowdown in optical stocks. Structurally, we will see more of optics as we continue this AI buildout. This limitations only come from supply, not demand._
 
@@ -63,7 +61,7 @@ Flash storage maker Kioxia is running a parallel campaign: the company is pitchi
 
 Figure AI CEO Brett Adcock announced a partnership with Nscale to [deploy up to 100,000 GPUs on Nvidia’s Vera Rubin platform](https://x.com/adcock_brett/status/2095499534940185022), with Figure committing $3.5 billion initially and plans to scale the investment beyond $6 billion. The compute buildout targets what Adcock described as the “massive amount” of processing power required to ship a humanoid robot into every home. Vera Rubin is Nvidia’s next-generation accelerator architecture, and sourcing that scale of capacity through Nscale positions Figure to run large training workloads in-house rather than through general-purpose cloud providers. The deal represents one of the more concrete dollar commitments from a humanoid robotics company to purpose-built AI infrastructure.
 
-[Brett Adcock@adcock_brettToday, Figure is partnering with Nscale to deploy up to 100,000 GPUs on the NVIDIA Vera Rubin Platform We're committing $3.5 billion initially, with plans to scale beyond $6 billion To ship a robot into every home, we need a massive amount of compute 1:09 PM · Sep 3, 2026 · 1.34M Views
+[![X avatar for @adcock_brett](<../_img/2026-09-04--daily-update-september-4th-2026/006_H-pYm78t.jpg> "https://substackcdn.com/image/fetch/$s_!RF-C!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1975050867842908160%2FH-pYm78t.jpg")Brett Adcock@adcock_brettToday, Figure is partnering with Nscale to deploy up to 100,000 GPUs on the NVIDIA Vera Rubin Platform We're committing $3.5 billion initially, with plans to scale beyond $6 billion To ship a robot into every home, we need a massive amount of compute ![](<../_img/2026-09-04--daily-update-september-4th-2026/007___ss-rehost__tw-video-preview-13_2095498656602533888.jpg> "https://substackcdn.com/image/fetch/$s_!Lhuo!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2095498656602533888.jpg")1:09 PM · Sep 3, 2026 · 1.34M Views
 
 * * *
 
@@ -79,7 +77,7 @@ Nvidia has released a beta of its [Personal AI Router (PAIR)](https://www.nvidia
 > 
 > _**Austin:** Is it open source, i.e. can it ultimately support AMD GPUs cards?_
 
-[](https://substackcdn.com/image/fetch/$s_!XNUs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70cd9b8f-1903-493f-90b8-f6e769b60d1b_1200x630.jpeg)
+[![](<../_img/2026-09-04--daily-update-september-4th-2026/008_70cd9b8f-1903-493f-90b8-f6e769b60d1b_1200x630.jpeg> "https://substackcdn.com/image/fetch/$s_!XNUs!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70cd9b8f-1903-493f-90b8-f6e769b60d1b_1200x630.jpeg")](https://substackcdn.com/image/fetch/$s_!XNUs!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70cd9b8f-1903-493f-90b8-f6e769b60d1b_1200x630.jpeg)
 
 ### Sector Watch
 
@@ -164,7 +162,7 @@ Nvidia has released a beta of its [Personal AI Router (PAIR)](https://www.nvidia
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-04--daily-update-september-4th-2026/009_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

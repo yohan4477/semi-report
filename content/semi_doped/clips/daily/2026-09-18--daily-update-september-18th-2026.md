@@ -13,9 +13,7 @@ Crusoe closed an oversubscribed $3.9 billion Series F at a $30.9 billion valuati
 
 Let’s get into it. — _Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -133,7 +131,7 @@ Doosan [announced on Sept. 17 that it will spend ₩968.4 billion](https://www.t
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-18--daily-update-september-18th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

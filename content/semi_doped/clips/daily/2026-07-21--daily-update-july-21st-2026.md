@@ -13,9 +13,7 @@ AMD is making a grand entrance into rack-level hardware with their Microsoft dea
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -158,7 +156,7 @@ Similar colors in the chart below means that models give similar responses. It m
 
 This is leading to believe that Chinese models are distilled from frontier US models. 
 
-[](https://substackcdn.com/image/fetch/$s_!sd18!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F05267ca8-840f-469f-b97e-ff5993474d44_864x741.png)
+[![Image](<../_img/2026-07-21--daily-update-july-21st-2026/001_05267ca8-840f-469f-b97e-ff5993474d44_864x741.png> "https://substackcdn.com/image/fetch/$s_!sd18!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F05267ca8-840f-469f-b97e-ff5993474d44_864x741.png")](https://substackcdn.com/image/fetch/$s_!sd18!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F05267ca8-840f-469f-b97e-ff5993474d44_864x741.png)
 
 ### Interesting
 

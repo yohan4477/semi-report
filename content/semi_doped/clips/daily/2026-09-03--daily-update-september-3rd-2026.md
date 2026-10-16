@@ -13,13 +13,11 @@ Nvidia is acquiring Hugging Face for $12.93 billion, with Jensen Huang framing t
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-03--daily-update-september-3rd-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Nvidia Acquires Hugging Face for $12.93 Billion, Retention Package Included
 
@@ -123,7 +121,7 @@ Phison Electronics [told Bloomberg](https://www.bloomberg.com/news/videos/2026-0
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-03--daily-update-september-3rd-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

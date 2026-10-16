@@ -13,13 +13,11 @@ DOJ is looking into Nvidia-Groq deal, d-Matrix Raptor chips to work alongside NV
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-10--daily-update-september-10th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### DOJ Probes Whether Nvidia Structured Groq Deal to Skirt Merger Review
 
@@ -43,7 +41,7 @@ DeepSeek released V4.1 Flash on Thursday, built on a 552-billion-parameter Mixtu
 
 > **Vik:**_DeepSeek has been continuously improving on how they compress KV cache, which means they need to use even lesser SSD offload. The progress is actually impressive. zephyr_z9 on X posted a good picture of this._
 > 
-> [ Zephyr@zephyr_z9Deepseek has compressed KV cache size per token by 54x in the last 9 months 7:03 AM · Sep 10, 2026 · 95.1K Views
+> [![X avatar for @zephyr_z9](<../_img/2026-09-10--daily-update-september-10th-2026/002_Jk4w7gjp.jpg> "https://substackcdn.com/image/fetch/$s_!X8j6!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1837802996723597312%2FJk4w7gjp.jpg") Zephyr@zephyr_z9Deepseek has compressed KV cache size per token by 54x in the last 9 months ![](<../_img/2026-09-10--daily-update-september-10th-2026/003_HR1k2r2bQAA3bek.png> "https://pbs.substack.com/media/HR1k2r2bQAA3bek.png")7:03 AM · Sep 10, 2026 · 95.1K Views
 > 
 > * * *
 > 
@@ -63,7 +61,7 @@ Wafer announced the launch of what it describes as the most comprehensive AI per
 
 **Sources:** [@wafer_ai](https://x.com/wafer_ai/status/2096104842712469923?s=46)
 
-[wafer@wafer_aiWafer AI Performance Engineering Repo: github.comGitHub - wafer-ai/gpu-perf-engineering-resources: A curated resource list for learning AI performance engineering, from GPU fundamentals to production inference.5:15 AM · Sep 5, 2026 · 894 Views
+[![X avatar for @wafer_ai](<../_img/2026-09-10--daily-update-september-10th-2026/004_dx5Anxe6.png> "https://substackcdn.com/image/fetch/$s_!ghF1!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2002108104599642112%2Fdx5Anxe6.png")wafer@wafer_aiWafer AI Performance Engineering Repo: github.comGitHub - wafer-ai/gpu-perf-engineering-resources: A curated resource list for learning AI performance engineering, from GPU fundamentals to production inference.![](https://substackcdn.com/image/fetch/$s_!PKhN!,w_64,h_64,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fnews_img%2F2096836802917330944%2FeZfhw3lN%3Fformat%3Djpg%26name%3Dorig)5:15 AM · Sep 5, 2026 · 894 Views
 
 * * *
 
@@ -73,7 +71,7 @@ Wafer announced the launch of what it describes as the most comprehensive AI per
 
 ### 👀 Look at this mysterious memory company
 
-[](https://substackcdn.com/image/fetch/$s_!CsYw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8bd3a8ea-c227-4967-adb0-ed7fba4cba66_1377x875.png)
+[![](<../_img/2026-09-10--daily-update-september-10th-2026/006_8bd3a8ea-c227-4967-adb0-ed7fba4cba66_1377x875.png> "https://substackcdn.com/image/fetch/$s_!CsYw!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8bd3a8ea-c227-4967-adb0-ed7fba4cba66_1377x875.png")](https://substackcdn.com/image/fetch/$s_!CsYw!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8bd3a8ea-c227-4967-adb0-ed7fba4cba66_1377x875.png)
 
 See more at [keplercompute.com](https://keplercompute.com/).
 
@@ -156,7 +154,7 @@ See more at [keplercompute.com](https://keplercompute.com/).
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-10--daily-update-september-10th-2026/007_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

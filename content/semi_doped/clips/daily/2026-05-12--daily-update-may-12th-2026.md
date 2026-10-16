@@ -13,9 +13,7 @@ Lots of happenings today. Lets get into it.
 
 > _**Vik:** My [tweet](https://x.com/vikramskr/status/2053543744201433179?s=20) went super viral for just saying that analog electronics is hard. LOL. Read my [follow up tweet](https://x.com/vikramskr/status/2053645019324858555?s=20) with more context._
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -27,7 +25,7 @@ Subscribe
 
 Here’s a table from TrendForce about the state of the microLED market.
 
-[](https://substackcdn.com/image/fetch/$s_!_j37!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea8765aa-eeeb-4d18-850c-49d0525f81aa_794x395.png)
+[![](<../_img/2026-05-12--daily-update-may-12th-2026/001_ea8765aa-eeeb-4d18-850c-49d0525f81aa_794x395.png> "https://substackcdn.com/image/fetch/$s_!_j37!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea8765aa-eeeb-4d18-850c-49d0525f81aa_794x395.png")](https://substackcdn.com/image/fetch/$s_!_j37!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fea8765aa-eeeb-4d18-850c-49d0525f81aa_794x395.png)
 
 > _**If you need more context:**_
 > 
@@ -42,7 +40,7 @@ Here’s a table from TrendForce about the state of the microLED market.
 
 Thinking Machines Lab released “[Interaction Models](https://thinkingmachines.ai/blog/interaction-models/)” — a research preview of TML-Interaction-Small, a 276B-parameter MoE (12B active) trained from scratch **to natively process continuous audio, video, and text in 200ms micro-turns** , rather than wrapping a turn-based model in voice-activity-detection scaffolding the way OpenAI’s GPT-realtime and Google’s Gemini-live do:
 
-[Thinking Machines@thinkymachinesPeople talk, listen, watch, think, and collaborate at the same time, in real time. We've designed an AI that works with people the same way. We share our approach, early results, and a quick look at our model in action. [thinkingmachines.ai/blog/interacti…](https://thinkingmachines.ai/blog/interaction-models) 8:42 PM · May 11, 2026 · 542K Views
+[![X avatar for @thinkymachines](https://substackcdn.com/image/fetch/$s_!6p-a!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1891614400328630273%2FU6tsxu60.jpg)Thinking Machines@thinkymachinesPeople talk, listen, watch, think, and collaborate at the same time, in real time. We've designed an AI that works with people the same way. We share our approach, early results, and a quick look at our model in action. [thinkingmachines.ai/blog/interacti…](https://thinkingmachines.ai/blog/interaction-models) ![](<../_img/2026-05-12--daily-update-may-12th-2026/003_lcqnscsbhhmrdmsl0ybh> "https://substackcdn.com/image/upload/w_1028,c_limit,q_auto:best/l_twitter_play_button_rvaygk,w_88/lcqnscsbhhmrdmsl0ybh")8:42 PM · May 11, 2026 · 542K Views
 
 * * *
 
@@ -52,7 +50,7 @@ Thinking Machines Lab released “[Interaction Models](https://thinkingmachines.
 > 
 > _**Austin:** All I can think of is Scarlett Johansson from [Her](https://www.imdb.com/title/tt1798709/). _
 > 
-> [](https://substackcdn.com/image/fetch/$s_!yByc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe0181834-7bee-4b49-ac34-cccfc0e09e93_1536x2048.jpeg)
+> [![Her | Rotten Tomatoes](<../_img/2026-05-12--daily-update-may-12th-2026/004_e0181834-7bee-4b49-ac34-cccfc0e09e93_1536x2048.jpeg> "https://substackcdn.com/image/fetch/$s_!yByc!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe0181834-7bee-4b49-ac34-cccfc0e09e93_1536x2048.jpeg")](https://substackcdn.com/image/fetch/$s_!yByc!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe0181834-7bee-4b49-ac34-cccfc0e09e93_1536x2048.jpeg)
 > 
 > If only Sam hadn’t screwed things up (_[Scarlett Johansson says she is ‘shocked, angered’ over new ChatGPT voice](http://Scarlett Johansson says she is 'shocked, angered' over new ChatGPT voice)_)
 
@@ -90,7 +88,7 @@ Thinking Machines Lab released “[Interaction Models](https://thinkingmachines.
 
 Semis have been on a tear. No other way to put it. Check out [Coatue’s public slide deck](https://www.coatue.com/blog/perspective/public-markets-update-2026-05-06).
 
-[](https://substackcdn.com/image/fetch/$s_!pYPu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd5969655-8fab-4868-86c9-cee4ce1957e2_1580x882.png)
+[![](<../_img/2026-05-12--daily-update-may-12th-2026/005_d5969655-8fab-4868-86c9-cee4ce1957e2_1580x882.png> "https://substackcdn.com/image/fetch/$s_!pYPu!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd5969655-8fab-4868-86c9-cee4ce1957e2_1580x882.png")](https://substackcdn.com/image/fetch/$s_!pYPu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd5969655-8fab-4868-86c9-cee4ce1957e2_1580x882.png)
 
 ### Cool AI Tech
 
@@ -98,7 +96,7 @@ AI SBC. Highest spec-ed one is like $650. Wonder what cool local inference stuff
 
 > _**Vik**_ : _32GB LPDDR5 RAM too?! At these memory prices, I might harvest it for RAM and sell it to Apple._ 🤣
 
-[Sipeed@SipeedIOHigh performance #RISCV (RVA23) K3 SBC coming soon! Up to 32GB DDR5, 60T int4 NPU, able to run Qwen3.5 35B-A3B @ 15tps~ Support Ubuntu2604 ! Vote for your preferred config and get early access when it launches next month! [sipeed.com/k3/vote](https://sipeed.com/k3/vote) 2:56 AM · Mar 25, 2026 · 254K Views
+[![X avatar for @SipeedIO](<../_img/2026-05-12--daily-update-may-12th-2026/006_OG-4GPd8.jpg> "https://substackcdn.com/image/fetch/$s_!kJIB!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1234771036400340993%2FOG-4GPd8.jpg")Sipeed@SipeedIOHigh performance #RISCV (RVA23) K3 SBC coming soon! Up to 32GB DDR5, 60T int4 NPU, able to run Qwen3.5 35B-A3B @ 15tps~ Support Ubuntu2604 ! Vote for your preferred config and get early access when it launches next month! [sipeed.com/k3/vote](https://sipeed.com/k3/vote) ![](<../_img/2026-05-12--daily-update-may-12th-2026/007_HEOWVuXa4AEhoeB.png> "https://substackcdn.com/image/fetch/$s_!jntF!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHEOWVuXa4AEhoeB.png")![](<../_img/2026-05-12--daily-update-may-12th-2026/008_HEOWXeubYAAp2v9.jpg> "https://substackcdn.com/image/fetch/$s_!kx5X!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHEOWXeubYAAp2v9.jpg")2:56 AM · Mar 25, 2026 · 254K Views
 
 * * *
 

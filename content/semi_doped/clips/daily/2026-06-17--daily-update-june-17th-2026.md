@@ -11,9 +11,7 @@ This week, we’re diving deep into advanced packaging, with TSMC making a big m
 
 Let’s get into it. _—Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -53,7 +51,7 @@ Nokia announced an expansion of its advanced test and packaging operations in Al
 > 
 > _**Austin:** Nokia! _
 > 
-> [](https://substackcdn.com/image/fetch/$s_!AqTu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Feedc9c8e-572e-4dce-b514-341ee340ab8f_960x1280.jpeg)
+> [![Nokia 5110 - Wikipedia](<../_img/2026-06-17--daily-update-june-17th-2026/001_eedc9c8e-572e-4dce-b514-341ee340ab8f_960x1280.jpeg> "https://substackcdn.com/image/fetch/$s_!AqTu!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Feedc9c8e-572e-4dce-b514-341ee340ab8f_960x1280.jpeg")](https://substackcdn.com/image/fetch/$s_!AqTu!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Feedc9c8e-572e-4dce-b514-341ee340ab8f_960x1280.jpeg)
 
 ### Applied Materials, EssilorLuxottica partner on AR optics
 

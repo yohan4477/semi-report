@@ -17,13 +17,11 @@ On the supply side, AWS and Nvidia are committing 2 million additional GPUs to d
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-27--daily-update-august-27th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Nvidia Projects 70% Revenue Growth, Sees AI Spending Running Through 2028
 
@@ -149,7 +147,7 @@ Nvidia has [confirmed its first H200 data-centre chip shipments to China](https:
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-27--daily-update-august-27th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

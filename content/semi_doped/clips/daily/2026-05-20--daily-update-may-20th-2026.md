@@ -9,9 +9,7 @@ subtitle: Dell goes heavy on AI-workstations. Nvidia hand delivering CPUs, Samsu
 ---
 On today’s hit list: On-prem AI getting a foothold with Dell’s AI workstations, Nvidia’s Ian Buck becomes CPU Santa, and Samsung strikes become national issue.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -91,7 +89,7 @@ Photonics
 
 Inference is king, and the king needs power. Surfaced by [@jukan05 on X](https://x.com/jukan05/status/2056999277944336733?s=20).
 
-[](https://substackcdn.com/image/fetch/$s_!MP0x!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff44bdd14-ae82-496b-b4cb-4d88c69f1b98_1080x560.jpeg)
+[![Image](<../_img/2026-05-20--daily-update-may-20th-2026/001_f44bdd14-ae82-496b-b4cb-4d88c69f1b98_1080x560.jpeg> "https://substackcdn.com/image/fetch/$s_!MP0x!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff44bdd14-ae82-496b-b4cb-4d88c69f1b98_1080x560.jpeg")](https://substackcdn.com/image/fetch/$s_!MP0x!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ff44bdd14-ae82-496b-b4cb-4d88c69f1b98_1080x560.jpeg)
 
 ### You can’t miss this!
 

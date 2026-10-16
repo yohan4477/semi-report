@@ -13,9 +13,7 @@ $1.5B from Nvidia to Amkor locks in domestic advanced packaging capacity in Ariz
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -52,7 +50,7 @@ SK Hynix is in talks with Intel to **jointly operate** Intel’s semiconductor f
 > 
 > **Austin:** _14A is a go! HVM 2028!_
 > 
-> _LBT: “I'm pleased to see the increasing momentum on customer engagements for Intel 14A, and I'm increasingly confident that the 14A will be highly competitive process offering across key vectors of performance, power, density, cost, and schedule._
+> _LBT: “I 'm pleased to see the increasing momentum on customer engagements for Intel 14A, and I'm increasingly confident that the 14A will be highly competitive process offering across key vectors of performance, power, density, cost, and schedule. _
 > 
 > _With encouraging external customer progress and increased demand for our internal products, we remain on track for 14A risk production for our internal products in the second half of 2027, and we make the decision in Q2 to fully commit to high volume ramp in 2028.”_
 
@@ -91,13 +89,13 @@ The company is positioning its product not as a standalone chip but as a full-st
 
 Google’s cash flow is negative?! They’re REALLY spending on this AI infra buildout. As the saying goes — if you see a bubble, run towards it. Bullish AI.
 
-[](https://substackcdn.com/image/fetch/$s_!33JE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fce83adb7-d7c7-4b86-8e94-baff2b8d1e6c_1023x1023.jpeg)
+[![Image](<../_img/2026-07-24--daily-update-july-24th-2026/001_ce83adb7-d7c7-4b86-8e94-baff2b8d1e6c_1023x1023.jpeg> "https://substackcdn.com/image/fetch/$s_!33JE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fce83adb7-d7c7-4b86-8e94-baff2b8d1e6c_1023x1023.jpeg")](https://substackcdn.com/image/fetch/$s_!33JE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fce83adb7-d7c7-4b86-8e94-baff2b8d1e6c_1023x1023.jpeg)
 
 ### Funny
 
 LOL
 
-[](https://substackcdn.com/image/fetch/$s_!-gJx!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F85910a43-b29f-48b0-adcc-7b1292e611e0_1125x840.png)LOL. From SemiAnalysis
+[![](<../_img/2026-07-24--daily-update-july-24th-2026/002_85910a43-b29f-48b0-adcc-7b1292e611e0_1125x840.png> "https://substackcdn.com/image/fetch/$s_!-gJx!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F85910a43-b29f-48b0-adcc-7b1292e611e0_1125x840.png")](https://substackcdn.com/image/fetch/$s_!-gJx!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F85910a43-b29f-48b0-adcc-7b1292e611e0_1125x840.png)LOL. From SemiAnalysis
 
 Thanks for reading! This post is public so feel free to share it.
 

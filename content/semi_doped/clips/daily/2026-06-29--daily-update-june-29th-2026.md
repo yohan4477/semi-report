@@ -11,9 +11,7 @@ Memory finally hit a boiling point this week when Apple raised prices of its pro
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -73,7 +71,7 @@ DeepSeek has released DSpark, a speculative decoding framework for its V4 model 
 > 
 > _**Austin:** d-Matrix and Gimlet [have a nice demo](https://gimletlabs.ai/blog/low-latency-spec-decode-corsair) showing how speculative decoding on right-sized hardware can further improve the Pareto frontier. _
 > 
-> [](https://substackcdn.com/image/fetch/$s_!mnVq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F94b7290f-5ca5-48b1-8311-699a37e1ac01_1466x880.png)
+> [![](<../_img/2026-06-29--daily-update-june-29th-2026/001_94b7290f-5ca5-48b1-8311-699a37e1ac01_1466x880.png> "https://substackcdn.com/image/fetch/$s_!mnVq!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F94b7290f-5ca5-48b1-8311-699a37e1ac01_1466x880.png")](https://substackcdn.com/image/fetch/$s_!mnVq!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F94b7290f-5ca5-48b1-8311-699a37e1ac01_1466x880.png)
 
 * * *
 
@@ -81,7 +79,7 @@ DeepSeek has released DSpark, a speculative decoding framework for its V4 model 
 
 A large part of our reader/listener base on Semi Doped are professional investors, and on Austin’s and Vik’s substack too! We think this chart might be interesting. (h/t to The Kobeissi Letter on X)
 
-[](https://substackcdn.com/image/fetch/$s_!0pdy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbfc387df-2a2c-4c03-b527-a41bac1e5157_975x715.jpeg)
+[![Image](<../_img/2026-06-29--daily-update-june-29th-2026/002_bfc387df-2a2c-4c03-b527-a41bac1e5157_975x715.jpeg> "https://substackcdn.com/image/fetch/$s_!0pdy!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbfc387df-2a2c-4c03-b527-a41bac1e5157_975x715.jpeg")](https://substackcdn.com/image/fetch/$s_!0pdy!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbfc387df-2a2c-4c03-b527-a41bac1e5157_975x715.jpeg)
 
 ## Sector Watch
 

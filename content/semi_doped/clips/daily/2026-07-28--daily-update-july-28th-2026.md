@@ -13,9 +13,7 @@ China has reportedly begun mass producing domestic immersion DUV lithography sys
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -35,17 +33,17 @@ SMIC, Hua Hong, and CXMT are each [slated for delivery before year-end](https://
 
 South Korea’s chipmakers led a [broad Asian selloff](https://www.reuters.com/world/china/samsung-sk-hynix-slide-amid-nvidia-financing-worries-china-competition-2026-07-28/) on Monday, China competition fears rattling the AI trade and [forcing trading halts across Korean exchanges](https://www.bloomberg.com/news/articles/2026-07-28/korean-markets-hit-by-turmoil-as-chip-rout-forces-trading-halts). The [KOSPI posted its biggest single-day drop since early March](https://www.reuters.com/world/asia-pacific/south-koreas-kospi-drops-7-global-chipmaker-selloff-deepens-2026-07-28/), the scale of the move triggering circuit breakers. SK Hynix was at the center of it: Bloomberg tallied a [$570 billion wipeout in market value](https://www.bloomberg.com/news/articles/2026-07-27/sk-hynix-s-rebound-from-470-billion-rout-hinges-on-ai-spending) for the memory maker, whose shares [fell below the US IPO price](https://www.bloomberg.com/news/articles/2026-07-27/sk-hynix-slumps-below-us-ipo-price-as-mega-listings-turn-sour), part of what Bloomberg described as mega-listings turning sour across the sector. Japanese stocks followed Korean names lower, with Bloomberg reporting that [chip stocks in both markets tumbled](https://www.bloomberg.com/news/articles/2026-07-28/japanese-korean-stocks-tumble-as-chip-selloff-intensifies) as the selloff intensified through the session.
 
-[](https://substackcdn.com/image/fetch/$s_!Sh_V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffd850883-f80d-42e3-8e92-e0d975269d7f_737x489.png)Source: Reuters.
+[![](<../_img/2026-07-28--daily-update-july-28th-2026/001_fd850883-f80d-42e3-8e92-e0d975269d7f_737x489.png> "https://substackcdn.com/image/fetch/$s_!Sh_V!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffd850883-f80d-42e3-8e92-e0d975269d7f_737x489.png")](https://substackcdn.com/image/fetch/$s_!Sh_V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Ffd850883-f80d-42e3-8e92-e0d975269d7f_737x489.png)Source: Reuters.
 
 [US tech stocks were set to open lower](https://www.bloomberg.com/news/articles/2026-07-28/us-tech-stocks-poised-to-slide-as-global-chip-selloff-deepens) as the rout moved westward. Bloomberg identified [circular funding concerns alongside China competition fears](https://www.bloomberg.com/news/articles/2026-07-28/korean-stocks-sink-as-chipmakers-plung-on-deepening-ai-fatigue) as the twin forces behind the selling, noting the rout was deepening. Reuters described the session as a moment when [AI chip momentum shifted](https://www.reuters.com/business/retail-consumer/global-markets-view-europe-2026-07-28/), with China competition fears rattling markets across Asia and into US pre-market trading.
 
-[](https://substackcdn.com/image/fetch/$s_!ek6p!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd71330f5-1451-44d5-b3fb-469bd959cebd_578x408.png)Source: Bloomberg.
+[![](<../_img/2026-07-28--daily-update-july-28th-2026/002_d71330f5-1451-44d5-b3fb-469bd959cebd_578x408.png> "https://substackcdn.com/image/fetch/$s_!ek6p!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd71330f5-1451-44d5-b3fb-469bd959cebd_578x408.png")](https://substackcdn.com/image/fetch/$s_!ek6p!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd71330f5-1451-44d5-b3fb-469bd959cebd_578x408.png)Source: Bloomberg.
 
 > **Vik** : _What a rout in Asian markets! All because China’s immersion DUV system is reportedly entering mass production? That technology is 20 years old compared to ASML and still cannot produce leading-edge chips without crazy techniques like logic folding. I personally don’t understand what all the massive panic selling is about._
 > 
 > **Austin:**_I think there’s still broader concerns around hyperscaler CapEx, especially as they shift to more debt financing and not just pure cash flow. For example, Moody’s put out a[note](https://www.moodys.com/web/en/us/insights/credit-risk/data-centers.html?_sp=77f8c1bb-66c1-4dd0-9128-d744043cbf93) last week about this debt financing and how it “threatens credit quality”:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!o__8!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c3772be-66f1-4d26-bb96-2a11af2cdbaa_820x950.png)
+> [![](<../_img/2026-07-28--daily-update-july-28th-2026/003_6c3772be-66f1-4d26-bb96-2a11af2cdbaa_820x950.png> "https://substackcdn.com/image/fetch/$s_!o__8!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c3772be-66f1-4d26-bb96-2a11af2cdbaa_820x950.png")](https://substackcdn.com/image/fetch/$s_!o__8!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6c3772be-66f1-4d26-bb96-2a11af2cdbaa_820x950.png)
 
 ### Cadence Lifts Full-Year Outlook as AI Chip Design Demand Accelerates
 
@@ -65,7 +63,7 @@ The EPA ruled that [power for data centers can sidestep pollution laws](https://
 
 > **Vik** : _I came across an insightful tweet that explains how BTM generation currently deployed by AI data centers will eventually serve as excess capacity when grid connections actually come on_. 
 > 
-> [Duncan S. Campbell@duncancampbellBTM and off-grid are not anti-grid. They’re exactly what the grid needs. High-renewables grids require a source of well-funded, dispatchable reserve capacity. Solar and wind are intermittent, and batteries handle average daily fluctuations well, but not extreme events. Something3:04 PM · Jul 27, 2026 · 18.2K Views
+> [![X avatar for @duncancampbell](<../_img/2026-07-28--daily-update-july-28th-2026/004_6IxQlKL-.jpg> "https://substackcdn.com/image/fetch/$s_!0LnU!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1723803334870466560%2F6IxQlKL-.jpg")Duncan S. Campbell@duncancampbellBTM and off-grid are not anti-grid. They’re exactly what the grid needs. High-renewables grids require a source of well-funded, dispatchable reserve capacity. Solar and wind are intermittent, and batteries handle average daily fluctuations well, but not extreme events. Something3:04 PM · Jul 27, 2026 · 18.2K Views
 > 
 > * * *
 > 

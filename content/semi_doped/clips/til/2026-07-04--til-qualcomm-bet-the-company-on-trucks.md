@@ -13,11 +13,10 @@ The company was [Qualcomm](https://www.qualcomm.com/), founded in 1985 by seven 
 
 So while that idea matured, they built something far less glamorous: **OmniTRACS** , a satellite terminal bolted to the roof of a truck cab, letting a dispatcher a thousand miles away see exactly where his fleet was and radio instructions straight to the driver. It was logistics software before logistics software was cool, and by 1989, one customer, [Schneider National](https://schneider.com/), accounted for half of Qualcomm’s $32 million in revenue.
 
-[](https://substackcdn.com/image/fetch/$s_!T3te!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faac74c76-c96a-41ca-8068-6f2ec908bb89_738x581.png)
+[![](<../_img/2026-07-04--til-qualcomm-bet-the-company-on-trucks/001_aac74c76-c96a-41ca-8068-6f2ec908bb89_738x581.png> "https://substackcdn.com/image/fetch/$s_!T3te!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faac74c76-c96a-41ca-8068-6f2ec908bb89_738x581.png")](https://substackcdn.com/image/fetch/$s_!T3te!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Faac74c76-c96a-41ca-8068-6f2ec908bb89_738x581.png)
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 That trucking money bought Qualcomm time, and it needed every bit of it, because the big idea was a hard sell. 
 
@@ -35,7 +34,7 @@ As Qualcomm now reforms itself into an AI datacenter company, it could really us
 
 Could High Bandwidth Compute be it?
 
-[Vik's NewsletterQualcomm's High Bandwidth Compute and the Packaging Problem It MovedAt its 2026 Investor Day, Qualcomm introduced High Bandwidth Compute (HBC), which is DRAM stacked on top of a logic die with a dense interface that gives high bandwidth between the two. It lays the foundation for Qualcomm’s route into the data center using a memory architecture that does not use the traditional HBM+CoWoS approach…Read more2 months ago · 35 likes · Vikram Sekar](https://www.viksnewsletter.com/p/qualcomms-high-bandwidth-compute?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
+[![](<../_img/2026-07-04--til-qualcomm-bet-the-company-on-trucks/002_a409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png> "https://substackcdn.com/image/fetch/$s_!9JlA!,w_56,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa409d69d-ca10-4bfe-a1fc-f8d291690566_185x185.png")Vik's NewsletterQualcomm's High Bandwidth Compute and the Packaging Problem It MovedAt its 2026 Investor Day, Qualcomm introduced High Bandwidth Compute (HBC), which is DRAM stacked on top of a logic die with a dense interface that gives high bandwidth between the two. It lays the foundation for Qualcomm’s route into the data center using a memory architecture that does not use the traditional HBM+CoWoS approach…Read more3 months ago · 35 likes · Vikram Sekar](https://www.viksnewsletter.com/p/qualcomms-high-bandwidth-compute?utm_source=substack&utm_campaign=post_embed&utm_medium=web)
 
 Thanks for reading! This post is public so feel free to share it.
 

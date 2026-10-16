@@ -11,9 +11,7 @@ Semis were all down last week; let’s see what this week has to offer. SemiAnal
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -21,7 +19,7 @@ Subscribe
 
 Nvidia’s Kyber NVL144, demoed at GTC three months prior, has been delayed by over 12 months, pushing its release to 2028. This delay also follows the cancellation of Nvidia’s NVL72x2 back-to-back rack architecture, which limits Rubin Ultra’s scale-up domain. ([SemiAnalysis](https://x.com/SemiAnalysis_/status/2073874671498387899?s=20))
 
-[SemiAnalysis@SemiAnalysis_MASSIVE DELAY: Just 3 months after Jensen demoed Kyber NVL144 at GTC, it has faced major setbacks and has been delayed by more than 12 months, pushing it back to 2028. Below, we explain why Kyber has faced massive delays and why NVIDIA’s NVL72x2 back-to-back rack architecture was 9:00 PM · Jul 5, 2026 · 23.3K Views
+[![X avatar for @SemiAnalysis_](<../_img/2026-07-06--daily-update-july-6th-2026/001_CdplNoi1.jpg> "https://substackcdn.com/image/fetch/$s_!200W!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2062973370157694976%2FCdplNoi1.jpg")SemiAnalysis@SemiAnalysis_MASSIVE DELAY: Just 3 months after Jensen demoed Kyber NVL144 at GTC, it has faced major setbacks and has been delayed by more than 12 months, pushing it back to 2028. Below, we explain why Kyber has faced massive delays and why NVIDIA’s NVL72x2 back-to-back rack architecture was ![](<../_img/2026-07-06--daily-update-july-6th-2026/002_HMfiBhcXMAAALlN.jpg> "https://pbs.substack.com/media/HMfiBhcXMAAALlN.jpg")9:00 PM · Jul 5, 2026 · 23.3K Views
 
 * * *
 
@@ -73,7 +71,7 @@ South Korea is considering establishing a growth fund seeded by tax revenue from
 
 Intel XBM is good to see. Just don’t make it have the same fate as Optane. Too soon? [Read the patent](https://www.freepatentsonline.com/20260191095.pdf) for yourself.
 
-[Underfox@Underfox3In this week, an Intel patent application was published, revealing its proposed Cross-Batch Memory (XBM), an ultra high-bandwidth memory that offers some significant improvements over the current standard, which could be a direct competitor to HBM4 in the near future. 9:52 PM · Jul 5, 2026 · 44.4K Views
+[![X avatar for @Underfox3](<../_img/2026-07-06--daily-update-july-6th-2026/003_DRY1zKvv.jpg> "https://substackcdn.com/image/fetch/$s_!Vrxv!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1575874163264339969%2FDRY1zKvv.jpg")Underfox@Underfox3In this week, an Intel patent application was published, revealing its proposed Cross-Batch Memory (XBM), an ultra high-bandwidth memory that offers some significant improvements over the current standard, which could be a direct competitor to HBM4 in the near future. ![](<../_img/2026-07-06--daily-update-july-6th-2026/004_HMfdKrZXsAAney6.png> "https://substackcdn.com/image/fetch/$s_!bqJa!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHMfdKrZXsAAney6.png")![](<../_img/2026-07-06--daily-update-july-6th-2026/005_HMfsLE_XAAABDn9.png> "https://substackcdn.com/image/fetch/$s_!i_jS!,w_520,h_520,c_fill,f_auto,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fpbs.substack.com%2Fmedia%2FHMfsLE_XAAABDn9.png")9:52 PM · Jul 5, 2026 · 44.4K Views
 
 * * *
 
@@ -83,7 +81,7 @@ Intel XBM is good to see. Just don’t make it have the same fate as Optane. Too
 
 Amazing post by Big Boss on X, which explains from first principles why we should be designing AI accelerators with interconnects in mind.
 
-[Big Boss@0xBADB01EI agree with this post whole heartedly but I’d push it even further. The interconnect IS the binding constraint for AI even more so than memory. If we want faster inference & training with better economics we are best served by designing our interconnect first and then workingoutside five sigma @jwt0625chips get all the love but the interconnects across all levels from c2c to rack-to-rack are as important, and many chip makers are sleeping on it until very recently. Even most interconnects people just want it to be as transparent as possible, just send and receive the bits with3:20 AM · Jul 6, 2026 · 48K Views
+[![X avatar for @0xBADB01E](<../_img/2026-07-06--daily-update-july-6th-2026/006_QJsqQ_Cr.jpg> "https://substackcdn.com/image/fetch/$s_!y02e!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2072395999222681600%2FQJsqQ_Cr.jpg")Big Boss@0xBADB01EI agree with this post whole heartedly but I’d push it even further. The interconnect IS the binding constraint for AI even more so than memory. If we want faster inference & training with better economics we are best served by designing our interconnect first and then working![](<../_img/2026-07-06--daily-update-july-6th-2026/007_HMg5GRia8AAzA3Q.jpg> "https://pbs.substack.com/media/HMg5GRia8AAzA3Q.jpg")![X avatar for @jwt0625](<../_img/2026-07-06--daily-update-july-6th-2026/008_lp6zzK9w.jpg> "https://substackcdn.com/image/fetch/$s_!uDI6!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1696056954832175104%2Flp6zzK9w.jpg")outside five sigma @jwt0625chips get all the love but the interconnects across all levels from c2c to rack-to-rack are as important, and many chip makers are sleeping on it until very recently. Even most interconnects people just want it to be as transparent as possible, just send and receive the bits with3:20 AM · Jul 6, 2026 · 48K Views
 
 * * *
 

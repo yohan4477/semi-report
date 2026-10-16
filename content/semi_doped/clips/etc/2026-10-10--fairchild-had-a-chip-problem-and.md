@@ -11,7 +11,7 @@ Special tribute to Margaret Hamilton died on September 30, 2026, at the age of 9
 
 Margaret Hamilton helped write the software that would guide Apollo astronauts to the Moon. But software was only one part of the problem. The Apollo Guidance Computer also needed thousands of integrated circuits, and in the early 1960s, making enough reliable chips was proving surprisingly difficult.
 
-[](https://substackcdn.com/image/fetch/$s_!sN80!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb3924d7d-1dbb-4f17-89b0-6e6a9f09b565_800x593.jpeg)Fairchild’s Micrologic Type G Integrated Circuit.
+[![1962-1-1.jpg](<../_img/2026-10-10--fairchild-had-a-chip-problem-and/001_b3924d7d-1dbb-4f17-89b0-6e6a9f09b565_800x593.jpeg> "https://substackcdn.com/image/fetch/$s_!sN80!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb3924d7d-1dbb-4f17-89b0-6e6a9f09b565_800x593.jpeg")](https://substackcdn.com/image/fetch/$s_!sN80!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb3924d7d-1dbb-4f17-89b0-6e6a9f09b565_800x593.jpeg)Fairchild’s Micrologic Type G Integrated Circuit.
 
 At Fairchild Semiconductor in Mountain View, California, a technician named Ed Porter spotted a possible way forward. Porter was studying for an engineering degree while working at the company, where [James “Phil” Ferguson](https://www.mercurynews.com/obituaries/james-ferguson-3/) led a team struggling to improve chip manufacturing yields. After a weekend spent reading _Semiconductor Magazine_ , Porter came in with an idea that might solve a problem the team had been wrestling with for years.
 
@@ -23,7 +23,6 @@ Ferguson remembered the mood of the team rather well. “Usually I spent Monday 
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 Then one Monday, Porter walked in asking who else read _[Semiconductor Magazine](https://semiconductormagazine.com/)_.
 

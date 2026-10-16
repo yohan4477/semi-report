@@ -13,13 +13,12 @@ Seven years later, on the eve of the company’s stock market debut, a much larg
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 **Name the company.**
 
 # **CLUES**
 
-[](https://substackcdn.com/image/fetch/$s_!VGVQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a4bb798-b75e-4ccf-bf30-34b7fd536c67.svg) By Original: 毛抜きDerivative work: Tkgd2007 - This file was derived from: Sdcard.svg, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=3539190
+[![](<../_img/2026-07-26--semi-doped-pub-quiz/001_3a4bb798-b75e-4ccf-bf30-34b7fd536c67.svg> "https://substackcdn.com/image/fetch/$s_!VGVQ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a4bb798-b75e-4ccf-bf30-34b7fd536c67.svg")](https://substackcdn.com/image/fetch/$s_!VGVQ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3a4bb798-b75e-4ccf-bf30-34b7fd536c67.svg) By Original: 毛抜きDerivative work: Tkgd2007 - This file was derived from: Sdcard.svg, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=3539190
 
 > The company went on to help create the small removable cards that fed a generation of digital cameras and phones. One of its co-founders later left to run one of America’s two big memory makers.
 
@@ -28,5 +27,3 @@ Subscribe
 ### **Answer: SanDisk**
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

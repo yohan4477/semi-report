@@ -13,13 +13,11 @@ OpenAI’s Jalapeño inference chip went in front on a third-party benchmark and
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player_
 
- _Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+ _Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-25--daily-update-august-25th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### OpenAI’s Jalapeño Beats Blackwell on Perf/W and Runs Level With Rubin, Nine Months After Tapeout
 
@@ -152,7 +150,7 @@ Apple [introduced the M6 and M5 Ultra processors](https://www.businesswire.com/n
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-25--daily-update-august-25th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

@@ -11,9 +11,7 @@ Meta wants to be a cloud vendor. It’s in early talks to lease up to $10 billio
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player_
 
@@ -46,7 +44,7 @@ Following Kimi K3’s chip selloff, two more Chinese releases landed within days
 
   * Three trillion-scale open-weight Chinese models now in market simultaneously; next hard checkpoint is DeepSeek V4’s full release, expected imminently per [36Kr](https://eu.36kr.com/en/p/3903106705606274).
 
-[](https://substackcdn.com/image/fetch/$s_!JZSL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70e641f3-0780-4976-b948-57e6773e78b8_789x674)
+[![DeepSeek](<../_img/2026-07-20--daily-update-july-20th-2026/001_70e641f3-0780-4976-b948-57e6773e78b8_789x674> "https://substackcdn.com/image/fetch/$s_!JZSL!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70e641f3-0780-4976-b948-57e6773e78b8_789x674")](https://substackcdn.com/image/fetch/$s_!JZSL!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70e641f3-0780-4976-b948-57e6773e78b8_789x674)
 
 
 
@@ -55,7 +53,7 @@ Following Kimi K3’s chip selloff, two more Chinese releases landed within days
 > 
 > **Austin:** _Open weights models are great for enterprise inference demand; just need more competitive American open weight alternatives. Also, I’m tired of the OpenAI vs. Anthropic story. It’s Zoolander and Hansel in a walk-off… two beautiful rivals who only see each other. Let’s get more models and crowd the runway. (double entendre, see what i did there)_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!Y_9k!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2d440219-1b1b-430d-9ca2-15d7d16ef57e_400x259.jpeg)
+> [![](<../_img/2026-07-20--daily-update-july-20th-2026/002_2d440219-1b1b-430d-9ca2-15d7d16ef57e_400x259.jpeg> "https://substackcdn.com/image/fetch/$s_!Y_9k!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2d440219-1b1b-430d-9ca2-15d7d16ef57e_400x259.jpeg")](https://substackcdn.com/image/fetch/$s_!Y_9k!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2d440219-1b1b-430d-9ca2-15d7d16ef57e_400x259.jpeg)
 
 ### PC Vendors Book CXMT Capacity Through 2027 as Ban Calls Mount
 
@@ -112,13 +110,13 @@ Following the $8.6B IPO, PC makers are now **fighting for CXMT DRAM allocation**
 
 ### Key Data
 
-[](https://substackcdn.com/image/fetch/$s_!FaJ5!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F215975e1-87d2-4c3e-847c-3b6264248cf3_745x450.png)
+[![Image](<../_img/2026-07-20--daily-update-july-20th-2026/003_215975e1-87d2-4c3e-847c-3b6264248cf3_745x450.png> "https://substackcdn.com/image/fetch/$s_!FaJ5!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F215975e1-87d2-4c3e-847c-3b6264248cf3_745x450.png")](https://substackcdn.com/image/fetch/$s_!FaJ5!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F215975e1-87d2-4c3e-847c-3b6264248cf3_745x450.png)
 
 ### Funny
 
 Felt like just yesterday when [Hunterbrook found hidden HTML](https://x.com/hntrbrkmedia/status/2077161996852564327?s=20) with Anthropic partnership details — which was supposedly not real. Now some AMD Senior Director has checked in Github code? LOL
 
-[](https://substackcdn.com/image/fetch/$s_!fmla!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e84de20-3f31-4b55-a21f-116a145dc649_1372x1166.jpeg)[Source](https://x.com/SemiAnalysis_/status/2078975426358026661)
+[![Image](<../_img/2026-07-20--daily-update-july-20th-2026/004_5e84de20-3f31-4b55-a21f-116a145dc649_1372x1166.jpeg> "https://substackcdn.com/image/fetch/$s_!fmla!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e84de20-3f31-4b55-a21f-116a145dc649_1372x1166.jpeg")](https://substackcdn.com/image/fetch/$s_!fmla!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e84de20-3f31-4b55-a21f-116a145dc649_1372x1166.jpeg)[Source](https://x.com/SemiAnalysis_/status/2078975426358026661)
 
 Thanks for reading! This post is public so feel free to share it.
 

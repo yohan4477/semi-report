@@ -15,7 +15,7 @@ Hall won the non-race. By the middle of September he had coherent infrared light
 
 The consolation (for Holonyak) was that Hall’s beam was invisible. So was IBM’s, and Lincoln Lab’s. Every one of those devices emitted in the infrared, which meant you proved you had a laser by pointing it at a detector and reading a trace.
 
-[](https://substackcdn.com/image/fetch/$s_!cMJv!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe2f22a85-355a-42ba-8fcf-6114ac37fb85_1104x1516.jpeg)By Anonymous - Nick Holonyak, Jr.. Archived from the original on 2006-08-06., Public Domain, https://commons.wikimedia.org/w/index.php?curid=7901356
+[![](<../_img/2026-08-22--til-the-first-red-led-was-a-laser/001_e2f22a85-355a-42ba-8fcf-6114ac37fb85_1104x1516.jpeg> "https://substackcdn.com/image/fetch/$s_!cMJv!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe2f22a85-355a-42ba-8fcf-6114ac37fb85_1104x1516.jpeg")](https://substackcdn.com/image/fetch/$s_!cMJv!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe2f22a85-355a-42ba-8fcf-6114ac37fb85_1104x1516.jpeg)By Anonymous - Nick Holonyak, Jr.. Archived from the original on 2006-08-06., Public Domain, https://commons.wikimedia.org/w/index.php?curid=7901356
 
 Holonyak wanted one you could look at. Pushing phosphorus into the gallium arsenide lattice widens the bandgap and drags the emission up out of the infrared into red, and he had been growing that alloy for a while, using a trick borrowed from[ J. C. Marinace ](https://research.ibm.com/publications/gaas-lnjection-laser-with-novel-mode-control-and-switching-properties)at IBM: seal the ingredients in a quartz tube with a halide, heat one end, let the vapor carry the material to the cool end and crystallize there.
 
@@ -31,7 +31,6 @@ Then it warmed up.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 At room temperature the lasing collapsed and the diode just sat there glowing, a plain red with no coherence in it at all. GE gave him its Cordiner Award that year - [named for the man then running the company](https://en.wikipedia.org/wiki/Ralph_J._Cordiner) \- for the laser. Diode lasers would not run at room temperature until 1970, when [Herbert Kroemer](https://en.wikipedia.org/wiki/Herbert_Kroemer)’s and [Zhorev Alferov](https://en.wikipedia.org/wiki/Zhores_Alferov)’s heterojunctions finally made it possible. The useless-looking glow went into production almost immediately and is now in your dashboard, your traffic lights and the indicator on your power strip.
 

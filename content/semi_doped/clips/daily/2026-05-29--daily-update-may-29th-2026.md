@@ -13,15 +13,13 @@ More importantly, and this is the downright most flattering thing that has ever 
 
 Just one example of a dashboard that helps you understand wafer economics. Check out the whole post → [Known Scaling Options for EUV Lithography](https://www.nhurwitz.com/writing/known-scaling-options-for-euv-lithography)
 
-[](https://substackcdn.com/image/fetch/$s_!Ws91!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc9f38b9c-99b8-43db-ab39-2c1e86d044d2_732x519.png)
+[![](<../_img/2026-05-29--daily-update-may-29th-2026/001_c9f38b9c-99b8-43db-ab39-2c1e86d044d2_732x519.png> "https://substackcdn.com/image/fetch/$s_!Ws91!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc9f38b9c-99b8-43db-ab39-2c1e86d044d2_732x519.png")](https://substackcdn.com/image/fetch/$s_!Ws91!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc9f38b9c-99b8-43db-ab39-2c1e86d044d2_732x519.png)
 
 If you ever enjoy our content, reply/DM and let us know. Be like Noam.
 
 Ok, now on to the today’s greatest hits! Good things await.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -37,7 +35,7 @@ C.C. Wei is expected to address AI demand, advanced-node capacity, and overseas 
 
 > _**Austin:** TSMC can embrace a value-based pricing model, rather than a traditional “cost-plus” manufacturing pricing model. Which is a fancy way to say they have pricing power and a differentiated, premium product. We see this in [margins](https://www.chipstrat.com/p/tsmcs-margins-in-uncharted-territory), which are running way ahead of forecasted targets:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!hXab!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2fc55e15-bd17-4d90-8a44-83e52356cf4b_1866x1092.png)
+> [![](<../_img/2026-05-29--daily-update-may-29th-2026/002_2fc55e15-bd17-4d90-8a44-83e52356cf4b_1866x1092.png> "https://substackcdn.com/image/fetch/$s_!hXab!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2fc55e15-bd17-4d90-8a44-83e52356cf4b_1866x1092.png")](https://substackcdn.com/image/fetch/$s_!hXab!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2fc55e15-bd17-4d90-8a44-83e52356cf4b_1866x1092.png)
 > 
 > _The question is, what is the true value of a 3nm wafer? It’s surely even more than what TSMC is asking even after price hikes. imo this is all a function of not enough supply…_
 > 
@@ -90,7 +88,7 @@ Dell lifted its fiscal 2027 forecasts, guiding to roughly $60 billion in AI serv
 
 How much money a $20/mo makes for the model provider, depends on how much of your quota you use. So Anthropic revenue going to the moon means people got an AI sub, but haven’t figured out how to use it yet? **What happens when they do?**
 
-[](https://x.com/SemiAnalysis_/status/2060043702450446552?s=20) via SemiAnalysis on X.
+[![Image](<../_img/2026-05-29--daily-update-may-29th-2026/003_5a3cf719-4b29-4f0e-bdbc-f94fc6ad5e3a_679x178.jpeg> "https://substackcdn.com/image/fetch/$s_!NNrT!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5a3cf719-4b29-4f0e-bdbc-f94fc6ad5e3a_679x178.jpeg")](https://x.com/SemiAnalysis_/status/2060043702450446552?s=20) via SemiAnalysis on X.
 
 Thanks for reading! This post is public so feel free to share it.
 

@@ -104,6 +104,9 @@ def check(root, rows, idx, actors, tmap=None, meta=None):
             if not os.path.isfile(q):
                 continue
             rel = paths.virtual(root, q)
+            # 클립 옆 _img/ 는 본문 그림 사본이지 안 읽힌 원문이 아니다(2026-10-16 Semi Doped 그림 447장)
+            if '/_img/' in rel.replace('\\', '/'):
+                continue
             if not sl.known(rel):
                 unread.add(rel)
     for rel in sorted(unread):

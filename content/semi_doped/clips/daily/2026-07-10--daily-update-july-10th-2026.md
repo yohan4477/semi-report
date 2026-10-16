@@ -11,9 +11,7 @@ If you want in on the SK Hynix action on NASDAQ, ADR shares are now trading unde
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast playe_
 
@@ -25,7 +23,7 @@ Meta plans to begin production of its in-house AI chip in September as part of a
 > 
 > _**Austin:** MTIA roadmap is very interesting, would love to talk shop with them sometime:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!oPSj!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F952b515b-7153-47da-b500-f67a77c2a222_1486x1356.png)
+> [![](<../_img/2026-07-10--daily-update-july-10th-2026/001_952b515b-7153-47da-b500-f67a77c2a222_1486x1356.png> "https://substackcdn.com/image/fetch/$s_!oPSj!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F952b515b-7153-47da-b500-f67a77c2a222_1486x1356.png")](https://substackcdn.com/image/fetch/$s_!oPSj!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F952b515b-7153-47da-b500-f67a77c2a222_1486x1356.png)
 
 ### Apollo’s $35B AI Chip Credit Facility Enters Secondary Market
 
@@ -69,7 +67,7 @@ nLIGHT has been awarded a $627 million contract to develop the Joint Laser Weapo
 > 
 >  _**Austin:** Remember that nLIGHT that trades under [LASR 0.00%↑](https://substack.com/search/%24LASR) has had quite the run up already._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!6LGB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd44db4c4-ea97-4565-bf3b-7ea76253a96e_567x419.png)
+> [![](<../_img/2026-07-10--daily-update-july-10th-2026/002_d44db4c4-ea97-4565-bf3b-7ea76253a96e_567x419.png> "https://substackcdn.com/image/fetch/$s_!6LGB!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd44db4c4-ea97-4565-bf3b-7ea76253a96e_567x419.png")](https://substackcdn.com/image/fetch/$s_!6LGB!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd44db4c4-ea97-4565-bf3b-7ea76253a96e_567x419.png)
 
 ### Nexchip Shares Rise After $891M Hong Kong IPO
 
@@ -89,7 +87,7 @@ European probe card supplier Technoprobe has seen its stock surge 330%, driven b
 
 > _**Vik:** Multibaggers everywhere you look these days. Anyone know what is special about Technoprobe probecards?_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!MTp3!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fda7d17d4-58ff-4f51-9fe6-5dbe3f695397_645x445.png)
+> [![](<../_img/2026-07-10--daily-update-july-10th-2026/003_da7d17d4-58ff-4f51-9fe6-5dbe3f695397_645x445.png> "https://substackcdn.com/image/fetch/$s_!MTp3!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fda7d17d4-58ff-4f51-9fe6-5dbe3f695397_645x445.png")](https://substackcdn.com/image/fetch/$s_!MTp3!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fda7d17d4-58ff-4f51-9fe6-5dbe3f695397_645x445.png)
 > 
 > _**Austin:** Technoprobe? **Technologic**._
 > 
@@ -114,7 +112,7 @@ Neosem signed a contract with Samsung Electronics on July 8 to supply its CLT me
 
 > _**Vik:** AI overview, because I didn’t know what a CLT tester was._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!ctj9!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F886413c7-08c4-457b-9082-cb60e0e1abe1_661x165.png)
+> ![](<../_img/2026-07-10--daily-update-july-10th-2026/004_886413c7-08c4-457b-9082-cb60e0e1abe1_661x165.png> "https://substackcdn.com/image/fetch/$s_!ctj9!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F886413c7-08c4-457b-9082-cb60e0e1abe1_661x165.png")
 
 ## Sector Watch
 

@@ -11,9 +11,7 @@ TeraWulf locked in a 20-year, $19 billion lease with Anthropic for a Kentucky da
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast playe_
 
@@ -61,7 +59,7 @@ SK Hynix has formally launched a US American Depositary Receipt offering targeti
 
 > _**Vik:** This basically means that you can buy SK Hynix shares in the US stock market. Supposedly, the domestic market has not fully reflected its valuation _👀 — _Also kudos to[Tae Kim](https://open.substack.com/users/954920-tae-kim?utm_source=mentions) on X for reading the original filing that shows both Coatue Management and Situational Awareness have indicated an interest in purchasing up to US $7B in these ADRs._
 > 
-> [tae kim@firstadopter"investment funds managed by Coatue Management, L.L.C., and Situational Awareness Partners LP (in alphabetical order) (collectively, the “Cornerstone Investors”) have, severally and not jointly, indicated an interest in purchasing up to an aggregate of US$7 billion of the ADSs 3:16 AM · Jul 7, 2026 · 18.7K Views
+> [![X avatar for @firstadopter](<../_img/2026-07-07--daily-update-july-7th-2026/001_NDo0EYpY.jpg> "https://substackcdn.com/image/fetch/$s_!HhTx!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2038758350561607680%2FNDo0EYpY.jpg")tae kim@firstadopter"investment funds managed by Coatue Management, L.L.C., and Situational Awareness Partners LP (in alphabetical order) (collectively, the “Cornerstone Investors”) have, severally and not jointly, indicated an interest in purchasing up to an aggregate of US$7 billion of the ADSs ![](<../_img/2026-07-07--daily-update-july-7th-2026/002_HMmBwk1WQAA7gfi.jpg> "https://pbs.substack.com/media/HMmBwk1WQAA7gfi.jpg")3:16 AM · Jul 7, 2026 · 18.7K Views
 > 
 > * * *
 > 
@@ -81,7 +79,7 @@ Huawei is entering the South Korean AI chip market with its Atlas SuperPod syste
 
 Brilliant video from Anthropic — recommend!
 
-[Anthropic@AnthropicAINew Anthropic research: A global workspace in language models. Of everything happening in your brain right now, only a tiny fraction is consciously accessible—thoughts you can describe, hold in mind, and reason with. We found a strikingly similar divide inside Claude. 5:34 PM · Jul 6, 2026 · 4.74M Views
+[![X avatar for @AnthropicAI](<../_img/2026-07-07--daily-update-july-7th-2026/003_XP8gyBaY.jpg> "https://substackcdn.com/image/fetch/$s_!yhOq!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1798110641414443008%2FXP8gyBaY.jpg")Anthropic@AnthropicAINew Anthropic research: A global workspace in language models. Of everything happening in your brain right now, only a tiny fraction is consciously accessible—thoughts you can describe, hold in mind, and reason with. We found a strikingly similar divide inside Claude. ![](<../_img/2026-07-07--daily-update-july-7th-2026/004___ss-rehost__tw-video-preview-13_2074179111296081920.jpg> "https://substackcdn.com/image/fetch/$s_!AS7h!,w_1028,c_limit,f_auto,q_auto:best,fl_progressive:steep/l_play_button_usfui2,w_88,e_colorize:0/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F__ss-rehost__tw-video-preview-13_2074179111296081920.jpg")5:34 PM · Jul 6, 2026 · 4.74M Views
 
 * * *
 

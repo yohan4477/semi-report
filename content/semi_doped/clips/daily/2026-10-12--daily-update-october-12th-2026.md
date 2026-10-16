@@ -41,7 +41,7 @@ TSMC’s rising wafer and advanced packaging costs are now landing directly on c
 > 
 > **Austin:**_TSMC is charging for it’s value. As they should!_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!aB9W!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F79964020-cf70-4657-bce3-6f03dcb24bf5_2100x1280.png)[Source](https://newsletter.chipstrat.com/p/tsmc-could-spend-10b-more-on-n2-capacity)
+> [![tsmc-gm-vs-gross-profit-dollars.png](<../_img/2026-10-12--daily-update-october-12th-2026/001_79964020-cf70-4657-bce3-6f03dcb24bf5_2100x1280.png> "https://substackcdn.com/image/fetch/$s_!aB9W!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F79964020-cf70-4657-bce3-6f03dcb24bf5_2100x1280.png")](https://substackcdn.com/image/fetch/$s_!aB9W!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F79964020-cf70-4657-bce3-6f03dcb24bf5_2100x1280.png)[Source](https://newsletter.chipstrat.com/p/tsmc-could-spend-10b-more-on-n2-capacity)
 
 ### Vicor ITC Section 337 Filing Pulls 20 AI Server Makers Into Patent Fight
 
@@ -159,7 +159,7 @@ Penguin Solutions raised its outlook on the strength of sustained AI memory syst
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-10-12--daily-update-october-12th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

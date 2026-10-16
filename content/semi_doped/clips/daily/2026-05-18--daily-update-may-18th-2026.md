@@ -11,9 +11,7 @@ The rise of Agentic AI is creating a duopoly between OpenAI and Anthropic. Lots 
 
 Let’s dive in.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -23,7 +21,7 @@ Subscribe
 
 Among [34 AI startups analyzed by The Information](https://www.theinformation.com/articles/anthropic-openais-share-ai-startup-revenues-rises-89?utm_campaign=article_email&utm_content=article-17137&utm_medium=email&utm_source=sg), OpenAI and Anthropic account for 89% of the total $80B revenue. Other than these two, the next three companies crossing $500M in ARR are ElevenLabs, Cognition, and Perplexity, although revenue from some of these startups also flows into the big two model providers. Important to note that most of these startups are also burning cash in an effort to build latest models, for which hardware is just not cheap.
 
-[](https://substackcdn.com/image/fetch/$s_!Fbww!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1b91f734-5124-4292-a6a2-bf73702ed416_928x627.png)
+[![](<../_img/2026-05-18--daily-update-may-18th-2026/001_1b91f734-5124-4292-a6a2-bf73702ed416_928x627.png> "https://substackcdn.com/image/fetch/$s_!Fbww!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1b91f734-5124-4292-a6a2-bf73702ed416_928x627.png")](https://substackcdn.com/image/fetch/$s_!Fbww!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1b91f734-5124-4292-a6a2-bf73702ed416_928x627.png)
 
 > _**Vik**_ : _There are only two clear winners here among the startups, but it would be a mistake to think that only OAI and Anthropic are killing it out there. Yes, in startup land they have high ARRs, but what is not included here is Google who is benefitting from both software and hardware sides. Last reported earnings saw Google Cloud grow 63% due to AI demand, and they also sell TPUs externally now._
 
@@ -31,7 +29,7 @@ Among [34 AI startups analyzed by The Information](https://www.theinformation.co
 
 If you thought memory makers had it great, [Kioxia’s NAND business is booming](https://www.bloomberg.com/news/articles/2026-05-18/kioxia-shares-awash-in-buy-orders-after-ai-driven-profit-surge) as agentic AI places much higher demands on storage required for long term memory. Kioxia shares are up 300% just this year. They recently surpassed the quarterly revenue of Toyota Motor Corp, one of Japan’s most profitable businesses.
 
-[](https://substackcdn.com/image/fetch/$s_!fIsE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa9b34473-e9bd-4387-94c7-8b59941032aa_652x464.png)
+[![](<../_img/2026-05-18--daily-update-may-18th-2026/002_a9b34473-e9bd-4387-94c7-8b59941032aa_652x464.png> "https://substackcdn.com/image/fetch/$s_!fIsE!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa9b34473-e9bd-4387-94c7-8b59941032aa_652x464.png")](https://substackcdn.com/image/fetch/$s_!fIsE!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fa9b34473-e9bd-4387-94c7-8b59941032aa_652x464.png)
 
 > _**Vik** : Kinds of workloads are driving NAND demand: agents, multi-modal, and world models. All of these require massive storage. NAND SSD makers are focusing efforts on high IOPS to ensure that they can be used for KV-cache offloading so that agents can remember a lot. In addition, LTAs now protect pricing power of storage vendors. _
 
@@ -64,7 +62,7 @@ If you thought memory makers had it great, [Kioxia’s NAND business is booming]
 
 According to CXMT’s latest IPO filing document, 1Q26 revenue is up 720% YoY. At this rate, they will make more in 2026 compared to their last 3 years of revenue. This is expected to me the most explosive Chinese IPO this year. For more, see more from SemiAnalysis’ [Ray Wang](https://x.com/rwang07/status/2056006810801508432?s=20') and [Sravan Kundojjala](https://x.com/SKundojjala/status/2055982292880027876?s=20) on X.
 
-[](https://substackcdn.com/image/fetch/$s_!-ERI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5d63dde5-f095-43b6-a100-14abab84906c_680x430.jpeg)
+[![Image](<../_img/2026-05-18--daily-update-may-18th-2026/003_5d63dde5-f095-43b6-a100-14abab84906c_680x430.jpeg> "https://substackcdn.com/image/fetch/$s_!-ERI!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5d63dde5-f095-43b6-a100-14abab84906c_680x430.jpeg")](https://substackcdn.com/image/fetch/$s_!-ERI!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5d63dde5-f095-43b6-a100-14abab84906c_680x430.jpeg)
 
 ### Earnings
 

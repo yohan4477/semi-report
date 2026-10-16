@@ -13,13 +13,11 @@ Alibaba unveiled what it’s calling China’s most powerful AI chip alongside a
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-22--daily-update-september-22nd-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Alibaba Unveils AI Chip and 10-Trillion-Parameter Model at Apsara
 
@@ -143,7 +141,7 @@ Google [opened pre-orders for Googlebook laptops starting at $899](https://www.r
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-09-22--daily-update-september-22nd-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 

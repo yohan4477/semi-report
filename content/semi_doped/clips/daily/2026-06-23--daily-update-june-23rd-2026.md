@@ -11,9 +11,7 @@ Lots of positive MediaTek news, with 2.4T design wins on TPU v9, Triggerfish, al
 
 Shorter edition today since we’re both traveling. Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast pl_
 
@@ -21,7 +19,7 @@ Subscribe
 
 SpaceX shares dropped 23% over three days, erasing over $600 billion in market value. The stock now sits at $154.60, though it remains about 15% above its $135 IPO price. The sell-off followed news that SpaceX plans to raise at least $20 billion in bonds to fund AI investments, including a new computing deal with AI startup Reflection AI. Thin trading volume and heavy retail interest amplified the volatility. Investors are also watching SpaceX as a bellwether for the AI race, ahead of expected IPOs from Anthropic and OpenAI, both targeting ~$1 trillion valuations.
 
-[](https://substackcdn.com/image/fetch/$s_!-JXP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3abb7b29-a891-4941-a36b-71b7c88085b6_1200x675.png)
+[![](<../_img/2026-06-23--daily-update-june-23rd-2026/001_3abb7b29-a891-4941-a36b-71b7c88085b6_1200x675.png> "https://substackcdn.com/image/fetch/$s_!-JXP!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3abb7b29-a891-4941-a36b-71b7c88085b6_1200x675.png")](https://substackcdn.com/image/fetch/$s_!-JXP!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3abb7b29-a891-4941-a36b-71b7c88085b6_1200x675.png)
 
 ### MediaTek Secures Google TPU v9 Orders with 336G SerDes Solution
 
@@ -31,13 +29,13 @@ MediaTek has reportedly secured the primary orders for Google’s TPU v9, codena
 > 
 > _**Austin:**_ _336G per lane instead of 448G. Interesting. 448G is hard:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!hDPa!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ef2832c-3972-4460-be07-c8772641d17c_1456x762.jpeg)
+> [![](<../_img/2026-06-23--daily-update-june-23rd-2026/002_9ef2832c-3972-4460-be07-c8772641d17c_1456x762.jpeg> "https://substackcdn.com/image/fetch/$s_!hDPa!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ef2832c-3972-4460-be07-c8772641d17c_1456x762.jpeg")](https://substackcdn.com/image/fetch/$s_!hDPa!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ef2832c-3972-4460-be07-c8772641d17c_1456x762.jpeg)
 
 ### Memory Pricing to Surge 40-50% in Q3 2026
 
 Jefferies predicts memory pricing will increase 40-50% quarter-over-quarter in Q3 2026 and another 30-40% in Q4 2026, with continued price hikes into 2027 due to zero wafer capacity growth. Cloud Service Providers are securing 50% of total capacity through two-year long-term agreements requiring 40% prepayment, leaving consumer electronics players facing severe supply pressure. Samsung is expected to gain a competitive edge in HBM4 with its 4nm base die and hybrid bonding transition. ([@pequityresearch](https://x.com/pequityresearch/status/2069119897817223620))
 
-[P Equity Research 📰@pequityresearchJefferies: Memory Outlook > Memory pricing is expected to rise sharply in the near term—climbing 40%–50% QoQ in 3Q26 and another 30%–40% QoQ in 4Q26. > Price hikes are likely to continue into 2027, with a projected 40%–45% YoY increase due to zero wafer capacity growth. > 6:06 PM · Jun 22, 2026 · 34.3K Views
+[![X avatar for @pequityresearch](<../_img/2026-06-23--daily-update-june-23rd-2026/003_RkMJQMhn.jpg> "https://substackcdn.com/image/fetch/$s_!UuhI!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F2050765694447607808%2FRkMJQMhn.jpg")P Equity Research 📰@pequityresearchJefferies: Memory Outlook > Memory pricing is expected to rise sharply in the near term—climbing 40%–50% QoQ in 3Q26 and another 30%–40% QoQ in 4Q26. > Price hikes are likely to continue into 2027, with a projected 40%–45% YoY increase due to zero wafer capacity growth. > ![](<../_img/2026-06-23--daily-update-june-23rd-2026/004_HLb9PjuXcAAUg0i.jpg> "https://pbs.substack.com/media/HLb9PjuXcAAUg0i.jpg")6:06 PM · Jun 22, 2026 · 34.3K Views
 
 * * *
 
@@ -57,7 +55,7 @@ Qualcomm is close to acquiring Modular, an AI chip software startup, according t
 > 
 > _And previous rumors said Jim Keller’s Tenstorrent is on the table too._
 > 
-> [](https://substackcdn.com/image/fetch/$s_!P3N5!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac302933-b498-478b-b631-3c7aacf95ef3_500x236.gif)
+> ![Popcorn GIFs on GIPHY - Be Animated](<../_img/2026-06-23--daily-update-june-23rd-2026/005_ac302933-b498-478b-b631-3c7aacf95ef3_500x236.gif> "https://substackcdn.com/image/fetch/$s_!P3N5!,w_1456,c_limit,f_auto,q_auto:good,fl_lossy/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac302933-b498-478b-b631-3c7aacf95ef3_500x236.gif")
 
 ### Micron and Anthropic sign AI memory supply pact
 
@@ -99,7 +97,7 @@ Nvidia introduced its Vera Rubin accelerated computing platform at ISC High Perf
 
 Translated from Chinese using Claude. Errors are Dario’s fault. From [Commercial Times](https://www.ctee.com.tw/news/20260623700059-430501).
 
-[](https://substackcdn.com/image/fetch/$s_!mrR2!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F488ae05b-1c77-4882-a49e-6f77b4511769_1456x813.jpeg)
+[![](<../_img/2026-06-23--daily-update-june-23rd-2026/006_488ae05b-1c77-4882-a49e-6f77b4511769_1456x813.jpeg> "https://substackcdn.com/image/fetch/$s_!mrR2!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F488ae05b-1c77-4882-a49e-6f77b4511769_1456x813.jpeg")](https://substackcdn.com/image/fetch/$s_!mrR2!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F488ae05b-1c77-4882-a49e-6f77b4511769_1456x813.jpeg)
 
 Source: Commercial Times
 

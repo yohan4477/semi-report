@@ -11,9 +11,7 @@ Semi markets exploding as usual. Anthropic desperate for compute, ARM sends mixe
 
 Let’s get into it.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
 * * *
 
@@ -60,7 +58,7 @@ In an investor briefing, MediaTek (2454.TW) outlined plans for mass production o
 
 We going to consume tokens at breakfast, lunch, and dinner.
 
-[](https://substackcdn.com/image/fetch/$s_!5bku!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe4bcfb6e-1409-45b5-883a-d002aa404c4b_2402x1254.jpeg)
+[![Image](<../_img/2026-05-07--daily-update-may-7th-2026/001_e4bcfb6e-1409-45b5-883a-d002aa404c4b_2402x1254.jpeg> "https://substackcdn.com/image/fetch/$s_!5bku!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe4bcfb6e-1409-45b5-883a-d002aa404c4b_2402x1254.jpeg")](https://substackcdn.com/image/fetch/$s_!5bku!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe4bcfb6e-1409-45b5-883a-d002aa404c4b_2402x1254.jpeg)
 
 Catch you tomorrow.
 

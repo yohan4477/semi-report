@@ -21,7 +21,7 @@ Thanks for reading! This post is public so feel free to share it.
 
 > That wartime circuit is now called the superheterodyne, and it's the basic architecture inside nearly every AM/FM radio, TV tuner, and the RF front end of a smartphone.
 
-[](https://substackcdn.com/image/fetch/$s_!e4gp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1598c19d-5edc-4d2a-9842-7a014faeb5d2_776x772.jpeg)By Unknown author - Downloaded April 23, 2013 from Allen L. Benson, Armstrong of the Radio-Phone in Hearst’s International, International Magazine Co., New York, Vol. 42, No. 3, November 1922, p. 90 on Google Books, Public Domain, https://commons.wikimedia.org/w/index.php?curid=25724464
+[![](<../_img/2026-08-23--semi-doped-pub-quiz-94d/001_1598c19d-5edc-4d2a-9842-7a014faeb5d2_776x772.jpeg> "https://substackcdn.com/image/fetch/$s_!e4gp!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1598c19d-5edc-4d2a-9842-7a014faeb5d2_776x772.jpeg")](https://substackcdn.com/image/fetch/$s_!e4gp!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1598c19d-5edc-4d2a-9842-7a014faeb5d2_776x772.jpeg)By Unknown author - Downloaded April 23, 2013 from Allen L. Benson, Armstrong of the Radio-Phone in Hearst’s International, International Magazine Co., New York, Vol. 42, No. 3, November 1922, p. 90 on Google Books, Public Domain, https://commons.wikimedia.org/w/index.php?curid=25724464
 
 > That wartime fix is why your car radio can pull in a station from three counties away, and why your phone's radio chip works at all.
 
@@ -30,5 +30,3 @@ SPOILER ALERT: ANSWER BELOW
 ## **Answer** : [Edwin Howard Armstrong](https://en.wikipedia.org/wiki/Edwin_Howard_Armstrong)
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

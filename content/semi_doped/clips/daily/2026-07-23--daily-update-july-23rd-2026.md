@@ -15,9 +15,7 @@ Let’s get into it.
 
 _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -70,7 +68,7 @@ Samsung plans a **50-tool hybrid bonding** production line at its Pyeongtaek cam
 
 Samsung Foundry is also developing [3D Cube-H](https://semiconductor.samsung.com/news-events/tech-blog/advanced-packaging-and-the-shift-to-system-level-semiconductor-innovation/), a vertical integration platform that stacks logic dies along the Z-axis, uses through-silicon vias for alignment, and connects the dies through hybrid copper bonding.
 
-[](https://substackcdn.com/image/fetch/$s_!9i3E!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fae32f9ce-9b6d-47a4-bdd8-21001f6423be_1604x460.jpeg)Source: Samsung
+[![Architecture diagrams comparing Samsung Foundry's 3D packaging solutions: 3D Cube-T and 3D Cube-H.](<../_img/2026-07-23--daily-update-july-23rd-2026/001_ae32f9ce-9b6d-47a4-bdd8-21001f6423be_1604x460.jpeg> "https://substackcdn.com/image/fetch/$s_!9i3E!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fae32f9ce-9b6d-47a4-bdd8-21001f6423be_1604x460.jpeg")](https://substackcdn.com/image/fetch/$s_!9i3E!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fae32f9ce-9b6d-47a4-bdd8-21001f6423be_1604x460.jpeg)Source: Samsung
 
 > **Vik** : _Hybrid bonding is going to get important from about 2029-2030 because the next generation of HBM requires stacking even more chips which requires hybrid bonding. 3D stacking of logic is another emerging trend fueled by Huawei’s Tau scaling / LogicFolding claims. I bet others are putting similar approaches on the roadmap. Still a long play though._
 
@@ -99,7 +97,7 @@ Samsung Foundry is also developing [3D Cube-H](https://semiconductor.samsung.com
 
 AMD’s Lisa Su plays the long game. Remember how that worked for EPYC? 
 
-[](https://substackcdn.com/image/fetch/$s_!Nm8V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd1993fd3-131a-4406-a7c6-308af8afa122_2200x1040.png)
+[![](<../_img/2026-07-23--daily-update-july-23rd-2026/002_d1993fd3-131a-4406-a7c6-308af8afa122_2200x1040.png> "https://substackcdn.com/image/fetch/$s_!Nm8V!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd1993fd3-131a-4406-a7c6-308af8afa122_2200x1040.png")](https://substackcdn.com/image/fetch/$s_!Nm8V!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fd1993fd3-131a-4406-a7c6-308af8afa122_2200x1040.png)
 
 Reminder that we’re only a few years and maybe two generations into the AI accelerator long game. Sure, it’s a different ballgame, and the GPU market has different dynamics from x86 CPU, but the leadership and engineering approach is largely the same. 
 

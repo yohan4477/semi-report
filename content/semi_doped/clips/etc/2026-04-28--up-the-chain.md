@@ -23,7 +23,7 @@ _— Austin & Vik_
 > 
 > _Also, datacenter CPU packaging is normally not an exciting topic for investors… but it is now. Server CPU chiplet counts keep rising, and advanced packaging keeps getting more complex. Check out Amkor’s roadmap:_
 > 
-> [](https://substackcdn.com/image/fetch/$s_!UabU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe757ecbf-f93b-457f-b276-3c5d7bf27ec7_1782x905.png)
+> [![Advanced Packaging Solutions - Amkor](<../_img/2026-04-28--up-the-chain/001_e757ecbf-f93b-457f-b276-3c5d7bf27ec7_1782x905.png> "https://substackcdn.com/image/fetch/$s_!UabU!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe757ecbf-f93b-457f-b276-3c5d7bf27ec7_1782x905.png")](https://substackcdn.com/image/fetch/$s_!UabU!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe757ecbf-f93b-457f-b276-3c5d7bf27ec7_1782x905.png)
 > 
 > _OSAT gross margins look razor-thin next to a foundry like TSMC, but Amkor is climbing the packaging-complexity ladder and margin should follow._
 > 
@@ -43,7 +43,7 @@ Cadence also signed its largest-ever IP deal at a 2nm node. Per CEO Anirudh Devg
 
 POET Technologies plunged ~50% intraday Monday (closing $7.95, after-hours $7.23) after [Marvell cancelled all POET purchase orders](https://www.poet-technologies.com/news/poet-technologies-provides-purchase-order-update) tied to its Celestial AI subsidiary. [Gaetano](https://x.com/crux_capital_) sums it up well on X:
 
-[](https://substackcdn.com/image/fetch/$s_!As7S!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac601e5e-8984-4697-986f-69dbcafbbeaa_1180x1394.png)
+[![](<../_img/2026-04-28--up-the-chain/002_ac601e5e-8984-4697-986f-69dbcafbbeaa_1180x1394.png> "https://substackcdn.com/image/fetch/$s_!As7S!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac601e5e-8984-4697-986f-69dbcafbbeaa_1180x1394.png")](https://substackcdn.com/image/fetch/$s_!As7S!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fac601e5e-8984-4697-986f-69dbcafbbeaa_1180x1394.png)
 
 > _**Austin:** Pump and get dumped?_
 
@@ -56,5 +56,3 @@ POET Technologies plunged ~50% intraday Monday (closing $7.95, after-hours $7.23
 > _On the CFO skepticism… CFOs are supposed to ask the hard questions. That’s their job. Especially heading into an IPO, there’s a unit economics story that needs to be told much better than Sam did with Brad Gerstner last October. Sounds like Friar and the board are double-checking Altman, which is expected._
 
 That’s it for today!
-
-Subscribe

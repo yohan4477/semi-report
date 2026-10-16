@@ -13,13 +13,13 @@ One man built the first working one, in November 1959, and almost nobody wanted 
 
 Ever worked somewhere where a man leans back and tells you he has been doing this since before you were born? [Dawon Kahng](https://en.wikipedia.org/wiki/Dawon_Kahng) walked into Bell Labs at Murray Hill in 1959, months out of graduate school. The lab had invented the transistor twelve years earlier. It had collected a Nobel Prize for it three years before he arrived. Everybody there had been doing this longer than he had and made no bones about it.
 
-[](https://substackcdn.com/image/fetch/$s_!wOXZ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c334b85-a48a-4169-b320-5480b1ee3da3_261x382.jpeg)By Unknown - Original publication: UnknownImmediate source: https://www.invent.org/inductees/dawon-kahng, Fair use, https://en.wikipedia.org/w/index.php?curid=78995339
+[![](<../_img/2026-08-29--til-the-man-whose-perseverance-made/001_1c334b85-a48a-4169-b320-5480b1ee3da3_261x382.jpeg> "https://substackcdn.com/image/fetch/$s_!wOXZ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c334b85-a48a-4169-b320-5480b1ee3da3_261x382.jpeg")](https://substackcdn.com/image/fetch/$s_!wOXZ!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1c334b85-a48a-4169-b320-5480b1ee3da3_261x382.jpeg)By Unknown - Original publication: UnknownImmediate source: https://www.invent.org/inductees/dawon-kahng, Fair use, https://en.wikipedia.org/w/index.php?curid=78995339
 
 Kahng was born in Seoul in May 1931, though you had to call it Keijō then, Korea being a Japanese colony. He studied physics at Seoul National University and took the degree in 1955. He left for America almost at once. Ohio State walked him through a doctorate by 1959, and he arrived at Murray Hill the same year he left graduate school.
 
 Within a few months, [Mohamed “John” Atalla](https://en.wikipedia.org/wiki/Mohamed_M._Atalla) handed him the problem the field had been losing to since 1925.
 
-[](https://substackcdn.com/image/fetch/$s_!GfcH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8566fc95-4b69-4891-9be3-ecb12bd9e2bb_841x361.png)By Wikain - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=151581968
+[![](<../_img/2026-08-29--til-the-man-whose-perseverance-made/002_8566fc95-4b69-4891-9be3-ecb12bd9e2bb_841x361.png> "https://substackcdn.com/image/fetch/$s_!GfcH!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8566fc95-4b69-4891-9be3-ecb12bd9e2bb_841x361.png")](https://substackcdn.com/image/fetch/$s_!GfcH!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8566fc95-4b69-4891-9be3-ecb12bd9e2bb_841x361.png)By Wikain - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=151581968
 
 Put a voltage on a gate, [Julius Lilienfeld](https://en.wikipedia.org/wiki/Julius_Edgar_Lilienfeld) had written in Canada in 1925 and the US in 1926, and steer the current in the channel below. Repeat offending Semi Doped TIL readers will remember how that went. Nobody could make it work, and for thirty-four years nobody knew quite why. The answer turned out to be the surface. Silicon crawls with electronic traps that sit on it and screen out the gate’s field before it reaches anything. Atalla had just found the fix: grow a layer of silicon dioxide on the wafer, grow it clean enough, and the traps quiet down. He published that in May 1959 and handed the follow-up to the newest man in the department.
 
@@ -31,7 +31,6 @@ They took it to the Solid-State Device Research Conference in Pittsburgh the fol
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
 
-Subscribe
 
 Because Bell Labs passed, and they were right on the numbers. The gate ran twenty microns. It switched about a hundred times slower than the bipolar transistors already going by the millions into the telephone network. It drifted with temperature and with time. Bell Labs sold switching, and switching is a speed business. Nobody in that building had any use for a slow transistor that wouldn’t sit still.
 
@@ -39,7 +38,7 @@ At the end of the day, Bell Labs had a need. The need for speed.
 
 Kahng kept turning it over anyway. The thing was easy to make. It took fewer steps than a bipolar device and gave you fewer things to go wrong. It wanted no moat dug around it to keep it clear of its neighbours. You could set them down side by side and keep going until you ran out of wafer.
 
-[](https://substackcdn.com/image/fetch/$s_!0an_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bcf0806-cb28-412f-a82f-2ccdfd3a2816_613x408.png)By Brews ohare - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=18796795
+[![](<../_img/2026-08-29--til-the-man-whose-perseverance-made/003_0bcf0806-cb28-412f-a82f-2ccdfd3a2816_613x408.png> "https://substackcdn.com/image/fetch/$s_!0an_!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bcf0806-cb28-412f-a82f-2ccdfd3a2816_613x408.png")](https://substackcdn.com/image/fetch/$s_!0an_!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bcf0806-cb28-412f-a82f-2ccdfd3a2816_613x408.png)By Brews ohare - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=18796795
 
 He wrote all of that down on 16 January 1961 in a memo. Nothing whatsoever happened.
 

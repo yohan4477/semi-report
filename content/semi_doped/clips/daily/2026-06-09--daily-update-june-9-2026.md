@@ -15,9 +15,7 @@ And Elon wants to build a chip fab the size of a small city to feed Nvidia-power
 
 Normal Tuesday. Let’s get into it.
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
@@ -45,7 +43,7 @@ Marvell Technology shares jumped after the chipmaker was added to the S&P 500 in
 
 SpaceX CEO Elon Musk outlined plans for a roughly 100 million-square-foot chip factory, dubbed TeraFab, aimed at producing a terawatt of AI compute capacity per year — ten times the footprint of Tesla’s Gigafactory Texas. Musk said the buildout is needed to supply SpaceX’s AI1 satellites, which carry computing modules, a 70-meter solar array, and terabit laser links routed through Starlink. The current reference design uses Nvidia Rubin or GB300 chips, with TPU reference designs also planned. Musk projected an annualized launch rate of one gigawatt of orbital compute by the end of 2027, scaling exponentially from there.
 
-[Vikram Sekar@vikramskrSolar panel is 5x larger than the radiator panels. Interesting because I didnt know relative sizes before.Sawyer Merritt @SawyerMerrittSpaceX has just officially unveiled its AI1 satellite, the first generation of its AI satellite. Overall Specs: • 150 kW peak compute payload • 120 kW average compute payload • 70 kW per ton • Compute provider interchangeable Dimensions: • Wingspan: 70 meters • Deployed https://t.co/qR6wEvs2da6:45 AM · Jun 9, 2026 · 6.21K Views
+[![X avatar for @vikramskr](<../_img/2026-06-09--daily-update-june-9-2026/001_Rf_mIEz0.jpg> "https://substackcdn.com/image/fetch/$s_!TWOG!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1864653638054105088%2FRf_mIEz0.jpg")Vikram Sekar@vikramskrSolar panel is 5x larger than the radiator panels. Interesting because I didnt know relative sizes before.![X avatar for @SawyerMerritt](<../_img/2026-06-09--daily-update-june-9-2026/002_xH9vYixL.jpg> "https://substackcdn.com/image/fetch/$s_!0mee!,w_20,h_20,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1837744842715082752%2FxH9vYixL.jpg")Sawyer Merritt @SawyerMerrittSpaceX has just officially unveiled its AI1 satellite, the first generation of its AI satellite. Overall Specs: • 150 kW peak compute payload • 120 kW average compute payload • 70 kW per ton • Compute provider interchangeable Dimensions: • Wingspan: 70 meters • Deployed https://t.co/qR6wEvs2da6:45 AM · Jun 9, 2026 · 6.21K Views
 
 * * *
 
@@ -68,7 +66,7 @@ SpaceX CEO Elon Musk outlined plans for a roughly 100 million-square-foot chip f
 
 Open AI IPO?
 
-[OpenAI Newsroom@OpenAINewsroomWe recently submitted a confidential S-1. We expect it to leak so we’re just announcing it. We have not decided on timing yet; it may be a while because there are things we want to do that are likely easier as a private company. But it’s a complicated set of tradeoffs and this9:16 PM · Jun 8, 2026 · 830K Views
+[![X avatar for @OpenAINewsroom](<../_img/2026-06-09--daily-update-june-9-2026/003_3Gs7_1gs.jpg> "https://substackcdn.com/image/fetch/$s_!oZI4!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1885410297101381632%2F3Gs7_1gs.jpg")OpenAI Newsroom@OpenAINewsroomWe recently submitted a confidential S-1. We expect it to leak so we’re just announcing it. We have not decided on timing yet; it may be a while because there are things we want to do that are likely easier as a private company. But it’s a complicated set of tradeoffs and this9:16 PM · Jun 8, 2026 · 830K Views
 
 * * *
 
@@ -78,7 +76,7 @@ Open AI IPO?
 
 Nice Intel 18A video
 
-[Intel Foundry@Intel_FoundryPart of Intel 18A, RibbonFET technology is designed to maximize performance, improve power efficiency, and enhance utilization. Helping power what’s next. [ms.spr.ly/6017v5esz](http://ms.spr.ly/6017v5esz) #IntelFoundry #Semiconductors 4:15 PM · Jun 9, 2026 · 210 Views
+[![X avatar for @Intel_Foundry](<../_img/2026-06-09--daily-update-june-9-2026/004_Z_jTZEIO.jpg> "https://substackcdn.com/image/fetch/$s_!QJMi!,w_40,h_40,c_fill,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fpbs.substack.com%2Fprofile_images%2F1981112678849421312%2FZ_jTZEIO.jpg")Intel Foundry@Intel_FoundryPart of Intel 18A, RibbonFET technology is designed to maximize performance, improve power efficiency, and enhance utilization. Helping power what’s next. [ms.spr.ly/6017v5esz](http://ms.spr.ly/6017v5esz) #IntelFoundry #Semiconductors ![](<../_img/2026-06-09--daily-update-june-9-2026/005_ob2gfggmevwhksynor8p> "https://substackcdn.com/image/upload/w_1028,c_limit,q_auto:best/l_twitter_play_button_rvaygk,w_88/ob2gfggmevwhksynor8p")4:15 PM · Jun 9, 2026 · 210 Views
 
 * * *
 

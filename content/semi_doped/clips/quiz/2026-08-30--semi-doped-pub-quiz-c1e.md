@@ -17,11 +17,11 @@ Thanks for reading! This post is public so feel free to share it.
 
 ## **CLUES:**
 
-[](https://substackcdn.com/image/fetch/$s_!FDVG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F048afaeb-ce0c-48b7-b724-638cf49b7a71_380x378.png)
+[![](<../_img/2026-08-30--semi-doped-pub-quiz-c1e/001_048afaeb-ce0c-48b7-b724-638cf49b7a71_380x378.png> "https://substackcdn.com/image/fetch/$s_!FDVG!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F048afaeb-ce0c-48b7-b724-638cf49b7a71_380x378.png")](https://substackcdn.com/image/fetch/$s_!FDVG!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F048afaeb-ce0c-48b7-b724-638cf49b7a71_380x378.png)
 
 > The word traces back to a 19th century Dutch term for a thick, syrupy sauce, which later drifted toward opium.
 
-[](https://substackcdn.com/image/fetch/$s_!jah7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc2bf593d-4c10-4bed-989f-3185d0414872.svg)
+[![](<../_img/2026-08-30--semi-doped-pub-quiz-c1e/002_c2bf593d-4c10-4bed-989f-3185d0414872.svg> "https://substackcdn.com/image/fetch/$s_!jah7!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc2bf593d-4c10-4bed-989f-3185d0414872.svg")](https://substackcdn.com/image/fetch/$s_!jah7!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc2bf593d-4c10-4bed-989f-3185d0414872.svg)
 
 > Depending on whether those foreign atoms bring an extra electron or leave one missing, the result is labeled with a single letter, n or p; put an n-type and a p-type region next to each other and you get a diode.
 
@@ -32,5 +32,3 @@ Thanks for reading! This post is public so feel free to share it.
 Etymology: The word "dope" comes from the Dutch word _**doop**_ , which means "sauce" or "dipping liquid". Over time, Dutch settlers in early America used _doop_ to mean thick sauces, gravies, or sweet syrups, which eventually evolved into the modern English word "dope" and its various historical and slang meanings.
 
 Thanks for reading! Subscribe for free to receive new posts and support our work.
-
-Subscribe

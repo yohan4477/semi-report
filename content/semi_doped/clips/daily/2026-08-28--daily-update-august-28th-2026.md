@@ -13,13 +13,11 @@ Marvell beat estimates and raised its annual forecast, but shares dropped anyway
 
 Let’s get into it. _— Austin & Vik_
 
-Quick hits, high signal. Takes from semi industry experts. Sign up for free daily updates!
 
-Subscribe
 
  _Be sure to check out the[Semi Doped podcast](https://www.youtube.com/@semidoped) on YouTube or your favorite podcast player!_
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-28--daily-update-august-28th-2026/001_poll> "http://semidoped.com/poll")! ❤️_
 
 ### Marvell Earnings Beat Fails to Calm Google Revenue Timing Fears
 
@@ -128,7 +126,7 @@ The global foundry market expanded 29% in Q2 on surging demand for AI silicon, l
 
 
 
-_Tell us how to make Semi Doped better![ Give us your feedback](http://semidoped.com/poll)! ❤️_
+_Tell us how to make Semi Doped better![ Give us your feedback](<../_img/2026-08-28--daily-update-august-28th-2026/002_poll> "http://semidoped.com/poll")! ❤️_
 
 Thanks for reading! This post is public so feel free to share it.
 
