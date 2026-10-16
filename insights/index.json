@@ -3201,7 +3201,8 @@
 "input/clippings/mer/224379237136.json#L55",
 "input/clippings/mer/224379237136.json#L69",
 "input/clippings/mer/224379237136.json#L83",
-"input/clippings/mer/224379237136.json#L105"
+"input/clippings/mer/224379237136.json#L105",
+"input/clippings/mer/224439695894.json#L59"
 ],
 "AWS": [
 "content/aie/2025-08-26-내보낼-수-있는-에이전트-만들기.md#L2",
@@ -4933,7 +4934,25 @@
 "input/clippings/mer/224358951791.json#L115",
 "input/clippings/mer/224361778907.json#L62",
 "input/clippings/mer/224361778907.json#L64",
-"input/clippings/mer/224361778907.json#L84"
+"input/clippings/mer/224361778907.json#L84",
+"input/clippings/mer/224439695894.json#L1",
+"input/clippings/mer/224439695894.json#L3",
+"input/clippings/mer/224439695894.json#L47",
+"input/clippings/mer/224439695894.json#L53",
+"input/clippings/mer/224439695894.json#L63",
+"input/clippings/mer/224439695894.json#L75",
+"input/clippings/mer/224439695894.json#L101",
+"input/clippings/mer/224439695894.json#L103",
+"input/clippings/mer/224439695894.json#L105",
+"input/clippings/mer/224439695894.json#L111",
+"input/clippings/mer/224439695894.json#L121",
+"input/clippings/mer/224439695894.json#L143",
+"input/clippings/mer/224439695894.json#L145",
+"input/clippings/mer/224439695894.json#L147",
+"input/clippings/mer/224439695894.json#L151",
+"input/clippings/mer/224439695894.json#L153",
+"input/clippings/mer/224439695894.json#L155",
+"input/clippings/mer/224439695894.json#L157"
 ],
 "Citizens": [
 "content/epoch/[260609] AGI 이후 자본을 누가 쥐게 할 것인가.md#L38",
@@ -10264,7 +10283,24 @@
 "input/clippings/mer/224433051682.json#L161",
 "input/clippings/mer/224433051682.json#L183",
 "input/clippings/mer/224433051682.json#L191",
-"input/clippings/mer/224438575128.json#L73"
+"input/clippings/mer/224438575128.json#L73",
+"input/clippings/mer/224439043424.json#L7",
+"input/clippings/mer/224439043424.json#L9",
+"input/clippings/mer/224439043424.json#L11",
+"input/clippings/mer/224439695894.json#L99",
+"input/clippings/mer/224439695894.json#L147",
+"input/clippings/mer/224439695894.json#L151",
+"input/clippings/mer/224440926200.json#L7",
+"input/clippings/mer/224440926200.json#L29",
+"input/clippings/mer/224440926200.json#L37",
+"input/clippings/mer/224440926200.json#L43",
+"input/clippings/mer/224440926200.json#L47",
+"input/clippings/mer/224440926200.json#L51",
+"input/clippings/mer/224440926200.json#L61",
+"input/clippings/mer/224442390068.json#L3",
+"input/clippings/mer/224442390068.json#L98",
+"input/clippings/mer/224442390068.json#L102",
+"input/clippings/mer/224442390068.json#L104"
 ],
 "SK온": [
 "content/understanding/회계사/[260523] 시총 21조 825억원이 요구하는 내재성장률은 36~46%다 - 에코프로비엠 - 엘곰.md#L13",
@@ -11119,7 +11155,24 @@
 "input/clippings/mer/224423696087.json#L115",
 "input/clippings/mer/224433051682.json#L141",
 "input/clippings/mer/224433051682.json#L191",
-"input/clippings/mer/224438575128.json#L73"
+"input/clippings/mer/224438575128.json#L73",
+"input/clippings/mer/224439043424.json#L7",
+"input/clippings/mer/224439043424.json#L9",
+"input/clippings/mer/224439043424.json#L11",
+"input/clippings/mer/224439695894.json#L99",
+"input/clippings/mer/224439695894.json#L147",
+"input/clippings/mer/224439695894.json#L151",
+"input/clippings/mer/224440926200.json#L7",
+"input/clippings/mer/224440926200.json#L29",
+"input/clippings/mer/224440926200.json#L37",
+"input/clippings/mer/224440926200.json#L43",
+"input/clippings/mer/224440926200.json#L47",
+"input/clippings/mer/224440926200.json#L51",
+"input/clippings/mer/224440926200.json#L61",
+"input/clippings/mer/224442390068.json#L3",
+"input/clippings/mer/224442390068.json#L98",
+"input/clippings/mer/224442390068.json#L102",
+"input/clippings/mer/224442390068.json#L104"
 ],
 "SMIC": [
 "content/linkedin/[2605] 링크드인 게시물.md#L23",
@@ -18871,9 +18924,9 @@
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L95"
 ],
 "_meta": {
-"built": "2026-10-16",
+"built": "2026-10-17",
 "entities_hash": "d25e1ae61c2225fb78e63a922069deb5538b15dc",
-"files": 2312,
+"files": 2324,
 "files_stat": {
 "content/aie/2024-08-26-프롬프트-엔지니어링의-원칙.md": [
 "89591cc65dd7b8fbc988ea02e7a2ab7094a01765",
@@ -21988,7 +22041,7 @@
 1022
 ],
 "content/understanding/_대기 목록.md": [
-"22fbb693d08d5ed64fa01c5eca9f566117d2bb0b",
+"d63a6105efb8637c55a64b91f2e608f8b23bafc1",
 77
 ],
 "content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md": [
@@ -28055,9 +28108,17 @@
 "24bdc57dea175b4459f502ddb74aa6cc1edab594",
 141
 ],
+"input/clippings/mer/224430771982.json": [
+"fabd4343236203ca0e39d779f795ff65529531a6",
+145
+],
 "input/clippings/mer/224431218151.json": [
 "db7f78967869b46698d4e7f4bd2fdf5b8dfa73b2",
 165
+],
+"input/clippings/mer/224431604995.json": [
+"4b006342f04eeb863330b36c52844b05edef06c5",
+129
 ],
 "input/clippings/mer/224431902976.json": [
 "21c5cd3ef04101d9ed20845fe5fb501dbc73f6ec",
@@ -28119,13 +28180,53 @@
 "3721443edab78e92c9621b2f8e6da87be12f8c23",
 99
 ],
+"input/clippings/mer/224439043424.json": [
+"cf99270d5ee34fb207ec1f6cb8d17d4b86a7f36d",
+89
+],
+"input/clippings/mer/224439695894.json": [
+"be71790618dd86f224b02aba6d21a917c51febe0",
+162
+],
+"input/clippings/mer/224439764329.json": [
+"3603113ec7a8d696744299c007552f083d172a14",
+91
+],
+"input/clippings/mer/224440926200.json": [
+"78de460ee14e763c7ee5e66a066ee70a20c41c7c",
+121
+],
+"input/clippings/mer/224441382513.json": [
+"6d48146ce79bc34afc8a0c9af90927354fece64e",
+163
+],
+"input/clippings/mer/224441926403.json": [
+"fceead593de8a84ecec3d88d16212366cd843733",
+89
+],
+"input/clippings/mer/224442142358.json": [
+"771c3736351c05e1f2e501a6f5939e81443c1634",
+254
+],
+"input/clippings/mer/224442390068.json": [
+"84d8dd8b41b69678a39356ae3bd1b76544b9e3cf",
+106
+],
+"input/clippings/mer/224443203845.json": [
+"8ebc3d4e00413763ccb9ac63c42ade0e0c8482f4",
+90
+],
+"input/clippings/mer/224443747132.json": [
+"5007833c13507a68137a3484767b4443220f3306",
+191
+],
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md": [
 "773c500ed9a39eb60899c0f4300b74f5065fbb1c",
 213
 ]
 },
-"fingerprint": "703fa1097f0adc04f8d1be2a72095b6adc04a251",
-"lines": 485308
+"fingerprint": "2d13a7bdae95c8ec33168361e2636e856f26d514",
+"lines": 486938
 },
 "iShares": [
 "content/understanding/미국주식 사관학교/[260622] 빅테크 하나 없는 모멘텀 ETF가 나스닥을 앞질렀다 - 짧은 신호가 넓어진 장세를 먼저 잡은 이야기.md#L68",
@@ -31711,7 +31812,12 @@
 "input/clippings/mer/224374142133.json#L121",
 "input/clippings/mer/224389781168.json#L55",
 "input/clippings/mer/224389781168.json#L59",
-"input/clippings/mer/224389781168.json#L61"
+"input/clippings/mer/224389781168.json#L61",
+"input/clippings/mer/224440926200.json#L9",
+"input/clippings/mer/224440926200.json#L19",
+"input/clippings/mer/224440926200.json#L23",
+"input/clippings/mer/224440926200.json#L33",
+"input/clippings/mer/224440926200.json#L119"
 ],
 "국세청": [
 "content/understanding/_대기 목록.md#L70",
@@ -32212,7 +32318,8 @@
 "input/clippings/mer/224368786980.json#L101",
 "input/clippings/mer/224386666279.json#L114",
 "input/clippings/mer/224402375244.json#L46",
-"input/clippings/mer/224402375244.json#L96"
+"input/clippings/mer/224402375244.json#L96",
+"input/clippings/mer/224441926403.json#L55"
 ],
 "내셔널그리드": [
 "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L51",
@@ -33115,7 +33222,11 @@
 "input/clippings/mer/224429949987.json#L1",
 "input/clippings/mer/224433577964.json#L45",
 "input/clippings/mer/224435147266.json#L1",
-"input/clippings/mer/224435833096.json#L45"
+"input/clippings/mer/224435833096.json#L45",
+"input/clippings/mer/224439695894.json#L155",
+"input/clippings/mer/224442142358.json#L1",
+"input/clippings/mer/224442390068.json#L9",
+"input/clippings/mer/224443203845.json#L3"
 ],
 "넥스트에라": [
 "content/understanding/미국주식 사관학교/[260420] 전력회사는 돈을 쓸수록 번다 - 1조 4천억 달러 공사판의 구조.md#L43",
@@ -33187,9 +33298,9 @@
 "content/semi_doped/2026-08-18-tensordyne-rk-anand.md#L51",
 "content/semi_doped/til-14.md#L39",
 "content/semi_doped/til-14.md#L117",
-"content/understanding/_대기 목록.md#L19",
-"content/understanding/_대기 목록.md#L24",
-"content/understanding/_대기 목록.md#L41",
+"content/understanding/_대기 목록.md#L22",
+"content/understanding/_대기 목록.md#L27",
+"content/understanding/_대기 목록.md#L44",
 "content/understanding/권효재 대표/미국 LNG 수출이 세계 1위로 올라선 이유.md#L111",
 "content/understanding/권효재 대표/미국 데이터센터 전력난 이걸로 뚫었다.md#L157",
 "content/understanding/김상훈 기자/[260806] 엔화를 지켜준 게 아니라 국채를 못 팔게 했다 - 미일 공동개입의 진짜 청구서 - 김상훈.md#L25",
@@ -33457,7 +33568,8 @@
 "input/clippings/mer/224428298482.json#L57",
 "input/clippings/mer/224428978052.json#L17",
 "input/clippings/mer/224428978052.json#L23",
-"input/clippings/mer/224429949987.json#L30"
+"input/clippings/mer/224429949987.json#L30",
+"input/clippings/mer/224439764329.json#L37"
 ],
 "다난타라": [
 "content/understanding/박팀장/[260715] 경제는 멀쩡한데 환율만 외환위기 수준 - 인도네시아에서 돈이 빠지는 이유 - 박팀장.md#L46",
@@ -33561,7 +33673,7 @@
 "content/semi_doped/2026-07-16-picojool-yuen.md#L66",
 "content/semi_doped/2026-07-29-hyperscaler-cds.md#L45",
 "content/semi_doped/2026-08-24-grok-bots-cpu.md#L20",
-"content/understanding/_대기 목록.md#L38",
+"content/understanding/_대기 목록.md#L41",
 "content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md#L17",
 "content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md#L39",
 "content/understanding/권효재 대표/15억 인구 밥 못 짓는다, 인도 덮친 비상사태 (3부).md#L51",
@@ -34335,7 +34447,8 @@
 "input/clippings/mer/224428298482.json#L97",
 "input/clippings/mer/224428298482.json#L121",
 "input/clippings/mer/224428298482.json#L139",
-"input/clippings/mer/224431218151.json#L139"
+"input/clippings/mer/224431218151.json#L139",
+"input/clippings/mer/224440926200.json#L119"
 ],
 "대신증권": [
 "content/understanding/회계사/[260820] 삼성전자 100조 배당·SK하이닉스 40조 소각, 기준은 둘 다 FCF의 50% - 삼성전자·SK하이닉스 - 엘곰.md#L28",
@@ -34462,7 +34575,8 @@
 "input/clippings/mer/224396155596.json#L52",
 "input/clippings/mer/224396155596.json#L56",
 "input/clippings/mer/224396155596.json#L60",
-"input/clippings/mer/224418658099.json#L5"
+"input/clippings/mer/224418658099.json#L5",
+"input/clippings/mer/224442390068.json#L88"
 ],
 "델타일렉트로닉스": [
 "content/newsletter/ai_infra/power/[250625] 기가와트급 AI 학습 부하 변동 - 전력망 정전을 부를 수 있는가.md#L548",
@@ -34890,6 +35004,8 @@
 "input/clippings/mer/224390337312.json#L67",
 "input/clippings/mer/224390337312.json#L69",
 "input/clippings/mer/224423584111.json#L105",
+"input/clippings/mer/224431604995.json#L3",
+"input/clippings/mer/224431604995.json#L103",
 "input/clippings/mer/224433577964.json#L66",
 "input/clippings/mer/224433577964.json#L68",
 "input/clippings/mer/224433577964.json#L70",
@@ -34901,7 +35017,10 @@
 "input/clippings/mer/224436002512.json#L49",
 "input/clippings/mer/224436002512.json#L55",
 "input/clippings/mer/224436002512.json#L63",
-"input/clippings/mer/224436002512.json#L85"
+"input/clippings/mer/224436002512.json#L85",
+"input/clippings/mer/224443203845.json#L84",
+"input/clippings/mer/224443747132.json#L15",
+"input/clippings/mer/224443747132.json#L53"
 ],
 "두산로보틱스": [
 "content/understanding/회계사/[260508] DCF 적정주가 12만 4,956원, 주가보다 69.5% 위 - 두산밥캣 - 엘곰.md#L134",
@@ -36616,8 +36735,11 @@
 "input/clippings/mer/224428298482.json#L51",
 "input/clippings/mer/224428298482.json#L53",
 "input/clippings/mer/224428298482.json#L55",
+"input/clippings/mer/224431604995.json#L69",
+"input/clippings/mer/224431604995.json#L87",
 "input/clippings/mer/224432463581.json#L15",
-"input/clippings/mer/224432463581.json#L27"
+"input/clippings/mer/224432463581.json#L27",
+"input/clippings/mer/224442142358.json#L80"
 ],
 "레나": [
 "content/aie/2026-06-26-에이전트-평가를-모두에게.md#L44",
@@ -39401,7 +39523,12 @@
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L7",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L23",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L25",
-"content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L29"
+"content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L29",
+"input/clippings/mer/224442142358.json#L156",
+"input/clippings/mer/224442142358.json#L158",
+"input/clippings/mer/224442142358.json#L160",
+"input/clippings/mer/224442142358.json#L162",
+"input/clippings/mer/224442142358.json#L166"
 ],
 "메가뱅크": [
 "content/understanding/이창민 교수/[260811] 빚이 GDP의 210%인데 더 찍겠다는 쪽의 계산 - 사나에노믹스와 순부채 - 이창민.md#L107",
@@ -41099,7 +41226,22 @@
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L19",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L21",
 "content/understanding/회계사/[260820] 흑색종 3상 성공에 모더나가 하루 177% 올랐다 - 모더나·머크 - 엘곰.md#L29",
-"input/clippings/mer/224142717440.json#L45"
+"input/clippings/mer/224142717440.json#L45",
+"input/clippings/mer/224442142358.json#L1",
+"input/clippings/mer/224442142358.json#L3",
+"input/clippings/mer/224442142358.json#L4",
+"input/clippings/mer/224442142358.json#L112",
+"input/clippings/mer/224442142358.json#L114",
+"input/clippings/mer/224442142358.json#L116",
+"input/clippings/mer/224442142358.json#L138",
+"input/clippings/mer/224442142358.json#L158",
+"input/clippings/mer/224442142358.json#L162",
+"input/clippings/mer/224442142358.json#L166",
+"input/clippings/mer/224442142358.json#L180",
+"input/clippings/mer/224442142358.json#L182",
+"input/clippings/mer/224442142358.json#L200",
+"input/clippings/mer/224442142358.json#L210",
+"input/clippings/mer/224442142358.json#L252"
 ],
 "무디스": [
 "content/understanding/미국주식 사관학교/[260606] 무엇으로 찌르든 터졌을 풍선 - 나스닥 5% 급락의 진짜 원인.md#L99",
@@ -47511,6 +47653,12 @@
 "input/clippings/mer/224428978052.json#L55",
 "input/clippings/mer/224428978052.json#L69",
 "input/clippings/mer/224429293459.json#L1",
+"input/clippings/mer/224430771982.json#L7",
+"input/clippings/mer/224430771982.json#L43",
+"input/clippings/mer/224430771982.json#L117",
+"input/clippings/mer/224430771982.json#L121",
+"input/clippings/mer/224431604995.json#L29",
+"input/clippings/mer/224431604995.json#L103",
 "input/clippings/mer/224431902976.json#L97",
 "input/clippings/mer/224431902976.json#L99",
 "input/clippings/mer/224431902976.json#L109",
@@ -47549,7 +47697,29 @@
 "input/clippings/mer/224435867065.json#L43",
 "input/clippings/mer/224435867065.json#L55",
 "input/clippings/mer/224436002512.json#L17",
-"input/clippings/mer/224436787721.json#L33"
+"input/clippings/mer/224436787721.json#L33",
+"input/clippings/mer/224439695894.json#L59",
+"input/clippings/mer/224439764329.json#L61",
+"input/clippings/mer/224440926200.json#L69",
+"input/clippings/mer/224440926200.json#L71",
+"input/clippings/mer/224440926200.json#L85",
+"input/clippings/mer/224441382513.json#L5",
+"input/clippings/mer/224441382513.json#L37",
+"input/clippings/mer/224441382513.json#L161",
+"input/clippings/mer/224441926403.json#L3",
+"input/clippings/mer/224441926403.json#L41",
+"input/clippings/mer/224441926403.json#L43",
+"input/clippings/mer/224441926403.json#L51",
+"input/clippings/mer/224441926403.json#L81",
+"input/clippings/mer/224442142358.json#L186",
+"input/clippings/mer/224443203845.json#L82",
+"input/clippings/mer/224443747132.json#L3",
+"input/clippings/mer/224443747132.json#L59",
+"input/clippings/mer/224443747132.json#L63",
+"input/clippings/mer/224443747132.json#L85",
+"input/clippings/mer/224443747132.json#L95",
+"input/clippings/mer/224443747132.json#L135",
+"input/clippings/mer/224443747132.json#L141"
 ],
 "미국 상무부": [
 "content/understanding/미국주식 사관학교/[260615] 클로드가 90분 만에 전 세계에서 꺼졌다 - AI 모델 수출통제와 각자도생 인프라 수요.md#L9",
@@ -47962,13 +48132,13 @@
 "content/understanding/김상훈 기자/[260819] 중국은 금리를 설계한다 - 같은 4천조를 빌려도 이자가 122조와 270조로 갈린다 - 김상훈.md#L31"
 ],
 "백종훈": [
-"content/understanding/_대기 목록.md#L18",
-"content/understanding/_대기 목록.md#L20",
-"content/understanding/_대기 목록.md#L25",
-"content/understanding/_대기 목록.md#L29",
-"content/understanding/_대기 목록.md#L31",
-"content/understanding/_대기 목록.md#L37",
+"content/understanding/_대기 목록.md#L21",
+"content/understanding/_대기 목록.md#L23",
+"content/understanding/_대기 목록.md#L28",
+"content/understanding/_대기 목록.md#L32",
+"content/understanding/_대기 목록.md#L34",
 "content/understanding/_대기 목록.md#L40",
+"content/understanding/_대기 목록.md#L43",
 "content/understanding/_대기 목록.md#L59",
 "content/understanding/_대기 목록.md#L62",
 "content/understanding/_대기 목록.md#L71",
@@ -50966,7 +51136,28 @@
 "input/clippings/mer/224423696087.json#L109",
 "input/clippings/mer/224423696087.json#L115",
 "input/clippings/mer/224423696087.json#L117",
-"input/clippings/mer/224438575128.json#L73"
+"input/clippings/mer/224438575128.json#L73",
+"input/clippings/mer/224439043424.json#L7",
+"input/clippings/mer/224439043424.json#L9",
+"input/clippings/mer/224439043424.json#L11",
+"input/clippings/mer/224439695894.json#L95",
+"input/clippings/mer/224439695894.json#L147",
+"input/clippings/mer/224439695894.json#L151",
+"input/clippings/mer/224440926200.json#L7",
+"input/clippings/mer/224440926200.json#L29",
+"input/clippings/mer/224440926200.json#L37",
+"input/clippings/mer/224440926200.json#L39",
+"input/clippings/mer/224440926200.json#L41",
+"input/clippings/mer/224440926200.json#L61",
+"input/clippings/mer/224440926200.json#L87",
+"input/clippings/mer/224440926200.json#L89",
+"input/clippings/mer/224440926200.json#L91",
+"input/clippings/mer/224440926200.json#L115",
+"input/clippings/mer/224440926200.json#L117",
+"input/clippings/mer/224442390068.json#L3",
+"input/clippings/mer/224442390068.json#L98",
+"input/clippings/mer/224442390068.json#L102",
+"input/clippings/mer/224442390068.json#L104"
 ],
 "삼성SDI": [
 "content/understanding/권효재 대표/전쟁 끝나도 계속 간다, 가격보다 중요한 에너지 믹스와 자원 확보 전쟁.md#L60",
@@ -52837,7 +53028,28 @@
 "input/clippings/mer/224423696087.json#L109",
 "input/clippings/mer/224423696087.json#L115",
 "input/clippings/mer/224423696087.json#L117",
-"input/clippings/mer/224438575128.json#L73"
+"input/clippings/mer/224438575128.json#L73",
+"input/clippings/mer/224439043424.json#L7",
+"input/clippings/mer/224439043424.json#L9",
+"input/clippings/mer/224439043424.json#L11",
+"input/clippings/mer/224439695894.json#L95",
+"input/clippings/mer/224439695894.json#L147",
+"input/clippings/mer/224439695894.json#L151",
+"input/clippings/mer/224440926200.json#L7",
+"input/clippings/mer/224440926200.json#L29",
+"input/clippings/mer/224440926200.json#L37",
+"input/clippings/mer/224440926200.json#L39",
+"input/clippings/mer/224440926200.json#L41",
+"input/clippings/mer/224440926200.json#L61",
+"input/clippings/mer/224440926200.json#L87",
+"input/clippings/mer/224440926200.json#L89",
+"input/clippings/mer/224440926200.json#L91",
+"input/clippings/mer/224440926200.json#L115",
+"input/clippings/mer/224440926200.json#L117",
+"input/clippings/mer/224442390068.json#L3",
+"input/clippings/mer/224442390068.json#L98",
+"input/clippings/mer/224442390068.json#L102",
+"input/clippings/mer/224442390068.json#L104"
 ],
 "삼익가든맨션": [
 "content/understanding/부동산/[260720] 한 동만 빼고 재건축 - 대지지분이 커도 감정가는 시세를 따라간다 - 장순원.md#L6",
@@ -53087,9 +53299,10 @@
 "content/semi_doped/2026-07-29-hyperscaler-cds.md#L62",
 "content/semi_doped/2026-07-29-hyperscaler-cds.md#L72",
 "content/semi_doped/til-14.md#L26",
-"content/understanding/_대기 목록.md#L25",
-"content/understanding/_대기 목록.md#L29",
-"content/understanding/_대기 목록.md#L34",
+"content/understanding/_대기 목록.md#L16",
+"content/understanding/_대기 목록.md#L28",
+"content/understanding/_대기 목록.md#L32",
+"content/understanding/_대기 목록.md#L37",
 "content/understanding/_대기 목록.md#L50",
 "content/understanding/_대기 목록.md#L65",
 "content/understanding/부동산/[260106] 용인에 공장이 와도 사람은 동탄에 산다 - 전기는 묻으면 되지만 물은 답이 없다 - 김시덕.md#L35",
@@ -53567,7 +53780,9 @@
 "input/clippings/mer/224437506112.json#L15",
 "input/clippings/mer/224438575128.json#L39",
 "input/clippings/mer/224438575128.json#L63",
-"input/clippings/mer/224438575128.json#L77"
+"input/clippings/mer/224438575128.json#L77",
+"input/clippings/mer/224439043424.json#L81",
+"input/clippings/mer/224439043424.json#L83"
 ],
 "서울시": [
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L6",
@@ -53655,7 +53870,9 @@
 "input/clippings/mer/224193608780.json#L31",
 "input/clippings/mer/224436358808.json#L77",
 "input/clippings/mer/224436358808.json#L83",
-"input/clippings/mer/224438575128.json#L77"
+"input/clippings/mer/224438575128.json#L77",
+"input/clippings/mer/224439043424.json#L81",
+"input/clippings/mer/224439043424.json#L83"
 ],
 "석유회사": [
 "content/newsletter/ai_infra/business/[260630] 토큰 버짓팅 - 기업들과 나눈 토큰 지출 실태.md#L349",
@@ -54567,7 +54784,17 @@
 "input/clippings/mer/224287501270.json#L114",
 "input/clippings/mer/224287501270.json#L118",
 "input/clippings/mer/224287501270.json#L122",
-"input/clippings/mer/224323682143.json#L23"
+"input/clippings/mer/224323682143.json#L23",
+"input/clippings/mer/224441382513.json#L85",
+"input/clippings/mer/224441382513.json#L113",
+"input/clippings/mer/224441382513.json#L115",
+"input/clippings/mer/224441382513.json#L119",
+"input/clippings/mer/224441382513.json#L125",
+"input/clippings/mer/224441382513.json#L127",
+"input/clippings/mer/224441382513.json#L129",
+"input/clippings/mer/224441382513.json#L131",
+"input/clippings/mer/224441382513.json#L145",
+"input/clippings/mer/224441382513.json#L161"
 ],
 "스트래티지": [
 "content/linkedin/[2608] 링크드인 게시물.md#L707",
@@ -55033,6 +55260,31 @@
 "input/clippings/mer/224394968574.json#L113",
 "input/clippings/mer/224395000762.json#L84",
 "input/clippings/mer/224395022673.json#L3",
+"input/clippings/mer/224441382513.json#L3",
+"input/clippings/mer/224441382513.json#L7",
+"input/clippings/mer/224441382513.json#L17",
+"input/clippings/mer/224441382513.json#L37",
+"input/clippings/mer/224441382513.json#L49",
+"input/clippings/mer/224441382513.json#L57",
+"input/clippings/mer/224441382513.json#L67",
+"input/clippings/mer/224441382513.json#L71",
+"input/clippings/mer/224441382513.json#L75",
+"input/clippings/mer/224441382513.json#L87",
+"input/clippings/mer/224441382513.json#L89",
+"input/clippings/mer/224441382513.json#L91",
+"input/clippings/mer/224441382513.json#L93",
+"input/clippings/mer/224441382513.json#L95",
+"input/clippings/mer/224441382513.json#L99",
+"input/clippings/mer/224441382513.json#L101",
+"input/clippings/mer/224441382513.json#L103",
+"input/clippings/mer/224441382513.json#L105",
+"input/clippings/mer/224441382513.json#L113",
+"input/clippings/mer/224441382513.json#L135",
+"input/clippings/mer/224441382513.json#L139",
+"input/clippings/mer/224441382513.json#L145",
+"input/clippings/mer/224441382513.json#L151",
+"input/clippings/mer/224441382513.json#L157",
+"input/clippings/mer/224441382513.json#L161",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L149",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L161"
 ],
@@ -55600,7 +55852,7 @@
 "content/semi_doped/2026-08-07-globalfoundries-barber.md#L27",
 "content/semi_doped/2026-08-11-china-optical-ban.md#L34",
 "content/semi_doped/2026-08-11-china-optical-ban.md#L49",
-"content/understanding/_대기 목록.md#L17",
+"content/understanding/_대기 목록.md#L20",
 "content/understanding/_대기 목록.md#L75",
 "content/understanding/권효재 대표/이란 전쟁 오늘 끝나도 유가 9월까지 뛴다 (1부).md#L61",
 "content/understanding/김녹원 대표/[260819] 중국이 피지컬 AI에서 앞선 이유는 공장을 다 갖고 있어서다 - 김녹원.md#L14",
@@ -56707,7 +56959,12 @@
 "input/clippings/mer/224432463581.json#L125",
 "input/clippings/mer/224436787721.json#L53",
 "input/clippings/mer/224436787721.json#L57",
-"input/clippings/mer/224436787721.json#L59"
+"input/clippings/mer/224436787721.json#L59",
+"input/clippings/mer/224441382513.json#L147",
+"input/clippings/mer/224441382513.json#L149",
+"input/clippings/mer/224441382513.json#L151",
+"input/clippings/mer/224441382513.json#L153",
+"input/clippings/mer/224442142358.json#L80"
 ],
 "아마존웹서비스": [
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L35",
@@ -59923,7 +60180,10 @@
 "content/understanding/미국주식 사관학교/[260619] 상장 일주일 - 본주는 오르고 대리 종목은 빠졌다.md#L19",
 "content/understanding/미국주식 사관학교/[260619] 상장 일주일 - 본주는 오르고 대리 종목은 빠졌다.md#L32",
 "content/understanding/미국주식 사관학교/[260619] 상장 일주일 - 본주는 오르고 대리 종목은 빠졌다.md#L47",
-"content/understanding/미국주식 사관학교/[260619] 상장 일주일 - 본주는 오르고 대리 종목은 빠졌다.md#L58"
+"content/understanding/미국주식 사관학교/[260619] 상장 일주일 - 본주는 오르고 대리 종목은 빠졌다.md#L58",
+"input/clippings/mer/224441382513.json#L17",
+"input/clippings/mer/224441382513.json#L87",
+"input/clippings/mer/224441382513.json#L103"
 ],
 "에코프로CnG": [
 "content/understanding/회계사/[260523] 시총 21조 825억원이 요구하는 내재성장률은 36~46%다 - 에코프로비엠 - 엘곰.md#L13"
@@ -65876,6 +66136,8 @@
 "input/clippings/mer/224403735059.json#L141",
 "input/clippings/mer/224431218151.json#L77",
 "input/clippings/mer/224436787721.json#L7",
+"input/clippings/mer/224442390068.json#L18",
+"input/clippings/mer/224442390068.json#L98",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L22",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L159"
 ],
@@ -67245,7 +67507,12 @@
 "input/clippings/mer/224429949987.json#L66",
 "input/clippings/mer/224429949987.json#L78",
 "input/clippings/mer/224434786803.json#L61",
-"input/clippings/mer/224435867065.json#L35"
+"input/clippings/mer/224435867065.json#L35",
+"input/clippings/mer/224441926403.json#L35",
+"input/clippings/mer/224441926403.json#L47",
+"input/clippings/mer/224441926403.json#L87",
+"input/clippings/mer/224443203845.json#L62",
+"input/clippings/mer/224443203845.json#L70"
 ],
 "오라클": [
 "content/epoch/[260520] 프런티어 랩은 세계 AI 컴퓨트의 절반도 안 쓴다.md#L68",
@@ -67695,6 +67962,7 @@
 "input/clippings/mer/224381744094.json#L61",
 "input/clippings/mer/224403735059.json#L129",
 "input/clippings/mer/224436787721.json#L7",
+"input/clippings/mer/224442390068.json#L88",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L16",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L18",
 "input/clippings/xAI's Colossus 2 - First Gigawatt Datacenter In The World, Unique RL Methodology, Capital Raise.md#L57"
@@ -67720,7 +67988,8 @@
 "content/understanding/회계사/[260811] DCF 내재가치 38만원, 주가보다 180.8% 위 - 오리온 - 엘곰.md#L117",
 "content/understanding/회계사/[260811] DCF 내재가치 38만원, 주가보다 180.8% 위 - 오리온 - 엘곰.md#L120",
 "content/understanding/회계사/[260811] DCF 내재가치 38만원, 주가보다 180.8% 위 - 오리온 - 엘곰.md#L136",
-"content/understanding/회계사/[260819] DCF 내재가치 55.8만원, 주가보다 25.9% 아래 - HD현대일렉트릭 - 엘곰.md#L87"
+"content/understanding/회계사/[260819] DCF 내재가치 55.8만원, 주가보다 25.9% 아래 - HD현대일렉트릭 - 엘곰.md#L87",
+"input/clippings/mer/224430771982.json#L129"
 ],
 "오세훈": [
 "content/understanding/부동산/[260424] 장특공제 축소는 비실거주 1주택을 겨냥한다 - 보유 공제를 깎는 두 시나리오 - 백종훈.md#L34",
@@ -72071,7 +72340,17 @@
 "input/clippings/mer/224435147266.json#L178",
 "input/clippings/mer/224435867065.json#L43",
 "input/clippings/mer/224436002512.json#L5",
-"input/clippings/mer/224436002512.json#L7"
+"input/clippings/mer/224436002512.json#L7",
+"input/clippings/mer/224439764329.json#L21",
+"input/clippings/mer/224439764329.json#L29",
+"input/clippings/mer/224439764329.json#L31",
+"input/clippings/mer/224439764329.json#L71",
+"input/clippings/mer/224439764329.json#L75",
+"input/clippings/mer/224439764329.json#L79",
+"input/clippings/mer/224439764329.json#L81",
+"input/clippings/mer/224440926200.json#L95",
+"input/clippings/mer/224441382513.json#L127",
+"input/clippings/mer/224442390068.json#L20"
 ],
 "이관옥": [
 "content/understanding/부동산/[260304] 공급 절벽은 통계 차이였다 - 같은 서울에 4천호와 3만호 - 장순원.md#L90",
@@ -73385,7 +73664,9 @@
 "input/clippings/mer/224415028844.json#L7",
 "input/clippings/mer/224415028844.json#L59",
 "input/clippings/mer/224421516189.json#L43",
-"input/clippings/mer/224421516189.json#L47"
+"input/clippings/mer/224421516189.json#L47",
+"input/clippings/mer/224441926403.json#L85",
+"input/clippings/mer/224443203845.json#L32"
 ],
 "이레인": [
 "content/newsletter/ai_infra/business/[260402] GPU 대란, 임대편 - H100 1년 임대 가격 지수 출범.md#L37",
@@ -73423,7 +73704,6 @@
 "content/understanding/부동산/[260424] 부모가 준 전세금까지 타고 올라간다 - 자금조달계획서가 국세청으로 가는 길 (2부) - 이장원.md#L3"
 ],
 "이재명 정부": [
-"content/understanding/_대기 목록.md#L44",
 "content/understanding/언더스탠딩 백브리핑/독일 신재생 전기 때문에 북유럽이 빡친 이유.md#L13",
 "content/understanding/언더스탠딩 백브리핑/호남 반도체 산단, 4년 만에 완공 가능할까.md#L6"
 ],
@@ -73833,7 +74113,10 @@
 "input/clippings/mer/224401859933.json#L93",
 "input/clippings/mer/224415028844.json#L1",
 "input/clippings/mer/224428298482.json#L9",
-"input/clippings/mer/224433750784.json#L105"
+"input/clippings/mer/224431604995.json#L107",
+"input/clippings/mer/224431604995.json#L109",
+"input/clippings/mer/224433750784.json#L105",
+"input/clippings/mer/224441382513.json#L101"
 ],
 "인도네시아": [
 "content/newsletter/ai_infra/business/[260706] 엔비디아 GPU 부채 백스톱이 여는 AI 프로젝트 트리니티 - 자본, 오프테이크, 데이터센터.md#L419",
@@ -73938,7 +74221,8 @@
 "content/understanding/김상훈 기자/[260819] 중국은 금리를 설계한다 - 같은 4천조를 빌려도 이자가 122조와 270조로 갈린다 - 김상훈.md#L77",
 "content/understanding/미국주식 사관학교/[260614] 금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다 - 인플레이션·경제규모·통화량으로 다시 잰 금 시세.md#L37",
 "input/clippings/mer/224100977035.json#L21",
-"input/clippings/mer/224281974042.json#L75"
+"input/clippings/mer/224281974042.json#L75",
+"input/clippings/mer/224439764329.json#L79"
 ],
 "인엔아웃": [
 "content/newsletter/ai_infra/cooling/[260115] 토큰 대 햄버거 - 데이터센터 물 발자국 대결.md#L18",
@@ -75942,7 +76226,11 @@
 "input/clippings/mer/224379237136.json#L105",
 "input/clippings/mer/224410744840.json#L89",
 "input/clippings/mer/224432463581.json#L113",
-"input/clippings/mer/224432463581.json#L117"
+"input/clippings/mer/224432463581.json#L117",
+"input/clippings/mer/224441382513.json#L3",
+"input/clippings/mer/224441382513.json#L5",
+"input/clippings/mer/224441382513.json#L161",
+"input/clippings/mer/224442390068.json#L30"
 ],
 "일본": [
 "content/aie/2026-06-26-제미나이-오디오-스택.md#L15",
@@ -77991,6 +78279,8 @@
 "input/clippings/mer/224430262140.json#L65",
 "input/clippings/mer/224430262140.json#L67",
 "input/clippings/mer/224430262140.json#L77",
+"input/clippings/mer/224430771982.json#L117",
+"input/clippings/mer/224431604995.json#L103",
 "input/clippings/mer/224433577964.json#L3",
 "input/clippings/mer/224433577964.json#L5",
 "input/clippings/mer/224433577964.json#L15",
@@ -78006,7 +78296,10 @@
 "input/clippings/mer/224433577964.json#L74",
 "input/clippings/mer/224433577964.json#L78",
 "input/clippings/mer/224433577964.json#L80",
-"input/clippings/mer/224433577964.json#L84"
+"input/clippings/mer/224433577964.json#L84",
+"input/clippings/mer/224440926200.json#L119",
+"input/clippings/mer/224442142358.json#L36",
+"input/clippings/mer/224443203845.json#L84"
 ],
 "일본 정부": [
 "content/understanding/류상철 국장/환율 오른다고 서학개미 탓하지 마라.md#L99",
@@ -78291,21 +78584,21 @@
 ],
 "장순원": [
 "content/understanding/_대기 목록.md#L15",
-"content/understanding/_대기 목록.md#L16",
-"content/understanding/_대기 목록.md#L17",
-"content/understanding/_대기 목록.md#L22",
-"content/understanding/_대기 목록.md#L23",
-"content/understanding/_대기 목록.md#L24",
+"content/understanding/_대기 목록.md#L18",
+"content/understanding/_대기 목록.md#L19",
+"content/understanding/_대기 목록.md#L20",
+"content/understanding/_대기 목록.md#L25",
+"content/understanding/_대기 목록.md#L26",
 "content/understanding/_대기 목록.md#L27",
 "content/understanding/_대기 목록.md#L30",
-"content/understanding/_대기 목록.md#L32",
-"content/understanding/_대기 목록.md#L34",
+"content/understanding/_대기 목록.md#L33",
 "content/understanding/_대기 목록.md#L35",
-"content/understanding/_대기 목록.md#L36",
+"content/understanding/_대기 목록.md#L37",
 "content/understanding/_대기 목록.md#L38",
 "content/understanding/_대기 목록.md#L39",
 "content/understanding/_대기 목록.md#L41",
-"content/understanding/_대기 목록.md#L43",
+"content/understanding/_대기 목록.md#L42",
+"content/understanding/_대기 목록.md#L44",
 "content/understanding/_대기 목록.md#L52",
 "content/understanding/_대기 목록.md#L53",
 "content/understanding/_대기 목록.md#L54",
@@ -81394,6 +81687,7 @@
 "input/clippings/mer/224428298482.json#L127",
 "input/clippings/mer/224430262140.json#L83",
 "input/clippings/mer/224430262140.json#L131",
+"input/clippings/mer/224431604995.json#L103",
 "input/clippings/mer/224431902976.json#L99",
 "input/clippings/mer/224431902976.json#L101",
 "input/clippings/mer/224431902976.json#L103",
@@ -81403,10 +81697,18 @@
 "input/clippings/mer/224432463581.json#L5",
 "input/clippings/mer/224432463581.json#L31",
 "input/clippings/mer/224432463581.json#L35",
-"input/clippings/mer/224432463581.json#L57"
+"input/clippings/mer/224432463581.json#L57",
+"input/clippings/mer/224439695894.json#L59",
+"input/clippings/mer/224439695894.json#L115",
+"input/clippings/mer/224439695894.json#L149",
+"input/clippings/mer/224439695894.json#L155",
+"input/clippings/mer/224439695894.json#L157",
+"input/clippings/mer/224439764329.json#L77",
+"input/clippings/mer/224439764329.json#L79"
 ],
 "중국 인민은행": [
-"content/understanding/미국주식 사관학교/[260614] 금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다 - 인플레이션·경제규모·통화량으로 다시 잰 금 시세.md#L37"
+"content/understanding/미국주식 사관학교/[260614] 금값 4,200달러, 잣대를 바꾸면 비싼 값이 아니다 - 인플레이션·경제규모·통화량으로 다시 잰 금 시세.md#L37",
+"input/clippings/mer/224439764329.json#L79"
 ],
 "즈푸": [
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L98",
@@ -82201,7 +82503,9 @@
 "input/clippings/mer/224415552295.json#L17",
 "input/clippings/mer/224415552295.json#L39",
 "input/clippings/mer/224421039479.json#L17",
-"input/clippings/mer/224421039479.json#L79"
+"input/clippings/mer/224421039479.json#L79",
+"input/clippings/mer/224430771982.json#L23",
+"input/clippings/mer/224430771982.json#L29"
 ],
 "캐터필러": [
 "content/linkedin/[2607] 링크드인 게시물.md#L1161",
@@ -82219,7 +82523,8 @@
 "content/understanding/미국주식 사관학교/[260805] 마이클 버리 8월 4일 포지션 재정비 - 반도체에서 순환금융으로.md#L24",
 "content/understanding/미국주식 사관학교/[260807] 순환금융 - AI 관련주 최대 리스크와 고리 밖 기업들.md#L46",
 "content/understanding/미국주식 사관학교/[260812] DIVO 옵션 명세 읽기 - 양산형 커버드콜과 무엇이 다른가.md#L22",
-"input/clippings/mer/224383455971.json#L103"
+"input/clippings/mer/224383455971.json#L103",
+"input/clippings/mer/224443747132.json#L21"
 ],
 "캠브리콘": [
 "content/epoch/[260624] 중국 AI 채용공고 1,604건에서 읽은 것.md#L10",
@@ -82891,7 +83196,8 @@
 "input/clippings/mer/224401025776.json#L41",
 "input/clippings/mer/224401025776.json#L49",
 "input/clippings/mer/224401025776.json#L55",
-"input/clippings/mer/224401025776.json#L97"
+"input/clippings/mer/224401025776.json#L97",
+"input/clippings/mer/224440926200.json#L59"
 ],
 "코어42": [
 "content/newsletter/ai_infra/business/[260420] GPU 클러스터 진짜 비용 계산법 - 총소유비용(TCO)과 굿풋 이론.md#L474",
@@ -83314,7 +83620,29 @@
 "input/clippings/Vera Rubin – Extreme Co-Design An Evolution from Grace Blackwell Oberon.md#L244",
 "input/clippings/Vera Rubin – Extreme Co-Design An Evolution from Grace Blackwell Oberon.md#L640",
 "input/clippings/mer/224359986701.json#L88",
-"input/clippings/mer/224436787721.json#L7"
+"input/clippings/mer/224436787721.json#L7",
+"input/clippings/mer/224442390068.json#L16",
+"input/clippings/mer/224442390068.json#L18",
+"input/clippings/mer/224442390068.json#L20",
+"input/clippings/mer/224442390068.json#L28",
+"input/clippings/mer/224442390068.json#L34",
+"input/clippings/mer/224442390068.json#L44",
+"input/clippings/mer/224442390068.json#L46",
+"input/clippings/mer/224442390068.json#L48",
+"input/clippings/mer/224442390068.json#L52",
+"input/clippings/mer/224442390068.json#L62",
+"input/clippings/mer/224442390068.json#L64",
+"input/clippings/mer/224442390068.json#L66",
+"input/clippings/mer/224442390068.json#L68",
+"input/clippings/mer/224442390068.json#L74",
+"input/clippings/mer/224442390068.json#L78",
+"input/clippings/mer/224442390068.json#L84",
+"input/clippings/mer/224442390068.json#L86",
+"input/clippings/mer/224442390068.json#L88",
+"input/clippings/mer/224442390068.json#L90",
+"input/clippings/mer/224442390068.json#L96",
+"input/clippings/mer/224442390068.json#L100",
+"input/clippings/mer/224442390068.json#L104"
 ],
 "코인베이스": [
 "content/newsletter/ai_infra/business/[260708] 앤트로픽 3분기 10억 달러 흑자 - IPO 재무제표 미리보기.md#L382",
@@ -86463,6 +86791,8 @@
 "input/clippings/mer/224429293459.json#L103",
 "input/clippings/mer/224429293459.json#L117",
 "input/clippings/mer/224429293459.json#L121",
+"input/clippings/mer/224431604995.json#L23",
+"input/clippings/mer/224431604995.json#L35",
 "input/clippings/mer/224433577964.json#L27",
 "input/clippings/mer/224433577964.json#L29",
 "input/clippings/mer/224433577964.json#L33",
@@ -87455,7 +87785,7 @@
 "content/semi_doped/2026-08-11-china-optical-ban.md#L68",
 "content/semi_doped/2026-08-24-grok-bots-cpu.md#L65",
 "content/semi_doped/2026-08-27-openai-jalapeno.md#L77",
-"content/understanding/_대기 목록.md#L31",
+"content/understanding/_대기 목록.md#L34",
 "content/understanding/_대기 목록.md#L74",
 "content/understanding/_대기 목록.md#L75",
 "content/understanding/권석준 교수/[260826] 중국 반도체는 미국이 키웠다 - 메모리 가격 폭등에 CXMT가 돈방석에 앉고, 그 돈은 중국 장비사로 되돌아간다 - 권석준 (1부).md#L25",
@@ -90278,12 +90608,32 @@
 "input/clippings/mer/224430262140.json#L131",
 "input/clippings/mer/224430262140.json#L133",
 "input/clippings/mer/224430262140.json#L137",
+"input/clippings/mer/224430771982.json#L3",
+"input/clippings/mer/224430771982.json#L7",
+"input/clippings/mer/224430771982.json#L43",
+"input/clippings/mer/224430771982.json#L47",
+"input/clippings/mer/224430771982.json#L117",
+"input/clippings/mer/224430771982.json#L127",
+"input/clippings/mer/224431604995.json#L103",
 "input/clippings/mer/224432463581.json#L85",
 "input/clippings/mer/224434786803.json#L1",
 "input/clippings/mer/224435147266.json#L16",
 "input/clippings/mer/224435147266.json#L82",
 "input/clippings/mer/224435867065.json#L1",
-"input/clippings/mer/224437506112.json#L63"
+"input/clippings/mer/224437506112.json#L63",
+"input/clippings/mer/224439764329.json#L81",
+"input/clippings/mer/224440926200.json#L65",
+"input/clippings/mer/224440926200.json#L67",
+"input/clippings/mer/224440926200.json#L119",
+"input/clippings/mer/224441926403.json#L3",
+"input/clippings/mer/224442142358.json#L252",
+"input/clippings/mer/224442390068.json#L12",
+"input/clippings/mer/224443203845.json#L6",
+"input/clippings/mer/224443747132.json#L55",
+"input/clippings/mer/224443747132.json#L83",
+"input/clippings/mer/224443747132.json#L85",
+"input/clippings/mer/224443747132.json#L87",
+"input/clippings/mer/224443747132.json#L123"
 ],
 "한국가스공사": [
 "input/clippings/mer/224058494349.json#L26",
@@ -90511,7 +90861,8 @@
 "input/clippings/mer/224392077639.json#L70",
 "input/clippings/mer/224392077639.json#L80",
 "input/clippings/mer/224407452404.json#L61",
-"input/clippings/mer/224407452404.json#L63"
+"input/clippings/mer/224407452404.json#L63",
+"input/clippings/mer/224439764329.json#L81"
 ],
 "한국전력공사": [
 "content/understanding/미국주식 사관학교/[260601] 국민연금 매도폭탄, 국채로 흡수된다 - 목표비중 올려 위기 넘겼고 미국주식엔 안 간다.md#L83"
@@ -90790,7 +91141,8 @@
 "input/clippings/mer/224281298015.json#L19",
 "input/clippings/mer/224281298015.json#L27",
 "input/clippings/mer/224352751154.json#L138",
-"input/clippings/mer/224411023780.json#L93"
+"input/clippings/mer/224411023780.json#L93",
+"input/clippings/mer/224441926403.json#L85"
 ],
 "현대모비스": [
 "content/understanding/피지컬AI/[260602] 로보스트레티지가 여는 Figure AI 길.md#L35",
